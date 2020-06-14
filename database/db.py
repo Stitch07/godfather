@@ -18,5 +18,19 @@ class DB:
         data = json.load(open(f'database/data/{key}.json'))
         return data
 
+    def remove(self, key: str):
+        if not self.has(key):
+            raise KeyError(key)
+        os.remove(f'database/data/{key}.json')
+
     def update(self, key: str, data):
         self.update(key, data)
+
+    def __setitem__(self, key: str, item):
+        self.set(key, item)
+
+    def __getitem__(self, key: str):
+        return self.get(key)
+
+    def __delitem__(self, key: str):
+        self.remove(key)
