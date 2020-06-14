@@ -1,0 +1,19 @@
+[
+    {
+        "name": "ss3",
+        "roles": [
+            {
+                "id": "vanilla",
+                "faction": "Town"
+            },
+            {
+                "id": "vanilla",
+                "faction": "Mafia"
+            },
+            {
+                "id": "super_saint",
+                "faction": "Town"
+            }
+        ]
+    }
+]
