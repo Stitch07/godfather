@@ -3,3 +3,4 @@ __pycache__/
 config.json
 .vscode
 **/.ropeproject
+database/data
