@@ -4,7 +4,6 @@ import game
 from discord.ext import commands
 import ast
 from discord.ext import commands
-from database import DB
 
 def insert_returns(body):
     # insert return stmt if the last expression is a expression statement
@@ -27,8 +26,8 @@ class Misc(commands.Cog):
 
     @commands.Cog.listener()
     async def on_ready(self):
-        # initialize database
-        self.bot.db = DB()
+        # initialize games map
+        self.bot.games = {}
         print('Ready!')
 
     @commands.command()

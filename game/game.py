@@ -1,24 +1,25 @@
 import discord
-from enum import Enum, auto
+from enum import IntEnum, auto
 from typing import Tuple
 import json
 import roles
 
 rolesets = json.load(open('rolesets/rolesets.json'))
 
-class Phase(Enum):
+class Phase(IntEnum):
     PREGAME = auto()
     DAY = auto()
     NIGHT = auto()
 
 class Game:
     def __init__(self, channel: discord.channel.TextChannel):
-        self.channel = channel
-        self.guild = channel.guild
+        self.channel_id = channel.id
+        self.guild_id = channel.guild.id
         self.players = []
         self.votes = [] # votes of the current day
         self.phase = Phase.PREGAME
         self.phase_number = 0
+        self.host_id = None # assigned to the user creating the game
 
     # finds a setup for the current player-size. if no setup is found, raises an Exception
     def find_setup(self):
@@ -40,3 +41,7 @@ class Game:
         elif num_town <= num_maf: # town cannot majority lynch the mafia
             return True, 'Mafia'
         return False, None
+
+    @property
+    def has_started(self): # this might be useful
+        return not self.phase == Phase.PREGAME
