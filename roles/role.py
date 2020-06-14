@@ -6,10 +6,10 @@ class Role:
         self.id = id
         self.description = description
 
+    # str representation of role
+    def __str__(self):
+        return self.name
+
     # called when a player is lynched
     def on_lynch(self, game):
         pass
-
-    # generates the role's PM
-    def get_role_pm(self, player: Player):
-        return f'Hello {player.name}, you are a {player.faction} **{self.name}**. {self.description}'

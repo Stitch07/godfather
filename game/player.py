@@ -5,3 +5,8 @@ class Player:
         self.user = user
         self.role = None
         self.faction = None
+
+    # generates the role's PM
+    @property
+    def role_pm(self):
+        return f'Hello {self.user}, you are a {self.faction} **{self.role}**. {self.description}'
