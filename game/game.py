@@ -15,8 +15,8 @@ class Phase(IntEnum):
 
 class Game:
     def __init__(self, channel: discord.channel.TextChannel):
-        self.channel_id = channel.id
-        self.guild_id = channel.guild.id
+        self.channel = channel
+        self.guild = channel.guild
         self.players = []
         self.votes = [] # votes of the current day
         self.phase = Phase.PREGAME
@@ -40,8 +40,8 @@ class Game:
 
     # checks whether the game has ended, returns whether the game has ended and the winning faction
     def check_endgame(self) -> typing.Tuple[bool, str]:
-        num_town = len(filter(lambda p: p.alive == True and p.faction == 'Town'))
-        num_maf = len(filter(lambda p: p.alive == True and p.faction == 'Mafia'))
+        num_town = len([*filter(lambda p: p.alive == True and p.faction == 'Town', self.players)])
+        num_maf = len([*filter(lambda p: p.alive == True and p.faction == 'Mafia', self.players)])
         # very primitive endgame check; if mafia and town have equal members, town don't have
         # the majority and cannot lynch mafia. in the future, this method should account for
         # town's potential to nightkill mafia members.
@@ -61,4 +61,4 @@ class Game:
     @property
     def majority_votes(self):
         alive_players = len([*filter(lambda p: p.alive, self.players)])
-        return math.floor(alive_players / 2) + 1
+        return math.floor(alive_players / 2) + 1 

@@ -10,6 +10,6 @@ class Role:
     def __str__(self):
         return self.name
 
-    # called when a player is lynched
-    def on_lynch(self, game):
+    # called when a player is lynched. takes the game object, and the player lynched
+    async def on_lynch(self, game, player):
         pass

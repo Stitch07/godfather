@@ -1,6 +1,6 @@
 import discord
 from discord.ext import commands
-from game import Game, Player
+from game import Game, Player, Phase
 from roles import all_roles
 import json
 import typing
@@ -117,6 +117,7 @@ class Mafia(commands.Cog):
                 # send role PMs; wip: check if the message was successfully sent
                 await player.user.send(player.role_pm)
         await ctx.send('Sent all role PMs!')
+        game.phase = Phase.DAY
 
     @commands.command()
     @game_only()
@@ -140,8 +141,15 @@ class Mafia(commands.Cog):
 
         votes_on_target = len(target.votes)
         if votes_on_target >= game.majority_votes:
-            # WIP: actually lynch if hammered
-            await ctx.send('lol hammered')
+            target.alive = False
+            await ctx.send(f'{target.user.name} was lynched. He was a *{target.faction} {target.role}*.')
+            await target.role.on_lynch(game, target)
+            game_ended, winning_faction = game.check_endgame()
+            if game_ended:
+                # wip: need a game.end() function
+                await ctx.send(f'The game is over. {winning_faction} wins! 🎉')
+                del self.bot.games[ctx.guild.id]
+            # change phase after this.
 
 def setup(bot):
     bot.add_cog(Mafia(bot))
