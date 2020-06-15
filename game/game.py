@@ -3,6 +3,8 @@ from enum import IntEnum, auto
 import typing
 import json
 import roles
+from .player import Player
+import math
 
 rolesets = json.load(open('rolesets/rolesets.json'))
 
@@ -50,20 +52,13 @@ class Game:
         return False, None
 
     def has_player(self, user: discord.User):
-        return any(player.user.id == user.id for player in self.bot.games[ctx.guild.id].players)
-
-    # Check if last person voted was hammered
-    def check_hammer(self, last_voted: Player):
-        if len(last_voted.votes) >= self.majority_votes:
-            return True
-        else:
-            return False
+        return any(player.user.id == user.id for player in self.players)
 
     @property
     def has_started(self): # this might be useful
         return not self.phase == Phase.PREGAME
 
     @property
-    def majority_votes():
-        alive_players = len([*filter(lambda p: p.alive, game.players)])
-        return floor(alive_players / 2) + 1
+    def majority_votes(self):
+        alive_players = len([*filter(lambda p: p.alive, self.players)])
+        return math.floor(alive_players / 2) + 1

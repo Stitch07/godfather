@@ -1,3 +1,4 @@
+import discord
 from discord.ext import commands
 from game import Game, Player
 from roles import all_roles
@@ -26,7 +27,16 @@ def host_only():
 def player_only():
     async def predicate(ctx):
         if not ctx.bot.games[ctx.guild.id].has_player(ctx.author):
-            await ctx.send('Only players can vote.')
+            await ctx.send('Only players can use this command.')
+            return False
+        return True
+    return commands.check(predicate)
+
+def game_started_only():
+    async def predicate(ctx):
+        game = ctx.bot.games[ctx.guild.id]
+        if not game.has_started:
+            await ctx.send('The game hasn\'t started yet!')
             return False
         return True
     return commands.check(predicate)
@@ -110,24 +120,28 @@ class Mafia(commands.Cog):
 
     @commands.command()
     @game_only()
+    @game_started_only()
     @player_only()
     async def vote(self, ctx: commands.Context, target: discord.Member):
-        if not self.bot.games[ctx.guild.id].has_player(target):
-            return await ctx.send(f'Player {member} not found.')
-        if target == ctx.author:
+        game = self.bot.games[ctx.guild.id]
+        target = [*filter(lambda pl: pl.user.id == target.id, game.players)][0]
+        if not self.bot.games[ctx.guild.id].has_player(target.user):
+            return await ctx.send(f'Player {target.mention} not found.')
+        if target.user == ctx.author:
             return await ctx.send(f'Self-voting is not allowed.')
 
-        for player in self.bot.games.players:
+        for player in game.players:
             if player.has_vote(ctx.author):
                 player.votes = list(filter(lambda p: p.user.id != ctx.author.id, player.votes))
                 break
 
-        target.votes.append(list(filter(lambda p: p.user.id == ctx.author.id, self.bot.games.players))[0])
-        await ctx.send(f'Voted {target}')
+        target.votes.append(list(filter(lambda p: p.user.id == ctx.author.id, game.players))[0])
+        await ctx.send(f'Voted {target.user.name}')
 
-        # TODO add action for hammer
-        if check_hammer(list(filter(lambda p: p.user.id == target.id, self.bot.games.players))[0]):
-            pass
+        votes_on_target = len(target.votes)
+        if votes_on_target >= game.majority_votes:
+            # WIP: actually lynch if hammered
+            await ctx.send('lol hammered')
 
 def setup(bot):
     bot.add_cog(Mafia(bot))
