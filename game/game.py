@@ -42,6 +42,9 @@ class Game:
             return True, 'Mafia'
         return False, None
 
+    def has_player(self, user: discord.User):
+        return len(list(filter(lambda p: p.user.id == user.id, self.players))) > 0
+
     @property
     def has_started(self): # this might be useful
         return not self.phase == Phase.PREGAME
