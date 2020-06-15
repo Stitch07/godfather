@@ -2,6 +2,14 @@ from discord.ext import commands
 from game import Game, Player
 import json
 
+def game_only():
+    async def predicate(ctx):
+        if ctx.guild.id not in ctx.bot.games:
+            await ctx.send('No game is currently running in this server.')
+            return False
+        return True
+    return commands.check(predicate)
+
 class Mafia(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -17,29 +25,26 @@ class Mafia(commands.Cog):
         return await ctx.send(f'Started a game of mafia in {ctx.message.channel.mention}, hosted by **{ctx.message.author}**')
 
     @commands.command()
+    @game_only()
     async def join(self, ctx: commands.Context):
-        if not ctx.guild.id in self.bot.games:
-            return await ctx.send('No game is currently running in this server')
-        elif self.bot.games[ctx.guild.id].has_started:
+        if self.bot.games[ctx.guild.id].has_started:
             return await ctx.send('Signup phase for the game has ended')
         elif self.bot.games[ctx.guild.id].has_player(ctx.author):
             return await ctx.send('You have already joined this game')
 
         rolesets = json.load(open('rolesets/rolesets.json'))
-        rolesets = [*map(lambda rl: len(rl['roles']), rolesets)] # map into array of no. of roles
-        rolesets.sort(reverse=True) # sort them into descending order
+        rolesets.sort(key=lambda rl: len(rl['roles']), reverse=True)
 
-        if len(self.bot.games[ctx.guild.id].players) >= rolesets[0]:
+        if len(self.bot.games[ctx.guild.id].players) >= len(rolesets[0].get('roles')):
             return await ctx.send(f'Maximum amount of players reached')
         else:
             self.bot.games[ctx.guild.id].players.append(Player(ctx.message.author))
             return await ctx.send('✅ Game joined successfully')
 
     @commands.command()
+    @game_only()
     async def leave(self, ctx: commands.Context):
-        if not ctx.guild.id in self.bot.games:
-            return await ctx.send('No game is currently running in this server')
-        elif self.bot.games[ctx.guild.id].has_started:
+        if self.bot.games[ctx.guild.id].has_started:
             return await ctx.send('Cannot leave game after signup phase has ended')
         elif not self.bot.games[ctx.guild.id].has_player(ctx.author):
             return await ctx.send('You have not joined this game')
