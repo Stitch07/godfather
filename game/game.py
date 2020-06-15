@@ -22,9 +22,16 @@ class Game:
         self.host_id = None # assigned to the user creating the game
 
     # finds a setup for the current player-size. if no setup is found, raises an Exception
-    def find_setup(self):
+    def find_setup(self, setup: str=None):
         num_players = len(self.players)
-        possibles = list(filter(lambda s: len(s.roles == num_players)))
+        if not setup == None:
+            found_setup = [*filter(lambda rs: rs['name'] == setup.lower(), rolesets)]
+            if len(found_setup) == 0:
+                raise Exception('Setup not found.')
+            elif not len(found_setup[0]['roles']) == num_players:
+                raise Exception(f'Chosen setup needs {len(found_setup[0]["roles"])} players.')
+            return found_setup[0]
+        possibles = list(filter(lambda s: len(s['roles']) == num_players, rolesets))
         if len(possibles) == 0:
             raise Exception('No rolelists found.') # wip: custom exception types?
         return possibles.pop(0)
