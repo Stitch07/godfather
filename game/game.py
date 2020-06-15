@@ -1,6 +1,6 @@
 import discord
 from enum import IntEnum, auto
-from typing import Tuple
+import typing
 import json
 import roles
 
@@ -37,7 +37,7 @@ class Game:
         return possibles.pop(0)
 
     # checks whether the game has ended, returns whether the game has ended and the winning faction
-    def check_endgame(self) -> Tuple[bool, str]:
+    def check_endgame(self) -> typing.Tuple[bool, str]:
         num_town = len(filter(lambda p: p.alive == True and p.faction == 'Town'))
         num_maf = len(filter(lambda p: p.alive == True and p.faction == 'Mafia'))
         # very primitive endgame check; if mafia and town have equal members, town don't have
@@ -50,8 +50,20 @@ class Game:
         return False, None
 
     def has_player(self, user: discord.User):
-        return len(list(filter(lambda p: p.user.id == user.id, self.players))) > 0
+        return any(player.user.id == user.id for player in self.bot.games[ctx.guild.id].players)
+
+    # Check if last person voted was hammered
+    def check_hammer(self, last_voted: Player):
+        if len(last_voted.votes) >= self.majority_votes:
+            return True
+        else:
+            return False
 
     @property
     def has_started(self): # this might be useful
         return not self.phase == Phase.PREGAME
+
+    @property
+    def majority_votes():
+        alive_players = len([*filter(lambda p: p.alive, game.players)])
+        return floor(alive_players / 2) + 1
