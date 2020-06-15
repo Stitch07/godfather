@@ -56,5 +56,13 @@ class Mafia(commands.Cog):
             self.bot.games[ctx.guild.id].players = players
             return await ctx.send('✅ Game left successfully')
 
+    @commands.command()
+    @game_only()
+    async def playerlist(self, ctx: commands.Context):
+        if not self.bot.games[ctx.guild.id].has_started:
+            return await ctx.send(f'**Players: {len(self.bot.games[ctx.guild.id].players)}**\n'
+                    + ('\n'.join([f'{i+1}. {pl.user}' for (i, pl) in
+                    enumerate(self.bot.games[ctx.guild.id].players)])))
+
 def setup(bot):
     bot.add_cog(Mafia(bot))
