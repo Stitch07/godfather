@@ -1,4 +1,6 @@
 import ast
+import sys
+import traceback
 import discord
 from discord.ext import commands
 import roles  # pylint: disable=import-error
@@ -31,6 +33,22 @@ class Misc(commands.Cog):
         self.bot.games = {}
         self.bot.get_cog('EventLoop').event_loop.start()
         print('Ready!')
+
+    @commands.Cog.listener()
+    async def on_command_error(self, ctx, error):
+        if hasattr(ctx.command, 'on_error'):
+            return
+        if isinstance(error, commands.CommandNotFound):
+            return  # ignore invalid commands
+        elif isinstance(error, commands.MissingRequiredArgument):
+            return await ctx.send(f'Missing required argument {error.param}')
+        elif isinstance(error, commands.ArgumentParsingError):
+            return await ctx.send('Invalid input')
+        elif isinstance(error, commands.BadArgument):
+            return await ctx.send('Invalid input')
+        await ctx.send(f'Uncaught exception: ```{error}```')
+        traceback.print_exception(
+            type(error), error, error.__traceback__, file=sys.stderr)
 
     @commands.command()
     async def ping(self, ctx):
@@ -71,7 +89,7 @@ class Misc(commands.Cog):
 
     @eval.error
     async def eval_error(self, ctx, error):
-        await ctx.send(f'❌ **An error occurred**: ```python\n{error}```')
+        return await ctx.send(f'❌ **An error occurred**: ```python\n{error}```')
 
 
 def setup(bot):

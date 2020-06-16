@@ -105,8 +105,8 @@ class Mafia(commands.Cog):
                                             enumerate(self.bot.games[ctx.guild.id].players)])))
 
     @commands.command()
-    @game_only()
     @host_only()
+    @game_only()
     async def startgame(self, ctx: commands.Context, r_setup: typing.Optional[str] = None):
         game = self.bot.games[ctx.guild.id]
 
