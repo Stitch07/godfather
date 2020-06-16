@@ -29,6 +29,9 @@ def player_only():
         if not ctx.bot.games[ctx.guild.id].has_player(ctx.author):
             await ctx.send('Only players can use this command.')
             return False
+        elif not ctx.bot.games[ctx.guild.id].get_player(ctx.author).alive:
+            await ctx.send('Dead players can\'t use this command')
+            return False
         return True
     return commands.check(predicate)
 
@@ -125,31 +128,57 @@ class Mafia(commands.Cog):
     @player_only()
     async def vote(self, ctx: commands.Context, target: discord.Member):
         game = self.bot.games[ctx.guild.id]
-        target = [*filter(lambda pl: pl.user.id == target.id, game.players)][0]
-        if not self.bot.games[ctx.guild.id].has_player(target.user):
-            return await ctx.send(f'Player {target.mention} not found.')
+        target = game.get_player(target)
+
+        if not game.has_player(target.user):
+            return await ctx.send(f'Player {target.mention} not found in game.')
+        elif not game.get_player(target.user).alive:
+            return await ctx.send('You can\'t vote a dead player')
         if target.user == ctx.author:
-            return await ctx.send(f'Self-voting is not allowed.')
+            return await ctx.send('Self-voting is not allowed.')
 
-        for player in game.players:
-            if player.has_vote(ctx.author):
-                player.votes = list(filter(lambda p: p.user.id != ctx.author.id, player.votes))
-                break
+        game.filter_players(is_voted_by=ctx.author)[0].remove_vote(ctx.author)
 
-        target.votes.append(list(filter(lambda p: p.user.id == ctx.author.id, game.players))[0])
+        target.votes.append(game.get_player(ctx.author))
         await ctx.send(f'Voted {target.user.name}')
 
         votes_on_target = len(target.votes)
+
         if votes_on_target >= game.majority_votes:
-            target.alive = False
-            await ctx.send(f'{target.user.name} was lynched. He was a *{target.faction} {target.role}*.')
-            await target.role.on_lynch(game, target)
+            await game.lynch(target)
+
             game_ended, winning_faction = game.check_endgame()
             if game_ended:
-                # wip: need a game.end() function
-                await ctx.send(f'The game is over. {winning_faction} wins! 🎉')
-                del self.bot.games[ctx.guild.id]
-            # change phase after this.
+                game.end()
+            else:
+                # change phase after this.
+                pass
+
+    # TODO Finish this
+    @commands.command()
+    @game_only()
+    @game_started_only()
+    @player_only()
+    async def unvote(self, ctx: commands.Context, target: discord.Member):
+        game = self.bot.games[ctx.guild.id]
+
+        if not game.has_player(target.user):
+            return await ctx.send(f'Player {target.mention} not found in game.')
+        if not game.get_player(target).has_vote(ctx.author):
+            return await ctx.send(f'You haven\'t voted {target.user.name}')
+
+        game.get_player(target).remove_vote(ctx.author)
+        await ctx.send(f'Unvoted {target.user.name}')
+
+    async def votecount(self, ctx: commands.Context):
+        game = self.bot.games[ctx.guild.id]
+        num_alive = len(game.filter_players(alive=True))
+
+        msg : str = '**Vote Count:\n'
+        msg += ''.join([(f'{pl.user.name} ({len(pl.votes)}) - ' + ', '.join(pl.votes) + '\n') for pl in game.players])
+        msg += f'With {num_alive} alive, it takes {game.majority_votes} to lynch.'
+
+        return await ctx.send(msg)
 
 def setup(bot):
     bot.add_cog(Mafia(bot))

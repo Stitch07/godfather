@@ -5,6 +5,7 @@ import json
 import roles
 from .player import Player
 import math
+import copy
 
 rolesets = json.load(open('rolesets/rolesets.json'))
 
@@ -40,8 +41,8 @@ class Game:
 
     # checks whether the game has ended, returns whether the game has ended and the winning faction
     def check_endgame(self) -> typing.Tuple[bool, str]:
-        num_town = len([*filter(lambda p: p.alive == True and p.faction == 'Town', self.players)])
-        num_maf = len([*filter(lambda p: p.alive == True and p.faction == 'Mafia', self.players)])
+        num_town = len(self.filter_players(faction='Town', alive=True))
+        num_maf = len(self.filter_players(faction='Mafia', alive=True))
         # very primitive endgame check; if mafia and town have equal members, town don't have
         # the majority and cannot lynch mafia. in the future, this method should account for
         # town's potential to nightkill mafia members.
@@ -51,8 +52,69 @@ class Game:
             return True, 'Mafia'
         return False, None
 
-    def has_player(self, user: discord.User):
-        return any(player.user.id == user.id for player in self.players)
+    # Filter players by:
+    # Their Role
+    # Their Faction
+    # Whether they have a vote on someone
+    # Whether someone voted them
+    # By applying a lambda on their votecount
+    # Checking if they are alive
+    def filter_players(self,
+                   role: typing.Optional[str] = None,
+                   faction: typing.Optional[str] = None,
+                   has_vote_on: typing.Optional[discord.Member] = None,
+                   is_voted_by: typing.Optional[discord.Member] = None,
+                   votecount: typing.Optional[typing.Callable] = None,
+                   alive : bool = False):
+        plist = self.players
+
+        if role:
+            plist = [*filter(lambda pl: pl.role.name == role, plist)]
+
+        if faction:
+            plist = [*filter(lambda pl: pl.faction == faction, plist)]
+
+        if has_vote_on:
+            plist = copy.deepcopy(has_vote_on.votes)
+
+        if is_voted_by:
+            plist = [*filter(lambda pl: pl.has_vote(is_voted_by.user), plist)]
+
+        if votecount:
+            plist = [*filter(lambda pl: votecount(len(pl.votes)), plist)]
+
+        if alive:
+            plist = [*filter(lambda pl: pl.alive, plist)]
+
+        return plist
+
+    def get_player(self, user: discord.Member):
+        plist = [*filter(lambda p: p.user.id == user.id, self.players)]
+        return plist[0] if plist else None
+
+    def has_player(self, user: discord.Member):
+        return self.get_player(user) != None
+
+    # lynch a player
+    async def lynch(self, target : Player):
+        async with self.channel.typing():
+            await self.channel.send(f'{target.user.name} was lynched. He was a *{target.faction} {target.role}*.')
+            await target.role.on_lynch(self, target)
+
+        for player in self.players[]:
+            player.votes = []
+
+        target.remove()
+
+    # WIP: End the game
+    # If a winning faction is not provided, game is ended
+    # as if host ended the game without letting it finish
+    def end(self, bot, winning_faction : typing.Optional[str] = None):
+        if winning_faction:
+            async with game.channel.typing():
+                await ctx.send(f'The game is over. {winning_faction} wins! 🎉')
+
+        del bot.games[self.guild.id]
 
     @property
     def has_started(self): # this might be useful
@@ -60,5 +122,4 @@ class Game:
 
     @property
     def majority_votes(self):
-        alive_players = len([*filter(lambda p: p.alive, self.players)])
-        return math.floor(alive_players / 2) + 1 
+        return math.floor(self.filter_players(alive=True) / 2) + 1
