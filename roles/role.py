@@ -1,9 +1,7 @@
-from game import Player
-
 class Role:
-    def __init__(self, name=None, id=None, description=''):
+    def __init__(self, name=None, role_id=None, description=''):
         self.name = name
-        self.id = id
+        self.role_id = role_id
         self.description = description
 
     # str representation of role

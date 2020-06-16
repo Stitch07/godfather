@@ -1,5 +1,6 @@
 import discord
 
+
 class Player:
     def __init__(self, user: discord.Member):
         self.user = user
@@ -29,4 +30,3 @@ class Player:
     def remove(self):
         self.alive = False
         self.votes = []
-

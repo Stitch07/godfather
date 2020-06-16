@@ -1,11 +1,12 @@
-import discord
-from discord.ext import commands
-from game import Game, Player, Phase
-from roles import all_roles
 import json
 import typing
 import random
 import copy
+import discord
+from discord.ext import commands
+from game import Game, Player
+from roles import all_roles
+
 
 def game_only():
     async def predicate(ctx):
@@ -15,6 +16,7 @@ def game_only():
         return True
     return commands.check(predicate)
 
+
 def host_only():
     async def predicate(ctx):
         game = ctx.bot.games[ctx.guild.id]
@@ -23,6 +25,7 @@ def host_only():
             return False
         return True
     return commands.check(predicate)
+
 
 def player_only():
     async def predicate(ctx):
@@ -35,6 +38,7 @@ def player_only():
         return True
     return commands.check(predicate)
 
+
 def game_started_only():
     async def predicate(ctx):
         game = ctx.bot.games[ctx.guild.id]
@@ -43,6 +47,7 @@ def game_started_only():
             return False
         return True
     return commands.check(predicate)
+
 
 class Mafia(commands.Cog):
     def __init__(self, bot):
@@ -70,9 +75,10 @@ class Mafia(commands.Cog):
         rolesets.sort(key=lambda rl: len(rl['roles']), reverse=True)
 
         if len(self.bot.games[ctx.guild.id].players) >= len(rolesets[0].get('roles')):
-            return await ctx.send(f'Maximum amount of players reached')
+            return await ctx.send('Maximum amount of players reached')
         else:
-            self.bot.games[ctx.guild.id].players.append(Player(ctx.message.author))
+            self.bot.games[ctx.guild.id].players.append(
+                Player(ctx.message.author))
             return await ctx.send('✅ Game joined successfully')
 
     @commands.command()
@@ -86,7 +92,8 @@ class Mafia(commands.Cog):
             return await ctx.send('The host cannot leave the game.')
         else:
             players = self.bot.games[ctx.guild.id].players
-            players = [pl for pl in players if not (pl.user.id == ctx.author.id)]
+            players = [pl for pl in players if not (
+                pl.user.id == ctx.author.id)]
             self.bot.games[ctx.guild.id].players = players
             return await ctx.send('✅ Game left successfully')
 
@@ -94,13 +101,13 @@ class Mafia(commands.Cog):
     @game_only()
     async def playerlist(self, ctx: commands.Context):
         return await ctx.send(f'**Players: {len(self.bot.games[ctx.guild.id].players)}**\n'
-                + ('\n'.join([f'{i+1}. {pl.user}' for (i, pl) in
-                enumerate(self.bot.games[ctx.guild.id].players)])))
+                              + ('\n'.join([f'{i+1}. {pl.user}' for (i, pl) in
+                                            enumerate(self.bot.games[ctx.guild.id].players)])))
 
     @commands.command()
     @game_only()
     @host_only()
-    async def startgame(self, ctx: commands.Context, setup: typing.Optional[str] = None):
+    async def startgame(self, ctx: commands.Context, r_setup: typing.Optional[str] = None):
         game = self.bot.games[ctx.guild.id]
 
         if game.has_started:
@@ -108,16 +115,16 @@ class Mafia(commands.Cog):
             return
 
         try:
-            setup = game.find_setup(setup)
-        except Exception as err:
+            found_setup = game.find_setup(r_setup)
+        except Exception as err:  # pylint: disable=broad-except
             return await ctx.send(err)
-        await ctx.send(f'Chose the setup **{setup["name"]}**. Randing roles...')
-        roles = copy.deepcopy(setup['roles'])
+        await ctx.send(f'Chose the setup **{r_setup["name"]}**. Randing roles...')
+        roles = copy.deepcopy(found_setup['roles'])
         # shuffle roles in place and assign the nth (shuffled) role to the nth player
         random.shuffle(roles)
         async with ctx.channel.typing():
-            for n, player in enumerate(game.players):
-                player_role = roles[n]
+            for num, player in enumerate(game.players):
+                player_role = roles[num]
                 # assign role and faction to the player
                 player.role = all_roles.get(player_role['id'])()
                 player.faction = player_role['faction']
@@ -177,13 +184,15 @@ class Mafia(commands.Cog):
         num_alive = len(game.filter_players(alive=True))
         msg = '**Vote Count**:\n'
 
-        for pl in game.players:
-            if pl.votes:
-                msg += f'{pl.user.name} ({len(pl.votes)}) - ' + \
-                    ', '.join([voter.user.name for voter in pl.votes]) + '\n'
+        for player in game.players:
+            if player.votes:
+                msg += f'{player.user.name} ({len(player.votes)}) - ' + \
+                    ', '.join(
+                        [voter.user.name for voter in player.votes]) + '\n'
 
         msg += f'With {num_alive} alive, it takes {game.majority_votes} to lynch.'
         return await ctx.send(msg)
+
 
 def setup(bot):
     bot.add_cog(Mafia(bot))

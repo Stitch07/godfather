@@ -1,9 +1,9 @@
+import ast
 import discord
+from discord.ext import commands
 import roles
 import game
-from discord.ext import commands
-import ast
-from discord.ext import commands
+
 
 def insert_returns(body):
     # insert return stmt if the last expression is a expression statement
@@ -19,6 +19,7 @@ def insert_returns(body):
     # for with blocks, again we insert returns into the body
     if isinstance(body[-1], ast.With):
         insert_returns(body[-1].body)
+
 
 class Misc(commands.Cog):
     def __init__(self, bot):
@@ -59,16 +60,18 @@ class Misc(commands.Cog):
             'ctx': ctx,
             'game': game,
             'roles': roles,
-        '   __import__': __import__
+            '   __import__': __import__
         }
-        exec(compile(parsed, filename="<ast>", mode="exec"), env)
+        exec(compile(parsed, filename="<ast>", mode="exec"),  # pylint: disable=exec-used
+             env)
 
-        result = (await eval(f"{fn_name}()", env))
+        result = (await eval(f"{fn_name}()", env))  # pylint: disable=eval-used
         await ctx.send(f'```python\n{result}```')
 
     @eval.error
     async def eval_error(self, ctx, error):
         await ctx.send(f'❌ **An error occurred**: ```python\n{error}```')
+
 
 def setup(bot):
     bot.add_cog(Misc(bot))

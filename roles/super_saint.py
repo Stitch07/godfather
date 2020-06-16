@@ -1,11 +1,12 @@
-from .role import Role
 import asyncio
+from .role import Role
 
-description = 'You will blow up the last person to lynch you!'
+DESCRIPTION = 'You will blow up the last person to lynch you!'
+
 
 class SuperSaint(Role):
     def __init__(self):
-        super().__init__(name='Super Saint', id='super_saint', description=description)
+        super().__init__(name='Super Saint', role_id='super_saint', description=DESCRIPTION)
 
     async def on_lynch(self, game, player):
         last_voted = player.votes[-1]
@@ -14,4 +15,3 @@ class SuperSaint(Role):
             await game.channel.send('💣 **BOOOOOOOOOOOOOOM!!!**')
             await asyncio.sleep(2)
             await game.channel.send(f'{last_voted.user} hammered the super saint and was blown up! He was a *{last_voted.full_role}*')
-        pass
