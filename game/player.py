@@ -13,6 +13,10 @@ class Player:
     def role_pm(self):
         return f'Hello {self.user}, you are a {self.faction} **{self.role}**. {self.role.description}'
 
+    @property
+    def full_role(self):
+        return f'{self.faction} {self.role}'
+
     # check if player is voted by 'user'
     def has_vote(self, user: discord.User):
         return any(player.user.id == user.id for player in self.votes)

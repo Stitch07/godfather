@@ -18,9 +18,8 @@ class Game:
         self.channel = channel
         self.guild = channel.guild
         self.players = []
-        self.votes = [] # votes of the current day
         self.phase = Phase.PREGAME
-        self.phase_number = 0
+        self.cycle = 0
         self.host_id = None # assigned to the user creating the game
 
     # finds a setup for the current player-size. if no setup is found, raises an Exception
@@ -50,6 +49,20 @@ class Game:
         elif num_town <= num_maf: # town cannot majority lynch the mafia
             return True, 'Mafia'
         return False, None
+
+    async def increment_phase(self):
+        # cycle 0 check
+        if self.cycle == 0 or self.phase == Phase.NIGHT:
+            # go to the next day
+            self.cycle = self.cycle + 1
+            self.phase = Phase.DAY
+            # voting starts
+            alive_players = len([*filter(lambda p: p.alive, self.players)])
+            # TODO: make limits configurable
+            await self.channel.send(f'Day **{self.cycle}** will last 5 minutes. With {alive_players} alive, it takes {self.majority_votes} to lynch.')
+        else:
+            self.phase = Phase.NIGHT
+            await self.channel.send(f'Night **{self.cycle}** will last 5 minutes. Send in those actions quickly!')
 
     def has_player(self, user: discord.User):
         return any(player.user.id == user.id for player in self.players)

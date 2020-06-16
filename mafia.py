@@ -45,7 +45,7 @@ class Mafia(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command()
+    @commands.command(aliases=['create', 'create-game'])
     async def creategame(self, ctx: commands.Context):
         if ctx.guild.id in self.bot.games:
             return await ctx.send('A game of mafia is already running in this server.')
@@ -117,7 +117,7 @@ class Mafia(commands.Cog):
                 # send role PMs; wip: check if the message was successfully sent
                 await player.user.send(player.role_pm)
         await ctx.send('Sent all role PMs!')
-        game.phase = Phase.DAY
+        await game.increment_phase()
 
     @commands.command()
     @game_only()
@@ -142,12 +142,14 @@ class Mafia(commands.Cog):
         votes_on_target = len(target.votes)
         if votes_on_target >= game.majority_votes:
             target.alive = False
-            await ctx.send(f'{target.user.name} was lynched. He was a *{target.faction} {target.role}*.')
+            await ctx.send(f'{target.user.name} was lynched. He was a *{target.full_role}*.')
             await target.role.on_lynch(game, target)
             game_ended, winning_faction = game.check_endgame()
             if game_ended:
                 # wip: need a game.end() function
                 await ctx.send(f'The game is over. {winning_faction} wins! 🎉')
+                rolelist = '\n'.join([f'{n+1}. {player.user} ({player.full_role})' for n, player in enumerate(game.players)])
+                await ctx.send(f'**Rolelist**: ```{rolelist}```')
                 del self.bot.games[ctx.guild.id]
             # change phase after this.
 
