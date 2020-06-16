@@ -75,10 +75,10 @@ class Game:
             plist = [*filter(lambda pl: pl.faction == faction, plist)]
 
         if has_vote_on:
-            plist = copy.deepcopy(has_vote_on.votes)
+            plist = copy.deepcopy(self.get_player(has_vote_on).votes)
 
         if is_voted_by:
-            plist = [*filter(lambda pl: pl.has_vote(is_voted_by.user), plist)]
+            plist = [*filter(lambda pl: pl.has_vote(is_voted_by), plist)]
 
         if votecount:
             plist = [*filter(lambda pl: votecount(len(pl.votes)), plist)]
@@ -101,7 +101,7 @@ class Game:
             await self.channel.send(f'{target.user.name} was lynched. He was a *{target.faction} {target.role}*.')
             await target.role.on_lynch(self, target)
 
-        for player in self.players[]:
+        for player in self.players:
             player.votes = []
 
         target.remove()
@@ -109,10 +109,10 @@ class Game:
     # WIP: End the game
     # If a winning faction is not provided, game is ended
     # as if host ended the game without letting it finish
-    def end(self, bot, winning_faction : typing.Optional[str] = None):
+    async def end(self, bot, winning_faction : typing.Optional[str] = None):
         if winning_faction:
-            async with game.channel.typing():
-                await ctx.send(f'The game is over. {winning_faction} wins! 🎉')
+            async with self.channel.typing():
+                await self.channel.send(f'The game is over. {winning_faction} wins! 🎉')
 
         del bot.games[self.guild.id]
 
@@ -122,4 +122,4 @@ class Game:
 
     @property
     def majority_votes(self):
-        return math.floor(self.filter_players(alive=True) / 2) + 1
+        return math.floor(len(self.filter_players(alive=True)) / 2) + 1

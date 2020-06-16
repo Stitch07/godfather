@@ -93,16 +93,20 @@ class Mafia(commands.Cog):
     @commands.command()
     @game_only()
     async def playerlist(self, ctx: commands.Context):
-        if not self.bot.games[ctx.guild.id].has_started:
-            return await ctx.send(f'**Players: {len(self.bot.games[ctx.guild.id].players)}**\n'
-                    + ('\n'.join([f'{i+1}. {pl.user}' for (i, pl) in
-                    enumerate(self.bot.games[ctx.guild.id].players)])))
+        return await ctx.send(f'**Players: {len(self.bot.games[ctx.guild.id].players)}**\n'
+                + ('\n'.join([f'{i+1}. {pl.user}' for (i, pl) in
+                enumerate(self.bot.games[ctx.guild.id].players)])))
 
     @commands.command()
     @game_only()
     @host_only()
     async def startgame(self, ctx: commands.Context, setup: typing.Optional[str] = None):
         game = self.bot.games[ctx.guild.id]
+
+        if game.has_started:
+            await ctx.send("Game has already started!")
+            return
+
         try:
             setup = game.find_setup(setup)
         except Exception as err:
@@ -128,33 +132,35 @@ class Mafia(commands.Cog):
     @player_only()
     async def vote(self, ctx: commands.Context, target: discord.Member):
         game = self.bot.games[ctx.guild.id]
-        target = game.get_player(target)
 
-        if not game.has_player(target.user):
-            return await ctx.send(f'Player {target.mention} not found in game.')
-        elif not game.get_player(target.user).alive:
+        if not game.has_player(target):
+            return await ctx.send(f'Player {target.name} not found in game.')
+        elif not game.get_player(target).alive:
             return await ctx.send('You can\'t vote a dead player')
-        if target.user == ctx.author:
+        elif game.get_player(target).has_vote(ctx.author):
+            return await ctx.send(f'You have already voted {target.name}')
+
+        if target == ctx.author:
             return await ctx.send('Self-voting is not allowed.')
 
-        game.filter_players(is_voted_by=ctx.author)[0].remove_vote(ctx.author)
+        for voted in game.filter_players(is_voted_by=ctx.author):
+            voted.remove_vote(ctx.author)
 
-        target.votes.append(game.get_player(ctx.author))
-        await ctx.send(f'Voted {target.user.name}')
+        game.get_player(target).votes.append(game.get_player(ctx.author))
+        await ctx.send(f'Voted {target.name}')
 
-        votes_on_target = len(target.votes)
+        votes_on_target = len(game.get_player(target).votes)
 
         if votes_on_target >= game.majority_votes:
-            await game.lynch(target)
+            await game.lynch(game.get_player(target))
 
             game_ended, winning_faction = game.check_endgame()
             if game_ended:
-                game.end()
+                await game.end(self.bot, winning_faction)
             else:
                 # change phase after this.
                 pass
 
-    # TODO Finish this
     @commands.command()
     @game_only()
     @game_started_only()
@@ -170,12 +176,21 @@ class Mafia(commands.Cog):
         game.get_player(target).remove_vote(ctx.author)
         await ctx.send(f'Unvoted {target.user.name}')
 
+    @commands.command()
+    @game_only()
+    @game_started_only()
+    @player_only()
     async def votecount(self, ctx: commands.Context):
         game = self.bot.games[ctx.guild.id]
         num_alive = len(game.filter_players(alive=True))
 
-        msg : str = '**Vote Count:\n'
-        msg += ''.join([(f'{pl.user.name} ({len(pl.votes)}) - ' + ', '.join(pl.votes) + '\n') for pl in game.players])
+        msg : str = '**Vote Count**:\n'
+
+        for pl in game.players:
+            if pl.votes:
+                msg += f'{pl.user.name} ({len(pl.votes)}) - ' + \
+                    ', '.join([voter.user.name for voter in pl.votes]) + '\n'
+
         msg += f'With {num_alive} alive, it takes {game.majority_votes} to lynch.'
 
         return await ctx.send(msg)

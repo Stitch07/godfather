@@ -4,7 +4,7 @@ import json
 
 config = json.load(open('config.json'))
 
-bot = commands.Bot(command_prefix='=')
+bot = commands.Bot(command_prefix=config.get('prefix'))
 
 if __name__ == '__main__':
     for extension in ['misc', 'mafia']:
