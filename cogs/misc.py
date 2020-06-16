@@ -29,6 +29,7 @@ class Misc(commands.Cog):
     async def on_ready(self):
         # initialize games map
         self.bot.games = {}
+        self.bot.get_cog('EventLoop').event_loop.start()
         print('Ready!')
 
     @commands.command()

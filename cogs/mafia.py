@@ -118,7 +118,7 @@ class Mafia(commands.Cog):
             found_setup = game.find_setup(r_setup)
         except Exception as err:  # pylint: disable=broad-except
             return await ctx.send(err)
-        await ctx.send(f'Chose the setup **{r_setup["name"]}**. Randing roles...')
+        await ctx.send(f'Chose the setup **{found_setup["name"]}**. Randing roles...')
         roles = copy.deepcopy(found_setup['roles'])
         # shuffle roles in place and assign the nth (shuffled) role to the nth player
         random.shuffle(roles)

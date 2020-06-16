@@ -3,6 +3,7 @@ import typing
 import json
 import math
 import copy
+import time
 import discord
 from .player import Player
 
@@ -23,6 +24,8 @@ class Game:
         self.phase = Phase.PREGAME
         self.cycle = 0
         self.host_id = None  # assigned to the user creating the game
+        # time at which the current phase ends
+        self.phase_end_at: time.struct_time = None
 
     # finds a setup for the current player-size. if no setup is found, raises an Exception
     def find_setup(self, setup: str = None):
@@ -69,6 +72,7 @@ class Game:
         else:
             self.phase = Phase.NIGHT
             await self.channel.send(f'Night **{self.cycle}** will last 5 minutes. Send in those actions quickly!')
+        self.phase_end_at = time.localtime(time.time() + 30)  # 5 minutes
 
     # Filter players by:
     # Their Role
