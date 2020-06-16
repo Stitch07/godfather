@@ -1,4 +1,5 @@
 import discord
+import typing
 
 
 class Player:
@@ -7,7 +8,7 @@ class Player:
         self.role = None
         self.faction = None
         self.alive = True
-        self.votes = []
+        self.votes: typing.List[Player] = []
 
     # generates the role's PM
     @property

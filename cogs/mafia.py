@@ -66,35 +66,35 @@ class Mafia(commands.Cog):
     @commands.command()
     @game_only()
     async def join(self, ctx: commands.Context):
-        if self.bot.games[ctx.guild.id].has_started:
+        game = self.bot.games[ctx.guild.id]
+
+        if game.has_started:
             return await ctx.send('Signup phase for the game has ended')
-        elif self.bot.games[ctx.guild.id].has_player(ctx.author):
+        elif game.has_player(ctx.author):
             return await ctx.send('You have already joined this game')
 
         rolesets = json.load(open('rolesets/rolesets.json'))
         rolesets.sort(key=lambda rl: len(rl['roles']), reverse=True)
 
-        if len(self.bot.games[ctx.guild.id].players) >= len(rolesets[0].get('roles')):
+        if len(game.players) >= len(rolesets[0].get('roles')):
             return await ctx.send('Maximum amount of players reached')
         else:
-            self.bot.games[ctx.guild.id].players.append(
-                Player(ctx.message.author))
+            game.players.append(Player(ctx.message.author))
             return await ctx.send('✅ Game joined successfully')
 
     @commands.command()
     @game_only()
     async def leave(self, ctx: commands.Context):
-        if self.bot.games[ctx.guild.id].has_started:
+        game = self.bot.games[ctx.guild.id]
+
+        if game.has_started:
             return await ctx.send('Cannot leave game after signup phase has ended')
-        elif not self.bot.games[ctx.guild.id].has_player(ctx.author):
+        elif not game.has_player(ctx.author):
             return await ctx.send('You have not joined this game')
-        elif self.bot.games[ctx.guild.id].host_id == ctx.author.id:
+        elif game.host_id == ctx.author.id:
             return await ctx.send('The host cannot leave the game.')
         else:
-            players = self.bot.games[ctx.guild.id].players
-            players = [pl for pl in players if not (
-                pl.user.id == ctx.author.id)]
-            self.bot.games[ctx.guild.id].players = players
+            game.players.remove(game.get_player(ctx.author))
             return await ctx.send('✅ Game left successfully')
 
     @commands.command()
@@ -118,7 +118,7 @@ class Mafia(commands.Cog):
             found_setup = game.find_setup(r_setup)
         except Exception as err:  # pylint: disable=broad-except
             return await ctx.send(err)
-        await ctx.send(f'Chose the setup **{r_setup["name"]}**. Randing roles...')
+        await ctx.send(f'Chose the setup **{found_setup["name"]}**. Randing roles...')
         roles = copy.deepcopy(found_setup['roles'])
         # shuffle roles in place and assign the nth (shuffled) role to the nth player
         random.shuffle(roles)
