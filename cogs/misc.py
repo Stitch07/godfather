@@ -1,8 +1,8 @@
 import ast
 import discord
 from discord.ext import commands
-import roles
-import game
+import roles  # pylint: disable=import-error
+import game  # pylint: disable=import-error
 
 
 def insert_returns(body):

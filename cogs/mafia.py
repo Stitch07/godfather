@@ -4,8 +4,8 @@ import random
 import copy
 import discord
 from discord.ext import commands
-from game import Game, Player
-from roles import all_roles
+from game import Game, Player  # pylint: disable=import-error
+from roles import all_roles  # pylint: disable=import-error
 
 
 def game_only():
