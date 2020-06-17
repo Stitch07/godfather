@@ -14,7 +14,6 @@ class SingleAction(Role):
         can_do_nightaction = self.can_do_action(
             self, ctx, args) if hasattr(self, 'can_do_action') else True
         if can_do_nightaction:
-            print(1)
             try:
                 target = await conv.convert(ctx, ' '.join(args))
             except commands.BadArgument:
@@ -34,3 +33,6 @@ class SingleAction(Role):
                 'priority': self.action_priority
             })
             return await ctx.send(f'You are {self.action_gerund} {target} tonight.')
+
+    async def after_action(self, player, success, target):
+        pass

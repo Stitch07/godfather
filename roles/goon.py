@@ -14,3 +14,8 @@ class Goon(SingleAction):
     def run_action(self, night_record, target):
         pl_record = night_record[target.user.id]
         pl_record.update({'nightkill': True})
+
+    async def after_action(self, player, success, target):
+        if not success:
+            await player.user.send('Your target was too strong to kill!')
+        await target.user.send('You were shot by a Goon. You have died!')

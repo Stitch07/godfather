@@ -36,5 +36,26 @@
                 "faction": "Mafia"
             }
         ]
+    },
+    {
+        "name": "vigtest",
+        "roles": [
+            {
+                "id": "vanilla",
+                "faction": "Town"
+            },
+            {
+                "id": "vanilla",
+                "faction": "Town"
+            },
+            {
+                "id": "vanilla",
+                "faction": "Mafia"
+            },
+            {
+                "id": "vig",
+                "faction": "Town"
+            }
+        ]
     }
 ]

@@ -77,6 +77,7 @@ class Game:
                 if game_ended:
                     return await self.end(bot, winning_faction)
             # voting starts
+            self.night_actions = []
             self.phase = Phase.DAY
             alive_players = len(self.filter_players(alive=True))
             # TODO: make limits configurable
@@ -108,6 +109,15 @@ class Game:
                 nked_pl = self.filter_players(pl_id=pl_id)[0]
                 nked_pl.remove()  # TODO: check for bulletproof here?
                 dead_players.append(nked_pl)
+        # after action clean-up
+        for action in self.night_actions:
+            # checking only kills rn
+            if action['action'] == 'shoot':
+                success = night_record.get(action.get(
+                    'target').user.id).get('nightkill')
+                await action['player'].role.after_action(
+                    action['player'], success, action['target'])
+
         announcement = ''
         for player in dead_players:
             announcement = announcement + \
