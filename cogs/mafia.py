@@ -131,7 +131,7 @@ class Mafia(commands.Cog):
                 # send role PMs; wip: check if the message was successfully sent
                 await player.user.send(player.role_pm)
         await ctx.send('Sent all role PMs!')
-        await game.increment_phase()
+        await game.increment_phase(self.bot)
 
     @commands.command()
     @game_only()
@@ -161,8 +161,8 @@ class Mafia(commands.Cog):
             if game_ended:
                 await game.end(self.bot, winning_faction)
             else:
+                await game.increment_phase(self.bot)
                 # change phase after this.
-                pass
 
     @commands.command()
     @game_only()

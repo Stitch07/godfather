@@ -15,5 +15,26 @@
                 "faction": "Town"
             }
         ]
+    },
+    {
+        "name": "fake4",
+        "roles": [
+            {
+                "id": "vanilla",
+                "faction": "Town"
+            },
+            {
+                "id": "vanilla",
+                "faction": "Town"
+            },
+            {
+                "id": "vanilla",
+                "faction": "Town"
+            },
+            {
+                "id": "goon",
+                "faction": "Mafia"
+            }
+        ]
     }
 ]

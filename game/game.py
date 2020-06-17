@@ -1,4 +1,5 @@
 from enum import IntEnum, auto
+from collections import defaultdict
 import typing
 import json
 import math
@@ -14,6 +15,7 @@ class Phase(IntEnum):
     PREGAME = auto()
     DAY = auto()
     NIGHT = auto()
+    STANDBY = auto()
 
 
 class Game:
@@ -26,6 +28,7 @@ class Game:
         self.host_id = None  # assigned to the user creating the game
         # time at which the current phase ends
         self.phase_end_at: time.struct_time = None
+        self.night_actions = []
 
     # finds a setup for the current player-size. if no setup is found, raises an Exception
     def find_setup(self, setup: str = None):
@@ -59,20 +62,57 @@ class Game:
             return True, 'Mafia'
         return False, None
 
-    async def increment_phase(self):
+    async def increment_phase(self, bot):
         # cycle 0 check
         if self.cycle == 0 or self.phase == Phase.NIGHT:
             # go to the next day
             self.cycle = self.cycle + 1
             self.phase = Phase.DAY
+            # resolve night actions
+            self.phase = Phase.STANDBY  # so the event loop doesn't mess things up here
+            announcement = await self.resolve_night_actions()
+            if announcement != '':
+                await self.channel.send(announcement)
+                game_ended, winning_faction = self.check_endgame()
+                if game_ended:
+                    return await self.end(bot, winning_faction)
             # voting starts
-            alive_players = len([*filter(lambda p: p.alive, self.players)])
+            self.phase = Phase.DAY
+            alive_players = len(self.filter_players(alive=True))
             # TODO: make limits configurable
             await self.channel.send(f'Day **{self.cycle}** will last 5 minutes. With {alive_players} alive, it takes {self.majority_votes} to lynch.')
         else:
             self.phase = Phase.NIGHT
             await self.channel.send(f'Night **{self.cycle}** will last 5 minutes. Send in those actions quickly!')
-        self.phase_end_at = time.localtime(time.time() + 30)  # 5 minutes
+            for player in self.filter_players(alive=True):
+                if hasattr(player.role, 'on_night'):
+                    await player.role.on_night(bot, player, self)
+        self.phase_end_at = time.localtime(time.time() + 120)  # 5 minutes
+
+    async def resolve_night_actions(self):
+        # sort them into ascending priorities. priorities determine if the action can be reversed.
+        self.night_actions.sort(key=lambda na: na['priority'])
+
+        def def_record():
+            return {
+                'nightkill': False
+            }
+        # night record is a map of player_ids to actions performed on them
+        night_record = defaultdict(def_record)
+        for action in self.night_actions:
+            action['player'].role.run_action(night_record, action['target'])
+        # now figure out which players have died
+        dead_players = []
+        for pl_id, record in night_record.items():
+            if record['nightkill']:
+                nked_pl = self.filter_players(pl_id=pl_id)[0]
+                nked_pl.remove()  # TODO: check for bulletproof here?
+                dead_players.append(nked_pl)
+        announcement = ''
+        for player in dead_players:
+            announcement = announcement + \
+                f'{player.user.name} died last night. They were a {player.full_role}\n'
+        return announcement
 
     # Filter players by:
     # Their Role
@@ -81,12 +121,14 @@ class Game:
     # Whether someone voted them
     # By applying a lambda on their votecount
     # Checking if they are alive
+
     def filter_players(self,
                        role: typing.Optional[str] = None,
                        faction: typing.Optional[str] = None,
                        has_vote_on: typing.Optional[discord.Member] = None,
                        is_voted_by: typing.Optional[discord.Member] = None,
                        votecount: typing.Optional[typing.Callable] = None,
+                       pl_id: typing.Optional[int] = None,
                        alive: bool = False):
         plist = self.players
 
@@ -102,6 +144,8 @@ class Game:
             plist = [*filter(lambda pl: votecount(len(pl.votes)), plist)]
         if alive:
             plist = [*filter(lambda pl: pl.alive, plist)]
+        if pl_id:
+            plist = [*filter(lambda pl: pl.user.id == pl_id, plist)]
 
         return plist
 
