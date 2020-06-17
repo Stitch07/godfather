@@ -43,18 +43,14 @@ class Misc(commands.Cog):
         if hasattr(ctx.command, 'on_error'):
             return
         if isinstance(error, commands.CommandNotFound):
-            print(60)
             if not isinstance(ctx.channel, discord.DMChannel):
-                print(1)
                 return
             command, * \
                 args = remove_prefix(ctx.message.content,
                                      ctx.prefix).split(' ')
-            print(command, args)
             games = [
                 *filter(lambda g: g.has_player(ctx.author), ctx.bot.games.values())]
             if len(games) == 0:
-                print(2)
                 return
             pl_game = games[0]
             player = pl_game.get_player(ctx.author)
