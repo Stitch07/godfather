@@ -33,7 +33,7 @@ class Game:
     # finds a setup for the current player-size. if no setup is found, raises an Exception
     def find_setup(self, setup: str = None):
         num_players = len(self.players)
-        if not setup is None:
+        if setup:
             found_setup = [
                 *filter(lambda rs: rs['name'] == setup.lower(), rolesets)]
             if len(found_setup) == 0:
@@ -49,8 +49,10 @@ class Game:
             raise Exception('No rolelists found.')
         return possibles.pop(0)
 
-    # checks whether the game has ended, returns whether the game has ended and the winning faction
-    def check_endgame(self) -> typing.Tuple[bool, typing.List[str]]:
+
+<< << << < HEAD
+   # checks whether the game has ended, returns whether the game has ended and the winning faction
+   def check_endgame(self) -> typing.Tuple[bool, typing.List[str]]:
         winning_faction = None
         for player in self.players:
             win_check = player.faction.has_won(self)
@@ -59,8 +61,23 @@ class Game:
         if winning_faction:
             return (True, winning_faction)
         return (False, None)
+== == == =
+   # returns whether the game has ended and the winning faction
+   def check_endgame(self) -> typing.Tuple[bool, str]:
+        num_town = len(self.filter_players(faction='Town', alive=True))
+        num_maf = len(self.filter_players(faction='Mafia', alive=True))
+        # very primitive endgame check; if mafia and town have equal members,
+        # town don't have the majority and cannot lynch mafia.
+        # in the future, this method should account for
+        # town's potential to nightkill mafia members.
+        if num_maf == 0:  # all mafia are killed, town wins
+            return True, 'Town'
+        elif num_town <= num_maf:  # town cannot majority lynch the mafia
+            return True, 'Mafia'
+        return False, None
+>>>>>> > a6eb3aed1194c4141e24f90d120d1b30ed5b3b31
 
-    async def increment_phase(self, bot):
+   async def increment_phase(self, bot):
         # cycle 0 check
         if self.cycle == 0 or self.phase == Phase.NIGHT:
             # go to the next day
@@ -125,18 +142,22 @@ class Game:
     # Filter players by:
     # Their Role
     # Their Faction
+    # Their Night Action
     # Whether they have a vote on someone
     # Whether someone voted them
     # By applying a lambda on their votecount
+    # By their Discord ID
+    # Checking if they have a Night Action
     # Checking if they are alive
-
     def filter_players(self,
                        role: typing.Optional[str] = None,
                        faction: typing.Optional[str] = None,
+                       action: typing.Optional[str] = None,
                        has_vote_on: typing.Optional[discord.Member] = None,
                        is_voted_by: typing.Optional[discord.Member] = None,
                        votecount: typing.Optional[typing.Callable] = None,
                        pl_id: typing.Optional[int] = None,
+                       action_only: bool = False,
                        alive: bool = False):
         plist = self.players
 
@@ -144,12 +165,17 @@ class Game:
             plist = [*filter(lambda pl: pl.role.name == role, plist)]
         if faction:
             plist = [*filter(lambda pl: pl.faction.id == faction, plist)]
+        if action:
+            plist = [*filter(lambda pl: pl.role.action == action
+                             if hasattr(pl.role, 'action') else False)]
         if has_vote_on:
             plist = copy.deepcopy(self.get_player(has_vote_on).votes)
         if is_voted_by:
             plist = [*filter(lambda pl: pl.has_vote(is_voted_by), plist)]
         if votecount:
             plist = [*filter(lambda pl: votecount(len(pl.votes)), plist)]
+        if action_only:
+            plist = [*filter(lambda pl: hasattr(pl.role, 'action'), plist)]
         if alive:
             plist = [*filter(lambda pl: pl.alive, plist)]
         if pl_id:

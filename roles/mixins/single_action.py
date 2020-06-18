@@ -41,7 +41,10 @@ class SingleAction(Role):
                 'target': target_pl,
                 'priority': self.action_priority
             })
-            return await ctx.send(f'You are {self.action_gerund} {target} tonight.')
+            await ctx.send(f'You are {self.action_gerund} {target} tonight.')
+
+            if len(game.filter_players(action_only=True)) == len(game.night_actions):
+                await game.increment_phase(ctx.bot)
 
     async def after_action(self, player, success, target):
         pass
