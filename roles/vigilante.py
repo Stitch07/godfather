@@ -38,7 +38,7 @@ class Vigilante(SingleAction):
         pl_record.update({'nightkill': True})
 
     async def after_action(self, player, success, target):
-        if success and target.faction == 'Town':
+        if success and target.faction.id == 'town':
             self.guilty = True
         if not success:
             await player.user.send('Your target was too strong to kill!')

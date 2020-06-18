@@ -50,17 +50,15 @@ class Game:
         return possibles.pop(0)
 
     # checks whether the game has ended, returns whether the game has ended and the winning faction
-    def check_endgame(self) -> typing.Tuple[bool, str]:
-        num_town = len(self.filter_players(faction='Town', alive=True))
-        num_maf = len(self.filter_players(faction='Mafia', alive=True))
-        # very primitive endgame check; if mafia and town have equal members, town don't have
-        # the majority and cannot lynch mafia. in the future, this method should account for
-        # town's potential to nightkill mafia members.
-        if num_maf == 0:  # all mafia are killed, town wins
-            return True, 'Town'
-        elif num_town <= num_maf:  # town cannot majority lynch the mafia
-            return True, 'Mafia'
-        return False, None
+    def check_endgame(self) -> typing.Tuple[bool, typing.List[str]]:
+        winning_faction = None
+        for player in self.players:
+            win_check = player.faction.has_won(self)
+            if win_check:
+                winning_faction = player.faction.name
+        if winning_faction:
+            return (True, winning_faction)
+        return (False, None)
 
     async def increment_phase(self, bot):
         # cycle 0 check
@@ -145,7 +143,7 @@ class Game:
         if role:
             plist = [*filter(lambda pl: pl.role.name == role, plist)]
         if faction:
-            plist = [*filter(lambda pl: pl.faction == faction, plist)]
+            plist = [*filter(lambda pl: pl.faction.id == faction, plist)]
         if has_vote_on:
             plist = copy.deepcopy(self.get_player(has_vote_on).votes)
         if is_voted_by:
@@ -169,7 +167,7 @@ class Game:
     # lynch a player
     async def lynch(self, target: Player):
         async with self.channel.typing():
-            await self.channel.send(f'{target.user.name} was lynched. He was a *{target.faction} {target.role}*.')
+            await self.channel.send(f'{target.user.name} was lynched. He was a *{target.full_role}*.')
             await target.role.on_lynch(self, target)
 
         for player in self.players:

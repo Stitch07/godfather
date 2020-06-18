@@ -4,6 +4,7 @@ import random
 import copy
 import discord
 from discord.ext import commands
+from factions import factions
 from game import Game, Player  # pylint: disable=import-error
 from roles import all_roles  # pylint: disable=import-error
 
@@ -111,7 +112,7 @@ class Mafia(commands.Cog):
                           for (i, pl) in enumerate(game.players)])
 
         return await ctx.send(msg)
-   
+
     @commands.command()
     @game_only()
     @game_started_only()
@@ -150,9 +151,10 @@ class Mafia(commands.Cog):
         async with ctx.channel.typing():
             for num, player in enumerate(game.players):
                 player_role = roles[num]
+                print(player_role)
                 # assign role and faction to the player
                 player.role = all_roles.get(player_role['id'])()
-                player.faction = player_role['faction']
+                player.faction = factions.get(player_role['faction'])()
                 # send role PMs
                 try:
                     await player.user.send(player.role_pm)

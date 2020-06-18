@@ -13,9 +13,10 @@ class Player:
     # generates the role's PM
     @property
     def role_pm(self):
-        return f'Hello {self.user}, you are a **{self.full_role}**. {self.role.description}'
+        return (f'Hello {self.user}, you are a **{self.full_role}**. {self.role.description}'
+                f'\n\nWin Condition: {self.faction.win_con}')
 
-    @property
+    @ property
     def full_role(self):
         return f'{self.faction} {self.role}'
 

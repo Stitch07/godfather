@@ -4,15 +4,15 @@
         "roles": [
             {
                 "id": "vanilla",
-                "faction": "Town"
+                "faction": "town"
             },
             {
-                "id": "vanilla",
-                "faction": "Mafia"
+                "id": "goon",
+                "faction": "mafia"
             },
             {
                 "id": "super_saint",
-                "faction": "Town"
+                "faction": "town"
             }
         ]
     },
@@ -21,15 +21,15 @@
         "roles": [
             {
                 "id": "vanilla",
-                "faction": "Town"
+                "faction": "town"
             },
             {
                 "id": "vanilla",
-                "faction": "Town"
+                "faction": "town"
             },
             {
                 "id": "vanilla",
-                "faction": "Town"
+                "faction": "town"
             },
             {
                 "id": "goon",
