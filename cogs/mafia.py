@@ -56,12 +56,15 @@ class Mafia(commands.Cog):
     @commands.command(aliases=['create', 'create-game'])
     async def creategame(self, ctx: commands.Context):
         if ctx.guild.id in self.bot.games:
-            return await ctx.send('A game of mafia is already running in this server.')
+            return await ctx.send('A game of mafia is already running '
+                                  'in this server.')
         new_game = Game(ctx.channel)
         new_game.host_id = ctx.message.author.id
         new_game.players.append(Player(ctx.author))
         self.bot.games[ctx.guild.id] = new_game
-        return await ctx.send(f'Started a game of mafia in {ctx.message.channel.mention}, hosted by **{ctx.message.author}**')
+        return await ctx.send('Started a game of mafia in '
+                              f'{ctx.message.channel.mention}, '
+                              f'hosted by **{ctx.message.author}**')
 
     @commands.command()
     @game_only()
@@ -88,7 +91,8 @@ class Mafia(commands.Cog):
         game = self.bot.games[ctx.guild.id]
 
         if game.has_started:
-            return await ctx.send('Cannot leave game after signup phase has ended')
+            return await ctx.send('Cannot leave game after '
+                                  'signup phase has ended')
         elif not game.has_player(ctx.author):
             return await ctx.send('You have not joined this game')
         elif game.host_id == ctx.author.id:
@@ -100,10 +104,14 @@ class Mafia(commands.Cog):
     @commands.command()
     @game_only()
     async def playerlist(self, ctx: commands.Context):
-        return await ctx.send(f'**Players: {len(self.bot.games[ctx.guild.id].players)}**\n'
-                              + ('\n'.join([f'{i+1}. {pl.user}' for (i, pl) in
-                                            enumerate(self.bot.games[ctx.guild.id].players)])))
+        game = self.bot.games[ctx.guild.id]
+        msg = f'**Players: {len(game.players)}**\n'
 
+        msg += '\n'.join([f'{i+1}. {pl.user}'
+                          for (i, pl) in enumerate(game.players)])
+
+        return await ctx.send(msg)
+   
     @commands.command()
     @game_only()
     @game_started_only()
@@ -119,7 +127,8 @@ class Mafia(commands.Cog):
     @commands.command(aliases=['start'])
     @host_only()
     @game_only()
-    async def startgame(self, ctx: commands.Context, r_setup: typing.Optional[str] = None):
+    async def startgame(self, ctx: commands.Context,
+                        r_setup: typing.Optional[str] = None):
         game = self.bot.games[ctx.guild.id]
 
         if game.has_started:
@@ -130,9 +139,11 @@ class Mafia(commands.Cog):
             found_setup = game.find_setup(r_setup)
         except Exception as err:  # pylint: disable=broad-except
             return await ctx.send(err)
-        await ctx.send(f'Chose the setup **{found_setup["name"]}**. Randing roles...')
+        await ctx.send(f'Chose the setup **{found_setup["name"]}**. '
+                       'Randing roles...')
         roles = copy.deepcopy(found_setup['roles'])
-        # shuffle roles in place and assign the nth (shuffled) role to the nth player
+        # shuffle roles in place
+        # and assign the nth (shuffled) role to the nth player
         random.shuffle(roles)
         # people the bot couldn't dm
         no_dms = []
