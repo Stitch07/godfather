@@ -14,11 +14,20 @@ class SingleAction(Role):
         can_do_nightaction = self.can_do_action(
             self, ctx, args) if hasattr(self, 'can_do_action') else True
         if can_do_nightaction:
-            try:
-                target = await conv.convert(ctx, ' '.join(args))
-            except commands.BadArgument:
-                return await ctx.send('invalid input')
-            target_pl = game.get_player(target)
+            args = ' '.join(args)
+            if args.isdigit():
+                num = int(args)
+                if num > len(game.players):
+                    return await ctx.send(f'There are only {len(game.players)} playing.')
+                target_pl = game.players[num - 1]
+                target = target_pl.user
+            else:
+                try:
+                    target = await conv.convert(ctx, args)
+                    target_pl = game.get_player(target)
+                except commands.BadArgument:
+                    return await ctx.send('invalid input')
+
             if target_pl is None or not target_pl.alive:
                 return await ctx.send('Invalid target')
             if target.id == player.user.id and not self.can_self_target:

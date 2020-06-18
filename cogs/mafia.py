@@ -116,7 +116,7 @@ class Mafia(commands.Cog):
         except discord.Forbidden:
             await ctx.send('Cannot send you your role PM. Make sure your DMs are enabled!')
 
-    @commands.command()
+    @commands.command(aliases=['start'])
     @host_only()
     @game_only()
     async def startgame(self, ctx: commands.Context, r_setup: typing.Optional[str] = None):

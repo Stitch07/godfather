@@ -159,7 +159,7 @@ class Game:
 
         return plist
 
-    def get_player(self, user: discord.Member):
+    def get_player(self, user):
         plist = [*filter(lambda p: p.user.id == user.id, self.players)]
         return plist[0] if plist else None
 
