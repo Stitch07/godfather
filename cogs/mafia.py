@@ -105,6 +105,17 @@ class Mafia(commands.Cog):
                                             enumerate(self.bot.games[ctx.guild.id].players)])))
 
     @commands.command()
+    @game_only()
+    @game_started_only()
+    async def rolepm(self, ctx: commands.Context):
+        game = self.bot.games[ctx.guild.id]
+        player = game.get_player(ctx.author)
+        try:
+            await player.user.send(player.role_pm)
+        except discord.Forbidden:
+            await ctx.send('Cannot send you your role PM. Make sure your DMs are enabled!')
+
+    @commands.command()
     @host_only()
     @game_only()
     async def startgame(self, ctx: commands.Context, r_setup: typing.Optional[str] = None):
@@ -122,15 +133,23 @@ class Mafia(commands.Cog):
         roles = copy.deepcopy(found_setup['roles'])
         # shuffle roles in place and assign the nth (shuffled) role to the nth player
         random.shuffle(roles)
+        # people the bot couldn't dm
+        no_dms = []
         async with ctx.channel.typing():
             for num, player in enumerate(game.players):
                 player_role = roles[num]
                 # assign role and faction to the player
                 player.role = all_roles.get(player_role['id'])()
                 player.faction = player_role['faction']
-                # send role PMs; wip: check if the message was successfully sent
-                await player.user.send(player.role_pm)
+                # send role PMs
+                try:
+                    await player.user.send(player.role_pm)
+                except discord.Forbidden:
+                    no_dms.append(player.user)
         await ctx.send('Sent all role PMs!')
+        if len(no_dms) > 0:
+            no_dms = [*map(lambda usr: usr.name, no_dms)]
+            await ctx.send(f"I couldn't DM {', '.join(no_dms)}. Use the {ctx.prefix}rolepm command to receive your PM.")
         await game.increment_phase(self.bot)
 
     @commands.command()
