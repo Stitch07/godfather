@@ -33,7 +33,7 @@
             },
             {
                 "id": "goon",
-                "faction": "Mafia"
+                "faction": "mafia"
             }
         ]
     },
@@ -42,19 +42,19 @@
         "roles": [
             {
                 "id": "vanilla",
-                "faction": "Town"
+                "faction": "town"
+            },
+            {
+                "id": "doctor",
+                "faction": "town"
             },
             {
                 "id": "vanilla",
-                "faction": "Town"
-            },
-            {
-                "id": "vanilla",
-                "faction": "Mafia"
+                "faction": "mafia"
             },
             {
                 "id": "vig",
-                "faction": "Town"
+                "faction": "town"
             }
         ]
     }

@@ -32,10 +32,10 @@ class SingleAction(Role):
                 return await ctx.send('Invalid target')
             if target.id == player.user.id and not self.can_self_target:
                 return await ctx.send(f'As a {self.name}, you cannot self target.')
-            for action in game.night_actions:
+            for action in game.night_actions.actions:
                 if action['player'].user.id == player.user.id:
-                    game.night_actions.remove(action)
-            game.night_actions.append({
+                    game.night_actions.actions.remove(action)
+            game.night_actions.add_action({
                 'action': self.action,
                 'player': player,
                 'target': target_pl,
@@ -43,8 +43,8 @@ class SingleAction(Role):
             })
             await ctx.send(f'You are {self.action_gerund} {target} tonight.')
 
-            if len(game.filter_players(action_only=True)) == len(game.night_actions):
+            if len(game.filter_players(action_only=True)) == len(game.night_actions.actions):
                 await game.increment_phase(ctx.bot)
 
-    async def after_action(self, player, success, target):
+    async def after_action(self, player, target, night_record):
         pass

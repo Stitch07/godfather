@@ -7,6 +7,7 @@ import copy
 import time
 import discord
 from .player import Player
+from .night_actions import NightActions
 
 rolesets = json.load(open('rolesets/rolesets.json'))
 
@@ -28,7 +29,7 @@ class Game:
         self.host_id = None  # assigned to the user creating the game
         # time at which the current phase ends
         self.phase_end_at: time.struct_time = None
-        self.night_actions = []
+        self.night_actions = NightActions(self)
 
     # finds a setup for the current player-size. if no setup is found, raises an Exception
     def find_setup(self, setup: str = None):
@@ -49,10 +50,8 @@ class Game:
             raise Exception('No rolelists found.')
         return possibles.pop(0)
 
-
-<< << << < HEAD
-   # checks whether the game has ended, returns whether the game has ended and the winning faction
-   def check_endgame(self) -> typing.Tuple[bool, typing.List[str]]:
+    # checks whether the game has ended, returns whether the game has ended and the winning faction
+    def check_endgame(self):
         winning_faction = None
         for player in self.players:
             win_check = player.faction.has_won(self)
@@ -61,23 +60,8 @@ class Game:
         if winning_faction:
             return (True, winning_faction)
         return (False, None)
-== == == =
-   # returns whether the game has ended and the winning faction
-   def check_endgame(self) -> typing.Tuple[bool, str]:
-        num_town = len(self.filter_players(faction='Town', alive=True))
-        num_maf = len(self.filter_players(faction='Mafia', alive=True))
-        # very primitive endgame check; if mafia and town have equal members,
-        # town don't have the majority and cannot lynch mafia.
-        # in the future, this method should account for
-        # town's potential to nightkill mafia members.
-        if num_maf == 0:  # all mafia are killed, town wins
-            return True, 'Town'
-        elif num_town <= num_maf:  # town cannot majority lynch the mafia
-            return True, 'Mafia'
-        return False, None
->>>>>> > a6eb3aed1194c4141e24f90d120d1b30ed5b3b31
 
-   async def increment_phase(self, bot):
+    async def increment_phase(self, bot):
         # cycle 0 check
         if self.cycle == 0 or self.phase == Phase.NIGHT:
             # go to the next day
@@ -85,14 +69,14 @@ class Game:
             self.phase = Phase.DAY
             # resolve night actions
             self.phase = Phase.STANDBY  # so the event loop doesn't mess things up here
-            announcement = await self.resolve_night_actions()
+            announcement = await self.night_actions.resolve()
             if announcement != '':
                 await self.channel.send(announcement)
                 game_ended, winning_faction = self.check_endgame()
                 if game_ended:
                     return await self.end(bot, winning_faction)
             # voting starts
-            self.night_actions = []
+            self.night_actions.reset()
             self.phase = Phase.DAY
             alive_players = len(self.filter_players(alive=True))
             # TODO: make limits configurable
@@ -104,40 +88,6 @@ class Game:
                 if hasattr(player.role, 'on_night'):
                     await player.role.on_night(bot, player, self)
         self.phase_end_at = time.localtime(time.time() + 120)  # 5 minutes
-
-    async def resolve_night_actions(self):
-        # sort them into ascending priorities. priorities determine if the action can be reversed.
-        self.night_actions.sort(key=lambda na: na['priority'])
-
-        def def_record():
-            return {
-                'nightkill': False
-            }
-        # night record is a map of player_ids to actions performed on them
-        night_record = defaultdict(def_record)
-        for action in self.night_actions:
-            action['player'].role.run_action(night_record, action['target'])
-        # now figure out which players have died
-        dead_players = []
-        for pl_id, record in night_record.items():
-            if record['nightkill']:
-                nked_pl = self.filter_players(pl_id=pl_id)[0]
-                nked_pl.remove()  # TODO: check for bulletproof here?
-                dead_players.append(nked_pl)
-        # after action clean-up
-        for action in self.night_actions:
-            # checking only kills rn
-            if action['action'] == 'shoot':
-                success = night_record.get(action.get(
-                    'target').user.id).get('nightkill')
-                await action['player'].role.after_action(
-                    action['player'], success, action['target'])
-
-        announcement = ''
-        for player in dead_players:
-            announcement = announcement + \
-                f'{player.user.name} died last night. They were a {player.full_role}\n'
-        return announcement
 
     # Filter players by:
     # Their Role
