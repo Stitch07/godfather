@@ -16,6 +16,14 @@ class Player:
         return (f'Hello {self.user}, you are a **{self.full_role}**. {self.role.description}'
                 f'\n\nWin Condition: {self.faction.win_con}')
 
+    @property
+    def innocent(self):
+        if hasattr(self.role, 'innocence_modifier'):
+            return self.role.innocence_modifier()
+        if self.faction.id == 'town':
+            return True
+        return False
+
     @ property
     def full_role(self):
         return f'{self.faction} {self.role}'

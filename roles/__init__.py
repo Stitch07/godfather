@@ -3,6 +3,7 @@ from .vanilla import *
 from .goon import *
 from .vigilante import *
 from .doctor import *
+from .cop import *
 from .role import Role
 
 all_roles = {
@@ -10,5 +11,6 @@ all_roles = {
     'vanilla': Vanilla,
     'goon': Goon,
     'vig': Vigilante,
-    'doctor': Doctor
+    'doctor': Doctor,
+    'cop': Cop
 }

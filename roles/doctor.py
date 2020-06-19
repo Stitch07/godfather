@@ -21,7 +21,6 @@ class Doctor(SingleAction):
 
     async def after_action(self, player, target, night_record):
         record = night_record[target.user.id].get('heal')
-        print(record)
         success = record['result'] and player.user.id in record['by']
 
         if success:

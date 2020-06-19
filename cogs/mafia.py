@@ -151,7 +151,6 @@ class Mafia(commands.Cog):
         async with ctx.channel.typing():
             for num, player in enumerate(game.players):
                 player_role = roles[num]
-                print(player_role)
                 # assign role and faction to the player
                 player.role = all_roles.get(player_role['id'])()
                 player.faction = factions.get(player_role['faction'])()

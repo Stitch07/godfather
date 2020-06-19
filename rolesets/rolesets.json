@@ -17,6 +17,23 @@
         ]
     },
     {
+        "name": "coptest",
+        "roles": [
+            {
+                "id": "vanilla",
+                "faction": "town"
+            },
+            {
+                "id": "vanilla",
+                "faction": "mafia"
+            },
+            {
+                "id": "cop",
+                "faction": "town"
+            }
+        ]
+    },
+    {
         "name": "fake4",
         "roles": [
             {

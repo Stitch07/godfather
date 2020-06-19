@@ -40,7 +40,6 @@ class NightActions:
 
         # figure out which players died
         dead_players = []
-        print(self.record)
         for pl_id, record in self.record.items():
             if record['nightkill']['result'] == True:
                 nked_pl = self.game.filter_players(pl_id=pl_id)[0]
