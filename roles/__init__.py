@@ -4,6 +4,8 @@ from .goon import *
 from .vigilante import *
 from .doctor import *
 from .cop import *
+from .jester import *
+from .serial_killer import *
 from .role import Role
 
 all_roles = {
@@ -12,5 +14,7 @@ all_roles = {
     'goon': Goon,
     'vig': Vigilante,
     'doctor': Doctor,
-    'cop': Cop
+    'cop': Cop,
+    'jester': Jester,
+    'serial_killer': SerialKiller
 }

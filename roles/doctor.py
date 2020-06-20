@@ -14,10 +14,11 @@ class Doctor(SingleAction):
 
     def run_action(self, night_record, player, target):
         pl_record = night_record[target.user.id]
-        pl_record['nightkill']['result'] = False
-        pl_record['nightkill']['by'] = []
-        pl_record['heal']['result'] = True
-        pl_record['heal']['by'].append(player.user.id)
+        if pl_record['nightkill']['result']:
+            pl_record['nightkill']['result'] = False
+            pl_record['nightkill']['by'] = []
+            pl_record['heal']['result'] = True
+            pl_record['heal']['by'].append(player.user.id)
 
     async def after_action(self, player, target, night_record):
         record = night_record[target.user.id].get('heal')

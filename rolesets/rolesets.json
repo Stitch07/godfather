@@ -17,18 +17,22 @@
         ]
     },
     {
-        "name": "coptest",
+        "name": "jestertest",
         "roles": [
             {
-                "id": "vanilla",
-                "faction": "town"
+                "id": "jester",
+                "faction": "neutral.jester"
             },
             {
                 "id": "vanilla",
                 "faction": "mafia"
             },
             {
-                "id": "cop",
+                "id": "vanilla",
+                "faction": "town"
+            },
+            {
+                "id": "vanilla",
                 "faction": "town"
             }
         ]
@@ -55,23 +59,19 @@
         ]
     },
     {
-        "name": "vigtest",
+        "name": "sktest",
         "roles": [
             {
                 "id": "vanilla",
                 "faction": "town"
             },
             {
-                "id": "doctor",
-                "faction": "town"
-            },
-            {
                 "id": "vanilla",
-                "faction": "mafia"
+                "faction": "town"
             },
             {
-                "id": "vig",
-                "faction": "town"
+                "id": "serial_killer",
+                "faction": "neutral.serialkiller"
             }
         ]
     }
