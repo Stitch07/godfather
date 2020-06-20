@@ -81,6 +81,7 @@ class Admin(commands.Cog):
                     await game.end(self.bot, winning_faction, individual_wins)
                     break
                 else:
+                    await game.increment_phase(self.bot)
                     # change phase after this.
                     break
 
