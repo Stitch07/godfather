@@ -17,7 +17,7 @@ class Jester(Role):
 
         txt = [
             'You can now haunt one player on your wagon! Type a number corresponding to a player:'
-        ] + [f'{i+1}. {voter.user.name}' for i, voter in enumerate(player.votes)]
+        ] + [f'{i+1}. {voter.user.name}' for i, voter in enumerate(self.voted)]
         await player.user.send('\n'.join(txt))
 
         def check(msg):
