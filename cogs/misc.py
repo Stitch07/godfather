@@ -54,6 +54,7 @@ class Misc(commands.Cog):
                 return
             pl_game = games[0]
             player = pl_game.get_player(ctx.author)
+
             if not player.alive or not hasattr(player.role, 'action'):
                 return
             if player.role.action != command.lower():

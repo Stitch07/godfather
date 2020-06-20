@@ -9,6 +9,7 @@ class Player:
         self.faction = None
         self.alive = True
         self.votes: typing.List[Player] = []
+        self.death_reason = ''
 
     # generates the role's PM
     @property
@@ -26,6 +27,8 @@ class Player:
 
     @ property
     def full_role(self):
+        if self.faction.id.startswith('neutral'):
+            return self.role
         return f'{self.faction} {self.role}'
 
     # remove vote by 'user' from player
@@ -37,6 +40,7 @@ class Player:
         return any(player.user.id == user.id for player in self.votes)
 
     # remove a player from the game
-    def remove(self):
+    def remove(self, reason):
         self.alive = False
         self.votes = []
+        self.death_reason = reason

@@ -53,13 +53,21 @@ class Game:
     # checks whether the game has ended, returns whether the game has ended and the winning faction
     def check_endgame(self):
         winning_faction = None
+        individual_wins = []
+
         for player in self.players:
             win_check = player.faction.has_won(self)
             if win_check:
                 winning_faction = player.faction.name
+            if hasattr(player.faction, 'has_won_individual'):
+                individual_check = player.faction.has_won_individual(player)
+                if individual_check:
+                    individual_wins.append(
+                        f'{player.user.name} ({player.full_role})')
+
         if winning_faction:
-            return (True, winning_faction)
-        return (False, None)
+            return (True, winning_faction, individual_wins)
+        return (False, None, None)
 
     async def increment_phase(self, bot):
         # cycle 0 check
@@ -72,9 +80,9 @@ class Game:
             announcement = await self.night_actions.resolve()
             if announcement != '':
                 await self.channel.send(announcement)
-                game_ended, winning_faction = self.check_endgame()
+                game_ended, winning_faction, individual_wins = self.check_endgame()
                 if game_ended:
-                    return await self.end(bot, winning_faction)
+                    return await self.end(bot, winning_faction, individual_wins)
             # voting starts
             self.night_actions.reset()
             self.phase = Phase.DAY
@@ -84,10 +92,19 @@ class Game:
         else:
             self.phase = Phase.NIGHT
             await self.channel.send(f'Night **{self.cycle}** will last 5 minutes. Send in those actions quickly!')
-            for player in self.filter_players(alive=True):
+
+            # recently lynched jesters and alive players are allowed to send in actions
+            def alive_or_recent_jester(player):
+                if player.role.role_id == 'jester' and not player.alive \
+                        and player.death_reason == f'lynched D{self.cycle}':
+                    return True
+                return player.alive
+
+            for player in filter(alive_or_recent_jester, self.players):
                 if hasattr(player.role, 'on_night'):
                     await player.role.on_night(bot, player, self)
-        self.phase_end_at = time.localtime(time.time() + 120)  # 5 minutes
+
+        self.phase_end_at = time.localtime(time.time() + 120)  # 2 minutes
 
     # Filter players by:
     # Their Role
@@ -149,15 +166,17 @@ class Game:
         for player in self.players:
             player.votes = []
 
-        target.remove()
+        target.remove(f'lynched D{self.cycle}')
 
     # WIP: End the game
     # If a winning faction is not provided, game is ended
     # as if host ended the game without letting it finish
-    async def end(self, bot, winning_faction: typing.Optional[str] = None):
+    async def end(self, bot, winning_faction, individual_wins):
         if winning_faction:
             async with self.channel.typing():
                 await self.channel.send(f'The game is over. {winning_faction} wins! 🎉')
+                if len(individual_wins) > 0:
+                    await self.channel.send(f'Individual wins: {", ".join(individual_wins)}')
         full_rolelist = '\n'.join(
             [f'{i+1}. {player.user.name} ({player.full_role})' for i, player in enumerate(self.players)])
         await self.channel.send(f'**Final Rolelist**: ```{full_rolelist}```')
