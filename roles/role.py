@@ -11,3 +11,6 @@ class Role:
     # called when a player is lynched. takes the game object, and the player lynched
     async def on_lynch(self, game, player):
         pass
+
+    def night_instructions(self, ctx):
+        return None

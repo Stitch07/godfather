@@ -7,6 +7,10 @@ import roles  # pylint: disable=import-error
 import game  # pylint: disable=import-error
 
 
+def remove_prefix(text, prefix):
+    return text[text.startswith(prefix) and len(prefix):]
+
+
 def insert_returns(body):
     # insert return stmt if the last expression is a expression statement
     if isinstance(body[-1], ast.Expr):
@@ -39,6 +43,23 @@ class Misc(commands.Cog):
         if hasattr(ctx.command, 'on_error'):
             return
         if isinstance(error, commands.CommandNotFound):
+            if not isinstance(ctx.channel, discord.DMChannel):
+                return
+            command, * \
+                args = remove_prefix(ctx.message.content,
+                                     ctx.prefix).split(' ')
+            games = [
+                *filter(lambda g: g.has_player(ctx.author), ctx.bot.games.values())]
+            if len(games) == 0:
+                return
+            pl_game = games[0]
+            player = pl_game.get_player(ctx.author)
+
+            if not player.alive or not hasattr(player.role, 'action'):
+                return
+            if player.role.action != command.lower():
+                return
+            await player.role.on_pm_command(ctx, pl_game, player, args)
             return  # ignore invalid commands
         elif isinstance(error, commands.MissingRequiredArgument):
             return await ctx.send(f'Missing required argument {error.param}')

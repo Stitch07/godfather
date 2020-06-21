@@ -4,7 +4,8 @@ import random
 import copy
 import discord
 from discord.ext import commands
-from game import Game, Player  # pylint: disable=import-error
+from factions import factions
+from game import Game, Player, Phase  # pylint: disable=import-error
 from roles import all_roles  # pylint: disable=import-error
 from utils import get_random_sequence
 
@@ -23,6 +24,16 @@ def host_only():
         game = ctx.bot.games[ctx.guild.id]
         if not game.host_id == ctx.author.id:
             await ctx.send('Only hosts can use this command.')
+            return False
+        return True
+    return commands.check(predicate)
+
+
+def day_only():
+    async def predicate(ctx):
+        game = ctx.bot.games[ctx.guild.id]
+        if game.phase != Phase.DAY:
+            await ctx.send('This command can only be used during the day.')
             return False
         return True
     return commands.check(predicate)
@@ -114,8 +125,30 @@ class Mafia(commands.Cog):
         return await ctx.send(msg)
 
     @commands.command()
-    @game_only()
-    @game_started_only()
+    async def setupinfo(self, ctx: commands.Context, roleset: typing.Optional[str] = None):
+        rolesets = json.load(open('rolesets/rolesets.json'))
+        if roleset is None:
+            txt = ('**All available setups:** (to view a specific setup, use '
+                   f'{ctx.prefix}setupinfo <name>)')
+            txt += '```\n'
+            for _roleset in rolesets:
+                txt += f'{_roleset["name"]} ({len(_roleset["roles"])} players)\n'
+            txt += '```'
+            return await ctx.send(txt)
+        found_setup = next(
+            (rs for rs in rolesets if rs['name'] == roleset.lower()), None)
+        if found_setup is None:
+            return await ctx.send(f"Couldn't find {roleset}, use {ctx.prefix}setupinfo to view all setups.")
+        txt = [f'**{roleset}** ({len(found_setup["roles"])} players)', '```\n']
+        for i, role in enumerate(found_setup['roles']):
+            txt.append(
+                f'{i+1}. {role["faction"].title()} {role["id"].title()}')
+        txt.append('```')
+        await ctx.send('\n'.join(txt))
+
+    @ commands.command()
+    @ game_only()
+    @ game_started_only()
     async def rolepm(self, ctx: commands.Context):
         game = self.bot.games[ctx.guild.id]
         player = game.get_player(ctx.author)
@@ -125,9 +158,9 @@ class Mafia(commands.Cog):
         except discord.Forbidden:
             await ctx.send('Cannot send you your role PM. Make sure your DMs are enabled!')
 
-    @commands.command()
-    @host_only()
-    @game_only()
+    @ commands.command(aliases=['start'])
+    @ host_only()
+    @ game_only()
     async def startgame(self, ctx: commands.Context,
                         r_setup: typing.Optional[str] = None):
         game = self.bot.games[ctx.guild.id]
@@ -157,8 +190,8 @@ class Mafia(commands.Cog):
 
                 # assign role and faction to the player
                 player.role = all_roles.get(player_role['id'])()
-                player.faction = player_role['faction']
-
+                player.faction = factions.get(player_role['faction'])()
+  
                 # send role PMs
                 try:
                     await player.user.send(player.role_pm)
@@ -169,15 +202,14 @@ class Mafia(commands.Cog):
 
         if len(no_dms) > 0:
             no_dms = [*map(lambda usr: usr.name, no_dms)]
-            await ctx.send(f"I couldn't DM {', '.join(no_dms)}. "
-                           f"Use the {ctx.prefix}rolepm command to receive your PM.")
+            await ctx.send(f"I couldn't DM {', '.join(no_dms)}. Use the {ctx.prefix}rolepm command to receive your PM.")
+        await game.increment_phase(self.bot)
 
-        await game.increment_phase()
-
-    @commands.command()
-    @game_only()
-    @game_started_only()
-    @player_only()
+    @ commands.command()
+    @day_only()
+    @ game_started_only()
+    @ player_only()
+    @ game_only()
     async def vote(self, ctx: commands.Context, target: discord.Member):
         game = self.bot.games[ctx.guild.id]
 
@@ -198,17 +230,18 @@ class Mafia(commands.Cog):
 
         if votes_on_target >= game.majority_votes:
             await game.lynch(game.get_player(target))
-            game_ended, winning_faction = game.check_endgame()
+            game_ended, winning_faction, individual_wins = game.check_endgame()
             if game_ended:
-                await game.end(self.bot, winning_faction)
+                await game.end(self.bot, winning_faction, individual_wins)
             else:
+                await game.increment_phase(self.bot)
                 # change phase after this.
-                pass
 
-    @commands.command()
-    @game_only()
-    @game_started_only()
-    @player_only()
+    @ commands.command()
+    @day_only()
+    @ game_started_only()
+    @ player_only()
+    @ game_only()
     async def unvote(self, ctx: commands.Context):
         game = self.bot.games[ctx.guild.id]
         for voted in game.filter_players(is_voted_by=ctx.author):
@@ -216,10 +249,11 @@ class Mafia(commands.Cog):
             return await ctx.send(f'Unvoted {voted.user.name}')
         await ctx.send('No votes to remove.')
 
-    @commands.command()
-    @game_only()
-    @game_started_only()
-    @player_only()
+    @ commands.command()
+    @day_only()
+    @ game_started_only()
+    @ player_only()
+    @ game_only()
     async def votecount(self, ctx: commands.Context):
         game = self.bot.games[ctx.guild.id]
         num_alive = len(game.filter_players(alive=True))

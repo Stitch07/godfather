@@ -4,15 +4,74 @@
         "roles": [
             {
                 "id": "vanilla",
-                "faction": "Town"
+                "faction": "town"
             },
             {
-                "id": "vanilla",
-                "faction": "Mafia"
+                "id": "goon",
+                "faction": "mafia"
             },
             {
                 "id": "super_saint",
-                "faction": "Town"
+                "faction": "town"
+            }
+        ]
+    },
+    {
+        "name": "jestertest",
+        "roles": [
+            {
+                "id": "jester",
+                "faction": "neutral.jester"
+            },
+            {
+                "id": "vanilla",
+                "faction": "mafia"
+            },
+            {
+                "id": "vanilla",
+                "faction": "town"
+            },
+            {
+                "id": "vanilla",
+                "faction": "town"
+            }
+        ]
+    },
+    {
+        "name": "fake4",
+        "roles": [
+            {
+                "id": "vanilla",
+                "faction": "town"
+            },
+            {
+                "id": "vanilla",
+                "faction": "town"
+            },
+            {
+                "id": "vigilante",
+                "faction": "town"
+            },
+            {
+                "id": "goon",
+                "faction": "mafia"
+            }
+        ]
+    },
+    {
+        "name": "sktest",
+        "roles": [
+            {
+                "id": "vanilla",
+                "faction": "town"
+            },
+            {
+                "id": "vanilla",
+                "faction": "town"
+            },
+            {
+                "id": "serial_killer",
+                "faction": "neutral.serialkiller"
             }
         ]
     }
