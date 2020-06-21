@@ -43,7 +43,7 @@ class SingleAction(Role):
             })
             await ctx.send(f'You are {self.action_gerund} {target} tonight.')
 
-            if len(game.filter_players(action_only=True)) == len(game.night_actions.actions):
+            if len(game.filter_players(action_only=True, alive=True)) == len(game.night_actions.actions):
                 await game.increment_phase(ctx.bot)
 
     async def after_action(self, player, target, night_record):

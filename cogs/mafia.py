@@ -5,7 +5,7 @@ import copy
 import discord
 from discord.ext import commands
 from factions import factions
-from game import Game, Player  # pylint: disable=import-error
+from game import Game, Player, Phase  # pylint: disable=import-error
 from roles import all_roles  # pylint: disable=import-error
 
 
@@ -23,6 +23,16 @@ def host_only():
         game = ctx.bot.games[ctx.guild.id]
         if not game.host_id == ctx.author.id:
             await ctx.send('Only hosts can use this command.')
+            return False
+        return True
+    return commands.check(predicate)
+
+
+def day_only():
+    async def predicate(ctx):
+        game = ctx.bot.games[ctx.guild.id]
+        if game.phase != Phase.DAY:
+            await ctx.send('This command can only be used during the day.')
             return False
         return True
     return commands.check(predicate)
@@ -188,9 +198,10 @@ class Mafia(commands.Cog):
         await game.increment_phase(self.bot)
 
     @ commands.command()
-    @ game_only()
+    @day_only()
     @ game_started_only()
     @ player_only()
+    @ game_only()
     async def vote(self, ctx: commands.Context, target: discord.Member):
         game = self.bot.games[ctx.guild.id]
 
@@ -219,9 +230,10 @@ class Mafia(commands.Cog):
                 # change phase after this.
 
     @ commands.command()
-    @ game_only()
+    @day_only()
     @ game_started_only()
     @ player_only()
+    @ game_only()
     async def unvote(self, ctx: commands.Context):
         game = self.bot.games[ctx.guild.id]
         for voted in game.filter_players(is_voted_by=ctx.author):
@@ -230,9 +242,10 @@ class Mafia(commands.Cog):
         await ctx.send('No votes to remove.')
 
     @ commands.command()
-    @ game_only()
+    @day_only()
     @ game_started_only()
     @ player_only()
+    @ game_only()
     async def votecount(self, ctx: commands.Context):
         game = self.bot.games[ctx.guild.id]
         num_alive = len(game.filter_players(alive=True))

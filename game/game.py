@@ -104,7 +104,7 @@ class Game:
                 if hasattr(player.role, 'on_night'):
                     await player.role.on_night(bot, player, self)
 
-        self.phase_end_at = time.localtime(time.time() + 120)  # 2 minutes
+        self.phase_end_at = time.localtime(time.time() + 300)  # 2 minutes
 
     # Filter players by:
     # Their Role
