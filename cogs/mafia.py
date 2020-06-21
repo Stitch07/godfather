@@ -6,6 +6,7 @@ import discord
 from discord.ext import commands
 from game import Game, Player  # pylint: disable=import-error
 from roles import all_roles  # pylint: disable=import-error
+from utils import get_random_sequence
 
 
 def game_only():
@@ -111,7 +112,7 @@ class Mafia(commands.Cog):
                           for (i, pl) in enumerate(game.players)])
 
         return await ctx.send(msg)
-   
+
     @commands.command()
     @game_only()
     @game_started_only()
@@ -142,26 +143,35 @@ class Mafia(commands.Cog):
         await ctx.send(f'Chose the setup **{found_setup["name"]}**. '
                        'Randing roles...')
         roles = copy.deepcopy(found_setup['roles'])
-        # shuffle roles in place
-        # and assign the nth (shuffled) role to the nth player
-        random.shuffle(roles)
+
+        # Create a random sequence of role indexes, enumerate the player list.
+        # And assign the nth number in the random sequence to the nth player.
+        # Then use the resulting number as index for the role.
+        role_sequence = get_random_sequence(0, len(roles)-1)
+
         # people the bot couldn't dm
         no_dms = []
         async with ctx.channel.typing():
             for num, player in enumerate(game.players):
-                player_role = roles[num]
+                player_role = roles[role_sequence[num]]
+
                 # assign role and faction to the player
                 player.role = all_roles.get(player_role['id'])()
                 player.faction = player_role['faction']
+
                 # send role PMs
                 try:
                     await player.user.send(player.role_pm)
                 except discord.Forbidden:
                     no_dms.append(player.user)
+
         await ctx.send('Sent all role PMs!')
+
         if len(no_dms) > 0:
             no_dms = [*map(lambda usr: usr.name, no_dms)]
-            await ctx.send(f"I couldn't DM {', '.join(no_dms)}. Use the {ctx.prefix}rolepm command to receive your PM.")
+            await ctx.send(f"I couldn't DM {', '.join(no_dms)}. "
+                           f"Use the {ctx.prefix}rolepm command to receive your PM.")
+
         await game.increment_phase()
 
     @commands.command()
