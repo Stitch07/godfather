@@ -11,11 +11,13 @@ class EventLoop(commands.Cog):
     def cog_unload(self):
         self.event_loop.cancel()
 
-    @tasks.loop(seconds=5.0)
+    @tasks.loop(seconds=10.0)
     async def event_loop(self):
         for game in self.bot.games.values():
             if not game.has_started:
                 continue
+            if game.phase == Phase.STANDBY:
+                return
             curr_t = time.time()
             phase_end = time.mktime(game.phase_end_at)
             if curr_t > phase_end:
@@ -25,7 +27,7 @@ class EventLoop(commands.Cog):
                     for player in game.players:
                         player.votes = []
                 # wip: resolve night actions here
-                await game.increment_phase()
+                await game.increment_phase(self.bot)
 
     @event_loop.before_loop
     async def before_loop(self):
