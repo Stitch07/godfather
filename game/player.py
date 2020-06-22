@@ -44,3 +44,6 @@ class Player:
         self.alive = False
         self.votes = []
         self.death_reason = reason
+
+        # if hasattr(self.role, 'on_death'):
+        #     self.role.on_death(self, game)

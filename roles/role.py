@@ -12,5 +12,10 @@ class Role:
     async def on_lynch(self, game, player):
         pass
 
+    # called when a player dies
+    # TODO: merge on_lynch and on_death
+    async def on_death(self, player, game):
+        pass
+
     def night_instructions(self, ctx):
         return None

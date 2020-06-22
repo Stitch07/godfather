@@ -7,58 +7,7 @@ from discord.ext import commands
 from factions import factions
 from game import Game, Player, Phase  # pylint: disable=import-error
 from roles import all_roles  # pylint: disable=import-error
-from utils import get_random_sequence
-
-
-def game_only():
-    async def predicate(ctx):
-        if ctx.guild.id not in ctx.bot.games:
-            await ctx.send('No game is currently running in this server.')
-            return False
-        return True
-    return commands.check(predicate)
-
-
-def host_only():
-    async def predicate(ctx):
-        game = ctx.bot.games[ctx.guild.id]
-        if not game.host_id == ctx.author.id:
-            await ctx.send('Only hosts can use this command.')
-            return False
-        return True
-    return commands.check(predicate)
-
-
-def day_only():
-    async def predicate(ctx):
-        game = ctx.bot.games[ctx.guild.id]
-        if game.phase != Phase.DAY:
-            await ctx.send('This command can only be used during the day.')
-            return False
-        return True
-    return commands.check(predicate)
-
-
-def player_only():
-    async def predicate(ctx):
-        if not ctx.bot.games[ctx.guild.id].has_player(ctx.author):
-            await ctx.send('Only players can use this command.')
-            return False
-        elif not ctx.bot.games[ctx.guild.id].get_player(ctx.author).alive:
-            await ctx.send('Dead players can\'t use this command')
-            return False
-        return True
-    return commands.check(predicate)
-
-
-def game_started_only():
-    async def predicate(ctx):
-        game = ctx.bot.games[ctx.guild.id]
-        if not game.has_started:
-            await ctx.send('The game hasn\'t started yet!')
-            return False
-        return True
-    return commands.check(predicate)
+from utils import get_random_sequence, from_now, game_only, game_started_only, host_only, day_only, player_only
 
 
 class Mafia(commands.Cog):
@@ -118,16 +67,27 @@ class Mafia(commands.Cog):
     async def playerlist(self, ctx: commands.Context):
         game = self.bot.games[ctx.guild.id]
         msg = f'**Players: {len(game.players)}**\n'
-
-        msg += '\n'.join([f'{i+1}. {pl.user}'
-                          for (i, pl) in enumerate(game.players)])
+        msg += game.playerlist()
 
         return await ctx.send(msg)
 
     @commands.command()
+    @game_started_only()
+    @game_only()
+    async def remaining(self, ctx):
+        game = self.bot.games[ctx.guild.id]
+        await ctx.send(f'🕰️ The current phase ends {from_now(game.phase_end_at)}')
+
+    @commands.command()
     async def setupinfo(self, ctx: commands.Context, roleset: typing.Optional[str] = None):
+        # show the current setup if a game is ongoing
+        if ctx.guild.id in ctx.bot.games \
+                and ctx.bot.games[ctx.guild.id].phase != Phase.PREGAME \
+                and roleset is None:
+            roleset = ctx.bot.games[ctx.guild.id].setup_id
+
         rolesets = json.load(open('rolesets/rolesets.json'))
-        if roleset is None:
+        if roleset is None or roleset == 'all':
             txt = ('**All available setups:** (to view a specific setup, use '
                    f'{ctx.prefix}setupinfo <name>)')
             txt += '```\n'
@@ -173,6 +133,8 @@ class Mafia(commands.Cog):
             found_setup = game.find_setup(r_setup)
         except Exception as err:  # pylint: disable=broad-except
             return await ctx.send(err)
+        game.setup_id = found_setup['name']
+
         await ctx.send(f'Chose the setup **{found_setup["name"]}**. '
                        'Randing roles...')
         roles = copy.deepcopy(found_setup['roles'])
@@ -191,7 +153,7 @@ class Mafia(commands.Cog):
                 # assign role and faction to the player
                 player.role = all_roles.get(player_role['id'])()
                 player.faction = factions.get(player_role['faction'])()
-  
+
                 # send role PMs
                 try:
                     await player.user.send(player.role_pm)

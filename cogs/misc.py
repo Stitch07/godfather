@@ -67,6 +67,9 @@ class Misc(commands.Cog):
             return await ctx.send('Invalid input')
         elif isinstance(error, commands.BadArgument):
             return await ctx.send('Invalid input')
+        elif isinstance(error, commands.CheckFailure):
+            # checks are handled in the predicates
+            return
         await ctx.send(f'Uncaught exception: ```{error}```')
         traceback.print_exception(
             type(error), error, error.__traceback__, file=sys.stderr)

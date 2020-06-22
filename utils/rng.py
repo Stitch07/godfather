@@ -26,7 +26,7 @@ def get_random_sequence(low: int, high: int):
     # If so, read through each line, form a sequence by turning
     # everything into an int, and return it
     if resp.status_code == 200:
-        return list(map(int, resp.iter_lines))
+        return list(map(int, resp.iter_lines()))
 
     # If an error is shown, fallback to standard random
     return random.sample(range(low, high + 1), high - low + 1)
