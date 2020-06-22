@@ -31,6 +31,20 @@ class NightActions:
         self.record.clear()
 
     async def resolve(self) -> str:
+        # handle roleblocks
+        for rb in filter(lambda action: action['action'] == 'block', self.actions):
+            target = rb['target']
+            roleblocker = rb['player']
+            for action in self.actions:
+                if action['player'].user.id == target.user.id:
+                    if 'rb_immune' in action and action['rb_immune']:
+                        continue
+                    # remove the action, getting roleblocked
+                    self.actions.remove(action)
+                    self.record[target.user.id]['roleblock']['result'] = True
+                    self.record[target.user.id]['roleblock']['by'].append(
+                        roleblocker.user.id)
+
         # sort by ascending priorities
         self.actions.sort(key=lambda action: action['priority'])
         for action in self.actions:

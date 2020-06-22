@@ -17,18 +17,14 @@
         ]
     },
     {
-        "name": "jestertest",
+        "name": "escorttest",
         "roles": [
             {
-                "id": "jester",
-                "faction": "neutral.jester"
-            },
-            {
-                "id": "vanilla",
+                "id": "goon",
                 "faction": "mafia"
             },
             {
-                "id": "vanilla",
+                "id": "escort",
                 "faction": "town"
             },
             {
