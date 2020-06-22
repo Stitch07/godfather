@@ -39,6 +39,14 @@ class SingleAction(Role):
             for action in game.night_actions.actions:
                 if action['player'].user.id == player.user.id:
                     game.night_actions.actions.remove(action)
+
+            # special godfather stuff
+            if self.name == 'Godfather' and len(game.filter_players(role='Goon')) > 0:
+                player = game.filter_players(role='Goon')[0]
+                for action in game.night_actions.actions:
+                    if action['player'].role.name == 'Goon':
+                        game.night_actions.actions.remove(action)
+
             game.night_actions.add_action({
                 'action': self.action,
                 'player': player,

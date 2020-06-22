@@ -30,8 +30,8 @@ class Vigilante(SingleAction, Shooter):
             await super().on_pm_command(ctx, game, player, args)
 
     async def after_action(self, player, target, night_record):
-        record = night_record[target.user.id].get('nightkill')
-        success = record['result'] and player.user.id in record['by']
+        record = night_record[target.user.id]['nightkill']
+        success = record['result'] and player in record['by']
 
         if success and target.faction.id == 'town':
             self.guilty = True

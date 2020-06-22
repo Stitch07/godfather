@@ -3,7 +3,7 @@ from roles.mixins import SingleAction
 DESCRIPTION = 'You may roleblock somebody each night.'
 
 
-class Escort(SingleAction):
+class Consort(SingleAction):
     def __init__(self):
         super().__init__(name='Consort', role_id='consort', description=DESCRIPTION)
         self.action = 'block'
@@ -11,7 +11,7 @@ class Escort(SingleAction):
         self.action_priority = None  # doesn't matter here
         self.action_text = 'roleblock a player'
 
-    def run_action(self, night_record, player, target):
+    async def run_action(self, night_record, player, target):
         # night actions specially resolve roleblocks, so we don't do anything here
         pass
 

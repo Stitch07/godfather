@@ -9,7 +9,7 @@ class Goon(SingleAction, Shooter):
 
     async def after_action(self, player, target, night_record):
         record = night_record[target.user.id].get('nightkill')
-        success = record['result'] and player.user.id in record['by']
+        success = record['result'] and player in record['by']
 
         if not success:
             return await player.user.send('Your target was too strong to kill!')

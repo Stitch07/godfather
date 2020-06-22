@@ -11,13 +11,13 @@ class SerialKiller(SingleAction):
         self.action_priority = 1  # placeholder
         self.action_text = 'stab a player'
 
-    def run_action(self, night_record, player, target):
+    async def run_action(self, night_record, player, target):
         pl_record = night_record[target.user.id]
         pl_record['nightkill']['result'] = True
-        pl_record['nightkill']['by'].append(player.user.id)
+        pl_record['nightkill']['by'].append(player)
 
     async def after_action(self, player, target, night_record):
-        record = night_record[target.user.id].get('nightkill')
+        record = night_record[target.user.id]['nightkill']
         success = record['result'] and player.user.id in record['by']
 
         if not success:

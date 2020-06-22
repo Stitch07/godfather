@@ -17,6 +17,3 @@ class Role:
     # TODO: merge on_lynch and on_death
     async def on_death(self, player, game):
         pass
-
-    def night_instructions(self, ctx):
-        return None

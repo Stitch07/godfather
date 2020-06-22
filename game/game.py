@@ -174,7 +174,7 @@ class Game:
         for player in self.players:
             player.votes = []
 
-        target.remove(f'lynched D{self.cycle}')
+        await target.remove(self, f'lynched D{self.cycle}')
 
     # since this is needed in a couple of places
     def playerlist(self, codeblock=False):

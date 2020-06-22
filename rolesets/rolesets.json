@@ -17,19 +17,19 @@
         ]
     },
     {
-        "name": "escorttest",
+        "name": "gftest",
         "roles": [
-            {
-                "id": "goon",
-                "faction": "mafia"
-            },
-            {
-                "id": "escort",
-                "faction": "town"
-            },
             {
                 "id": "vanilla",
                 "faction": "town"
+            },
+            {
+                "id": "cop",
+                "faction": "town"
+            },
+            {
+                "id": "godfather",
+                "faction": "mafia"
             }
         ]
     },
@@ -55,19 +55,19 @@
         ]
     },
     {
-        "name": "sktest",
+        "name": "bgtest",
         "roles": [
             {
-                "id": "vanilla",
-                "faction": "town"
+                "id": "goon",
+                "faction": "mafia"
             },
             {
                 "id": "vanilla",
                 "faction": "town"
             },
             {
-                "id": "serial_killer",
-                "faction": "neutral.serialkiller"
+                "id": "bodyguard",
+                "faction": "town"
             }
         ]
     }
