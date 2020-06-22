@@ -22,7 +22,3 @@ def from_now(t1: datetime):
         result += ' ago'
 
     return result
-
-
-def mixin(cls1, cls2):
-    insp
