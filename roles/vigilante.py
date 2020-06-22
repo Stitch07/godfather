@@ -1,15 +1,11 @@
-from roles.mixins import SingleAction
+from roles.mixins import SingleAction, Shooter
 
 DESCRIPTION = 'You may shoot someone every night. If you shoot a townie, you will die of guilt the next night.'
 
 
-class Vigilante(SingleAction):
+class Vigilante(SingleAction, Shooter):
     def __init__(self):
         super().__init__(name='Vigilante', role_id='vig', description=DESCRIPTION)
-        self.action = 'shoot'
-        self.action_gerund = 'shooting'
-        self.action_priority = 1  # placeholder
-        self.action_text = 'shoot a player'
         self.guilty = False
         self.bullets = 3  # vigs only get 3 shots
 
@@ -33,14 +29,9 @@ class Vigilante(SingleAction):
                 return await ctx.send("You're out of bullets!")
             await super().on_pm_command(ctx, game, player, args)
 
-    def run_action(self, night_record, player, target):
-        pl_record = night_record[target.user.id]
-        pl_record['nightkill']['result'] = True
-        pl_record['nightkill']['by'].append(player.user.id)
-
     async def after_action(self, player, target, night_record):
-        record = night_record[target.user.id].get('nightkill')
-        success = record['result'] and player.user.id in record['by']
+        record = night_record[target.user.id]['nightkill']
+        success = record['result'] and player in record['by']
 
         if success and target.faction.id == 'town':
             self.guilty = True

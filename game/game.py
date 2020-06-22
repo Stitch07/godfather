@@ -4,7 +4,7 @@ import typing
 import json
 import math
 import copy
-import time
+from datetime import datetime, timedelta
 import discord
 from .player import Player
 from .night_actions import NightActions
@@ -28,8 +28,13 @@ class Game:
         self.cycle = 0
         self.host_id = None  # assigned to the user creating the game
         # time at which the current phase ends
-        self.phase_end_at: time.struct_time = None
+        self.phase_end_at: datetime = None
         self.night_actions = NightActions(self)
+        self.setup_id = None  # the setup used
+        # host-configurable stuff
+        self.config = {
+            'phase_time': 5 * 60  # in seconds
+        }
 
     # finds a setup for the current player-size. if no setup is found, raises an Exception
     def find_setup(self, setup: str = None):
@@ -70,6 +75,8 @@ class Game:
         return (False, None, None)
 
     async def increment_phase(self, bot):
+        phase_t = round(self.config['phase_time'] / 60, 1)
+
         # cycle 0 check
         if self.cycle == 0 or self.phase == Phase.NIGHT:
             # go to the next day
@@ -88,10 +95,10 @@ class Game:
             self.phase = Phase.DAY
             alive_players = len(self.filter_players(alive=True))
             # TODO: make limits configurable
-            await self.channel.send(f'Day **{self.cycle}** will last 5 minutes. With {alive_players} alive, it takes {self.majority_votes} to lynch.')
+            await self.channel.send(f'Day **{self.cycle}** will last {phase_t} minutes. With {alive_players} alive, it takes {self.majority_votes} to lynch.')
         else:
             self.phase = Phase.NIGHT
-            await self.channel.send(f'Night **{self.cycle}** will last 5 minutes. Send in those actions quickly!')
+            await self.channel.send(f'Night **{self.cycle}** will last {phase_t} minutes. Send in those actions quickly!')
 
             # recently lynched jesters and alive players are allowed to send in actions
             def alive_or_recent_jester(player):
@@ -104,7 +111,8 @@ class Game:
                 if hasattr(player.role, 'on_night'):
                     await player.role.on_night(bot, player, self)
 
-        self.phase_end_at = time.localtime(time.time() + 300)  # 2 minutes
+        self.phase_end_at = datetime.now() \
+            + timedelta(seconds=self.config['phase_time'])
 
     # Filter players by:
     # Their Role
@@ -166,7 +174,27 @@ class Game:
         for player in self.players:
             player.votes = []
 
-        target.remove(f'lynched D{self.cycle}')
+        await target.remove(self, f'lynched D{self.cycle}')
+
+    # since this is needed in a couple of places
+    def playerlist(self, codeblock=False):
+        players = []
+        for n, player in enumerate(self.players):
+            # codeblock friendly formatting. green for alive, red for dead
+            usrname = ''
+            if codeblock:
+                if player.alive:
+                    usrname += f'+ {n+1}. {player.user}'
+                else:
+                    usrname += f'- {n+1}. {player.user} ({player.death_reason})'
+            else:
+                if player.alive:
+                    usrname += f'{n+1} {player.user}'
+                else:
+                    usrname += f'{n+1}. ~~{player.user}~~ ({player.death_reason})'
+
+            players.append(usrname)
+        return '\n'.join(players)
 
     # WIP: End the game
     # If a winning faction is not provided, game is ended

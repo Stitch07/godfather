@@ -31,12 +31,31 @@ class NightActions:
         self.record.clear()
 
     async def resolve(self) -> str:
+        # handle roleblocks
+        for rb in filter(lambda action: action['action'] == 'block', self.actions):
+            target = rb['target']
+            roleblocker = rb['player']
+            for action in self.actions:
+                if action['player'].user.id == target.user.id:
+                    if 'rb_immune' in action and action['rb_immune']:
+                        continue
+                    # remove the action, getting roleblocked
+                    self.actions.remove(action)
+                    self.record[target.user.id]['roleblock']['result'] = True
+                    self.record[target.user.id]['roleblock']['by'].append(
+                        roleblocker.user.id)
+                    # if the mafioso/goon is roleblocked, the godfather performs the kill
+                    if target.role.name == 'Mafioso' \
+                            and len(self.game.filter_players(role='Godfather')) > 0:
+                        action['player'] = self.game.filter_players(role='Godfather')[
+                            0]
+
         # sort by ascending priorities
         self.actions.sort(key=lambda action: action['priority'])
         for action in self.actions:
             player = action['player']
             target = action['target']
-            action['player'].role.run_action(self.record, player, target)
+            await action['player'].role.run_action(self.record, player, target)
 
         # figure out which players died
         dead_players = []
@@ -44,7 +63,7 @@ class NightActions:
             if record['nightkill']['result']:
                 nked_pl = self.game.filter_players(pl_id=pl_id)[0]
                 # TODO: check for bulletproof here?
-                nked_pl.remove(f'killed N{self.game.cycle}')
+                await nked_pl.remove(self.game, f'killed N{self.game.cycle}')
                 dead_players.append(nked_pl)
 
          # after action clean-up

@@ -12,7 +12,7 @@ class Doctor(SingleAction):
         self.action_text = 'heal a player'
         self.can_self_target = True  # one self-heal allowed
 
-    def run_action(self, night_record, player, target):
+    async def run_action(self, night_record, player, target):
         pl_record = night_record[target.user.id]
         if pl_record['nightkill']['result']:
             pl_record['nightkill']['result'] = False

@@ -1,4 +1,4 @@
-import time
+from datetime import datetime
 from discord.ext import tasks, commands
 from game import Phase
 
@@ -18,8 +18,8 @@ class EventLoop(commands.Cog):
                 continue
             if game.phase == Phase.STANDBY:
                 return
-            curr_t = time.time()
-            phase_end = time.mktime(game.phase_end_at)
+            curr_t = datetime.now()
+            phase_end = game.phase_end_at
             if curr_t > phase_end:
                 if game.phase == Phase.DAY:
                     # no lynch achieved

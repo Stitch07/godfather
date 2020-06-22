@@ -40,10 +40,10 @@ class Jester(Role):
             'priority': 3
         })
 
-    def run_action(self, night_record, player, target):
+    async def run_action(self, night_record, player, target):
         pl_record = night_record[target.user.id]
         pl_record['nightkill']['result'] = True
-        pl_record['nightkill']['by'].append(player.user.id)
+        pl_record['nightkill']['by'].append(player)
 
     async def on_lynch(self, game, player):
         self.action = 'haunt'
