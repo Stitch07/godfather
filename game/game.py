@@ -177,13 +177,23 @@ class Game:
         target.remove(f'lynched D{self.cycle}')
 
     # since this is needed in a couple of places
-    def playerlist(self):
+    def playerlist(self, codeblock=False):
         players = []
         for n, player in enumerate(self.players):
-            usrname = str(
-                player.user) if player.alive else f'~~{player.user}~~'
-            dead_tag = f'({player.death_reason})' if not player.alive else ''
-            players.append(f'{n+1}. {usrname} {dead_tag}')
+            # codeblock friendly formatting. green for alive, red for dead
+            usrname = ''
+            if codeblock:
+                if player.alive:
+                    usrname += f'+ {n+1}. {player.user}'
+                else:
+                    usrname += f'- {n+1}. {player.user} ({player.death_reason})'
+            else:
+                if player.alive:
+                    usrname += f'{n+1} {player.user}'
+                else:
+                    usrname += f'{n+1}. ~~{player.user}~~ ({player.death_reason})'
+
+            players.append(usrname)
         return '\n'.join(players)
 
     # WIP: End the game

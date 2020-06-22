@@ -3,6 +3,7 @@ class Role:
         self.name = name
         self.role_id = role_id
         self.description = description
+        super().__init__()
 
     # str representation of role
     def __str__(self):

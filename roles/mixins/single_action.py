@@ -5,10 +5,13 @@ conv = commands.MemberConverter()
 
 
 class SingleAction(Role):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
     async def on_night(self, bot, player, game):
         output = f'It is now night {game.cycle}. Use the {bot.command_prefix}{self.action} command to {self.action_text}. ' \
             + f'Use {bot.command_prefix}cancel to cancel.\n'
-        output += f'```{game.playerlist()}```'
+        output += f'```diff\n{game.playerlist(codeblock=True)}```'
         await player.user.send(output)
 
     async def on_pm_command(self, ctx, game, player, args):
