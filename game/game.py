@@ -136,6 +136,10 @@ class Game:
                        alive: bool = False):
         plist = self.players
 
+        def action_only(pl):
+            can_do, _ = pl.role.can_do_action()
+            return can_do
+
         if role:
             plist = [*filter(lambda pl: pl.role.name == role, plist)]
         if faction:
@@ -150,7 +154,7 @@ class Game:
         if votecount:
             plist = [*filter(lambda pl: votecount(len(pl.votes)), plist)]
         if action_only:
-            plist = [*filter(lambda pl: hasattr(pl.role, 'action'), plist)]
+            plist = [*filter(action_only, plist)]
         if alive:
             plist = [*filter(lambda pl: pl.alive, plist)]
         if pl_id:
