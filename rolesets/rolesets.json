@@ -20,7 +20,7 @@
         "name": "gftest",
         "roles": [
             {
-                "id": "vanilla",
+                "id": "vigilante",
                 "faction": "town"
             },
             {
@@ -30,6 +30,14 @@
             {
                 "id": "godfather",
                 "faction": "mafia"
+            },
+            {
+                "id": "goon",
+                "faction": "mafia"
+            },
+            {
+                "id": "escort",
+                "faction": "town"
             }
         ]
     },

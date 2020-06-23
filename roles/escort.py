@@ -8,10 +8,10 @@ class Escort(SingleAction):
         super().__init__(name='Escort', role_id='escort', description=DESCRIPTION)
         self.action = 'block'
         self.action_gerund = 'blocking'
-        self.action_priority = None  # doesn't matter here
+        self.action_priority = 3  # doesn't matter here
         self.action_text = 'roleblock a player'
 
-    async def run_action(self, night_record, player, target):
+    async def run_action(self, game, night_record, player, target):
         # night actions specially resolve roleblocks, so we don't do anything here
         pass
 

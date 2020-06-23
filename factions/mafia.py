@@ -9,6 +9,7 @@ class Mafia(Faction):
     name = 'Mafia'
     id = 'mafia'
     win_con = 'Kill all townies and competing evil factions.'
+    informed = True
 
     def has_won(self, game: Game):
         alive_maf = len(game.filter_players(faction='mafia', alive=True))

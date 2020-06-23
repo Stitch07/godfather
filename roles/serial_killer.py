@@ -11,7 +11,7 @@ class SerialKiller(SingleAction):
         self.action_priority = 1  # placeholder
         self.action_text = 'stab a player'
 
-    async def run_action(self, night_record, player, target):
+    async def run_action(self, game, night_record, player, target):
         pl_record = night_record[target.user.id]
         pl_record['nightkill']['result'] = True
         pl_record['nightkill']['by'].append(player)

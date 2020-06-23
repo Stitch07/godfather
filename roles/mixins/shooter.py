@@ -6,7 +6,9 @@ class Shooter:
         self.action_text = 'shoot a player'
         super().__init__(*args, **kwargs)
 
-    async def run_action(self, night_record, player, target):
+    async def run_action(self, game, night_record, player, target):
+        if hasattr(player.role, 'bullets'):
+            player.role.bullets -= 1
         if hasattr(target.role, 'bulletproof') and target.role.bulletproof():
             return
         pl_record = night_record[target.user.id]

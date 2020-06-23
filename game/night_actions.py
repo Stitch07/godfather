@@ -44,18 +44,13 @@ class NightActions:
                     self.record[target.user.id]['roleblock']['result'] = True
                     self.record[target.user.id]['roleblock']['by'].append(
                         roleblocker.user.id)
-                    # if the mafioso/goon is roleblocked, the godfather performs the kill
-                    if target.role.name == 'Mafioso' \
-                            and len(self.game.filter_players(role='Godfather')) > 0:
-                        action['player'] = self.game.filter_players(role='Godfather')[
-                            0]
 
         # sort by ascending priorities
         self.actions.sort(key=lambda action: action['priority'])
         for action in self.actions:
             player = action['player']
             target = action['target']
-            await action['player'].role.run_action(self.record, player, target)
+            await action['player'].role.run_action(self.game, self.record, player, target)
 
         # figure out which players died
         dead_players = []

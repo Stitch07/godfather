@@ -12,10 +12,15 @@ class Player:
         self.death_reason = ''
 
     # generates the role's PM
-    @property
-    def role_pm(self):
+    def role_pm(self, game):
+        teammate_info = ''
+        if self.faction.aware:
+            teammates = game.filter_players(faction=self.faction.id)
+            if len(teammates) > 0:
+                teammate_info += f'Your teammates are: {", ".join(map(lambda pl: pl.user.name, teammates))}'
         return (f'Hello {self.user}, you are a **{self.full_role}**. {self.role.description}'
-                f'\n\nWin Condition: {self.faction.win_con}')
+                f'\n{teammate_info}'
+                f'\nWin Condition: {self.faction.win_con}')
 
     @property
     def innocent(self):

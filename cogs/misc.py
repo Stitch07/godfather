@@ -113,7 +113,9 @@ class Misc(commands.Cog):
 
     @eval.error
     async def eval_error(self, ctx, error):
-        return await ctx.send(f'❌ **An error occurred**: ```python\n{error}```')
+        await ctx.send(f'❌ **A error occurred**: ```python\n{error}```')
+        traceback.print_exception(
+            type(error), error, error.__traceback__, file=sys.stderr)
 
 
 def setup(bot):
