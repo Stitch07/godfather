@@ -11,7 +11,7 @@ class Cop(SingleAction):
         self.action_priority = 2
         self.action_text = 'check a player'
 
-    async def run_action(self, night_record, player, target):
+    async def run_action(self, game, night_record, player, target):
         pass
 
     async def after_action(self, player, target, night_record):

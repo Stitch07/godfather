@@ -15,48 +15,58 @@ class SingleAction(Role):
         await player.user.send(output)
 
     async def on_pm_command(self, ctx, game, player, args):
-        can_do_nightaction = self.can_do_action(
-            self, ctx, args) if hasattr(self, 'can_do_action') else True
-        if can_do_nightaction:
-            args = ' '.join(args)
-            if args.isdigit():
-                num = int(args)
-                if num > len(game.players):
-                    return await ctx.send(f'There are only {len(game.players)} playing.')
-                target_pl = game.players[num - 1]
-                target = target_pl.user
-            else:
-                try:
-                    target = await conv.convert(ctx, args)
-                    target_pl = game.get_player(target)
-                except commands.BadArgument:
-                    return await ctx.send('invalid input')
+        can_do, reason = self.can_do_action()
+        if not can_do:
+            return await ctx.send(f'You cannot use your action today. {reason}')
 
-            if target_pl is None or not target_pl.alive:
-                return await ctx.send('Invalid target')
-            if target.id == player.user.id and not self.can_self_target:
-                return await ctx.send(f'As a {self.name}, you cannot self target.')
+        args = ' '.join(args)
+        if args.isdigit():
+            num = int(args)
+            if num > len(game.players):
+                return await ctx.send(f'There are only {len(game.players)} playing.')
+            target_pl = game.players[num - 1]
+            target = target_pl.user
+        else:
+            try:
+                target = await conv.convert(ctx, args)
+                target_pl = game.get_player(target)
+            except commands.BadArgument:
+                return await ctx.send('invalid input')
+
+        if target_pl is None or not target_pl.alive:
+            return await ctx.send('Invalid target')
+        if target.id == player.user.id and not self.can_self_target:
+            return await ctx.send(f'As a {self.name}, you cannot self target.')
+        for action in game.night_actions.actions:
+            if action['player'].user.id == player.user.id:
+                game.night_actions.actions.remove(action)
+
+        # special godfather stuff
+        if self.name == 'Godfather' and len(game.filter_players(role='Goon')) > 0:
+            goon = game.filter_players(role='Goon')[0]
             for action in game.night_actions.actions:
-                if action['player'].user.id == player.user.id:
+                if action['player'].role.name == 'Goon':
                     game.night_actions.actions.remove(action)
-
-            # special godfather stuff
-            if self.name == 'Godfather' and len(game.filter_players(role='Goon')) > 0:
-                player = game.filter_players(role='Goon')[0]
-                for action in game.night_actions.actions:
-                    if action['player'].role.name == 'Goon':
-                        game.night_actions.actions.remove(action)
-
             game.night_actions.add_action({
                 'action': self.action,
-                'player': player,
+                'player': goon,
                 'target': target_pl,
                 'priority': self.action_priority
             })
-            await ctx.send(f'You are {self.action_gerund} {target} tonight.')
 
-            if len(game.filter_players(action_only=True, alive=True)) == len(game.night_actions.actions):
-                await game.increment_phase(ctx.bot)
+        game.night_actions.add_action({
+            'action': self.action,
+            'player': player,
+            'target': target_pl,
+            'priority': self.action_priority
+        })
+        await ctx.send(f'You are {self.action_gerund} {target} tonight.')
+
+        if len(game.filter_players(action_only=True, alive=True)) == len(game.night_actions.actions):
+            await game.increment_phase(ctx.bot)
 
     async def after_action(self, player, target, night_record):
         pass
+
+    async def can_do_action(self):
+        return True, ''

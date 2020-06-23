@@ -9,11 +9,9 @@ class Role:
     def __str__(self):
         return self.name
 
+    def can_do_action(self):
+        return False, ''
+
     # called when a player is lynched. takes the game object, and the player lynched
     async def on_lynch(self, game, player):
-        pass
-
-    # called when a player dies
-    # TODO: merge on_lynch and on_death
-    async def on_death(self, player, game):
         pass

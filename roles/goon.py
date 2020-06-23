@@ -1,9 +1,9 @@
-from roles.mixins import SingleAction, Shooter
+from roles.mixins import SingleAction, Shooter, MafiaMember
 
 DESCRIPTION = 'You may shoot someone every night.'
 
 
-class Goon(SingleAction, Shooter):
+class Goon(SingleAction, Shooter, MafiaMember):
     def __init__(self):
         super().__init__(name='Goon', role_id='goon', description=DESCRIPTION)
 

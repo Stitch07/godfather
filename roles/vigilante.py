@@ -21,13 +21,12 @@ class Vigilante(SingleAction, Shooter):
         else:
             await super().on_night(bot, player, game)
 
-    async def on_pm_command(self, ctx, game, player, args):
+    async def can_do_action(self):
         if self.guilty:
-            await player.user.send('You cannot shoot.')
-        else:
-            if self.bullets <= 0:
-                return await ctx.send("You're out of bullets!")
-            await super().on_pm_command(ctx, game, player, args)
+            return False, ''
+        if self.bullets <= 0:
+            return False, 'You ran out of bullets!'
+        return True, ''
 
     async def after_action(self, player, target, night_record):
         record = night_record[target.user.id]['nightkill']

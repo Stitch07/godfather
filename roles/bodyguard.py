@@ -12,7 +12,7 @@ class Bodyguard(SingleAction):
         self.action_text = 'guard a player'
         self.can_self_target = True  # one self-heal allowed
 
-    async def run_action(self, night_record, player, target):
+    async def run_action(self, game, night_record, player, target):
         pl_record = night_record[target.user.id]
         if pl_record['nightkill']['result']:
             # kill the attacker
