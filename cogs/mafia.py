@@ -113,7 +113,7 @@ class Mafia(commands.Cog):
         game = self.bot.games[ctx.guild.id]
         player = game.get_player(ctx.author)
         try:
-            await player.user.send(player.role_pm)
+            await player.user.send(player.role_pm(game))
             await ctx.message.add_reaction('✅')
         except discord.Forbidden:
             await ctx.send('Cannot send you your role PM. Make sure your DMs are enabled!')
@@ -156,9 +156,14 @@ class Mafia(commands.Cog):
 
                 # send role PMs
                 try:
-                    await player.user.send(player.role_pm)
+                    await player.user.send(player.role_pm(game))
                 except discord.Forbidden:
                     no_dms.append(player.user)
+
+            for player in filter(lambda pl: pl.faction.informed, game.players):
+                teammates = game.filter_players(faction=player.faction.id)
+                if len(teammates) > 1:
+                    await player.user.send(f'Your teammates are: {", ".join(map(lambda pl: pl.user.name, teammates))}')
 
         await ctx.send('Sent all role PMs!')
 
@@ -190,12 +195,14 @@ class Mafia(commands.Cog):
         await ctx.send(f'Voted {target.name}')
         votes_on_target = len(game.get_player(target).votes)
 
-        if votes_on_target >= game.majority_votes:
+        if votes_on_target >= game.majority_votes and not game.phase == Phase.STANDBY:
+            game.phase = Phase.STANDBY
             await game.lynch(game.get_player(target))
             game_ended, winning_faction, individual_wins = game.check_endgame()
             if game_ended:
                 await game.end(self.bot, winning_faction, individual_wins)
             else:
+                game.phase = Phase.DAY
                 await game.increment_phase(self.bot)
                 # change phase after this.
 

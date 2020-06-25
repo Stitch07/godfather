@@ -8,7 +8,7 @@ class Consort(SingleAction):
         super().__init__(name='Consort', role_id='consort', description=DESCRIPTION)
         self.action = 'block'
         self.action_gerund = 'blocking'
-        self.action_priority = None  # doesn't matter here
+        self.action_priority = 3  # doesn't matter here
         self.action_text = 'roleblock a player'
 
     async def run_action(self, game, night_record, player, target):

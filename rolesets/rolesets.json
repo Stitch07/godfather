@@ -17,7 +17,7 @@
         ]
     },
     {
-        "name": "gftest",
+        "name": "jestertest",
         "roles": [
             {
                 "id": "vigilante",
@@ -32,8 +32,8 @@
                 "faction": "mafia"
             },
             {
-                "id": "goon",
-                "faction": "mafia"
+                "id": "jester",
+                "faction": "neutral.jester"
             },
             {
                 "id": "escort",
@@ -63,19 +63,43 @@
         ]
     },
     {
-        "name": "bgtest",
+        "name": "notreallymatrix6",
         "roles": [
             {
-                "id": "goon",
-                "faction": "mafia"
+                "id": "vanilla",
+                "faction": "town"
             },
             {
                 "id": "vanilla",
                 "faction": "town"
             },
             {
-                "id": "bodyguard",
+                "id": "vanilla",
                 "faction": "town"
+            },
+            {
+                "id": "vanilla",
+                "faction": "town"
+            },
+            {
+                "id": "escort",
+                "faction": "town"
+            },
+            {
+                "id": "cop",
+                "faction": "town"
+            },
+            {
+                "id": "doctor",
+                "faction": "town"
+            },
+            {
+                "id": "goon",
+                "faction": "mafia"
+            },
+            {
+                "id": "consort",
+                "faction": "mafia"
             }
         ]
     }

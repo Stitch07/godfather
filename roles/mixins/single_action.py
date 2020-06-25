@@ -7,6 +7,9 @@ conv = commands.MemberConverter()
 class SingleAction(Role):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.can_block = True
+        self.can_transport = True
+        self.can_self_target = False
 
     async def on_night(self, bot, player, game):
         output = f'It is now night {game.cycle}. Use the {bot.command_prefix}{self.action} command to {self.action_text}. ' \
@@ -20,18 +23,26 @@ class SingleAction(Role):
             return await ctx.send(f'You cannot use your action today. {reason}')
 
         args = ' '.join(args)
-        if args.isdigit():
-            num = int(args)
-            if num > len(game.players):
-                return await ctx.send(f'There are only {len(game.players)} playing.')
-            target_pl = game.players[num - 1]
-            target = target_pl.user
-        else:
-            try:
-                target = await conv.convert(ctx, args)
-                target_pl = game.get_player(target)
-            except commands.BadArgument:
-                return await ctx.send('invalid input')
+
+        if args == 'noaction':
+            for action in game.night_actions.actions:
+                if action['player'].user.id == player.user.id:
+                    game.night_actions.actions.remove(action)
+            game.night_actions.add_action({
+                'action': None,
+                'player': player,
+                'priority': 0
+            })
+            return await ctx.send('You decided to stay home tonight.')
+
+        if not args.isdigit():
+            return await ctx.send('Pick a valid number from the playerlist.')
+
+        num = int(args)
+        if num > len(game.players):
+            return await ctx.send(f'There are only {len(game.players)} playing.')
+        target_pl = game.players[num - 1]
+        target = target_pl.user
 
         if target_pl is None or not target_pl.alive:
             return await ctx.send('Invalid target')
@@ -51,14 +62,18 @@ class SingleAction(Role):
                 'action': self.action,
                 'player': goon,
                 'target': target_pl,
-                'priority': self.action_priority
+                'priority': self.action_priority,
+                'can_block': self.can_block,
+                'can_transport': self.can_transport
             })
 
         game.night_actions.add_action({
             'action': self.action,
             'player': player,
             'target': target_pl,
-            'priority': self.action_priority
+            'priority': self.action_priority,
+            'can_block': self.can_block,
+            'can_transport': self.can_transport
         })
         await ctx.send(f'You are {self.action_gerund} {target} tonight.')
 
@@ -68,5 +83,5 @@ class SingleAction(Role):
     async def after_action(self, player, target, night_record):
         pass
 
-    async def can_do_action(self):
+    def can_do_action(self):
         return True, ''

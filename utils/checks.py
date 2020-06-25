@@ -1,5 +1,4 @@
 from discord.ext import commands
-from game import Phase
 
 
 def game_only():
@@ -24,7 +23,7 @@ def host_only():
 def day_only():
     async def predicate(ctx):
         game = ctx.bot.games[ctx.guild.id]
-        if game.phase != Phase.DAY:
+        if not game.phase == 2:  # this is Phase.DAY, can't have circular imports
             await ctx.send('This command can only be used during the day.')
             return False
         return True

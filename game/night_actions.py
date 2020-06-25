@@ -37,7 +37,7 @@ class NightActions:
             roleblocker = rb['player']
             for action in self.actions:
                 if action['player'].user.id == target.user.id:
-                    if 'rb_immune' in action and action['rb_immune']:
+                    if 'can_block' in action and not action['can_block']:
                         continue
                     # remove the action, getting roleblocked
                     self.actions.remove(action)
@@ -45,9 +45,18 @@ class NightActions:
                     self.record[target.user.id]['roleblock']['by'].append(
                         roleblocker.user.id)
 
+        # if the mafioso isn't roleblocked, remove GF action
+        if any(filter(lambda action: action['player'].role.name == 'Goon', self.actions)):
+            for action in self.actions:
+                if action['player'].role.name == 'Godfather':
+                    self.actions.remove(action)
+
         # sort by ascending priorities
         self.actions.sort(key=lambda action: action['priority'])
         for action in self.actions:
+            # noaction, just ignore
+            if action['action'] is None:
+                continue
             player = action['player']
             target = action['target']
             await action['player'].role.run_action(self.game, self.record, player, target)
@@ -63,12 +72,14 @@ class NightActions:
 
          # after action clean-up
         for action in self.actions:
+            if action['action'] is None:
+                return
             player = action['player']
             target = action['target']
             await player.role.after_action(player, target, self.record)
 
         announcement = ''
         for player in dead_players:
-            announcement = announcement + \
-                f'{player.user.name} died last night. They were a {player.full_role}\n'
+            announcement += f'{player.user.name} died last night. They were a {player.full_role}\n'
+        print(announcement)
         return announcement

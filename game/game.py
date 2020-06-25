@@ -8,6 +8,7 @@ from datetime import datetime, timedelta
 import discord
 from .player import Player
 from .night_actions import NightActions
+import utils
 
 rolesets = json.load(open('rolesets/rolesets.json'))
 
@@ -97,19 +98,15 @@ class Game:
             # TODO: make limits configurable
             await self.channel.send(f'Day **{self.cycle}** will last {phase_t} minutes. With {alive_players} alive, it takes {self.majority_votes} to lynch.')
         else:
-            self.phase = Phase.NIGHT
+            self.phase = Phase.STANDBY
             await self.channel.send(f'Night **{self.cycle}** will last {phase_t} minutes. Send in those actions quickly!')
 
             # recently lynched jesters and alive players are allowed to send in actions
-            def alive_or_recent_jester(player):
-                if player.role.role_id == 'jester' and not player.alive \
-                        and player.death_reason == f'lynched D{self.cycle}':
-                    return True
-                return player.alive
-
-            for player in filter(alive_or_recent_jester, self.players):
+            for player in filter(lambda p: utils.alive_or_recent_jester(p, self), self.players):
                 if hasattr(player.role, 'on_night'):
                     await player.role.on_night(bot, player, self)
+
+            self.phase = Phase.NIGHT
 
         self.phase_end_at = datetime.now() \
             + timedelta(seconds=self.config['phase_time'])
@@ -136,7 +133,7 @@ class Game:
                        alive: bool = False):
         plist = self.players
 
-        def action_only(pl):
+        def action_only_filter(pl):
             can_do, _ = pl.role.can_do_action()
             return can_do
 
@@ -154,7 +151,7 @@ class Game:
         if votecount:
             plist = [*filter(lambda pl: votecount(len(pl.votes)), plist)]
         if action_only:
-            plist = [*filter(action_only, plist)]
+            plist = [*filter(action_only_filter, plist)]
         if alive:
             plist = [*filter(lambda pl: pl.alive, plist)]
         if pl_id:
