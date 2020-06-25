@@ -22,3 +22,10 @@ def from_now(t1: datetime):
         result += ' ago'
 
     return result
+
+
+def alive_or_recent_jester(player, game):
+    if player.role.role_id == 'jester' and not player.alive \
+            and player.death_reason == f'lynched D{game.cycle}':
+        return True
+    return player.alive

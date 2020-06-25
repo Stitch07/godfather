@@ -21,7 +21,7 @@ class Doctor(SingleAction):
             pl_record['heal']['by'].append(player.user.id)
 
     async def after_action(self, player, target, night_record):
-        record = night_record[target.user.id].get('heal')
+        record = night_record[target.user.id]['heal']
         success = record['result'] and player.user.id in record['by']
 
         if success:

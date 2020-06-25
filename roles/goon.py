@@ -8,7 +8,7 @@ class Goon(SingleAction, Shooter, MafiaMember):
         super().__init__(name='Goon', role_id='goon', description=DESCRIPTION)
 
     async def after_action(self, player, target, night_record):
-        record = night_record[target.user.id].get('nightkill')
+        record = night_record[target.user.id]['nightkill']
         success = record['result'] and player in record['by']
 
         if not success:

@@ -5,6 +5,7 @@ import discord
 from discord.ext import commands
 import roles  # pylint: disable=import-error
 import game  # pylint: disable=import-error
+import utils
 
 
 def remove_prefix(text, prefix):
@@ -55,11 +56,15 @@ class Misc(commands.Cog):
             pl_game = games[0]
             player = pl_game.get_player(ctx.author)
 
-            if not player.alive or not hasattr(player.role, 'action'):
+            if not utils.alive_or_recent_jester(player, pl_game) \
+                    or not hasattr(player.role, 'action'):
                 return
-            if player.role.action != command.lower():
+            if command.lower() not in [player.role.action, 'noaction']:
                 return
+            if command.lower() == 'noaction':
+                args = ['noaction']
             await player.role.on_pm_command(ctx, pl_game, player, args)
+
             return  # ignore invalid commands
         elif isinstance(error, commands.MissingRequiredArgument):
             return await ctx.send(f'Missing required argument {error.param}')

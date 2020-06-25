@@ -1,8 +1,5 @@
 class MafiaMember:
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
     async def on_death(self, game, player):
         # mafioso becomes new gf and stuff here
         if player.role.name == 'Godfather':
@@ -13,7 +10,7 @@ class MafiaMember:
             # goon becomes the new Godfather
             goon.role = player.role
             await goon.user.send('You have been promoted to a Godfather!')
-            await goon.user.send(goon.role_pm)
+            await goon.user.send(goon.role_pm(game))
 
         # other roles become new mafioso
         if player.role.name == 'Goon':
@@ -27,5 +24,5 @@ class MafiaMember:
                 return
             new_goon = other_mafia[0]
             new_goon.role = player.role
-            await goon.user.send('You have been promoted to a Goon!')
-            await new_goon.user.send(new_goon.role_pm)
+            await new_goon.user.send('You have been promoted to a Goon!')
+            await new_goon.user.send(new_goon.role_pm(game))
