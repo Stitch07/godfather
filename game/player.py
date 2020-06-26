@@ -1,5 +1,9 @@
 import discord
+from discord.ext import commands
+from discord.ext.commands import errors
 import typing
+
+conv = commands.MemberConverter()
 
 
 class Player:
@@ -45,3 +49,24 @@ class Player:
         self.death_reason = reason
         if hasattr(self.role, 'on_death'):
             await self.role.on_death(game, self)
+
+    @classmethod
+    async def convert(cls, ctx, argument):
+        # follow the strategy: numbers, names, standard discord.py conversions
+        game = ctx.bot.games[ctx.guild.id]
+        if argument.isdigit() and \
+                int(argument) > 0 and \
+                int(argument) <= len(game.players):
+            return game.players[int(argument) - 1]
+
+        found_member = None
+        # case sensitive username search
+        for member in ctx.guild.members:
+            if member.name.lower() == argument.lower():
+                found_member = member
+
+        if found_member is None:
+            found_member = await conv.convert(ctx, argument)
+        if found_member is None or not game.has_player(found_member):
+            raise errors.BadArgument('Player {} not found'.format(argument))
+        return game.get_player(found_member)

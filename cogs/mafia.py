@@ -11,7 +11,6 @@ from roles import all_roles  # pylint: disable=import-error
 from utils import get_random_sequence, from_now, game_only, game_started_only, host_only, day_only, player_only
 
 
-
 class Mafia(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -116,6 +115,8 @@ class Mafia(commands.Cog):
         for role in all_roles.values():
             role = role()  # initialize the class
             if role.name.lower() == rolename.lower():
+                if role.__doc__ == None:
+                    return await ctx.send('No documentation on {} available.'.format(rolename))
                 text = [f'**{role.name}**', '```diff']
                 text.append(inspect.getdoc(role))
                 text.append('```')
@@ -193,27 +194,26 @@ class Mafia(commands.Cog):
     @ game_started_only()
     @ player_only()
     @ game_only()
-    async def vote(self, ctx: commands.Context, target: discord.Member):
+    async def vote(self, ctx: commands.Context, *, target: Player):
         game = self.bot.games[ctx.guild.id]
 
-        if not game.has_player(target):
-            return await ctx.send(f'Player {target.name} not found in game.')
-        elif not game.get_player(target).alive:
-            return await ctx.send('You can\'t vote a dead player')
-        elif game.get_player(target).has_vote(ctx.author):
-            return await ctx.send(f'You have already voted {target.name}')
-        if target == ctx.author:
-            return await ctx.send('Self-voting is not allowed.')
+        if not target.alive:
+            return await ctx.send("You can't vote a dead player.")
+        elif target.has_vote(ctx.author):
+            return await ctx.send('You have already voted {}'.format(target.user.name))
+        elif target.user.id == ctx.author.id:
+            return await ctx.send('Self-voting is not allowed')
+
         for voted in game.filter_players(is_voted_by=ctx.author):
             voted.remove_vote(ctx.author)
 
-        game.get_player(target).votes.append(game.get_player(ctx.author))
-        await ctx.send(f'Voted {target.name}')
-        votes_on_target = len(game.get_player(target).votes)
+        target.votes.append(game.get_player(ctx.author))
+        await ctx.send(f'Voted {target.user.name}')
+        votes_on_target = len(target.votes)
 
         if votes_on_target >= game.majority_votes and not game.phase == Phase.STANDBY:
             game.phase = Phase.STANDBY
-            await game.lynch(game.get_player(target))
+            await game.lynch(target)
             game_ended, winning_faction, individual_wins = game.check_endgame()
             if game_ended:
                 await game.end(self.bot, winning_faction, individual_wins)
