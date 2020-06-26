@@ -8,7 +8,8 @@ from discord.ext import commands
 from factions import factions
 from game import Game, Player, Phase  # pylint: disable=import-error
 from roles import all_roles  # pylint: disable=import-error
-from utils import get_random_sequence, from_now, game_only, game_started_only, host_only, day_only, player_only
+from cogs.mafia import game_only, game_started_only, host_only, day_only, player_only
+from utils import get_random_sequence, from_now
 
 
 class Mafia(commands.Cog):
@@ -252,7 +253,3 @@ class Mafia(commands.Cog):
 
         msg += f'With {num_alive} alive, it takes {game.majority_votes} to lynch.'
         return await ctx.send(msg)
-
-
-def setup(bot):
-    bot.add_cog(Mafia(bot))

@@ -1,5 +1,5 @@
 from discord.ext import commands
-from utils import host_only, game_only
+from cogs.mafia import host_only, game_only
 import math
 
 

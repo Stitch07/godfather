@@ -4,6 +4,17 @@ DESCRIPTION = 'You can order the mafioso to shoot someone every night.'
 
 
 class Godfather(SingleAction, Shooter, MafiaMember):
+    """
+    The leader of organized crime.
+
+    - Win Condition: Kill anyone that will not submit to the Mafia.
+
+    + Abilities:
+    + You may order the Goon to attack your target.
+    + If there is no Goon/the Goon is roleblocked, you will attack the target instead.
+    + You have a Basic Defense, and will appear as innocent to the cop.
+    """
+
     def __init__(self):
         super().__init__(name='Godfather', role_id='godfather', description=DESCRIPTION)
         self.action = 'shoot'

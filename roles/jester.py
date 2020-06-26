@@ -7,10 +7,9 @@ class Jester(SingleAction):
     """
     A crazed lunatic whose life goal is to be publicly executed.
 
-    - Abilities: Trick the Town into voting against you.
     - Win Condition: Get yourself lynched by any means necessary.
 
-    + If you are lynched you will attack one of your guilty voters the following night with an Unstoppable attack.
+    + Abilities: If you are lynched, you will attack one of your guilty voters the following night with an Unstoppable attack.
     """
 
     def __init__(self):

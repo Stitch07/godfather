@@ -6,9 +6,9 @@ import math
 import copy
 from datetime import datetime, timedelta
 import discord
+import utils
 from .player import Player
 from .night_actions import NightActions
-import utils
 
 rolesets = json.load(open('rolesets/rolesets.json'))
 
