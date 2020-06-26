@@ -229,6 +229,8 @@ class Game:
                     cur2.execute(query)
 
             bot.db.conn.commit()
+            bot.logger.debug(
+                'Added stats for {} players.'.format(len(self.players)))
 
         del bot.games[self.guild.id]
 

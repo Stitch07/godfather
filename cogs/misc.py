@@ -37,7 +37,8 @@ class Misc(commands.Cog):
         # initialize games map
         self.bot.games = {}
         self.bot.get_cog('EventLoop').event_loop.start()
-        print('Ready!')
+        self.bot.logger.info(
+            'Ready to serve {} guilds!'.format(len(self.bot.guilds)))
 
     @commands.Cog.listener()
     async def on_command_error(self, ctx, error):
@@ -76,8 +77,7 @@ class Misc(commands.Cog):
             # checks are handled in the predicates
             return
         await ctx.send(f'Uncaught exception: ```{error}```')
-        traceback.print_exception(
-            type(error), error, error.__traceback__, file=sys.stderr)
+        await self.bot.logger.exception(error)
 
     @commands.command()
     async def ping(self, ctx):
@@ -132,8 +132,7 @@ class Misc(commands.Cog):
     @eval.error
     async def eval_error(self, ctx, error):
         await ctx.send(f'❌ **A error occurred**: ```python\n{error}```')
-        traceback.print_exception(
-            type(error), error, error.__traceback__, file=sys.stderr)
+        self.bot.logger.exception(error)
 
 
 def setup(bot):
