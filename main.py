@@ -2,6 +2,7 @@ import json
 import os
 import glob
 from discord.ext import commands
+import database
 
 
 config = json.load(open('config.json'))
@@ -14,5 +15,9 @@ if __name__ == '__main__':
     for cog in cogs:
         bot.load_extension(
             f'cogs.{os.path.basename(os.path.splitext(cog)[0])}')
+
+# setup Postgres
+if 'postgres' in config:
+    bot.db = database.DB(**config.get('postgres'))
 
 bot.run(config.get('token'))

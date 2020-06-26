@@ -134,6 +134,8 @@ class Game:
         plist = self.players
 
         def action_only_filter(pl):
+            if not utils.alive_or_recent_jester(pl, self):
+                return False
             can_do, _ = pl.role.can_do_action()
             return can_do
 
@@ -187,12 +189,12 @@ class Game:
                 if player.alive:
                     usrname += f'+ {n+1}. {player.user}'
                 else:
-                    usrname += f'- {n+1}. {player.user} ({player.death_reason})'
+                    usrname += f'- {n+1}. {player.user} ({player.full_role}; {player.death_reason})'
             else:
                 if player.alive:
-                    usrname += f'{n+1} {player.user}'
+                    usrname += f'{n+1}. {player.user}'
                 else:
-                    usrname += f'{n+1}. ~~{player.user}~~ ({player.death_reason})'
+                    usrname += f'{n+1}. ~~{player.user}~~ ({player.full_role}; {player.death_reason})'
 
             players.append(usrname)
         return '\n'.join(players)
@@ -208,13 +210,32 @@ class Game:
                     await self.channel.send(f'Individual wins: {", ".join(individual_wins)}')
         full_rolelist = '\n'.join(
             [f'{i+1}. {player.user.name} ({player.full_role})' for i, player in enumerate(self.players)])
+
         await self.channel.send(f'**Final Rolelist**: ```{full_rolelist}```')
+        # update player stats
+        if bot.db:
+            with bot.db.conn.cursor() as cur:
+                cur.execute("INSERT INTO games (setup, winning_faction) VALUES (%s, %s) RETURNING id;",
+                            (self.setup_id, winning_faction))
+                game_id, = cur.fetchone()
+                with bot.db.conn.cursor() as cur2:
+                    values = []
+                    for player in self.players:
+                        win = player.user.name in individual_wins or player.faction.name == winning_faction
+                        values.append(cur2.mogrify('(%s, %s, %s, %s, %s)',
+                                                   (player.user.id, player.faction.name, player.role.name, game_id, win)).decode('utf-8'))
+                    query = "INSERT INTO players (player_id, faction, role_name, game_id, result) VALUES " + \
+                        ",".join(values) + ";"
+                    cur2.execute(query)
+
+            bot.db.conn.commit()
+
         del bot.games[self.guild.id]
 
-    @property
+    @ property
     def has_started(self):  # this might be useful
         return not self.phase == Phase.PREGAME
 
-    @property
+    @ property
     def majority_votes(self):
         return math.floor(len(self.filter_players(alive=True)) / 2) + 1

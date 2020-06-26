@@ -2,12 +2,14 @@ import json
 import typing
 import random
 import copy
+import inspect
 import discord
 from discord.ext import commands
 from factions import factions
 from game import Game, Player, Phase  # pylint: disable=import-error
 from roles import all_roles  # pylint: disable=import-error
 from utils import get_random_sequence, from_now, game_only, game_started_only, host_only, day_only, player_only
+
 
 
 class Mafia(commands.Cog):
@@ -105,6 +107,20 @@ class Mafia(commands.Cog):
                 f'{i+1}. {role["faction"].title()} {role["id"].title()}')
         txt.append('```')
         await ctx.send('\n'.join(txt))
+
+    @commands.command()
+    async def roleinfo(self, ctx: commands.Context, *, rolename: typing.Optional[str] = None):
+        if rolename is None:
+            # show all available roles here sometime
+            return
+        for role in all_roles.values():
+            role = role()  # initialize the class
+            if role.name.lower() == rolename.lower():
+                text = [f'**{role.name}**', '```diff']
+                text.append(inspect.getdoc(role))
+                text.append('```')
+                return await ctx.send('\n'.join(text))
+        await ctx.send("Couldn't find that role!")
 
     @ commands.command()
     @ game_only()

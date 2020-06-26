@@ -83,6 +83,19 @@ class Misc(commands.Cog):
     async def ping(self, ctx):
         await ctx.send('Pong!')
 
+    # just a basic proof of concept
+    @commands.command()
+    @commands.is_owner()
+    async def userstats(self, ctx):
+        with self.bot.db.conn.cursor() as cur:
+            cur.execute(
+                'SELECT result, COUNT(result) FROM players WHERE player_id=%s GROUP BY result ORDER BY result DESC;', [str(ctx.author.id)])
+            win_res, loss_res = cur.fetchall()
+            wins = win_res[1]
+            losses = loss_res[1]
+            total = wins + losses
+            await ctx.send(f'Games: {total}\nWins: {wins}\nWinrate: {round(100 * wins/total)}%')
+
     @commands.command()
     @commands.is_owner()
     async def eval(self, ctx, *, cmd):

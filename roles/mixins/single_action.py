@@ -28,6 +28,7 @@ class SingleAction(Role):
             for action in game.night_actions.actions:
                 if action['player'].user.id == player.user.id:
                     game.night_actions.actions.remove(action)
+
             game.night_actions.add_action({
                 'action': None,
                 'player': player,
@@ -44,10 +45,12 @@ class SingleAction(Role):
         target_pl = game.players[num - 1]
         target = target_pl.user
 
-        if target_pl is None or not target_pl.alive:
-            return await ctx.send('Invalid target')
-        if target.id == player.user.id and not self.can_self_target:
-            return await ctx.send(f'As a {self.name}, you cannot self target.')
+        if target_pl is None:
+            return await ctx.send('Invalid input')
+        can_target, reason = self.can_target(player, target_pl)
+        if not can_target:
+            return await ctx.send(reason)
+
         for action in game.night_actions.actions:
             if action['player'].user.id == player.user.id:
                 game.night_actions.actions.remove(action)
@@ -77,11 +80,18 @@ class SingleAction(Role):
         })
         await ctx.send(f'You are {self.action_gerund} {target} tonight.')
 
-        if len(game.filter_players(action_only=True, alive=True)) == len(game.night_actions.actions):
+        if len(game.filter_players(action_only=True)) == len(game.night_actions.actions):
             await game.increment_phase(ctx.bot)
 
     async def after_action(self, player, target, night_record):
         pass
 
     def can_do_action(self):
+        return True, ''
+
+    def can_target(self, player, target):
+        if not target.alive:
+            return False, 'You cannot target dead players.'
+        if target.user.id == player.user.id and not self.can_self_target:
+            return False, f'As a {self.name}, you cannot self target.'
         return True, ''
