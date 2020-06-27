@@ -66,10 +66,10 @@ class Mafia(commands.Cog):
 
     @commands.command()
     @game_only()
-    async def playerlist(self, ctx: commands.Context):
+    async def list_players_life_status(self, ctx: commands.Context):
         game = self.bot.games[ctx.guild.id]
         msg = f'**Players: {len(game.players)}**\n'
-        msg += game.playerlist()
+        msg += game.list_players_life_status()
 
         return await ctx.send(msg)
 

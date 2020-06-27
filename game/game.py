@@ -180,7 +180,7 @@ class Game:
         await target.remove(self, f'lynched D{self.cycle}')
 
     # since this is needed in a couple of places
-    def playerlist(self, codeblock=False):
+    def list_players_life_status(self, codeblock=False):
         players = []
         for n, player in enumerate(self.players, 1):
             # codeblock friendly formatting. green for alive, red for dead
