@@ -90,8 +90,8 @@
                 "faction": "town"
             },
             {
-                "id": "doctor",
-                "faction": "town"
+                "id": "jester",
+                "faction": "neutral.jester"
             },
             {
                 "id": "goon",
@@ -99,6 +99,51 @@
             },
             {
                 "id": "consort",
+                "faction": "mafia"
+            }
+        ]
+    },
+    {
+        "name": "matrix7maybe?",
+        "roles": [
+            {
+                "id": "vanilla",
+                "faction": "town"
+            },
+            {
+                "id": "vanilla",
+                "faction": "town"
+            },
+            {
+                "id": "vanilla",
+                "faction": "town"
+            },
+            {
+                "id": "doctor",
+                "faction": "town"
+            },
+            {
+                "id": "vigilante",
+                "faction": "town"
+            },
+            {
+                "id": "escort",
+                "faction": "town"
+            },
+            {
+                "id": "cop",
+                "faction": "town"
+            },
+            {
+                "id": "serial_killer",
+                "faction": "neutral.serialkiller"
+            },
+            {
+                "id": "godfather",
+                "faction": "mafia"
+            },
+            {
+                "id": "goon",
                 "faction": "mafia"
             }
         ]
