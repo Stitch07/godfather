@@ -182,19 +182,19 @@ class Game:
     # since this is needed in a couple of places
     def playerlist(self, codeblock=False):
         players = []
-        for n, player in enumerate(self.players):
+        for n, player in enumerate(self.players, 1):
             # codeblock friendly formatting. green for alive, red for dead
             usrname = ''
             if codeblock:
                 if player.alive:
-                    usrname += f'+ {n+1}. {player.user}'
+                    usrname += f'+ {n}. {player.user}'
                 else:
-                    usrname += f'- {n+1}. {player.user} ({player.display_role}; {player.death_reason})'
+                    usrname += f'- {n}. {player.user} ({player.display_role}; {player.death_reason})'
             else:
                 if player.alive:
-                    usrname += f'{n+1}. {player.user}'
+                    usrname += f'{n}. {player.user}'
                 else:
-                    usrname += f'{n+1}. ~~{player.user}~~ ({player.display_role}; {player.death_reason})'
+                    usrname += f'{n}. ~~{player.user}~~ ({player.display_role}; {player.death_reason})'
 
             players.append(usrname)
         return '\n'.join(players)
