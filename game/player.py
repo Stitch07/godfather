@@ -14,10 +14,11 @@ class Player:
         self.alive = True
         self.votes: typing.List[Player] = []
         self.death_reason = ''
+        self.visitors = []
 
     # generates the role's PM
     def role_pm(self, game):
-        return (f'Hello {self.user}, you are a **{self.full_role}**. {self.role.description}'
+        return (f'Hello {self.user}, you are a **{self.display_role}**. {self.role.description}'
                 f'\nWin Condition: {self.faction.win_con}')
 
     @property
@@ -33,6 +34,17 @@ class Player:
         if self.faction.id.startswith('neutral'):
             return self.role
         return f'{self.faction} {self.role}'
+
+    @property
+    def display_role(self):
+        if self.faction.id.startswith('neutral'):
+            return self.role.display_role()
+        return f'{self.faction} {self.role.display_role()}'
+
+    async def visit(self, visitor, record):
+        self.visitors.append(visitor)
+        if hasattr(self.role, 'visited'):
+            await self.role.visited(self, visitor, record)
 
     # remove vote by 'user' from player
     def remove_vote(self, user: discord.Member):

@@ -59,6 +59,8 @@ class NightActions:
                 continue
             player = action['player']
             target = action['target']
+            if not target.user.id == player.user.id:
+                await target.visit(player, self.record)
             await action['player'].role.run_action(self.game, self.record, player, target)
 
         # figure out which players died
@@ -80,5 +82,5 @@ class NightActions:
 
         announcement = ''
         for player in dead_players:
-            announcement += f'{player.user.name} died last night. They were a {player.full_role}\n'
+            announcement += f'{player.user.name} died last night. They were a {player.display_role}\n'
         return announcement

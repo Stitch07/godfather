@@ -21,7 +21,7 @@ class Vigilante(SingleAction, Shooter):
         else:
             await super().on_night(bot, player, game)
 
-    def can_do_action(self):
+    def can_do_action(self, game):
         if self.guilty:
             return False, ''
         if self.bullets <= 0:
