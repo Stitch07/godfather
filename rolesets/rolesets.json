@@ -42,18 +42,22 @@
         ]
     },
     {
-        "name": "fake4",
+        "name": "fake5",
         "roles": [
             {
                 "id": "vanilla",
                 "faction": "town"
             },
             {
-                "id": "vanilla",
+                "id": "doctor",
                 "faction": "town"
             },
             {
-                "id": "vigilante",
+                "id": "cop",
+                "faction": "town"
+            },
+            {
+                "id": "lookout",
                 "faction": "town"
             },
             {
