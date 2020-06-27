@@ -82,5 +82,5 @@ class NightActions:
 
         announcement = ''
         for player in dead_players:
-            announcement += f'{player.user.name} died last night. They were a {player.full_role}\n'
+            announcement += f'{player.user.name} died last night. They were a {player.display_role}\n'
         return announcement

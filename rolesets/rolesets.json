@@ -67,6 +67,32 @@
         ]
     },
     {
+        "name": "dethy",
+        "night_start": true,
+        "roles": [
+            {
+                "id": "cop",
+                "faction": "town"
+            },
+            {
+                "id": "insane_cop",
+                "faction": "town"
+            },
+            {
+                "id": "naive_cop",
+                "faction": "town"
+            },
+            {
+                "id": "paranoid_cop",
+                "faction": "town"
+            },
+            {
+                "id": "goon",
+                "faction": "mafia"
+            }
+        ]
+    },
+    {
         "name": "notreallymatrix6",
         "roles": [
             {
