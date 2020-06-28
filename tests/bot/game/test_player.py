@@ -20,9 +20,9 @@ class PlayerTestCase(unittest.TestCase):
         mock_faction = Mock(win_con='Gets rid of lemons.')
 
         with patch(
-            'game.player.Player.full_role', new_callable=PropertyMock
-        ) as mock_full_role:
-            mock_full_role.return_value = 'Neutral Role'
+            'game.player.Player.display_role', new_callable=PropertyMock
+        ) as mock_display_role:
+            mock_display_role.return_value = 'Neutral Role'
             player = Player(user=mock_user)
             player.user = 'LemonGrass#3333'
             player.role = mock_role

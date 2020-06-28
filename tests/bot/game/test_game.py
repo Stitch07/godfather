@@ -10,7 +10,7 @@ class MockFaction(Mock):
 
 class MockPlayer(Mock):
     user: str
-    full_role: str
+    display_role: str
     alive: bool
     death_reason: str
 
@@ -20,7 +20,6 @@ class GameSyncTestCase(unittest.TestCase):
         self.game = Game(Mock())
 
     def test_show_players_with_codeblock(self):
-        # Mock user have: user, full_role, alive, death_reason (if dead)
         players = []
 
         # Half alive, half dead
@@ -30,7 +29,7 @@ class GameSyncTestCase(unittest.TestCase):
                 alive_bool = False
 
             user = ''.join(['Player', str(i)])
-            player = MockPlayer(user=user, full_role='Role', alive=alive_bool)
+            player = MockPlayer(user=user, display_role='Role', alive=alive_bool)
             if player.alive is False:
                 player.death_reason = "Eaten by lemons."
             players.append(player)
@@ -46,7 +45,6 @@ class GameSyncTestCase(unittest.TestCase):
         )
 
     def test_show_players_without_codeblock(self):
-        # Mock user have: user, full_role, alive, death_reason (if dead)
         players = []
 
         # Half alive, half dead
@@ -56,7 +54,7 @@ class GameSyncTestCase(unittest.TestCase):
                 alive_bool = False
 
             user = ''.join(['Player', str(i)])
-            player = MockPlayer(user=user, full_role='Role', alive=alive_bool)
+            player = MockPlayer(user=user, display_role='Role', alive=alive_bool)
             if player.alive is False:
                 player.death_reason = "Eaten by lemons."
             players.append(player)
@@ -134,14 +132,14 @@ class CheckEndgameTestCase(unittest.TestCase):
         # Generate 10 players, half mafia, half town
         for i in range(1, 11):
             if i > 5:
-                full_role = 'Town'
+                display_role = 'Town'
                 faction = mafia_fac_mock
             else:
-                full_role = 'Mafia'
+                display_role = 'Mafia'
                 faction = town_fac_mock
             player = Mock()
             player.user.name = ''.join(['Player', str(i)])
-            player.full_role = full_role
+            player.display_role = display_role
             player.faction = faction
             players.append(player)
 
@@ -167,7 +165,7 @@ class GameAsyncTestCase(unittest.IsolatedAsyncioTestCase):
     async def test_lynch(self):
         players = []
         target = AsyncMock(**{
-            'user.name': 'Target', 'full_role': 'Joker', 'role': AsyncMock()
+            'user.name': 'Target', 'display_role': 'Joker', 'role': AsyncMock()
         })
         players.append(target)
         for _ in range(3):
