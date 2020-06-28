@@ -69,7 +69,7 @@ class Mafia(commands.Cog):
     async def playerlist(self, ctx: commands.Context):
         game = self.bot.games[ctx.guild.id]
         msg = f'**Players: {len(game.players)}**\n'
-        msg += game.playerlist()
+        msg += game.show_players()
 
         return await ctx.send(msg)
 
