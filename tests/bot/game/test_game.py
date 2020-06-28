@@ -67,7 +67,7 @@ class GameSyncTestCase(unittest.TestCase):
 
         self.assertTrue(self.game.check_endgame, expected_results)
 
-    def test_list_players_life_status_with_codeblock(self):
+    def test_show_players_with_codeblock(self):
         # Mock user have: user, full_role, alive, death_reason (if dead)
         players = []
 
@@ -90,10 +90,10 @@ class GameSyncTestCase(unittest.TestCase):
 
         self.game.players = players
         self.assertEqual(
-            self.game.list_players_life_status(codeblock=True), expected_str
+            self.game.show_players(codeblock=True), expected_str
         )
 
-    def test_list_players_life_status_without_codeblock(self):
+    def test_show_players_without_codeblock(self):
         # Mock user have: user, full_role, alive, death_reason (if dead)
         players = []
 
@@ -116,7 +116,7 @@ class GameSyncTestCase(unittest.TestCase):
 
         self.game.players = players
         self.assertEqual(
-            self.game.list_players_life_status(codeblock=False), expected_str
+            self.game.show_players(codeblock=False), expected_str
         )
 
     def test_get_player_return_player(self):
