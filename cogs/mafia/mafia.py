@@ -131,7 +131,7 @@ class Mafia(commands.Cog):
         game = self.bot.games[ctx.guild.id]
         player = game.get_player(ctx.author)
         try:
-            await player.user.send(player.role_pm(game))
+            await player.user.send(player.role_pm)
             await ctx.message.add_reaction('✅')
         except discord.Forbidden:
             await ctx.send('Cannot send you your role PM. Make sure your DMs are enabled!')
@@ -174,7 +174,7 @@ class Mafia(commands.Cog):
 
                 # send role PMs
                 try:
-                    await player.user.send(player.role_pm(game))
+                    await player.user.send(player.role_pm)
                 except discord.Forbidden:
                     no_dms.append(player.user)
 

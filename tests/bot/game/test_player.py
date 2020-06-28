@@ -32,7 +32,7 @@ class PlayerTestCase(unittest.TestCase):
                 '**Neutral Role**. ' \
                 'Eats a lot of lemons.\nWin Condition: ' \
                 'Gets rid of lemons.'
-            self.assertEqual(player.role_pm(), expected_str)
+            self.assertEqual(player.role_pm, expected_str)
 
     def test_innocent(self):
         test_values = (

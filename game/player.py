@@ -17,6 +17,7 @@ class Player:
         self.visitors = []
 
     # generates the role's PM
+    @property
     def role_pm(self):
         return (f'Hello {self.user}, you are a **{self.display_role}**. {self.role.description}'
                 f'\nWin Condition: {self.faction.win_con}')

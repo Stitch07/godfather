@@ -10,7 +10,7 @@ class MafiaMember:
             # goon becomes the new Godfather
             goon.role = player.role
             await goon.user.send('You have been promoted to a Godfather!')
-            await goon.user.send(goon.role_pm(game))
+            await goon.user.send(goon.role_pm)
 
         # other roles become new mafioso
         if player.role.name == 'Goon':
@@ -25,4 +25,4 @@ class MafiaMember:
             new_goon = other_mafia[0]
             new_goon.role = player.role
             await new_goon.user.send('You have been promoted to a Goon!')
-            await new_goon.user.send(new_goon.role_pm(game))
+            await new_goon.user.send(new_goon.role_pm)
