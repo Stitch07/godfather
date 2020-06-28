@@ -6,6 +6,7 @@ from game.game import Game
 
 class MockFaction(Mock):
     name: str
+    id: str
 
 
 class MockPlayer(Mock):
@@ -30,7 +31,8 @@ class GameSyncTestCase(unittest.TestCase):
                 alive_bool = False
 
             user = ''.join(['Player', str(i)])
-            player = MockPlayer(user=user, full_role='Role', alive=alive_bool)
+            player = MockPlayer(
+                user=user, display_role='Role', alive=alive_bool)
             if player.alive is False:
                 player.death_reason = "Eaten by lemons."
             players.append(player)
@@ -56,7 +58,8 @@ class GameSyncTestCase(unittest.TestCase):
                 alive_bool = False
 
             user = ''.join(['Player', str(i)])
-            player = MockPlayer(user=user, full_role='Role', alive=alive_bool)
+            player = MockPlayer(
+                user=user, display_role='Role', alive=alive_bool)
             if player.alive is False:
                 player.death_reason = "Eaten by lemons."
             players.append(player)
@@ -167,7 +170,7 @@ class GameAsyncTestCase(unittest.IsolatedAsyncioTestCase):
     async def test_lynch(self):
         players = []
         target = AsyncMock(**{
-            'user.name': 'Target', 'full_role': 'Joker', 'role': AsyncMock()
+            'user.name': 'Target', 'display_role': 'Joker', 'role': AsyncMock()
         })
         players.append(target)
         for _ in range(3):
