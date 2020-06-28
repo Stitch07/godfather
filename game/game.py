@@ -65,9 +65,9 @@ class Game:
             win_check = player.faction.has_won(self)
             if win_check:
                 winning_faction = player.faction.name
-            if hasattr(player.faction, 'has_won_individual'):
-                individual_check = player.faction.has_won_individual(player)
-                if individual_check:
+            if hasattr(player.faction, 'has_won_independent'):
+                independent_check = player.faction.has_won_independent(player)
+                if independent_check:
                     independent_wins.append(
                         f'{player.user.name} ({player.full_role})')
 
@@ -88,9 +88,9 @@ class Game:
             announcement = await self.night_actions.resolve()
             if announcement != '':
                 await self.channel.send(announcement)
-                game_ended, winning_faction, individual_wins = self.check_endgame()
+                game_ended, winning_faction, independent_wins = self.check_endgame()
                 if game_ended:
-                    return await self.end(bot, winning_faction, individual_wins)
+                    return await self.end(bot, winning_faction, independent_wins)
             # voting starts
             self.night_actions.reset()
             self.phase = Phase.DAY
@@ -202,12 +202,12 @@ class Game:
     # WIP: End the game
     # If a winning faction is not provided, game is ended
     # as if host ended the game without letting it finish
-    async def end(self, bot, winning_faction, individual_wins):
+    async def end(self, bot, winning_faction, independent_wins):
         if winning_faction:
             async with self.channel.typing():
                 await self.channel.send(f'The game is over. {winning_faction} wins! 🎉')
-                if len(individual_wins) > 0:
-                    await self.channel.send(f'Individual wins: {", ".join(individual_wins)}')
+                if len(independent_wins) > 0:
+                    await self.channel.send(f'Independent wins: {", ".join(independent_wins)}')
         full_rolelist = '\n'.join(
             [f'{i+1}. {player.user.name} ({player.full_role})' for i, player in enumerate(self.players)])
 
@@ -221,7 +221,7 @@ class Game:
                 with bot.db.conn.cursor() as cur2:
                     values = []
                     for player in self.players:
-                        win = player.user.name in individual_wins or player.faction.name == winning_faction
+                        win = player.user.name in independent_wins or player.faction.name == winning_faction
                         values.append(cur2.mogrify('(%s, %s, %s, %s, %s)',
                                                    (player.user.id, player.faction.name, player.role.name, game_id, win)).decode('utf-8'))
                     query = "INSERT INTO players (player_id, faction, role_name, game_id, result) VALUES " + \

@@ -75,10 +75,10 @@ class Admin(commands.Cog):
 
             if votes_on_target >= game.majority_votes:
                 await game.lynch(game.get_player(voted))
-                game_ended, winning_faction, individual_wins = game.check_endgame()
+                game_ended, winning_faction, independent_wins = game.check_endgame()
 
                 if game_ended:
-                    await game.end(self.bot, winning_faction, individual_wins)
+                    await game.end(self.bot, winning_faction, independent_wins)
                     break
                 else:
                     await game.increment_phase(self.bot)
