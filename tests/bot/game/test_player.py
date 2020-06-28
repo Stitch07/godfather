@@ -60,7 +60,7 @@ class PlayerTestCase(unittest.TestCase):
                 player.faction = mock_faction
                 self.assertIs(player.innocent, expected_bool)
 
-    def test_full_role(self):
+    def test_display_role(self):
         # Mock faction (id, rv=name), role
         test_values = (
             ('neutral', 'Joker'),
@@ -76,4 +76,4 @@ class PlayerTestCase(unittest.TestCase):
                 player = Player(Mock())
                 player.faction = mock_faction
                 player.role = 'Joker'
-                self.assertEqual(player.full_role, expected_str)
+                self.assertEqual(player.display_role, expected_str)
