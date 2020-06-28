@@ -59,7 +59,7 @@ class Game:
     # checks whether the game has ended, returns whether the game has ended and the winning faction
     def check_endgame(self):
         winning_faction = None
-        individual_wins = []
+        independent_wins = []
 
         for player in self.players:
             win_check = player.faction.has_won(self)
@@ -68,11 +68,11 @@ class Game:
             if hasattr(player.faction, 'has_won_individual'):
                 individual_check = player.faction.has_won_individual(player)
                 if individual_check:
-                    individual_wins.append(
+                    independent_wins.append(
                         f'{player.user.name} ({player.full_role})')
 
         if winning_faction:
-            return (True, winning_faction, individual_wins)
+            return (True, winning_faction, independent_wins)
         return (False, None, None)
 
     async def increment_phase(self, bot):
