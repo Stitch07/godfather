@@ -29,9 +29,9 @@ class PlayerTestCase(unittest.TestCase):
             player.faction = mock_faction
 
             expected_str = f'Hello LemonGrass#3333, you are a ' \
-                            '**Neutral Role**. ' \
-                            'Eats a lot of lemons.\nWin Condition: ' \
-                            'Gets rid of lemons.'
+                '**Neutral Role**. ' \
+                'Eats a lot of lemons.\nWin Condition: ' \
+                'Gets rid of lemons.'
             self.assertEqual(player.role_pm(), expected_str)
 
     def test_innocent(self):

@@ -6,6 +6,7 @@ from game.game import Game
 
 class MockFaction(Mock):
     name: str
+    id: str
 
 
 class MockPlayer(Mock):
@@ -29,7 +30,9 @@ class GameSyncTestCase(unittest.TestCase):
                 alive_bool = False
 
             user = ''.join(['Player', str(i)])
-            player = MockPlayer(user=user, display_role='Role', alive=alive_bool)
+            player = MockPlayer(
+                user=user, display_role='Role', alive=alive_bool)
+
             if player.alive is False:
                 player.death_reason = "Eaten by lemons."
             players.append(player)
@@ -54,7 +57,9 @@ class GameSyncTestCase(unittest.TestCase):
                 alive_bool = False
 
             user = ''.join(['Player', str(i)])
-            player = MockPlayer(user=user, display_role='Role', alive=alive_bool)
+            player = MockPlayer(
+                user=user, display_role='Role', alive=alive_bool)
+
             if player.alive is False:
                 player.death_reason = "Eaten by lemons."
             players.append(player)
