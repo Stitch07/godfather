@@ -1,5 +1,5 @@
 import unittest
-from unittest.mock import AsyncMock, MagicMock, Mock, patch
+from unittest.mock import AsyncMock, MagicMock, Mock
 
 from game.game import Game
 
@@ -18,54 +18,6 @@ class MockPlayer(Mock):
 class GameSyncTestCase(unittest.TestCase):
     def setUp(self):
         self.game = Game(Mock())
-
-    def test_check_endgame_noone_wins(self):
-        """If `has_won` is not True, then no one had won yet."""
-        for _ in range(5):
-            player = Mock()
-            player.faction.has_won.return_value = False
-            self.game.players.append(player)
-
-        results = self.game.check_endgame()
-
-        self.assertEqual(results, (False, None, None))
-
-    def test_endgame_town_wins(self):
-        players = []
-        town_faction_mock = MockFaction(name='Town')
-        mafia_faction_mock = MockFaction(name='Mafia')
-
-        # Town
-        for i in range(3):
-            player = Mock()
-            player.user.name = ''.join(['Player', str(i)])
-            player.full_role = 'Town'
-            player.faction = town_faction_mock
-            player.faction.has_won.return_value = True
-            player.faction.has_won_individual = True
-            players.append(player)
-
-        # Mafia
-        for i in range(3, 6):
-            player = Mock()
-            player.user.name = ''.join(['Player', str(i)])
-            player.full_role = 'Mafia'
-            player.faction = mafia_faction_mock
-            player.faction.has_won.return_value = False
-            player.faction.has_won_individual = False
-            players.append(player)
-
-        expected_results = (
-            True,
-            'Town',
-            [
-                'Player0 (Town)',
-                'Player1 (Town)',
-                'Player2 (Town)'
-            ]
-        )
-
-        self.assertTrue(self.game.check_endgame, expected_results)
 
     def test_show_players_with_codeblock(self):
         # Mock user have: user, full_role, alive, death_reason (if dead)
@@ -166,6 +118,49 @@ class GameSyncTestCase(unittest.TestCase):
         for players, expected_num in test_values:
             self.game.players = players
             self.assertEqual(self.game.majority_votes, expected_num)
+
+
+class CheckEndgameTestCase(unittest.TestCase):
+    def setUp(self):
+        self.game = Game(Mock())
+
+    def test_mafia_and_town_only(self):
+        players = []
+        town_fac_mock = MockFaction(**{
+            'spec': ["has_won", "name"]
+            # 'name': 'Town'
+        })
+        town_fac_mock.name = 'Town'
+        mafia_fac_mock = MockFaction(spec=["name", "has_won"])
+        mafia_fac_mock.name = 'Mafia'
+
+        # Generate 10 players, half mafia, half town
+        for i in range(1, 11):
+            if i > 5:
+                full_role = 'Town'
+                faction = mafia_fac_mock
+            else:
+                full_role = 'Mafia'
+                faction = town_fac_mock
+            player = Mock()
+            player.user.name = ''.join(['Player', str(i)])
+            player.full_role = full_role
+            player.faction = faction
+            players.append(player)
+
+        self.game.players = players
+
+        test_values = (
+            ((True, False), (True, 'Town', [])),
+            ((False, True), (True, 'Mafia', [])),
+            ((False, False), (False, None, None))
+        )
+
+        for win_fac_set, expected_rv in test_values:
+            with self.subTest(win_fac_set=win_fac_set, expected_rv=expected_rv):
+                town_fac_mock.has_won.return_value = win_fac_set[0]
+                mafia_fac_mock.has_won.return_value = win_fac_set[1]
+                self.assertEqual(self.game.check_endgame(), expected_rv)
 
 
 class GameAsyncTestCase(unittest.IsolatedAsyncioTestCase):
