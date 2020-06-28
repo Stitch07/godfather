@@ -153,6 +153,8 @@ class Mafia(commands.Cog):
             return await ctx.send(err)
         game.setup = found_setup
 
+        # set to standby so people can't join while the bot is sending rolepms
+        game.phase = Phase.STANDBY
         await ctx.send(f'Chose the setup **{found_setup["name"]}**. '
                        'Randing roles...')
         roles = copy.deepcopy(found_setup['roles'])
