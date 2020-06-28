@@ -18,7 +18,7 @@ class SingleAction(Role):
         await player.user.send(output)
 
     async def on_pm_command(self, ctx, game, player, args):
-        can_do, reason = self.can_do_action()
+        can_do, reason = self.can_do_action(game)
         if not can_do:
             return await ctx.send(f'You cannot use your action today. {reason}')
 
@@ -61,6 +61,7 @@ class SingleAction(Role):
             for action in game.night_actions.actions:
                 if action['player'].role.name == 'Goon':
                     game.night_actions.actions.remove(action)
+
             game.night_actions.add_action({
                 'action': self.action,
                 'player': goon,
@@ -86,7 +87,7 @@ class SingleAction(Role):
     async def after_action(self, player, target, night_record):
         pass
 
-    def can_do_action(self):
+    def can_do_action(self, game):
         return True, ''
 
     def can_target(self, player, target):

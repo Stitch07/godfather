@@ -42,7 +42,7 @@ class Jester(SingleAction):
     async def after_action(self, player, target, night_record):
         await target.user.send('You were haunted by a Jester! You have died!')
 
-    def can_do_action(self):
+    def can_do_action(self, game):
         if self.can_haunt:
             return True, ''
         return False, ''

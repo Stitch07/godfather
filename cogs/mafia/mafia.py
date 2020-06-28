@@ -86,7 +86,7 @@ class Mafia(commands.Cog):
         if ctx.guild.id in ctx.bot.games \
                 and ctx.bot.games[ctx.guild.id].phase != Phase.PREGAME \
                 and roleset is None:
-            roleset = ctx.bot.games[ctx.guild.id].setup_id
+            roleset = ctx.bot.games[ctx.guild.id].setup['name']
 
         rolesets = json.load(open('rolesets/rolesets.json'))
         if roleset is None or roleset == 'all':
@@ -151,7 +151,7 @@ class Mafia(commands.Cog):
             found_setup = game.find_setup(r_setup)
         except Exception as err:  # pylint: disable=broad-except
             return await ctx.send(err)
-        game.setup_id = found_setup['name']
+        game.setup = found_setup
 
         await ctx.send(f'Chose the setup **{found_setup["name"]}**. '
                        'Randing roles...')
@@ -188,6 +188,12 @@ class Mafia(commands.Cog):
         if len(no_dms) > 0:
             no_dms = [*map(lambda usr: usr.name, no_dms)]
             await ctx.send(f"I couldn't DM {', '.join(no_dms)}. Use the {ctx.prefix}rolepm command to receive your PM.")
+
+        # night starts
+        night_start = 'night_start' in game.setup
+        if night_start:
+            game.cycle = 1
+            game.phase = Phase.DAY
         await game.increment_phase(self.bot)
 
     @ commands.command()

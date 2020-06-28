@@ -31,7 +31,7 @@ class Game:
         # time at which the current phase ends
         self.phase_end_at: datetime = None
         self.night_actions = NightActions(self)
-        self.setup_id = None  # the setup used
+        self.setup = None  # the setup used
         # host-configurable stuff
         self.config = {
             'phase_time': 5 * 60  # in seconds
@@ -136,7 +136,7 @@ class Game:
         def action_only_filter(pl):
             if not utils.alive_or_recent_jester(pl, self):
                 return False
-            can_do, _ = pl.role.can_do_action()
+            can_do, _ = pl.role.can_do_action(self)
             return can_do
 
         if role:
@@ -171,7 +171,7 @@ class Game:
     # lynch a player
     async def lynch(self, target: Player):
         async with self.channel.typing():
-            await self.channel.send(f'{target.user.name} was lynched. He was a *{target.full_role}*.')
+            await self.channel.send(f'{target.user.name} was lynched. He was a *{target.display_role}*.')
             await target.role.on_lynch(self, target)
 
         for player in self.players:
@@ -189,12 +189,12 @@ class Game:
                 if player.alive:
                     usrname += f'+ {n}. {player.user}'
                 else:
-                    usrname += f'- {n}. {player.user} ({player.full_role}; {player.death_reason})'
+                    usrname += f'- {n}. {player.user} ({player.display_role}; {player.death_reason})'
             else:
                 if player.alive:
                     usrname += f'{n}. {player.user}'
                 else:
-                    usrname += f'{n}. ~~{player.user}~~ ({player.full_role}; {player.death_reason})'
+                    usrname += f'{n}. ~~{player.user}~~ ({player.display_role}; {player.death_reason})'
 
             players.append(usrname)
         return '\n'.join(players)
@@ -216,7 +216,7 @@ class Game:
         if bot.db:
             with bot.db.conn.cursor() as cur:
                 cur.execute("INSERT INTO games (setup, winning_faction) VALUES (%s, %s) RETURNING id;",
-                            (self.setup_id, winning_faction))
+                            (self.setup['name'], winning_faction))
                 game_id, = cur.fetchone()
                 with bot.db.conn.cursor() as cur2:
                     values = []
