@@ -42,18 +42,48 @@
         ]
     },
     {
-        "name": "fake4",
+        "name": "fake5",
         "roles": [
             {
                 "id": "vanilla",
                 "faction": "town"
             },
             {
-                "id": "vanilla",
+                "id": "doctor",
                 "faction": "town"
             },
             {
-                "id": "vigilante",
+                "id": "cop",
+                "faction": "town"
+            },
+            {
+                "id": "lookout",
+                "faction": "town"
+            },
+            {
+                "id": "goon",
+                "faction": "mafia"
+            }
+        ]
+    },
+    {
+        "name": "dethy",
+        "night_start": true,
+        "roles": [
+            {
+                "id": "cop",
+                "faction": "town"
+            },
+            {
+                "id": "insane_cop",
+                "faction": "town"
+            },
+            {
+                "id": "naive_cop",
+                "faction": "town"
+            },
+            {
+                "id": "paranoid_cop",
                 "faction": "town"
             },
             {
@@ -90,8 +120,8 @@
                 "faction": "town"
             },
             {
-                "id": "doctor",
-                "faction": "town"
+                "id": "jester",
+                "faction": "neutral.jester"
             },
             {
                 "id": "goon",
@@ -99,6 +129,51 @@
             },
             {
                 "id": "consort",
+                "faction": "mafia"
+            }
+        ]
+    },
+    {
+        "name": "matrix7maybe?",
+        "roles": [
+            {
+                "id": "vanilla",
+                "faction": "town"
+            },
+            {
+                "id": "vanilla",
+                "faction": "town"
+            },
+            {
+                "id": "vanilla",
+                "faction": "town"
+            },
+            {
+                "id": "doctor",
+                "faction": "town"
+            },
+            {
+                "id": "vigilante",
+                "faction": "town"
+            },
+            {
+                "id": "escort",
+                "faction": "town"
+            },
+            {
+                "id": "cop",
+                "faction": "town"
+            },
+            {
+                "id": "serial_killer",
+                "faction": "neutral.serialkiller"
+            },
+            {
+                "id": "godfather",
+                "faction": "mafia"
+            },
+            {
+                "id": "goon",
                 "faction": "mafia"
             }
         ]

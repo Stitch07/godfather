@@ -14,4 +14,4 @@ class SuperSaint(Role):
         async with game.channel.typing():
             await game.channel.send('💣 **BOOOOOOOOOOOOOOM!!!**')
             await asyncio.sleep(2)
-            await game.channel.send(f'{last_voted.user} hammered the super saint and was blown up! He was a *{last_voted.full_role}*')
+            await game.channel.send(f'{last_voted.user} hammered the super saint and was blown up! He was a *{last_voted.display_role}*')

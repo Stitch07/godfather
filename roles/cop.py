@@ -14,7 +14,13 @@ class Cop(SingleAction):
     async def run_action(self, game, night_record, player, target):
         pass
 
+    # this ensures all cop modifiers show up as regular Cops
+    def display_role(self):
+        return 'Cop'
+
     async def after_action(self, player, target, night_record):
         # TODO: framer check here
-        innocence = 'innocent' if target.innocent else 'suspicious'
-        await player.user.send(f'Your target is {innocence}.')
+        innocence = target.innocent
+        if hasattr(self, 'result_modifier'):  # allows for cop variants
+            innocence = self.result_modifier(innocence)
+        await player.user.send(f"Your target is {'innocent' if innocence else 'suspicious'}.")

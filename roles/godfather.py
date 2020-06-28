@@ -12,7 +12,7 @@ class Godfather(SingleAction, Shooter, MafiaMember):
     + Abilities:
     + You may order the Goon to attack your target.
     + If there is no Goon/the Goon is roleblocked, you will attack the target instead.
-    + You have a Basic Defense, and will appear as innocent to the cop.
+    + You have a Basic Defense, and will appear as innocent to the Cop.
     """
 
     def __init__(self):

@@ -9,8 +9,11 @@ class Role:
     def __str__(self):
         return self.name
 
-    def can_do_action(self):
+    def can_do_action(self, game):
         return False, ''
+
+    def display_role(self):
+        return self.name
 
     # called when a player is lynched. takes the game object, and the player lynched
     async def on_lynch(self, game, player):
