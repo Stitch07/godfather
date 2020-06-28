@@ -16,7 +16,7 @@ class Player:
         self.death_reason = ''
 
     # generates the role's PM
-    def role_pm(self, game):
+    def role_pm(self):
         return (f'Hello {self.user}, you are a **{self.full_role}**. {self.role.description}'
                 f'\nWin Condition: {self.faction.win_con}')
 
