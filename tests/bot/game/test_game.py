@@ -126,10 +126,7 @@ class CheckEndgameTestCase(unittest.TestCase):
 
     def test_mafia_and_town_only(self):
         players = []
-        town_fac_mock = MockFaction(**{
-            'spec': ["has_won", "name"]
-            # 'name': 'Town'
-        })
+        town_fac_mock = MockFaction(spec=["name", "has_won"])
         town_fac_mock.name = 'Town'
         mafia_fac_mock = MockFaction(spec=["name", "has_won"])
         mafia_fac_mock.name = 'Mafia'
