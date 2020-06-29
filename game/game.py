@@ -1,5 +1,4 @@
 from enum import IntEnum, auto
-from collections import defaultdict
 import typing
 import json
 import math
@@ -68,8 +67,7 @@ class Game:
             if hasattr(player.faction, 'has_won_independent'):
                 independent_check = player.faction.has_won_independent(player)
                 if independent_check:
-                    independent_wins.append(
-                        f'{player.user.name} ({player.full_role})')
+                    independent_wins.append(player)
 
         if winning_faction:
             return (True, winning_faction, independent_wins)
@@ -207,7 +205,8 @@ class Game:
             async with self.channel.typing():
                 await self.channel.send(f'The game is over. {winning_faction} wins! 🎉')
                 if len(independent_wins) > 0:
-                    await self.channel.send(f'Independent wins: {", ".join(independent_wins)}')
+                    ind_win_strings = [f'{player.user.name} ({player.role.name})' for player in independent_wins]
+                    await self.channel.send(f'Independent wins: {", ".join(ind_win_strings)}')
         full_rolelist = '\n'.join(
             [f'{i+1}. {player.user.name} ({player.full_role})' for i, player in enumerate(self.players)])
 
@@ -215,16 +214,16 @@ class Game:
         # update player stats
         if bot.db:
             with bot.db.conn.cursor() as cur:
-                cur.execute("INSERT INTO games (setup, winning_faction) VALUES (%s, %s) RETURNING id;",
-                            (self.setup['name'], winning_faction))
+                cur.execute("INSERT INTO games (setup, winning_faction, independent_wins) VALUES (%s, %s, %s) RETURNING id;",
+                            (self.setup['name'], winning_faction, [player.role.name for player in independent_wins]))
                 game_id, = cur.fetchone()
                 with bot.db.conn.cursor() as cur2:
                     values = []
                     for player in self.players:
-                        win = player.user.name in independent_wins or player.faction.name == winning_faction
+                        win = player in independent_wins or player.faction.name == winning_faction
                         values.append(cur2.mogrify('(%s, %s, %s, %s, %s)',
                                                    (player.user.id, player.faction.name, player.role.name, game_id, win)).decode('utf-8'))
-                    query = "INSERT INTO players (player_id, faction, role_name, game_id, result) VALUES " + \
+                    query = "INSERT INTO players (player_id, faction, rolename, game_id, result) VALUES " + \
                         ",".join(values) + ";"
                     cur2.execute(query)
 
