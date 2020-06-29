@@ -75,5 +75,7 @@ class PlayerTestCase(unittest.TestCase):
                 mock_faction.name = faction_id.capitalize()
                 player = Player(Mock())
                 player.faction = mock_faction
-                player.role = 'Joker'
+                player.role = Mock(**{
+                    'display_role.return_value': 'Joker'
+                })
                 self.assertEqual(player.display_role, expected_str)
