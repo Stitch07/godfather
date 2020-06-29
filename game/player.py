@@ -18,8 +18,11 @@ class Player:
 
     # generates the role's PM
     def role_pm(self):
-        return (f'Hello {self.user}, you are a **{self.display_role}**. {self.role.description}'
-                f'\nWin Condition: {self.faction.win_con}')
+        return (
+            f'Hello {self.user}, you are a **{self.display_role}**.'
+            f'{self.role.description}'  # This follows the previous line.
+            f'\nWin Condition: {self.faction.win_con}'
+        )
 
     @property
     def innocent(self):
@@ -29,7 +32,7 @@ class Player:
             return True
         return False
 
-    @ property
+    @property
     def full_role(self):
         if self.faction.id.startswith('neutral'):
             return self.role
