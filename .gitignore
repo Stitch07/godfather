@@ -5,3 +5,4 @@ config.json
 .vscode
 **/.ropeproject
 database/data
+.coverage
