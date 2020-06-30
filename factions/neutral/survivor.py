@@ -7,5 +7,5 @@ class SurvivorNeutral(Faction):
     id = 'neutral.survivor'
     win_con = 'Live until the end of the game.'
 
-    def has_won_individual(self, player: Player):
+    def has_won_independent(self, player: Player):
         return player.alive

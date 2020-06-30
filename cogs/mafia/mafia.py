@@ -223,9 +223,9 @@ class Mafia(commands.Cog):
         if votes_on_target >= game.majority_votes and not game.phase == Phase.STANDBY:
             game.phase = Phase.STANDBY
             await game.lynch(target)
-            game_ended, winning_faction, individual_wins = game.check_endgame()
+            game_ended, winning_faction, independent_wins = game.check_endgame()
             if game_ended:
-                await game.end(self.bot, winning_faction, individual_wins)
+                await game.end(self.bot, winning_faction, independent_wins)
             else:
                 game.phase = Phase.DAY
                 await game.increment_phase(self.bot)
