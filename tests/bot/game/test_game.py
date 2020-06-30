@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import AsyncMock, MagicMock, Mock
 
-from game.game import Game
+from godfather.game import Game
 
 
 class MockFaction(Mock):
