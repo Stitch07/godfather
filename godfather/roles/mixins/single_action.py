@@ -10,10 +10,6 @@ class SingleAction(Role):
         self.can_block = True
         self.can_transport = True
         self.can_self_target = False
-        self.action = ''
-        self.action_text = ''
-        self.action_priority = 1
-        self.action_gerund = ''
 
     async def on_night(self, bot, player, game):
         output = f'It is now night {game.cycle}. Use the {bot.command_prefix}{self.action} command to {self.action_text}. ' \
