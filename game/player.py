@@ -19,7 +19,7 @@ class Player:
     # generates the role's PM
     def role_pm(self):
         return (
-            f'Hello {self.user}, you are a **{self.display_role}**.'
+            f'Hello {self.user}, you are a **{self.display_role}**. '
             f'{self.role.description}'  # This follows the previous line.
             f'\nWin Condition: {self.faction.win_con}'
         )
