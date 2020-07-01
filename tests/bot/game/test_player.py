@@ -44,15 +44,15 @@ class PlayerTestCase(unittest.TestCase):
             (None, 'not town', False)
         )
 
-        for innocent_modifier, role_id, expected_bool in test_values:
-            with self.subTest(innocent_modifier=innocent_modifier,
+        for innocence_modifier, role_id, expected_bool in test_values:
+            with self.subTest(innocence_modifier=innocence_modifier,
                               role_id=role_id, expected_bool=expected_bool):
                 mock_user = Mock()
-                if innocent_modifier is None:
+                if innocence_modifier is None:
                     mock_role = Mock(spec=False)
                 else:
                     mock_role = Mock(**{
-                        'innocence_modifier.return_value': innocent_modifier
+                        'innocence_modifier.return_value': innocence_modifier
                     })
                 mock_faction = Mock(**{'id': role_id})
                 player = Player(mock_user)
@@ -60,8 +60,7 @@ class PlayerTestCase(unittest.TestCase):
                 player.faction = mock_faction
                 self.assertIs(player.innocent, expected_bool)
 
-    def test_full_role(self):
-        # Mock faction (id, rv=name), role
+    def test_display_role(self):
         test_values = (
             ('neutral', 'Joker'),
             ('town', 'Town Joker'),
@@ -75,5 +74,7 @@ class PlayerTestCase(unittest.TestCase):
                 mock_faction.name = faction_id.capitalize()
                 player = Player(Mock())
                 player.faction = mock_faction
-                player.role = 'Joker'
-                self.assertEqual(player.full_role, expected_str)
+                player.role = Mock(**{
+                    'display_role.return_value': 'Joker'
+                })
+                self.assertEqual(player.display_role, expected_str)
