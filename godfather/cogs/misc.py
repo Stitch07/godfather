@@ -77,7 +77,7 @@ class Misc(commands.Cog):
             # checks are handled in the predicates
             return
         await ctx.send(f'Uncaught exception: ```{error}```')
-        await self.bot.logger.exception(error)
+        self.bot.logger.exception(error)
 
     @commands.command()
     async def ping(self, ctx):

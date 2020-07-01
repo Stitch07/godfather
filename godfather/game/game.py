@@ -222,8 +222,8 @@ class Game:
         # update player stats
         if bot.db:
             with bot.db.conn.cursor() as cur:
-                cur.execute("INSERT INTO games (setup, winning_faction) VALUES (%s, %s) RETURNING id;",
-                            (self.setup['name'], winning_faction))
+                cur.execute("INSERT INTO games (setup, winning_faction, independent_wins) VALUES (%s, %s, %s) RETURNING id;",
+                            (self.setup['name'], winning_faction, independent_wins))
                 game_id, = cur.fetchone()
                 with bot.db.conn.cursor() as cur2:
                     values = []
