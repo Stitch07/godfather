@@ -1,6 +1,6 @@
 import unittest
 from datetime import datetime, timedelta
-import utils
+from godfather.utils import from_now
 
 
 class TestUtils(unittest.TestCase):
@@ -13,5 +13,5 @@ class TestUtils(unittest.TestCase):
         time_future = time_now + delta_minutes
         time_past = time_now - delta_seconds
 
-        self.assertEqual(utils.from_now(time_future), 'in 1 minute')
-        self.assertEqual(utils.from_now(time_past), '45 seconds ago')
+        self.assertEqual(from_now(time_future), 'in 1 minute')
+        self.assertEqual(from_now(time_past), '45 seconds ago')

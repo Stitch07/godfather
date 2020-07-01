@@ -3,7 +3,7 @@ from unittest.mock import AsyncMock, Mock
 
 from tests.helpers import MockRole
 from tests.bot.game import MockFaction
-from roles.mixins.mafia_member import MafiaMember
+from godfather.roles.mixins.mafia_member import MafiaMember
 
 
 class GodfatherOnDeathTestCase(unittest.IsolatedAsyncioTestCase):

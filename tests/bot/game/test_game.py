@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import AsyncMock, MagicMock, Mock
 
-from game.game import Game
+from godfather.game import Game
 
 
 class MockFaction(Mock):
@@ -16,98 +16,82 @@ class MockPlayer(Mock):
     death_reason: str
 
 
-class GameSyncTestCase(unittest.TestCase):
+class ShowPlayersTestCase(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.game = Game(Mock())
+
     def setUp(self):
-        self.game = Game(Mock())
+        # Generate players, half alive, half dead
+        def generate_players(num):
+            for i in range(num):
+                alive_bool = False if i >= (num/2) else True
+
+                user = ''.join(['Player', str(i)])
+                player = MockPlayer(
+                    user=user, display_role='Role', alive=alive_bool
+                )
+                if player.alive is False:
+                    player.death_reason = "Eaten by lemons."
+                yield player
+
+        self.game.players = [player for player in generate_players(6)]
 
     def test_show_players_with_codeblock(self):
-        players = []
-
-        # Half alive, half dead
-        for i in range(6):
-            alive_bool = True
-            if i >= (6/2):
-                alive_bool = False
-
-            user = ''.join(['Player', str(i)])
-            player = MockPlayer(
-                user=user, display_role='Role', alive=alive_bool)
-
-            if player.alive is False:
-                player.death_reason = "Eaten by lemons."
-            players.append(player)
-
         expected_str = "+ 1. Player0\n+ 2. Player1\n+ 3. Player2\n" \
                        "- 4. Player3 (Role; Eaten by lemons.)\n" \
                        "- 5. Player4 (Role; Eaten by lemons.)\n" \
                        "- 6. Player5 (Role; Eaten by lemons.)"
 
-        self.game.players = players
         self.assertEqual(
             self.game.show_players(codeblock=True), expected_str
         )
 
     def test_show_players_without_codeblock(self):
-        players = []
-
-        # Half alive, half dead
-        for i in range(6):
-            alive_bool = True
-            if i >= (6/2):
-                alive_bool = False
-
-            user = ''.join(['Player', str(i)])
-            player = MockPlayer(
-                user=user, display_role='Role', alive=alive_bool)
-
-            if player.alive is False:
-                player.death_reason = "Eaten by lemons."
-            players.append(player)
-
         expected_str = "1. Player0\n2. Player1\n3. Player2\n" \
                        "4. ~~Player3~~ (Role; Eaten by lemons.)\n" \
                        "5. ~~Player4~~ (Role; Eaten by lemons.)\n" \
                        "6. ~~Player5~~ (Role; Eaten by lemons.)"
 
-        self.game.players = players
         self.assertEqual(
             self.game.show_players(codeblock=False), expected_str
         )
 
-    def test_get_player_return_player(self):
-        players = [Mock(**{'user.id': i}) for i in range(10)]
 
-        test_values = (
+class GetPlayerTestCase(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.game = Game(Mock())
+
+    def setUp(self):
+        self.game.players = [
+            Mock(**{'user.id': i}) for i in range(100000, 900000, 100000)
+        ]
+
+        self.test_values = (
             Mock(**{'user.id': 112233}),
             Mock(**{'user.id': 332211}),
             Mock(**{'user.id': 101000}),
             Mock(**{'user.id': 123456})
         )
 
-        for target_player in test_values:
+    def test_get_player_return_player(self):
+        for target_player in self.test_values:
             with self.subTest(target_player=target_player):
-                players.append(target_player)
-                self.game.players = players
+                self.game.players.append(target_player)
                 self.assertEqual(
                     self.game.get_player(target_player.user), target_player
                 )
 
     def test_get_player_return_none(self):
-        players = [
-            Mock(**{'user.id': i}) for i in range(100000, 900000, 100000)
-        ]
-
-        test_values = (
-            Mock(**{'user.id': 112233}),
-            Mock(**{'user.id': 332211}),
-            Mock(**{'user.id': 101000}),
-            Mock(**{'user.id': 123456})
-        )
-
-        for target_player in test_values:
+        for target_player in self.test_values:
             with self.subTest(target_player=target_player):
-                self.game.players = players
                 self.assertIsNone(self.game.get_player(target_player))
+
+
+class GameSyncTestCase(unittest.TestCase):
+    def setUp(self):
+        self.game = Game(Mock())
 
     def test_majority_votes(self):
         test_values = (
@@ -168,6 +152,7 @@ class GameAsyncTestCase(unittest.IsolatedAsyncioTestCase):
         self.game = Game(Mock())
 
     async def test_lynch(self):
+        # Should not have so many asserts, need further refactoring
         players = []
         target = AsyncMock(**{
             'user.name': 'Target', 'display_role': 'Joker', 'role': AsyncMock()

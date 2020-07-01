@@ -1,7 +1,7 @@
-import unittest
-import discord
 import collections
 import itertools
+import unittest
+import discord
 
 
 class CustomMockMixin:
@@ -23,7 +23,8 @@ class CustomMockMixin:
     additional_spec_asyncs = None
 
     def __init__(self, **kwargs):
-        name = kwargs.pop('name', None)  # `name` has special meaning for Mock classes, so we need to set it manually.
+        # `name` has special meaning for Mock classes, so we need to set it manually.
+        name = kwargs.pop('name', None)
         super().__init__(spec_set=self.spec_set, **kwargs)
 
         if self.additional_spec_asyncs:
@@ -47,6 +48,7 @@ class CustomMockMixin:
             return unittest.mock.AsyncMock(**kw)
 
         _type = type(self)
+        # pylint: disable=protected-access
         if issubclass(_type, unittest.mock.MagicMock) and _new_name in unittest.mock._async_method_magics:
             # Any asynchronous magic becomes an AsyncMock
             klass = unittest.mock.AsyncMock
@@ -104,11 +106,13 @@ guild_data = {
     'owner_id': 1,
     'afk_channel_id': 464033278631084042,
 }
-guild_instance = discord.Guild(data=guild_data, state=unittest.mock.MagicMock())
+guild_instance = discord.Guild(
+    data=guild_data, state=unittest.mock.MagicMock())
 
 # Create a Role instance to get a realistic Mock of `discord.Role`
 role_data = {'name': 'role', 'id': 1}
-role_instance = discord.Role(guild=guild_instance, state=unittest.mock.MagicMock(), data=role_data)
+role_instance = discord.Role(
+    guild=guild_instance, state=unittest.mock.MagicMock(), data=role_data)
 
 
 class MockRole(CustomMockMixin, unittest.mock.Mock, ColourMixin, HashableMixin):
