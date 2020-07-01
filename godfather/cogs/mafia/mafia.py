@@ -8,7 +8,7 @@ from godfather.factions import factions
 from godfather.game import Game, Player, Phase
 from godfather.roles import all_roles
 from godfather.cogs.mafia.checks import *  # pylint: disable=wildcard-import
-from godfather.utils import get_random_sequence, from_now
+from godfather.utils import get_random_sequence, from_now, confirm
 
 
 class Mafia(commands.Cog):
@@ -34,7 +34,19 @@ class Mafia(commands.Cog):
         game = self.bot.games[ctx.guild.id]
 
         if game.has_started:
-            return await ctx.send('Signup phase for the game has ended')
+            if ctx.author in game.replacements:
+                return await ctx.send('You are already a replacement.')
+            confirm_replacement = await confirm(
+                ctx.bot, ctx.author, ctx.channel,
+                'Sign-ups for this game have ended. Would you like to be a replacement?')
+            if confirm_replacement is None:
+                return
+            if not confirm_replacement:
+                return await ctx.message.add_reaction('❌')
+            game.replacements.append(ctx.author)
+            await ctx.send('You have decided to become a replacement.')
+            return
+
         elif game.has_player(ctx.author):
             return await ctx.send('You have already joined this game')
 
@@ -52,13 +64,44 @@ class Mafia(commands.Cog):
     async def leave(self, ctx: commands.Context):
         game = self.bot.games[ctx.guild.id]
 
-        if game.has_started:
-            return await ctx.send('Cannot leave game after '
-                                  'signup phase has ended')
-        elif not game.has_player(ctx.author):
+        if ctx.author in game.replacements:
+            game.replacements.remove(ctx.author)
+            return await ctx.send("You're not a replacement anymore.")
+        if not game.has_player(ctx.author):
             return await ctx.send('You have not joined this game')
-        elif game.host_id == ctx.author.id:
+        if game.host_id == ctx.author.id:
             return await ctx.send('The host cannot leave the game.')
+
+        if game.has_started:
+
+            replace_text = 'Are you sure you want to leave the game? You will be mod-killed.' \
+                if len(game.replacements) == 0 \
+                else 'Are you sure you want to leave the game? You will be replaced out.'
+            confirm_replacement = await confirm(ctx.bot, ctx.author, ctx.channel, replace_text)
+            if confirm_replacement is None:
+                return
+            if not confirm_replacement:
+                return await ctx.message.add_reaction('❌')
+
+            player = game.get_player(ctx.author)
+
+            if len(game.replacements) == 0:
+                phase_str = 'd' if game.phase == Phase.DAY else 'n'
+                async with game.channel.typing():
+                    await game.channel.send(f'{player.user.name} was modkilled. They were a *{player.display_role}*.')
+                    await player.remove(game, f'modkilled {phase_str}{game.cycle}')
+                    game_ended, winning_faction, independent_wins = game.check_endgame()
+                    if game_ended:
+                        await game.end(self.bot, winning_faction, independent_wins)
+                    return
+
+            else:
+                replacement = game.replacements.pop(0)
+                player.user = replacement
+                await ctx.send(f'{replacement} has replaced {ctx.author}.')
+                await replacement.send(player.role_pm)
+                return
+
         else:
             game.players.remove(game.get_player(ctx.author))
             return await ctx.send('✅ Game left successfully')

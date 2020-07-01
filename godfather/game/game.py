@@ -24,6 +24,7 @@ class Game:
         self.channel = channel
         self.guild = channel.guild
         self.players = []
+        self.replacements: typing.List[discord.Member] = []
         self.phase = Phase.PREGAME
         self.cycle = 0
         self.host_id = None  # assigned to the user creating the game
@@ -96,7 +97,6 @@ class Game:
             self.night_actions.reset()
             self.phase = Phase.DAY
             alive_players = len(self.filter_players(alive=True))
-            # TODO: make limits configurable
             await self.channel.send(f'Day **{self.cycle}** will last {phase_t} minutes.'
                                     f' With {alive_players} alive, it takes {self.majority_votes} to lynch.')
         else:
