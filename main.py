@@ -4,6 +4,7 @@ import pathlib
 import discord
 from discord.ext import commands
 from godfather.database import DB
+from godfather.errors import PhaseChangeError
 from godfather.utils import ColoredFormatter, getlogger, alive_or_recent_jester
 
 
@@ -80,6 +81,12 @@ class Godfather(commands.Bot):
         elif isinstance(error, commands.CheckFailure):
             # checks are handled in the predicates
             return
+
+        elif isinstance(error, PhaseChangeError):
+            # Inform users that game has ended and remove guild id from `self.games`.
+            await ctx.send('There was an error incrementing the phase. The game has ended.')
+            self.games.pop(ctx.guild.id, None)
+            return self.logger.exception(error)
 
         await ctx.send(f'Uncaught exception: ```{error}```')
         self.logger.exception(error)

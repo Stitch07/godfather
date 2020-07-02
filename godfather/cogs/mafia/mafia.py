@@ -9,6 +9,7 @@ from godfather.game import Game, Player, Phase
 from godfather.roles import all_roles
 from godfather.cogs.mafia.checks import *  # pylint: disable=wildcard-import
 from godfather.utils import get_random_sequence, from_now
+from godfather.errors import PhaseChangeError
 
 
 class Mafia(commands.Cog):
@@ -202,7 +203,10 @@ class Mafia(commands.Cog):
         if night_start:
             game.cycle = 1
             game.phase = Phase.DAY
-        await game.increment_phase(self.bot)
+        try:
+            await game.increment_phase(self.bot)
+        except Exception as exc:
+            raise PhaseChangeError(None, *exc.args)
 
     @ commands.command()
     @day_only()
@@ -234,8 +238,11 @@ class Mafia(commands.Cog):
                 await game.end(self.bot, winning_faction, independent_wins)
             else:
                 game.phase = Phase.DAY
-                await game.increment_phase(self.bot)
-                # change phase after this.
+                try:
+                    await game.increment_phase(self.bot)
+                    # change phase after this.
+                except Exception as exc:
+                    raise PhaseChangeError(None, *exc.args)
 
     @ commands.command()
     @day_only()
