@@ -57,6 +57,7 @@ class Mafia(commands.Cog):
             return await ctx.send('Maximum amount of players reached')
         else:
             game.players.append(Player(ctx.message.author))
+            game.votes[ctx.author.id] = []
             return await ctx.send('✅ Game joined successfully')
 
     @commands.command()
@@ -104,6 +105,8 @@ class Mafia(commands.Cog):
 
         else:
             game.players.remove(game.get_player(ctx.author))
+            if ctx.author.id in game.votes:
+                del game.votes[ctx.author.id]
             return await ctx.send('✅ Game left successfully')
 
     @commands.command()
@@ -247,30 +250,34 @@ class Mafia(commands.Cog):
             game.phase = Phase.DAY
         await game.increment_phase(self.bot)
 
-    @ commands.command()
+    @commands.command()
     @day_only()
-    @ game_started_only()
-    @ player_only()
-    @ game_only()
+    @game_started_only()
+    @player_only()
+    @game_only()
     async def vote(self, ctx: commands.Context, *, target: Player):
         game = self.bot.games[ctx.guild.id]
 
         if not target.alive:
             return await ctx.send("You can't vote a dead player.")
-        elif target.has_vote(ctx.author):
+        elif ctx.author in game.votes[target.user.id]:
             return await ctx.send('You have already voted {}'.format(target.user.name))
         elif target.user.id == ctx.author.id:
             return await ctx.send('Self-voting is not allowed')
 
-        for voted in game.filter_players(is_voted_by=ctx.author):
-            voted.remove_vote(ctx.author)
+        # clear any other possible votes
+        for votes in game.votes.values():
+            if ctx.author in votes:
+                votes.remove(ctx.author)
 
-        target.votes.append(game.get_player(ctx.author))
+        game.votes[target.user.id].append(ctx.author)
+
         await ctx.send(f'Voted {target.user.name}')
-        votes_on_target = len(target.votes)
+        votes_on_target = len(game.votes[target.user.id])
 
         if votes_on_target >= game.majority_votes and not game.phase == Phase.STANDBY:
             game.phase = Phase.STANDBY
+
             await game.lynch(target)
             game_ended, winning_faction, independent_wins = game.check_endgame()
             if game_ended:
@@ -278,7 +285,31 @@ class Mafia(commands.Cog):
             else:
                 game.phase = Phase.DAY
                 await game.increment_phase(self.bot)
-                # change phase after this.
+
+    @commands.command(aliases=['vtnl'])
+    @day_only()
+    @game_started_only()
+    @player_only()
+    @game_only()
+    async def nolynch(self, ctx: commands.Context):
+        game = self.bot.games[ctx.guild.id]
+
+        if ctx.author in game.votes['nolynch']:
+            return await ctx.send('You have already voted to no-lynch.')
+        # clear any other possible votes
+        for votes in game.votes.values():
+            if ctx.author in votes:
+                votes.remove(ctx.author)
+
+        game.votes['nolynch'].append(ctx.author)
+        await ctx.send('You have voted to no-lynch.')
+
+        votes_to_no_lynch = len(game.votes['nolynch'])
+        if votes_to_no_lynch >= game.majority_votes and not game.phase == Phase.STANDBY:
+            game.phase = Phase.STANDBY
+            await ctx.send('Nobody was lynched!')
+            game.phase = Phase.DAY
+            await game.increment_phase(self.bot)
 
     @ commands.command()
     @day_only()
@@ -287,9 +318,15 @@ class Mafia(commands.Cog):
     @ game_only()
     async def unvote(self, ctx: commands.Context):
         game = self.bot.games[ctx.guild.id]
-        for voted in game.filter_players(is_voted_by=ctx.author):
-            voted.remove_vote(ctx.author)
-            return await ctx.send(f'Unvoted {voted.user.name}')
+        for target, votes in game.votes:
+            if target == 'notvoting':
+                continue
+            if ctx.author not in votes:
+                continue
+            votes.remove(ctx)
+            game.votes['notvoting'].append(ctx.author)
+            return await ctx.message.add_reaction('✅')
+
         await ctx.send('No votes to remove.')
 
     @ commands.command()
@@ -302,11 +339,28 @@ class Mafia(commands.Cog):
         num_alive = len(game.filter_players(alive=True))
         msg = '**Vote Count**:\n'
 
-        for player in game.players:
-            if player.votes:
-                msg += f'{player.user.name} ({len(player.votes)}) - ' + \
+        sorted_votes = {k: v for k, v in sorted(
+            game.votes.items(), key=lambda item: len(item[1]))}
+
+        for target, voters in sorted_votes.items():
+            if target in ['notvoting', 'nolynch']:
+                continue
+            player = game.filter_players(pl_id=target)[0]
+            if len(voters) > 0:
+                msg += f'{player.user.name} ({len(voters)}) - ' + \
                     ', '.join(
-                        [voter.user.name for voter in player.votes]) + '\n'
+                        [voter.name for voter in voters]) + '\n'
+
+        nolynchers = game.votes['nolynch']
+        if len(nolynchers) > 0:
+            msg += f'No-lynch ({len(nolynchers)}) - ' + \
+                ', '.join(
+                    [voter.name for voter in nolynchers]) + '\n'
+
+        notvoting = game.votes['notvoting']
+        msg += f'Not Voting ({len(notvoting)}) - ' + \
+            ', '.join(
+                [voter.name for voter in notvoting]) + '\n'
 
         msg += f'With {num_alive} alive, it takes {game.majority_votes} to lynch.'
         return await ctx.send(msg)

@@ -36,6 +36,12 @@ class Game:
         self.config = {
             'phase_time': 5 * 60  # in seconds
         }
+        # votes holds a dict of player IDs mapped to the player objects voting them
+        # it includes a special notvoting and nolynch key for players not voting, and players voting to no-lynch
+        self.votes = {
+            'notvoting': [],
+            'nolynch': []
+        }
 
     # finds a setup for the current player-size. if no setup is found, raises an Exception
     def find_setup(self, setup: str = None):
@@ -87,12 +93,14 @@ class Game:
 
             # resolve night actions
             self.phase = Phase.STANDBY  # so the event loop doesn't mess things up here
-            announcement = await self.night_actions.resolve()
-            if announcement != '':
-                await self.channel.send(announcement)
-                game_ended, winning_faction, independent_wins = self.check_endgame()
-                if game_ended:
-                    return await self.end(bot, winning_faction, independent_wins)
+            dead_players = await self.night_actions.resolve()
+
+            for player in dead_players:
+                await self.channel.send(f'{player.user.name} died last night. They were a {player.display_role}\n')
+
+            game_ended, winning_faction, independent_wins = self.check_endgame()
+            if game_ended:
+                return await self.end(bot, winning_faction, independent_wins)
 
             # clear visits
             for player in self.players:
@@ -101,16 +109,20 @@ class Game:
             # voting starts
             self.night_actions.reset()
             self.phase = Phase.DAY
-            alive_players = len(self.filter_players(alive=True))
+            alive_players = self.filter_players(alive=True)
+            # populate voting cache
+            self.votes['nolynch'] = []
+            self.votes['notvoting'] = []
+            for player in alive_players:
+                self.votes[player.user.id] = []
+                self.votes['notvoting'].append(player.user)
+
             await self.channel.send(f'Day **{self.cycle}** will last {phase_t} minutes.'
-                                    f' With {alive_players} alive, it takes {self.majority_votes} to lynch.')
+                                    f' With {len(alive_players)} alive, it takes {self.majority_votes} to lynch.')
         else:
             self.phase = Phase.STANDBY
-
-            # clear votes
-            for player in self.players:
-                player.votes.clear()
-
+            # remove all votes from every player
+            self.votes.clear()
             await self.channel.send(f'Night **{self.cycle}** will last {phase_t} minutes. '
                                     'Send in those actions quickly!')
 

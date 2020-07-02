@@ -23,9 +23,7 @@ class EventLoop(commands.Cog):
             if curr_t > phase_end:
                 if game.phase == Phase.DAY:
                     # no lynch achieved
-                    await game.channel.send('Nobody was lynched')
-                    for player in game.players:
-                        player.votes = []
+                    await game.channel.send('Nobody was lynched!')
                 # wip: resolve night actions here
                 await game.increment_phase(self.bot)
 

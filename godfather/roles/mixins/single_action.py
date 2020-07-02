@@ -34,6 +34,8 @@ class SingleAction(Role):
                 'player': player,
                 'priority': 0
             })
+            if len(game.filter_players(action_only=True)) == len(game.night_actions.actions):
+                await game.increment_phase(ctx.bot)
             return await ctx.send('You decided to stay home tonight.')
 
         if not args.isdigit():
