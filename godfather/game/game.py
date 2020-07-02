@@ -80,11 +80,11 @@ class Game:
     async def increment_phase(self, bot):
         phase_t = round(self.config['phase_time'] / 60, 1)
 
-        # cycle 0 check
+        # night loop is the same as the pregame loop
         if self.cycle == 0 or self.phase == Phase.NIGHT:
             # go to the next day
             self.cycle = self.cycle + 1
-            self.phase = Phase.DAY
+
             # resolve night actions
             self.phase = Phase.STANDBY  # so the event loop doesn't mess things up here
             announcement = await self.night_actions.resolve()
@@ -93,6 +93,11 @@ class Game:
                 game_ended, winning_faction, independent_wins = self.check_endgame()
                 if game_ended:
                     return await self.end(bot, winning_faction, independent_wins)
+
+            # clear visits
+            for player in self.players:
+                player.visitors.clear()
+
             # voting starts
             self.night_actions.reset()
             self.phase = Phase.DAY
@@ -101,6 +106,11 @@ class Game:
                                     f' With {alive_players} alive, it takes {self.majority_votes} to lynch.')
         else:
             self.phase = Phase.STANDBY
+
+            # clear votes
+            for player in self.players:
+                player.votes.clear()
+
             await self.channel.send(f'Night **{self.cycle}** will last {phase_t} minutes. '
                                     'Send in those actions quickly!')
 
@@ -177,9 +187,6 @@ class Game:
         async with self.channel.typing():
             await self.channel.send(f'{target.user.name} was lynched. He was a *{target.display_role}*.')
             await target.role.on_lynch(self, target)
-
-        for player in self.players:
-            player.votes = []
 
         await target.remove(self, f'lynched D{self.cycle}')
 
