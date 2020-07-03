@@ -81,8 +81,7 @@ class Godfather(commands.Bot):
         elif isinstance(error, commands.BadArgument):
             return await ctx.send('Invalid input')
         elif isinstance(error, commands.CheckFailure):
-            # checks are handled in the predicates
-            return
+            return await ctx.send(error)
 
         elif isinstance(error, PhaseChangeError):
             # Inform users that game has ended and remove guild id from `self.games`.
