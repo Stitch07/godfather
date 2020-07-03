@@ -195,7 +195,4 @@ class GameAsyncTestCase(unittest.IsolatedAsyncioTestCase):
         )
         target.role.on_lynch.assert_called_with(self.game, target)
 
-        for player in self.game.players:
-            self.assertEqual(player.votes, [])
-
         target.remove.assert_called_once()
