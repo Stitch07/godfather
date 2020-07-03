@@ -1,4 +1,4 @@
-from .cop import Cop
+from godfather.roles.town.cop import Cop
 
 
 class InsaneCop(Cop):

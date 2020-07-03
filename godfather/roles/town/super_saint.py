@@ -1,5 +1,5 @@
 import asyncio
-from .role import Role
+from godfather.roles.base import Role
 
 DESCRIPTION = 'You will blow up the last person to lynch you!'
 

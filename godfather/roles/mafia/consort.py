@@ -1,4 +1,4 @@
-from godfather.roles.escort import Escort
+from godfather.roles.town.escort import Escort
 
 
 class Consort(Escort):
