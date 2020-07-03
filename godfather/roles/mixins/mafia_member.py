@@ -4,7 +4,7 @@ class MafiaMember:
         # mafioso becomes new gf and stuff here
         if player.role.name == 'Godfather':
             # find a mafioso/goon
-            if len(game.filter_players(role='Goon')) == 0:
+            if len(game.filter_players(role='Goon', alive=True)) == 0:
                 return
             goon = game.filter_players(role='Goon')[0]
             # goon becomes the new Godfather
