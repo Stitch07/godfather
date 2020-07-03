@@ -93,6 +93,31 @@
         ]
     },
     {
+        "name": "dethysucks",
+        "roles": [
+            {
+                "id": "vanilla",
+                "faction": "town"
+            },
+            {
+                "id": "vanilla",
+                "faction": "town"
+            },
+            {
+                "id": "vanilla",
+                "faction": "town"
+            },
+            {
+                "id": "doctor",
+                "faction": "town"
+            },
+            {
+                "id": "goon",
+                "faction": "mafia"
+            }
+        ]
+    },
+    {
         "name": "notreallymatrix6",
         "roles": [
             {
@@ -145,11 +170,11 @@
                 "faction": "town"
             },
             {
-                "id": "vanilla",
+                "id": "lookout",
                 "faction": "town"
             },
             {
-                "id": "doctor",
+                "id": "bodyguard",
                 "faction": "town"
             },
             {
@@ -165,15 +190,15 @@
                 "faction": "town"
             },
             {
-                "id": "serial_killer",
-                "faction": "neutral.serialkiller"
-            },
-            {
                 "id": "godfather",
                 "faction": "mafia"
             },
             {
                 "id": "goon",
+                "faction": "mafia"
+            },
+            {
+                "id": "consigliere",
                 "faction": "mafia"
             }
         ]

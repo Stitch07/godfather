@@ -75,12 +75,9 @@ class NightActions:
          # after action clean-up
         for action in self.actions:
             if action['action'] is None:
-                return
+                continue
             player = action['player']
             target = action['target']
             await player.role.after_action(player, target, self.record)
 
-        announcement = ''
-        for player in dead_players:
-            announcement += f'{player.user.name} died last night. They were a {player.display_role}\n'
-        return announcement
+        return dead_players

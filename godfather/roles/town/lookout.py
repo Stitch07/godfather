@@ -15,5 +15,11 @@ class Lookout(SingleAction):
         pass
 
     async def after_action(self, player, target, night_record):
-        visitors = map(lambda v: v.user.name, target.visitors)
-        await player.user.send('Your target was visited by {}'.format(', '.join(visitors)))
+        if len(target.visitors) > 1:
+            # get all visitors except self
+            visitors = [*filter(lambda v: v.user.id != player.user.id, target.visitors)]
+            # turn all visitors objects into their names
+            visitors = map(lambda v: v.user.name, visitors)
+            await player.user.send('Your target was visited by {}'.format(', '.join(visitors)))
+        else:
+            await player.user.send('Your target was visited by no one')

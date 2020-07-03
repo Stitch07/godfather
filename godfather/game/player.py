@@ -59,11 +59,11 @@ class Player:
         return any(player.user.id == user.id for player in self.votes)
 
     # remove a player from the game
-    async def remove(self, game, reason):
+    async def remove(self, game, reason, modkill=False):
         self.alive = False
         self.votes = []
         self.death_reason = reason
-        if hasattr(self.role, 'on_death'):
+        if hasattr(self.role, 'on_death') and not modkill:
             await self.role.on_death(game, self)
 
     @classmethod

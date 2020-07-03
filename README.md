@@ -1,5 +1,7 @@
 # tvm-bot
 
+[![Discord](https://discordapp.com/api/guilds/723535249073504306/embed.png)](https://discord.gg/gFhvChy)
+
 TvM Bot is a Discord bot that automatically hosts and runs games of Werewolf/Mafia.
 Version 1 aims to be completely compatible with [Town of Salem](http://blankmediagames.org/)
 

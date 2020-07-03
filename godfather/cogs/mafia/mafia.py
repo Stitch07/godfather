@@ -8,7 +8,7 @@ from godfather.factions import factions
 from godfather.game import Game, Player, Phase
 from godfather.roles import all_roles
 from godfather.cogs.mafia.checks import *  # pylint: disable=wildcard-import
-from godfather.utils import get_random_sequence, from_now
+from godfather.utils import get_random_sequence, from_now, confirm
 from godfather.errors import PhaseChangeError
 
 
@@ -35,7 +35,19 @@ class Mafia(commands.Cog):
         game = self.bot.games[ctx.guild.id]
 
         if game.has_started:
-            return await ctx.send('Signup phase for the game has ended')
+            if ctx.author in game.replacements:
+                return await ctx.send('You are already a replacement.')
+            confirm_replacement = await confirm(
+                ctx.bot, ctx.author, ctx.channel,
+                'Sign-ups for this game have ended. Would you like to be a replacement?')
+            if confirm_replacement is None:
+                return
+            if not confirm_replacement:
+                return await ctx.message.add_reaction('❌')
+            game.replacements.append(ctx.author)
+            await ctx.send('You have decided to become a replacement.')
+            return
+
         elif game.has_player(ctx.author):
             return await ctx.send('You have already joined this game')
 
@@ -46,6 +58,7 @@ class Mafia(commands.Cog):
             return await ctx.send('Maximum amount of players reached')
         else:
             game.players.append(Player(ctx.message.author))
+            game.votes[ctx.author.id] = []
             return await ctx.send('✅ Game joined successfully')
 
     @commands.command()
@@ -53,15 +66,48 @@ class Mafia(commands.Cog):
     async def leave(self, ctx: commands.Context):
         game = self.bot.games[ctx.guild.id]
 
-        if game.has_started:
-            return await ctx.send('Cannot leave game after '
-                                  'signup phase has ended')
-        elif not game.has_player(ctx.author):
+        if ctx.author in game.replacements:
+            game.replacements.remove(ctx.author)
+            return await ctx.send("You're not a replacement anymore.")
+        if not game.has_player(ctx.author):
             return await ctx.send('You have not joined this game')
-        elif game.host_id == ctx.author.id:
+        if game.host_id == ctx.author.id:
             return await ctx.send('The host cannot leave the game.')
+
+        if game.has_started:
+
+            replace_text = 'Are you sure you want to leave the game? You will be mod-killed.' \
+                if len(game.replacements) == 0 \
+                else 'Are you sure you want to leave the game? You will be replaced out.'
+            confirm_replacement = await confirm(ctx.bot, ctx.author, ctx.channel, replace_text)
+            if confirm_replacement is None:
+                return
+            if not confirm_replacement:
+                return await ctx.message.add_reaction('❌')
+
+            player = game.get_player(ctx.author)
+
+            if len(game.replacements) == 0:
+                phase_str = 'd' if game.phase == Phase.DAY else 'n'
+                async with game.channel.typing():
+                    await game.channel.send(f'{player.user.name} was modkilled. They were a *{player.display_role}*.')
+                    await player.remove(game, f'modkilled {phase_str}{game.cycle}')
+                    game_ended, winning_faction, independent_wins = game.check_endgame()
+                    if game_ended:
+                        await game.end(self.bot, winning_faction, independent_wins)
+                    return
+
+            else:
+                replacement = game.replacements.pop(0)
+                player.user = replacement
+                await ctx.send(f'{replacement} has replaced {ctx.author}.')
+                await replacement.send(player.role_pm)
+                return
+
         else:
             game.players.remove(game.get_player(ctx.author))
+            if ctx.author.id in game.votes:
+                del game.votes[ctx.author.id]
             return await ctx.send('✅ Game left successfully')
 
     @commands.command()
@@ -69,7 +115,7 @@ class Mafia(commands.Cog):
     async def playerlist(self, ctx: commands.Context):
         game = self.bot.games[ctx.guild.id]
         msg = f'**Players: {len(game.players)}**\n'
-        msg += game.show_players()
+        msg += game.show_players(show_replacements=True)
 
         return await ctx.send(msg)
 
@@ -188,7 +234,7 @@ class Mafia(commands.Cog):
                 teammates = game.filter_players(faction=player.faction.id)
                 if len(teammates) > 1:
                     await player.user.send(
-                        f'Your teammates are: {", ".join(map(lambda pl: pl.user.name, teammates))}'
+                        f'Your team consists of: {", ".join(map(lambda pl: pl.user.name, teammates))}'
                     )
 
         await ctx.send('Sent all role PMs!')
@@ -208,30 +254,34 @@ class Mafia(commands.Cog):
         except Exception as exc:
             raise PhaseChangeError(None, *exc.args)
 
-    @ commands.command()
+    @commands.command()
     @day_only()
-    @ game_started_only()
-    @ player_only()
-    @ game_only()
+    @game_started_only()
+    @player_only()
+    @game_only()
     async def vote(self, ctx: commands.Context, *, target: Player):
         game = self.bot.games[ctx.guild.id]
 
         if not target.alive:
             return await ctx.send("You can't vote a dead player.")
-        elif target.has_vote(ctx.author):
+        elif ctx.author in game.votes[target.user.id]:
             return await ctx.send('You have already voted {}'.format(target.user.name))
         elif target.user.id == ctx.author.id:
             return await ctx.send('Self-voting is not allowed')
 
-        for voted in game.filter_players(is_voted_by=ctx.author):
-            voted.remove_vote(ctx.author)
+        # clear any other possible votes
+        for votes in game.votes.values():
+            if ctx.author in votes:
+                votes.remove(ctx.author)
 
-        target.votes.append(game.get_player(ctx.author))
+        game.votes[target.user.id].append(ctx.author)
+
         await ctx.send(f'Voted {target.user.name}')
-        votes_on_target = len(target.votes)
+        votes_on_target = len(game.votes[target.user.id])
 
         if votes_on_target >= game.majority_votes and not game.phase == Phase.STANDBY:
             game.phase = Phase.STANDBY
+
             await game.lynch(target)
             game_ended, winning_faction, independent_wins = game.check_endgame()
             if game_ended:
@@ -244,6 +294,31 @@ class Mafia(commands.Cog):
                 except Exception as exc:
                     raise PhaseChangeError(None, *exc.args)
 
+    @commands.command(aliases=['vtnl'])
+    @day_only()
+    @game_started_only()
+    @player_only()
+    @game_only()
+    async def nolynch(self, ctx: commands.Context):
+        game = self.bot.games[ctx.guild.id]
+
+        if ctx.author in game.votes['nolynch']:
+            return await ctx.send('You have already voted to no-lynch.')
+        # clear any other possible votes
+        for votes in game.votes.values():
+            if ctx.author in votes:
+                votes.remove(ctx.author)
+
+        game.votes['nolynch'].append(ctx.author)
+        await ctx.send('You have voted to no-lynch.')
+
+        votes_to_no_lynch = len(game.votes['nolynch'])
+        if votes_to_no_lynch >= game.majority_votes and not game.phase == Phase.STANDBY:
+            game.phase = Phase.STANDBY
+            await ctx.send('Nobody was lynched!')
+            game.phase = Phase.DAY
+            await game.increment_phase(self.bot)
+
     @ commands.command()
     @day_only()
     @ game_started_only()
@@ -251,9 +326,15 @@ class Mafia(commands.Cog):
     @ game_only()
     async def unvote(self, ctx: commands.Context):
         game = self.bot.games[ctx.guild.id]
-        for voted in game.filter_players(is_voted_by=ctx.author):
-            voted.remove_vote(ctx.author)
-            return await ctx.send(f'Unvoted {voted.user.name}')
+        for target, votes in game.votes.items():
+            if target == 'notvoting':
+                continue
+            if ctx.author not in votes:
+                continue
+            votes.remove(ctx.author)
+            game.votes['notvoting'].append(ctx.author)
+            return await ctx.message.add_reaction('✅')
+
         await ctx.send('No votes to remove.')
 
     @ commands.command()
@@ -266,11 +347,28 @@ class Mafia(commands.Cog):
         num_alive = len(game.filter_players(alive=True))
         msg = '**Vote Count**:\n'
 
-        for player in game.players:
-            if player.votes:
-                msg += f'{player.user.name} ({len(player.votes)}) - ' + \
+        sorted_votes = {k: v for k, v in sorted(
+            game.votes.items(), key=lambda item: len(item[1]))}
+
+        for target, voters in sorted_votes.items():
+            if target in ['notvoting', 'nolynch']:
+                continue
+            player = game.filter_players(pl_id=target)[0]
+            if len(voters) > 0:
+                msg += f'{player.user.name} ({len(voters)}) - ' + \
                     ', '.join(
-                        [voter.user.name for voter in player.votes]) + '\n'
+                        [voter.name for voter in voters]) + '\n'
+
+        nolynchers = game.votes['nolynch']
+        if len(nolynchers) > 0:
+            msg += f'No-lynch ({len(nolynchers)}) - ' + \
+                ', '.join(
+                    [voter.name for voter in nolynchers]) + '\n'
+
+        notvoting = game.votes['notvoting']
+        msg += f'Not Voting ({len(notvoting)}) - ' + \
+            ', '.join(
+                [voter.name for voter in notvoting]) + '\n'
 
         msg += f'With {num_alive} alive, it takes {game.majority_votes} to lynch.'
         return await ctx.send(msg)

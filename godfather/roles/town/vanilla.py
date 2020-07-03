@@ -1,4 +1,4 @@
-from .role import Role
+from godfather.roles.base import Role
 
 DESCRIPTION = 'You have no powers.'
 

@@ -1,4 +1,7 @@
 from datetime import datetime
+from discord import TextChannel, Member
+from discord.ext.commands import Bot
+import asyncio
 
 # General utilities
 
@@ -29,3 +32,24 @@ def alive_or_recent_jester(player, game):
             and player.death_reason == f'lynched D{game.cycle}':
         return True
     return player.alive
+
+
+async def confirm(bot: Bot, prompter: Member, channel: TextChannel, message: str):
+    msg = await channel.send(content=message)
+    await msg.add_reaction('🇾')
+    await msg.add_reaction('🇳')
+
+    def check(reaction, user):
+        return user == prompter \
+            and str(reaction.emoji) in ['🇾', '🇳'] \
+            and reaction.message.id == msg.id
+
+    try:
+        reaction, _user = await bot.wait_for(
+            'reaction_add', timeout=30.0, check=check)
+        return str(reaction.emoji) == '🇾'
+    except asyncio.TimeoutError:
+        await channel.send(content='Prompt timed out.')
+        return None
+    finally:
+        await msg.delete()

@@ -24,6 +24,7 @@ class Game:
         self.channel = channel
         self.guild = channel.guild
         self.players = []
+        self.replacements: typing.List[discord.Member] = []
         self.phase = Phase.PREGAME
         self.cycle = 0
         self.host_id = None  # assigned to the user creating the game
@@ -34,6 +35,12 @@ class Game:
         # host-configurable stuff
         self.config = {
             'phase_time': 5 * 60  # in seconds
+        }
+        # votes holds a dict of player IDs mapped to the player objects voting them
+        # it includes a special notvoting and nolynch key for players not voting, and players voting to no-lynch
+        self.votes = {
+            'notvoting': [],
+            'nolynch': []
         }
 
     # finds a setup for the current player-size. if no setup is found, raises an Exception
@@ -79,28 +86,41 @@ class Game:
     async def increment_phase(self, bot):
         phase_t = round(self.config['phase_time'] / 60, 1)
 
-        # cycle 0 check
+        # night loop is the same as the pregame loop
         if self.cycle == 0 or self.phase == Phase.NIGHT:
-            # go to the next day
-            self.cycle = self.cycle + 1
-            self.phase = Phase.DAY
             # resolve night actions
             self.phase = Phase.STANDBY  # so the event loop doesn't mess things up here
-            announcement = await self.night_actions.resolve()
-            if announcement != '':
-                await self.channel.send(announcement)
-                game_ended, winning_faction, independent_wins = self.check_endgame()
-                if game_ended:
-                    return await self.end(bot, winning_faction, independent_wins)
+            dead_players = await self.night_actions.resolve()
+
+            for player in dead_players:
+                await self.channel.send(f'{player.user.name} died last night. They were a {player.display_role}\n')
+
+            game_ended, winning_faction, independent_wins = self.check_endgame()
+            if game_ended:
+                return await self.end(bot, winning_faction, independent_wins)
+
+            # clear visits
+            for player in self.players:
+                player.visitors.clear()
+
             # voting starts
             self.night_actions.reset()
             self.phase = Phase.DAY
-            alive_players = len(self.filter_players(alive=True))
-            # TODO: make limits configurable
+            self.cycle = self.cycle + 1
+            alive_players = self.filter_players(alive=True)
+            # populate voting cache
+            self.votes['nolynch'] = []
+            self.votes['notvoting'] = []
+            for player in alive_players:
+                self.votes[player.user.id] = []
+                self.votes['notvoting'].append(player.user)
+
             await self.channel.send(f'Day **{self.cycle}** will last {phase_t} minutes.'
-                                    f' With {alive_players} alive, it takes {self.majority_votes} to lynch.')
+                                    f' With {len(alive_players)} alive, it takes {self.majority_votes} to lynch.')
         else:
             self.phase = Phase.STANDBY
+            # remove all votes from every player
+            self.votes.clear()
             await self.channel.send(f'Night **{self.cycle}** will last {phase_t} minutes. '
                                     'Send in those actions quickly!')
 
@@ -178,13 +198,10 @@ class Game:
             await self.channel.send(f'{target.user.name} was lynched. He was a *{target.display_role}*.')
             await target.role.on_lynch(self, target)
 
-        for player in self.players:
-            player.votes = []
-
         await target.remove(self, f'lynched D{self.cycle}')
 
     # since this is needed in a couple of places
-    def show_players(self, codeblock=False):
+    def show_players(self, codeblock=False, show_replacements=False):
         players = []
         for num, player in enumerate(self.players, 1):
             # codeblock friendly formatting. green for alive, red for dead
@@ -201,6 +218,9 @@ class Game:
                     usrname += f'{num}. ~~{player.user}~~ ({player.display_role}; {player.death_reason})'
 
             players.append(usrname)
+        if show_replacements and len(self.replacements) > 0:
+            replacements = ', '.join(map(str, self.replacements))
+            players.append('\nReplacements: {}'.format(replacements))
         return '\n'.join(players)
 
     # WIP: End the game
@@ -222,8 +242,10 @@ class Game:
         # update player stats
         if bot.db:
             with bot.db.conn.cursor() as cur:
+                independent_win_roles = [
+                    *map(lambda player: player.role.name, independent_wins)]
                 cur.execute("INSERT INTO games (setup, winning_faction, independent_wins) VALUES (%s, %s, %s) RETURNING id;",
-                            (self.setup['name'], winning_faction, independent_wins))
+                            (self.setup['name'], winning_faction, independent_win_roles))
                 game_id, = cur.fetchone()
                 with bot.db.conn.cursor() as cur2:
                     values = []
