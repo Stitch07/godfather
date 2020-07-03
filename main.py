@@ -90,6 +90,12 @@ class Godfather(commands.Bot):
             return self.logger.exception(error)
 
         await ctx.send(f'Uncaught exception: ```{error}```')
+
+        if config.get('env', '') == "production":
+            # End game only if `env` is set to 'production'.
+            await ctx.send('\nThe game has ended.')
+            self.games.pop(ctx.guild.id, None)
+
         self.logger.exception(error)
 
     def load_extensions(self):
