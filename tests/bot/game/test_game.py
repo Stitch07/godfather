@@ -57,6 +57,22 @@ class ShowPlayersTestCase(unittest.TestCase):
             self.game.show_players(codeblock=False), expected_str
         )
 
+    def test_show_players_with_replacements(self):
+        expected_str = "1. Player0\n2. Player1\n3. Player2\n" \
+            "4. ~~Player3~~ (Role; Eaten by lemons.)\n" \
+            "5. ~~Player4~~ (Role; Eaten by lemons.)\n" \
+            "6. ~~Player5~~ (Role; Eaten by lemons.)\n" \
+            "\nReplacements: Replacement0, Replacement1, Replacement2"
+        # generate 3 replacements
+        for num in range(3):
+            replacement = MagicMock()
+            replacement.__str__.return_value = 'Replacement{}'.format(num)
+            self.game.replacements.append(replacement)
+
+        self.assertEqual(
+            self.game.show_players(show_replacements=True), expected_str
+        )
+
 
 class GetPlayerTestCase(unittest.TestCase):
     @classmethod

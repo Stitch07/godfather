@@ -201,7 +201,7 @@ class Game:
         await target.remove(self, f'lynched D{self.cycle}')
 
     # since this is needed in a couple of places
-    def show_players(self, codeblock=False):
+    def show_players(self, codeblock=False, show_replacements=False):
         players = []
         for num, player in enumerate(self.players, 1):
             # codeblock friendly formatting. green for alive, red for dead
@@ -218,6 +218,9 @@ class Game:
                     usrname += f'{num}. ~~{player.user}~~ ({player.display_role}; {player.death_reason})'
 
             players.append(usrname)
+        if show_replacements and len(self.replacements) > 0:
+            replacements = ', '.join(map(str, self.replacements))
+            players.append('\nReplacements: {}'.format(replacements))
         return '\n'.join(players)
 
     # WIP: End the game
