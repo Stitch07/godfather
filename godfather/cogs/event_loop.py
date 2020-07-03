@@ -1,6 +1,7 @@
 from datetime import datetime
 from discord.ext import tasks, commands
 from godfather.game import Phase
+from godfather.errors import PhaseChangeError
 
 
 class EventLoop(commands.Cog):
@@ -23,9 +24,11 @@ class EventLoop(commands.Cog):
             if curr_t > phase_end:
                 if game.phase == Phase.DAY:
                     # no lynch achieved
-                    await game.channel.send('Nobody was lynched!')
-                # wip: resolve night actions here
-                await game.increment_phase(self.bot)
+                    await game.channel.send('Nobody was lynched')
+                try:
+                    await game.increment_phase(self.bot)
+                except Exception as exc:
+                    raise PhaseChangeError(None, *exc.args)
 
     @event_loop.before_loop
     async def before_loop(self):

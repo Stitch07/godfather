@@ -3,11 +3,6 @@ import discord
 from discord.ext import commands
 import godfather.roles as roles
 import godfather.game as game
-from godfather.utils import alive_or_recent_jester
-
-
-def remove_prefix(text, prefix):
-    return text[text.startswith(prefix) and len(prefix):]
 
 
 def insert_returns(body):
@@ -29,55 +24,6 @@ def insert_returns(body):
 class Misc(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-
-    @commands.Cog.listener()
-    async def on_ready(self):
-        # initialize games map
-        self.bot.games = {}
-        self.bot.get_cog('EventLoop').event_loop.start()
-        self.bot.logger.info(
-            'Ready to serve {} guilds!'.format(len(self.bot.guilds)))
-
-    @commands.Cog.listener()
-    async def on_command_error(self, ctx, error):
-        # pylint: disable=too-many-return-statements
-        if hasattr(ctx.command, 'on_error'):
-            return
-        if isinstance(error, commands.CommandNotFound):
-            if not isinstance(ctx.channel, discord.DMChannel):
-                return
-            command, * \
-                args = remove_prefix(ctx.message.content,
-                                     ctx.prefix).split(' ')
-            games = [
-                *filter(lambda g: g.has_player(ctx.author), ctx.bot.games.values())]
-            if len(games) == 0:
-                return
-            pl_game = games[0]
-            player = pl_game.get_player(ctx.author)
-
-            if not alive_or_recent_jester(player, pl_game) \
-                    or not hasattr(player.role, 'action'):
-                return
-            if command.lower() not in [player.role.action, 'noaction']:
-                return
-            if command.lower() == 'noaction':
-                args = ['noaction']
-            await player.role.on_pm_command(ctx, pl_game, player, args)
-
-            return  # ignore invalid commands
-
-        elif isinstance(error, commands.MissingRequiredArgument):
-            return await ctx.send(f'Missing required argument {error.param}')
-        elif isinstance(error, commands.ArgumentParsingError):
-            return await ctx.send('Invalid input')
-        elif isinstance(error, commands.BadArgument):
-            return await ctx.send('Invalid input')
-        elif isinstance(error, commands.CheckFailure):
-            # checks are handled in the predicates
-            return
-        await ctx.send(f'Uncaught exception: ```{error}```')
-        self.bot.logger.exception(error)
 
     @commands.command()
     async def ping(self, ctx):

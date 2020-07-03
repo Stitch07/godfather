@@ -2,6 +2,7 @@ import json
 import discord
 from discord.ext import commands
 from godfather.game import Player
+from godfather.errors import PhaseChangeError
 
 
 class Admin(commands.Cog):
@@ -82,8 +83,11 @@ class Admin(commands.Cog):
                     break
 
                 # change phase after this.
-                await game.increment_phase(self.bot)
-                break
+                try:
+                    await game.increment_phase(self.bot)
+                    break
+                except Exception as exc:
+                    raise PhaseChangeError(None, *exc.args)
 
 
 def setup(bot):

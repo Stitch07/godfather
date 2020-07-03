@@ -1,5 +1,6 @@
 from discord.ext import commands
 from godfather.roles import Role
+from godfather.errors import PhaseChangeError
 
 conv = commands.MemberConverter()
 
@@ -84,7 +85,10 @@ class SingleAction(Role):
         await ctx.send(f'You are {self.action_gerund} {target} tonight.')
 
         if len(game.filter_players(action_only=True)) == len(game.night_actions.actions):
-            await game.increment_phase(ctx.bot)
+            try:
+                await game.increment_phase(ctx.bot)
+            except Exception as exc:
+                raise PhaseChangeError(None, *exc.args)
 
     async def after_action(self, player, target, night_record):
         pass
