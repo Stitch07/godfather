@@ -91,7 +91,7 @@ class Godfather(commands.Bot):
 
         await ctx.send(f'Uncaught exception: ```{error}```')
 
-        if config.get('env', '') == "production":
+        if config.get('ENV', '') == "production":
             # End game only if `env` is set to 'production'.
             await ctx.send('\nThe game has ended.')
             self.games.pop(ctx.guild.id, None)
