@@ -29,8 +29,10 @@ class Godfather(commands.Bot):
 
         # set Discord.py's logger to our custom one
         discord_logger = logging.getLogger('discord')
-        discord_logger.addHandler(
-            logging.StreamHandler().setFormatter(ColoredFormatter()))
+        handler = logging.StreamHandler()
+        # setFormatter returns `None`, so it can't be used while chaining
+        handler.setFormatter(ColoredFormatter())
+        discord_logger.addHandler(handler)
 
         # Load all extensions.
         self.load_extensions()
@@ -111,4 +113,4 @@ class Godfather(commands.Bot):
 
 if __name__ == "__main__":
     # Run the bot
-    Godfather().run(config.get('token'))
+    Godfather().run(config.get('token'), reconnect=True)
