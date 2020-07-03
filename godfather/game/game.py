@@ -88,9 +88,6 @@ class Game:
 
         # night loop is the same as the pregame loop
         if self.cycle == 0 or self.phase == Phase.NIGHT:
-            # go to the next day
-            self.cycle = self.cycle + 1
-
             # resolve night actions
             self.phase = Phase.STANDBY  # so the event loop doesn't mess things up here
             dead_players = await self.night_actions.resolve()
@@ -109,6 +106,7 @@ class Game:
             # voting starts
             self.night_actions.reset()
             self.phase = Phase.DAY
+            self.cycle = self.cycle + 1
             alive_players = self.filter_players(alive=True)
             # populate voting cache
             self.votes['nolynch'] = []

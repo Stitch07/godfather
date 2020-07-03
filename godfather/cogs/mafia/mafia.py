@@ -318,7 +318,7 @@ class Mafia(commands.Cog):
     @ game_only()
     async def unvote(self, ctx: commands.Context):
         game = self.bot.games[ctx.guild.id]
-        for target, votes in game.votes:
+        for target, votes in game.votes.items():
             if target == 'notvoting':
                 continue
             if ctx.author not in votes:
