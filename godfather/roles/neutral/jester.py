@@ -36,7 +36,7 @@ class Jester(SingleAction):
     async def on_lynch(self, game, player):
         self.action = 'haunt'
         self.can_haunt = True
-        self.voted = player.votes
+        self.voted = game.votes[player.user.id]
         await game.channel.send('The jester will get revenge from his grave!')
 
     async def after_action(self, player, target, night_record):
@@ -48,6 +48,6 @@ class Jester(SingleAction):
         return False, ''
 
     def can_target(self, player, target):
-        if not target in self.voted:
+        if not target.user in self.voted:
             return False, 'You can only lynch players hammering you.'
         return super().can_target(player, target)

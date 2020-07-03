@@ -242,8 +242,10 @@ class Game:
         # update player stats
         if bot.db:
             with bot.db.conn.cursor() as cur:
+                independent_win_roles = [
+                    *map(lambda player: player.role.name, independent_wins)]
                 cur.execute("INSERT INTO games (setup, winning_faction, independent_wins) VALUES (%s, %s, %s) RETURNING id;",
-                            (self.setup['name'], winning_faction, independent_wins))
+                            (self.setup['name'], winning_faction, independent_win_roles))
                 game_id, = cur.fetchone()
                 with bot.db.conn.cursor() as cur2:
                     values = []

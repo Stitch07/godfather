@@ -233,7 +233,7 @@ class Mafia(commands.Cog):
                 teammates = game.filter_players(faction=player.faction.id)
                 if len(teammates) > 1:
                     await player.user.send(
-                        f'Your teammates are: {", ".join(map(lambda pl: pl.user.name, teammates))}'
+                        f'Your team consists of: {", ".join(map(lambda pl: pl.user.name, teammates))}'
                     )
 
         await ctx.send('Sent all role PMs!')
@@ -323,7 +323,7 @@ class Mafia(commands.Cog):
                 continue
             if ctx.author not in votes:
                 continue
-            votes.remove(ctx)
+            votes.remove(ctx.author)
             game.votes['notvoting'].append(ctx.author)
             return await ctx.message.add_reaction('✅')
 
