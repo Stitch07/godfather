@@ -39,7 +39,8 @@ class Godfather(commands.Bot):
 
         # setup Postgres
         if 'postgres' in config:
-            self.db = DB(**config.get('postgres'))  # pylint: disable=invalid-name
+            self.db = DB(**config.get('postgres')
+                         )  # pylint: disable=invalid-name
 
     async def on_ready(self):
         # initialize games map
@@ -70,6 +71,8 @@ class Godfather(commands.Bot):
                 return
             if command.lower() == 'noaction':
                 args = ['noaction']
+            if hasattr(player.role, 'on_pm_command_notarget'):
+                return await player.role.on_pm_command_notarget(ctx, pl_game, player, command)
             await player.role.on_pm_command(ctx, pl_game, player, args)
 
             return  # ignore invalid commands

@@ -17,7 +17,7 @@
         ]
     },
     {
-        "name": "jestertest",
+        "name": "survivortest",
         "roles": [
             {
                 "id": "vigilante",
@@ -32,8 +32,8 @@
                 "faction": "mafia"
             },
             {
-                "id": "jester",
-                "faction": "neutral.jester"
+                "id": "survivor",
+                "faction": "neutral.survivor"
             },
             {
                 "id": "escort",

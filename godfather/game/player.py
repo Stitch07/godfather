@@ -29,7 +29,7 @@ class Player:
     def innocent(self):
         if hasattr(self.role, 'innocence_modifier'):
             return self.role.innocence_modifier()
-        if self.faction.id == 'town':
+        if self.faction.id in ['town', 'neutral.survivor']:
             return True
         return False
 
