@@ -198,5 +198,50 @@
                 "faction": "mafia"
             }
         ]
+    },
+    {
+        "name": "prmadness",
+        "roles": [
+            {
+                "id": "lookout",
+                "faction": "town"
+            },
+            {
+                "id": "bodyguard",
+                "faction": "town"
+            },
+            {
+                "id": "veteran",
+                "faction": "town"
+            },
+            {
+                "id": "escort",
+                "faction": "town"
+            },
+            {
+                "id": "cop",
+                "faction": "town"
+            },
+            {
+                "id": "vigilante",
+                "faction": "town"
+            },
+            {
+                "id": "survivor",
+                "faction": "neutral.survivor"
+            },
+            {
+                "id": "serial_killer",
+                "faction": "neutral.serialkiller"
+            },
+            {
+                "id": "goon",
+                "faction": "mafia"
+            },
+            {
+                "id": "consigliere",
+                "faction": "mafia"
+            }
+        ]
     }
 ]
