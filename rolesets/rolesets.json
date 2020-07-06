@@ -17,6 +17,23 @@
         ]
     },
     {
+        "name": "arsotest",
+        "roles": [
+            {
+                "id": "arsonist",
+                "faction": "neutral.arsonist"
+            },
+            {
+                "id": "vanilla",
+                "faction": "town"
+            },
+            {
+                "id": "vanilla",
+                "faction": "town"
+            }
+        ]
+    },
+    {
         "name": "vettest",
         "roles": [
             {
@@ -110,6 +127,43 @@
             {
                 "id": "goon",
                 "faction": "mafia"
+            }
+        ]
+    },
+    {
+        "name": "getburnt",
+        "roles": [
+            {
+                "id": "arsonist",
+                "faction": "neutral.arsonist"
+            },
+            {
+                "id": "vanilla",
+                "faction": "town"
+            },
+            {
+                "id": "vanilla",
+                "faction": "town"
+            },
+            {
+                "id": "vanilla",
+                "faction": "town"
+            },
+            {
+                "id": "vanilla",
+                "faction": "town"
+            },
+            {
+                "id": "vanilla",
+                "faction": "town"
+            },
+            {
+                "id": "vanilla",
+                "faction": "town"
+            },
+            {
+                "id": "jester",
+                "faction": "neutral.jester"
             }
         ]
     },
