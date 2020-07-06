@@ -37,7 +37,7 @@ class Godfather(SingleAction, Shooter, MafiaMember):
         await super().run_action(game, night_record, player, target)
 
     async def after_action(self, player, target, night_record):
-        record = night_record[target.user.id].get('nightkill')
+        record = night_record[target.user.id]['nightkill']
         success = record['result'] and player in record['by']
 
         if not success:

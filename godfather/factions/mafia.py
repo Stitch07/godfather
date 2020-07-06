@@ -14,10 +14,10 @@ class Mafia(Faction):
 
     def has_won(self, game: Game):
         def filter_opposing_power_roles(player):
-            can_do, = player.can_do_action(game)
+            can_do, _ = player.role.can_do_action(game)
             return player.faction.id in OPPOSING_FACTIONS \
                 and can_do \
-                and player.alive_maf
+                and player.alive
 
         # mafia win when they have majority and no opposing factions can disturb that
         # that is, 2 mafiosos should automatically win against 2 vanilla townies,

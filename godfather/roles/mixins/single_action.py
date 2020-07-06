@@ -19,13 +19,14 @@ class SingleAction(Role):
         await player.user.send(output)
 
     async def on_pm_command(self, ctx, game, player, args):
+        command = args.pop(0)
         can_do, reason = self.can_do_action(game)
         if not can_do:
             return await ctx.send(f'You cannot use your action today. {reason}')
 
         args = ' '.join(args)
 
-        if args == 'noaction':
+        if command == 'noaction':
             for action in game.night_actions.actions:
                 if action['player'].user.id == player.user.id:
                     game.night_actions.actions.remove(action)
