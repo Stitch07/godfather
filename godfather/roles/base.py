@@ -1,3 +1,5 @@
+
+
 class Role:
     def __init__(self, name=None, role_id=None, description=''):
         self.name = name

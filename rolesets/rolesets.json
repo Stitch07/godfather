@@ -17,19 +17,19 @@
         ]
     },
     {
-        "name": "arsotest",
+        "name": "exetest",
         "roles": [
             {
-                "id": "arsonist",
-                "faction": "neutral.arsonist"
+                "id": "executioner",
+                "faction": "neutral.executioner"
             },
             {
-                "id": "vanilla",
+                "id": "vigilante",
                 "faction": "town"
             },
             {
-                "id": "vanilla",
-                "faction": "town"
+                "id": "goon",
+                "faction": "mafia"
             }
         ]
     },
