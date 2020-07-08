@@ -7,7 +7,7 @@ from discord.ext import commands
 from godfather.factions import factions
 from godfather.game import Game, Player, Phase
 from godfather.roles import all_roles
-from godfather.cogs.mafia.checks import *  # pylint: disable=wildcard-import
+from godfather.cogs.mafia.checks import *  # pylint: disable=wildcard-import, unused-wildcard-import
 from godfather.utils import get_random_sequence, from_now, confirm
 from godfather.errors import PhaseChangeError
 
@@ -21,13 +21,17 @@ class Mafia(commands.Cog):
         if ctx.guild.id in self.bot.games:
             return await ctx.send('A game of mafia is already running '
                                   'in this server.')
-        new_game = Game(ctx.channel)
-        new_game.host_id = ctx.message.author.id
-        new_game.players.append(Player(ctx.author))
+        new_game = self._creategame(ctx)
         self.bot.games[ctx.guild.id] = new_game
         return await ctx.send('Started a game of mafia in '
                               f'{ctx.message.channel.mention}, '
                               f'hosted by **{ctx.message.author}**')
+
+    def _creategame(self, ctx: commands.Context) -> Game:
+        new_game = Game(ctx.channel)
+        new_game.host = ctx.author
+        new_game.players.append(Player(ctx.author))
+        return new_game
 
     @commands.command()
     @game_only()
@@ -71,7 +75,7 @@ class Mafia(commands.Cog):
             return await ctx.send("You're not a replacement anymore.")
         if not game.has_player(ctx.author):
             return await ctx.send('You have not joined this game')
-        if game.host_id == ctx.author.id:
+        if game.host.id == ctx.author.id:
             return await ctx.send('The host cannot leave the game.')
 
         if game.has_started:

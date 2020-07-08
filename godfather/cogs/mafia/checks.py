@@ -14,7 +14,7 @@ def game_only():
 def host_only():
     async def predicate(ctx):
         game = ctx.bot.games[ctx.guild.id]
-        if not game.host_id == ctx.author.id:
+        if not game.host.id == ctx.author.id:
             raise CheckFailure('Only hosts can use this command.')
         return True
     return commands.check(predicate)

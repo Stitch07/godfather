@@ -41,7 +41,7 @@ class Admin(commands.Cog):
         for target in targets:
             if not game.has_player(target):
                 await ctx.send(f'{target.name} has not joined this game')
-            elif game.host_id == target.id:
+            elif game.host.id == target.id:
                 await ctx.send('The host cannot be removed from the game.')
             else:
                 game.players.remove(game.get_player(target))

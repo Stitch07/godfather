@@ -27,7 +27,7 @@ class Game:
         self.replacements: typing.List[discord.Member] = []
         self.phase = Phase.PREGAME
         self.cycle = 0
-        self.host_id = None  # assigned to the user creating the game
+        self.host = None  # assigned to the user creating the game
         # time at which the current phase ends
         self.phase_end_at: datetime = None
         self.night_actions = NightActions(self)
