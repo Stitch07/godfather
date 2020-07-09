@@ -8,6 +8,7 @@ import discord
 from godfather.utils import alive_or_recent_jester
 from .player import Player
 from .night_actions import NightActions
+from godfather.game.player_manager import PlayerManager
 
 rolesets = json.load(open('rolesets/rolesets.json'))
 
@@ -23,7 +24,7 @@ class Game:
     def __init__(self, channel: discord.channel.TextChannel):
         self.channel = channel
         self.guild = channel.guild
-        self.players = []
+        self.players = PlayerManager(self)
         self.replacements: typing.List[discord.Member] = []
         self.phase = Phase.PREGAME
         self.cycle = 0

@@ -30,13 +30,16 @@ class Mafia(commands.Cog):
     def _creategame(self, ctx: commands.Context) -> Game:
         new_game = Game(ctx.channel)
         new_game.host = ctx.author
-        new_game.players.append(Player(ctx.author))
+        new_game.players.add(ctx.author)
         return new_game
 
     @commands.command()
     @game_only()
     async def join(self, ctx: commands.Context):
         game = self.bot.games[ctx.guild.id]
+
+        if ctx.author in game.players:
+            return await ctx.send('You have already joined this game.')
 
         if game.has_started:
             if ctx.author in game.replacements:
@@ -48,12 +51,9 @@ class Mafia(commands.Cog):
                 return
             if not confirm_replacement:
                 return await ctx.message.add_reaction('❌')
-            game.replacements.append(ctx.author)
+            game.players.add(ctx.author, replacement=True)
             await ctx.send('You have decided to become a replacement.')
             return
-
-        elif game.has_player(ctx.author):
-            return await ctx.send('You have already joined this game')
 
         rolesets = json.load(open('rolesets/rolesets.json'))
         rolesets.sort(key=lambda rl: len(rl['roles']), reverse=True)
@@ -61,8 +61,7 @@ class Mafia(commands.Cog):
         if len(game.players) >= len(rolesets[0].get('roles')):
             return await ctx.send('Maximum amount of players reached')
         else:
-            game.players.append(Player(ctx.message.author))
-            game.votes[ctx.author.id] = []
+            game.players.add(ctx.author)
             return await ctx.send('✅ Game joined successfully')
 
     @commands.command()
@@ -70,10 +69,10 @@ class Mafia(commands.Cog):
     async def leave(self, ctx: commands.Context):
         game = self.bot.games[ctx.guild.id]
 
-        if ctx.author in game.replacements:
-            game.replacements.remove(ctx.author)
+        if ctx.author in game.players.replacements:
+            game.players.replacements.remove(ctx.author)
             return await ctx.send("You're not a replacement anymore.")
-        if not game.has_player(ctx.author):
+        if not ctx.author in game.players:
             return await ctx.send('You have not joined this game')
         if game.host.id == ctx.author.id:
             return await ctx.send('The host cannot leave the game.')
@@ -89,7 +88,7 @@ class Mafia(commands.Cog):
             if not confirm_replacement:
                 return await ctx.message.add_reaction('❌')
 
-            player = game.get_player(ctx.author)
+            player = game.players.get(ctx.author)
 
             if len(game.replacements) == 0:
                 phase_str = 'd' if game.phase == Phase.DAY else 'n'
@@ -102,14 +101,14 @@ class Mafia(commands.Cog):
                     return
 
             else:
-                replacement = game.replacements.pop(0)
+                replacement = game.players.replacements.pop(0)
                 player.user = replacement
                 await ctx.send(f'{replacement} has replaced {ctx.author}.')
                 await replacement.send(player.role_pm)
                 return
 
         else:
-            game.players.remove(game.get_player(ctx.author))
+            game.players.remove(ctx.author)
             if ctx.author.id in game.votes:
                 del game.votes[ctx.author.id]
             return await ctx.send('✅ Game left successfully')
@@ -119,7 +118,7 @@ class Mafia(commands.Cog):
     async def playerlist(self, ctx: commands.Context):
         game = self.bot.games[ctx.guild.id]
         msg = f'**Players: {len(game.players)}**\n'
-        msg += game.show_players(show_replacements=True)
+        msg += game.players.show(show_replacements=True)
 
         return await ctx.send(msg)
 
@@ -183,7 +182,7 @@ class Mafia(commands.Cog):
     @ game_started_only()
     async def rolepm(self, ctx: commands.Context):
         game = self.bot.games[ctx.guild.id]
-        player = game.get_player(ctx.author)
+        player = game.players.get(ctx.author)
         try:
             await player.user.send(player.role_pm)
             await ctx.message.add_reaction('✅')
@@ -235,7 +234,7 @@ class Mafia(commands.Cog):
                     no_dms.append(player.user)
 
             for player in filter(lambda pl: pl.faction.informed, game.players):
-                teammates = game.filter_players(faction=player.faction.id)
+                teammates = game.players.filter(faction=player.faction.id)
                 if len(teammates) > 1:
                     await player.user.send(
                         f'Your team consists of: {", ".join(map(lambda pl: pl.user.name, teammates))}'
@@ -348,7 +347,7 @@ class Mafia(commands.Cog):
     @ game_only()
     async def votecount(self, ctx: commands.Context):
         game = self.bot.games[ctx.guild.id]
-        num_alive = len(game.filter_players(alive=True))
+        num_alive = len(game.players.filter(alive=True))
         msg = '**Vote Count**:\n'
 
         sorted_votes = {k: v for k, v in sorted(
