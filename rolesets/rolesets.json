@@ -195,8 +195,8 @@
                 "faction": "town"
             },
             {
-                "id": "jester",
-                "faction": "neutral.jester"
+                "id": "executioner",
+                "faction": "neutral.executioner"
             },
             {
                 "id": "goon",
