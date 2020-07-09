@@ -108,7 +108,7 @@ class Game:
             self.night_actions.reset()
             self.phase = Phase.DAY
             self.cycle = self.cycle + 1
-            alive_players = self.filter_players(alive=True)
+            alive_players = self.players.filter(alive=True)
             # populate voting cache
             self.votes['nolynch'] = []
             self.votes['notvoting'] = []
@@ -134,64 +134,6 @@ class Game:
 
         self.phase_end_at = datetime.now() \
             + timedelta(seconds=self.config['phase_time'])
-
-    # Filter players by:
-    # Their Role
-    # Their Faction
-    # Their Night Action
-    # Whether they have a vote on someone
-    # Whether someone voted them
-    # By applying a lambda on their votecount
-    # By their Discord ID
-    # Checking if they have a Night Action
-    # Checking if they are alive
-    def filter_players(self,
-                       role: typing.Optional[str] = None,
-                       faction: typing.Optional[str] = None,
-                       action: typing.Optional[str] = None,
-                       has_vote_on: typing.Optional[discord.Member] = None,
-                       is_voted_by: typing.Optional[discord.Member] = None,
-                       votecount: typing.Optional[typing.Callable] = None,
-                       pl_id: typing.Optional[int] = None,
-                       action_only: bool = False,
-                       alive: bool = False):
-        # pylint: disable=too-many-arguments
-        plist = self.players
-
-        def action_only_filter(player):
-            if not alive_or_recent_jester(player, self):
-                return False
-            can_do, _ = player.role.can_do_action(self)
-            return can_do
-
-        if role:
-            plist = [*filter(lambda pl: pl.role.name == role, plist)]
-        if faction:
-            plist = [*filter(lambda pl: pl.faction.id == faction, plist)]
-        if action:
-            plist = [*filter(lambda pl: pl.role.action == action
-                             if hasattr(pl.role, 'action') else False)]
-        if has_vote_on:
-            plist = copy.deepcopy(self.get_player(has_vote_on).votes)
-        if is_voted_by:
-            plist = [*filter(lambda pl: pl.has_vote(is_voted_by), plist)]
-        if votecount:
-            plist = [*filter(lambda pl: votecount(len(pl.votes)), plist)]
-        if action_only:
-            plist = [*filter(action_only_filter, plist)]
-        if alive:
-            plist = [*filter(lambda pl: pl.alive, plist)]
-        if pl_id:
-            plist = [*filter(lambda pl: pl.user.id == pl_id, plist)]
-
-        return plist
-
-    def get_player(self, user):
-        plist = [*filter(lambda p: p.user.id == user.id, self.players)]
-        return plist[0] if plist else None
-
-    def has_player(self, user: discord.Member):
-        return self.get_player(user) is not None
 
     # lynch a player
     async def lynch(self, target: Player):
@@ -270,4 +212,11 @@ class Game:
 
     @ property
     def majority_votes(self):
-        return math.floor(len(self.filter_players(alive=True)) / 2) + 1
+        return math.floor(len(self.players.filter(alive=True)) / 2) + 1
+
+    @classmethod
+    def create(cls, ctx):
+        new_game = cls(ctx.channel)
+        new_game.host = ctx.author
+        new_game.players.add(ctx.author)
+        return new_game

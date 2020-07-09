@@ -79,7 +79,7 @@ class NightActions:
         dead_players = []
         for pl_id, record in self.record.items():
             if record['nightkill']['result']:
-                nked_pl = self.game.filter_players(pl_id=pl_id)[0]
+                nked_pl = self.game.players.filter(pl_id=pl_id)[0]
                 await nked_pl.remove(self.game, f'killed N{self.game.cycle}')
                 dead_players.append(nked_pl)
 

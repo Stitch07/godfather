@@ -36,7 +36,7 @@ class SingleAction(Role):
                 'player': player,
                 'priority': 0
             })
-            if len(game.filter_players(action_only=True)) == len(game.night_actions.actions):
+            if len(game.players.filter(action_only=True)) == len(game.night_actions.actions):
                 await game.increment_phase(ctx.bot)
             return await ctx.send('You decided to stay home tonight.')
 
@@ -60,8 +60,8 @@ class SingleAction(Role):
                 game.night_actions.actions.remove(action)
 
         # special godfather stuff
-        if self.name == 'Godfather' and len(game.filter_players(role='Goon')) > 0:
-            goon = game.filter_players(role='Goon')[0]
+        if self.name == 'Godfather' and len(game.players.filter(role='Goon')) > 0:
+            goon = game.players.filter(role='Goon')[0]
             for action in game.night_actions.actions:
                 if action['player'].role.name == 'Goon':
                     game.night_actions.actions.remove(action)
@@ -85,7 +85,7 @@ class SingleAction(Role):
         })
         await ctx.send(f'You are {self.action_gerund} {target} tonight.')
 
-        if len(game.filter_players(action_only=True)) == len(game.night_actions.actions):
+        if len(game.players.filter(action_only=True)) == len(game.night_actions.actions):
             try:
                 await game.increment_phase(ctx.bot)
             except Exception as exc:

@@ -22,7 +22,7 @@ class Mafia(Faction):
         # mafia win when they have majority and no opposing factions can disturb that
         # that is, 2 mafiosos should automatically win against 2 vanilla townies,
         # but the game should continue against a vigilante and a veteran
-        alive_maf = len(game.filter_players(faction='mafia', alive=True))
+        alive_maf = len(game.players.filter(faction='mafia', alive=True))
         alive_opposing = len(
             [*filter(lambda pl: pl.faction.id in OPPOSING_FACTIONS and pl.alive, game.players)])
         alive_opposing_prs = len(

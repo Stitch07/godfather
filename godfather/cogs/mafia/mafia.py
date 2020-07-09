@@ -22,17 +22,11 @@ class Mafia(commands.Cog):
         if ctx.guild.id in self.bot.games:
             return await ctx.send('A game of mafia is already running '
                                   'in this server.')
-        new_game = self._creategame(ctx)
+        new_game = Game.create(ctx)
         self.bot.games[ctx.guild.id] = new_game
         return await ctx.send('Started a game of mafia in '
                               f'{ctx.message.channel.mention}, '
                               f'hosted by **{ctx.message.author}**')
-
-    def _creategame(self, ctx: commands.Context) -> Game:
-        new_game = Game(ctx.channel)
-        new_game.host = ctx.author
-        new_game.players.add(ctx.author)
-        return new_game
 
     @commands.command()
     @game_only()
@@ -79,7 +73,6 @@ class Mafia(commands.Cog):
             return await ctx.send('The host cannot leave the game.')
 
         if game.has_started:
-
             replace_text = 'Are you sure you want to leave the game? You will be mod-killed.' \
                 if len(game.replacements) == 0 \
                 else 'Are you sure you want to leave the game? You will be replaced out.'
@@ -241,7 +234,7 @@ class Mafia(commands.Cog):
                         f'Your team consists of: {", ".join(map(lambda pl: pl.user.name, teammates))}'
                     )
 
-            for player in game.filter_players(role='Executioner'):
+            for player in game.players.filter(role='Executioner'):
                 targets = list(filter(lambda pl: pl.faction.name == 'Town' and pl.role.name not in [
                     'Jailor', 'Mayor'], game.players))
                 target = random.choice(targets)
@@ -364,7 +357,7 @@ class Mafia(commands.Cog):
         for target, voters in sorted_votes.items():
             if target in ['notvoting', 'nolynch']:
                 continue
-            player = game.filter_players(pl_id=target)[0]
+            player = game.players.filter(pl_id=target)[0]
             if len(voters) > 0:
                 msg += f'{player.user.name} ({len(voters)}) - ' + \
                     ', '.join(

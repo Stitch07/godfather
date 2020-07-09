@@ -53,7 +53,7 @@ class Arsonist(Role):
                 'player': player,
                 'priority': 0
             })
-            if len(game.filter_players(action_only=True)) == len(game.night_actions.actions):
+            if len(game.players.filter(action_only=True)) == len(game.night_actions.actions):
                 await game.increment_phase(ctx.bot)
             return await ctx.send('You decided to stay home tonight.')
 
@@ -71,7 +71,7 @@ class Arsonist(Role):
                 })
             self.ignited = True
             await ctx.send('You are igniting your doused targets today.')
-            total_actions = len(game.filter_players(action_only=True))
+            total_actions = len(game.players.filter(action_only=True))
             expected_total = total_actions + len(self.doused) - 1
             if expected_total == len(game.night_actions.actions):
                 try:
@@ -109,7 +109,7 @@ class Arsonist(Role):
         })
         await ctx.send(f'You are dousing {target} tonight.')
 
-        if len(game.filter_players(action_only=True)) == len(game.night_actions.actions):
+        if len(game.players.filter(action_only=True)) == len(game.night_actions.actions):
             try:
                 await game.increment_phase(ctx.bot)
             except Exception as exc:

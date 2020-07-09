@@ -42,8 +42,8 @@ class Godfather(commands.Bot):
             self.db = DB(**config.get('postgres')
                          )  # pylint: disable=invalid-name
 
-    async def get_context(self, *args):
-        return await super().get_context(*args, cls=CustomContext)
+    async def get_context(self, message):
+        return await super().get_context(message, cls=CustomContext)
 
     async def on_ready(self):
         # initialize games map
@@ -65,7 +65,7 @@ class Godfather(commands.Bot):
             if len(games) == 0:
                 return
             pl_game = games[0]
-            player = pl_game.get_player(ctx.author)
+            player = pl_game.players.get(ctx.author)
 
             if not alive_or_recent_jester(player, pl_game) \
                     or not hasattr(player.role, 'action'):

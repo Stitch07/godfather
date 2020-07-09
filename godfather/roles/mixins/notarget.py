@@ -41,7 +41,7 @@ class NoTarget(Role):
         })
         await ctx.send('You have decided to {} tonight.'.format(self.action))
 
-        if len(game.filter_players(action_only=True)) == len(game.night_actions.actions):
+        if len(game.players.filter(action_only=True)) == len(game.night_actions.actions):
             try:
                 await game.increment_phase(ctx.bot)
             except Exception as exc:

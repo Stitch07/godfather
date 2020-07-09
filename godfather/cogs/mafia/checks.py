@@ -13,8 +13,7 @@ def game_only():
 
 def host_only():
     async def predicate(ctx):
-        game = ctx.bot.games[ctx.guild.id]
-        if not game.host.id == ctx.author.id:
+        if not ctx.game.host.id == ctx.author.id:
             raise CheckFailure('Only hosts can use this command.')
         return True
     return commands.check(predicate)
@@ -22,8 +21,7 @@ def host_only():
 
 def day_only():
     async def predicate(ctx):
-        game = ctx.bot.games[ctx.guild.id]
-        if not game.phase == Phase.DAY:  # this is Phase.DAY, can't have circular imports
+        if not ctx.game.phase == Phase.DAY:  # this is Phase.DAY, can't have circular imports
             raise CheckFailure('This command can only be used during the day.')
         return True
     return commands.check(predicate)
@@ -31,9 +29,9 @@ def day_only():
 
 def player_only():
     async def predicate(ctx):
-        if not ctx.bot.games[ctx.guild.id].has_player(ctx.author):
+        if not ctx.author in ctx.game.players:
             raise CheckFailure('Only players can use this command.')
-        if not ctx.bot.games[ctx.guild.id].get_player(ctx.author).alive:
+        if not ctx.game.players.get(ctx.author).alive:
             raise CheckFailure('Dead players can\'t use this command')
         return True
     return commands.check(predicate)
@@ -41,8 +39,7 @@ def player_only():
 
 def game_started_only():
     async def predicate(ctx):
-        game = ctx.bot.games[ctx.guild.id]
-        if not game.has_started:
+        if not ctx.game.has_started:
             raise CheckFailure('The game hasn\'t started yet!')
         return True
     return commands.check(predicate)
