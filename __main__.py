@@ -5,7 +5,7 @@ import discord
 from discord.ext import commands
 from godfather.database import DB
 from godfather.errors import PhaseChangeError
-from godfather.utils import ColoredFormatter, getlogger, alive_or_recent_jester
+from godfather.utils import CustomContext, ColoredFormatter, getlogger, alive_or_recent_jester
 
 
 config = json.load(open('config.json'))
@@ -42,6 +42,9 @@ class Godfather(commands.Bot):
             self.db = DB(**config.get('postgres')
                          )  # pylint: disable=invalid-name
 
+    async def get_context(self, *args):
+        return await super().get_context(*args, cls=CustomContext)
+
     async def on_ready(self):
         # initialize games map
         self.get_cog('EventLoop').event_loop.start()
@@ -58,7 +61,7 @@ class Godfather(commands.Bot):
                 args = remove_prefix(ctx.message.content,
                                      ctx.prefix).split(' ')
             games = [
-                *filter(lambda g: g.has_player(ctx.author), self.games.values())]
+                *filter(lambda g: ctx.author in g.players, self.games.values())]
             if len(games) == 0:
                 return
             pl_game = games[0]

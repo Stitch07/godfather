@@ -1,7 +1,7 @@
 from godfather.game import Game
 from .base import Faction
 
-OPPOSING_FACTIONS = ['mafia', 'neutral.serialkiller']
+OPPOSING_FACTIONS = ['mafia', 'neutral.serialkiller', 'neutral.arsonist']
 
 
 class Town(Faction):

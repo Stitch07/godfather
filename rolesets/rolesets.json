@@ -17,6 +17,23 @@
         ]
     },
     {
+        "name": "exetest",
+        "roles": [
+            {
+                "id": "executioner",
+                "faction": "neutral.executioner"
+            },
+            {
+                "id": "vigilante",
+                "faction": "town"
+            },
+            {
+                "id": "goon",
+                "faction": "mafia"
+            }
+        ]
+    },
+    {
         "name": "vettest",
         "roles": [
             {
@@ -114,6 +131,43 @@
         ]
     },
     {
+        "name": "getburnt",
+        "roles": [
+            {
+                "id": "arsonist",
+                "faction": "neutral.arsonist"
+            },
+            {
+                "id": "vanilla",
+                "faction": "town"
+            },
+            {
+                "id": "vanilla",
+                "faction": "town"
+            },
+            {
+                "id": "vanilla",
+                "faction": "town"
+            },
+            {
+                "id": "vanilla",
+                "faction": "town"
+            },
+            {
+                "id": "vanilla",
+                "faction": "town"
+            },
+            {
+                "id": "vanilla",
+                "faction": "town"
+            },
+            {
+                "id": "jester",
+                "faction": "neutral.jester"
+            }
+        ]
+    },
+    {
         "name": "notreallymatrix6",
         "roles": [
             {
@@ -188,6 +242,51 @@
             {
                 "id": "godfather",
                 "faction": "mafia"
+            },
+            {
+                "id": "goon",
+                "faction": "mafia"
+            },
+            {
+                "id": "consigliere",
+                "faction": "mafia"
+            }
+        ]
+    },
+    {
+        "name": "prmadness",
+        "roles": [
+            {
+                "id": "lookout",
+                "faction": "town"
+            },
+            {
+                "id": "bodyguard",
+                "faction": "town"
+            },
+            {
+                "id": "veteran",
+                "faction": "town"
+            },
+            {
+                "id": "escort",
+                "faction": "town"
+            },
+            {
+                "id": "cop",
+                "faction": "town"
+            },
+            {
+                "id": "vigilante",
+                "faction": "town"
+            },
+            {
+                "id": "survivor",
+                "faction": "neutral.survivor"
+            },
+            {
+                "id": "serial_killer",
+                "faction": "neutral.serialkiller"
             },
             {
                 "id": "goon",

@@ -1,6 +1,7 @@
 import json
 import typing
 import copy
+import random
 import inspect
 import discord
 from discord.ext import commands
@@ -239,6 +240,13 @@ class Mafia(commands.Cog):
                     await player.user.send(
                         f'Your team consists of: {", ".join(map(lambda pl: pl.user.name, teammates))}'
                     )
+
+            for player in game.filter_players(role='Executioner'):
+                targets = list(filter(lambda pl: pl.faction.name == 'Town' and pl.role.name not in [
+                    'Jailor', 'Mayor'], game.players))
+                target = random.choice(targets)
+                player.target = target
+                await player.user.send('Your target is {}'.format(target.user))
 
         await ctx.send('Sent all role PMs!')
 

@@ -39,6 +39,10 @@ class NightActions:
                 if action['player'].user.id == target.user.id:
                     if 'can_block' in action and not action['can_block']:
                         continue
+                    # escort blocking serial-killers gets killed instead
+                    if target.role.name == 'Serial Killer':
+                        action['target'] = roleblocker
+                        continue
                     # remove the action, getting roleblocked
                     self.actions.remove(action)
                     self.record[target.user.id]['roleblock']['result'] = True
@@ -63,15 +67,6 @@ class NightActions:
                 await target.visit(player, self.record)
             await action['player'].role.run_action(self.game, self.record, player, target)
 
-        # figure out which players died
-        dead_players = []
-        for pl_id, record in self.record.items():
-            if record['nightkill']['result']:
-                nked_pl = self.game.filter_players(pl_id=pl_id)[0]
-                # TODO: check for bulletproof here?
-                await nked_pl.remove(self.game, f'killed N{self.game.cycle}')
-                dead_players.append(nked_pl)
-
          # after action clean-up
         for action in self.actions:
             if action['action'] is None:
@@ -79,5 +74,13 @@ class NightActions:
             player = action['player']
             target = action['target']
             await player.role.after_action(player, target, self.record)
+
+        # figure out which players died
+        dead_players = []
+        for pl_id, record in self.record.items():
+            if record['nightkill']['result']:
+                nked_pl = self.game.filter_players(pl_id=pl_id)[0]
+                await nked_pl.remove(self.game, f'killed N{self.game.cycle}')
+                dead_players.append(nked_pl)
 
         return dead_players

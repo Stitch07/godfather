@@ -13,7 +13,8 @@ class NoTarget(Role):
             + f'Use {bot.command_prefix}cancel to cancel.\n'
         await player.user.send(output)
 
-    async def on_pm_command_notarget(self, ctx, game, player, command):
+    async def on_pm_command(self, ctx, game, player, args):
+        command = args[0]
         can_do, reason = self.can_do_action(game)
         if not can_do:
             return await ctx.send(f'You cannot use your action today. {reason}')

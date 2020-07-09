@@ -16,6 +16,9 @@ class Veteran(NoTarget):
         self.can_transport = False
         self.action_priority = 0
 
+    def bulletproof(self):
+        return self.alerted
+
     def can_do_action(self, _game):
         if self.alerts <= 0:
             return False, 'You ran out of alerts!'
