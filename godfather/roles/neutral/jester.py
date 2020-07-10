@@ -48,6 +48,6 @@ class Jester(SingleAction):
         return False, ''
 
     def can_target(self, player, target):
-        if not target.user in self.voted:
+        if not target in self.voted:
             return False, 'You can only lynch players hammering you.'
         return super().can_target(player, target)

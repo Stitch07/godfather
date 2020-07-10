@@ -1,4 +1,6 @@
-from .night_record import night_record
+import typing
+from discord import Member
+from .types import night_record
 
 
 class NightActions:
@@ -30,7 +32,7 @@ class NightActions:
         self.actions = []
         self.record.clear()
 
-    async def resolve(self) -> str:
+    async def resolve(self) -> typing.List[Member]:
         # handle roleblocks
         for roleblock in filter(lambda action: action['action'] == 'block', self.actions):
             target = roleblock['target']

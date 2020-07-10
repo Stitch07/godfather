@@ -28,7 +28,7 @@ def from_now(time: datetime):
 
 
 def alive_or_recent_jester(player, game):
-    if player.role.role_id == 'jester' and not player.alive \
+    if player.role.name == 'Jester' and not player.alive \
             and player.death_reason == f'lynched D{game.cycle}':
         return True
     return player.alive

@@ -9,8 +9,9 @@ from godfather.factions import factions
 from godfather.game import Game, Player, Phase
 from godfather.roles import all_roles
 from godfather.cogs.mafia.checks import *  # pylint: disable=wildcard-import, unused-wildcard-import
-from godfather.utils import get_random_sequence, from_now, confirm
+from godfather.utils import CustomContext, get_random_sequence, from_now, confirm
 from godfather.errors import PhaseChangeError
+from godfather.game.vote_manager import VoteError
 
 
 class Mafia(commands.Cog):
@@ -18,7 +19,7 @@ class Mafia(commands.Cog):
         self.bot = bot
 
     @commands.command(aliases=['create', 'create-game'])
-    async def creategame(self, ctx: commands.Context):
+    async def creategame(self, ctx: CustomContext):
         if ctx.guild.id in self.bot.games:
             return await ctx.send('A game of mafia is already running '
                                   'in this server.')
@@ -30,7 +31,7 @@ class Mafia(commands.Cog):
 
     @commands.command()
     @game_only()
-    async def join(self, ctx: commands.Context):
+    async def join(self, ctx: CustomContext):
         game = self.bot.games[ctx.guild.id]
 
         if ctx.author in game.players:
@@ -61,7 +62,7 @@ class Mafia(commands.Cog):
 
     @commands.command()
     @game_only()
-    async def leave(self, ctx: commands.Context):
+    async def leave(self, ctx: CustomContext):
         game = self.bot.games[ctx.guild.id]
 
         if ctx.author in game.players.replacements:
@@ -109,7 +110,7 @@ class Mafia(commands.Cog):
 
     @commands.command()
     @game_only()
-    async def playerlist(self, ctx: commands.Context):
+    async def playerlist(self, ctx: CustomContext):
         game = self.bot.games[ctx.guild.id]
         msg = f'**Players: {len(game.players)}**\n'
         msg += game.players.show(show_replacements=True)
@@ -124,12 +125,12 @@ class Mafia(commands.Cog):
         await ctx.send(f'🕰️ The current phase ends {from_now(game.phase_end_at)}')
 
     @commands.command()
-    async def setupinfo(self, ctx: commands.Context, roleset: typing.Optional[str] = None):
+    async def setupinfo(self, ctx: CustomContext, roleset: typing.Optional[str] = None):
         # show the current setup if a game is ongoing
         if ctx.guild.id in ctx.bot.games \
-                and ctx.bot.games[ctx.guild.id].phase != Phase.PREGAME \
+                and ctx.game.phase != Phase.PREGAME \
                 and roleset is None:
-            roleset = ctx.bot.games[ctx.guild.id].setup['name']
+            roleset = ctx.game.setup['name']
 
         rolesets = json.load(open('rolesets/rolesets.json'))
         if roleset is None or roleset == 'all':
@@ -156,7 +157,7 @@ class Mafia(commands.Cog):
         await ctx.send('\n'.join(txt))
 
     @commands.command()
-    async def roleinfo(self, ctx: commands.Context, *, rolename: typing.Optional[str] = None):
+    async def roleinfo(self, ctx: CustomContext, *, rolename: typing.Optional[str] = None):
         if rolename is None:
             # show all available roles here sometime
             return
@@ -174,9 +175,8 @@ class Mafia(commands.Cog):
     @ commands.command()
     @ game_only()
     @ game_started_only()
-    async def rolepm(self, ctx: commands.Context):
-        game = self.bot.games[ctx.guild.id]
-        player = game.players.get(ctx.author)
+    async def rolepm(self, ctx: CustomContext):
+        player = ctx.game.players.get(ctx.author)
         try:
             await player.user.send(player.role_pm)
             await ctx.message.add_reaction('✅')
@@ -186,7 +186,7 @@ class Mafia(commands.Cog):
     @ commands.command(aliases=['start'])
     @ host_only()
     @ game_only()
-    async def startgame(self, ctx: commands.Context,
+    async def startgame(self, ctx: CustomContext,
                         r_setup: typing.Optional[str] = None):
         game = self.bot.games[ctx.guild.id]
 
@@ -263,27 +263,16 @@ class Mafia(commands.Cog):
     @game_started_only()
     @player_only()
     @game_only()
-    async def vote(self, ctx: commands.Context, *, target: Player):
-        game = self.bot.games[ctx.guild.id]
-
-        if not target.alive:
-            return await ctx.send("You can't vote a dead player.")
-        elif ctx.author in game.votes[target.user.id]:
-            return await ctx.send('You have already voted {}'.format(target.user.name))
-        elif target.user.id == ctx.author.id:
-            return await ctx.send('Self-voting is not allowed')
-
-        # clear any other possible votes
-        for votes in game.votes.values():
-            if ctx.author in votes:
-                votes.remove(ctx.author)
-
-        game.votes[target.user.id].append(ctx.author)
+    async def vote(self, ctx: CustomContext, *, target: Player):
+        game: Game = ctx.game
+        try:
+            hammered = game.votes.vote(ctx.author, target)
+        except VoteError as err:
+            return await ctx.send(*err.args)
 
         await ctx.send(f'Voted {target.user.name}')
-        votes_on_target = len(game.votes[target.user.id])
 
-        if votes_on_target >= game.majority_votes and not game.phase == Phase.STANDBY:
+        if hammered and not game.phase == Phase.STANDBY:
             game.phase = Phase.STANDBY
 
             await game.lynch(target)
@@ -292,32 +281,22 @@ class Mafia(commands.Cog):
                 await game.end(self.bot, winning_faction, independent_wins)
             else:
                 game.phase = Phase.DAY
-                try:
-                    await game.increment_phase(self.bot)
-                    # change phase after this.
-                except Exception as exc:
-                    raise PhaseChangeError(None, *exc.args)
+                await game.increment_phase(self.bot)
 
     @commands.command(aliases=['vtnl'])
     @day_only()
     @game_started_only()
     @player_only()
     @game_only()
-    async def nolynch(self, ctx: commands.Context):
+    async def nolynch(self, ctx: CustomContext):
         game = self.bot.games[ctx.guild.id]
-
-        if ctx.author in game.votes['nolynch']:
-            return await ctx.send('You have already voted to no-lynch.')
-        # clear any other possible votes
-        for votes in game.votes.values():
-            if ctx.author in votes:
-                votes.remove(ctx.author)
-
-        game.votes['nolynch'].append(ctx.author)
+        try:
+            nolynch = game.votes.nolynch(ctx.author)
+        except VoteError as err:
+            return await ctx.send(*err.args)
         await ctx.send('You have voted to no-lynch.')
 
-        votes_to_no_lynch = len(game.votes['nolynch'])
-        if votes_to_no_lynch >= game.majority_votes and not game.phase == Phase.STANDBY:
+        if nolynch and not game.phase == Phase.STANDBY:
             game.phase = Phase.STANDBY
             await ctx.send('Nobody was lynched!')
             game.phase = Phase.DAY
@@ -328,15 +307,9 @@ class Mafia(commands.Cog):
     @ game_started_only()
     @ player_only()
     @ game_only()
-    async def unvote(self, ctx: commands.Context):
-        game = self.bot.games[ctx.guild.id]
-        for target, votes in game.votes.items():
-            if target == 'notvoting':
-                continue
-            if ctx.author not in votes:
-                continue
-            votes.remove(ctx.author)
-            game.votes['notvoting'].append(ctx.author)
+    async def unvote(self, ctx: CustomContext):
+        unvoted = ctx.game.votes.unvote(ctx.game.players.get(ctx.author))
+        if unvoted:
             return await ctx.message.add_reaction('✅')
 
         await ctx.send('No votes to remove.')
@@ -346,33 +319,6 @@ class Mafia(commands.Cog):
     @ game_started_only()
     @ player_only()
     @ game_only()
-    async def votecount(self, ctx: commands.Context):
-        game = self.bot.games[ctx.guild.id]
-        num_alive = len(game.players.filter(alive=True))
-        msg = '**Vote Count**:\n'
-
-        sorted_votes = {k: v for k, v in sorted(
-            game.votes.items(), key=lambda item: len(item[1]))}
-
-        for target, voters in sorted_votes.items():
-            if target in ['notvoting', 'nolynch']:
-                continue
-            player = game.players.filter(pl_id=target)[0]
-            if len(voters) > 0:
-                msg += f'{player.user.name} ({len(voters)}) - ' + \
-                    ', '.join(
-                        [voter.name for voter in voters]) + '\n'
-
-        nolynchers = game.votes['nolynch']
-        if len(nolynchers) > 0:
-            msg += f'No-lynch ({len(nolynchers)}) - ' + \
-                ', '.join(
-                    [voter.name for voter in nolynchers]) + '\n'
-
-        notvoting = game.votes['notvoting']
-        msg += f'Not Voting ({len(notvoting)}) - ' + \
-            ', '.join(
-                [voter.name for voter in notvoting]) + '\n'
-
-        msg += f'With {num_alive} alive, it takes {game.majority_votes} to lynch.'
+    async def votecount(self, ctx: CustomContext):
+        msg = ctx.game.votes.show()
         return await ctx.send(msg)

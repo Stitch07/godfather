@@ -9,6 +9,7 @@ from godfather.utils import alive_or_recent_jester
 from .player import Player
 from .night_actions import NightActions
 from godfather.game.player_manager import PlayerManager
+from godfather.game.vote_manager import VoteManager
 
 rolesets = json.load(open('rolesets/rolesets.json'))
 
@@ -37,12 +38,7 @@ class Game:
         self.config = {
             'phase_time': 5 * 60  # in seconds
         }
-        # votes holds a dict of player IDs mapped to the player objects voting them
-        # it includes a special notvoting and nolynch key for players not voting, and players voting to no-lynch
-        self.votes = {
-            'notvoting': [],
-            'nolynch': []
-        }
+        self.votes = VoteManager()
 
     # finds a setup for the current player-size. if no setup is found, raises an Exception
     def find_setup(self, setup: str = None):

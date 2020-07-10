@@ -9,7 +9,7 @@ class SuperSaint(Role):
         super().__init__(name='Super Saint', role_id='super_saint', description=DESCRIPTION)
 
     async def on_lynch(self, game, player):
-        last_voted = game.players.get(game.votes[player.user.id][-1])
+        last_voted = game.votes[player.user.id][-1]
         last_voted.alive = False
         async with game.channel.typing():
             await game.channel.send('💣 **BOOOOOOOOOOOOOOM!!!**')
