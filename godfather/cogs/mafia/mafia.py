@@ -38,7 +38,7 @@ class Mafia(commands.Cog):
             return await ctx.send('You have already joined this game.')
 
         if game.has_started:
-            if ctx.author in game.replacements:
+            if ctx.author in game.players.replacements:
                 return await ctx.send('You are already a replacement.')
             confirm_replacement = await confirm(
                 ctx.bot, ctx.author, ctx.channel,
@@ -75,7 +75,7 @@ class Mafia(commands.Cog):
 
         if game.has_started:
             replace_text = 'Are you sure you want to leave the game? You will be mod-killed.' \
-                if len(game.replacements) == 0 \
+                if len(game.players.replacements) == 0 \
                 else 'Are you sure you want to leave the game? You will be replaced out.'
             confirm_replacement = await confirm(ctx.bot, ctx.author, ctx.channel, replace_text)
             if confirm_replacement is None:
@@ -85,7 +85,7 @@ class Mafia(commands.Cog):
 
             player = game.players.get(ctx.author)
 
-            if len(game.replacements) == 0:
+            if len(game.players.replacements) == 0:
                 phase_str = 'd' if game.phase == Phase.DAY else 'n'
                 async with game.channel.typing():
                     await game.channel.send(f'{player.user.name} was modkilled. They were a *{player.display_role}*.')
@@ -266,7 +266,7 @@ class Mafia(commands.Cog):
     async def vote(self, ctx: CustomContext, *, target: Player):
         game: Game = ctx.game
         try:
-            hammered = game.votes.vote(ctx.author, target)
+            hammered = game.votes.vote(game.players.get(ctx.author), target)
         except VoteError as err:
             return await ctx.send(*err.args)
 
@@ -291,7 +291,7 @@ class Mafia(commands.Cog):
     async def nolynch(self, ctx: CustomContext):
         game = self.bot.games[ctx.guild.id]
         try:
-            nolynch = game.votes.nolynch(ctx.author)
+            nolynch = game.votes.nolynch(game.players.get(ctx.author))
         except VoteError as err:
             return await ctx.send(*err.args)
         await ctx.send('You have voted to no-lynch.')

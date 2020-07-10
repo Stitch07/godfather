@@ -14,7 +14,8 @@ class PlayerManager:
         if replacement:
             self.replacements.append(member)
         else:
-            self.players.append(Player(member))
+            player = Player(member)
+            self.players.append(player)
             self.game.votes[member.id] = []
 
     def get(self, user_or_player):

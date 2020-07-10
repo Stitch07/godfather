@@ -1,6 +1,6 @@
 from discord.ext import commands
 from discord.ext.commands import CheckFailure
-from godfather.game import Phase
+from godfather.game.game import Phase
 
 
 def game_only():

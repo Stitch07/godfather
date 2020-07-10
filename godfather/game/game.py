@@ -1,8 +1,6 @@
 from enum import IntEnum, auto
-import typing
 import json
 import math
-import copy
 from datetime import datetime, timedelta
 import discord
 from godfather.utils import alive_or_recent_jester
@@ -26,7 +24,6 @@ class Game:
         self.channel = channel
         self.guild = channel.guild
         self.players = PlayerManager(self)
-        self.replacements: typing.List[discord.Member] = []
         self.phase = Phase.PREGAME
         self.cycle = 0
         self.host = None  # assigned to the user creating the game
@@ -38,7 +35,7 @@ class Game:
         self.config = {
             'phase_time': 5 * 60  # in seconds
         }
-        self.votes = VoteManager()
+        self.votes = VoteManager(self)
 
     # finds a setup for the current player-size. if no setup is found, raises an Exception
     def find_setup(self, setup: str = None):
@@ -110,7 +107,7 @@ class Game:
             self.votes['notvoting'] = []
             for player in alive_players:
                 self.votes[player.user.id] = []
-                self.votes['notvoting'].append(player.user)
+                self.votes['notvoting'].append(player)
 
             await self.channel.send(f'Day **{self.cycle}** will last {phase_t} minutes.'
                                     f' With {len(alive_players)} alive, it takes {self.majority_votes} to lynch.')
