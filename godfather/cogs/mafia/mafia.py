@@ -1,17 +1,21 @@
-import json
-import typing
 import copy
-import random
 import inspect
+import json
+import random
+import typing
+
 import discord
 from discord.ext import commands
-from godfather.factions import factions
-from godfather.game import Game, Player, Phase
-from godfather.roles import all_roles
+
 from godfather.cogs.mafia.checks import *  # pylint: disable=wildcard-import, unused-wildcard-import
-from godfather.utils import CustomContext, get_random_sequence, from_now, confirm
 from godfather.errors import PhaseChangeError
+from godfather.factions import factions
+from godfather.game import Game, Phase, Player
+from godfather.game.player_manager import PlayerManager
 from godfather.game.vote_manager import VoteError
+from godfather.roles import all_roles
+from godfather.utils import (CustomContext, confirm, from_now,
+                             get_random_sequence)
 
 
 class Mafia(commands.Cog):
@@ -42,7 +46,9 @@ class Mafia(commands.Cog):
                 return await ctx.send('You are already a replacement.')
             confirm_replacement = await confirm(
                 ctx.bot, ctx.author, ctx.channel,
-                'Sign-ups for this game have ended. Would you like to be a replacement?')
+                'Sign-ups for this game have ended.'
+                'Would you like to be a replacement?'
+            )
             if confirm_replacement is None:
                 return
             if not confirm_replacement:
@@ -51,14 +57,11 @@ class Mafia(commands.Cog):
             await ctx.send('You have decided to become a replacement.')
             return
 
-        rolesets = json.load(open('rolesets/rolesets.json'))
-        rolesets.sort(key=lambda rl: len(rl['roles']), reverse=True)
-
-        if len(game.players) >= len(rolesets[0].get('roles')):
-            return await ctx.send('Maximum amount of players reached')
+        if PlayerManager.check_if_lobby_full() is True:
+            return await ctx.send('Maximum number of players reached.')
         else:
             game.players.add(ctx.author)
-            return await ctx.send('✅ Game joined successfully')
+            return await ctx.send('✅ Game joined successfully.')
 
     @commands.command()
     @game_only()

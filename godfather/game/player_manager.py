@@ -1,5 +1,8 @@
+import json
 from typing import Callable, List, Optional
+
 from discord import Member
+
 from godfather.game.player import Player
 from godfather.utils import alive_or_recent_jester
 
@@ -117,3 +120,14 @@ class PlayerManager:
 
     def __iter__(self):
         return self.players.__iter__()
+
+    @staticmethod
+    def check_if_lobby_full(self):
+        with open('rolesets.json', 'r') as rs_file:
+            rolesets = json.load(rs_file)
+
+        max_num = max(len(rs_dict['roles']) for rs_dict in rolesets)
+
+        if len(self.players) >= max_num:
+            return True
+        return False
