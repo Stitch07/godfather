@@ -15,7 +15,7 @@ class EventLoop(commands.Cog):
     @tasks.loop(seconds=10.0)
     async def event_loop(self):
         for game in self.bot.games.values():
-            game.update(self.bot)
+            game.update()
 
     @event_loop.before_loop
     async def before_loop(self):

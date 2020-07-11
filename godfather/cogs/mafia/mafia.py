@@ -23,7 +23,7 @@ class Mafia(commands.Cog):
         if ctx.guild.id in self.bot.games:
             return await ctx.send('A game of mafia is already running '
                                   'in this server.')
-        new_game = Game.create(ctx)
+        new_game = Game.create(ctx, self.bot)
         self.bot.games[ctx.guild.id] = new_game
         return await ctx.send('Started a game of mafia in '
                               f'{ctx.message.channel.mention}, '
@@ -281,7 +281,7 @@ class Mafia(commands.Cog):
                 await game.end(self.bot, winning_faction, independent_wins)
             else:
                 game.phase = Phase.DAY
-                await game.increment_phase(self.bot)
+                await game.increment_phase()
 
     @commands.command(aliases=['vtnl'])
     @day_only()

@@ -13,7 +13,6 @@ from godfather.utils import alive_or_recent_jester
 from .night_actions import NightActions
 from .player import Player
 
-
 rolesets = json.load(open('rolesets/rolesets.json'))
 
 
@@ -25,8 +24,9 @@ class Phase(IntEnum):
 
 
 class Game:
-    def __init__(self, channel: discord.channel.TextChannel):
+    def __init__(self, channel: discord.channel.TextChannel, bot):
         self.channel = channel
+        self.bot = bot
         self.guild = channel.guild
         self.players = PlayerManager(self)
         self.phase = Phase.PREGAME
@@ -42,7 +42,14 @@ class Game:
         }
         self.votes = VoteManager(self)
 
-    def update(self, bot):
+    @classmethod
+    def create(cls, ctx, bot):
+        new_game = cls(ctx.channel, bot)
+        new_game.host = ctx.author
+        new_game.players.add(ctx.author)
+        return new_game
+
+    async def update(self):
         if not self.has_started or self.phase == Phase.STANDBY:
             return
 
@@ -53,7 +60,7 @@ class Game:
                 # no lynch achieved
                 await self.channel.send('Nobody was lynched')
             try:
-                await self.increment_phase(bot)
+                await self.increment_phase()
             except Exception as exc:
                 raise PhaseChangeError(None, *exc.args)
 
@@ -97,7 +104,7 @@ class Game:
             return (True, winning_faction, independent_wins)
         return (False, None, None)
 
-    async def increment_phase(self, bot):
+    async def increment_phase(self):
         phase_t = round(self.config['phase_time'] / 60, 1)
 
         # night loop is the same as the pregame loop
@@ -111,7 +118,7 @@ class Game:
 
             game_ended, winning_faction, independent_wins = self.check_endgame()
             if game_ended:
-                return await self.end(bot, winning_faction, independent_wins)
+                return await self.end(winning_faction, independent_wins)
 
             # clear visits
             for player in self.players:
@@ -141,7 +148,7 @@ class Game:
             # recently lynched jesters and alive players are allowed to send in actions
             for player in filter(lambda p: alive_or_recent_jester(p, self), self.players):
                 if hasattr(player.role, 'on_night'):
-                    await player.role.on_night(bot, player, self)
+                    await player.role.on_night(self.bot, player, self)
 
             self.phase = Phase.NIGHT
 
@@ -182,7 +189,9 @@ class Game:
     # WIP: End the game
     # If a winning faction is not provided, game is ended
     # as if host ended the game without letting it finish
-    async def end(self, bot, winning_faction, independent_wins):
+    async def end(self, winning_faction, independent_wins):
+        bot = self.bot  # TODO: Move db stuff to separate func
+
         if winning_faction:
             async with self.channel.typing():
                 await self.channel.send(f'The game is over. {winning_faction} wins! 🎉')
@@ -226,10 +235,3 @@ class Game:
     @ property
     def majority_votes(self):
         return math.floor(len(self.players.filter(alive=True)) / 2) + 1
-
-    @classmethod
-    def create(cls, ctx):
-        new_game = cls(ctx.channel)
-        new_game.host = ctx.author
-        new_game.players.add(ctx.author)
-        return new_game

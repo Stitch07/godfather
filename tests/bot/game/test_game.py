@@ -19,7 +19,7 @@ class MockPlayer(Mock):
 class ShowPlayersTestCase(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.game = Game(Mock())
+        cls.game = Game(Mock(), Mock())
 
     def setUp(self):
         # Generate players, half alive, half dead
@@ -77,7 +77,7 @@ class ShowPlayersTestCase(unittest.TestCase):
 class GetPlayerTestCase(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.game = Game(Mock())
+        cls.game = Game(Mock(), Mock())
 
     def setUp(self):
         self.game.players = [
@@ -107,7 +107,7 @@ class GetPlayerTestCase(unittest.TestCase):
 
 class GameSyncTestCase(unittest.TestCase):
     def setUp(self):
-        self.game = Game(Mock())
+        self.game = Game(Mock(), Mock())
 
     def test_majority_votes(self):
         test_values = (
@@ -125,7 +125,7 @@ class GameSyncTestCase(unittest.TestCase):
 
 class CheckEndgameTestCase(unittest.TestCase):
     def setUp(self):
-        self.game = Game(Mock())
+        self.game = Game(Mock(), Mock())
 
     def test_mafia_and_town_only(self):
         players = []
@@ -165,7 +165,7 @@ class CheckEndgameTestCase(unittest.TestCase):
 
 class GameAsyncTestCase(unittest.IsolatedAsyncioTestCase):
     def setUp(self):
-        self.game = Game(Mock())
+        self.game = Game(Mock(), Mock())
 
     async def test_lynch(self):
         # Should not have so many asserts, need further refactoring
