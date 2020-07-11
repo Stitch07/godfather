@@ -10,6 +10,17 @@ def pluralize(value: int):
     return 's' if value > 1 else ''
 
 
+def convert_code_syntax_to_formal(text):
+    """Converts python syntax language to title-cased English.
+
+    EXAMPLES
+    --------
+    \'eat_food\' => \'Eat Food\'
+    \'eat_my_shorts\' => \'Eat My Shorts\'
+    """
+    return text.replace('_', ' ').title()
+
+
 def from_now(time: datetime):
     now = datetime.now()
     delta = time - now if time > now else now - time
@@ -34,7 +45,8 @@ def alive_or_recent_jester(player, game):
     return player.alive
 
 
-async def confirm(bot: Bot, prompter: Member, channel: TextChannel, message: str):
+async def confirm(bot: Bot, prompter: Member, channel: TextChannel,
+                  message: str):
     msg = await channel.send(content=message)
     await msg.add_reaction('🇾')
     await msg.add_reaction('🇳')

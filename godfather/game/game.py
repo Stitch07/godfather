@@ -6,6 +6,7 @@ from enum import IntEnum, auto
 import discord
 
 from godfather.errors import PhaseChangeError
+from godfather.game.game_config import GameConfig
 from godfather.game.player_manager import PlayerManager
 from godfather.game.vote_manager import VoteManager
 from godfather.utils import alive_or_recent_jester
@@ -14,6 +15,11 @@ from .night_actions import NightActions
 from .player import Player
 
 rolesets = json.load(open('rolesets/rolesets.json'))
+
+
+default_game_config = {
+    'phase_duration': 5 * 60  # In seconds
+}
 
 
 class Phase(IntEnum):
@@ -37,9 +43,7 @@ class Game:
         self.night_actions = NightActions(self)
         self.setup = dict()  # the setup used
         # host-configurable stuff
-        self.config = {
-            'phase_time': 5 * 60  # in seconds
-        }
+        self.config = GameConfig(default_game_config, channel=channel)
         self.votes = VoteManager(self)
 
     @classmethod
