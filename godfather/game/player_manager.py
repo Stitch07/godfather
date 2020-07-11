@@ -121,8 +121,8 @@ class PlayerManager:
     def __iter__(self):
         return self.players.__iter__()
 
-    @staticmethod
-    def check_if_lobby_full(self):
+    @property
+    def is_full(self):
         with open('rolesets.json', 'r') as rs_file:
             rolesets = json.load(rs_file)
 

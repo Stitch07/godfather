@@ -57,7 +57,7 @@ class Mafia(commands.Cog):
             await ctx.send('You have decided to become a replacement.')
             return
 
-        if PlayerManager.check_if_lobby_full() is True:
+        if game.players.is_full:
             return await ctx.send('Maximum number of players reached.')
         else:
             game.players.add(ctx.author)
@@ -71,14 +71,15 @@ class Mafia(commands.Cog):
         if ctx.author in game.players.replacements:
             game.players.replacements.remove(ctx.author)
             return await ctx.send("You're not a replacement anymore.")
-        if not ctx.author in game.players:
+        elif ctx.author not in game.players:
             return await ctx.send('You have not joined this game')
-        if game.host.id == ctx.author.id:
+        elif ctx.author.id == game.host.id:
             return await ctx.send('The host cannot leave the game.')
 
         if game.has_started:
-            replace_text = 'Are you sure you want to leave the game? You will be mod-killed.' \
-                if len(game.players.replacements) == 0 \
+            replace_text = 'Are you sure you want to leave the game?' \ 
+                           'You will be mod-killed.' \
+            if len(game.players.replacements) == 0 \
                 else 'Are you sure you want to leave the game? You will be replaced out.'
             confirm_replacement = await confirm(ctx.bot, ctx.author, ctx.channel, replace_text)
             if confirm_replacement is None:
