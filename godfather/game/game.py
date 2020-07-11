@@ -1,13 +1,18 @@
-from enum import IntEnum, auto
 import json
 import math
 from datetime import datetime, timedelta
+from enum import IntEnum, auto
+
 import discord
-from godfather.utils import alive_or_recent_jester
-from .player import Player
-from .night_actions import NightActions
+
+from godfather.errors import PhaseChangeError
 from godfather.game.player_manager import PlayerManager
 from godfather.game.vote_manager import VoteManager
+from godfather.utils import alive_or_recent_jester
+
+from .night_actions import NightActions
+from .player import Player
+
 
 rolesets = json.load(open('rolesets/rolesets.json'))
 
@@ -36,6 +41,21 @@ class Game:
             'phase_time': 5 * 60  # in seconds
         }
         self.votes = VoteManager(self)
+
+    def update(self, bot):
+        if not self.has_started or self.phase == Phase.STANDBY:
+            return
+
+        curr_t = datetime.now()
+        phase_end = self.phase_end_at
+        if curr_t > phase_end:
+            if self.phase == Phase.DAY:
+                # no lynch achieved
+                await self.channel.send('Nobody was lynched')
+            try:
+                await self.increment_phase(bot)
+            except Exception as exc:
+                raise PhaseChangeError(None, *exc.args)
 
     # finds a setup for the current player-size. if no setup is found, raises an Exception
     def find_setup(self, setup: str = None):
