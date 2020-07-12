@@ -1,4 +1,5 @@
 from godfather.roles.mixins import SingleAction
+from godfather.game.types import Defense
 
 DESCRIPTION = 'You may stab someone every night.'
 
@@ -14,15 +15,15 @@ class SerialKiller(SingleAction):
     def bulletproof(self):
         return True
 
-    async def run_action(self, _game, night_record, player, target):
-        if hasattr(target.role, 'bulletproof') and target.role.bulletproof():
+    async def run_action(self, actions, player, target):
+        if target.defense() >= Defense.BASIC:
             return
-        pl_record = night_record[target.user.id]
+        pl_record = actions[target.user.id]
         pl_record['nightkill']['result'] = True
         pl_record['nightkill']['by'].append(player)
 
-    async def after_action(self, player, target, night_record):
-        record = night_record[target.user.id]['nightkill']
+    async def tear_down(self, actions, player, target):
+        record = actions.record[target.user.id]['nightkill']
         success = record['result'] and player in record['by']
 
         if not success:

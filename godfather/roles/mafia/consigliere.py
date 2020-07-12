@@ -11,8 +11,5 @@ class Consigliere(SingleAction):
         self.action_priority = 2
         self.action_text = 'check a player'
 
-    async def run_action(self, game, night_record, player, target):
-        pass
-
-    async def after_action(self, player, target, night_record):
+    async def tear_down(self, actions, player, target):
         await player.user.send(f'Your target must be a **{target.role.name}**.')

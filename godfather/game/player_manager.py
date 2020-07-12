@@ -1,5 +1,5 @@
 from typing import Callable, List, Optional
-from discord import Member
+from discord.abc import User
 from godfather.game.player import Player
 from godfather.utils import alive_or_recent_jester
 
@@ -8,9 +8,9 @@ class PlayerManager:
     def __init__(self, game):
         self.game = game
         self.players: List[Player] = list()
-        self.replacements: List[Member] = list()
+        self.replacements: List[User] = list()
 
-    def add(self, member: Member, replacement=False):
+    def add(self, member: User, replacement=False):
         if replacement:
             self.replacements.append(member)
         else:
@@ -21,7 +21,7 @@ class PlayerManager:
     def get(self, user_or_player):
         if isinstance(user_or_player, Player):
             return next(player for player in self.players if player == user_or_player)
-        elif isinstance(user_or_player, Member):
+        elif isinstance(user_or_player, User):
             return next(player for player in self.players if player.user.id == user_or_player.id)
         elif isinstance(user_or_player, int):
             return self.players[user_or_player]
@@ -29,7 +29,7 @@ class PlayerManager:
     def remove(self, user_or_player):
         if isinstance(user_or_player, Player):
             self.players.remove(user_or_player)
-        elif isinstance(user_or_player, Member):
+        elif isinstance(user_or_player, User):
             self.players = [
                 player for player in self.players if player.user != user_or_player]
         elif isinstance(user_or_player, Callable[Player]):
@@ -37,14 +37,14 @@ class PlayerManager:
                 player for player in self.players if not user_or_player(player)]
         else:
             raise TypeError(
-                'PlayerManager.remove must be called with a discord.Member, Player or Callable<Player>')
+                'PlayerManager.remove must be called with a discord.User, Player or Callable<Player>')
 
     def filter(self,
                role: Optional[str] = None,
                faction: Optional[str] = None,
                action: Optional[str] = None,
-               has_vote_on: Optional[Member] = None,
-               is_voted_by: Optional[Member] = None,
+               has_vote_on: Optional[User] = None,
+               is_voted_by: Optional[User] = None,
                votecount: Optional[Callable] = None,
                pl_id: Optional[int] = None,
                action_only: bool = False,
@@ -53,9 +53,9 @@ class PlayerManager:
         plist = self.players
 
         def action_only_filter(player):
-            if not alive_or_recent_jester(player, self):
+            if not alive_or_recent_jester(player, self.game):
                 return False
-            can_do, _ = player.role.can_do_action(self)
+            can_do, _ = player.role.can_do_action(self.game)
             return can_do
 
         if role:
@@ -106,14 +106,17 @@ class PlayerManager:
     def __contains__(self, user_or_player):
         if isinstance(user_or_player, Player):
             return user_or_player in self.players
-        elif isinstance(user_or_player, Member):
+        elif isinstance(user_or_player, User):
             return any([player for player in self.players if player.user.id == user_or_player.id])
         else:
             raise TypeError(
-                'PlayerManager.__contains__ must be called with a discord.Member or Player instance.')
+                'PlayerManager.__contains__ must be called with a discord.abc.User or Player instance.')
 
     def __len__(self):
         return len(self.players)
 
     def __iter__(self):
         return self.players.__iter__()
+
+    def __getitem__(self, idx):
+        return self.players[idx]

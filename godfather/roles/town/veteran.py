@@ -1,4 +1,5 @@
 from godfather.roles.mixins import NoTarget
+from godfather.game.types import Defense
 
 DESCRIPTION = 'You may alert 3 times in a game, killing everyone who visits you.'
 
@@ -16,8 +17,8 @@ class Veteran(NoTarget):
         self.can_transport = False
         self.action_priority = 0
 
-    def bulletproof(self):
-        return self.alerted
+    def defense(self):
+        return Defense.POWERFUL
 
     def can_do_action(self, _game):
         if self.alerts <= 0:
@@ -27,12 +28,12 @@ class Veteran(NoTarget):
     async def run_action(self, _game, _night_record, _player, _target):
         self.alerted = True
 
-    async def after_action(self, _player, _target, _night_record):
+    async def tear_down(self, _actions, _player, _target):
         self.alerted = False
 
-    async def visited(self, player, visitor, record):
+    async def on_visit(self, player, visitor, actions):
         if self.alerted:
-            record[visitor.user.id]['nightkill']['result'] = True
-            record[visitor.user.id]['nightkill']['by'].append(player)
+            actions.record[visitor.user.id]['nightkill']['result'] = True
+            actions.record[visitor.user.id]['nightkill']['by'].append(player)
             await player.user.send('You shot someone visiting you!')
             await visitor.user.send('You were killed by the veteran you visited!')

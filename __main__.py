@@ -57,9 +57,9 @@ class Godfather(commands.Bot):
         if isinstance(error, commands.CommandNotFound):
             if not isinstance(ctx.channel, discord.DMChannel):
                 return
-            command, * \
-                args = remove_prefix(ctx.message.content,
-                                     ctx.prefix).split(' ')
+            args = remove_prefix(ctx.message.content,
+                                 ctx.prefix).split(' ')
+            command = args[0]
             games = [
                 *filter(lambda g: ctx.author in g.players, self.games.values())]
             if len(games) == 0:

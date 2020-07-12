@@ -11,14 +11,11 @@ class Cop(SingleAction):
         self.action_priority = 2
         self.action_text = 'check a player'
 
-    async def run_action(self, game, night_record, player, target):
-        pass
-
     # this ensures all cop modifiers show up as regular Cops
     def display_role(self):
         return 'Cop'
 
-    async def after_action(self, player, target, night_record):
+    async def tear_down(self, actions, player, target):
         # TODO: framer check here
         innocence = self.result_modifier(target.innocent)
         await player.user.send(f"Your target is {'innocent' if innocence else 'suspicious'}.")

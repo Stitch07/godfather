@@ -45,10 +45,10 @@ class Player:
             return self.role.display_role()
         return f'{self.faction} {self.role.display_role()}'
 
-    async def visit(self, visitor, record):
+    async def visit(self, visitor, actions):
         self.visitors.append(visitor)
-        if hasattr(self.role, 'visited'):
-            await self.role.visited(self, visitor, record)
+        if hasattr(self.role, 'on_visit'):
+            await self.role.on_visit(self, visitor, actions)
 
     # remove vote by 'user' from player
     def remove_vote(self, user: discord.Member):

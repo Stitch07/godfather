@@ -34,10 +34,10 @@
         ]
     },
     {
-        "name": "vettest",
+        "name": "prtest",
         "roles": [
             {
-                "id": "veteran",
+                "id": "escort",
                 "faction": "town"
             },
             {
@@ -45,12 +45,16 @@
                 "faction": "town"
             },
             {
+                "id": "vigilante",
+                "faction": "town"
+            },
+            {
                 "id": "godfather",
                 "faction": "mafia"
             },
             {
-                "id": "escort",
-                "faction": "town"
+                "id": "goon",
+                "faction": "mafia"
             }
         ]
     },

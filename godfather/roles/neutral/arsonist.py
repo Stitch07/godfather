@@ -54,7 +54,7 @@ class Arsonist(Role):
                 'priority': 0
             })
             if len(game.players.filter(action_only=True)) == len(game.night_actions.actions):
-                await game.increment_phase(ctx.bot)
+                await game.increment_phase()
             return await ctx.send('You decided to stay home tonight.')
 
         if command == 'ignite':
@@ -75,7 +75,7 @@ class Arsonist(Role):
             expected_total = total_actions + len(self.doused) - 1
             if expected_total == len(game.night_actions.actions):
                 try:
-                    await game.increment_phase(ctx.bot)
+                    await game.increment_phase()
                 except Exception as exc:
                     raise PhaseChangeError(None, *exc.args)
             return
@@ -111,26 +111,26 @@ class Arsonist(Role):
 
         if len(game.players.filter(action_only=True)) == len(game.night_actions.actions):
             try:
-                await game.increment_phase(ctx.bot)
+                await game.increment_phase()
             except Exception as exc:
                 raise PhaseChangeError(None, *exc.args)
 
-    async def run_action(self, _game, night_record, player, target):
+    async def run_action(self, actions, player, target):
         if not self.ignited:
             # just dousing here
             self.doused.add(target)
             return
 
         # igniting everyone here
-        pl_record = night_record[target.user.id]
+        pl_record = actions.record[target.user.id]
         pl_record['nightkill']['result'] = True
         pl_record['nightkill']['by'].append(player)
 
-    async def after_action(self, player, target, night_record):
+    async def tear_down(self, actions, player, target):
         # nothing for dousing
         if not self.ignited:
             return
-        record = night_record[target.user.id]['nightkill']
+        record = actions.record[target.user.id]['nightkill']
         success = record['result'] and player in record['by']
 
         if success:

@@ -1,3 +1,4 @@
+from godfather.game.types import Defense
 
 
 class Role:
@@ -20,3 +21,6 @@ class Role:
     # called when a player is lynched. takes the game object, and the player lynched
     async def on_lynch(self, game, player):
         pass
+
+    def defense(self) -> Defense:
+        return Defense.NONE

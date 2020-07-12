@@ -3,7 +3,7 @@ from discord import Member
 from .types import night_record
 
 
-class NightActions:
+class NightActions(list):
     """This class resolves and accepts night actions, abstracting all logic from Games.
     Night actions are first accepted in a list. Each action has the following attributes:
 
@@ -20,62 +20,49 @@ class NightActions:
     """
 
     def __init__(self, game):
+        super().__init__()
         self.game = game
-        self.actions = []
         self.record = night_record
         self.record.clear()
 
-    def add_action(self, action):
-        self.actions.append(action)
-
     def reset(self):
-        self.actions = []
+        self.clear()
         self.record.clear()
 
+    def add_action(self, action):
+        self.append(action)
+
     async def resolve(self) -> typing.List[Member]:
-        # handle roleblocks
-        for roleblock in filter(lambda action: action['action'] == 'block', self.actions):
-            target = roleblock['target']
-            roleblocker = roleblock['player']
-            for action in self.actions:
-                if action['player'].user.id == target.user.id:
-                    if 'can_block' in action and not action['can_block']:
-                        continue
-                    # escort blocking serial-killers gets killed instead
-                    if target.role.name == 'Serial Killer':
-                        action['target'] = roleblocker
-                        continue
-                    # remove the action, getting roleblocked
-                    self.actions.remove(action)
-                    self.record[target.user.id]['roleblock']['result'] = True
-                    self.record[target.user.id]['roleblock']['by'].append(
-                        roleblocker.user.id)
-
-        # if the mafioso isn't roleblocked, remove GF action
-        if any(filter(lambda action: action['player'].role.name == 'Goon', self.actions)):
-            for action in self.actions:
-                if action['player'].role.name == 'Godfather':
-                    self.actions.remove(action)
-
         # sort by ascending priorities
-        self.actions.sort(key=lambda action: action['priority'])
-        for action in self.actions:
-            # noaction, just ignore
-            if action['action'] is None:
-                continue
-            player = action['player']
-            target = action['target']
-            if not target.user.id == player.user.id:
-                await target.visit(player, self.record)
-            await action['player'].role.run_action(self.game, self.record, player, target)
+        self.sort(key=lambda action: action['priority'])
 
-         # after action clean-up
-        for action in self.actions:
+        # run setUp for every role first
+        for action in self:
+            # noaction, ignore
             if action['action'] is None:
                 continue
             player = action['player']
-            target = action['target']
-            await player.role.after_action(player, target, self.record)
+            # NoTarget mixin sets target to None
+            target = action.get('target', None)
+            await player.role.set_up(self, player, target)
+
+        # run_action runs the actual logic of the role's action (eg: Vig shooting a player)
+        for action in self:
+            if action['action'] is None:
+                continue
+            player = action['player']
+            target = action.get('target', None)
+            if not target.user.id == player.user.id:
+                await target.visit(player, self)
+            await player.role.run_action(self, player, target)
+
+         # tear_down is for roles to reset states initialized in set_up, report action success/failure
+        for action in self:
+            if action['action'] is None:
+                continue
+            player = action['player']
+            target = action.get('target', None)
+            await player.role.tear_down(self, player, target)
 
         # figure out which players died
         dead_players = []

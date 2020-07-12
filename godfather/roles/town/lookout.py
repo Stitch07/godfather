@@ -11,13 +11,11 @@ class Lookout(SingleAction):
         self.action_priority = 1
         self.action_text = 'watch a player'
 
-    async def run_action(self, game, night_record, player, target):
-        pass
-
-    async def after_action(self, player, target, night_record):
+    async def tear_down(self, _actions, player, target):
         if len(target.visitors) > 1:
             # get all visitors except self
-            visitors = [*filter(lambda v: v.user.id != player.user.id, target.visitors)]
+            visitors = [*filter(lambda v: v.user.id !=
+                                player.user.id, target.visitors)]
             # turn all visitors objects into their names
             visitors = map(lambda v: v.user.name, visitors)
             await player.user.send('Your target was visited by {}'.format(', '.join(visitors)))

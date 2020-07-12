@@ -92,7 +92,7 @@ class Mafia(commands.Cog):
                     await player.remove(game, f'modkilled {phase_str}{game.cycle}')
                     game_ended, winning_faction, independent_wins = game.check_endgame()
                     if game_ended:
-                        await game.end(self.bot, winning_faction, independent_wins)
+                        await game.end(winning_faction, independent_wins)
                     return
 
             else:
@@ -254,7 +254,7 @@ class Mafia(commands.Cog):
             game.cycle = 1
             game.phase = Phase.DAY
         try:
-            await game.increment_phase(self.bot)
+            await game.increment_phase()
         except Exception as exc:
             raise PhaseChangeError(None, *exc.args)
 
@@ -278,7 +278,7 @@ class Mafia(commands.Cog):
             await game.lynch(target)
             game_ended, winning_faction, independent_wins = game.check_endgame()
             if game_ended:
-                await game.end(self.bot, winning_faction, independent_wins)
+                await game.end(winning_faction, independent_wins)
             else:
                 game.phase = Phase.DAY
                 await game.increment_phase()
@@ -291,7 +291,7 @@ class Mafia(commands.Cog):
     async def nolynch(self, ctx: CustomContext):
         game = self.bot.games[ctx.guild.id]
         try:
-            nolynch = game.votes.nolynch(game.players.get(ctx.author))
+            nolynch = game.votes.no_lynch(game.players.get(ctx.author))
         except VoteError as err:
             return await ctx.send(*err.args)
         await ctx.send('You have voted to no-lynch.')
@@ -300,7 +300,7 @@ class Mafia(commands.Cog):
             game.phase = Phase.STANDBY
             await ctx.send('Nobody was lynched!')
             game.phase = Phase.DAY
-            await game.increment_phase(self.bot)
+            await game.increment_phase()
 
     @ commands.command()
     @day_only()

@@ -1,4 +1,5 @@
 from collections import defaultdict
+from enum import IntEnum, auto
 
 
 def default_key():
@@ -6,3 +7,10 @@ def default_key():
 
 
 night_record = defaultdict(default_key)
+
+
+class Defense(IntEnum):
+    NONE = auto()
+    BASIC = auto()
+    POWERFUL = auto()
+    UNSTOPPABLE = auto()

@@ -28,8 +28,8 @@ class Jester(SingleAction):
             return
         await super().on_night(bot, player, game)
 
-    async def run_action(self, _game, night_record, player, target):
-        pl_record = night_record[target.user.id]
+    async def run_action(self, actions, player, target):
+        pl_record = actions[target.user.id]
         pl_record['nightkill']['result'] = True
         pl_record['nightkill']['by'].append(player)
 
@@ -39,7 +39,7 @@ class Jester(SingleAction):
         self.voted = game.votes[player.user.id]
         await game.channel.send('The jester will get revenge from his grave!')
 
-    async def after_action(self, player, target, night_record):
+    async def tear_down(self, actions, player, target):
         await target.user.send('You were haunted by a Jester! You have died!')
 
     def can_do_action(self, _game):
