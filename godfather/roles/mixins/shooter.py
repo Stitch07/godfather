@@ -1,11 +1,11 @@
-from godfather.game.types import Attack, Defense
+from godfather.game.types import Attack, Defense, Priority
 
 
 class Shooter:
     def __init__(self, *args, **kwargs):
         self.action = 'shoot'
         self.action_gerund = 'shooting'
-        self.action_priority = 1  # placeholder
+        self.action_priority = Priority.SHOOTER
         self.action_text = 'shoot a player'
         super().__init__(*args, **kwargs)
 

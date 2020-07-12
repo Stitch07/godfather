@@ -1,5 +1,5 @@
 from godfather.roles.mixins import NoTarget
-from godfather.game.types import Attack, Defense
+from godfather.game.types import Attack, Defense, Priority
 
 DESCRIPTION = 'You may alert 3 times in a game, killing everyone who visits you.'
 
@@ -12,7 +12,7 @@ class Veteran(NoTarget):
         self.action_text = 'go on alert'
         # whether the vet has alerted this night
         self.alerted = False
-        self.alerts = 3
+        self.alerts = Priority.VETERAN
         self.can_block = False
         self.can_transport = False
         self.action_priority = 0

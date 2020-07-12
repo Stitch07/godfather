@@ -1,5 +1,5 @@
 from godfather.roles.mixins import SingleAction
-from godfather.game.types import Attack
+from godfather.game.types import Attack, Priority
 
 DESCRIPTION = 'You may heal guard someone every night.'
 
@@ -9,7 +9,7 @@ class Bodyguard(SingleAction):
         super().__init__(name='Bodyguard', role_id='bodyguard', description=DESCRIPTION)
         self.action = 'guard'
         self.action_gerund = 'guarding'
-        self.action_priority = 2
+        self.action_priority = Priority.BODYGUARD
         self.action_text = 'guard a player'
         self.can_self_target = True  # one self-heal allowed
 

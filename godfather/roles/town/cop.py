@@ -1,4 +1,5 @@
 from godfather.roles.mixins import SingleAction
+from godfather.game.types import Priority
 
 DESCRIPTION = 'You may interrogate one person each night for suspicious activity.'
 
@@ -8,7 +9,7 @@ class Cop(SingleAction):
         super().__init__(name='Cop', role_id='cop', description=DESCRIPTION)
         self.action = 'check'
         self.action_gerund = 'checking'
-        self.action_priority = 2
+        self.action_priority = Priority.COP
         self.action_text = 'check a player'
 
     # this ensures all cop modifiers show up as regular Cops

@@ -27,6 +27,7 @@ class Priority(IntEnum):
     VETERAN = 0
     JESTER_HAUNT = 0
     VIGI_SUICIDE = 0
+    SURVIVOR = 0
     # modify night actions directly
     ESCORT = 1
     TRANSPORTER = 1
@@ -40,3 +41,4 @@ class Priority(IntEnum):
     # investigative roles usually only rely on tear_down(), so they can safely go last
     COP = 5
     LOOKOUT = 5
+    CONSIG = 5

@@ -1,5 +1,5 @@
 from godfather.roles.mixins import NoTarget
-from godfather.game.types import Defense
+from godfather.game.types import Defense, Priority
 
 DESCRIPTION = 'You may vest 4 times in a game.'
 
@@ -9,7 +9,7 @@ class Survivor(NoTarget):
         super().__init__(name='Survivor', role_id='survivor', description=DESCRIPTION)
         self.action = 'vest'
         self.action_gerund = 'vesting'
-        self.action_priority = 1
+        self.action_priority = Priority.SURVIVOR
         self.action_text = 'protect yourself at night.'
         self.vests = 4
         self.vested = False

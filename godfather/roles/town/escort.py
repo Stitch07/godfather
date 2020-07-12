@@ -1,4 +1,5 @@
 from godfather.roles.mixins import SingleAction
+from godfather.game.types import Priority
 
 DESCRIPTION = 'You may roleblock somebody each night.'
 
@@ -8,7 +9,7 @@ class Escort(SingleAction):
         super().__init__(name='Escort', role_id='escort', description=DESCRIPTION)
         self.action = 'block'
         self.action_gerund = 'blocking'
-        self.action_priority = 1
+        self.action_priority = Priority.ESCORT
         self.action_text = 'roleblock a player'
 
     async def set_up(self, actions, player, target):

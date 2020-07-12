@@ -1,5 +1,5 @@
 from godfather.roles.mixins import SingleAction
-from godfather.game.types import Attack
+from godfather.game.types import Attack, Priority
 
 DESCRIPTION = 'You can haunt one of the people voting you.'
 
@@ -21,7 +21,7 @@ class Jester(SingleAction):
         self.can_transport = False
         self.action = 'haunt'
         self.action_gerund = 'haunting'
-        self.action_priority = 3
+        self.action_priority = Priority.JESTER_HAUNT
         self.action_text = 'haunt a player'
 
     async def on_night(self, bot, player, game):

@@ -1,4 +1,5 @@
 from godfather.roles.mixins import SingleAction
+from godfather.game.types import Priority
 
 DESCRIPTION = 'You may watch one person at night to see who visits them.'
 
@@ -8,7 +9,7 @@ class Lookout(SingleAction):
         super().__init__(name='Lookout', role_id='lookout', description=DESCRIPTION)
         self.action = 'watch'
         self.action_gerund = 'watching'
-        self.action_priority = 1
+        self.action_priority = Priority.LOOKOUT
         self.action_text = 'watch a player'
 
     async def tear_down(self, _actions, player, target):

@@ -1,6 +1,6 @@
 from godfather.roles.base import Role
 from godfather.errors import PhaseChangeError
-from godfather.game.types import Defense, Attack
+from godfather.game.types import Attack, Defense, Priority
 
 DESCRIPTION = 'You may douse someone every night, and then ignite all your doused targets.'
 
@@ -17,7 +17,7 @@ class Arsonist(Role):
             return False, "You haven't doused anyone to ignite yet!"
         return True, ''
 
-    def can_target(self, player, target):
+    def can_target(self, _player, target):
         if target in self.doused:
             return False, 'You have already doused {}'.format(target.user)
         return True, ''
@@ -69,7 +69,7 @@ class Arsonist(Role):
                     'action': 'ignite',
                     'player': player,
                     'target': target,
-                    'priority': 3,
+                    'priority': Priority.ARSONIST,
                     'can_block': False,
                     'can_transport': False
                 })
@@ -107,7 +107,7 @@ class Arsonist(Role):
             'action': 'douse',
             'player': player,
             'target': target_pl,
-            'priority': 1,
+            'priority': Priority.ARSONIST,
             'can_block': True,
             'can_transport': True
         })

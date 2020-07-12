@@ -1,4 +1,5 @@
 from godfather.roles.mixins import SingleAction, Shooter
+from godfather.game.types import Priority
 
 DESCRIPTION = 'You may shoot someone every night. If you shoot a townie, you will die of guilt the next night.'
 
@@ -16,7 +17,7 @@ class Vigilante(Shooter, SingleAction):
                 'action': self.action,
                 'player': player,
                 'target': player,
-                'priority': 3,
+                'priority': Priority.VIGI_SUICIDE,
                 'can_block': False,
                 'can_transport': False
             })

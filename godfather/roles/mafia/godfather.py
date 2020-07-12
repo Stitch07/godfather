@@ -20,7 +20,6 @@ class Godfather(MafiaMember, Shooter, SingleAction):
         super().__init__(name='Godfather', role_id='godfather', description=DESCRIPTION)
         self.action = 'shoot'
         self.action_gerund = 'shooting'
-        self.action_priority = 1
         self.action_text = 'shoot a player'
 
     def defense(self):
