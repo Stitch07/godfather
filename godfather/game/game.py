@@ -109,7 +109,7 @@ class Game:
         return (False, None, None)
 
     async def increment_phase(self):
-        phase_t = round(self.config['phase_time'] / 60, 1)
+        phase_t = round(self.config['phase_duration'] / 60, 1)
 
         # night loop is the same as the pregame loop
         if self.cycle == 0 or self.phase == Phase.NIGHT:
@@ -157,7 +157,7 @@ class Game:
             self.phase = Phase.NIGHT
 
         self.phase_end_at = datetime.now() \
-            + timedelta(seconds=self.config['phase_time'])
+            + timedelta(seconds=self.config['phase_duration'])
 
     # lynch a player
     async def lynch(self, target: Player):
