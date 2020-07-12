@@ -11,7 +11,6 @@ from godfather.cogs.mafia.checks import *  # pylint: disable=wildcard-import, un
 from godfather.errors import PhaseChangeError
 from godfather.factions import factions
 from godfather.game import Game, Phase, Player
-from godfather.game.player_manager import PlayerManager
 from godfather.game.vote_manager import VoteError
 from godfather.roles import all_roles
 from godfather.utils import (CustomContext, confirm, from_now,
