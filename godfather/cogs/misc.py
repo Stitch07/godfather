@@ -1,7 +1,8 @@
 import ast
 import importlib
+import typing
 import discord
-from discord.ext import commands
+from discord.ext import flags, commands
 
 
 def insert_returns(body):
@@ -29,18 +30,40 @@ class Misc(commands.Cog):
         await ctx.send('Pong!')
 
     # just a basic proof of concept
-    @commands.command()
-    @commands.is_owner()
-    async def userstats(self, ctx):
+    @flags.add_flag('--role', type=str, default='')
+    @flags.add_flag('--faction', type=str, default='')
+    @flags.command()
+    async def userstats(self, ctx, member: typing.Optional[discord.Member] = None, **flags):
+        if member is None:
+            member = ctx.author
+        clauses = []
+        role_filter = flags.get('role').title()
+        faction_filter = flags.get('faction').title()
+
         with self.bot.db.conn.cursor() as cur:
-            cur.execute(
-                'SELECT result, COUNT(result) FROM players'
-                ' WHERE player_id=%s GROUP BY result ORDER BY result DESC;',
-                [str(ctx.author.id)])
-            win_res, loss_res = cur.fetchall()
-            wins = win_res[1]
-            losses = loss_res[1]
+
+            clauses.append(cur.mogrify(
+                'player_id=%s', (str(member.id), )).decode('utf-8'))
+            if role_filter != '':
+                clauses.append(cur.mogrify(
+                    'rolename=%s', (role_filter, )).decode('utf-8'))
+            if faction_filter != '':
+                clauses.append(cur.mogrify(
+                    'faction=%s', (faction_filter, )).decode('utf-8'))
+            clauses = ' AND '.join(clauses)
+
+            query = ('SELECT result, COUNT(RESULT) FROM players'
+                     ' WHERE {} GROUP BY result ORDER BY result DESC;'.format(clauses))
+            cur.execute(query)
+            results = cur.fetchall()
+            wins = next((result[1]
+                         for result in results if result[0]), 0)
+            losses = next((result[1]
+                           for result in results if not result[0]), 0)
             total = wins + losses
+
+            if total == 0:
+                return await ctx.send('No games played!')
             await ctx.send(f'Games: {total}\nWins: {wins}\nWinrate: {round(100 * wins/total)}%')
 
     @commands.command()
