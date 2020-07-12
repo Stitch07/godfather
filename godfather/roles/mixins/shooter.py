@@ -1,4 +1,4 @@
-from godfather.game.types import Defense
+from godfather.game.types import Attack, Defense
 
 
 class Shooter:
@@ -16,4 +16,5 @@ class Shooter:
             return
         pl_record = actions.record[target.user.id]
         pl_record['nightkill']['result'] = True
+        pl_record['nightkill']['type'] = Attack.BASIC
         pl_record['nightkill']['by'].append(player)

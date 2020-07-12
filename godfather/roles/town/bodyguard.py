@@ -1,4 +1,5 @@
 from godfather.roles.mixins import SingleAction
+from godfather.game.types import Attack
 
 DESCRIPTION = 'You may heal guard someone every night.'
 
@@ -14,11 +15,13 @@ class Bodyguard(SingleAction):
 
     async def run_action(self, actions, player, target):
         pl_record = actions.record[target.user.id]
-        if pl_record['nightkill']['result']:
+        # BG defenses are Powerful
+        if pl_record['nightkill']['result'] and pl_record['nightkill']['type'] < Attack.UNSTOPPABLE:
             # kill the attacker
             attacker = pl_record['nightkill']['by'].pop()
             await attacker.user.send('You were killed by a bodyguard. You have died!')
             actions.record[attacker.user.id]['nightkill']['result'] = True
+            actions.record[attacker.user.id]['nightkill']['type'] = Attack.POWERFUL
             actions.record[attacker.user.id]['nightkill']['by'].append(player)
 
             # kill the bg

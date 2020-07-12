@@ -1,4 +1,5 @@
 from godfather.roles.mixins import SingleAction
+from godfather.game.types import Attack
 
 DESCRIPTION = 'You can haunt one of the people voting you.'
 
@@ -31,6 +32,7 @@ class Jester(SingleAction):
     async def run_action(self, actions, player, target):
         pl_record = actions[target.user.id]
         pl_record['nightkill']['result'] = True
+        pl_record['nightkill']['type'] = Attack.UNSTOPPABLE
         pl_record['nightkill']['by'].append(player)
 
     async def on_lynch(self, game, player):

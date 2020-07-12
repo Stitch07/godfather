@@ -1,4 +1,5 @@
 from godfather.roles.mixins import SingleAction
+from godfather.game.types import Attack
 
 DESCRIPTION = 'You may heal someone every night, and self-heal once.'
 
@@ -14,7 +15,7 @@ class Doctor(SingleAction):
 
     async def run_action(self, actions, player, target):
         pl_record = actions.record[target.user.id]
-        if pl_record['nightkill']['result']:
+        if pl_record['nightkill']['result'] and pl_record['nightkill']['type'] < Attack.UNSTOPPABLE:
             pl_record['nightkill']['result'] = False
             pl_record['nightkill']['by'] = []
             pl_record['heal']['result'] = True

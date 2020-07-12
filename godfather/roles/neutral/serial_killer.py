@@ -1,5 +1,5 @@
 from godfather.roles.mixins import SingleAction
-from godfather.game.types import Defense
+from godfather.game.types import Attack, Defense
 
 DESCRIPTION = 'You may stab someone every night.'
 
@@ -9,17 +9,18 @@ class SerialKiller(SingleAction):
         super().__init__(name='Serial Killer', role_id='serial_killer', description=DESCRIPTION)
         self.action = 'stab'
         self.action_gerund = 'stabbing'
-        self.action_priority = 1  # placeholder
+        self.action_priority = 1
         self.action_text = 'stab a player'
 
-    def bulletproof(self):
-        return True
+    def defense(self):
+        return Defense.BASIC
 
     async def run_action(self, actions, player, target):
         if target.defense() >= Defense.BASIC:
             return
         pl_record = actions[target.user.id]
         pl_record['nightkill']['result'] = True
+        pl_record['nightkill']['type'] = Attack.BASIC
         pl_record['nightkill']['by'].append(player)
 
     async def tear_down(self, actions, player, target):

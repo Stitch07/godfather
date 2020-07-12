@@ -1,5 +1,6 @@
 from godfather.roles.base import Role
 from godfather.errors import PhaseChangeError
+from godfather.game.types import Defense, Attack
 
 DESCRIPTION = 'You may douse someone every night, and then ignite all your doused targets.'
 
@@ -20,6 +21,9 @@ class Arsonist(Role):
         if target in self.doused:
             return False, 'You have already doused {}'.format(target.user)
         return True, ''
+
+    def defense(self):
+        return Defense.BASIC
 
     async def on_night(self, bot, player, game):
         output = f'It is now night {game.cycle}. Use the {bot.command_prefix}douse command to douse a player. ' \
@@ -124,6 +128,7 @@ class Arsonist(Role):
         # igniting everyone here
         pl_record = actions.record[target.user.id]
         pl_record['nightkill']['result'] = True
+        pl_record['nightkill']['type'] = Attack.UNSTOPPABLE
         pl_record['nightkill']['by'].append(player)
 
     async def tear_down(self, actions, player, target):
