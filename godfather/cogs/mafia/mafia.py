@@ -299,7 +299,7 @@ class Mafia(commands.Cog):
     async def nolynch(self, ctx: CustomContext):
         game = self.bot.games[ctx.guild.id]
         try:
-            nolynch = game.votes.nolynch(game.players[ctx.author])
+            nolynch = game.votes.no_lynch(game.players[ctx.author])
         except VoteError as err:
             return await ctx.send(*err.args)
         await ctx.send('You have voted to no-lynch.')
