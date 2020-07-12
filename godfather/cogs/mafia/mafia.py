@@ -77,9 +77,9 @@ class Mafia(commands.Cog):
             return await ctx.send('The host cannot leave the game.')
 
         if game.has_started:
-            replace_text = 'Are you sure you want to leave the game?' \ 
-                           'You will be mod-killed.' \
-            if len(game.players.replacements) == 0 \
+            replace_text = ('Are you sure you want to leave the game?'
+                            'You will be mod-killed.') \
+                if len(game.players.replacements) == 0 \
                 else 'Are you sure you want to leave the game? You will be replaced out.'
             confirm_replacement = await confirm(ctx.bot, ctx.author, ctx.channel, replace_text)
             if confirm_replacement is None:
@@ -100,7 +100,7 @@ class Mafia(commands.Cog):
                     return
 
             else:
-                replacement = game.players.replacements.pop(0)
+                replacement = game.players.replacements.popleft()
                 player.user = replacement
                 await ctx.send(f'{replacement} has replaced {ctx.author}.')
                 await replacement.send(player.role_pm)

@@ -1,5 +1,6 @@
 import json
-from typing import Callable, List, Optional
+from collections import deque
+from typing import Callable, Deque, List, Optional
 
 from discord import Member
 
@@ -11,7 +12,7 @@ class PlayerManager:
     def __init__(self, game):
         self.game = game
         self.players: List[Player] = list()
-        self.replacements: List[Member] = list()
+        self.replacements: Deque[Member] = deque()
 
     def add(self, member: Member, replacement=False):
         if replacement:
