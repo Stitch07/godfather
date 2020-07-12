@@ -65,7 +65,7 @@ class Godfather(commands.Bot):
             if len(games) == 0:
                 return
             pl_game = games[0]
-            player = pl_game.players.get(ctx.author)
+            player = pl_game.players[ctx.author]
 
             if not alive_or_recent_jester(player, pl_game) \
                     or not hasattr(player.role, 'action'):

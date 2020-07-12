@@ -82,14 +82,17 @@ class Mafia(commands.Cog):
             replace_text = ('Are you sure you want to leave the game?'
                             'You will be mod-killed.') \
                 if len(game.players.replacements) == 0 \
-                else 'Are you sure you want to leave the game? You will be replaced out.'
-            confirm_replacement = await confirm(ctx.bot, ctx.author, ctx.channel, replace_text)
+                else ('Are you sure you want to leave the game? '
+                      'You will be replaced out.')
+            confirm_replacement = await confirm(
+                ctx.bot, ctx.author, ctx.channel, replace_text
+            )
             if confirm_replacement is None:
                 return
             if not confirm_replacement:
                 return await ctx.message.add_reaction('❌')
 
-            player = game.players.get(ctx.author)
+            player = game.players[ctx.author]
 
             if len(game.players.replacements) == 0:
                 phase_str = 'd' if game.phase == Phase.DAY else 'n'
@@ -182,7 +185,7 @@ class Mafia(commands.Cog):
     @ game_only()
     @ game_started_only()
     async def rolepm(self, ctx: CustomContext):
-        player = ctx.game.players.get(ctx.author)
+        player = ctx.game.players[ctx.author]
         try:
             await player.user.send(player.role_pm)
             await ctx.message.add_reaction('✅')
@@ -272,7 +275,7 @@ class Mafia(commands.Cog):
     async def vote(self, ctx: CustomContext, *, target: Player):
         game: Game = ctx.game
         try:
-            hammered = game.votes.vote(game.players.get(ctx.author), target)
+            hammered = game.votes.vote(game.players[ctx.author], target)
         except VoteError as err:
             return await ctx.send(*err.args)
 
@@ -297,7 +300,7 @@ class Mafia(commands.Cog):
     async def nolynch(self, ctx: CustomContext):
         game = self.bot.games[ctx.guild.id]
         try:
-            nolynch = game.votes.nolynch(game.players.get(ctx.author))
+            nolynch = game.votes.nolynch(game.players[ctx.author])
         except VoteError as err:
             return await ctx.send(*err.args)
         await ctx.send('You have voted to no-lynch.')
@@ -314,7 +317,7 @@ class Mafia(commands.Cog):
     @ player_only()
     @ game_only()
     async def unvote(self, ctx: CustomContext):
-        unvoted = ctx.game.votes.unvote(ctx.game.players.get(ctx.author))
+        unvoted = ctx.game.votes.unvote(ctx.game.players[ctx.author])
         if unvoted:
             return await ctx.message.add_reaction('✅')
 

@@ -86,4 +86,4 @@ class Player:
             found_member = await conv.convert(ctx, argument)
         if found_member is None or not found_member in game.players:
             raise errors.BadArgument('Player {} not found'.format(argument))
-        return game.players.get(found_member)
+        return game.players[found_member]
