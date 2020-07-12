@@ -31,6 +31,9 @@ class PlayerManager:
         elif isinstance(user_or_index, int):
             return self.players[user_or_index]
 
+    def __getitem__(self, key):
+        self.get(key)
+
     def remove(self, user_or_player):
         if isinstance(user_or_player, Player):
             self.players.remove(user_or_player)
