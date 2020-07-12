@@ -77,7 +77,7 @@ class Misc(commands.Cog):
     @eval.error
     async def eval_error(self, ctx, error):
         await ctx.send(f'❌ **A error occurred**: ```python\n{error}```')
-        self.bot.logger.exception(error)
+        self.bot.logger.exception(error, exc_info=True, stack_info=True)
 
 
 def setup(bot):

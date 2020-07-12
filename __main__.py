@@ -93,7 +93,7 @@ class Godfather(commands.Bot):
             # Inform users that game has ended and remove guild id from `self.games`.
             await ctx.send('There was an error incrementing the phase. The game has ended.')
             self.games.pop(ctx.guild.id, None)
-            return self.logger.exception(error)
+            return self.logger.exception(error, exc_info=(type(error), error, error.__traceback__))
 
         await ctx.send(f'Uncaught exception: ```{error}```')
 
@@ -102,7 +102,8 @@ class Godfather(commands.Bot):
             await ctx.send('\nThe game has ended.')
             self.games.pop(ctx.guild.id, None)
 
-        self.logger.exception(error)
+        self.logger.exception(error, exc_info=(
+            type(error), error, error.__traceback__))
 
     def load_extensions(self):
         for file in pathlib.Path('godfather/cogs/').iterdir():
@@ -119,7 +120,7 @@ class Godfather(commands.Bot):
                 self.logger.info('Loaded cog %s', file.stem)
             except commands.ExtensionError as err:
                 self.logger.error('Error loading extension %s', file.stem)
-                self.logger.exception(err)
+                self.logger.exception(err, exc_info=True, stack_info=True)
 
 
 if __name__ == "__main__":
