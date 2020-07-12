@@ -40,6 +40,7 @@ class NightActions(list):
         for action in self:
             # noaction, ignore
             if action['action'] is None:
+                self.remove(action)
                 continue
             player = action['player']
             # NoTarget mixin sets target to None
@@ -48,8 +49,6 @@ class NightActions(list):
 
         # run_action runs the actual logic of the role's action (eg: Vig shooting a player)
         for action in self:
-            if action['action'] is None:
-                continue
             player = action['player']
             target = action.get('target', None)
             if not target.user.id == player.user.id:
@@ -58,8 +57,6 @@ class NightActions(list):
 
          # tear_down is for roles to reset states initialized in set_up, report action success/failure
         for action in self:
-            if action['action'] is None:
-                continue
             player = action['player']
             target = action.get('target', None)
             await player.role.tear_down(self, player, target)
