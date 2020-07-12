@@ -1,5 +1,9 @@
-from typing import Callable, List, Optional
+import json
+from collections import deque
+from typing import Callable, Deque, List, Optional
+
 from discord.abc import User
+
 from godfather.game.player import Player
 from godfather.utils import alive_or_recent_jester
 
@@ -8,7 +12,7 @@ class PlayerManager:
     def __init__(self, game):
         self.game = game
         self.players: List[Player] = list()
-        self.replacements: List[User] = list()
+        self.replacements: Deque[User] = deque()
 
     def add(self, member: User, replacement=False):
         if replacement:
@@ -18,13 +22,14 @@ class PlayerManager:
             self.players.append(player)
             self.game.votes[member.id] = []
 
-    def get(self, user_or_player):
-        if isinstance(user_or_player, Player):
-            return next(player for player in self.players if player == user_or_player)
-        elif isinstance(user_or_player, User):
-            return next(player for player in self.players if player.user.id == user_or_player.id)
-        elif isinstance(user_or_player, int):
-            return self.players[user_or_player]
+    def get(self, user_or_index):
+        if isinstance(user_or_index, User):
+            return next(
+                player for player in self.players
+                if player.user.id == user_or_index.id
+            )
+        elif isinstance(user_or_index, int):
+            return self.players[user_or_index]
 
     def remove(self, user_or_player):
         if isinstance(user_or_player, Player):
@@ -48,7 +53,7 @@ class PlayerManager:
                votecount: Optional[Callable] = None,
                pl_id: Optional[int] = None,
                action_only: bool = False,
-               alive: bool = False):
+               is_alive: bool = False):
         # pylint: disable=too-many-arguments
         plist = self.players
 
@@ -73,8 +78,8 @@ class PlayerManager:
             plist = [*filter(lambda pl: votecount(len(pl.votes)), plist)]
         if action_only:
             plist = [*filter(action_only_filter, plist)]
-        if alive:
-            plist = [*filter(lambda pl: pl.alive, plist)]
+        if is_alive:
+            plist = [*filter(lambda pl: pl.is_alive, plist)]
         if pl_id:
             plist = [*filter(lambda pl: pl.user.id == pl_id, plist)]
 
@@ -83,15 +88,15 @@ class PlayerManager:
     def show(self, codeblock=False, show_replacements=False):
         players = []
         for num, player in enumerate(self.players, 1):
-            # codeblock friendly formatting. green for alive, red for dead
+            # codeblock friendly formatting. green for is_alive, red for dead
             usrname = ''
             if codeblock:
-                if player.alive:
+                if player.is_alive:
                     usrname += f'+ {num}. {player.user}'
                 else:
                     usrname += f'- {num}. {player.user} ({player.display_role}; {player.death_reason})'
             else:
-                if player.alive:
+                if player.is_alive:
                     usrname += f'{num}. {player.user}'
                 else:
                     usrname += f'{num}. ~~{player.user}~~ ({player.display_role}; {player.death_reason})'
@@ -118,5 +123,16 @@ class PlayerManager:
     def __iter__(self):
         return self.players.__iter__()
 
-    def __getitem__(self, idx):
-        return self.players[idx]
+    def __getitem__(self, key):
+        return self.get(key)
+
+    @property
+    def is_full(self):
+        with open('rolesets.json', 'r') as rs_file:
+            rolesets = json.load(rs_file)
+
+        max_num = max(len(rs_dict['roles']) for rs_dict in rolesets)
+
+        if len(self.players) >= max_num:
+            return True
+        return False

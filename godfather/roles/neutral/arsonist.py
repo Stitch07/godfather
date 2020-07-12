@@ -63,7 +63,7 @@ class Arsonist(Role):
 
         if command == 'ignite':
             for target in self.doused:
-                if not target.alive:
+                if not target.is_alive:
                     continue
                 game.night_actions.add_action({
                     'action': 'ignite',

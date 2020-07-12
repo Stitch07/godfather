@@ -17,14 +17,14 @@ class Mafia(Faction):
             can_do, _ = player.role.can_do_action(game)
             return player.faction.id in OPPOSING_FACTIONS \
                 and can_do \
-                and player.alive
+                and player.is_alive
 
         # mafia win when they have majority and no opposing factions can disturb that
         # that is, 2 mafiosos should automatically win against 2 vanilla townies,
         # but the game should continue against a vigilante and a veteran
-        alive_maf = len(game.players.filter(faction='mafia', alive=True))
+        alive_maf = len(game.players.filter(faction='mafia', is_alive=True))
         alive_opposing = len(
-            [*filter(lambda pl: pl.faction.id in OPPOSING_FACTIONS and pl.alive, game.players)])
+            [*filter(lambda pl: pl.faction.id in OPPOSING_FACTIONS and pl.is_alive, game.players)])
         alive_opposing_prs = len(
             [*filter(filter_opposing_power_roles, game.players)])
         return alive_maf > 0 \

@@ -6,6 +6,7 @@ from enum import IntEnum, auto
 import discord
 
 from godfather.errors import PhaseChangeError
+from godfather.game.game_config import GameConfig
 from godfather.game.player_manager import PlayerManager
 from godfather.game.vote_manager import VoteManager
 from godfather.utils import alive_or_recent_jester
@@ -14,6 +15,11 @@ from .night_actions import NightActions
 from .player import Player
 
 rolesets = json.load(open('rolesets/rolesets.json'))
+
+
+default_game_config = {
+    'phase_duration': 5 * 60  # In seconds
+}
 
 
 class Phase(IntEnum):
@@ -37,9 +43,7 @@ class Game:
         self.night_actions = NightActions(self)
         self.setup = dict()  # the setup used
         # host-configurable stuff
-        self.config = {
-            'phase_time': 5 * 60  # in seconds
-        }
+        self.config = GameConfig(default_game_config, channel=channel)
         self.votes = VoteManager(self)
 
     @classmethod
@@ -105,7 +109,7 @@ class Game:
         return (False, None, None)
 
     async def increment_phase(self):
-        phase_t = round(self.config['phase_time'] / 60, 1)
+        phase_t = round(self.config['phase_duration'] / 60, 1)
 
         # night loop is the same as the pregame loop
         if self.cycle == 0 or self.phase == Phase.NIGHT:
@@ -128,7 +132,7 @@ class Game:
             self.night_actions.reset()
             self.phase = Phase.DAY
             self.cycle = self.cycle + 1
-            alive_players = self.players.filter(alive=True)
+            alive_players = self.players.filter(is_alive=True)
             # populate voting cache
             self.votes['nolynch'] = []
             self.votes['notvoting'] = []
@@ -153,7 +157,7 @@ class Game:
             self.phase = Phase.NIGHT
 
         self.phase_end_at = datetime.now() \
-            + timedelta(seconds=self.config['phase_time'])
+            + timedelta(seconds=self.config['phase_duration'])
 
     # lynch a player
     async def lynch(self, target: Player):
@@ -170,12 +174,12 @@ class Game:
             # codeblock friendly formatting. green for alive, red for dead
             usrname = ''
             if codeblock:
-                if player.alive:
+                if player.is_alive:
                     usrname += f'+ {num}. {player.user}'
                 else:
                     usrname += f'- {num}. {player.user} ({player.display_role}; {player.death_reason})'
             else:
-                if player.alive:
+                if player.is_alive:
                     usrname += f'{num}. {player.user}'
                 else:
                     usrname += f'{num}. ~~{player.user}~~ ({player.display_role}; {player.death_reason})'
@@ -234,4 +238,4 @@ class Game:
 
     @ property
     def majority_votes(self):
-        return math.floor(len(self.players.filter(alive=True)) / 2) + 1
+        return math.floor(len(self.players.filter(is_alive=True)) / 2) + 1

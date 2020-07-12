@@ -4,7 +4,7 @@ class MafiaMember:
         # mafioso becomes new gf and stuff here
         if player.role.name == 'Godfather':
             # find a mafioso/goon
-            if len(game.players.filter(role='Goon', alive=True)) == 0:
+            if len(game.players.filter(role='Goon', is_alive=True)) == 0:
                 return
             goon = game.players.filter(role='Goon')[0]
             # goon becomes the new Godfather
@@ -16,7 +16,7 @@ class MafiaMember:
         if player.role.name == 'Goon':
             def filter_func(player):
                 return player.faction.id == 'mafia' \
-                    and player.alive \
+                    and player.is_alive \
                     and player.role.name not in ['Godfather', 'Goon']
 
             other_mafia = list(filter(filter_func, game.players))

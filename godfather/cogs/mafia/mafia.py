@@ -1,17 +1,21 @@
-import json
-import typing
 import copy
-import random
 import inspect
+import json
+import random
+import typing
+
 import discord
 from discord.ext import commands
-from godfather.factions import factions
-from godfather.game import Game, Player, Phase
-from godfather.roles import all_roles
+
 from godfather.cogs.mafia.checks import *  # pylint: disable=wildcard-import, unused-wildcard-import
-from godfather.utils import CustomContext, get_random_sequence, from_now, confirm
 from godfather.errors import PhaseChangeError
+from godfather.factions import factions
+from godfather.game import Game, Phase, Player
+from godfather.game.player_manager import PlayerManager
 from godfather.game.vote_manager import VoteError
+from godfather.roles import all_roles
+from godfather.utils import (CustomContext, confirm, from_now,
+                             get_random_sequence)
 
 
 class Mafia(commands.Cog):
@@ -37,28 +41,29 @@ class Mafia(commands.Cog):
         if ctx.author in game.players:
             return await ctx.send('You have already joined this game.')
 
+        if game.players.is_full:
+            return await ctx.send('Maximum number of players reached.')
+
+        # If game has already started, can only be replacement
         if game.has_started:
             if ctx.author in game.players.replacements:
                 return await ctx.send('You are already a replacement.')
-            confirm_replacement = await confirm(
+
+            to_replace = await confirm(
                 ctx.bot, ctx.author, ctx.channel,
-                'Sign-ups for this game have ended. Would you like to be a replacement?')
-            if confirm_replacement is None:
+                'Sign-ups for this game have ended. '
+                'Would you like to be a replacement?'
+            )
+            if to_replace is None:  # If timeout
                 return
-            if not confirm_replacement:
+            if not to_replace:
                 return await ctx.message.add_reaction('❌')
+
             game.players.add(ctx.author, replacement=True)
-            await ctx.send('You have decided to become a replacement.')
-            return
+            return await ctx.send('You have decided to become a replacement.')
 
-        rolesets = json.load(open('rolesets/rolesets.json'))
-        rolesets.sort(key=lambda rl: len(rl['roles']), reverse=True)
-
-        if len(game.players) >= len(rolesets[0].get('roles')):
-            return await ctx.send('Maximum amount of players reached')
-        else:
-            game.players.add(ctx.author)
-            return await ctx.send('✅ Game joined successfully')
+        game.players.add(ctx.author)
+        return await ctx.send('✅ Game joined successfully.')
 
     @commands.command()
     @game_only()
@@ -68,22 +73,26 @@ class Mafia(commands.Cog):
         if ctx.author in game.players.replacements:
             game.players.replacements.remove(ctx.author)
             return await ctx.send("You're not a replacement anymore.")
-        if not ctx.author in game.players:
+        elif ctx.author not in game.players:
             return await ctx.send('You have not joined this game')
-        if game.host.id == ctx.author.id:
+        elif ctx.author.id == game.host.id:
             return await ctx.send('The host cannot leave the game.')
 
         if game.has_started:
-            replace_text = 'Are you sure you want to leave the game? You will be mod-killed.' \
+            replace_text = ('Are you sure you want to leave the game?'
+                            'You will be mod-killed.') \
                 if len(game.players.replacements) == 0 \
-                else 'Are you sure you want to leave the game? You will be replaced out.'
-            confirm_replacement = await confirm(ctx.bot, ctx.author, ctx.channel, replace_text)
+                else ('Are you sure you want to leave the game? '
+                      'You will be replaced out.')
+            confirm_replacement = await confirm(
+                ctx.bot, ctx.author, ctx.channel, replace_text
+            )
             if confirm_replacement is None:
                 return
             if not confirm_replacement:
                 return await ctx.message.add_reaction('❌')
 
-            player = game.players.get(ctx.author)
+            player = game.players[ctx.author]
 
             if len(game.players.replacements) == 0:
                 phase_str = 'd' if game.phase == Phase.DAY else 'n'
@@ -96,7 +105,7 @@ class Mafia(commands.Cog):
                     return
 
             else:
-                replacement = game.players.replacements.pop(0)
+                replacement = game.players.replacements.popleft()
                 player.user = replacement
                 await ctx.send(f'{replacement} has replaced {ctx.author}.')
                 await replacement.send(player.role_pm)
@@ -176,7 +185,7 @@ class Mafia(commands.Cog):
     @ game_only()
     @ game_started_only()
     async def rolepm(self, ctx: CustomContext):
-        player = ctx.game.players.get(ctx.author)
+        player = ctx.game.players[ctx.author]
         try:
             await player.user.send(player.role_pm)
             await ctx.message.add_reaction('✅')
@@ -266,7 +275,7 @@ class Mafia(commands.Cog):
     async def vote(self, ctx: CustomContext, *, target: Player):
         game: Game = ctx.game
         try:
-            hammered = game.votes.vote(game.players.get(ctx.author), target)
+            hammered = game.votes.vote(game.players[ctx.author], target)
         except VoteError as err:
             return await ctx.send(*err.args)
 
@@ -291,7 +300,7 @@ class Mafia(commands.Cog):
     async def nolynch(self, ctx: CustomContext):
         game = self.bot.games[ctx.guild.id]
         try:
-            nolynch = game.votes.no_lynch(game.players.get(ctx.author))
+            nolynch = game.votes.nolynch(game.players[ctx.author])
         except VoteError as err:
             return await ctx.send(*err.args)
         await ctx.send('You have voted to no-lynch.')
@@ -308,7 +317,7 @@ class Mafia(commands.Cog):
     @ player_only()
     @ game_only()
     async def unvote(self, ctx: CustomContext):
-        unvoted = ctx.game.votes.unvote(ctx.game.players.get(ctx.author))
+        unvoted = ctx.game.votes.unvote(ctx.game.players[ctx.author])
         if unvoted:
             return await ctx.message.add_reaction('✅')
 

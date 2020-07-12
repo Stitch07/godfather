@@ -10,7 +10,7 @@ class SuperSaint(Role):
 
     async def on_lynch(self, game, player):
         last_voted = game.votes[player.user.id][-1]
-        last_voted.alive = False
+        last_voted.is_alive = False
         async with game.channel.typing():
             await game.channel.send('💣 **BOOOOOOOOOOOOOOM!!!**')
             await asyncio.sleep(2)

@@ -29,9 +29,9 @@ def day_only():
 
 def player_only():
     async def predicate(ctx):
-        if not ctx.author in ctx.game.players:
+        if ctx.author not in ctx.game.players:
             raise CheckFailure('Only players can use this command.')
-        if not ctx.game.players.get(ctx.author).alive:
+        if not ctx.game.players[ctx.author].is_alive:
             raise CheckFailure('Dead players can\'t use this command')
         return True
     return commands.check(predicate)
