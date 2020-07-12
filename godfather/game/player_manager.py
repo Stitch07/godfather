@@ -56,7 +56,7 @@ class PlayerManager:
                votecount: Optional[Callable] = None,
                pl_id: Optional[int] = None,
                action_only: bool = False,
-               alive: bool = False):
+               is_alive: bool = False):
         # pylint: disable=too-many-arguments
         plist = self.players
 
@@ -81,8 +81,8 @@ class PlayerManager:
             plist = [*filter(lambda pl: votecount(len(pl.votes)), plist)]
         if action_only:
             plist = [*filter(action_only_filter, plist)]
-        if alive:
-            plist = [*filter(lambda pl: pl.alive, plist)]
+        if is_alive:
+            plist = [*filter(lambda pl: pl.is_alive, plist)]
         if pl_id:
             plist = [*filter(lambda pl: pl.user.id == pl_id, plist)]
 
@@ -91,15 +91,15 @@ class PlayerManager:
     def show(self, codeblock=False, show_replacements=False):
         players = []
         for num, player in enumerate(self.players, 1):
-            # codeblock friendly formatting. green for alive, red for dead
+            # codeblock friendly formatting. green for is_alive, red for dead
             usrname = ''
             if codeblock:
-                if player.alive:
+                if player.is_alive:
                     usrname += f'+ {num}. {player.user}'
                 else:
                     usrname += f'- {num}. {player.user} ({player.display_role}; {player.death_reason})'
             else:
-                if player.alive:
+                if player.is_alive:
                     usrname += f'{num}. {player.user}'
                 else:
                     usrname += f'{num}. ~~{player.user}~~ ({player.display_role}; {player.death_reason})'

@@ -12,7 +12,7 @@ class MockFaction(Mock):
 class MockPlayer(Mock):
     user: str
     display_role: str
-    alive: bool
+    is_alive: bool
     death_reason: str
 
 
@@ -29,9 +29,9 @@ class ShowPlayersTestCase(unittest.TestCase):
 
                 user = ''.join(['Player', str(i)])
                 player = MockPlayer(
-                    user=user, display_role='Role', alive=alive_bool
+                    user=user, display_role='Role', is_alive=alive_bool
                 )
-                if player.alive is False:
+                if player.is_alive is False:
                     player.death_reason = "Eaten by lemons."
                 yield player
 
@@ -111,11 +111,11 @@ class GameSyncTestCase(unittest.TestCase):
 
     def test_majority_votes(self):
         test_values = (
-            ([Mock(alive=True) for _ in range(5)], 3),
-            ([Mock(alive=True) for _ in range(6)], 4),
-            ([Mock(alive=True) for _ in range(8)], 5),
-            ([Mock(alive=True) for _ in range(9)], 5),
-            ([Mock(alive=True) for _ in range(10)], 6)
+            ([Mock(is_alive=True) for _ in range(5)], 3),
+            ([Mock(is_alive=True) for _ in range(6)], 4),
+            ([Mock(is_alive=True) for _ in range(8)], 5),
+            ([Mock(is_alive=True) for _ in range(9)], 5),
+            ([Mock(is_alive=True) for _ in range(10)], 6)
         )
 
         for players, expected_num in test_values:

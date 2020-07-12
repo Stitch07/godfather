@@ -39,10 +39,10 @@ def from_now(time: datetime):
 
 
 def alive_or_recent_jester(player, game):
-    if player.role.name == 'Jester' and not player.alive \
+    if player.role.name == 'Jester' and not player.is_alive \
             and player.death_reason == f'lynched D{game.cycle}':
         return True
-    return player.alive
+    return player.is_alive
 
 
 async def confirm(bot: Bot, prompter: Member, channel: TextChannel,

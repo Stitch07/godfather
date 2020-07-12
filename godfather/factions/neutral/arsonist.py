@@ -9,6 +9,6 @@ class ArsonistNeutral(Faction):
 
     def has_won(self, game: Game):
         alive_arsos = game.players.filter(
-            faction='neutral.arsonist', alive=True)
-        alive_players = game.players.filter(alive=True)
+            faction='neutral.arsonist', is_alive=True)
+        alive_players = game.players.filter(is_alive=True)
         return len(alive_arsos) == len(alive_players)

@@ -8,6 +8,6 @@ class JesterNeutral(Faction):
     win_con = 'Get lynched.'
 
     def has_won_independent(self, player: Player):
-        if not player.alive and player.death_reason.startswith('lynched'):
+        if not player.is_alive and player.death_reason.startswith('lynched'):
             return True
         return False

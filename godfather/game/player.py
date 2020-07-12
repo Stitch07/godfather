@@ -3,6 +3,7 @@ import discord
 from discord.ext import commands
 from discord.ext.commands import errors
 
+
 conv = commands.MemberConverter()
 
 
@@ -11,7 +12,7 @@ class Player:
         self.user = user
         self.role = None
         self.faction = None
-        self.alive = True
+        self.is_alive = True
         self.votes: typing.List[Player] = []
         self.death_reason = ''
         self.visitors = []
@@ -60,7 +61,7 @@ class Player:
 
     # remove a player from the game
     async def remove(self, game, reason, modkill=False):
-        self.alive = False
+        self.is_alive = False
         self.votes = []
         self.death_reason = reason
         if hasattr(self.role, 'on_death') and not modkill:

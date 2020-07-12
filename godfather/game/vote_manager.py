@@ -12,7 +12,7 @@ class VoteManager(dict):
         self.vote_history = []
 
     def vote(self, voter, target=None) -> bool:
-        if not target.alive:
+        if not target.is_alive:
             raise VoteError('You can\'t vote a dead player.')
         elif voter in self[target.user.id]:
             raise VoteError(
@@ -53,7 +53,7 @@ class VoteManager(dict):
         return False
 
     def show(self):
-        num_alive = len(self.game.players.filter(alive=True))
+        num_alive = len(self.game.players.filter(is_alive=True))
         text = ['**Vote Count**']
 
         for target, voters in self.items():
@@ -77,6 +77,6 @@ class VoteManager(dict):
                         [voter.user.name for voter in notvoting]))
 
         text.append(
-            f'With {num_alive} alive, it takes {self.game.majority_votes} to lynch.')
+            f'With {num_alive} is_alive, it takes {self.game.majority_votes} to lynch.')
 
         return '\n'.join(text)

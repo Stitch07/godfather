@@ -132,7 +132,7 @@ class Game:
             self.night_actions.reset()
             self.phase = Phase.DAY
             self.cycle = self.cycle + 1
-            alive_players = self.players.filter(alive=True)
+            alive_players = self.players.filter(is_alive=True)
             # populate voting cache
             self.votes['nolynch'] = []
             self.votes['notvoting'] = []
@@ -174,12 +174,12 @@ class Game:
             # codeblock friendly formatting. green for alive, red for dead
             usrname = ''
             if codeblock:
-                if player.alive:
+                if player.is_alive:
                     usrname += f'+ {num}. {player.user}'
                 else:
                     usrname += f'- {num}. {player.user} ({player.display_role}; {player.death_reason})'
             else:
-                if player.alive:
+                if player.is_alive:
                     usrname += f'{num}. {player.user}'
                 else:
                     usrname += f'{num}. ~~{player.user}~~ ({player.display_role}; {player.death_reason})'
@@ -238,4 +238,4 @@ class Game:
 
     @ property
     def majority_votes(self):
-        return math.floor(len(self.players.filter(alive=True)) / 2) + 1
+        return math.floor(len(self.players.filter(is_alive=True)) / 2) + 1
