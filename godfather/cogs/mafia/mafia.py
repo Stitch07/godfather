@@ -41,27 +41,29 @@ class Mafia(commands.Cog):
         if ctx.author in game.players:
             return await ctx.send('You have already joined this game.')
 
+        if game.players.is_full:
+            return await ctx.send('Maximum number of players reached.')
+
+        # If game has already started, can only be replacement
         if game.has_started:
             if ctx.author in game.players.replacements:
                 return await ctx.send('You are already a replacement.')
-            confirm_replacement = await confirm(
+
+            to_replace = await confirm(
                 ctx.bot, ctx.author, ctx.channel,
-                'Sign-ups for this game have ended.'
+                'Sign-ups for this game have ended. '
                 'Would you like to be a replacement?'
             )
-            if confirm_replacement is None:
+            if to_replace is None:  # If timeout
                 return
-            if not confirm_replacement:
+            if not to_replace:
                 return await ctx.message.add_reaction('❌')
-            game.players.add(ctx.author, replacement=True)
-            await ctx.send('You have decided to become a replacement.')
-            return
 
-        if game.players.is_full:
-            return await ctx.send('Maximum number of players reached.')
-        else:
-            game.players.add(ctx.author)
-            return await ctx.send('✅ Game joined successfully.')
+            game.players.add(ctx.author, replacement=True)
+            return await ctx.send('You have decided to become a replacement.')
+
+        game.players.add(ctx.author)
+        return await ctx.send('✅ Game joined successfully.')
 
     @commands.command()
     @game_only()
