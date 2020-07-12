@@ -22,13 +22,14 @@ class PlayerManager:
             self.players.append(player)
             self.game.votes[member.id] = []
 
-    def get(self, user_or_player):
-        if isinstance(user_or_player, Player):
-            return next(player for player in self.players if player == user_or_player)
-        elif isinstance(user_or_player, Member):
-            return next(player for player in self.players if player.user.id == user_or_player.id)
-        elif isinstance(user_or_player, int):
-            return self.players[user_or_player]
+    def get(self, user_or_index):
+        if isinstance(user_or_index, Member):
+            return next(
+                player for player in self.players
+                if player.user.id == user_or_index.id
+            )
+        elif isinstance(user_or_index, int):
+            return self.players[user_or_index]
 
     def remove(self, user_or_player):
         if isinstance(user_or_player, Player):
