@@ -5,7 +5,7 @@ import discord
 from discord.ext import commands
 from godfather.database import DB
 from godfather.errors import PhaseChangeError
-from godfather.utils import CustomContext, ColoredFormatter, getlogger, alive_or_recent_jester
+from godfather.utils import CustomContext, ColoredFormatter, getlogger, alive_or_recent_jester, pluralize
 
 
 config = json.load(open('config.json'))
@@ -88,6 +88,9 @@ class Godfather(commands.Bot):
             return await ctx.send('Invalid input')
         elif isinstance(error, commands.CheckFailure):
             return await ctx.send(error)
+        elif isinstance(error, commands.CommandOnCooldown):
+            retry_after = round(error.retry_after)
+            return await ctx.send('You are using this command too fast: try again in {} second{}'.format(retry_after, pluralize(retry_after)))
 
         elif isinstance(error, PhaseChangeError):
             # Inform users that game has ended and remove guild id from `self.games`.

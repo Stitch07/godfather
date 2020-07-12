@@ -118,6 +118,7 @@ class Mafia(commands.Cog):
 
     @commands.command()
     @game_only()
+    @commands.cooldown(1, 5.0, commands.BucketType.channel)
     async def playerlist(self, ctx: CustomContext):
         game = self.bot.games[ctx.guild.id]
         msg = f'**Players: {len(game.players)}**\n'
@@ -128,11 +129,13 @@ class Mafia(commands.Cog):
     @commands.command()
     @game_started_only()
     @game_only()
+    @commands.cooldown(1, 5.0, commands.BucketType.channel)
     async def remaining(self, ctx):
         game = self.bot.games[ctx.guild.id]
         await ctx.send(f'🕰️ The current phase ends {from_now(game.phase_end_at)}')
 
     @commands.command()
+    @commands.cooldown(1, 5.0, commands.BucketType.channel)
     async def setupinfo(self, ctx: CustomContext, roleset: typing.Optional[str] = None):
         # show the current setup if a game is ongoing
         if ctx.guild.id in ctx.bot.games \
@@ -326,6 +329,7 @@ class Mafia(commands.Cog):
     @ game_started_only()
     @ player_only()
     @ game_only()
+    @commands.cooldown(1, 5.0, commands.BucketType.channel)
     async def votecount(self, ctx: CustomContext):
         msg = ctx.game.votes.show()
         return await ctx.send(msg)
