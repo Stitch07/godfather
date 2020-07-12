@@ -32,7 +32,7 @@ class PlayerManager:
             return self.players[user_or_index]
 
     def __getitem__(self, key):
-        self.get(key)
+        return self.get(key)
 
     def remove(self, user_or_player):
         if isinstance(user_or_player, Player):
