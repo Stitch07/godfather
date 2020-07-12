@@ -1,10 +1,11 @@
 import asyncio
 from godfather.roles.base import Role
+from godfather.roles.mixins import Townie
 
 DESCRIPTION = 'You will blow up the last person to lynch you!'
 
 
-class SuperSaint(Role):
+class SuperSaint(Townie, Role):
     def __init__(self):
         super().__init__(name='Super Saint', role_id='super_saint', description=DESCRIPTION)
 

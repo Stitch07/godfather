@@ -1,10 +1,10 @@
-from godfather.roles.mixins import SingleAction
+from godfather.roles.mixins import SingleAction, MafiaMember
 from godfather.game.types import Priority
 
 DESCRIPTION = 'You may check one person for their exact role each night'
 
 
-class Consigliere(SingleAction):
+class Consigliere(MafiaMember, SingleAction):
     def __init__(self):
         super().__init__(name='Consigliere', role_id='consigliere', description=DESCRIPTION)
         self.action = 'check'

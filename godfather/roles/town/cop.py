@@ -1,10 +1,10 @@
-from godfather.roles.mixins import SingleAction
+from godfather.roles.mixins import SingleAction, Townie
 from godfather.game.types import Priority
 
 DESCRIPTION = 'You may interrogate one person each night for suspicious activity.'
 
 
-class Cop(SingleAction):
+class Cop(Townie, SingleAction):
     def __init__(self):
         super().__init__(name='Cop', role_id='cop', description=DESCRIPTION)
         self.action = 'check'

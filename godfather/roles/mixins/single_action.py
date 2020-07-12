@@ -15,7 +15,7 @@ class SingleAction(Role):
     async def on_night(self, bot, player, game):
         output = f'It is now night {game.cycle}. Use the {bot.command_prefix}{self.action} command to {self.action_text}. ' \
             + f'Use {bot.command_prefix}cancel to cancel.\n'
-        output += f'```diff\n{game.show_players(codeblock=True)}```'
+        output += f'```diff\n{game.players.show(codeblock=True)}```'
         await player.user.send(output)
 
     async def on_pm_command(self, ctx, game, player, args):

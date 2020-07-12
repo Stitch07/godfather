@@ -1,8 +1,7 @@
 import ast
+import importlib
 import discord
 from discord.ext import commands
-import godfather.roles as roles
-import godfather.game as game
 
 
 def insert_returns(body):
@@ -67,9 +66,7 @@ class Misc(commands.Cog):
             'discord': discord,
             'commands': commands,
             'ctx': ctx,
-            'game': game,
-            'roles': roles,
-            '   __import__': __import__
+            'importlib': importlib
         }
         exec(compile(parsed, filename="<ast>", mode="exec"),  # pylint: disable=exec-used
              env)

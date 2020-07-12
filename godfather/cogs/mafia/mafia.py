@@ -227,7 +227,6 @@ class Mafia(commands.Cog):
 
                 # assign role and faction to the player
                 player.role = all_roles.get(player_role['id'])()
-                player.faction = factions.get(player_role['faction'])()
 
                 # send role PMs
                 try:
@@ -235,15 +234,15 @@ class Mafia(commands.Cog):
                 except discord.Forbidden:
                     no_dms.append(player.user)
 
-            for player in filter(lambda pl: pl.faction.informed, game.players):
-                teammates = game.players.filter(faction=player.faction.id)
+            for player in filter(lambda pl: pl.role.faction.informed, game.players):
+                teammates = game.players.filter(faction=player.role.faction.id)
                 if len(teammates) > 1:
                     await player.user.send(
                         f'Your team consists of: {", ".join(map(lambda pl: pl.user.name, teammates))}'
                     )
 
             for player in game.players.filter(role='Executioner'):
-                targets = list(filter(lambda pl: pl.faction.name == 'Town' and pl.role.name not in [
+                targets = list(filter(lambda pl: pl.role.faction.name == 'Town' and pl.role.name not in [
                     'Jailor', 'Mayor'], game.players))
                 target = random.choice(targets)
                 player.target = target

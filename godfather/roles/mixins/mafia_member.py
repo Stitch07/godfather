@@ -1,4 +1,11 @@
+from godfather.factions import Mafia
+
+
 class MafiaMember:
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.faction = Mafia()
 
     async def on_death(self, game, player):
         # mafioso becomes new gf and stuff here
@@ -15,7 +22,7 @@ class MafiaMember:
         # other roles become new mafioso
         if player.role.name == 'Goon':
             def filter_func(player):
-                return player.faction.id == 'mafia' \
+                return player.role.faction.id == 'mafia' \
                     and player.is_alive \
                     and player.role.name not in ['Godfather', 'Goon']
 

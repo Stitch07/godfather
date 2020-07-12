@@ -1,10 +1,10 @@
-from godfather.roles.mixins import SingleAction, Shooter
+from godfather.roles.mixins import SingleAction, Shooter, Townie
 from godfather.game.types import Priority
 
 DESCRIPTION = 'You may shoot someone every night. If you shoot a townie, you will die of guilt the next night.'
 
 
-class Vigilante(Shooter, SingleAction):
+class Vigilante(Townie, Shooter, SingleAction):
     def __init__(self):
         super().__init__(name='Vigilante', role_id='vig', description=DESCRIPTION)
         self.guilty = False
@@ -35,7 +35,7 @@ class Vigilante(Shooter, SingleAction):
         record = actions.record[target.user.id]['nightkill']
         success = record['result'] and player in record['by']
 
-        if success and target.faction.id == 'town':
+        if success and target.role.faction.id == 'town':
             self.guilty = True
         if not success:
             return await player.user.send('Your target was too strong to kill!')

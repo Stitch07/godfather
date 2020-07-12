@@ -6,6 +6,7 @@ class Role:
         self.name = name
         self.role_id = role_id
         self.description = description
+        self.faction = None
         super().__init__()
 
     # str representation of role

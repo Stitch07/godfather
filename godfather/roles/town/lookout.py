@@ -1,10 +1,10 @@
-from godfather.roles.mixins import SingleAction
+from godfather.roles.mixins import SingleAction, Townie
 from godfather.game.types import Priority
 
 DESCRIPTION = 'You may watch one person at night to see who visits them.'
 
 
-class Lookout(SingleAction):
+class Lookout(Townie, SingleAction):
     def __init__(self):
         super().__init__(name='Lookout', role_id='lookout', description=DESCRIPTION)
         self.action = 'watch'

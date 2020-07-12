@@ -95,12 +95,13 @@ class Game:
         independent_wins = []
 
         for player in self.players:
-            win_check = player.faction.has_won(self)
+            win_check = player.role.faction.has_won(self)
             if win_check:
-                winning_faction = player.faction.name
+                winning_faction = player.role.faction.name
 
-            if hasattr(player.faction, 'has_won_independent'):
-                independent_check = player.faction.has_won_independent(player)
+            if hasattr(player.role.faction, 'has_won_independent'):
+                independent_check = player.role.faction.has_won_independent(
+                    player)
                 if independent_check:
                     independent_wins.append(player)
 
@@ -167,29 +168,6 @@ class Game:
 
         await target.remove(self, f'lynched D{self.cycle}')
 
-    # since this is needed in a couple of places
-    def show_players(self, codeblock=False, show_replacements=False):
-        players = []
-        for num, player in enumerate(self.players, 1):
-            # codeblock friendly formatting. green for alive, red for dead
-            usrname = ''
-            if codeblock:
-                if player.is_alive:
-                    usrname += f'+ {num}. {player.user}'
-                else:
-                    usrname += f'- {num}. {player.user} ({player.display_role}; {player.death_reason})'
-            else:
-                if player.is_alive:
-                    usrname += f'{num}. {player.user}'
-                else:
-                    usrname += f'{num}. ~~{player.user}~~ ({player.display_role}; {player.death_reason})'
-
-            players.append(usrname)
-        if show_replacements and len(self.replacements) > 0:
-            replacements = ', '.join(map(str, self.replacements))
-            players.append('\nReplacements: {}'.format(replacements))
-        return '\n'.join(players)
-
     # WIP: End the game
     # If a winning faction is not provided, game is ended
     # as if host ended the game without letting it finish
@@ -219,9 +197,9 @@ class Game:
                 with bot.db.conn.cursor() as cur2:
                     values = []
                     for player in self.players:
-                        win = player in independent_wins or player.faction.name == winning_faction
+                        win = player in independent_wins or player.role.faction.name == winning_faction
                         values.append(cur2.mogrify('(%s, %s, %s, %s, %s)',
-                                                   (player.user.id, player.faction.name, player.role.name, game_id, win)).decode('utf-8'))
+                                                   (player.user.id, player.role.faction.name, player.role.name, game_id, win)).decode('utf-8'))
                     query = "INSERT INTO players (player_id, faction, rolename, game_id, result) VALUES " + \
                         ",".join(values) + ";"
                     cur2.execute(query)

@@ -66,7 +66,7 @@ class PlayerManager:
         if role:
             plist = [*filter(lambda pl: pl.role.name == role, plist)]
         if faction:
-            plist = [*filter(lambda pl: pl.faction.id == faction, plist)]
+            plist = [*filter(lambda pl: pl.role.faction.id == faction, plist)]
         if action:
             plist = [*filter(lambda pl: pl.role.action == action
                              if hasattr(pl.role, 'action') else False)]
@@ -128,7 +128,7 @@ class PlayerManager:
 
     @property
     def is_full(self):
-        with open('rolesets.json', 'r') as rs_file:
+        with open('rolesets/rolesets.json', 'r') as rs_file:
             rolesets = json.load(rs_file)
 
         max_num = max(len(rs_dict['roles']) for rs_dict in rolesets)

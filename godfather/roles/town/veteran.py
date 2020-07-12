@@ -1,10 +1,10 @@
-from godfather.roles.mixins import NoTarget
+from godfather.roles.mixins import NoTarget, Townie
 from godfather.game.types import Attack, Defense, Priority
 
 DESCRIPTION = 'You may alert 3 times in a game, killing everyone who visits you.'
 
 
-class Veteran(NoTarget):
+class Veteran(Townie, NoTarget):
     def __init__(self):
         super().__init__(name='Veteran', role_id='veteran', description=DESCRIPTION)
         self.action = 'alert'

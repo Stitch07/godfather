@@ -1,10 +1,10 @@
-from godfather.roles.mixins import SingleAction
+from godfather.roles.mixins import SingleAction, Townie
 from godfather.game.types import Attack, Priority
 
 DESCRIPTION = 'You may heal guard someone every night.'
 
 
-class Bodyguard(SingleAction):
+class Bodyguard(Townie, SingleAction):
     def __init__(self):
         super().__init__(name='Bodyguard', role_id='bodyguard', description=DESCRIPTION)
         self.action = 'guard'

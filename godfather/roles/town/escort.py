@@ -1,10 +1,10 @@
-from godfather.roles.mixins import SingleAction
+from godfather.roles.mixins import SingleAction, Townie
 from godfather.game.types import Priority
 
 DESCRIPTION = 'You may roleblock somebody each night.'
 
 
-class Escort(SingleAction):
+class Escort(Townie, SingleAction):
     def __init__(self):
         super().__init__(name='Escort', role_id='escort', description=DESCRIPTION)
         self.action = 'block'

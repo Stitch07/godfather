@@ -1,5 +1,6 @@
 from godfather.roles.mixins import NoTarget
 from godfather.game.types import Defense, Priority
+from godfather.factions import SurvivorNeutral
 
 DESCRIPTION = 'You may vest 4 times in a game.'
 
@@ -7,6 +8,7 @@ DESCRIPTION = 'You may vest 4 times in a game.'
 class Survivor(NoTarget):
     def __init__(self):
         super().__init__(name='Survivor', role_id='survivor', description=DESCRIPTION)
+        self.faction = SurvivorNeutral()
         self.action = 'vest'
         self.action_gerund = 'vesting'
         self.action_priority = Priority.SURVIVOR

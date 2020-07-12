@@ -1,6 +1,7 @@
 from godfather.roles.base import Role
 from godfather.errors import PhaseChangeError
 from godfather.game.types import Attack, Defense, Priority
+from godfather.factions import ArsonistNeutral
 
 DESCRIPTION = 'You may douse someone every night, and then ignite all your doused targets.'
 
@@ -8,6 +9,7 @@ DESCRIPTION = 'You may douse someone every night, and then ignite all your douse
 class Arsonist(Role):
     def __init__(self):
         super().__init__(name='Arsonist', role_id='arsonist', description=DESCRIPTION)
+        self.faction = ArsonistNeutral()
         self.action = ['douse', 'ignite']
         self.doused = set()
         self.ignited = False
@@ -28,7 +30,7 @@ class Arsonist(Role):
     async def on_night(self, bot, player, game):
         output = f'It is now night {game.cycle}. Use the {bot.command_prefix}douse command to douse a player. ' \
             + f'Use {bot.command_prefix}ignite to douse all ignited targets.\n'
-        output += f'```diff\n{game.show_players(codeblock=True)}```'
+        output += f'```diff\n{game.players.show(codeblock=True)}```'
         await player.user.send(output)
 
     async def on_pm_command(self, ctx, game, player, args):

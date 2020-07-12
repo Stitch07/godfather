@@ -23,28 +23,28 @@ class Player:
         return (
             f'Hello {self.user}, you are a **{self.display_role}**. '
             f'{self.role.description}'  # This follows the previous line.
-            f'\nWin Condition: {self.faction.win_con}'
+            f'\nWin Condition: {self.role.faction.win_con}'
         )
 
     @property
     def innocent(self):
         if hasattr(self.role, 'innocence_modifier'):
             return self.role.innocence_modifier()
-        if self.faction.id in ['town', 'neutral.survivor']:
+        if self.role.faction.id in ['town', 'neutral.survivor']:
             return True
         return False
 
     @property
     def full_role(self):
-        if self.faction.id.startswith('neutral'):
+        if self.role.faction.id.startswith('neutral'):
             return self.role
-        return f'{self.faction} {self.role}'
+        return f'{self.role.faction} {self.role}'
 
     @property
     def display_role(self):
-        if self.faction.id.startswith('neutral'):
+        if self.role.faction.id.startswith('neutral'):
             return self.role.display_role()
-        return f'{self.faction} {self.role.display_role()}'
+        return f'{self.role.faction} {self.role.display_role()}'
 
     async def visit(self, visitor, actions):
         self.visitors.append(visitor)

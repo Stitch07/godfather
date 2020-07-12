@@ -1,5 +1,6 @@
 from godfather.roles.mixins import SingleAction
 from godfather.game.types import Attack, Priority
+from godfather.factions import JesterNeutral
 
 DESCRIPTION = 'You can haunt one of the people voting you.'
 
@@ -15,6 +16,7 @@ class Jester(SingleAction):
 
     def __init__(self):
         super().__init__(name='Jester', role_id='jester', description=DESCRIPTION)
+        self.faction = JesterNeutral()
         self.can_haunt = False
         self.voted = None
         self.can_block = False

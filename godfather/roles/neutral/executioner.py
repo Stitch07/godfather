@@ -1,5 +1,6 @@
 from godfather.roles import Role
 from godfather.roles import all_roles
+from godfather.factions import ExecutionerNeutral
 
 DESCRIPTION = 'You must get your target lynched by all means necessary.'
 
@@ -8,6 +9,7 @@ class Executioner(Role):
     def __init__(self):
         super().__init__(name='Executioner', role_id='executioner', description=DESCRIPTION)
         self.target = None
+        self.faction = ExecutionerNeutral()
 
     async def on_death(self, game, player):
         # exe only attacks townies

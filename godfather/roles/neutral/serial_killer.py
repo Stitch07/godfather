@@ -1,5 +1,6 @@
 from godfather.roles.mixins import SingleAction
 from godfather.game.types import Attack, Defense, Priority
+from godfather.factions import SerialKillerNeutral
 
 DESCRIPTION = 'You may stab someone every night.'
 
@@ -7,6 +8,7 @@ DESCRIPTION = 'You may stab someone every night.'
 class SerialKiller(SingleAction):
     def __init__(self):
         super().__init__(name='Serial Killer', role_id='serial_killer', description=DESCRIPTION)
+        self.faction = SerialKillerNeutral()
         self.action = 'stab'
         self.action_gerund = 'stabbing'
         self.action_priority = Priority.SERIAL_KILLER
