@@ -9,7 +9,6 @@ from discord.ext import commands
 
 from godfather.cogs.mafia.checks import *  # pylint: disable=wildcard-import, unused-wildcard-import
 from godfather.errors import PhaseChangeError
-from godfather.factions import factions
 from godfather.game import Game, Phase, Player
 from godfather.game.vote_manager import VoteError
 from godfather.roles import all_roles
@@ -23,6 +22,12 @@ class Mafia(commands.Cog):
 
     @commands.command(aliases=['create', 'create-game'])
     async def creategame(self, ctx: CustomContext):
+        """
+        Creates a game of mafia in this server. 
+
+        To join an existing game, use the `join` command.
+        Hosts may delete running games using the `delete` command.
+        """
         if ctx.guild.id in self.bot.games:
             return await ctx.send('A game of mafia is already running '
                                   'in this server.')

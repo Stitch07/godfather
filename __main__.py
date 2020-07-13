@@ -4,6 +4,7 @@ import pathlib
 import discord
 from discord.ext import commands
 from godfather.database import DB
+from godfather.custom_help import CustomHelp
 from godfather.errors import PhaseChangeError
 from godfather.utils import CustomContext, ColoredFormatter, getlogger, alive_or_recent_jester, pluralize
 
@@ -19,7 +20,8 @@ class Godfather(commands.Bot):
     def __init__(self):
         super().__init__(
             command_prefix=config.get('prefix'),
-            help_command=commands.DefaultHelpCommand(verify_checks=False)
+            help_command=CustomHelp(verify_checks=False),
+            description='A Discord bot for automatically hosting games of Mafia/Werewolf.'
         )
 
         self.games = {}
