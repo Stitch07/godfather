@@ -333,3 +333,12 @@ class Mafia(commands.Cog):
     async def votecount(self, ctx: CustomContext):
         msg = ctx.game.votes.show()
         return await ctx.send(msg)
+
+    @commands.command(aliases=['delete'])
+    @host_only()
+    @game_only()
+    async def deletegame(self, ctx: CustomContext):
+        if ctx.game.has_started:
+            return await ctx.send('You cannot delete games that have already started!')
+        del self.bot.games[ctx.guild.id]
+        return await ctx.message.add_reaction('✅')
