@@ -44,7 +44,7 @@ class ShowPlayersTestCase(unittest.TestCase):
                        "- 6. Player5 (Role; Eaten by lemons.)"
 
         self.assertEqual(
-            self.game.show_players(codeblock=True), expected_str
+            self.game.players.show(codeblock=True), expected_str
         )
 
     def test_show_players_without_codeblock(self):
@@ -54,7 +54,7 @@ class ShowPlayersTestCase(unittest.TestCase):
                        "6. ~~Player5~~ (Role; Eaten by lemons.)"
 
         self.assertEqual(
-            self.game.show_players(codeblock=False), expected_str
+            self.game.players.show(codeblock=False), expected_str
         )
 
     def test_show_players_with_replacements(self):
@@ -67,10 +67,10 @@ class ShowPlayersTestCase(unittest.TestCase):
         for num in range(3):
             replacement = MagicMock()
             replacement.__str__.return_value = 'Replacement{}'.format(num)
-            self.game.replacements.append(replacement)
+            self.game.players.replacements.append(replacement)
 
         self.assertEqual(
-            self.game.show_players(show_replacements=True), expected_str
+            self.game.players.show(show_replacements=True), expected_str
         )
 
 
@@ -96,13 +96,13 @@ class GetPlayerTestCase(unittest.TestCase):
             with self.subTest(target_player=target_player):
                 self.game.players.append(target_player)
                 self.assertEqual(
-                    self.game.get_player(target_player.user), target_player
+                    self.game.players.get(target_player.user), target_player
                 )
 
     def test_get_player_return_none(self):
         for target_player in self.test_values:
             with self.subTest(target_player=target_player):
-                self.assertIsNone(self.game.get_player(target_player))
+                self.assertIsNone(self.game.players.get(target_player))
 
 
 class GameSyncTestCase(unittest.TestCase):
