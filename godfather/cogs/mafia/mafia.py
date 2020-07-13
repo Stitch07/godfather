@@ -229,7 +229,7 @@ class Mafia(commands.Cog):
                 player_role = roles[role_sequence[num]]
 
                 # assign role and faction to the player
-                player.role = all_roles.get(player_role['id'])()
+                player.role = all_roles.get(player_role['name'])()
 
                 # send role PMs
                 try:

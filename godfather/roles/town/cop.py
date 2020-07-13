@@ -5,8 +5,11 @@ DESCRIPTION = 'You may interrogate one person each night for suspicious activity
 
 
 class Cop(Townie, SingleAction):
+    name = 'Cop'
+    description = DESCRIPTION
+
     def __init__(self):
-        super().__init__(name='Cop', role_id='cop', description=DESCRIPTION)
+        super().__init__()
         self.action = 'check'
         self.action_gerund = 'checking'
         self.action_priority = Priority.COP

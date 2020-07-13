@@ -6,8 +6,8 @@ DESCRIPTION = 'You will blow up the last person to lynch you!'
 
 
 class SuperSaint(Townie, Role):
-    def __init__(self):
-        super().__init__(name='Super Saint', role_id='super_saint', description=DESCRIPTION)
+    name = 'Super Saint'
+    description = DESCRIPTION
 
     async def on_lynch(self, game, player):
         last_voted = game.votes[player.user.id][-1]

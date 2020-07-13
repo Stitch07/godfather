@@ -2,12 +2,8 @@ from godfather.game.types import Defense
 
 
 class Role:
-    def __init__(self, name=None, role_id=None, description=''):
-        self.name = name
-        self.role_id = role_id
-        self.description = description
-        self.faction = None
-        super().__init__()
+    name = ''
+    description = ''
 
     # str representation of role
     def __str__(self):

@@ -6,8 +6,11 @@ DESCRIPTION = 'You must get your target lynched by all means necessary.'
 
 
 class Executioner(Role):
+    name = 'Executioner'
+    description = DESCRIPTION
+
     def __init__(self):
-        super().__init__(name='Executioner', role_id='executioner', description=DESCRIPTION)
+        super().__init__()
         self.target = None
         self.faction = ExecutionerNeutral()
 

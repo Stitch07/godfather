@@ -15,9 +15,11 @@ class Godfather(MafiaMember, Shooter, SingleAction):
     + If there is no Goon/the Goon is roleblocked, you will attack the target instead.
     + You have a Basic Defense, and will appear as innocent to the Cop.
     """
+    name = 'Godfather'
+    description = DESCRIPTION
 
     def __init__(self):
-        super().__init__(name='Godfather', role_id='godfather', description=DESCRIPTION)
+        super().__init__()
         self.action = 'shoot'
         self.action_gerund = 'shooting'
         self.action_text = 'shoot a player'
@@ -31,7 +33,6 @@ class Godfather(MafiaMember, Shooter, SingleAction):
     async def set_up(self, actions, player, target):
         # if the goon hasn't been roleblocked, we could safely remove GFs kill
         if any(filter(lambda action: action['player'].role.name == 'Goon', actions)):
-            print('goon not roleblocked')
             for action in actions:
                 if action['player'].user.id == player.user.id:
                     actions.remove(action)

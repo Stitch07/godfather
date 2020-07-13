@@ -5,8 +5,11 @@ DESCRIPTION = 'You may alert 3 times in a game, killing everyone who visits you.
 
 
 class Veteran(Townie, NoTarget):
+    name = 'Veteran'
+    description = DESCRIPTION
+
     def __init__(self):
-        super().__init__(name='Veteran', role_id='veteran', description=DESCRIPTION)
+        super().__init__()
         self.action = 'alert'
         self.action_gerund = 'alerting'
         self.action_text = 'go on alert'
@@ -25,14 +28,15 @@ class Veteran(Townie, NoTarget):
             return False, 'You ran out of alerts!'
         return True, ''
 
-    async def run_action(self, _game, _night_record, _player, _target):
+    async def set_up(self, _game, _night_record, _player, _target):
         self.alerted = True
 
     async def tear_down(self, _actions, _player, _target):
         self.alerted = False
 
     async def on_visit(self, player, visitor, actions):
-        if self.alerted:
+        # damnit pest
+        if self.alerted and visitor.role.defense() < Defense.INVINCIBLE:
             actions.record[visitor.user.id]['nightkill']['result'] = True
             actions.record[visitor.user.id]['nightkill']['type'] = Attack.POWERFUL
             actions.record[visitor.user.id]['nightkill']['by'].append(player)

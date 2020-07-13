@@ -13,9 +13,11 @@ class Jester(SingleAction):
 
     + Abilities: If you are lynched, you will attack one of your guilty voters the following night with an Unstoppable attack.
     """
+    name = 'Jester'
+    description = DESCRIPTION
 
     def __init__(self):
-        super().__init__(name='Jester', role_id='jester', description=DESCRIPTION)
+        super().__init__()
         self.faction = JesterNeutral()
         self.can_haunt = False
         self.voted = None

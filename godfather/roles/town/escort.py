@@ -5,8 +5,11 @@ DESCRIPTION = 'You may roleblock somebody each night.'
 
 
 class Escort(Townie, SingleAction):
+    name = 'Escort'
+    description = DESCRIPTION
+
     def __init__(self):
-        super().__init__(name='Escort', role_id='escort', description=DESCRIPTION)
+        super().__init__()
         self.action = 'block'
         self.action_gerund = 'blocking'
         self.action_priority = Priority.ESCORT

@@ -5,8 +5,11 @@ DESCRIPTION = 'You may check one person for their exact role each night'
 
 
 class Consigliere(MafiaMember, SingleAction):
+    name = 'Consigliere'
+    description = DESCRIPTION
+
     def __init__(self):
-        super().__init__(name='Consigliere', role_id='consigliere', description=DESCRIPTION)
+        super().__init__()
         self.action = 'check'
         self.action_gerund = 'checking'
         self.action_priority = Priority.CONSIG

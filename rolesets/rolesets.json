@@ -3,16 +3,13 @@
         "name": "ss3",
         "roles": [
             {
-                "id": "vanilla",
-                "faction": "town"
+                "name": "Vanilla"
             },
             {
-                "id": "goon",
-                "faction": "mafia"
+                "name": "Goon"
             },
             {
-                "id": "super_saint",
-                "faction": "town"
+                "name": "Super Saint"
             }
         ]
     },
@@ -20,16 +17,13 @@
         "name": "exetest",
         "roles": [
             {
-                "id": "executioner",
-                "faction": "neutral.executioner"
+                "name": "Executioner"
             },
             {
-                "id": "vigilante",
-                "faction": "town"
+                "name": "Vigilante"
             },
             {
-                "id": "goon",
-                "faction": "mafia"
+                "name": "Goon"
             }
         ]
     },
@@ -37,24 +31,19 @@
         "name": "prtest",
         "roles": [
             {
-                "id": "escort",
-                "faction": "town"
+                "name": "Escort"
             },
             {
-                "id": "doctor",
-                "faction": "town"
+                "name": "Doctor"
             },
             {
-                "id": "vigilante",
-                "faction": "town"
+                "name": "Vigilante"
             },
             {
-                "id": "godfather",
-                "faction": "mafia"
+                "name": "Godfather"
             },
             {
-                "id": "goon",
-                "faction": "mafia"
+                "name": "Goon"
             }
         ]
     },
@@ -62,24 +51,19 @@
         "name": "fake5",
         "roles": [
             {
-                "id": "vanilla",
-                "faction": "town"
+                "name": "Vanilla"
             },
             {
-                "id": "doctor",
-                "faction": "town"
+                "name": "Doctor"
             },
             {
-                "id": "cop",
-                "faction": "town"
+                "name": "Cop"
             },
             {
-                "id": "lookout",
-                "faction": "town"
+                "name": "Lookout"
             },
             {
-                "id": "goon",
-                "faction": "mafia"
+                "name": "Goon"
             }
         ]
     },
@@ -88,24 +72,19 @@
         "night_start": true,
         "roles": [
             {
-                "id": "cop",
-                "faction": "town"
+                "name": "Cop"
             },
             {
-                "id": "insane_cop",
-                "faction": "town"
+                "name": "Insane Cop"
             },
             {
-                "id": "naive_cop",
-                "faction": "town"
+                "name": "Naive Cop"
             },
             {
-                "id": "paranoid_cop",
-                "faction": "town"
+                "name": "Paranoid Cop"
             },
             {
-                "id": "goon",
-                "faction": "mafia"
+                "name": "Goon"
             }
         ]
     },
@@ -113,24 +92,19 @@
         "name": "dethysucks",
         "roles": [
             {
-                "id": "vanilla",
-                "faction": "town"
+                "name": "Vanilla"
             },
             {
-                "id": "vanilla",
-                "faction": "town"
+                "name": "Vanilla"
             },
             {
-                "id": "vanilla",
-                "faction": "town"
+                "name": "Vanilla"
             },
             {
-                "id": "doctor",
-                "faction": "town"
+                "name": "Doctor"
             },
             {
-                "id": "goon",
-                "faction": "mafia"
+                "name": "Goon"
             }
         ]
     },
@@ -138,36 +112,28 @@
         "name": "getburnt",
         "roles": [
             {
-                "id": "arsonist",
-                "faction": "neutral.arsonist"
+                "name": "Arsonist"
             },
             {
-                "id": "vanilla",
-                "faction": "town"
+                "name": "Vanilla"
             },
             {
-                "id": "vanilla",
-                "faction": "town"
+                "name": "Vanilla"
             },
             {
-                "id": "vanilla",
-                "faction": "town"
+                "name": "Vanilla"
             },
             {
-                "id": "vanilla",
-                "faction": "town"
+                "name": "Vanilla"
             },
             {
-                "id": "vanilla",
-                "faction": "town"
+                "name": "Vanilla"
             },
             {
-                "id": "vanilla",
-                "faction": "town"
+                "name": "Vanilla"
             },
             {
-                "id": "jester",
-                "faction": "neutral.jester"
+                "name": "Jester"
             }
         ]
     },
@@ -175,40 +141,31 @@
         "name": "notreallymatrix6",
         "roles": [
             {
-                "id": "vanilla",
-                "faction": "town"
+                "name": "Vanilla"
             },
             {
-                "id": "vanilla",
-                "faction": "town"
+                "name": "Vanilla"
             },
             {
-                "id": "vanilla",
-                "faction": "town"
+                "name": "Vanilla"
             },
             {
-                "id": "vanilla",
-                "faction": "town"
+                "name": "Vanilla"
             },
             {
-                "id": "escort",
-                "faction": "town"
+                "name": "Escort"
             },
             {
-                "id": "cop",
-                "faction": "town"
+                "name": "Cop"
             },
             {
-                "id": "jester",
-                "faction": "neutral.jester"
+                "name": "Jester"
             },
             {
-                "id": "goon",
-                "faction": "mafia"
+                "name": "Goon"
             },
             {
-                "id": "consort",
-                "faction": "mafia"
+                "name": "Consort"
             }
         ]
     },
@@ -216,44 +173,34 @@
         "name": "matrix7maybe?",
         "roles": [
             {
-                "id": "vanilla",
-                "faction": "town"
+                "name": "Vanilla"
             },
             {
-                "id": "vanilla",
-                "faction": "town"
+                "name": "Vanilla"
             },
             {
-                "id": "lookout",
-                "faction": "town"
+                "name": "Lookout"
             },
             {
-                "id": "bodyguard",
-                "faction": "town"
+                "name": "Bodyguard"
             },
             {
-                "id": "vigilante",
-                "faction": "town"
+                "name": "Vigilante"
             },
             {
-                "id": "escort",
-                "faction": "town"
+                "name": "Escort"
             },
             {
-                "id": "cop",
-                "faction": "town"
+                "name": "Cop"
             },
             {
-                "id": "godfather",
-                "faction": "mafia"
+                "name": "Godfather"
             },
             {
-                "id": "goon",
-                "faction": "mafia"
+                "name": "Goon"
             },
             {
-                "id": "consigliere",
-                "faction": "mafia"
+                "name": "Consigliere"
             }
         ]
     },
@@ -261,44 +208,34 @@
         "name": "prmadness",
         "roles": [
             {
-                "id": "lookout",
-                "faction": "town"
+                "name": "Lookout"
             },
             {
-                "id": "bodyguard",
-                "faction": "town"
+                "name": "Bodyguard"
             },
             {
-                "id": "veteran",
-                "faction": "town"
+                "name": "Veteran"
             },
             {
-                "id": "escort",
-                "faction": "town"
+                "name": "Escort"
             },
             {
-                "id": "cop",
-                "faction": "town"
+                "name": "Cop"
             },
             {
-                "id": "vigilante",
-                "faction": "town"
+                "name": "Vigilante"
             },
             {
-                "id": "survivor",
-                "faction": "neutral.survivor"
+                "name": "Survivor"
             },
             {
-                "id": "serial_killer",
-                "faction": "neutral.serialkiller"
+                "name": "Serial Killer"
             },
             {
-                "id": "goon",
-                "faction": "mafia"
+                "name": "Goon"
             },
             {
-                "id": "consigliere",
-                "faction": "mafia"
+                "name": "Consigliere"
             }
         ]
     }

@@ -6,8 +6,11 @@ DESCRIPTION = 'You may stab someone every night.'
 
 
 class SerialKiller(SingleAction):
+    name = 'Serial Killer'
+    description = DESCRIPTION
+
     def __init__(self):
-        super().__init__(name='Serial Killer', role_id='serial_killer', description=DESCRIPTION)
+        super().__init__()
         self.faction = SerialKillerNeutral()
         self.action = 'stab'
         self.action_gerund = 'stabbing'

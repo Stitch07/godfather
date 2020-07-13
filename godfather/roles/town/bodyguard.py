@@ -5,8 +5,11 @@ DESCRIPTION = 'You may heal guard someone every night.'
 
 
 class Bodyguard(Townie, SingleAction):
+    name = 'Bodyguard'
+    description = DESCRIPTION
+
     def __init__(self):
-        super().__init__(name='Bodyguard', role_id='bodyguard', description=DESCRIPTION)
+        super().__init__()
         self.action = 'guard'
         self.action_gerund = 'guarding'
         self.action_priority = Priority.BODYGUARD

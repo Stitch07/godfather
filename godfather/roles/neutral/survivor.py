@@ -6,8 +6,11 @@ DESCRIPTION = 'You may vest 4 times in a game.'
 
 
 class Survivor(NoTarget):
+    name = 'Survivor'
+    description = DESCRIPTION
+
     def __init__(self):
-        super().__init__(name='Survivor', role_id='survivor', description=DESCRIPTION)
+        super().__init__()
         self.faction = SurvivorNeutral()
         self.action = 'vest'
         self.action_gerund = 'vesting'

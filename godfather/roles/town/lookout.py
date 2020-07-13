@@ -5,8 +5,11 @@ DESCRIPTION = 'You may watch one person at night to see who visits them.'
 
 
 class Lookout(Townie, SingleAction):
+    name = 'Lookout'
+    description = DESCRIPTION
+
     def __init__(self):
-        super().__init__(name='Lookout', role_id='lookout', description=DESCRIPTION)
+        super().__init__()
         self.action = 'watch'
         self.action_gerund = 'watching'
         self.action_priority = Priority.LOOKOUT

@@ -7,8 +7,11 @@ DESCRIPTION = 'You may douse someone every night, and then ignite all your douse
 
 
 class Arsonist(Role):
+    name = 'Arsonist'
+    description = DESCRIPTION
+
     def __init__(self):
-        super().__init__(name='Arsonist', role_id='arsonist', description=DESCRIPTION)
+        super().__init__()
         self.faction = ArsonistNeutral()
         self.action = ['douse', 'ignite']
         self.doused = set()

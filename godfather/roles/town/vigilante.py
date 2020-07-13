@@ -5,8 +5,11 @@ DESCRIPTION = 'You may shoot someone every night. If you shoot a townie, you wil
 
 
 class Vigilante(Townie, Shooter, SingleAction):
+    name = 'Vigilante'
+    description = DESCRIPTION
+
     def __init__(self):
-        super().__init__(name='Vigilante', role_id='vig', description=DESCRIPTION)
+        super().__init__()
         self.guilty = False
         self.bullets = 3  # vigs only get 3 shots
 
