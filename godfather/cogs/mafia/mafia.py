@@ -23,7 +23,7 @@ class Mafia(commands.Cog):
     @commands.command(aliases=['create', 'create-game'])
     async def creategame(self, ctx: CustomContext):
         """
-        Creates a game of mafia in this server. 
+        Creates a game of mafia in this server.
 
         To join an existing game, use the `join` command.
         Hosts may delete running games using the `delete` command.

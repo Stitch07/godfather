@@ -30,10 +30,12 @@ class CustomHelp(DefaultHelpCommand):
 
     async def send_command_help(self, command):
         command_sig = self.get_command_signature(command)
+        command_help = 'No help available.' if command.help is None else command.help
+
         embed = Embed()
         embed.color = EMBED_COLOR
         embed.set_author(name=self.context.bot.user.name,
                          icon_url=self.context.bot.user.avatar_url)
-        embed.add_field(name=command.name, value=command.help)
+        embed.add_field(name=command.name, value=command_help)
         embed.add_field(name='Usage', value=command_sig, inline=False)
         await self.get_destination().send(embed=embed)
