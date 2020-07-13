@@ -8,4 +8,4 @@ class SurvivorNeutral(Faction):
     win_con = 'Live until the end of the game.'
 
     def has_won_independent(self, player: Player):
-        return player.alive
+        return player.is_alive

@@ -1,5 +1,8 @@
 import random
+import logging
 import requests
+
+logger = logging.getLogger('godfather')
 
 
 def get_random_sequence(low: int, high: int):
@@ -26,4 +29,5 @@ def get_random_sequence(low: int, high: int):
         return list(map(int, resp.iter_lines()))
 
     # If an error is shown, fallback to standard random
+    logger.debug('random.org down, falling back to random.sample()')
     return random.sample(range(low, high + 1), high - low + 1)

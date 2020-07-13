@@ -1,15 +1,25 @@
-from enum import IntEnum, auto
-import typing
 import json
 import math
-import copy
 from datetime import datetime, timedelta
+from enum import IntEnum, auto
+
 import discord
+
+from godfather.errors import PhaseChangeError
+from godfather.game.game_config import GameConfig
+from godfather.game.player_manager import PlayerManager
+from godfather.game.vote_manager import VoteManager
 from godfather.utils import alive_or_recent_jester
-from .player import Player
+
 from .night_actions import NightActions
+from .player import Player
 
 rolesets = json.load(open('rolesets/rolesets.json'))
+
+
+default_game_config = {
+    'phase_duration': 5 * 60  # In seconds
+}
 
 
 class Phase(IntEnum):
@@ -20,28 +30,43 @@ class Phase(IntEnum):
 
 
 class Game:
-    def __init__(self, channel: discord.channel.TextChannel):
+    def __init__(self, channel: discord.channel.TextChannel, bot):
         self.channel = channel
+        self.bot = bot
         self.guild = channel.guild
-        self.players = []
-        self.replacements: typing.List[discord.Member] = []
+        self.players = PlayerManager(self)
         self.phase = Phase.PREGAME
         self.cycle = 0
-        self.host_id = None  # assigned to the user creating the game
+        self.host = None  # assigned to the user creating the game
         # time at which the current phase ends
         self.phase_end_at: datetime = None
         self.night_actions = NightActions(self)
         self.setup = dict()  # the setup used
         # host-configurable stuff
-        self.config = {
-            'phase_time': 5 * 60  # in seconds
-        }
-        # votes holds a dict of player IDs mapped to the player objects voting them
-        # it includes a special notvoting and nolynch key for players not voting, and players voting to no-lynch
-        self.votes = {
-            'notvoting': [],
-            'nolynch': []
-        }
+        self.config = GameConfig(default_game_config, channel=channel)
+        self.votes = VoteManager(self)
+
+    @classmethod
+    def create(cls, ctx, bot):
+        new_game = cls(ctx.channel, bot)
+        new_game.host = ctx.author
+        new_game.players.add(ctx.author)
+        return new_game
+
+    async def update(self):
+        if not self.has_started or self.phase == Phase.STANDBY:
+            return
+
+        curr_t = datetime.now()
+        phase_end = self.phase_end_at
+        if curr_t > phase_end:
+            if self.phase == Phase.DAY:
+                # no lynch achieved
+                await self.channel.send('Nobody was lynched')
+            try:
+                await self.increment_phase()
+            except Exception as exc:
+                raise PhaseChangeError(None, *exc.args)
 
     # finds a setup for the current player-size. if no setup is found, raises an Exception
     def find_setup(self, setup: str = None):
@@ -70,12 +95,13 @@ class Game:
         independent_wins = []
 
         for player in self.players:
-            win_check = player.faction.has_won(self)
+            win_check = player.role.faction.has_won(self)
             if win_check:
-                winning_faction = player.faction.name
+                winning_faction = player.role.faction.name
 
-            if hasattr(player.faction, 'has_won_independent'):
-                independent_check = player.faction.has_won_independent(player)
+            if hasattr(player.role.faction, 'has_won_independent'):
+                independent_check = player.role.faction.has_won_independent(
+                    player)
                 if independent_check:
                     independent_wins.append(player)
 
@@ -83,8 +109,8 @@ class Game:
             return (True, winning_faction, independent_wins)
         return (False, None, None)
 
-    async def increment_phase(self, bot):
-        phase_t = round(self.config['phase_time'] / 60, 1)
+    async def increment_phase(self):
+        phase_t = round(self.config['phase_duration'] / 60, 1)
 
         # night loop is the same as the pregame loop
         if self.cycle == 0 or self.phase == Phase.NIGHT:
@@ -97,7 +123,7 @@ class Game:
 
             game_ended, winning_faction, independent_wins = self.check_endgame()
             if game_ended:
-                return await self.end(bot, winning_faction, independent_wins)
+                return await self.end(winning_faction, independent_wins)
 
             # clear visits
             for player in self.players:
@@ -107,13 +133,13 @@ class Game:
             self.night_actions.reset()
             self.phase = Phase.DAY
             self.cycle = self.cycle + 1
-            alive_players = self.filter_players(alive=True)
+            alive_players = self.players.filter(is_alive=True)
             # populate voting cache
             self.votes['nolynch'] = []
             self.votes['notvoting'] = []
             for player in alive_players:
                 self.votes[player.user.id] = []
-                self.votes['notvoting'].append(player.user)
+                self.votes['notvoting'].append(player)
 
             await self.channel.send(f'Day **{self.cycle}** will last {phase_t} minutes.'
                                     f' With {len(alive_players)} alive, it takes {self.majority_votes} to lynch.')
@@ -127,70 +153,12 @@ class Game:
             # recently lynched jesters and alive players are allowed to send in actions
             for player in filter(lambda p: alive_or_recent_jester(p, self), self.players):
                 if hasattr(player.role, 'on_night'):
-                    await player.role.on_night(bot, player, self)
+                    await player.role.on_night(self.bot, player, self)
 
             self.phase = Phase.NIGHT
 
         self.phase_end_at = datetime.now() \
-            + timedelta(seconds=self.config['phase_time'])
-
-    # Filter players by:
-    # Their Role
-    # Their Faction
-    # Their Night Action
-    # Whether they have a vote on someone
-    # Whether someone voted them
-    # By applying a lambda on their votecount
-    # By their Discord ID
-    # Checking if they have a Night Action
-    # Checking if they are alive
-    def filter_players(self,
-                       role: typing.Optional[str] = None,
-                       faction: typing.Optional[str] = None,
-                       action: typing.Optional[str] = None,
-                       has_vote_on: typing.Optional[discord.Member] = None,
-                       is_voted_by: typing.Optional[discord.Member] = None,
-                       votecount: typing.Optional[typing.Callable] = None,
-                       pl_id: typing.Optional[int] = None,
-                       action_only: bool = False,
-                       alive: bool = False):
-        # pylint: disable=too-many-arguments
-        plist = self.players
-
-        def action_only_filter(player):
-            if not alive_or_recent_jester(player, self):
-                return False
-            can_do, _ = player.role.can_do_action(self)
-            return can_do
-
-        if role:
-            plist = [*filter(lambda pl: pl.role.name == role, plist)]
-        if faction:
-            plist = [*filter(lambda pl: pl.faction.id == faction, plist)]
-        if action:
-            plist = [*filter(lambda pl: pl.role.action == action
-                             if hasattr(pl.role, 'action') else False)]
-        if has_vote_on:
-            plist = copy.deepcopy(self.get_player(has_vote_on).votes)
-        if is_voted_by:
-            plist = [*filter(lambda pl: pl.has_vote(is_voted_by), plist)]
-        if votecount:
-            plist = [*filter(lambda pl: votecount(len(pl.votes)), plist)]
-        if action_only:
-            plist = [*filter(action_only_filter, plist)]
-        if alive:
-            plist = [*filter(lambda pl: pl.alive, plist)]
-        if pl_id:
-            plist = [*filter(lambda pl: pl.user.id == pl_id, plist)]
-
-        return plist
-
-    def get_player(self, user):
-        plist = [*filter(lambda p: p.user.id == user.id, self.players)]
-        return plist[0] if plist else None
-
-    def has_player(self, user: discord.Member):
-        return self.get_player(user) is not None
+            + timedelta(seconds=self.config['phase_duration'])
 
     # lynch a player
     async def lynch(self, target: Player):
@@ -200,33 +168,12 @@ class Game:
 
         await target.remove(self, f'lynched D{self.cycle}')
 
-    # since this is needed in a couple of places
-    def show_players(self, codeblock=False, show_replacements=False):
-        players = []
-        for num, player in enumerate(self.players, 1):
-            # codeblock friendly formatting. green for alive, red for dead
-            usrname = ''
-            if codeblock:
-                if player.alive:
-                    usrname += f'+ {num}. {player.user}'
-                else:
-                    usrname += f'- {num}. {player.user} ({player.display_role}; {player.death_reason})'
-            else:
-                if player.alive:
-                    usrname += f'{num}. {player.user}'
-                else:
-                    usrname += f'{num}. ~~{player.user}~~ ({player.display_role}; {player.death_reason})'
-
-            players.append(usrname)
-        if show_replacements and len(self.replacements) > 0:
-            replacements = ', '.join(map(str, self.replacements))
-            players.append('\nReplacements: {}'.format(replacements))
-        return '\n'.join(players)
-
     # WIP: End the game
     # If a winning faction is not provided, game is ended
     # as if host ended the game without letting it finish
-    async def end(self, bot, winning_faction, independent_wins):
+    async def end(self, winning_faction, independent_wins):
+        bot = self.bot  # TODO: Move db stuff to separate func
+
         if winning_faction:
             async with self.channel.typing():
                 await self.channel.send(f'The game is over. {winning_faction} wins! 🎉')
@@ -250,9 +197,9 @@ class Game:
                 with bot.db.conn.cursor() as cur2:
                     values = []
                     for player in self.players:
-                        win = player in independent_wins or player.faction.name == winning_faction
+                        win = player in independent_wins or player.role.faction.name == winning_faction
                         values.append(cur2.mogrify('(%s, %s, %s, %s, %s)',
-                                                   (player.user.id, player.faction.name, player.role.name, game_id, win)).decode('utf-8'))
+                                                   (player.user.id, player.role.faction.name, player.role.name, game_id, win)).decode('utf-8'))
                     query = "INSERT INTO players (player_id, faction, rolename, game_id, result) VALUES " + \
                         ",".join(values) + ";"
                     cur2.execute(query)
@@ -269,4 +216,4 @@ class Game:
 
     @ property
     def majority_votes(self):
-        return math.floor(len(self.filter_players(alive=True)) / 2) + 1
+        return math.floor(len(self.players.filter(is_alive=True)) / 2) + 1

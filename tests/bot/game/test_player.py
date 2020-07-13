@@ -26,7 +26,7 @@ class PlayerTestCase(unittest.TestCase):
             player = Player(user=mock_user)
             player.user = 'LemonGrass#3333'
             player.role = mock_role
-            player.faction = mock_faction
+            player.role.faction = mock_faction
 
             expected_str = 'Hello LemonGrass#3333, you are a ' \
                 '**Neutral Role**. ' \
@@ -54,10 +54,8 @@ class PlayerTestCase(unittest.TestCase):
                     mock_role = Mock(**{
                         'innocence_modifier.return_value': innocence_modifier
                     })
-                mock_faction = Mock(**{'id': role_id})
                 player = Player(mock_user)
                 player.role = mock_role
-                player.faction = mock_faction
                 self.assertIs(player.innocent, expected_bool)
 
     def test_display_role(self):
@@ -73,7 +71,7 @@ class PlayerTestCase(unittest.TestCase):
                 mock_faction.id = faction_id
                 mock_faction.name = faction_id.capitalize()
                 player = Player(Mock())
-                player.faction = mock_faction
+                player.role.faction = mock_faction
                 player.role = Mock(**{
                     'display_role.return_value': 'Joker'
                 })

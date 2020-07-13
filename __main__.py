@@ -5,7 +5,7 @@ import discord
 from discord.ext import commands
 from godfather.database import DB
 from godfather.errors import PhaseChangeError
-from godfather.utils import ColoredFormatter, getlogger, alive_or_recent_jester
+from godfather.utils import CustomContext, ColoredFormatter, getlogger, alive_or_recent_jester, pluralize
 
 
 config = json.load(open('config.json'))
@@ -42,6 +42,9 @@ class Godfather(commands.Bot):
             self.db = DB(**config.get('postgres')
                          )  # pylint: disable=invalid-name
 
+    async def get_context(self, message):
+        return await super().get_context(message, cls=CustomContext)
+
     async def on_ready(self):
         # initialize games map
         self.get_cog('EventLoop').event_loop.start()
@@ -54,22 +57,25 @@ class Godfather(commands.Bot):
         if isinstance(error, commands.CommandNotFound):
             if not isinstance(ctx.channel, discord.DMChannel):
                 return
-            args = remove_prefix(ctx.message.content, ctx.prefix).split(' ')
+            args = remove_prefix(ctx.message.content,
+                                 ctx.prefix).split(' ')
             command = args[0]
             games = [
-                *filter(lambda g: g.has_player(ctx.author), self.games.values())]
+                *filter(lambda g: ctx.author in g.players, self.games.values())]
             if len(games) == 0:
                 return
             pl_game = games[0]
-            player = pl_game.get_player(ctx.author)
+            player = pl_game.players[ctx.author]
 
             if not alive_or_recent_jester(player, pl_game) \
                     or not hasattr(player.role, 'action'):
                 return
-            valid_actions = player.role.action if isinstance(player.role.action, list) \
-                else [player.role.action]
-            if command.lower() not in (valid_actions + ['noaction']):
+            if command.lower() not in [player.role.action, 'noaction']:
                 return
+            if command.lower() == 'noaction':
+                args = ['noaction']
+            if hasattr(player.role, 'on_pm_command_notarget'):
+                return await player.role.on_pm_command_notarget(ctx, pl_game, player, command)
             await player.role.on_pm_command(ctx, pl_game, player, args)
 
             return  # ignore invalid commands
@@ -82,12 +88,15 @@ class Godfather(commands.Bot):
             return await ctx.send('Invalid input')
         elif isinstance(error, commands.CheckFailure):
             return await ctx.send(error)
+        elif isinstance(error, commands.CommandOnCooldown):
+            retry_after = round(error.retry_after)
+            return await ctx.send('You are using this command too fast: try again in {} second{}'.format(retry_after, pluralize(retry_after)))
 
         elif isinstance(error, PhaseChangeError):
             # Inform users that game has ended and remove guild id from `self.games`.
             await ctx.send('There was an error incrementing the phase. The game has ended.')
             self.games.pop(ctx.guild.id, None)
-            return self.logger.exception(error)
+            return self.logger.exception(error, exc_info=(type(error), error, error.__traceback__))
 
         await ctx.send(f'Uncaught exception: ```{error}```')
 
@@ -96,7 +105,8 @@ class Godfather(commands.Bot):
             await ctx.send('\nThe game has ended.')
             self.games.pop(ctx.guild.id, None)
 
-        self.logger.exception(error)
+        self.logger.exception(error, exc_info=(
+            type(error), error, error.__traceback__))
 
     def load_extensions(self):
         for file in pathlib.Path('godfather/cogs/').iterdir():
@@ -113,7 +123,7 @@ class Godfather(commands.Bot):
                 self.logger.info('Loaded cog %s', file.stem)
             except commands.ExtensionError as err:
                 self.logger.error('Error loading extension %s', file.stem)
-                self.logger.exception(err)
+                self.logger.exception(err, exc_info=True, stack_info=True)
 
 
 if __name__ == "__main__":

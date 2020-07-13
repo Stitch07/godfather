@@ -12,14 +12,14 @@ class MockFaction(Mock):
 class MockPlayer(Mock):
     user: str
     display_role: str
-    alive: bool
+    is_alive: bool
     death_reason: str
 
 
 class ShowPlayersTestCase(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.game = Game(Mock())
+        cls.game = Game(Mock(), Mock())
 
     def setUp(self):
         # Generate players, half alive, half dead
@@ -29,9 +29,9 @@ class ShowPlayersTestCase(unittest.TestCase):
 
                 user = ''.join(['Player', str(i)])
                 player = MockPlayer(
-                    user=user, display_role='Role', alive=alive_bool
+                    user=user, display_role='Role', is_alive=alive_bool
                 )
-                if player.alive is False:
+                if player.is_alive is False:
                     player.death_reason = "Eaten by lemons."
                 yield player
 
@@ -44,7 +44,7 @@ class ShowPlayersTestCase(unittest.TestCase):
                        "- 6. Player5 (Role; Eaten by lemons.)"
 
         self.assertEqual(
-            self.game.show_players(codeblock=True), expected_str
+            self.game.players.show(codeblock=True), expected_str
         )
 
     def test_show_players_without_codeblock(self):
@@ -54,7 +54,7 @@ class ShowPlayersTestCase(unittest.TestCase):
                        "6. ~~Player5~~ (Role; Eaten by lemons.)"
 
         self.assertEqual(
-            self.game.show_players(codeblock=False), expected_str
+            self.game.players.show(codeblock=False), expected_str
         )
 
     def test_show_players_with_replacements(self):
@@ -67,17 +67,17 @@ class ShowPlayersTestCase(unittest.TestCase):
         for num in range(3):
             replacement = MagicMock()
             replacement.__str__.return_value = 'Replacement{}'.format(num)
-            self.game.replacements.append(replacement)
+            self.game.players.replacements.append(replacement)
 
         self.assertEqual(
-            self.game.show_players(show_replacements=True), expected_str
+            self.game.players.show(show_replacements=True), expected_str
         )
 
 
 class GetPlayerTestCase(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.game = Game(Mock())
+        cls.game = Game(Mock(), Mock())
 
     def setUp(self):
         self.game.players = [
@@ -96,26 +96,26 @@ class GetPlayerTestCase(unittest.TestCase):
             with self.subTest(target_player=target_player):
                 self.game.players.append(target_player)
                 self.assertEqual(
-                    self.game.get_player(target_player.user), target_player
+                    self.game.players.get(target_player.user), target_player
                 )
 
     def test_get_player_return_none(self):
         for target_player in self.test_values:
             with self.subTest(target_player=target_player):
-                self.assertIsNone(self.game.get_player(target_player))
+                self.assertIsNone(self.game.players.get(target_player))
 
 
 class GameSyncTestCase(unittest.TestCase):
     def setUp(self):
-        self.game = Game(Mock())
+        self.game = Game(Mock(), Mock())
 
     def test_majority_votes(self):
         test_values = (
-            ([Mock(alive=True) for _ in range(5)], 3),
-            ([Mock(alive=True) for _ in range(6)], 4),
-            ([Mock(alive=True) for _ in range(8)], 5),
-            ([Mock(alive=True) for _ in range(9)], 5),
-            ([Mock(alive=True) for _ in range(10)], 6)
+            ([Mock(is_alive=True) for _ in range(5)], 3),
+            ([Mock(is_alive=True) for _ in range(6)], 4),
+            ([Mock(is_alive=True) for _ in range(8)], 5),
+            ([Mock(is_alive=True) for _ in range(9)], 5),
+            ([Mock(is_alive=True) for _ in range(10)], 6)
         )
 
         for players, expected_num in test_values:
@@ -125,7 +125,7 @@ class GameSyncTestCase(unittest.TestCase):
 
 class CheckEndgameTestCase(unittest.TestCase):
     def setUp(self):
-        self.game = Game(Mock())
+        self.game = Game(Mock(), Mock())
 
     def test_mafia_and_town_only(self):
         players = []
@@ -165,7 +165,7 @@ class CheckEndgameTestCase(unittest.TestCase):
 
 class GameAsyncTestCase(unittest.IsolatedAsyncioTestCase):
     def setUp(self):
-        self.game = Game(Mock())
+        self.game = Game(Mock(), Mock())
 
     async def test_lynch(self):
         # Should not have so many asserts, need further refactoring

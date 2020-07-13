@@ -1,36 +1,42 @@
-from godfather.roles.mixins import SingleAction
+from godfather.roles.mixins import SingleAction, Townie
+from godfather.game.types import Attack, Priority
 
 DESCRIPTION = 'You may heal guard someone every night.'
 
 
-class Bodyguard(SingleAction):
+class Bodyguard(Townie, SingleAction):
+    name = 'Bodyguard'
+    description = DESCRIPTION
+
     def __init__(self):
-        super().__init__(name='Bodyguard', role_id='bodyguard', description=DESCRIPTION)
+        super().__init__()
         self.action = 'guard'
         self.action_gerund = 'guarding'
-        self.action_priority = 2
+        self.action_priority = Priority.BODYGUARD
         self.action_text = 'guard a player'
         self.can_self_target = True  # one self-heal allowed
 
-    async def run_action(self, _game, night_record, player, target):
-        pl_record = night_record[target.user.id]
-        if pl_record['nightkill']['result']:
+    async def run_action(self, actions, player, target):
+        pl_record = actions.record[target.user.id]
+        # BG defenses are Powerful
+        if pl_record['nightkill']['result'] and pl_record['nightkill']['type'] < Attack.UNSTOPPABLE:
             # kill the attacker
             attacker = pl_record['nightkill']['by'].pop()
             await attacker.user.send('You were killed by a bodyguard. You have died!')
-            night_record[attacker.user.id]['nightkill']['result'] = True
-            night_record[attacker.user.id]['nightkill']['by'].append(player)
+            actions.record[attacker.user.id]['nightkill']['result'] = True
+            actions.record[attacker.user.id]['nightkill']['type'] = Attack.POWERFUL
+            actions.record[attacker.user.id]['nightkill']['by'].append(player)
 
             # kill the bg
-            night_record[player.user.id]['nightkill']['result'] = True
+            actions.record[player.user.id]['nightkill']['result'] = True
 
             pl_record['nightkill']['result'] = False
             pl_record['nightkill']['by'] = []
             pl_record['guard']['result'] = True
             pl_record['guard']['by'].append(player.user.id)
 
-    async def after_action(self, player, target, night_record):
-        record = night_record[target.user.id]['guard']
+    async def tear_down(self, actions, player, target):
+        record = actions.record[target.user.id]['guard']
         success = record['result'] and player.user.id in record['by']
 
         if success:

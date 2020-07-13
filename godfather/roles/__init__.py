@@ -18,10 +18,12 @@ for file in Path('godfather/roles').iterdir():
         role_mod = import_module(f'godfather.roles.{file.stem}')
         # role_name files have RoleName classes
         CLS_NAME = ''.join(map(str.title, file.stem.split('_')))
-        all_roles[file.stem] = getattr(role_mod, CLS_NAME)
+        role_cls = getattr(role_mod, CLS_NAME)
+        all_roles[role_cls.name] = role_cls
     else:
         for nested_file in filter(filter_func, Path(f'godfather/roles/{file.stem}').iterdir()):
             role_mod = import_module(
                 f'godfather.roles.{file.stem}.{nested_file.stem}')
             CLS_NAME = ''.join(map(str.title, nested_file.stem.split('_')))
-            all_roles[nested_file.stem] = getattr(role_mod, CLS_NAME)
+            role_cls = getattr(role_mod, CLS_NAME)
+            all_roles[role_cls.name] = role_cls

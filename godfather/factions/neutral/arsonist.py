@@ -8,7 +8,7 @@ class ArsonistNeutral(Faction):
     win_con = 'Watch everyone burn.'
 
     def has_won(self, game: Game):
-        alive_arsos = game.filter_players(
-            faction='neutral.arsonist', alive=True)
-        alive_players = game.filter_players(alive=True)
+        alive_arsos = game.players.filter(
+            faction='neutral.arsonist', is_alive=True)
+        alive_players = game.players.filter(is_alive=True)
         return len(alive_arsos) == len(alive_players)

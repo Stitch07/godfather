@@ -1,12 +1,18 @@
 from godfather.roles.base import Role
 from godfather.errors import PhaseChangeError
+from godfather.game.types import Attack, Defense, Priority
+from godfather.factions import ArsonistNeutral
 
 DESCRIPTION = 'You may douse someone every night, and then ignite all your doused targets.'
 
 
 class Arsonist(Role):
+    name = 'Arsonist'
+    description = DESCRIPTION
+
     def __init__(self):
-        super().__init__(name='Arsonist', role_id='arsonist', description=DESCRIPTION)
+        super().__init__()
+        self.faction = ArsonistNeutral()
         self.action = ['douse', 'ignite']
         self.doused = set()
         self.ignited = False
@@ -16,15 +22,18 @@ class Arsonist(Role):
             return False, "You haven't doused anyone to ignite yet!"
         return True, ''
 
-    def can_target(self, player, target):
+    def can_target(self, _player, target):
         if target in self.doused:
             return False, 'You have already doused {}'.format(target.user)
         return True, ''
 
+    def defense(self):
+        return Defense.BASIC
+
     async def on_night(self, bot, player, game):
         output = f'It is now night {game.cycle}. Use the {bot.command_prefix}douse command to douse a player. ' \
             + f'Use {bot.command_prefix}ignite to douse all ignited targets.\n'
-        output += f'```diff\n{game.show_players(codeblock=True)}```'
+        output += f'```diff\n{game.players.show(codeblock=True)}```'
         await player.user.send(output)
 
     async def on_pm_command(self, ctx, game, player, args):
@@ -53,29 +62,29 @@ class Arsonist(Role):
                 'player': player,
                 'priority': 0
             })
-            if len(game.filter_players(action_only=True)) == len(game.night_actions.actions):
-                await game.increment_phase(ctx.bot)
+            if len(game.players.filter(action_only=True)) == len(game.night_actions.actions):
+                await game.increment_phase()
             return await ctx.send('You decided to stay home tonight.')
 
         if command == 'ignite':
             for target in self.doused:
-                if not target.alive:
+                if not target.is_alive:
                     continue
                 game.night_actions.add_action({
                     'action': 'ignite',
                     'player': player,
                     'target': target,
-                    'priority': 3,
+                    'priority': Priority.ARSONIST,
                     'can_block': False,
                     'can_transport': False
                 })
             self.ignited = True
             await ctx.send('You are igniting your doused targets today.')
-            total_actions = len(game.filter_players(action_only=True))
+            total_actions = len(game.players.filter(action_only=True))
             expected_total = total_actions + len(self.doused) - 1
             if expected_total == len(game.night_actions.actions):
                 try:
-                    await game.increment_phase(ctx.bot)
+                    await game.increment_phase()
                 except Exception as exc:
                     raise PhaseChangeError(None, *exc.args)
             return
@@ -103,34 +112,35 @@ class Arsonist(Role):
             'action': 'douse',
             'player': player,
             'target': target_pl,
-            'priority': 1,
+            'priority': Priority.ARSONIST,
             'can_block': True,
             'can_transport': True
         })
         await ctx.send(f'You are dousing {target} tonight.')
 
-        if len(game.filter_players(action_only=True)) == len(game.night_actions.actions):
+        if len(game.players.filter(action_only=True)) == len(game.night_actions.actions):
             try:
-                await game.increment_phase(ctx.bot)
+                await game.increment_phase()
             except Exception as exc:
                 raise PhaseChangeError(None, *exc.args)
 
-    async def run_action(self, _game, night_record, player, target):
+    async def run_action(self, actions, player, target):
         if not self.ignited:
             # just dousing here
             self.doused.add(target)
             return
 
         # igniting everyone here
-        pl_record = night_record[target.user.id]
+        pl_record = actions.record[target.user.id]
         pl_record['nightkill']['result'] = True
+        pl_record['nightkill']['type'] = Attack.UNSTOPPABLE
         pl_record['nightkill']['by'].append(player)
 
-    async def after_action(self, player, target, night_record):
+    async def tear_down(self, actions, player, target):
         # nothing for dousing
         if not self.ignited:
             return
-        record = night_record[target.user.id]['nightkill']
+        record = actions.record[target.user.id]['nightkill']
         success = record['result'] and player in record['by']
 
         if success:

@@ -11,7 +11,7 @@ class Town(Faction):
     win_con = 'Lynch every evildoer.'
 
     def has_won(self, game: Game):
-        alive_townies = len(game.filter_players(faction='town'))
+        alive_townies = len(game.players.filter(faction='town'))
         alive_opposing = len(
-            [*filter(lambda pl: pl.faction.id in OPPOSING_FACTIONS and pl.alive, game.players)])
+            [*filter(lambda pl: pl.role.faction.id in OPPOSING_FACTIONS and pl.is_alive, game.players)])
         return alive_townies > 0 and alive_opposing == 0

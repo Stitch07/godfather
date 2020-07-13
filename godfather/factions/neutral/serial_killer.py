@@ -8,9 +8,9 @@ class SerialKillerNeutral(Faction):
     win_con = 'Be the last player standing.'
 
     def has_won(self, game: Game):
-        alive_sks = game.filter_players(
-            faction='neutral.serialkiller', alive=True)
-        alive_players = game.filter_players(alive=True)
+        alive_sks = game.players.filter(
+            faction='neutral.serialkiller', is_alive=True)
+        alive_players = game.players.filter(is_alive=True)
         if len(alive_sks) == 1 and len(alive_players) == 2:  # SK always wins in 1v1s
             return True
         return len(alive_sks) == len(alive_players)

@@ -1,28 +1,35 @@
 from godfather.roles.mixins import SingleAction
+from godfather.game.types import Attack, Defense, Priority
+from godfather.factions import SerialKillerNeutral
 
 DESCRIPTION = 'You may stab someone every night.'
 
 
 class SerialKiller(SingleAction):
+    name = 'Serial Killer'
+    description = DESCRIPTION
+
     def __init__(self):
-        super().__init__(name='Serial Killer', role_id='serial_killer', description=DESCRIPTION)
+        super().__init__()
+        self.faction = SerialKillerNeutral()
         self.action = 'stab'
         self.action_gerund = 'stabbing'
-        self.action_priority = 1  # placeholder
+        self.action_priority = Priority.SERIAL_KILLER
         self.action_text = 'stab a player'
 
-    def bulletproof(self):
-        return True
+    def defense(self):
+        return Defense.BASIC
 
-    async def run_action(self, _game, night_record, player, target):
-        if hasattr(target.role, 'bulletproof') and target.role.bulletproof():
+    async def run_action(self, actions, player, target):
+        if target.defense() >= Defense.BASIC:
             return
-        pl_record = night_record[target.user.id]
+        pl_record = actions[target.user.id]
         pl_record['nightkill']['result'] = True
+        pl_record['nightkill']['type'] = Attack.BASIC
         pl_record['nightkill']['by'].append(player)
 
-    async def after_action(self, player, target, night_record):
-        record = night_record[target.user.id]['nightkill']
+    async def tear_down(self, actions, player, target):
+        record = actions.record[target.user.id]['nightkill']
         success = record['result'] and player in record['by']
 
         if not success:

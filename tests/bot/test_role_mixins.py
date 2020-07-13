@@ -23,7 +23,7 @@ class GodfatherOnDeathTestCase(unittest.IsolatedAsyncioTestCase):
         player1 = AsyncMock()
         player1.role = MockRole(name='Goon')
 
-        self.game.filter_players.return_value = [player1]
+        self.game.players.filter.return_value = [player1]
         await self.mafia_member.on_death(self.game, self.godfather)
         self.assertEqual(player1.role.name, 'Godfather')
         self.assertEqual(player1.user.send.call_count, 2)
@@ -31,7 +31,7 @@ class GodfatherOnDeathTestCase(unittest.IsolatedAsyncioTestCase):
     async def test_consort_replacement(self):
         player1 = AsyncMock()
         player1.role = MockRole(name='Consort')
-        player1.alive = True
+        player1.is_alive = True
         player1.faction = MockFaction(spec=['id'])
         player1.faction.id = 'mafia'
         self.game.players = [player1]

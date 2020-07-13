@@ -1,11 +1,15 @@
-from godfather.roles.mixins import SingleAction, Shooter
+from godfather.roles.mixins import SingleAction, Shooter, Townie
+from godfather.game.types import Priority
 
 DESCRIPTION = 'You may shoot someone every night. If you shoot a townie, you will die of guilt the next night.'
 
 
-class Vigilante(SingleAction, Shooter):
+class Vigilante(Townie, Shooter, SingleAction):
+    name = 'Vigilante'
+    description = DESCRIPTION
+
     def __init__(self):
-        super().__init__(name='Vigilante', role_id='vig', description=DESCRIPTION)
+        super().__init__()
         self.guilty = False
         self.bullets = 3  # vigs only get 3 shots
 
@@ -16,7 +20,9 @@ class Vigilante(SingleAction, Shooter):
                 'action': self.action,
                 'player': player,
                 'target': player,
-                'priority': 3
+                'priority': Priority.VIGI_SUICIDE,
+                'can_block': False,
+                'can_transport': False
             })
         else:
             await super().on_night(bot, player, game)
@@ -28,11 +34,11 @@ class Vigilante(SingleAction, Shooter):
             return False, 'You ran out of bullets!'
         return True, ''
 
-    async def after_action(self, player, target, night_record):
-        record = night_record[target.user.id]['nightkill']
+    async def tear_down(self, actions, player, target):
+        record = actions.record[target.user.id]['nightkill']
         success = record['result'] and player in record['by']
 
-        if success and target.faction.id == 'town':
+        if success and target.role.faction.id == 'town':
             self.guilty = True
         if not success:
             return await player.user.send('Your target was too strong to kill!')

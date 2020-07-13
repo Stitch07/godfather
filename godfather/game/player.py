@@ -3,6 +3,7 @@ import discord
 from discord.ext import commands
 from discord.ext.commands import errors
 
+
 conv = commands.MemberConverter()
 
 
@@ -11,7 +12,7 @@ class Player:
         self.user = user
         self.role = None
         self.faction = None
-        self.alive = True
+        self.is_alive = True
         self.votes: typing.List[Player] = []
         self.death_reason = ''
         self.visitors = []
@@ -22,33 +23,33 @@ class Player:
         return (
             f'Hello {self.user}, you are a **{self.display_role}**. '
             f'{self.role.description}'  # This follows the previous line.
-            f'\nWin Condition: {self.faction.win_con}'
+            f'\nWin Condition: {self.role.faction.win_con}'
         )
 
     @property
     def innocent(self):
         if hasattr(self.role, 'innocence_modifier'):
             return self.role.innocence_modifier()
-        if self.faction.id in ['town', 'neutral.survivor']:
+        if self.role.faction.id in ['town', 'neutral.survivor']:
             return True
         return False
 
     @property
     def full_role(self):
-        if self.faction.id.startswith('neutral'):
+        if self.role.faction.id.startswith('neutral'):
             return self.role
-        return f'{self.faction} {self.role}'
+        return f'{self.role.faction} {self.role}'
 
     @property
     def display_role(self):
-        if self.faction.id.startswith('neutral'):
+        if self.role.faction.id.startswith('neutral'):
             return self.role.display_role()
-        return f'{self.faction} {self.role.display_role()}'
+        return f'{self.role.faction} {self.role.display_role()}'
 
-    async def visit(self, visitor, record):
+    async def visit(self, visitor, actions):
         self.visitors.append(visitor)
-        if hasattr(self.role, 'visited'):
-            await self.role.visited(self, visitor, record)
+        if hasattr(self.role, 'on_visit'):
+            await self.role.on_visit(self, visitor, actions)
 
     # remove vote by 'user' from player
     def remove_vote(self, user: discord.Member):
@@ -60,7 +61,7 @@ class Player:
 
     # remove a player from the game
     async def remove(self, game, reason, modkill=False):
-        self.alive = False
+        self.is_alive = False
         self.votes = []
         self.death_reason = reason
         if hasattr(self.role, 'on_death') and not modkill:
@@ -83,6 +84,6 @@ class Player:
 
         if found_member is None:
             found_member = await conv.convert(ctx, argument)
-        if found_member is None or not game.has_player(found_member):
+        if found_member is None or not found_member in game.players:
             raise errors.BadArgument('Player {} not found'.format(argument))
-        return game.get_player(found_member)
+        return game.players[found_member]
