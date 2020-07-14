@@ -71,7 +71,7 @@ def convert_setups(input_file: TextIOBase, output_file: TextIOBase):
         raise ValueError("Non-writable file provided as output stream")
 
     setups_json = json.load(input_file)
-    setups_yaml = []
+    setups_yaml = {}
 
     if not isinstance(setups_json, list):
         raise ValueError(
@@ -80,7 +80,7 @@ def convert_setups(input_file: TextIOBase, output_file: TextIOBase):
             )
 
     for setup_json in setups_json:
-        setups_yaml.append(setup_json_to_yaml(setup_json))
+        setups_yaml.update(setup_json_to_yaml(setup_json))
 
     yaml.safe_dump(setups_yaml, output_file)
 
