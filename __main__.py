@@ -87,10 +87,9 @@ class Godfather(commands.Bot):
             if not alive_or_recent_jester(player, pl_game) \
                     or not hasattr(player.role, 'action'):
                 return
-
-            if not isinstance(player.role.action, list):
-                player.role.action = [player.role.action]
-            if command.lower() not in player.role.action + ['noaction']:
+            valid_actions = [player.role.action, 'noaction'] if not isinstance(player.role.action, list) \
+                else player.role.action + ['noaction']
+            if command.lower() not in valid_actions:
                 return
             await player.role.on_pm_command(ctx, pl_game, player, args)
 
