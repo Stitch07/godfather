@@ -125,14 +125,3 @@ class PlayerManager:
 
     def __getitem__(self, key):
         return self.get(key)
-
-    @property
-    def is_full(self):
-        with open('rolesets/rolesets.json', 'r') as rs_file:
-            rolesets = json.load(rs_file)
-
-        max_num = max(len(rs_dict['roles']) for rs_dict in rolesets)
-
-        if len(self.players) >= max_num:
-            return True
-        return False

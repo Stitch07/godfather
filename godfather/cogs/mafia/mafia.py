@@ -1,6 +1,5 @@
 import copy
 import inspect
-import json
 import random
 import typing
 
@@ -9,9 +8,9 @@ from discord.ext import commands
 
 from godfather.cogs.mafia.checks import *  # pylint: disable=wildcard-import, unused-wildcard-import
 from godfather.errors import PhaseChangeError
-from godfather.factions import factions
 from godfather.game import Game, Phase, Player
 from godfather.game.vote_manager import VoteError
+from godfather.game.setup import Setup
 from godfather.roles import all_roles
 from godfather.utils import (CustomContext, confirm, from_now,
                              get_random_sequence)
@@ -39,9 +38,6 @@ class Mafia(commands.Cog):
 
         if ctx.author in game.players:
             return await ctx.send('You have already joined this game.')
-
-        if game.players.is_full:
-            return await ctx.send('Maximum number of players reached.')
 
         # If game has already started, can only be replacement
         if game.has_started:
@@ -136,35 +132,35 @@ class Mafia(commands.Cog):
 
     @commands.command()
     @commands.cooldown(1, 5.0, commands.BucketType.channel)
-    async def setupinfo(self, ctx: CustomContext, roleset: typing.Optional[str] = None):
+    async def setupinfo(self, ctx: CustomContext, setup_name: typing.Optional[str] = None):
         # show the current setup if a game is ongoing
-        if ctx.guild.id in ctx.bot.games \
-                and ctx.game.phase != Phase.PREGAME \
-                and roleset is None:
-            roleset = ctx.game.setup['name']
+        if (ctx.guild.id in ctx.bot.games
+                and ctx.game.phase != Phase.PREGAME
+                and setup_name is None):
+            setup_name = ctx.game.setup.name
 
-        rolesets = json.load(open('rolesets/rolesets.json'))
-        if roleset is None or roleset == 'all':
+        if setup_name is None or setup_name == 'all':
             txt = ('**All available setups:** (to view a specific setup, use '
                    f'{ctx.prefix}setupinfo <name>)')
             txt += '```\n'
-            for _roleset in rolesets:
-                txt += f'{_roleset["name"]} ({len(_roleset["roles"])} players)\n'
+            for setup in self.bot.setups:
+                txt += f'{setup.name} ({len(setup.roles)} players)\n'
             txt += '```'
             return await ctx.send(txt)
 
-        found_setup = next(
-            (rs for rs in rolesets if rs['name'] == roleset.lower()), None)
-        if found_setup is None:
+        found_setup = self.bot.setups.get(setup_name)
+
+        if not found_setup:
             return await ctx.send(
-                f"Couldn't find {roleset}, use {ctx.prefix}setupinfo to view all setups."
+                f"Couldn't find {setup_name}, use {ctx.prefix}setupinfo to view all setups."
             )
 
-        txt = [f'**{roleset}** ({len(found_setup["roles"])} players)', '```\n']
-        for i, role in enumerate(found_setup['roles']):
+        txt = [f'**{setup_name}** ({len(found_setup.total_players)} players)', '```\n']
+        for i, role in enumerate(found_setup.roles):
             txt.append(
                 f'{i+1}. {role["faction"].title()} {role["id"].title()}')
         txt.append('```')
+
         await ctx.send('\n'.join(txt))
 
     @commands.command()
@@ -183,9 +179,9 @@ class Mafia(commands.Cog):
                 return await ctx.send('\n'.join(text))
         await ctx.send("Couldn't find that role!")
 
-    @ commands.command()
-    @ game_only()
-    @ game_started_only()
+    @commands.command()
+    @game_only()
+    @game_started_only()
     async def rolepm(self, ctx: CustomContext):
         player = ctx.game.players[ctx.author]
         try:
@@ -194,12 +190,12 @@ class Mafia(commands.Cog):
         except discord.Forbidden:
             await ctx.send('Cannot send you your role PM. Make sure your DMs are enabled!')
 
-    @ commands.command(aliases=['start'])
-    @ host_only()
-    @ game_only()
+    @commands.command(aliases=['start'])
+    @host_only()
+    @game_only()
     async def startgame(self, ctx: CustomContext,
                         r_setup: typing.Optional[str] = None):
-        game = self.bot.games[ctx.guild.id]
+        game = ctx.game
 
         if game.has_started:
             await ctx.send("Game has already started!")
@@ -258,9 +254,11 @@ class Mafia(commands.Cog):
             await ctx.send(f"I couldn't DM {', '.join(no_dms)}."
                            f" Use the {ctx.prefix}rolepm command to receive your PM.")
 
-        # night starts
-        night_start = 'night_start' in game.setup
-        if night_start:
+        # flags
+        flags = {flag_name: game.setup.flags[flag_name]
+                 for flag_name in Setup.all_flags}
+
+        if "night_start" in flags:
             game.cycle = 1
             game.phase = Phase.DAY
         try:

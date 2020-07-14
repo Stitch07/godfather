@@ -1,4 +1,3 @@
-import json
 import math
 from datetime import datetime, timedelta
 from enum import IntEnum, auto
@@ -9,12 +8,11 @@ from godfather.errors import PhaseChangeError
 from godfather.game.game_config import GameConfig
 from godfather.game.player_manager import PlayerManager
 from godfather.game.vote_manager import VoteManager
-from godfather.utils import alive_or_recent_jester
+from godfather.game.setup import Setup
+from godfather.utils import alive_or_recent_jester, choice
 
 from .night_actions import NightActions
 from .player import Player
-
-rolesets = json.load(open('rolesets/rolesets.json'))
 
 
 default_game_config = {
@@ -41,7 +39,7 @@ class Game:
         # time at which the current phase ends
         self.phase_end_at: datetime = None
         self.night_actions = NightActions(self)
-        self.setup = dict()  # the setup used
+        self.setup: Setup = None # the setup used
         # host-configurable stuff
         self.config = GameConfig(default_game_config, channel=channel)
         self.votes = VoteManager(self)
@@ -69,25 +67,35 @@ class Game:
                 raise PhaseChangeError(None, *exc.args)
 
     # finds a setup for the current player-size. if no setup is found, raises an Exception
-    def find_setup(self, setup: str = None):
+    def find_setup(self, setup_name: str = None):
         num_players = len(self.players)
-        if setup:
-            found_setup = [
-                *filter(lambda rs: rs['name'] == setup.lower(), rolesets)]
-            if len(found_setup) == 0:
-                raise Exception('Setup not found.')
 
-            if not len(found_setup[0]['roles']) == num_players:
-                raise Exception(
-                    f'Chosen setup needs {len(found_setup[0]["roles"])} players.')
-            return found_setup[0]
+        if setup_name:
+            setup = self.bot.setups.get(setup_name)
 
-        possibles = list(filter(lambda s: len(
-            s['roles']) == num_players, rolesets))
-        if len(possibles) == 0:
+            if not setup:
+                raise ValueError('Setup not found.')
+
+            if not len(setup.total_players) == num_players:
+                raise ValueError(
+                    f'Chosen setup needs {len(setup.total_players)} players, '
+                    f'you currently have {num_players}'
+                    )
+
+            return setup
+
+        possible_setups = dict(filter(lambda s: s[1].total_players == num_players,
+                                      self.bot.setups.items()))
+        if len(possible_setups) == 0:
             # wip: custom exception types?
-            raise Exception('No rolelists found.')
-        return possibles.pop(0)
+            raise ValueError('No possible setups found.')
+
+        return choice(
+            self.bot, self.bot.get_user(self.host.id), self.channel,
+            "Multiple setups found.\n"
+            "Please choose one of the following:",
+            possible_setups.keys()
+            )
 
     # checks whether the game has ended, returns whether the game has ended and the winning faction
     def check_endgame(self):
@@ -192,7 +200,7 @@ class Game:
                 independent_win_roles = [
                     *map(lambda player: player.role.name, independent_wins)]
                 cur.execute("INSERT INTO games (setup, winning_faction, independent_wins) VALUES (%s, %s, %s) RETURNING id;",
-                            (self.setup['name'], winning_faction, independent_win_roles))
+                            (self.setup.name, winning_faction, independent_win_roles))
                 game_id, = cur.fetchone()
                 with bot.db.conn.cursor() as cur2:
                     values = []
@@ -210,10 +218,10 @@ class Game:
 
         del bot.games[self.guild.id]
 
-    @ property
+    @property
     def has_started(self):  # this might be useful
         return not self.phase == Phase.PREGAME
 
-    @ property
+    @property
     def majority_votes(self):
         return math.floor(len(self.players.filter(is_alive=True)) / 2) + 1
