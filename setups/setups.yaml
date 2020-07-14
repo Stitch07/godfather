@@ -1,0 +1,84 @@
+- ss3:
+    roles:
+    - Vanilla
+    - Goon
+    - Super Saint
+- exetest:
+    roles:
+    - Executioner
+    - Vigilante
+    - Goon
+- prtest:
+    roles:
+    - Escort
+    - Doctor
+    - Vigilante
+    - Godfather
+    - Goon
+- fake5:
+    roles:
+    - Vanilla
+    - Doctor
+    - Cop
+    - Lookout
+    - Goon
+- dethy:
+    night_start: true
+    roles:
+    - Cop
+    - Insane Cop
+    - Naive Cop
+    - Paranoid Cop
+    - Goon
+- dethysucks:
+    roles:
+    - Vanilla
+    - Vanilla
+    - Vanilla
+    - Doctor
+    - Goon
+- getburnt:
+    roles:
+    - Arsonist
+    - Vanilla
+    - Vanilla
+    - Vanilla
+    - Vanilla
+    - Vanilla
+    - Vanilla
+    - Jester
+- notreallymatrix6:
+    roles:
+    - Vanilla
+    - Vanilla
+    - Vanilla
+    - Vanilla
+    - Escort
+    - Cop
+    - Jester
+    - Goon
+    - Consort
+- matrix7maybe?:
+    roles:
+    - Vanilla
+    - Vanilla
+    - Lookout
+    - Bodyguard
+    - Vigilante
+    - Escort
+    - Cop
+    - Godfather
+    - Goon
+    - Consigliere
+- prmadness:
+    roles:
+    - Lookout
+    - Bodyguard
+    - Veteran
+    - Escort
+    - Cop
+    - Vigilante
+    - Survivor
+    - Serial Killer
+    - Goon
+    - Consigliere

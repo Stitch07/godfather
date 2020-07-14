@@ -1,7 +1,9 @@
-from datetime import datetime
-from discord import TextChannel, Member
-from discord.ext.commands import Bot
 import asyncio
+import typing
+from datetime import datetime
+
+from discord import TextChannel, Member, Message
+from discord.ext.commands import Bot
 
 # General utilities
 
@@ -52,9 +54,9 @@ async def confirm(bot: Bot, prompter: Member, channel: TextChannel,
     await msg.add_reaction('🇳')
 
     def check(reaction, user):
-        return user == prompter \
-            and str(reaction.emoji) in ['🇾', '🇳'] \
-            and reaction.message.id == msg.id
+        return (user == prompter
+                and str(reaction.emoji) in ['🇾', '🇳']
+                and reaction.message.id == msg.id)
 
     try:
         reaction, _user = await bot.wait_for(
@@ -65,3 +67,28 @@ async def confirm(bot: Bot, prompter: Member, channel: TextChannel,
         return None
     finally:
         await msg.delete()
+
+async def choice(bot: Bot, prompter: Member, channel: TextChannel, message: str,
+                 options: typing.List[str]):
+    option_text = '\n'.join([f'{i+1}. {option}'
+                             for i, option in enumerate(options)])
+    message += (f'\n{message}:\n```{option_text}```')
+
+    await channel.send(content=message)
+
+    def check(msg: Message):
+        return msg.author == prompter and msg.content.isdigit()
+
+    try:
+        while True:
+            response = await bot.wait_for('message', timeout=30.0, check=check)
+
+            if int(response.content) in range(1, len(options)+1):
+                break
+
+            await channel.send(content="Please pick a valid option")
+        return options[int(response.content)-1]
+
+    except asyncio.TimeoutError:
+        await channel.send(content='Prompt timed out.')
+        return None

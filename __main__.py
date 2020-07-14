@@ -1,12 +1,15 @@
 import json
 import logging
 import pathlib
+
 import discord
+
 from discord.ext import commands
 from godfather.database import DB
 from godfather.custom_help import CustomHelp
 from godfather.errors import PhaseChangeError
 from godfather.utils import CustomContext, ColoredFormatter, getlogger, alive_or_recent_jester, pluralize
+from godfather.game.setup import Setup, SetupLoadError
 
 
 config = json.load(open('config.json'))
@@ -24,6 +27,7 @@ class Godfather(commands.Bot):
             description='A Discord bot for automatically hosting games of Mafia/Werewolf.'
         )
 
+        self.setups = {}
         self.games = {}
 
         # set logger
@@ -41,10 +45,10 @@ class Godfather(commands.Bot):
 
         # setup Postgres
         if 'postgres' in config:
-            self.db = DB(**config.get('postgres')
-                         )  # pylint: disable=invalid-name
+            self.db = DB(**config.get('postgres')) # pylint: disable=invalid-name
 
     async def get_context(self, message):
+        # pylint: disable=arguments-differ
         return await super().get_context(message, cls=CustomContext)
 
     async def on_ready(self):
@@ -52,8 +56,18 @@ class Godfather(commands.Bot):
         self.get_cog('EventLoop').event_loop.start()
         self.logger.info('Ready to serve %s guilds!', len(self.guilds))
 
+        setup_errors: int = 0
+        try:
+            self.setups = Setup.parse_setuplist(open("setups/setups.yaml"))
+        except SetupLoadError as exc:
+            self.logger.error(str(exc))
+            setup_errors += 1
+
+        self.logger.info('Successfully loaded %s setups',
+                         len(self.setups) - setup_errors)
+
     async def on_command_error(self, ctx, error):
-        # pylint: disable=too-many-return-statements, arguments-differ
+        # pylint: disable=too-many-return-statements, arguments-differ, too-many-branches
         if hasattr(ctx.command, 'on_error'):
             return
         if isinstance(error, commands.CommandNotFound):
@@ -84,9 +98,7 @@ class Godfather(commands.Bot):
 
         elif isinstance(error, commands.MissingRequiredArgument):
             return await ctx.send(f'Missing required argument {error.param}')
-        elif isinstance(error, commands.ArgumentParsingError):
-            return await ctx.send('Invalid input')
-        elif isinstance(error, commands.BadArgument):
+        elif isinstance(error, (commands.ArgumentParsingError, commands.BadArgument)):
             return await ctx.send('Invalid input')
         elif isinstance(error, commands.CheckFailure):
             return await ctx.send(error)
