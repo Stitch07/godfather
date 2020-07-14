@@ -8,7 +8,6 @@ from godfather.errors import PhaseChangeError
 from godfather.game.game_config import GameConfig
 from godfather.game.player_manager import PlayerManager
 from godfather.game.vote_manager import VoteManager
-from godfather.game.setup import Setup
 from godfather.utils import alive_or_recent_jester, choice
 
 from .night_actions import NightActions
@@ -39,7 +38,7 @@ class Game:
         # time at which the current phase ends
         self.phase_end_at: datetime = None
         self.night_actions = NightActions(self)
-        self.setup: Setup = None # the setup used
+        self.setup = None  # the setup used
         # host-configurable stuff
         self.config = GameConfig(default_game_config, channel=channel)
         self.votes = VoteManager(self)
@@ -80,7 +79,7 @@ class Game:
                 raise ValueError(
                     f'Chosen setup needs {len(setup.total_players)} players, '
                     f'you currently have {num_players}'
-                    )
+                )
 
             return setup
 
@@ -95,7 +94,7 @@ class Game:
             "Multiple setups found.\n"
             "Please choose one of the following:",
             possible_setups.keys()
-            )
+        )
 
     # checks whether the game has ended, returns whether the game has ended and the winning faction
     def check_endgame(self):

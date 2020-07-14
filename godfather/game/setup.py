@@ -4,8 +4,10 @@ import re
 import yaml
 from godfather.roles import all_roles
 
+
 class SetupLoadError(Exception):
     pass
+
 
 class Setup:
     # Pattern to get parse name and quantity from string
@@ -14,8 +16,7 @@ class Setup:
     # Define all flags along with their default values here
     all_flags: typing.Dict[str, bool] = {
         "night_start": False
-        }
-
+    }
 
     @staticmethod
     def parse_role_str(role_str: str):
@@ -34,37 +35,37 @@ class Setup:
         return role_name, quantity
 
     @classmethod
-    def parse_setuplist(cls, file: TextIOBase) -> typing.Dict[str, Setup]:
+    def parse_setuplist(cls, file: TextIOBase):
         """Parse a YAML file and return a list of Setups"""
         try:
-            setupdict = yaml.safe_load(file)
+            setuplist = yaml.safe_load(file)
         except yaml.YAMLError as exc:
-            raise SetupLoadError(f"Error while parsing setup list file:\n{exc}")
+            raise SetupLoadError(
+                f"Error while parsing setup list file:\n{exc}")
         setups: typing.Dict[str, Setup] = {}
 
-        if not isinstance(setupdict, dict):
-            raise SetupLoadError("Invalid data-type for setup dict.\n"
-                                 f"Expected 'dict' but got '{type(setupdict).__name__}'")
-
-        for setup_name in setupdict:
+        for setup in setuplist:
+            setup_name = setup.get('name', 'unnamed')
             try:
-                setup_obj = cls(setup_name,
-                                yaml.safe_dump(setupdict[setup_name]))
+                setup_obj = cls(
+                    yaml.safe_dump(setup))
                 setups[setup_name] = setup_obj
             except SetupLoadError as exc:
-                raise SetupLoadError(f"While parsing setup '{setup_name}':\n{exc}")
+                raise SetupLoadError(
+                    f"While parsing setup '{setup_name}':\n{exc}")
+
+        return setups
 
     def to_yaml(self) -> str:
         """Convert setup to YAML format and return the string value of it"""
         return yaml.safe_dump({
-            **{"roles": self.roles},
+            **{"roles": self.roles, 'name': self.name},
             **{key: val for key, val in self.flags.items()
-               if Setup.all_flags[key] != val} # only non-default flag values
+               if Setup.all_flags[key] != val}  # only non-default flag values
         })
 
-    def __init__(self, name: str, setup_str: str):
+    def __init__(self, setup_str: str):
         """Read a YAML string and create a setup object from it"""
-        self.name = name
         self.total_players: int = 0
         self.flags: typing.Dict[str, bool] = {}
         self.roles: typing.List[str] = []
@@ -84,6 +85,8 @@ class Setup:
             # KeyError contains the name of key not found as its string value
             raise SetupLoadError(f"Required key {exc} doesn't exist.")
 
+        self.name = setup_dict.get('name', 'unnamed')
+
         for flag_name in Setup.all_flags:
             flag_value = setup_dict.get(flag_name, Setup.all_flags[flag_name])
 
@@ -91,7 +94,7 @@ class Setup:
                 raise SetupLoadError(
                     f"Invalid data-type for flag: '{flag_name}'.\n"
                     f"Expected 'bool' but got '{type(flag_value).__name__}'"
-                    )
+                )
 
             self.flags[flag_name] = flag_value
 

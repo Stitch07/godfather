@@ -10,7 +10,7 @@ from godfather.cogs.mafia.checks import *  # pylint: disable=wildcard-import, un
 from godfather.errors import PhaseChangeError
 from godfather.game import Game, Phase, Player
 from godfather.game.vote_manager import VoteError
-from godfather.game.setup import Setup
+from godfather.game.setup import Setup, SetupLoadError
 from godfather.roles import all_roles
 from godfather.utils import (CustomContext, confirm, from_now,
                              get_random_sequence)
@@ -140,31 +140,32 @@ class Mafia(commands.Cog):
     @commands.cooldown(1, 5.0, commands.BucketType.channel)
     async def setupinfo(self, ctx: CustomContext, setup_name: typing.Optional[str] = None):
         # show the current setup if a game is ongoing
-        if (ctx.guild.id in ctx.bot.games
-                and ctx.game.phase != Phase.PREGAME
-                and setup_name is None):
-            setup_name = ctx.game.setup.name
+        found_setup = None
+        if (ctx.guild.id in ctx.bot.games and ctx.game.setup):
+            found_setup = ctx.game.setup
 
-        if setup_name is None or setup_name == 'all':
+        if found_setup is None or setup_name == 'all':
             txt = ('**All available setups:** (to view a specific setup, use '
                    f'{ctx.prefix}setupinfo <name>)')
             txt += '```\n'
-            for setup in self.bot.setups:
+            for setup in self.bot.setups.values():
                 txt += f'{setup.name} ({len(setup.roles)} players)\n'
             txt += '```'
             return await ctx.send(txt)
 
-        found_setup = self.bot.setups.get(setup_name)
+        if found_setup is None:
+            found_setup = self.bot.setups.get(setup_name)
 
         if not found_setup:
             return await ctx.send(
                 f"Couldn't find {setup_name}, use {ctx.prefix}setupinfo to view all setups."
             )
 
-        txt = [f'**{setup_name}** ({len(found_setup.total_players)} players)', '```\n']
+        txt = [
+            f'**{found_setup.name}** ({found_setup.total_players} players)', '```\n']
         for i, role in enumerate(found_setup.roles):
             txt.append(
-                f'{i+1}. {role["faction"].title()} {role["id"].title()}')
+                f'{i+1}. {role.title()}')
         txt.append('```')
 
         await ctx.send('\n'.join(txt))
@@ -207,17 +208,18 @@ class Mafia(commands.Cog):
             await ctx.send("Game has already started!")
             return
 
-        try:
-            found_setup = game.find_setup(r_setup)
-        except Exception as err:  # pylint: disable=broad-except
-            return await ctx.send(err)
-        game.setup = found_setup
+        if game.setup is None:
+            try:
+                found_setup = game.find_setup(r_setup)
+            except Exception as err:  # pylint: disable=broad-except
+                return await ctx.send(err)
+            game.setup = found_setup
 
         # set to standby so people can't join while the bot is sending rolepms
         game.phase = Phase.STANDBY
-        await ctx.send(f'Chose the setup **{found_setup["name"]}**. '
+        await ctx.send(f'Chose the setup **{game.setup.name}**. '
                        'Randing roles...')
-        roles = copy.deepcopy(found_setup['roles'])
+        roles = copy.deepcopy(game.setup.roles)
 
         # Create a random sequence of role indexes, enumerate the player list.
         # And assign the nth number in the random sequence to the nth player.
@@ -231,7 +233,7 @@ class Mafia(commands.Cog):
                 player_role = roles[role_sequence[num]]
 
                 # assign role and faction to the player
-                player.role = all_roles.get(player_role['name'])()
+                player.role = all_roles.get(player_role)()
 
                 # send role PMs
                 try:
@@ -264,7 +266,7 @@ class Mafia(commands.Cog):
         flags = {flag_name: game.setup.flags[flag_name]
                  for flag_name in Setup.all_flags}
 
-        if "night_start" in flags:
+        if "night_start" in flags and flags['night_start']:
             game.cycle = 1
             game.phase = Phase.DAY
         try:
@@ -346,3 +348,17 @@ class Mafia(commands.Cog):
             return await ctx.send('You cannot delete games that have already started!')
         del self.bot.games[ctx.guild.id]
         return await ctx.message.add_reaction('✅')
+
+    @commands.command()
+    @host_only()
+    @game_only()
+    async def usesetup(self, ctx: CustomContext, *, setup_data: str):
+        setup_data = setup_data.strip('```yaml\n')
+        try:
+            ctx.game.setup = Setup(setup_data)
+        except SetupLoadError as err:
+            return await ctx.send(err)
+
+        return await ctx.send('Using the setup **{}** with {} players.'.format(
+            ctx.game.setup.name, len(ctx.game.setup.roles)
+        ))

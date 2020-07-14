@@ -45,7 +45,8 @@ class Godfather(commands.Bot):
 
         # setup Postgres
         if 'postgres' in config:
-            self.db = DB(**config.get('postgres')) # pylint: disable=invalid-name
+            self.db = DB(**config.get('postgres')
+                         )  # pylint: disable=invalid-name
 
     async def get_context(self, message):
         # pylint: disable=arguments-differ
@@ -86,12 +87,11 @@ class Godfather(commands.Bot):
             if not alive_or_recent_jester(player, pl_game) \
                     or not hasattr(player.role, 'action'):
                 return
-            if command.lower() not in [player.role.action, 'noaction']:
+
+            if not isinstance(player.role.action, list):
+                player.role.action = [player.role.action]
+            if command.lower() not in player.role.action + ['noaction']:
                 return
-            if command.lower() == 'noaction':
-                args = ['noaction']
-            if hasattr(player.role, 'on_pm_command_notarget'):
-                return await player.role.on_pm_command_notarget(ctx, pl_game, player, command)
             await player.role.on_pm_command(ctx, pl_game, player, args)
 
             return  # ignore invalid commands

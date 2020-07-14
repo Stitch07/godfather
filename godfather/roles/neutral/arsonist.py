@@ -49,20 +49,20 @@ class Arsonist(Role):
         args = ' '.join(args)
 
         if command == 'noaction':
-            for action in game.night_actions.actions:
+            for action in game.night_actions:
                 if action['player'].user.id == player.user.id:
-                    game.night_actions.actions.remove(action)
+                    game.night_actions.remove(action)
 
-            for action in game.night_actions.actions:
+            for action in game.night_actions:
                 if action['player'].user.id == player.user.id:
-                    game.night_actions.actions.remove(action)
+                    game.night_actions.remove(action)
 
             game.night_actions.add_action({
                 'action': None,
                 'player': player,
                 'priority': 0
             })
-            if len(game.players.filter(action_only=True)) == len(game.night_actions.actions):
+            if len(game.players.filter(action_only=True)) == len(game.night_actions):
                 await game.increment_phase()
             return await ctx.send('You decided to stay home tonight.')
 
@@ -82,7 +82,7 @@ class Arsonist(Role):
             await ctx.send('You are igniting your doused targets today.')
             total_actions = len(game.players.filter(action_only=True))
             expected_total = total_actions + len(self.doused) - 1
-            if expected_total == len(game.night_actions.actions):
+            if expected_total == len(game.night_actions):
                 try:
                     await game.increment_phase()
                 except Exception as exc:
@@ -104,9 +104,9 @@ class Arsonist(Role):
         if not can_target:
             return await ctx.send(reason)
 
-        for action in game.night_actions.actions:
+        for action in game.night_actions:
             if action['player'].user.id == player.user.id:
-                game.night_actions.actions.remove(action)
+                game.night_actions.remove(action)
 
         game.night_actions.add_action({
             'action': 'douse',
@@ -118,11 +118,14 @@ class Arsonist(Role):
         })
         await ctx.send(f'You are dousing {target} tonight.')
 
-        if len(game.players.filter(action_only=True)) == len(game.night_actions.actions):
+        if len(game.players.filter(action_only=True)) == len(game.night_actions):
             try:
                 await game.increment_phase()
             except Exception as exc:
                 raise PhaseChangeError(None, *exc.args)
+
+    async def set_up(self, actions, player, target):
+        pass
 
     async def run_action(self, actions, player, target):
         if not self.ignited:
