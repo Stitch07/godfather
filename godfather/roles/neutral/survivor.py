@@ -6,6 +6,14 @@ DESCRIPTION = 'You may vest 4 times in a game.'
 
 
 class Survivor(NoTarget):
+    """
+    A neutral character who just wants to live and is too afraid to die.
+
+    - Win condition: Live until the end of the game.
+
+    + Abilities: Decide if you want to put on a bulletproof vest at night. Bullet proof vest gives you a basic defense.
+    + You can only use the bulletproof vest 4 times.
+    """
     name = 'Survivor'
     description = DESCRIPTION
 
@@ -18,6 +26,7 @@ class Survivor(NoTarget):
         self.action_text = 'protect yourself at night.'
         self.vests = 4
         self.vested = False
+        self.categories.append('Neutral Benign')
 
     def can_do_action(self, _game):
         if self.vests > 0:

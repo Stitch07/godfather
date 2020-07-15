@@ -27,6 +27,7 @@ class Jester(SingleAction):
         self.action_gerund = 'haunting'
         self.action_priority = Priority.JESTER_HAUNT
         self.action_text = 'haunt a player'
+        self.categories.append('Neutral Evil')
 
     async def on_night(self, bot, player, game):
         if not self.can_haunt:

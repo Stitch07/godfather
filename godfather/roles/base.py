@@ -4,9 +4,11 @@ from godfather.game.types import Defense
 class Role:
     name = ''
     description = ''
+    unique = False
 
     def __init__(self, *args, **kwargs):
         self.cleaned = False
+        self.categories = []
         super().__init__(*args, **kwargs)
 
     # str representation of role

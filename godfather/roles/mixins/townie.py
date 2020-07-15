@@ -5,3 +5,4 @@ class Townie:
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.faction = Town()
+        self.categories.append('Random Town')

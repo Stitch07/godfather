@@ -5,6 +5,14 @@ DESCRIPTION = 'You may watch one person at night to see who visits them.'
 
 
 class Lookout(Townie, SingleAction):
+    """
+    Some think he has got eagle’s eyes. An observer who is master at camping outside homes to gain information.
+
+    - Win Condition: lynch every criminal and evildoer
+
+    + Abilities: Choose to watch one person at night to see who visits them.
+    + You will exactly know who visited your target at night, showing their names.
+    """
     name = 'Lookout'
     description = DESCRIPTION
 
@@ -14,6 +22,7 @@ class Lookout(Townie, SingleAction):
         self.action_gerund = 'watching'
         self.action_priority = Priority.LOOKOUT
         self.action_text = 'watch a player'
+        self.categories.append('Town Investigative')
 
     async def tear_down(self, _actions, player, target):
         if len(target.visitors) > 1:

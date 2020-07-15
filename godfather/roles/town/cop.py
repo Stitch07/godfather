@@ -22,6 +22,7 @@ class Cop(Townie, SingleAction):
         self.action_gerund = 'checking'
         self.action_priority = Priority.COP
         self.action_text = 'check a player'
+        self.categories.append('Town Investigative')
 
     # this ensures all cop modifiers show up as regular Cops
     def display_role(self):

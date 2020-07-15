@@ -6,6 +6,14 @@ DESCRIPTION = 'You may stab someone every night.'
 
 
 class SerialKiller(SingleAction):
+    """
+    An insane person who wants everyone to die
+
+    - Win condition: Kill everyone who would oppose you.
+
+    + Abilities: choose to stab a person each night.
+    + If you are roleblocked you will attack the roleblocker instead of your target.
+    """
     name = 'Serial Killer'
     description = DESCRIPTION
 
@@ -16,6 +24,7 @@ class SerialKiller(SingleAction):
         self.action_gerund = 'stabbing'
         self.action_priority = Priority.SERIAL_KILLER
         self.action_text = 'stab a player'
+        self.categories.append('Neutral Killing')
 
     def defense(self):
         return Defense.BASIC

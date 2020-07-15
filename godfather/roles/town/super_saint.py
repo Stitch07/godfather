@@ -6,6 +6,13 @@ DESCRIPTION = 'You will blow up the last person to lynch you!'
 
 
 class SuperSaint(Townie, Role):
+    """
+    A vengeful lunatic who will explode on getting lynched.
+
+    - Win Condition: Lynch every criminal and evildoer
+
+    + Abilities: Once the super saint gets lynched during day, the person last voted to lynch will die.
+    """
     name = 'Super Saint'
     description = DESCRIPTION
 

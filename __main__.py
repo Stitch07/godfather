@@ -27,6 +27,8 @@ class Godfather(commands.Bot):
             description='A Discord bot for automatically hosting games of Mafia/Werewolf.'
         )
 
+        self.__version__ = (0, 1, 1)
+        self.__release__ = 'alpha'
         self.setups = {}
         self.games = {}
 
@@ -70,6 +72,17 @@ class Godfather(commands.Bot):
 
         self.logger.info('Successfully loaded %s setups',
                          len(self.setups) - setup_errors)
+
+    async def on_guild_join(self, guild: discord.Guild):
+        if self.__release__ != 'beta':
+            return
+        with self.db.conn.cursor() as cur:
+            cur.execute(
+                'SELECT EXISTS(select 1 FROM approved_guilds WHERE id=%s);', [guild.id])
+            result = cur.fetchone()[0]
+            if not result:
+                await guild.leave()
+                self.logger.info('Leaving unapproved guild %s', guild.name)
 
     async def on_command_error(self, ctx, error):
         # pylint: disable=too-many-return-statements, arguments-differ, too-many-branches

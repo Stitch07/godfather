@@ -17,12 +17,14 @@ class Godfather(MafiaMember, Shooter, SingleAction):
     """
     name = 'Godfather'
     description = DESCRIPTION
+    unique = True
 
     def __init__(self):
         super().__init__()
         self.action = 'shoot'
         self.action_gerund = 'shooting'
         self.action_text = 'shoot a player'
+        self.categories.append('Mafia Killing')
 
     def defense(self):
         return Defense.BASIC

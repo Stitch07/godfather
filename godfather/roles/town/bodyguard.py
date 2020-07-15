@@ -5,6 +5,14 @@ DESCRIPTION = 'You may heal guard someone every night.'
 
 
 class Bodyguard(Townie, SingleAction):
+    """
+    An ex-army soldier who now protects people for a living.
+
+    - Win Condition: lynch every criminal and evildoer
+
+    + Abilities: Protect a player from direct attacks at night.
+    + If your target is attacked, then you and the visitor will fight to the death, if you successfully protect someone you can still be healed.
+    """
     name = 'Bodyguard'
     description = DESCRIPTION
 
@@ -15,6 +23,7 @@ class Bodyguard(Townie, SingleAction):
         self.action_priority = Priority.BODYGUARD
         self.action_text = 'guard a player'
         self.can_self_target = True  # one self-heal allowed
+        self.categories.append('Town Protective')
 
     async def run_action(self, actions, player, target):
         pl_record = actions.record[target.user.id]

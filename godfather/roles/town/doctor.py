@@ -5,6 +5,15 @@ DESCRIPTION = 'You may heal someone every night, and self-heal once.'
 
 
 class Doctor(Townie, SingleAction):
+    """
+    An experienced surgeon in trauma care who secretly heals people.
+
+    - Win Condition: lynch every criminal and evildoer
+
+    + Abilities: Choose to heal one person at night, granting them powerful defense.
+    + You will know if your target is attacked
+    + You can only choose to heal yourself once every game
+    """
     name = 'Doctor'
     description = DESCRIPTION
 
@@ -15,6 +24,7 @@ class Doctor(Townie, SingleAction):
         self.action_priority = Priority.DOCTOR
         self.action_text = 'heal a player'
         self.can_self_target = True  # one self-heal allowed
+        self.categories.append('Town Protective')
 
     async def run_action(self, actions, player, target):
         pl_record = actions.record[target.user.id]

@@ -5,6 +5,15 @@ DESCRIPTION = 'You may shoot someone every night. If you shoot a townie, you wil
 
 
 class Vigilante(Townie, Shooter, SingleAction):
+    """
+    A militant officer who takes laws in his own hand.
+
+    - Win Condition: lynch every criminal and evildoer
+
+    + Abilities: take justice in your own hands and shoot someone at night.
+    + you can only choose to shoot 3 times in the game.
+    + if you shoot another town member, you will commit suicide over the guilt of killing your own member.
+    """
     name = 'Vigilante'
     description = DESCRIPTION
 
@@ -12,6 +21,7 @@ class Vigilante(Townie, Shooter, SingleAction):
         super().__init__()
         self.guilty = False
         self.bullets = 3  # vigs only get 3 shots
+        self.categories.append('Town Killing')
 
     async def on_night(self, bot, player, game):
         if self.guilty:

@@ -5,6 +5,14 @@ DESCRIPTION = 'You may roleblock somebody each night.'
 
 
 class Escort(Townie, SingleAction):
+    """
+    A very beautiful woman skilled in distracting her targets.
+
+    - Win Condition: lynch every criminal and evildoer.
+
+    + Abilities: Choose one person each night to block them from using their role’s night ability. (roleblock)
+    + You cannot be roleblocked.
+    """
     name = 'Escort'
     description = DESCRIPTION
 
@@ -14,6 +22,7 @@ class Escort(Townie, SingleAction):
         self.action_gerund = 'blocking'
         self.action_priority = Priority.ESCORT
         self.action_text = 'roleblock a player'
+        self.categories.append('Town Support')
 
     async def set_up(self, actions, player, target):
         for action in filter(lambda act: act['player'] == target, actions):

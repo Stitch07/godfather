@@ -33,14 +33,33 @@ class Misc(commands.Cog):
 
     @commands.command()
     async def invite(self, ctx):
+        app = await self.bot.application_info()
+        if not app.bot_public:
+            return await ctx.send('{} isn\'t public yet...'.format(self.bot.user.name))
+
         embed = discord.Embed()
         embed.set_author(name=self.bot.user.name,
                          icon_url=self.bot.user.avatar_url)
         embed.description = '[Invite]({}) | [Support Server](https://discord.gg/gFhvChy)'.format(
             self.bot.invite)
+
+        if self.bot.__release__ == 'beta':
+            embed.description += ('\n{0} is currently semi-public. Use the `apply` command to apply for approval. {0} will automatically leave servers that aren\'t approved.').format(self.bot.user.name)
+
         return await ctx.send(embed=embed)
 
-    # just a basic proof of concept
+    @commands.command()
+    @commands.cooldown(5, 60.0, commands.BucketType.user)
+    async def apply(self, ctx, guild_id: int):
+        if self.bot.__release__ != 'beta':
+            return await ctx.send('Beta release hasn\'t started yet. Stay tuned... 👀')
+        # TODO: don't hardcode this
+        app_channel = self.bot.get_channel(732899498983948359)
+        await ctx.message.add_reaction('✅')
+        return await app_channel.send('{} is applying for the server **{}**'.format(ctx.author, guild_id))
+
+        # just a basic proof of concept
+
     @flags.add_flag('--role', type=str, default='')
     @flags.add_flag('--faction', type=str, default='')
     @flags.command()

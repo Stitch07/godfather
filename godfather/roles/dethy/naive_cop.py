@@ -14,5 +14,9 @@ class NaiveCop(Cop):
     """
     name = 'Naive Cop'
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.categories.remove('Town Investigative')
+
     def result_modifier(self, _innocence):
         return True

@@ -5,6 +5,15 @@ DESCRIPTION = 'You may clean a player at night.'
 
 
 class Janitor(MafiaMember, SingleAction):
+    """
+    A sanitisation expert working for organised crime.
+
+    - Win condition: Kill anyone who will not submit to the mafia.
+
+    + Abilities: Choose a target who will be potentially killed by mafia.
+    + If your target dies, their role will not be revealed to anyone except you.
+    + You can only perform 3 cleanings in a game.
+    """
     name = 'Janitor'
     description = DESCRIPTION
 
@@ -14,6 +23,7 @@ class Janitor(MafiaMember, SingleAction):
         self.action_gerund = 'cleaning'
         self.action_priority = Priority.JANITOR
         self.action_text = 'clean a player'
+        self.categories.append('Mafia Deception')
 
     async def run_action(self, actions, player, target):
         record = actions.record[target.user.id]['nightkill']

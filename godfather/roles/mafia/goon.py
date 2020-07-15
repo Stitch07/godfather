@@ -6,6 +6,11 @@ DESCRIPTION = 'You may shoot someone every night.'
 class Goon(MafiaMember, Shooter, SingleAction):
     name = 'Goon'
     description = DESCRIPTION
+    unique = True
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.categories.append('Mafia Killing')
 
     async def on_pm_command(self, ctx, game, player, args):
         if any(filter(lambda action: action['player'].role.name == 'Godfather', game.night_actions)):

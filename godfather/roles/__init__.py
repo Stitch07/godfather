@@ -1,9 +1,11 @@
 # All roles need to follow a common method pattern, but not all roles need the required parameters
+from collections import defaultdict
 from pathlib import Path
 from importlib import import_module
 from godfather.roles.base import Role
 
 all_roles = {}
+role_categories = defaultdict(list)
 
 
 def filter_func(path: Path):
@@ -20,6 +22,10 @@ for file in Path('godfather/roles').iterdir():
         CLS_NAME = ''.join(map(str.title, file.stem.split('_')))
         role_cls = getattr(role_mod, CLS_NAME)
         all_roles[role_cls.name] = role_cls
+        role_instance = role_cls()
+        for category in role_instance.categories:
+            role_categories[category].append(role_cls)
+
     else:
         for nested_file in filter(filter_func, Path(f'godfather/roles/{file.stem}').iterdir()):
             role_mod = import_module(
@@ -27,3 +33,6 @@ for file in Path('godfather/roles').iterdir():
             CLS_NAME = ''.join(map(str.title, nested_file.stem.split('_')))
             role_cls = getattr(role_mod, CLS_NAME)
             all_roles[role_cls.name] = role_cls
+            role_instance = role_cls()
+            for category in role_instance.categories:
+                role_categories[category].append(role_cls)

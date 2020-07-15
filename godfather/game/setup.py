@@ -1,8 +1,14 @@
+import copy
 from io import TextIOBase
 import typing
+import random
 import re
+
+import discord
 import yaml
-from godfather.roles import all_roles
+
+from godfather.roles import all_roles, role_categories
+from godfather.utils import get_random_sequence
 
 
 class SetupLoadError(Exception):
@@ -104,7 +110,7 @@ class Setup:
 
         for role_str in role_list:
             role_name, role_quantity = Setup.parse_role_str(role_str)
-            if role_name not in all_roles:
+            if role_name not in all_roles and role_name not in role_categories:
                 raise SetupLoadError(f"Role '{role_name}' not found.")
 
             self.roles.extend([role_name] * role_quantity)
@@ -113,3 +119,57 @@ class Setup:
 
         if self.total_players < 3:
             raise SetupLoadError("Setup must have at least 3 players.")
+
+    async def assign_roles(self, game):
+        roles = copy.deepcopy(self.roles)
+        # convert categories to roles
+        # contains all unique roles already used in the setup
+        unique_roles = set()
+        for n, role in enumerate(roles):
+            if role in role_categories:
+                category_roles = role_categories.get(role)
+
+                def filter_unique(role):
+                    return role.name not in unique_roles
+
+                random_role = random.choice(
+                    list(filter(filter_unique, category_roles)))
+                if random_role.unique:
+                    unique_roles.add(random_role.name)
+                roles[n] = random_role.name
+
+        # Create a random sequence of role indexes, enumerate the player list.
+        # And assign the nth number in the random sequence to the nth player.
+        # Then use the resulting number as index for the role.
+        role_sequence = get_random_sequence(0, len(roles)-1)
+
+        # people the bot couldn't dm
+        no_dms = []
+        async with game.channel.typing():
+            for num, player in enumerate(game.players):
+                player_role = roles[role_sequence[num]]
+
+                # assign role and faction to the player
+                player.role = all_roles.get(player_role)()
+
+                # send role PMs
+                try:
+                    await player.user.send(player.role_pm)
+                except discord.Forbidden:
+                    no_dms.append(player.user)
+
+            for player in filter(lambda pl: pl.role.faction.informed, game.players):
+                teammates = game.players.filter(faction=player.role.faction.id)
+                if len(teammates) > 1:
+                    await player.user.send(
+                        f'Your team consists of: {", ".join(map(lambda pl: pl.user.name, teammates))}'
+                    )
+
+            for player in game.players.filter(role='Executioner'):
+                targets = list(filter(lambda pl: pl.role.faction.name == 'Town' and pl.role.name not in [
+                    'Jailor', 'Mayor'], game.players))
+                target = random.choice(targets)
+                player.target = target
+                await player.user.send('Your target is {}'.format(target.user))
+
+        return no_dms

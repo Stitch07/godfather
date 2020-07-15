@@ -7,6 +7,14 @@ DESCRIPTION = 'You may douse someone every night, and then ignite all your douse
 
 
 class Arsonist(Role):
+    """
+    He wants to see the world burn.
+
+    -  Win condition: Live to see everyone burn.
+
+    + Abilities: You may douse someone each night in gasoline or ignite doused targets.
+    + Igniting doused people will deal and unstoppable attack to all doused targets.
+    """
     name = 'Arsonist'
     description = DESCRIPTION
 
@@ -16,6 +24,7 @@ class Arsonist(Role):
         self.action = ['douse', 'ignite']
         self.doused = set()
         self.ignited = False
+        self.categories.append('Neutral Killing')
 
     def can_do_action(self, command):
         if command == 'ignite' and len(self.doused) == 0:
