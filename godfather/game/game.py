@@ -126,7 +126,8 @@ class Game:
             dead_players = await self.night_actions.resolve()
 
             for player in dead_players:
-                await self.channel.send(f'{player.user.name} died last night. They were a {player.display_role}\n')
+                role_text = 'We could not determine their role.' if player.role.cleaned else f'They were a {player.display_role}.'
+                await self.channel.send(f'{player.user.name} died last night. {role_text}\n')
 
             game_ended, winning_faction, independent_wins = self.check_endgame()
             if game_ended:

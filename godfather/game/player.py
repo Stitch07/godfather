@@ -42,6 +42,8 @@ class Player:
 
     @property
     def display_role(self):
+        if self.role.cleaned:
+            return 'Cleaned'
         if self.role.faction.id.startswith('neutral'):
             return self.role.display_role()
         return f'{self.role.faction} {self.role.display_role()}'

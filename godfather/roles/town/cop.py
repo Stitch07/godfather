@@ -5,6 +5,14 @@ DESCRIPTION = 'You may interrogate one person each night for suspicious activity
 
 
 class Cop(Townie, SingleAction):
+    """
+    The law enforcer of town, on the hunt to find the mafia, always constantly in the danger of being killed.
+
+    - Win Condition: Lynch every criminal and evildoer
+
+    + Abilities: Interrogate one person each night for suspicious activity
+    + You will know if your target is suspicious or innocent
+    """
     name = 'Cop'
     description = DESCRIPTION
 

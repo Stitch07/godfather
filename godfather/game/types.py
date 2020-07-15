@@ -44,3 +44,5 @@ class Priority(IntEnum):
     CONSIG = 5
     TRACKER = 5
     FRAMER = 5
+    # janitor cleans after killing roles have already cleaned them
+    JANITOR = 6

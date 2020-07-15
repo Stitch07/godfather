@@ -5,6 +5,10 @@ class Role:
     name = ''
     description = ''
 
+    def __init__(self, *args, **kwargs):
+        self.cleaned = False
+        super().__init__(*args, **kwargs)
+
     # str representation of role
     def __str__(self):
         return self.name
@@ -13,6 +17,8 @@ class Role:
         return False, ''
 
     def display_role(self):
+        if self.cleaned:
+            return 'Cleaned'
         return self.name
 
     # called when a player is lynched. takes the game object, and the player lynched

@@ -160,7 +160,7 @@ class Mafia(commands.Cog):
         if (ctx.guild.id in ctx.bot.games and ctx.game.setup):
             found_setup = ctx.game.setup
 
-        if found_setup is None or setup_name == 'all':
+        if (found_setup is None and setup_name is None) or setup_name == 'all':
             txt = ('**All available setups:** (to view a specific setup, use '
                    f'{ctx.prefix}setupinfo <name>)')
             txt += '```\n'
