@@ -21,9 +21,9 @@ class SerialKiller(SingleAction):
         return Defense.BASIC
 
     async def run_action(self, actions, player, target):
-        if target.defense() >= Defense.BASIC:
+        if target.role.defense() >= Defense.BASIC:
             return
-        pl_record = actions[target.user.id]
+        pl_record = actions.record[target.user.id]
         pl_record['nightkill']['result'] = True
         pl_record['nightkill']['type'] = Attack.BASIC
         pl_record['nightkill']['by'].append(player)

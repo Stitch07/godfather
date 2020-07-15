@@ -2,9 +2,13 @@ import copy
 import inspect
 import random
 import typing
+from collections import defaultdict
+from functools import reduce
 
 import discord
 from discord.ext import commands
+
+from Levenshtein import jaro_winkler
 
 from godfather.cogs.mafia.checks import *  # pylint: disable=wildcard-import, unused-wildcard-import
 from godfather.errors import PhaseChangeError
@@ -13,7 +17,7 @@ from godfather.game.vote_manager import VoteError
 from godfather.game.setup import Setup, SetupLoadError
 from godfather.roles import all_roles
 from godfather.utils import (CustomContext, confirm, from_now,
-                             get_random_sequence)
+                             get_random_sequence, emotes)
 
 
 class Mafia(commands.Cog):
@@ -24,7 +28,6 @@ class Mafia(commands.Cog):
     async def creategame(self, ctx: CustomContext):
         """
         Creates a game of mafia in this server.
-
         To join an existing game, use the `join` command.
         Hosts may delete running games using the `delete` command.
         """
@@ -37,9 +40,12 @@ class Mafia(commands.Cog):
                               f'{ctx.message.channel.mention}, '
                               f'hosted by **{ctx.message.author}**')
 
-    @commands.command()
+    @commands.command(aliases=['in'])
     @game_only()
     async def join(self, ctx: CustomContext):
+        """
+        Adds you to the playerlist of an ongoing game.
+        """
         game = self.bot.games[ctx.guild.id]
 
         if ctx.author in game.players:
@@ -66,9 +72,13 @@ class Mafia(commands.Cog):
         game.players.add(ctx.author)
         return await ctx.send('✅ Game joined successfully.')
 
-    @commands.command()
+    @commands.command(aliases=['out'])
     @game_only()
     async def leave(self, ctx: CustomContext):
+        """
+        Leave an ongoing game.
+        Leaving a game that has started and has no replacements will result in a mod-kill.
+        """
         game = self.bot.games[ctx.guild.id]
 
         if ctx.author in game.players.replacements:
@@ -122,6 +132,9 @@ class Mafia(commands.Cog):
     @game_only()
     @commands.cooldown(1, 5.0, commands.BucketType.channel)
     async def playerlist(self, ctx: CustomContext):
+        """
+        Shows everyone who has signed up for the current game.
+        """
         game = self.bot.games[ctx.guild.id]
         msg = f'**Players: {len(game.players)}**\n'
         msg += game.players.show(show_replacements=True)
@@ -133,6 +146,9 @@ class Mafia(commands.Cog):
     @game_only()
     @commands.cooldown(1, 5.0, commands.BucketType.channel)
     async def remaining(self, ctx):
+        """
+        Shows when the current day/night ends.
+        """
         game = self.bot.games[ctx.guild.id]
         await ctx.send(f'🕰️ The current phase ends {from_now(game.phase_end_at)}')
 
@@ -164,17 +180,38 @@ class Mafia(commands.Cog):
         txt = [
             f'**{found_setup.name}** ({found_setup.total_players} players)', '```\n']
         for i, role in enumerate(found_setup.roles):
-            txt.append(
-                f'{i+1}. {role.title()}')
+            txt.append(f'{i+1}. {role.title()}')
         txt.append('```')
 
         await ctx.send('\n'.join(txt))
 
-    @commands.command()
+    @ commands.command()
     async def roleinfo(self, ctx: CustomContext, *, rolename: typing.Optional[str] = None):
+        """
+        Shows information about the given role.
+        """
         if rolename is None:
-            # show all available roles here sometime
-            return
+            def accumulator(facroles, role):
+                facroles[role().faction.category_name].append(role.name)
+                return facroles
+            fac_roles = reduce(
+                accumulator, all_roles.values(), defaultdict(list))
+            embed = discord.Embed()
+            embed.color = 0x000000
+            embed.set_author(name='All supported roles',
+                             icon_url=self.bot.user.avatar_url)
+            embed.set_footer(
+                text='For information on a specific role, use the roleinfo command.')
+            embed.description = ''
+            for faction, roles in fac_roles.items():
+                roles.sort()
+                for role in roles:
+                    emote_name = role if faction == 'Neutral' else faction
+                    emote = emotes.get(emote_name, '❓')
+                    embed.description += '{} **{}**\n'.format(emote, role)
+                embed.description += '\n'
+            return await ctx.send(embed=embed)
+
         for role in all_roles.values():
             role = role()  # initialize the class
             if role.name.lower() == rolename.lower():
@@ -184,24 +221,38 @@ class Mafia(commands.Cog):
                 text.append(inspect.getdoc(role))
                 text.append('```')
                 return await ctx.send('\n'.join(text))
+
+        for role in all_roles.values():
+            if jaro_winkler(role.name.lower(), rolename.lower()) > 0.85:
+                return await ctx.send('Couldn\'t find the role "{}". Did you mean {}?'.format(rolename, role.name))
         await ctx.send("Couldn't find that role!")
 
-    @commands.command()
-    @game_only()
-    @game_started_only()
+    @ commands.command()
+    @ game_only()
+    @ game_started_only()
     async def rolepm(self, ctx: CustomContext):
+        """
+        Sends you your role PM.
+        """
         player = ctx.game.players[ctx.author]
         try:
             await player.user.send(player.role_pm)
+            can_do, _ = player.role.can_do_action(ctx.game)
+            if ctx.game.phase == Phase.NIGHT and can_do:
+                await player.role.on_night(ctx.bot, player, ctx.game)
             await ctx.message.add_reaction('✅')
         except discord.Forbidden:
             await ctx.send('Cannot send you your role PM. Make sure your DMs are enabled!')
 
-    @commands.command(aliases=['start'])
-    @host_only()
-    @game_only()
+    @ commands.command(aliases=['start'])
+    @ host_only()
+    @ game_only()
     async def startgame(self, ctx: CustomContext,
                         r_setup: typing.Optional[str] = None):
+        """
+        Starts the game.
+        To view a list of available setups, use the `setupinfo` command.
+        """
         game = ctx.game
 
         if game.has_started:
@@ -274,12 +325,15 @@ class Mafia(commands.Cog):
         except Exception as exc:
             raise PhaseChangeError(None, *exc.args)
 
-    @commands.command()
+    @commands.command(aliases=['vtl'])
     @day_only()
     @game_started_only()
     @player_only()
     @game_only()
     async def vote(self, ctx: CustomContext, *, target: Player):
+        """
+        Vote to lynch a player.
+        """
         game: Game = ctx.game
         try:
             hammered = game.votes.vote(game.players[ctx.author], target)
@@ -299,12 +353,15 @@ class Mafia(commands.Cog):
                 game.phase = Phase.DAY
                 await game.increment_phase()
 
-    @commands.command(aliases=['vtnl'])
+    @commands.command(aliases=['vtnl', 'nl'])
     @day_only()
     @game_started_only()
     @player_only()
     @game_only()
     async def nolynch(self, ctx: CustomContext):
+        """
+        Vote to end day without a lynch.
+        """
         game = self.bot.games[ctx.guild.id]
         try:
             nolynch = game.votes.no_lynch(game.players[ctx.author])
@@ -318,25 +375,31 @@ class Mafia(commands.Cog):
             game.phase = Phase.DAY
             await game.increment_phase()
 
-    @ commands.command()
+    @commands.command()
     @day_only()
-    @ game_started_only()
-    @ player_only()
-    @ game_only()
+    @game_started_only()
+    @player_only()
+    @game_only()
     async def unvote(self, ctx: CustomContext):
+        """
+        Remove your vote from a player/nolynch.
+        """
         unvoted = ctx.game.votes.unvote(ctx.game.players[ctx.author])
         if unvoted:
             return await ctx.message.add_reaction('✅')
 
         await ctx.send('No votes to remove.')
 
-    @ commands.command()
+    @commands.command(aliases=['vc', 'votes'])
     @day_only()
-    @ game_started_only()
-    @ player_only()
-    @ game_only()
+    @game_started_only()
+    @player_only()
+    @game_only()
     @commands.cooldown(1, 5.0, commands.BucketType.channel)
     async def votecount(self, ctx: CustomContext):
+        """
+        Shows the current vote count.
+        """
         msg = ctx.game.votes.show()
         return await ctx.send(msg)
 
@@ -344,6 +407,9 @@ class Mafia(commands.Cog):
     @host_only()
     @game_only()
     async def deletegame(self, ctx: CustomContext):
+        """
+        Lets a host delete an ongoing game. (provided it has not started yet)
+        """
         if ctx.game.has_started:
             return await ctx.send('You cannot delete games that have already started!')
         del self.bot.games[ctx.guild.id]

@@ -20,8 +20,9 @@ class Cop(Townie, SingleAction):
         return 'Cop'
 
     async def tear_down(self, actions, player, target):
-        # TODO: framer check here
         innocence = self.result_modifier(target.innocent)
+        if target in actions.framed_players:
+            innocence = False
         await player.user.send(f"Your target is {'innocent' if innocence else 'suspicious'}.")
 
     def result_modifier(self, innocence):

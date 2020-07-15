@@ -21,6 +21,6 @@ class Goon(MafiaMember, Shooter, SingleAction):
         await target.user.send('You were shot by a Goon. You have died!')
 
     def can_do_action(self, game):
-        if game.setup['name'] == 'dethy' and game.cycle == 1:
+        if game.setup.name == 'dethy' and game.cycle == 1:
             return False, 'You cannot shoot N1 in Dethy.'
         return super().can_do_action(game)

@@ -48,6 +48,10 @@ class Godfather(commands.Bot):
             self.db = DB(**config.get('postgres')
                          )  # pylint: disable=invalid-name
 
+    @property
+    def invite(self):
+        return 'https://discord.com/oauth2/authorize?client_id={}&scope=bot'.format(self.user.id)
+
     async def get_context(self, message):
         # pylint: disable=arguments-differ
         return await super().get_context(message, cls=CustomContext)

@@ -42,3 +42,5 @@ class Priority(IntEnum):
     COP = 5
     LOOKOUT = 5
     CONSIG = 5
+    TRACKER = 5
+    FRAMER = 5

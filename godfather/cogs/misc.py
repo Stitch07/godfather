@@ -27,7 +27,18 @@ class Misc(commands.Cog):
 
     @commands.command()
     async def ping(self, ctx):
-        await ctx.send('Pong!')
+        resp = await ctx.send('Pinging...')
+        diff = resp.created_at - ctx.message.created_at
+        await resp.edit(content=f'Pong! That took {1000*diff.total_seconds():.1f}ms.')
+
+    @commands.command()
+    async def invite(self, ctx):
+        embed = discord.Embed()
+        embed.set_author(name=self.bot.user.name,
+                         icon_url=self.bot.user.avatar_url)
+        embed.description = '[Invite]({}) | [Support Server](https://discord.gg/gFhvChy)'.format(
+            self.bot.invite)
+        return await ctx.send(embed=embed)
 
     # just a basic proof of concept
     @flags.add_flag('--role', type=str, default='')

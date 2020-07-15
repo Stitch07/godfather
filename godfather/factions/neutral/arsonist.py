@@ -7,6 +7,10 @@ class ArsonistNeutral(Faction):
     id = 'neutral.arsonist'
     win_con = 'Watch everyone burn.'
 
+    @property
+    def category_name(self):
+        return 'Neutral'
+
     def has_won(self, game: Game):
         alive_arsos = game.players.filter(
             faction='neutral.arsonist', is_alive=True)

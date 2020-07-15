@@ -7,6 +7,10 @@ class ExecutionerNeutral(Faction):
     id = 'neutral.executioner'
     win_con = 'Get your target lynched at any cost.'
 
+    @property
+    def category_name(self):
+        return 'Neutral'
+
     def has_won_independent(self, player: Player):
         if not player.target.is_alive and player.target.death_reason.startswith('lynched'):
             return True

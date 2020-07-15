@@ -7,6 +7,10 @@ class SerialKillerNeutral(Faction):
     id = 'neutral.serialkiller'
     win_con = 'Be the last player standing.'
 
+    @property
+    def category_name(self):
+        return 'Neutral'
+
     def has_won(self, game: Game):
         alive_sks = game.players.filter(
             faction='neutral.serialkiller', is_alive=True)

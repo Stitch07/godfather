@@ -15,10 +15,10 @@ class Veteran(Townie, NoTarget):
         self.action_text = 'go on alert'
         # whether the vet has alerted this night
         self.alerted = False
-        self.alerts = Priority.VETERAN
+        self.alerts = 4
         self.can_block = False
         self.can_transport = False
-        self.action_priority = 0
+        self.action_priority = Priority.VETERAN
 
     def defense(self):
         return Defense.BASIC if self.alerted else Defense.NONE
@@ -28,7 +28,7 @@ class Veteran(Townie, NoTarget):
             return False, 'You ran out of alerts!'
         return True, ''
 
-    async def set_up(self, _game, _night_record, _player, _target):
+    async def set_up(self, _actions, _player, _target):
         self.alerted = True
 
     async def tear_down(self, _actions, _player, _target):

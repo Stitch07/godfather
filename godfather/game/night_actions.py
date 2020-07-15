@@ -23,10 +23,12 @@ class NightActions(list):
         super().__init__()
         self.game = game
         self.record = night_record
+        self.framed_players = []
         self.record.clear()
 
     def reset(self):
         self.clear()
+        self.framed_players.clear()
         self.record.clear()
 
     def add_action(self, action):
@@ -51,6 +53,9 @@ class NightActions(list):
         for action in self:
             player = action['player']
             target = action.get('target', None)
+            if action['action'] is None:
+                self.remove(action)
+                continue
             if not target.user.id == player.user.id:
                 await target.visit(player, self)
             await player.role.run_action(self, player, target)
@@ -59,6 +64,9 @@ class NightActions(list):
         for action in self:
             player = action['player']
             target = action.get('target', None)
+            if action['action'] is None:
+                self.remove(action)
+                continue
             await player.role.tear_down(self, player, target)
 
         # figure out which players died

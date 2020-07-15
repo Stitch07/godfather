@@ -13,6 +13,15 @@ class NoTarget(Role):
             + f'Use {bot.command_prefix}cancel to cancel.\n'
         await player.user.send(output)
 
+    async def set_up(self, actions, player, target):
+        pass
+
+    async def run_action(self, actions, player, target):
+        pass
+
+    async def tear_down(self, actions, player, target):
+        pass
+
     async def on_pm_command(self, ctx, game, player, args):
         command = args[0]
         can_do, reason = self.can_do_action(game)
@@ -20,9 +29,9 @@ class NoTarget(Role):
             return await ctx.send(f'You cannot use your action today. {reason}')
 
         if command == 'noaction':
-            for action in game.night_actions.actions:
+            for action in game.night_actions:
                 if action['player'].user.id == player.user.id:
-                    game.night_actions.actions.remove(action)
+                    game.night_actions.remove(action)
 
             game.night_actions.add_action({
                 'action': None,
@@ -41,7 +50,7 @@ class NoTarget(Role):
         })
         await ctx.send('You have decided to {} tonight.'.format(self.action))
 
-        if len(game.players.filter(action_only=True)) == len(game.night_actions.actions):
+        if len(game.players.filter(action_only=True)) == len(game.night_actions):
             try:
                 await game.increment_phase(ctx.bot)
             except Exception as exc:
