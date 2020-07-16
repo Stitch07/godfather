@@ -9,8 +9,7 @@ class InsaneCop(Cop):
 
     + Abilities: Interrogate one person each night for suspicious activity
     + You will know if your target is suspicious or innocent
-
-    Special Interactions: An insane cop will always show the opposite results for suspicion, showing innocent roles as suspicious and suspicious roles as innocent
+    + An insane cop will always show the opposite results for suspicion, showing innocent roles as suspicious and suspicious roles as innocent
     """
     name = 'Insane Cop'
 

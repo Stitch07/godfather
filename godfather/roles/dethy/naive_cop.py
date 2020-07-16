@@ -9,8 +9,7 @@ class NaiveCop(Cop):
 
     + Abilities: Interrogate one person each night for suspicious activity
     + You will know if your target is suspicious or innocent
-
-    Special Interactions: A naive cop will always show innocent results regardless of the roles]
+    + A naive cop will always show innocent results regardless of the roles]
     """
     name = 'Naive Cop'
 
