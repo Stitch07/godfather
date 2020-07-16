@@ -1,15 +1,16 @@
-# tvm-bot
+# Godfather
 
 [![Discord](https://discordapp.com/api/guilds/723535249073504306/embed.png)](https://discord.gg/gFhvChy)
 
-TvM Bot is a Discord bot that automatically hosts and runs games of Werewolf/Mafia.
-Version 1 aims to be completely compatible with [Town of Salem](http://blankmediagames.org/)
+Godfather is a Discord bot that automatically hosts and runs games of Werewolf/Mafia.
 
-## Planned Features:
+![Hammering](https://i.imgur.com/FysUnSv.png)
 
+## Features:
+
+* 20+ roles, including Vigilante, Godfather, Serial Killer
 * Custom setups
-* Fully ToS compatible roles
-* The ability to add modifiers (bulletproof, strongman) to roles
+* Preloaded setups for up to 11 players at a time.
 * Player statistics
 
 ## Contributors
