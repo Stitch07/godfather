@@ -9,8 +9,7 @@ class ParanoidCop(Cop):
 
     + Abilities: Interrogate one person each night for suspicious activity
     + You will know if your target is suspicious or innocent
-
-    Special Interactions: A paranoid cop will always show suspicious results regardless of the roles
+    + A paranoid cop will always show suspicious results regardless of the roles
     """
     name = 'Paranoid Cop'
 
