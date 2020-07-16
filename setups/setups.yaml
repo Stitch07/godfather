@@ -53,32 +53,32 @@
   - Vanilla
   - Vanilla
   - Vanilla
-  - Escort
-  - Cop
-  - Jester
+  - Town Support
+  - Town Investigative
+  - Neutral Evil
   - Goon
-  - Consort
+  - Mafia Support
 - name: matrix7maybe?
   roles:
   - Vanilla
   - Vanilla
-  - Lookout
-  - Bodyguard
-  - Vigilante
-  - Escort
-  - Cop
+  - Town Investigative
+  - Town Investigative
+  - Town Killing
+  - Town Support
+  - Town Protective
   - Godfather
   - Goon
-  - Consigliere
+  - Mafia Deception
 - name: prmadness
   roles:
-  - Lookout
-  - Bodyguard
-  - Veteran
-  - Escort
-  - Cop
-  - Vigilante
-  - Survivor
-  - Serial Killer
+  - Town Investigative
+  - Town Investigative
+  - Town Protective
+  - Town Killing
+  - Town Support
+  - Random Town
+  - Neutral Benign
+  - Neutral Killing
   - Goon
-  - Consigliere
+  - Mafia Support

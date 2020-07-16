@@ -7,9 +7,18 @@ verify_ssl = true
 pylint = "*"
 
 [packages]
-discord = "*"
-pyyaml = "*"
+discord = "==1.0.1"
 psycopg2 = "*"
+aiohttp = "==3.6.2"
+async-timeout = "==3.0.1"
+attrs = "==19.3.0"
+chardet = "==3.0.4"
+"discord.py" = "==1.3.4"
+idna = "==2.10"
+multidict = "==4.7.6"
+websockets = "==8.1"
+yarl = "==1.4.2"
+PyYAML = "==5.3.1"
 
 [requires]
 python_version = "3.8"

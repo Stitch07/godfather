@@ -1,12 +1,23 @@
 from discord.ext import commands
 
+ADMINS = [292571834770128906, 244275194070433795,
+          278094147901194242, 255449278808457218]
+
+
+def staff_only():
+    async def predicate(ctx):
+        if ctx.author.id not in ADMINS:
+            raise commands.CheckFailure('This command is staff only.')
+        return True
+    return commands.check(predicate)
+
 
 class Admin(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
     @commands.command()
-    @commands.is_owner()
+    @staff_only()
     async def approve(self, ctx, guild_id: int):
         with self.bot.db.conn.cursor() as cur:
             cur.execute('INSERT INTO approved_guilds VALUES (%s)', [guild_id])

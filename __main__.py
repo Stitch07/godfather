@@ -25,6 +25,7 @@ from godfather.custom_help import CustomHelp
 from godfather.errors import PhaseChangeError
 from godfather.utils import CustomContext, ColoredFormatter, getlogger, alive_or_recent_jester, pluralize
 from godfather.game.setup import Setup, SetupLoadError
+from godfather.game import Phase
 
 
 config = json.load(open('config.json'))
@@ -114,6 +115,8 @@ class Godfather(commands.Bot):
             if len(games) == 0:
                 return
             pl_game = games[0]
+            if pl_game.phase != Phase.NIGHT:
+                return
             player = pl_game.players[ctx.author]
 
             if not alive_or_recent_jester(player, pl_game) \
