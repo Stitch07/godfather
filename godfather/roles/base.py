@@ -1,4 +1,5 @@
 from godfather.game.types import Defense
+from godfather.roles import all_roles
 
 
 class Role:
@@ -10,6 +11,18 @@ class Role:
         self.cleaned = False
         self.categories = []
         super().__init__(*args, **kwargs)
+
+    async def on_death(self, game, player):
+        # exe only attacks townies
+        if not player.role.faction.name == 'Town':
+            return
+        for exe in game.players.filter(role='Executioner'):
+            if exe.target == player:
+                # exe becomes jester
+                await exe.user.send('Your target has died. You are now a Jester!')
+                Jester = all_roles['Jester']
+                exe.role = Jester()
+                await exe.user.send(exe.role_pm)
 
     # str representation of role
     def __str__(self):

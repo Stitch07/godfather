@@ -42,7 +42,6 @@ class NightActions(list):
         for action in self:
             # noaction, ignore
             if action['action'] is None:
-                self.remove(action)
                 continue
             player = action['player']
             # NoTarget mixin sets target to None
@@ -54,7 +53,6 @@ class NightActions(list):
             player = action['player']
             target = action.get('target', None)
             if action['action'] is None:
-                self.remove(action)
                 continue
             if not target.user.id == player.user.id:
                 await target.visit(player, self)
@@ -65,7 +63,6 @@ class NightActions(list):
             player = action['player']
             target = action.get('target', None)
             if action['action'] is None:
-                self.remove(action)
                 continue
             await player.role.tear_down(self, player, target)
 

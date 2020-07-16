@@ -39,7 +39,6 @@ class Escort(Townie, SingleAction):
             actions.record[target.user.id]['roleblock']['result'] = True
             actions.record[target.user.id]['roleblock']['by'].append(
                 player.user.id)
-            print(actions.record)
 
     async def tear_down(self, actions, player, target):
         record = actions.record[target.user.id]['roleblock']

@@ -18,6 +18,7 @@ class Goon(MafiaMember, Shooter, SingleAction):
         await super().on_pm_command(ctx, game, player, args)
 
     async def tear_down(self, actions, player, target):
+
         record = actions.record[target.user.id]['nightkill']
         success = record['result'] and player in record['by']
 

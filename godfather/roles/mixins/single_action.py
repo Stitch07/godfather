@@ -1,5 +1,5 @@
 from discord.ext import commands
-from godfather.roles import Role
+from godfather.roles.base import Role
 from godfather.errors import PhaseChangeError
 
 conv = commands.MemberConverter()

@@ -77,6 +77,6 @@ class VoteManager(dict):
                         [voter.user.name for voter in notvoting]))
 
         text.append(
-            f'With {num_alive} is_alive, it takes {self.game.majority_votes} to lynch.')
+            f'With {num_alive} alive, it takes {self.game.majority_votes} to lynch.')
 
         return '\n'.join(text)

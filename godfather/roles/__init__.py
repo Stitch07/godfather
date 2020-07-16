@@ -2,7 +2,6 @@
 from collections import defaultdict
 from pathlib import Path
 from importlib import import_module
-from godfather.roles.base import Role
 
 all_roles = {}
 role_categories = defaultdict(list)
