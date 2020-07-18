@@ -201,7 +201,7 @@ class Mafia(commands.Cog):
             embed.set_author(name='All supported roles',
                              icon_url=self.bot.user.avatar_url)
             embed.set_footer(
-                text='For information on a specific role, use the roleinfo command.')
+                text='For information on a specific role, use the roleinfo <rolename>.')
             embed.description = ''
             for faction, roles in fac_roles.items():
                 roles.sort()
@@ -217,10 +217,23 @@ class Mafia(commands.Cog):
             if role.name.lower() == rolename.lower():
                 if role.__doc__ is None:
                     return await ctx.send('No documentation on {} available.'.format(rolename))
-                text = [f'**{role.name}**', '```diff']
-                text.append(inspect.getdoc(role))
-                text.append('```')
-                return await ctx.send('\n'.join(text))
+
+                annotations = []
+                annotations.append(role.faction.category_name)
+                if role.unique:
+                    annotations.append('Unique')
+
+                embed = discord.Embed()
+                embed.color = 0x000000
+                embed.set_author(name=f'{role.name} ({"; ".join(annotations)})',
+                                 icon_url=self.bot.user.avatar_url)
+                embed.description = '```diff\n'
+                embed.description += inspect.getdoc(role)
+                embed.description += '```'
+                embed.set_footer(
+                    text=f'Categories: {", ".join(role.categories)}')
+
+                return await ctx.send(embed=embed)
 
         for role in all_roles.values():
             if jaro_winkler(role.name.lower(), rolename.lower()) > 0.85:

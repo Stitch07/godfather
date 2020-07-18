@@ -29,7 +29,7 @@ class Misc(commands.Cog):
     async def ping(self, ctx):
         resp = await ctx.send('Pinging...')
         diff = resp.created_at - ctx.message.created_at
-        await resp.edit(content=f'Pong! That took {1000*diff.total_seconds():.1f}ms.')
+        await resp.edit(content=f'Pong! That took {1000*diff.total_seconds():.0f}ms.')
 
     @commands.command()
     async def invite(self, ctx):

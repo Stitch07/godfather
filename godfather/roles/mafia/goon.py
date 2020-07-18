@@ -4,6 +4,15 @@ DESCRIPTION = 'You may shoot someone every night.'
 
 
 class Goon(MafiaMember, Shooter, SingleAction):
+    """
+    A member of organized crime, trying to work their way to the top.
+
+    - Win Condition: Kill anyone that will not submit to the Mafia.
+
+    + Abilities:
+    + You can choose to attack if the Godfather doesn't give orders.
+    + If the Godfather dies, you will become the next Godfather.
+    """
     name = 'Goon'
     description = DESCRIPTION
     unique = True
