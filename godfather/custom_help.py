@@ -24,11 +24,14 @@ class CustomHelp(DefaultHelpCommand):
             cog_name = getattr(cog, '__cog_name__', 'Default')
             if len(commands) == 0:
                 continue
-            command_names = ', '.join(map(lambda cmd: cmd.name, commands))
+            command_names = ', '.join(
+                [command.name for command in commands if not command.hidden])
             embed.add_field(name=cog_name, value=command_names, inline=False)
         await self.get_destination().send(embed=embed)
 
     async def send_command_help(self, command):
+        if command.hidden:
+            return
         command_sig = self.get_command_signature(command)
         command_help = 'No help available.' if command.help is None else command.help
 

@@ -30,6 +30,7 @@ from godfather.game import Phase
 
 
 config = json.load(open('config.json'))
+prefix = config.get('prefix', '=')
 
 
 def remove_prefix(text, prefix):
@@ -39,9 +40,12 @@ def remove_prefix(text, prefix):
 class Godfather(commands.Bot):
     def __init__(self):
         super().__init__(
-            command_prefix=config.get('prefix'),
+            command_prefix=commands.when_mentioned_or(prefix),
             help_command=CustomHelp(verify_checks=False),
-            description='A Discord bot for automatically hosting games of Mafia/Werewolf.'
+            description='A Discord bot for automatically hosting games of Mafia/Werewolf.',
+            activity=discord.Activity(
+                type=discord.ActivityType.listening, name='{}help'.format(prefix)),
+            max_messages=None
         )
 
         self.__version__ = (0, 1, 1)
@@ -95,6 +99,12 @@ class Godfather(commands.Bot):
 
         self.logger.info('Successfully loaded %s setups',
                          len(self.setups) - setup_errors)
+
+    async def on_message(self, message):
+        if message.content.replace('!', '') == self.user.mention:
+            prefix = (await self.get_prefix(message)).pop()
+            return await message.channel.send('My prefix in this server is: `{}`'.format(prefix))
+        return await super().on_message(message)
 
     async def on_guild_join(self, guild: discord.Guild):
         if self.__release__ != 'beta':

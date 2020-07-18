@@ -138,7 +138,7 @@ class Misc(commands.Cog):
                 return await ctx.send('No games played!')
             await ctx.send(f'Games: {total}\nWins: {wins}\nWinrate: {round(100 * wins/total)}%')
 
-    @commands.command()
+    @commands.command(hidden=True)
     @commands.is_owner()
     async def eval(self, ctx, *, cmd):
         fn_name = "_eval_expr"
