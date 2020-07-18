@@ -13,6 +13,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Godfather.  If not, see <https://www.gnu.org/licenses/>.
 
+from datetime import datetime
 import json
 import logging
 import pathlib
@@ -45,6 +46,8 @@ class Godfather(commands.Bot):
 
         self.__version__ = (0, 1, 1)
         self.__release__ = 'alpha'
+        # needed for showing uptime
+        self.connected_at = None
         self.setups = {}
         self.games = {}
 
@@ -69,6 +72,10 @@ class Godfather(commands.Bot):
     @property
     def invite(self):
         return 'https://discord.com/oauth2/authorize?client_id={}&scope=bot'.format(self.user.id)
+
+    def run(self, *args, **kwargs):
+        self.connected_at = datetime.now()
+        super().run(*args, **kwargs)
 
     async def get_context(self, message):
         # pylint: disable=arguments-differ

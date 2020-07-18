@@ -23,18 +23,23 @@ def convert_code_syntax_to_formal(text):
     return text.replace('_', ' ').title()
 
 
-def from_now(time: datetime):
+def from_now(time: datetime, show_in=True):
     now = datetime.now()
     delta = time - now if time > now else now - time
     result = ''
-    if time > now:
+    if time > now and show_in:
         result += 'in '
-    if delta.seconds / 60 > 1:
+    if delta.days > 0:
+        result += f'{delta.days} day{pluralize(delta.days)}'
+    elif delta.seconds / 3600 > 1:
+        hours_left = round(delta.seconds / 3600)
+        result += f'{hours_left} hour{pluralize(hours_left)}'
+    elif delta.seconds / 60 > 1:
         min_left = round(delta.seconds / 60)
         result += f'{min_left} minute{pluralize(min_left)}'
     else:
         result += f'{delta.seconds} second{pluralize(delta.seconds)}'
-    if time < now:
+    if time < now and show_in:
         result += ' ago'
 
     return result
@@ -67,6 +72,7 @@ async def confirm(bot: Bot, prompter: Member, channel: TextChannel,
         return None
     finally:
         await msg.delete()
+
 
 async def choice(bot: Bot, prompter: Member, channel: TextChannel, message: str,
                  options: typing.List[str]):

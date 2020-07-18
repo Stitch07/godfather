@@ -1,8 +1,13 @@
 import ast
 import importlib
+import os
 import typing
+
 import discord
 from discord.ext import flags, commands
+import psutil
+
+from godfather.utils import from_now
 
 
 def insert_returns(body):
@@ -29,7 +34,7 @@ class Misc(commands.Cog):
     async def ping(self, ctx):
         resp = await ctx.send('Pinging...')
         diff = resp.created_at - ctx.message.created_at
-        await resp.edit(content=f'Pong! That took {1000*diff.total_seconds():.0f}ms.')
+        await resp.edit(content='Pong! That took {:.0f}ms. (Latency: {:.0f}ms)'.format(1000*diff.total_seconds(), self.bot.latency*1000))
 
     @commands.command()
     async def invite(self, ctx):
@@ -49,6 +54,45 @@ class Misc(commands.Cog):
         return await ctx.send(embed=embed)
 
     @commands.command()
+    @commands.cooldown(1, 5.0, commands.BucketType.user)
+    async def stats(self, ctx):
+        proc = psutil.Process(os.getpid())
+        proc_memory_used = round(proc.memory_info().rss / 1e6, 2)
+        proc_memory_used_percentage = round(proc.memory_percent(), 2)
+        proc_cpu_usage = round(proc.cpu_percent(), 2)
+
+        connected_guilds = len(self.bot.guilds)
+        connected_users = len(self.bot.users)
+        connected_channels = len(list(self.bot.get_all_channels()))
+        uptime = from_now(self.bot.connected_at, show_in=False)
+
+        version = '{}-{}'.format('.'.join(map(str, self.bot.__version__)),
+                                 self.bot.__release__)
+        invite_header = 'To add {} to your Discord server, use the `{}invite` command.'.format(
+            self.bot.user.name, ctx.prefix)
+        footer_text = 'Running {} v{}.'.format(self.bot.user.name, version)
+
+        connected_to_field = '\n'.join([
+            '**Guilds**: {}'.format(connected_guilds),
+            '**Users**: {}'.format(connected_users),
+            '**Channels**: {}'.format(connected_channels)
+        ])
+        server_stats_field = '\n'.join([
+            '**RAM**: {}MB ({}%)'.format(proc_memory_used,
+                                         proc_memory_used_percentage),
+            '**CPU**: {}%'.format(proc_cpu_usage),
+            '**Uptime**: {}'.format(uptime)
+        ])
+
+        embed = discord.Embed()
+        embed.color = 0x000000
+        embed.description = invite_header
+        embed.add_field(name='Connected to:', value=connected_to_field)
+        embed.add_field(name='Server stats:', value=server_stats_field)
+        embed.set_footer(text=footer_text, icon_url=self.bot.user.avatar_url)
+        return await ctx.send(embed=embed)
+
+    @commands.command()
     @commands.cooldown(5, 60.0, commands.BucketType.user)
     async def apply(self, ctx, guild_id: int):
         if self.bot.__release__ != 'beta':
@@ -57,8 +101,6 @@ class Misc(commands.Cog):
         app_channel = self.bot.get_channel(732899498983948359)
         await ctx.message.add_reaction('✅')
         return await app_channel.send('{} is applying for the server **{}**'.format(ctx.author, guild_id))
-
-        # just a basic proof of concept
 
     @flags.add_flag('--role', type=str, default='')
     @flags.add_flag('--faction', type=str, default='')
