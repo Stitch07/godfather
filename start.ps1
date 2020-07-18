@@ -4,5 +4,5 @@
 
 Set-Variable -Name PIPENV_VERBOSITY -Value "-1"
 
-Invoke-Expression "pip install -r requirements.txt" > $null
+Invoke-Expression "python -m pip install -q -r requirements.txt" > $null
 Invoke-Expression "python ."

@@ -1,3 +1,4 @@
+import asyncio
 import copy
 import inspect
 import random
@@ -186,9 +187,11 @@ class Mafia(commands.Cog):
         await ctx.send('\n'.join(txt))
 
     @ commands.command()
+    @commands.cooldown(1, 5.0, commands.BucketType.channel)
     async def roleinfo(self, ctx: CustomContext, *, rolename: typing.Optional[str] = None):
         """
         Shows information about the given role.
+        If used without any arguments, shows you a list of all roles supported in the bot.
         """
         if rolename is None:
             def accumulator(facroles, role):
@@ -231,13 +234,20 @@ class Mafia(commands.Cog):
                 embed.description += inspect.getdoc(role)
                 embed.description += '```'
                 embed.set_footer(
-                    text=f'Categories: {", ".join(role.categories)}')
+                    text=f'Categories: {", ".join(sorted(role.categories))}')
 
                 return await ctx.send(embed=embed)
 
         for role in all_roles.values():
             if jaro_winkler(role.name.lower(), rolename.lower()) > 0.85:
-                return await ctx.send('Couldn\'t find the role "{}". Did you mean {}?'.format(rolename, role.name))
+                await ctx.send('Couldn\'t find the role "{}". Did you mean {}?'.format(rolename, role.name))
+                def check(msg):
+                    return msg.author == ctx.author and msg.content.lower() in ['yes', 'y', 'yeah']
+                try:
+                    response = await self.bot.wait_for('message', timeout=10.0, check=check)
+                    return await ctx.invoke(ctx.command, rolename=role.name)
+                except asyncio.TimeoutError:
+                    return
         await ctx.send("Couldn't find that role!")
 
     @ commands.command()

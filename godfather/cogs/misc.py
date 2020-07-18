@@ -9,6 +9,9 @@ import psutil
 
 from godfather.utils import from_now
 
+proc = psutil.Process(os.getpid())
+proc.cpu_percent(interval=None)
+
 
 def insert_returns(body):
     # insert return stmt if the last expression is a expression statement
@@ -37,6 +40,26 @@ class Misc(commands.Cog):
         await resp.edit(content='Pong! That took {:.0f}ms. (Latency: {:.0f}ms)'.format(1000*diff.total_seconds(), self.bot.latency*1000))
 
     @commands.command()
+    async def info(self, ctx):
+        version = '{}-{}'.format('.'.join(map(str, self.bot.__version__)),
+                                 self.bot.__release__)
+        info_text = [
+            '{} v{} is a Discord bot that hosts games of Werewolf/Mafia, with 24/7 uptime and intuitive commands.'.format(
+                self.bot.user.name, version),
+            '',
+            '{} features:'.format(self.bot.user.name),
+            '• Automatically hosted games of Mafia, with over 20 roles and different factions.',
+            '• Addable custom setups (with 10+ preloaded)',
+            '• Player and game statistics.',
+            'and much more!',
+            '',
+            'To add {} to your Discord server, use the `{}invite` command.'.format(
+                self.bot.user.name, ctx.prefix
+            )
+        ]
+        return await ctx.send('\n'.join(info_text))
+
+    @commands.command()
     async def invite(self, ctx):
         app = await self.bot.application_info()
         if not app.bot_public:
@@ -56,10 +79,9 @@ class Misc(commands.Cog):
     @commands.command()
     @commands.cooldown(1, 5.0, commands.BucketType.user)
     async def stats(self, ctx):
-        proc = psutil.Process(os.getpid())
         proc_memory_used = round(proc.memory_info().rss / 1e6, 2)
         proc_memory_used_percentage = round(proc.memory_percent(), 2)
-        proc_cpu_usage = round(proc.cpu_percent(), 2)
+        proc_cpu_usage = round(proc.cpu_percent(interval=None), 2)
 
         connected_guilds = len(self.bot.guilds)
         connected_users = len(self.bot.users)
@@ -70,7 +92,8 @@ class Misc(commands.Cog):
                                  self.bot.__release__)
         invite_header = 'To add {} to your Discord server, use the `{}invite` command.'.format(
             self.bot.user.name, ctx.prefix)
-        footer_text = 'Running {} v{}.'.format(self.bot.user.name, version)
+        footer_text = 'Running {} v{}'.format(
+            self.bot.user.name, version)
 
         connected_to_field = '\n'.join([
             '**Guilds**: {}'.format(connected_guilds),
@@ -137,6 +160,11 @@ class Misc(commands.Cog):
             if total == 0:
                 return await ctx.send('No games played!')
             await ctx.send(f'Games: {total}\nWins: {wins}\nWinrate: {round(100 * wins/total)}%')
+
+    @userstats.error
+    async def userstats_error(self, ctx, error):
+        if isinstance(error, flags.ArgumentParsingError):
+            return await ctx.send('Couldn\'t find that user. Try mentioning them!')
 
     @commands.command(hidden=True)
     @commands.is_owner()
