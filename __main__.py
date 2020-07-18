@@ -40,7 +40,7 @@ def remove_prefix(text, prefix):
 class Godfather(commands.Bot):
     def __init__(self):
         super().__init__(
-            command_prefix=commands.when_mentioned_or(prefix),
+            command_prefix=prefix,
             help_command=CustomHelp(verify_checks=False),
             description='A Discord bot for automatically hosting games of Mafia/Werewolf.',
             activity=discord.Activity(

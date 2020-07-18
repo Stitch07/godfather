@@ -16,7 +16,7 @@ class Role:
         # exe only attacks townies
         if not player.role.faction.name == 'Town':
             return
-        for exe in game.players.filter(role='Executioner'):
+        for exe in game.players.filter(role='Executioner', alive=True):
             if exe.target == player:
                 # exe becomes jester
                 await exe.user.send('Your target has died. You are now a Jester!')

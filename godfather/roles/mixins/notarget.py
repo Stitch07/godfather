@@ -52,6 +52,6 @@ class NoTarget(Role):
 
         if len(game.players.filter(action_only=True)) == len(game.night_actions):
             try:
-                await game.increment_phase(ctx.bot)
+                await game.increment_phase()
             except Exception as exc:
                 raise PhaseChangeError(None, *exc.args)

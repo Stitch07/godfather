@@ -16,6 +16,8 @@ class ParanoidCop(Cop):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.categories.remove('Town Investigative')
+        self.categories.remove('Random Town')
+        self.categories.append('Dethy Cop')
 
     def result_modifier(self, _innocence):
         return False

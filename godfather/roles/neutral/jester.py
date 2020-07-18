@@ -35,7 +35,7 @@ class Jester(SingleAction):
         await super().on_night(bot, player, game)
 
     async def run_action(self, actions, player, target):
-        pl_record = actions[target.user.id]
+        pl_record = actions.record[target.user.id]
         pl_record['nightkill']['result'] = True
         pl_record['nightkill']['type'] = Attack.UNSTOPPABLE
         pl_record['nightkill']['by'].append(player)

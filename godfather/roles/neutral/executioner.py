@@ -1,5 +1,5 @@
 from godfather.roles.base import Role
-from godfather.roles import all_roles
+from godfather.game.types import Defense
 from godfather.factions import ExecutionerNeutral
 
 DESCRIPTION = 'You must get your target lynched by all means necessary.'
@@ -21,3 +21,6 @@ class Executioner(Role):
         self.target = None
         self.faction = ExecutionerNeutral()
         self.categories.append('Neutral Evil')
+
+    def defense(self):
+        return Defense.BASIC
