@@ -6,7 +6,9 @@ class MafiaMember:
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.faction = Mafia()
-        self.categories.append('Random Mafia')
+        # this only works when MafiaMember is mixin'd with Role
+        if hasattr(self, 'categories'):
+            self.categories.append('Random Mafia')
 
     async def on_death(self, game, player):
         # mafioso becomes new gf and stuff here
