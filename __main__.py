@@ -48,8 +48,8 @@ class Godfather(commands.Bot):
             max_messages=None
         )
 
-        self.__version__ = (0, 1, 1)
-        self.__release__ = 'alpha'
+        self.__version__ = (0, 9, 0)
+        self.__release__ = 'beta'
         # needed for showing uptime
         self.connected_at = None
         self.setups = {}
