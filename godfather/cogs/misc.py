@@ -199,6 +199,8 @@ class Misc(commands.Cog):
 
     @eval.error
     async def eval_error(self, ctx, error):
+        if isinstance(error, commands.NotOwner):
+            return
         await ctx.send(f'❌ **A error occurred**: ```python\n{error}```')
         self.bot.logger.exception(error, exc_info=True, stack_info=True)
 

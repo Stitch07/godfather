@@ -78,9 +78,9 @@ async def choice(bot: Bot, prompter: Member, channel: TextChannel, message: str,
                  options: typing.List[str]):
     option_text = '\n'.join([f'{i+1}. {option}'
                              for i, option in enumerate(options)])
-    message += (f'\n{message}:\n```{option_text}```')
+    text = (f'{message}\n```{option_text}```')
 
-    await channel.send(content=message)
+    await channel.send(content=text)
 
     def check(msg: Message):
         return msg.author == prompter and msg.content.isdigit()
@@ -96,5 +96,4 @@ async def choice(bot: Bot, prompter: Member, channel: TextChannel, message: str,
         return options[int(response.content)-1]
 
     except asyncio.TimeoutError:
-        await channel.send(content='Prompt timed out.')
         return None

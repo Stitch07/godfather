@@ -66,7 +66,7 @@ class Game:
                 raise PhaseChangeError(None, *exc.args)
 
     # finds a setup for the current player-size. if no setup is found, raises an Exception
-    def find_setup(self, setup_name: str = None):
+    async def find_setup(self, setup_name: str = None):
         num_players = len(self.players)
 
         if setup_name:
@@ -89,12 +89,15 @@ class Game:
             # wip: custom exception types?
             raise ValueError('No possible setups found.')
 
-        return choice(
+        setup = await choice(
             self.bot, self.bot.get_user(self.host.id), self.channel,
             "Multiple setups found.\n"
             "Please choose one of the following:",
-            possible_setups.keys()
+            list(possible_setups.keys())
         )
+        if setup is None:
+            raise ValueError('Prompt timed out.')
+        return possible_setups.get(setup)
 
     # checks whether the game has ended, returns whether the game has ended and the winning faction
     def check_endgame(self):

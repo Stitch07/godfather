@@ -102,7 +102,6 @@ class Godfather(commands.Bot):
 
     async def on_message(self, message):
         if message.content.replace('!', '') == self.user.mention:
-            prefix = (await self.get_prefix(message)).pop()
             return await message.channel.send('My prefix in this server is: `{}`'.format(prefix))
         return await super().on_message(message)
 

@@ -241,6 +241,7 @@ class Mafia(commands.Cog):
         for role in all_roles.values():
             if jaro_winkler(role.name.lower(), rolename.lower()) > 0.85:
                 await ctx.send('Couldn\'t find the role "{}". Did you mean {}?'.format(rolename, role.name))
+
                 def check(msg):
                     return msg.author == ctx.author and msg.content.lower() in ['yes', 'y', 'yeah']
                 try:
@@ -284,8 +285,8 @@ class Mafia(commands.Cog):
 
         if game.setup is None:
             try:
-                found_setup = game.find_setup(r_setup)
-            except Exception as err:  # pylint: disable=broad-except
+                found_setup = await game.find_setup(r_setup)
+            except ValueError as err:  # pylint: disable=broad-except
                 return await ctx.send(err)
             game.setup = found_setup
 
