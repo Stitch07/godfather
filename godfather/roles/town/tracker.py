@@ -28,5 +28,5 @@ class Tracker(Townie, SingleAction):
     async def tear_down(self, actions, player, target):
         visited_players = [
             visited.user.name for visited in actions.game.players if target in visited.visitors]
-        if len(visited_players) >= 0:
+        if len(visited_players) > 0:
             await player.user.send('Your target visited {}.'.format(', '.join(visited_players)))
