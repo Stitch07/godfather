@@ -63,21 +63,18 @@ class SingleAction(Role):
         if self.name == 'Godfather' and len(game.players.filter(role='Goon')) > 0:
             goon = game.players.filter(role='Goon')[0]
             if goon.is_alive:
-                add_player = goon
                 for action in game.night_actions:
                     if action['player'].role.name == 'Goon':
                         game.night_actions.remove(action)
-            else:
-                add_player = player
 
-            game.night_actions.add_action({
-                'action': self.action,
-                'player': player,
-                'target': target_pl,
-                'priority': self.action_priority,
-                'can_block': self.can_block,
-                'can_transport': self.can_transport
-            })
+                game.night_actions.add_action({
+                    'action': self.action,
+                    'player': goon,
+                    'target': target_pl,
+                    'priority': self.action_priority,
+                    'can_block': self.can_block,
+                    'can_transport': self.can_transport
+                })
 
         game.night_actions.add_action({
             'action': self.action,
