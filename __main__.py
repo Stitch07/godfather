@@ -44,8 +44,7 @@ class Godfather(commands.Bot):
             help_command=CustomHelp(verify_checks=False),
             description='A Discord bot for automatically hosting games of Mafia/Werewolf.',
             activity=discord.Activity(
-                type=discord.ActivityType.listening, name='{}help'.format(prefix)),
-            max_messages=None
+                type=discord.ActivityType.listening, name='{}help'.format(prefix))
         )
 
         self.__version__ = (0, 9, 0)
