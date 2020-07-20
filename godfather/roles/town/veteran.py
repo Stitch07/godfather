@@ -44,6 +44,7 @@ class Veteran(Townie, NoTarget):
         self.alerted = True
 
     async def tear_down(self, _actions, _player, _target):
+        self.alerts -= 1
         self.alerted = False
 
     async def on_visit(self, player, visitor, actions):
