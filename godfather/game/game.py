@@ -77,7 +77,7 @@ class Game:
 
             if not setup.total_players == num_players:
                 raise ValueError(
-                    f'Chosen setup needs {len(setup.total_players)} players, '
+                    f'Chosen setup needs {setup.total_players} players, '
                     f'you currently have {num_players}'
                 )
 
