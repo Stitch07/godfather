@@ -2,11 +2,9 @@ from collections import defaultdict
 from enum import IntEnum, auto
 
 
-def default_key():
-    return defaultdict(lambda: {'result': False, 'by': []})
-
-
-night_record = defaultdict(default_key)
+class NightRecord(defaultdict):
+    def __init__(self):
+        super().__init__(self, lambda: {'result': False, 'by': []})
 
 
 class Defense(IntEnum):

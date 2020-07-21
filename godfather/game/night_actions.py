@@ -1,6 +1,6 @@
 import typing
 from discord import Member
-from .types import night_record
+from .types import NightRecord
 
 
 class NightActions(list):
@@ -22,9 +22,8 @@ class NightActions(list):
     def __init__(self, game):
         super().__init__()
         self.game = game
-        self.record = night_record
+        self.record = NightRecord()
         self.framed_players = []
-        self.record.clear()
 
     def reset(self):
         self.clear()
