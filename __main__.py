@@ -86,7 +86,6 @@ class Godfather(commands.Bot):
 
     async def on_ready(self):
         # initialize games map
-        self.get_cog('EventLoop').event_loop.start()
         self.logger.info('Ready to serve %s guilds!', len(self.guilds))
 
         setup_errors: int = 0
