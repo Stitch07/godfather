@@ -4,7 +4,7 @@ from enum import IntEnum, auto
 
 class NightRecord(defaultdict):
     def __init__(self):
-        super().__init__(lambda: {'result': False, 'by': []})
+        super().__init__(defaultdict(lambda: {'result': False, 'by': []}))
 
 
 class Defense(IntEnum):
