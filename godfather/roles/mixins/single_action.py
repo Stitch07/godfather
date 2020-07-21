@@ -107,5 +107,5 @@ class SingleAction(Role):
         if not target.is_alive:
             return False, 'You cannot target dead players.'
         if target.user.id == player.user.id and not self.can_self_target:
-            return False, f'As a {self.name}, you cannot self target.'
+            return False, f'As a {self.display_role()}, you cannot self target.'
         return True, ''
