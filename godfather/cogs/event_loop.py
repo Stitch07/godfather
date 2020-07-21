@@ -1,13 +1,11 @@
-from datetime import datetime
 from discord.ext import tasks, commands
-from godfather.game import Phase
-from godfather.errors import PhaseChangeError
 
 
 class EventLoop(commands.Cog):
     # the event loop ends pending days/nights
     def __init__(self, bot):
         self.bot = bot
+        self.event_loop.start()
 
     def cog_unload(self):
         self.event_loop.cancel()  # pylint: disable=no-member
