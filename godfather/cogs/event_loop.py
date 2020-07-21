@@ -1,4 +1,6 @@
 from discord.ext import tasks, commands
+import logging
+logger = logging.getLogger('godfather')
 
 
 class EventLoop(commands.Cog):
@@ -18,6 +20,10 @@ class EventLoop(commands.Cog):
     @event_loop.before_loop
     async def before_loop(self):
         await self.bot.wait_until_ready()
+
+    @event_loop.after_loop
+    async def loop_error(self):
+        self.event_loop.restart()
 
 
 def setup(bot):

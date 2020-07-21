@@ -56,7 +56,7 @@ class Game:
 
         curr_t = datetime.now()
         phase_end = self.phase_end_at
-        if curr_t > phase_end:
+        if phase_end is not None and curr_t > phase_end:
             if self.phase == Phase.DAY:
                 # no lynch achieved
                 await self.channel.send('Nobody was lynched')
