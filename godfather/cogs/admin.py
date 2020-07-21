@@ -20,7 +20,12 @@ class Admin(commands.Cog):
     @staff_only()
     async def approve(self, ctx, guild_id: int):
         with self.bot.db.conn.cursor() as cur:
-            cur.execute('INSERT INTO approved_guilds VALUES (%s)', [guild_id])
+            try:
+                cur.execute(
+                    'INSERT INTO approved_guilds VALUES (%s)', [guild_id])
+            except Exception:
+                self.bot.db.conn.rollback()
+                return await ctx.send('Guild {} already approved.'.format(guild_id))
         self.bot.db.conn.commit()
         return await ctx.send('Approved the server {}'.format(guild_id))
 
