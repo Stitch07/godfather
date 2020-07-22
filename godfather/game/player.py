@@ -6,6 +6,8 @@ from discord.ext.commands import errors
 
 conv = commands.MemberConverter()
 
+INNOCENT_FACTIONS = ['town', 'neutral.executioner', 'neutral.jester']
+
 
 class Player:
     def __init__(self, user: discord.Member):
@@ -30,7 +32,7 @@ class Player:
     def innocent(self):
         if hasattr(self.role, 'innocence_modifier'):
             return self.role.innocence_modifier()
-        if self.role.faction.id in ['town', 'neutral.survivor']:
+        if self.role.faction.id in INNOCENT_FACTIONS:
             return True
         return False
 
