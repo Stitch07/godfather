@@ -119,7 +119,7 @@ class Godfather(commands.Bot):
         if hasattr(ctx.command, 'on_error'):
             return
         if isinstance(error, commands.CommandNotFound):
-            if not isinstance(ctx.channel, discord.DMChannel):
+            if ctx.guild is not None:  # DM only
                 return
             args = remove_prefix(ctx.message.content,
                                  ctx.prefix).split(' ')
