@@ -3,6 +3,7 @@ from godfather.roles.mixins import MafiaMember
 
 DESCRIPTION = 'You have no powers.'
 
+
 class VanillaMafia(MafiaMember, Role):
     """
     A regular mafia without any special powers.
