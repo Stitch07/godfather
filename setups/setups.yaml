@@ -82,3 +82,12 @@
   - Neutral Killing
   - Goon
   - Mafia Support
+- name: classic
+  roles:
+  - Cop
+  - Doctor
+  - Goon
+  - Vanilla Mafia
+  - Vanilla
+  - Vanilla
+  - Vanilla
