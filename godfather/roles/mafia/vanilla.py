@@ -9,7 +9,7 @@ class VanillaMafia(MafiaMember, Role):
 
     - Win Condition: Kill anyone who will not submit to the mafia.
 
-    Abilities:
+    + Abilities:
     + If the Goon dies, you will be given the final say over nightkill selection.
     """
     name = 'Vanilla Mafia'
