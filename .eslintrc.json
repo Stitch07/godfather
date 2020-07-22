@@ -1,0 +1,6 @@
+{
+    "extends": "@skyra/eslint-config",
+    "rules": {
+        "@typescript-eslint/no-throw-literal": "off"
+    }
+}
