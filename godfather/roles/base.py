@@ -17,8 +17,8 @@ class Role:
         if not player.role.faction.name == 'Town':
             return
         for exe in game.players.filter(role='Executioner', is_alive=True):
-            if exe.target == player:
-                # exe becomes jester
+            if (exe.target == player and not
+                exe.target.death_reason.startswith('lynched')):
                 await exe.user.send('Your target has died. You are now a Jester!')
                 Jester = all_roles['Jester']
                 exe.role = Jester()
