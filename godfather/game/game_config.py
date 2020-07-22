@@ -4,8 +4,11 @@ from godfather.utils.utils import convert_code_syntax_to_formal
 
 
 designated_messages = {
-    'phase_duration': (
-        lambda k, val: f'Phases will now last {round(val / 60, 1)} minutes.'
+    'day_duration': (
+        lambda k, val: f'Days will now last {round(val / 60, 1)} minutes.'
+    ),
+    'night_duration': (
+        lambda k, val: f'Nights will now last {round(val / 60, 1)} minutes.'
     )
 }
 
@@ -58,7 +61,7 @@ class GameConfig(dict):
 
     async def configure_setting(self, key, value):
         # Checks & overrides  NOTE: Separate from func??
-        if key == 'phase_duration':
+        if key == 'day_duration' or key == 'night_duration':
             if await self.check_phase_duration(value) is False:
                 return
             value = int(value)  # Convert to int after check
