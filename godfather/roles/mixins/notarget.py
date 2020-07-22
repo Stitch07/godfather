@@ -10,7 +10,7 @@ class NoTarget(Role):
 
     async def on_night(self, bot, player, game):
         output = f'It is now night {game.cycle}. Use the {bot.command_prefix}{self.action} command to {self.action_text}. ' \
-            + f'Use {bot.command_prefix}cancel to cancel.\n'
+            + f'Use {bot.command_prefix}noaction to stay home.\n'
         await player.user.send(output)
 
     async def set_up(self, actions, player, target):
