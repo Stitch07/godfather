@@ -1,8 +1,8 @@
 emotes = {
-    'Town': '<:townie:732881753848414298>',
-    'Mafia': '<:goon:732944280003411978>',
-    'Arsonist': '<:arso:729808625027252365>',
-    'Executioner': '<:exe:733387401577234543>',
+    'Town': '<:townie:735134943507644436>',
+    'Mafia': '<:goon:735136200041562183>',
+    'Arsonist': '<:arso:735136511732744333>',
+    'Executioner': '<:exe:735136679408697375>',
     'Jester': '🤡',
     'Serial Killer': '🔪',
     'Survivor': '🏳️'

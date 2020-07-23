@@ -29,6 +29,7 @@ class MafiaMember:
                     await goon.user.send('You have been promoted to a Goon!')
                     await goon.user.send(goon.role_pm)
                     return
+                return
 
             goon = game.players.filter(role='Goon')[0]
             # goon becomes the new Godfather

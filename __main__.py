@@ -119,11 +119,15 @@ class Godfather(commands.Bot):
         if hasattr(ctx.command, 'on_error'):
             return
         if isinstance(error, commands.CommandNotFound):
-            if ctx.guild is not None:  # DM only
-                return
             args = remove_prefix(ctx.message.content,
                                  ctx.prefix).split(' ')
             command = args[0]
+            # logging for an unexpected bug
+            self.logger.debug('%s using command %s', ctx.author, command)
+            self.logger.debug('ctx.guild is not none: %s',
+                              ctx.guild is not None)
+            if ctx.guild is not None:  # DM only
+                return
             games = [
                 *filter(lambda g: ctx.author in g.players, self.games.values())]
             if len(games) == 0:

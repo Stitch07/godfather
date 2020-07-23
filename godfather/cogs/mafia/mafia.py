@@ -283,11 +283,17 @@ class Mafia(commands.Cog):
             await ctx.send("Game has already started!")
             return
 
+        if game.setup and len(game.players) != game.setup.total_players:
+            return await ctx.send('Custom setup used needs {} players.'.format(game.setup.total_players))
+
         if game.setup is None:
             try:
+                game.phase = Phase.STANDBY
                 found_setup = await game.find_setup(r_setup)
             except ValueError as err:  # pylint: disable=broad-except
                 return await ctx.send(err)
+            finally:
+                game.phase = Phase.PREGAME
             game.setup = found_setup
 
         # set to standby so people can't join while the bot is sending rolepms
