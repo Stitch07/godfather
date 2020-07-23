@@ -15,7 +15,8 @@ from .player import Player
 
 
 default_game_config = {
-    'phase_duration': 5 * 60  # In seconds
+    'day_duration': 5 * 60,  # In seconds
+    'night_duration': 2 * 60  # In seconds
 }
 
 
@@ -120,7 +121,17 @@ class Game:
         return (False, None, None)
 
     async def increment_phase(self):
-        phase_t = round(self.config['phase_duration'] / 60, 1)
+        # If it is day, `phase_t` should be equal to night_duration and vice versa.
+        # `phase_duration` is used at the end of the function.
+        # `phase_t` is used in day/night starting messages.
+        if self.phase == Phase.DAY:
+            phase_duration = self.config['night_duration']
+            phase_t = round(phase_duration / 60, 1)
+        else:
+            # Set it to day duration for all other phases.
+            # Note that it should almost always be `Phase.NIGHT`.
+            phase_duration = self.config['day_duration']
+            phase_t = round(phase_duration / 60, 1)
 
         # night loop is the same as the pregame loop
         if self.cycle == 0 or self.phase == Phase.NIGHT:
@@ -169,7 +180,7 @@ class Game:
             self.phase = Phase.NIGHT
 
         self.phase_end_at = datetime.now() \
-            + timedelta(seconds=self.config['phase_duration'])
+            + timedelta(seconds=phase_duration)
 
     # lynch a player
     async def lynch(self, target: Player):

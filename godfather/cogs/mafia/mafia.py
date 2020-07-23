@@ -151,7 +151,11 @@ class Mafia(commands.Cog):
         Shows when the current day/night ends.
         """
         game = self.bot.games[ctx.guild.id]
-        await ctx.send(f'🕰️ The current phase ends {from_now(game.phase_end_at)}')
+        if game.phase == Phase.DAY:
+            phase_str = 'day'
+        else:
+            phase_str = 'night'
+        await ctx.send(f'🕰️ The current {phase_str} ends {from_now(game.phase_end_at)}')
 
     @commands.command()
     @commands.cooldown(1, 5.0, commands.BucketType.channel)
