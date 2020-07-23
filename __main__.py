@@ -135,19 +135,24 @@ class Godfather(commands.Bot):
                 return
             games = [
                 *filter(lambda g: ctx.author in g.players, self.games.values())]
+            self.logger.debug('Game len: %s', len(games))
             if len(games) == 0:
                 return
             pl_game = games[0]
+            self.logger.debug('pl_game.phase: %s', pl_game.phase)
             if pl_game.phase != Phase.NIGHT:
                 return
             player = pl_game.players[ctx.author]
 
             if not alive_or_recent_jester(player, pl_game) \
                     or not hasattr(player.role, 'action'):
+                self.logger.debug('not alive_or_recent_jester failed')
                 return
             valid_actions = [player.role.action, 'noaction'] if not isinstance(player.role.action, list) \
                 else player.role.action + ['noaction']
             if command.lower() not in valid_actions:
+                self.logger.debug('%s not in valid_actions: %s',
+                                  command.lower(), valid_actions)
                 return
             await player.role.on_pm_command(ctx, pl_game, player, args)
 

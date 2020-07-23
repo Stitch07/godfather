@@ -371,7 +371,7 @@ class Mafia(commands.Cog):
 
         if nolynch and not game.phase == Phase.STANDBY:
             game.phase = Phase.STANDBY
-            game.days_with_no_lynch = 0
+            game.day_with_no_lynch = True
             await ctx.send('Nobody was lynched!')
             game.phase = Phase.DAY
             await game.increment_phase()
@@ -412,7 +412,10 @@ class Mafia(commands.Cog):
         Lets a host delete an ongoing game. (provided it has not started yet)
         """
         if ctx.game.has_started:
-            return await ctx.send('You cannot delete games that have already started!')
+            confirmation = await confirm(self.bot, ctx.author, ctx.channel,
+                                         'Are you sure you want to delete an ongoing game?')
+            if not confirmation:
+                return
         del self.bot.games[ctx.guild.id]
         return await ctx.message.add_reaction('✅')
 
