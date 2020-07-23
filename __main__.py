@@ -53,6 +53,7 @@ class Godfather(commands.Bot):
         self.connected_at = None
         self.setups = {}
         self.games = {}
+        self.db = None
 
         # set logger
         self.logger = getlogger(config.get('logging', dict()))

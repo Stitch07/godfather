@@ -371,6 +371,7 @@ class Mafia(commands.Cog):
 
         if nolynch and not game.phase == Phase.STANDBY:
             game.phase = Phase.STANDBY
+            game.days_with_no_lynch = 0
             await ctx.send('Nobody was lynched!')
             game.phase = Phase.DAY
             await game.increment_phase()

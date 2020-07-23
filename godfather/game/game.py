@@ -43,6 +43,9 @@ class Game:
         # host-configurable stuff
         self.config = GameConfig(default_game_config, channel=channel)
         self.votes = VoteManager(self)
+        # for drawing by timeout
+        self.days_with_no_lynch = 0
+        self.nights_with_no_kills = 0
 
     @classmethod
     def create(cls, ctx, bot):
@@ -60,6 +63,7 @@ class Game:
         if phase_end is not None and curr_t > phase_end:
             if self.phase == Phase.DAY:
                 # no lynch achieved
+                self.days_with_no_lynch += 1
                 await self.channel.send('Nobody was lynched')
             try:
                 await self.increment_phase()
@@ -139,9 +143,20 @@ class Game:
             self.phase = Phase.STANDBY  # so the event loop doesn't mess things up here
             dead_players = await self.night_actions.resolve()
 
+            if len(dead_players) == 0 and self.cycle != 0:
+                self.nights_with_no_kills += 1
+            else:
+                self.nights_with_no_kills = 0
+
             for player in dead_players:
                 role_text = 'We could not determine their role.' if player.role.cleaned else f'They were a {player.display_role}.'
                 await self.channel.send(f'{player.user.name} died last night. {role_text}\n')
+
+            # 3 consecutive nights w/o no kills = draw by timeout
+            if self.nights_with_no_kills >= 3:
+                _, _, independent_wins = self.check_endgame()
+                await self.channel.send('Nobody was killed on 3 consecutive nights. Ending game...')
+                return await self.end(None, independent_wins)
 
             game_ended, winning_faction, independent_wins = self.check_endgame()
             if game_ended:
@@ -169,6 +184,12 @@ class Game:
             self.phase = Phase.STANDBY
             # remove all votes from every player
             self.votes.clear()
+            # 3 consecutive days with day timed out = auto-draw
+            if self.days_with_no_lynch >= 3:
+                _, _, independent_wins = self.check_endgame()
+                await self.channel.send('Nobody was lynched on 3 consecutive days. Ending game...')
+                return await self.end(None, independent_wins)
+
             await self.channel.send(f'Night **{self.cycle}** will last {phase_t} minutes. '
                                     'Send in those actions quickly!')
 
@@ -188,6 +209,7 @@ class Game:
             await self.channel.send(f'{target.user.name} was lynched. He was a *{target.display_role}*.')
             await target.role.on_lynch(self, target)
 
+        self.days_with_no_lynch = 0
         await target.remove(self, f'lynched D{self.cycle}')
 
     # WIP: End the game
@@ -197,17 +219,20 @@ class Game:
         bot = self.bot  # TODO: Move db stuff to separate func
 
         if winning_faction:
-            async with self.channel.typing():
-                await self.channel.send(f'The game is over. {winning_faction} wins! 🎉')
-                if len(independent_wins) > 0:
-                    ind_win_strings = [
-                        f'{player.user.name} ({player.role.name})' for player in independent_wins]
-                    await self.channel.send(f'Independent wins: {", ".join(ind_win_strings)}')
+            await self.channel.send(f'The game is over. {winning_faction} wins! 🎉')
+        else:
+            await self.channel.send('The game is over. Nobody wins!')
 
         full_rolelist = '\n'.join(
             [f'{i+1}. {player.user.name} ({player.full_role})' for i, player in enumerate(self.players)])
 
+        if independent_wins and len(independent_wins) > 0:
+            ind_win_strings = [
+                f'{player.user.name} ({player.role.name})' for player in independent_wins]
+            await self.channel.send(f'Independent wins: {", ".join(ind_win_strings)}')
+
         await self.channel.send(f'**Final Rolelist**: ```{full_rolelist}```')
+        del bot.games[self.guild.id]
         # update player stats
         if bot.db:
             with bot.db.conn.cursor() as cur:
@@ -229,8 +254,6 @@ class Game:
             bot.db.conn.commit()
             bot.logger.debug(
                 'Added stats for {} players.'.format(len(self.players)))
-
-        del bot.games[self.guild.id]
 
     @property
     def has_started(self):  # this might be useful
