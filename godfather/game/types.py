@@ -1,6 +1,14 @@
 from collections import defaultdict
 from enum import IntEnum, auto
 
+STALEMATE_PRIORITY_ORDER = [
+    'Escort',
+    'Mafioso',
+    'Godfather',
+    'Serial Killer',
+    'Arsonist'
+]
+
 
 class NightRecord(defaultdict):
     def __init__(self):

@@ -12,6 +12,7 @@ from godfather.utils import alive_or_recent_jester, choice
 
 from .night_actions import NightActions
 from .player import Player
+from godfather.game.types import STALEMATE_PRIORITY_ORDER
 
 
 default_game_config = {
@@ -116,6 +117,8 @@ class Game:
         winning_faction = None
         independent_wins = []
 
+        alive_players = self.players.filter(is_alive=True)
+
         for player in self.players:
             win_check = player.role.faction.has_won(self)
             if win_check:
@@ -126,6 +129,21 @@ class Game:
                     player)
                 if independent_check:
                     independent_wins.append(player)
+
+        # draw by wipeout
+        if len(alive_players) == 0:
+            return (True, None, independent_wins)
+
+        # 1v1s may need to be specially handled by the stalemate detector
+        if len(alive_players) == 2:
+            player1, player2 = alive_players
+            if player1.role.name in STALEMATE_PRIORITY_ORDER and player2.role.name in STALEMATE_PRIORITY_ORDER:
+                player1_priority, player2_priority = map(
+                    lambda player: STALEMATE_PRIORITY_ORDER.index(player.role.name), alive_players)
+                if player1_priority > player2_priority:
+                    winning_faction = player1.role.faction.name
+                else:
+                    winning_faction = player2.role.faction.name
 
         if winning_faction:
             return (True, winning_faction, independent_wins)

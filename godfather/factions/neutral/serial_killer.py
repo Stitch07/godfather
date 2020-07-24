@@ -1,6 +1,8 @@
 from godfather.game import Game
 from godfather.factions.base import Faction
 
+OPPOSING_FACTIONS = ['neutral.arsonist', 'mafia', 'town']
+
 
 class SerialKillerNeutral(Faction):
     name = 'Serial Killer'
@@ -12,9 +14,8 @@ class SerialKillerNeutral(Faction):
         return 'Neutral'
 
     def has_won(self, game: Game):
-        alive_sks = game.players.filter(
-            faction='neutral.serialkiller', is_alive=True)
-        alive_players = game.players.filter(is_alive=True)
-        if len(alive_sks) == 1 and len(alive_players) == 2:  # SK always wins in 1v1s
-            return True
-        return len(alive_sks) == len(alive_players)
+        alive_sks = len(game.players.filter(
+            faction='neutral.serialkiller', is_alive=True))
+        alive_opposing = len(
+            [*filter(lambda pl: pl.role.faction.id in OPPOSING_FACTIONS and pl.is_alive, game.players)])
+        return alive_sks > 0 and alive_opposing == 0

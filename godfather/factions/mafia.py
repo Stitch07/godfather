@@ -2,7 +2,7 @@ from godfather.game import Game
 from .base import Faction
 
 # all factions that oppose the mafia, including town and competing evil
-OPPOSING_FACTIONS = ['town', 'neutral.serialkiller']
+OPPOSING_FACTIONS = ['town', 'neutral.serialkiller', 'neutral.arsonist']
 
 
 class Mafia(Faction):
