@@ -91,6 +91,9 @@ class Mafia(commands.Cog):
             return await ctx.send('The host cannot leave the game.')
 
         if game.has_started:
+            player = game.players.get(ctx.author)
+            if not player.is_alive:
+                return await ctx.send('Dead players cannot leave the game.')
             replace_text = ('Are you sure you want to leave the game?'
                             'You will be mod-killed.') \
                 if len(game.players.replacements) == 0 \

@@ -11,6 +11,7 @@ class SingleAction(Role):
         self.can_block = True
         self.can_transport = True
         self.can_self_target = False
+        self.can_visit = True
 
     async def on_night(self, bot, player, game):
         output = f'It is now night {game.cycle}. Use the {bot.command_prefix}{self.action} command to {self.action_text}. ' \
@@ -72,7 +73,8 @@ class SingleAction(Role):
                 'target': target_pl,
                 'priority': self.action_priority,
                 'can_block': self.can_block,
-                'can_transport': self.can_transport
+                'can_transport': self.can_transport,
+                'can_visit': self.can_visit
             })
 
         game.night_actions.add_action({
@@ -81,7 +83,8 @@ class SingleAction(Role):
             'target': target_pl,
             'priority': self.action_priority,
             'can_block': self.can_block,
-            'can_transport': self.can_transport
+            'can_transport': self.can_transport,
+            'can_visit': self.can_visit
         })
         await ctx.send(f'You are {self.action_gerund} {target} tonight.')
 
