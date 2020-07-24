@@ -28,6 +28,7 @@ class GameConfig(dict):
     You cannot set new values for the dictionary, you may only ammend.
     A dictionary with default values must be passed into the instance first.
     """
+
     def __init__(self, *arg, **kwargs):
         super(GameConfig, self).__init__(*arg, **kwargs)
         self.__dict__ = self
@@ -106,4 +107,5 @@ class GameConfig(dict):
             return False
 
     def __del__(self):
+        self.loop.stop()
         self.loop.close()

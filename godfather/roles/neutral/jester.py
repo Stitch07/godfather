@@ -23,6 +23,7 @@ class Jester(SingleAction):
         self.voted = None
         self.can_block = False
         self.can_transport = False
+        self.can_visit = False
         self.action = 'haunt'
         self.action_gerund = 'haunting'
         self.action_priority = Priority.JESTER_HAUNT

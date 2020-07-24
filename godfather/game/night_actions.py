@@ -53,7 +53,9 @@ class NightActions(list):
             target = action.get('target', None)
             if action['action'] is None:
                 continue
-            if not target.user.id == player.user.id:
+            # some actions such as jester haunt don't visit
+            to_visit = action.get('can_visit', True)
+            if not target.user.id == player.user.id and to_visit:
                 await target.visit(player, self)
             await player.role.run_action(self, player, target)
 

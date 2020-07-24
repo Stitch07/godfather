@@ -46,7 +46,8 @@ class NoTarget(Role):
             'priority': self.action_priority,
             'target': player,
             'can_block': self.can_block,
-            'can_transport': self.can_transport
+            'can_transport': self.can_transport,
+            'can_visit': False
         })
         await ctx.send('You have decided to {} tonight.'.format(self.action))
 
