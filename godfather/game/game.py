@@ -147,7 +147,7 @@ class Game:
 
         if winning_faction:
             return (True, winning_faction, independent_wins)
-        return (False, None, None)
+        return (False, None, independent_wins)
 
     async def increment_phase(self):
         # If it is day, `phase_t` should be equal to night_duration and vice versa.
