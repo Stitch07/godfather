@@ -10,4 +10,8 @@ export default class Player {
 
 	}
 
+	public toString(): string {
+		return this.user.username;
+	}
+
 }

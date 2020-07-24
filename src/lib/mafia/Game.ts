@@ -22,14 +22,13 @@ export default class Game {
 		return this.phase === Phase.PREGAME;
 	}
 
+	public get majorityVotes(): number {
+		const alivePlayers = this.players.filter(player => player.isAlive);
+		return Math.floor(alivePlayers.length / 2) + 1;
+	}
+
 	public delete(): void {
 		this.client.games.delete(this.channel.id);
 	}
 
-}
-
-declare module '@klasa/core' {
-	interface TextBasedChannel {
-		game: Game
-	}
 }

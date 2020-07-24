@@ -5,6 +5,7 @@ import GodfatherChannel from '@lib/extensions/GodfatherChannel';
 import Player from '@mafia/Player';
 
 @ApplyOptions<GodfatherCommandOptions>({
+	aliases: ['in'],
 	description: 'Adds you to the playerlist of an ongoing game.',
 	gameOnly: true
 })
@@ -19,7 +20,7 @@ export default class extends GodfatherCommand {
 			// do replacements here sometime
 		}
 		game!.players.push(new Player(msg.author));
-		return msg.reply(mb => mb.setContent('✅ Successfully joined.'));
+		return msg.sendMessage('✅ Successfully joined.');
 	}
 
 }

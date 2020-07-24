@@ -6,6 +6,7 @@ import { TextChannel, Message } from '@klasa/core';
 import GodfatherCommand, { GodfatherCommandOptions } from '@lib/GodfatherCommand';
 
 @ApplyOptions<GodfatherCommandOptions>({
+	aliases: ['creategame'],
 	cooldown: 5,
 	extendedHelp: [
 		'To join an existing game, use the `join` command.',

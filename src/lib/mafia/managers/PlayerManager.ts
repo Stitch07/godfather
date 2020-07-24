@@ -16,7 +16,7 @@ export default class PlayerManager extends Array<Player> {
 	}
 
 	public show(options: PlayerManagerShowOptions = { codeblock: false, showReplacements: true }): string {
-		const playerList = [];
+		const playerList = ['**Players:**'];
 		for (const [n, player] of this.entries()) {
 			let playerName = '';
 			if (options.codeblock) {
@@ -34,7 +34,7 @@ export default class PlayerManager extends Array<Player> {
 
 		}
 
-		if (this.replacements && options.showReplacements) {
+		if (this.replacements.length > 0 && options.showReplacements) {
 			playerList.push(`\nReplacements: ${this.replacements.map(user => user.tag).join(', ')}`);
 		}
 
