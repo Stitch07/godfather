@@ -8,7 +8,7 @@
   "license": "GPL-3.0",
   "private": false,
   "scripts": {
-    "build": "tsc -b src",
+    "build": "tsc -p src",
     "watch": "tsc -b src -w",
     "lint": "eslint src --ext ts --fix"
   },
@@ -30,6 +30,7 @@
   },
   "_moduleAliases": {
     "@lib": "dist/lib",
-    "@mafia": "dist/lib/mafia"
+    "@mafia": "dist/lib/mafia",
+    "@util": "dist/lib/util"
   }
 }

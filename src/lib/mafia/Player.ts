@@ -5,6 +5,8 @@ import Game from './Game';
 export default class Player {
 
 	public isAlive = true;
+	// whether this player was cleaned by a janitor
+	public cleaned = false;
 	public deathReason = '';
 	public role?: Role;
 	public constructor(public user: KlasaUser, public game: Game) {

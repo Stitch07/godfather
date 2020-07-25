@@ -12,7 +12,7 @@ export default class extends GodfatherCommand {
 
 	public run(msg: KlasaMessage) {
 		const { game } = msg.channel as GodfatherChannel;
-		return msg.reply(mb => mb.setContent(game!.players.show()));
+		return msg.sendMessage(game!.players.show());
 	}
 
 }

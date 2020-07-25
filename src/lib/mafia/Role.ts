@@ -1,14 +1,14 @@
 import Player from '@mafia/Player';
+import Faction from './Faction';
 
 abstract class Role {
 
-	public cleaned = false;
 	public name = '';
 	public constructor(public player: Player) {
 	}
 
-	public get displayRole(): string {
-		if (this.cleaned) return 'Cleaned';
+	public get display(): string {
+		if (this.player.cleaned) return 'Cleaned';
 		return this.name;
 	}
 
@@ -22,6 +22,7 @@ abstract class Role {
 
 interface Role {
 	onEvent(name: string, ...args: Array<any>): Promise<any>;
+	faction: Faction;
 }
 
 export default Role;

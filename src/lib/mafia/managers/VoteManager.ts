@@ -6,53 +6,67 @@ export interface Vote {
 	weight?: number;
 }
 
+export class VoteProxy extends Array<Vote> {
+
+	// Flattens weighted votes and gives the number of actual votes on an Array<Vote
+	public count(): number {
+		return this.reduce((acc, vote) => acc + (vote.weight ?? 1), 0);
+	}
+
+}
+
 export const notVoting = 'notVoting';
 export const noLynch = 'noLynch';
 
-export default class VoteManager extends Map<string, Array<Vote>> {
+export default class VoteManager extends Map<string, VoteProxy> {
 
 	public constructor(public game: Game) {
 		super();
 		// special keys for not voting and no lynch.
-		this.set(notVoting, []);
-		this.set(noLynch, []);
+		this.set(notVoting, new VoteProxy());
+		this.set(noLynch, new VoteProxy());
 	}
 
 	public vote(voter: Player, target: Player, weight = 1): boolean {
 		if (!target.isAlive) throw 'You can\'t vote a dead player.';
-		const votes = this.get(voter.user.id) ?? [];
+		const votes = this.on(voter);
 		if (voter === target) throw 'Self-voting is not allowed.';
 		else if (votes.find(vote => vote.by === voter)) throw `You have already voted for ${target}`;
 		// clear all other votes
-		for (let votes of this.values()) {
-			votes = votes.filter(vote => vote.by !== voter);
+		for (const votes of this.values()) {
+			for (const [n, vote] of votes.entries()) if (vote.by === voter) delete votes[n];
 		}
 		votes.push({
 			by: voter,
 			weight
 		});
 		this.set(target.user.id, votes);
-		return this.votesOnPlayer(votes) >= this.game.majorityVotes;
+		return this.on(voter).count() >= this.game.majorityVotes;
 	}
 
 	public noLynch(voter: Player, weight = 1): boolean {
-		const votes = this.get(noLynch) ?? [];
+		const votes = this.on(voter);
 		if (votes.find(vote => vote.by === voter)) throw 'You have already voted to no-lynch.';
 		// clear all other votes
-		for (let votes of this.values()) {
-			votes = votes.filter(vote => vote.by !== voter);
+		for (const votes of this.values()) {
+			for (const [n, vote] of votes.entries()) if (vote.by === voter) delete votes[n];
 		}
 		votes.push({
 			by: voter,
 			weight
 		});
 		this.set(noLynch, votes);
-		return this.votesOnPlayer(votes) >= this.game.majorityVotes;
+		return this.on(voter).count() >= this.game.majorityVotes;
 	}
 
-	// Flattens weighted votes and gives the number of actual votes on an Array<Vote>
-	private votesOnPlayer(votes: Array<Vote>) {
-		return votes.reduce((acc, vote) => acc + (vote.weight ?? 1), 0);
+	public on(player: Player) {
+		return this.get(player.user.id) ?? new VoteProxy();
+	}
+
+	public reset() {
+		this.clear();
+		this.set(notVoting, new VoteProxy());
+		this.set(noLynch, new VoteProxy());
 	}
 
 }

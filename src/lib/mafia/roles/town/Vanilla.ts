@@ -1,6 +1,6 @@
-import Role from '@mafia/Role';
+import Townie from '@mafia/mixins/Townie';
 
-class Vanilla extends Role {
+class Vanilla extends Townie {
 
 	public name = 'Vanilla';
 

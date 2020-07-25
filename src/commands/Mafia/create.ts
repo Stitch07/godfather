@@ -24,7 +24,7 @@ export default class extends GodfatherCommand {
 		}
 		const game = new Game(msg.author, msg.channel as GodfatherChannel);
 		this.client.games.set(msg.channel.id, game);
-		return msg.reply(mb => mb.setContent(`Started a game of Mafia in ${msg.channel} hosted by **${msg.author.tag}**.`));
+		return msg.sendMessage(`Started a game of Mafia in ${msg.channel} hosted by **${msg.author.tag}**.`);
 	}
 
 }

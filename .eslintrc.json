@@ -11,6 +11,9 @@
                     "UPPER_CASE"
                 ]
             }
+        ],
+        "@typescript-eslint/no-use-before-define": [
+            "off"
         ]
     }
 }

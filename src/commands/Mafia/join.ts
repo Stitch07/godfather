@@ -19,7 +19,7 @@ export default class extends GodfatherCommand {
 		if (game!.hasStarted) {
 			// do replacements here sometime
 		}
-		game!.players.push(new Player(msg.author));
+		game!.players.push(new Player(msg.author, game!));
 		return msg.sendMessage('✅ Successfully joined.');
 	}
 

@@ -14,7 +14,10 @@
                 "lib/mafia/*"
             ],
             "@lib/*": [
-                "lib/*"
+                "lib/*",
+            ],
+            "@util/*": [
+                "lib/util/*"
             ]
         }
     }
