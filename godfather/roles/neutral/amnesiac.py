@@ -7,6 +7,14 @@ DESCRIPTION = 'You may remember who you were by selecting a dead player.'
 
 
 class Amnesiac(SingleAction):
+    """
+    A trauma patient that does not remember who he was.
+
+    - Win Condition: Remember who you were and complete that role's win condition.
+
+    + Abilities:
+    + When you choose a role it will be revealed to all players in the game.
+    """
     name = 'Amnesiac'
     description = DESCRIPTION
 
