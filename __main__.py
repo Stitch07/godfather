@@ -115,6 +115,14 @@ class Godfather(commands.Bot):
                 await guild.leave()
                 self.logger.info('Leaving unapproved guild %s', guild.name)
 
+    async def on_guild_remove(self, guild: discord.Guild):
+        # Go over each channel and try to remove it from games.
+        for channel in guild.channels:
+            self.games.pop(channel.id, None)
+
+    async def on_guild_channel_delete(self, channel: discord.abc.GuildChannel):
+        self.games.pop(channel.id, None)
+
     async def on_command_error(self, ctx, error):
         # pylint: disable=too-many-return-statements, arguments-differ, too-many-branches
         if hasattr(ctx.command, 'on_error'):
