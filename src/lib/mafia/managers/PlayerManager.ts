@@ -23,12 +23,12 @@ export default class PlayerManager extends Array<Player> {
 				if (player.isAlive) {
 					playerName = `+ ${n + 1}. ${player.user.tag}`;
 				} else {
-					playerName = `- ${n + 1}. ${player.user.tag} (${player.role!.displayRole}; ${player.deathReason})`;
+					playerName = `- ${n + 1}. ${player.user.tag} (${player.role!.display}; ${player.deathReason})`;
 				}
 			} else if (player.isAlive) {
 				playerName = `${n + 1}. ${player.user.tag}`;
 			} else {
-				playerName = `${n + 1}. ~~${player.user.tag}~~ (${player.role!.displayRole}; ${player.deathReason})`;
+				playerName = `${n + 1}. ~~${player.user.tag}~~ (${player.role!.display}; ${player.deathReason})`;
 			}
 			playerList.push(playerName);
 
