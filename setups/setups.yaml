@@ -3,25 +3,7 @@
   - Vanilla
   - Goon
   - Super Saint
-- name: exetest
-  roles:
-  - Executioner
-  - Vigilante
-  - Goon
-- name: prtest
-  roles:
-  - Escort
-  - Doctor
-  - Vigilante
-  - Godfather
-  - Goon
-- name: fake5
-  roles:
-  - Vanilla
-  - Doctor
-  - Cop
-  - Lookout
-  - Goon
+
 - name: dethy
   night_start: true
   roles:
@@ -30,13 +12,17 @@
   - Naive Cop
   - Paranoid Cop
   - Goon
-- name: dethysucks
+
+- name: classic
   roles:
-  - Vanilla
-  - Vanilla
-  - Vanilla
+  - Cop
   - Doctor
   - Goon
+  - Vanilla Mafia
+  - Vanilla
+  - Vanilla
+  - Vanilla
+
 - name: getburnt
   roles:
   - Arsonist
@@ -47,6 +33,7 @@
   - Vanilla
   - Vanilla
   - Jester
+
 - name: notreallymatrix6
   roles:
   - Vanilla
@@ -58,6 +45,7 @@
   - Neutral Evil
   - Goon
   - Mafia Support
+
 - name: matrix7maybe?
   roles:
   - Vanilla
@@ -70,6 +58,7 @@
   - Godfather
   - Goon
   - Mafia Deception
+
 - name: prmadness
   roles:
   - Town Investigative
@@ -82,12 +71,16 @@
   - Neutral Killing
   - Goon
   - Mafia Support
-- name: classic
+
+- name: rankedpractice
   roles:
-  - Cop
-  - Doctor
+  - Town Investigative x2
+  - Town Protective
+  - Random Town x4
+  - Town Support
+  - Godfather
   - Goon
-  - Vanilla Mafia
-  - Vanilla
-  - Vanilla
-  - Vanilla
+  - Random Mafia x2
+  - Neutral Evil
+  - Neutral Killing
+
