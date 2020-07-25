@@ -75,6 +75,7 @@
 - name: rankedpractice
   roles:
   - Town Investigative x2
+  - Town Killing
   - Town Protective
   - Random Town x4
   - Town Support
