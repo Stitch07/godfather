@@ -77,7 +77,7 @@ class Player:
     @classmethod
     async def convert(cls, ctx, argument):
         # follow the strategy: numbers, names, standard discord.py conversions
-        game = ctx.bot.games[ctx.guild.id]
+        game = ctx.bot.games[ctx.channel.id]
         if argument.isdigit() and \
                 int(argument) > 0 and \
                 int(argument) <= len(game.players):

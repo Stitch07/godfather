@@ -32,11 +32,11 @@ class Mafia(commands.Cog):
         To join an existing game, use the `join` command.
         Hosts may delete running games using the `delete` command.
         """
-        if ctx.guild.id in self.bot.games:
+        if ctx.channel.id in self.bot.games:
             return await ctx.send('A game of mafia is already running '
                                   'in this server.')
         new_game = Game.create(ctx, self.bot)
-        self.bot.games[ctx.guild.id] = new_game
+        self.bot.games[ctx.channel.id] = new_game
         return await ctx.send('Started a game of mafia in '
                               f'{ctx.message.channel.mention}, '
                               f'hosted by **{ctx.message.author}**')
@@ -47,7 +47,7 @@ class Mafia(commands.Cog):
         """
         Adds you to the playerlist of an ongoing game.
         """
-        game = self.bot.games[ctx.guild.id]
+        game = self.bot.games[ctx.channel.id]
 
         if ctx.author in game.players:
             return await ctx.send('You have already joined this game.')
@@ -80,7 +80,7 @@ class Mafia(commands.Cog):
         Leave an ongoing game.
         Leaving a game that has started and has no replacements will result in a mod-kill.
         """
-        game = self.bot.games[ctx.guild.id]
+        game = self.bot.games[ctx.channel.id]
 
         if ctx.author in game.players.replacements:
             game.players.replacements.remove(ctx.author)
@@ -139,7 +139,7 @@ class Mafia(commands.Cog):
         """
         Shows everyone who has signed up for the current game.
         """
-        game = self.bot.games[ctx.guild.id]
+        game = self.bot.games[ctx.channel.id]
         msg = f'**Players: {len(game.players)}**\n'
         msg += game.players.show(show_replacements=True)
 
@@ -153,7 +153,7 @@ class Mafia(commands.Cog):
         """
         Shows when the current day/night ends.
         """
-        game = self.bot.games[ctx.guild.id]
+        game = self.bot.games[ctx.channel.id]
         if game.phase == Phase.DAY:
             phase_str = 'day'
         else:
@@ -165,7 +165,7 @@ class Mafia(commands.Cog):
     async def setupinfo(self, ctx: CustomContext, setup_name: typing.Optional[str] = None):
         # show the current setup if a game is ongoing
         found_setup = None
-        if (ctx.guild.id in ctx.bot.games and ctx.game.setup):
+        if (ctx.channel.id in ctx.bot.games and ctx.game.setup):
             found_setup = ctx.game.setup
 
         if (found_setup is None and setup_name is None) or setup_name == 'all':
@@ -365,7 +365,7 @@ class Mafia(commands.Cog):
         """
         Vote to end day without a lynch.
         """
-        game = self.bot.games[ctx.guild.id]
+        game = self.bot.games[ctx.channel.id]
         try:
             nolynch = game.votes.no_lynch(game.players[ctx.author])
         except VoteError as err:
@@ -419,7 +419,7 @@ class Mafia(commands.Cog):
                                          'Are you sure you want to delete an ongoing game?')
             if not confirmation:
                 return
-        del self.bot.games[ctx.guild.id]
+        del self.bot.games[ctx.channel.id]
         return await ctx.message.add_reaction('✅')
 
     @commands.command()

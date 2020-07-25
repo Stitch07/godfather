@@ -5,4 +5,4 @@ class CustomContext(Context):
 
     @property
     def game(self):
-        return self.bot.games.get(self.guild.id, None)
+        return self.bot.games.get(self.channel.id, None)

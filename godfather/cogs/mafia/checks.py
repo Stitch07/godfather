@@ -5,7 +5,7 @@ from godfather.game.game import Phase
 
 def game_only():
     async def predicate(ctx):
-        if ctx.guild.id not in ctx.bot.games:
+        if ctx.channel.id not in ctx.bot.games:
             raise CheckFailure('No game is currently running in this server.')
         return True
     return commands.check(predicate)
