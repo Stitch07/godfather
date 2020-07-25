@@ -10,7 +10,7 @@ class Framer(MafiaMember, SingleAction):
 
     - Win condition: Kill anyone who will not submit to the mafia.
 
-    + Abilities: If your target is investigated, they will appear as suspicious to the town investigators.
+    + Abilities: Your target will appear suspicious to cops if they are innocent, and vice versa (reversing their innocence).
     + choose one person at night to frame them as a suspicious townie.
     + If there are no mafia roles left who are capable of killing then you will become the goon.
     """
