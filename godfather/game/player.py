@@ -18,6 +18,8 @@ class Player:
         self.votes: typing.List[Player] = []
         self.death_reason = ''
         self.visitors = []
+        # when roles change: Goon -> GF, Exe -> Jester
+        self.previous_roles = []
 
     # generates the role's PM
     @property
@@ -38,9 +40,10 @@ class Player:
 
     @property
     def full_role(self):
+        all_roles = self.previous_roles + [self.role]
         if self.role.faction.id.startswith('neutral'):
-            return self.role
-        return f'{self.role.faction} {self.role}'
+            return ' -> '.join([self.role] + self.previous_roles)
+        return ' -> '.join([f'{role.faction} {role}' for role in all_roles])
 
     @property
     def display_role(self):

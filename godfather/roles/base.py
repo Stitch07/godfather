@@ -18,9 +18,10 @@ class Role:
             return
         for exe in game.players.filter(role='Executioner', is_alive=True):
             if (exe.target == player and not
-                exe.target.death_reason.startswith('lynched')):
+                    exe.target.death_reason.startswith('lynched')):
                 await exe.user.send('Your target has died. You are now a Jester!')
                 Jester = all_roles['Jester']
+                exe.previous_roles.append(exe.role)
                 exe.role = Jester()
                 await exe.user.send(exe.role_pm)
 
