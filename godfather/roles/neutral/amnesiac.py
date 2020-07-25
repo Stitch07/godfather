@@ -27,6 +27,17 @@ class Amnesiac(SingleAction):
         self.action_text = 'remember your role.'
         self.categories.append('Neutral Benign')
 
+    async def set_up(self, actions, player, target):
+        # if 2 amnesiacs remember a unique role at the same time, the first person to send actions actually remembers
+        def filter_other_amne(action):
+            return action['player'].role.name == 'Amnesiac' \
+                and action['target'].role.unique \
+                and action['player'].user.id != player.user.id
+
+        if any(other_amnes := filter(filter_other_amne, actions)):
+            for other_amne in other_amnes:
+                actions.remove(other_amne)
+
     async def tear_down(self, actions, player, target):
         new_role = copy.deepcopy(target.role)
         player.previous_roles.append(player.role)
@@ -44,6 +55,8 @@ class Amnesiac(SingleAction):
     def can_target(self, player, target):
         if target.is_alive:
             return False, 'You can only remember dead roles.'
+        if target.role.cleaned:
+            return False, 'You cannot remember cleaned roles.'
         if target.user.id == player.user.id:
             return False, f'As a {self.display_role()}, you cannot self target.'
         return True, ''

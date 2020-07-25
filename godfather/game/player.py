@@ -42,8 +42,8 @@ class Player:
     def full_role(self):
         all_roles = self.previous_roles + [self.role]
         if self.role.faction.id.startswith('neutral'):
-            return ' -> '.join([self.role] + self.previous_roles)
-        return ' -> '.join([f'{role.faction} {role}' for role in all_roles])
+            return ' -> '.join(map(str, all_roles))
+        return ' -> '.join(map(str, all_roles))
 
     @property
     def display_role(self):
