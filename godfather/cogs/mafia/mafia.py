@@ -28,13 +28,13 @@ class Mafia(commands.Cog):
     @commands.command(aliases=['create', 'create-game'])
     async def creategame(self, ctx: CustomContext):
         """
-        Creates a game of mafia in this server.
+        Creates a game of mafia in this channel.
         To join an existing game, use the `join` command.
         Hosts may delete running games using the `delete` command.
         """
         if ctx.channel.id in self.bot.games:
             return await ctx.send('A game of mafia is already running '
-                                  'in this server.')
+                                  'in this channel.')
         new_game = Game.create(ctx, self.bot)
         self.bot.games[ctx.channel.id] = new_game
         return await ctx.send('Started a game of mafia in '
