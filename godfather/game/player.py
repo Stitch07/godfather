@@ -20,6 +20,9 @@ class Player:
         self.visitors = []
         # when roles change: Goon -> GF, Exe -> Jester
         self.previous_roles = []
+        # retributionist stuff
+        self.is_revived = False
+        self.revived_on = None
 
     # generates the role's PM
     @property
