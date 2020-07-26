@@ -231,7 +231,6 @@ class Game:
             if self.cycles_with_no_kills >= 3:
                 _, _, independent_wins = self.check_endgame()
                 await self.channel.send('Nobody was lynched on 3 consecutive days. Ending game...')
-                print(independent_wins)
                 return await self.end(None, independent_wins)
 
             await self.channel.send(f'Night **{self.cycle}** will last {phase_t} minutes. '

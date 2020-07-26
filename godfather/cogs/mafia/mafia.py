@@ -1,7 +1,6 @@
 import asyncio
-import copy
 import inspect
-import random
+from datetime import datetime
 import typing
 from collections import defaultdict
 from functools import reduce
@@ -154,11 +153,14 @@ class Mafia(commands.Cog):
         Shows when the current day/night ends.
         """
         game = self.bot.games[ctx.channel.id]
-        if game.phase == Phase.DAY:
-            phase_str = 'day'
-        else:
-            phase_str = 'night'
-        await ctx.send(f'🕰️ The current {phase_str} ends {from_now(game.phase_end_at)}')
+        phase_str = 'Day' if game.phase == Phase.DAY else 'Night'
+        await ctx.send(f'🕰️ {phase_str} {game.cycle} ends {self._remaining(game)}')
+
+    # the status and remaining command both need this
+    def _remaining(self, game, show_in=True):
+        if datetime.now() > game.phase_end_at:
+            return 'any second now...'
+        return from_now(game.phase_end_at, show_in)
 
     @commands.command()
     @commands.cooldown(1, 5.0, commands.BucketType.channel)
@@ -435,3 +437,24 @@ class Mafia(commands.Cog):
         return await ctx.send('Using the setup **{}** with {} players.'.format(
             ctx.game.setup.name, len(ctx.game.setup.roles)
         ))
+
+    @commands.command()
+    @game_only()
+    async def status(self, ctx: CustomContext):
+        if (ctx.game.phase == Phase.PREGAME):
+            return await ctx.send(
+                'The game in {} hasn\'t started yet. Use {}in to join it!'.format(
+                    ctx.channel.mention, ctx.prefix)
+            )
+        elif (ctx.game.phase == Phase.STANDBY):
+            return await ctx.send('The bot is currently processing the game. Sit tight! 👀')
+        embed = discord.Embed()
+        phase_str = '**Day {}** 🌅' if ctx.game.phase == Phase.DAY else '**Night {}** 🌃'
+
+        embed.add_field(name='Host', value=ctx.game.host)
+        embed.add_field(name='Phase', value=phase_str.format(ctx.game.cycle))
+        embed.add_field(name='Time remaining',
+                        value=self._remaining(ctx.game, show_in=False))
+        embed.add_field(name='Players', value='```diff\n{}```'.format(
+            ctx.game.players.show(codeblock=True)))
+        return await ctx.send(embed=embed)
