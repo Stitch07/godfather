@@ -267,7 +267,7 @@ class Game:
             await self.channel.send(f'Independent wins: {", ".join(ind_win_strings)}')
 
         await self.channel.send(f'**Final Rolelist**: ```{full_rolelist}```')
-        del bot.games[self.guild.id]
+        del bot.games[self.channel.id]
         # update player stats
         if bot.db:
             with bot.db.conn.cursor() as cur:

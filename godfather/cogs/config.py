@@ -10,7 +10,7 @@ class Config(commands.Cog):
     @host_only()
     @game_only()
     async def config(self, ctx, key: str, *, value: str):
-        game = ctx.bot.games[ctx.guild.id]
+        game = ctx.bot.games[ctx.channel.id]
         game.config[key] = value
 
     @commands.command()
@@ -24,7 +24,7 @@ class Config(commands.Cog):
         For testing purposes only.
         This should be deleted once the bot gets released.
         """
-        game = ctx.bot.games[ctx.guild.id]
+        game = ctx.bot.games[ctx.channel.id]
         await ctx.send(game.config[key])
 
 
