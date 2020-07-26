@@ -28,6 +28,8 @@ class Doctor(Townie, SingleAction):
 
     async def run_action(self, actions, player, target):
         pl_record = actions.record[target.user.id]
+        if player.user.id == target.user.id:
+            self.can_self_target = False
         if pl_record['nightkill']['result'] and pl_record['nightkill']['type'] < Attack.UNSTOPPABLE:
             pl_record['nightkill']['result'] = False
             pl_record['nightkill']['by'] = []

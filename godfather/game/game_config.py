@@ -105,7 +105,3 @@ class GameConfig(dict):
             await self.channel.send('Phases must last 30 minutes at most '
                                     'and 30 seconds at least.')
             return False
-
-    def __del__(self):
-        self.loop.stop()
-        self.loop.close()

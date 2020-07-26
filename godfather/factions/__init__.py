@@ -3,6 +3,7 @@ from godfather.factions.neutral.serial_killer import SerialKillerNeutral
 from godfather.factions.neutral.survivor import SurvivorNeutral
 from godfather.factions.neutral.arsonist import ArsonistNeutral
 from godfather.factions.neutral.executioner import ExecutionerNeutral
+from godfather.factions.neutral.amnesiac import AmnesiacNeutral
 from .base import Faction
 from .town import Town
 from .mafia import Mafia
@@ -14,5 +15,6 @@ factions = {
     'neutral.serialkiller': SerialKillerNeutral,
     'neutral.survivor': SurvivorNeutral,
     'neutral.arsonist': ArsonistNeutral,
-    'neutral.executioner': ExecutionerNeutral
+    'neutral.executioner': ExecutionerNeutral,
+    'neutral.amnesiac': AmnesiacNeutral
 }

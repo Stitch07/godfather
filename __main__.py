@@ -116,8 +116,12 @@ class Godfather(commands.Bot):
                 self.logger.info('Leaving unapproved guild %s', guild.name)
 
     async def on_guild_remove(self, guild: discord.Guild):
-        # Delete the game running in the guild.
-        self.games.pop(guild.id, None)
+        # Go over each channel and try to remove it from games.
+        for channel in guild.channels:
+            self.games.pop(channel.id, None)
+
+    async def on_guild_channel_delete(self, channel: discord.abc.GuildChannel):
+        self.games.pop(channel.id, None)
 
     async def on_command_error(self, ctx, error):
         # pylint: disable=too-many-return-statements, arguments-differ, too-many-branches
@@ -169,9 +173,9 @@ class Godfather(commands.Bot):
             return await ctx.send('You are using this command too fast: try again in {} second{}'.format(retry_after, pluralize(retry_after)))
 
         elif isinstance(error, PhaseChangeError):
-            # Inform users that game has ended and remove guild id from `self.games`.
+            # Inform users that game has ended and remove channel id from `self.games`.
             await ctx.send('There was an error incrementing the phase. The game has ended.')
-            self.games.pop(ctx.guild.id, None)
+            self.games.pop(ctx.channel.id, None)
             return self.logger.exception(error, exc_info=(type(error), error, error.__traceback__))
 
         await ctx.send(f'Uncaught exception: ```{error}```')
@@ -179,7 +183,7 @@ class Godfather(commands.Bot):
         if config.get('ENV', '') == "production":
             # End game only if `env` is set to 'production'.
             await ctx.send('\nThe game has ended.')
-            self.games.pop(ctx.guild.id, None)
+            self.games.pop(ctx.channel.id, None)
 
         self.logger.exception(error, exc_info=(
             type(error), error, error.__traceback__))

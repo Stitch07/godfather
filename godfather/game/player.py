@@ -18,6 +18,8 @@ class Player:
         self.votes: typing.List[Player] = []
         self.death_reason = ''
         self.visitors = []
+        # when roles change: Goon -> GF, Exe -> Jester
+        self.previous_roles = []
 
     # generates the role's PM
     @property
@@ -38,9 +40,10 @@ class Player:
 
     @property
     def full_role(self):
+        all_roles = self.previous_roles + [self.role]
         if self.role.faction.id.startswith('neutral'):
-            return self.role
-        return f'{self.role.faction} {self.role}'
+            return ' -> '.join(map(str, all_roles))
+        return ' -> '.join(map(str, all_roles))
 
     @property
     def display_role(self):
@@ -74,7 +77,7 @@ class Player:
     @classmethod
     async def convert(cls, ctx, argument):
         # follow the strategy: numbers, names, standard discord.py conversions
-        game = ctx.bot.games[ctx.guild.id]
+        game = ctx.bot.games[ctx.channel.id]
         if argument.isdigit() and \
                 int(argument) > 0 and \
                 int(argument) <= len(game.players):

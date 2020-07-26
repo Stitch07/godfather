@@ -41,7 +41,7 @@ class Arsonist(Role):
 
     async def on_night(self, bot, player, game):
         output = f'It is now night {game.cycle}. Use the {bot.command_prefix}douse command to douse a player. ' \
-            + f'Use {bot.command_prefix}ignite to douse all ignited targets.\n'
+            + f'Use {bot.command_prefix}ignite to ignite all doused targets.\n'
         output += f'```diff\n{game.players.show(codeblock=True)}```'
         await player.user.send(output)
 

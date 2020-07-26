@@ -24,25 +24,28 @@ class MafiaMember:
             if len(game.players.filter(role='Goon', is_alive=True)) == 0:
                 # if there isn't a goon, promote the next mafia member
                 if any(other_maf := list(filter(filter_func, game.players))):
-                    goon = other_maf[0]
-                    goon.role = all_roles['Goon']()
-                    await goon.user.send('You have been promoted to a Goon!')
-                    await goon.user.send(goon.role_pm)
+                    new_goon = other_maf[0]
+                    new_goon.previous_roles.append(new_goon.role)
+                    new_goon.role = all_roles['Goon']()
+                    await new_goon.user.send('You have been promoted to a Goon!')
+                    await new_goon.user.send(new_goon.role_pm)
                     return
                 return
 
             goon = game.players.filter(role='Goon')[0]
+            goon.previous_roles.append(goon.role)
             # goon becomes the new Godfather
             goon.role = player.role
             await goon.user.send('You have been promoted to a Godfather!')
             await goon.user.send(goon.role_pm)
 
-        # other roles become new mafioso
+        # other roles become new goon
         if player.role.name == 'Goon':
             other_mafia = list(filter(filter_func, game.players))
             if len(other_mafia) == 0:
                 return
             new_goon = other_mafia[0]
+            new_goon.previous_roles.append(new_goon.role)
             new_goon.role = player.role
             await new_goon.user.send('You have been promoted to a Goon!')
             await new_goon.user.send(new_goon.role_pm)

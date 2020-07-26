@@ -81,6 +81,13 @@ class Setup:
         except yaml.YAMLError as exc:
             raise SetupLoadError(f"Error while parsing setup string:\n{exc}")
 
+        if isinstance(setup_dict, str) and ',' in setup_dict:
+            setup_dict = {'roles': list(map(str.strip, setup_dict.split(',')))}
+
+        if isinstance(setup_dict, list):
+            # convert list to dict, assuming a list of roles has been provided
+            setup_dict = {'roles': setup_dict}
+
         if not isinstance(setup_dict, dict):
             raise SetupLoadError("Invalid data-type for setup.\n"
                                  f"Expected 'dict' but got '{type(setup_dict).__name__}'")

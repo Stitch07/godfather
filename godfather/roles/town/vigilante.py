@@ -37,9 +37,12 @@ class Vigilante(Townie, Shooter, SingleAction):
         else:
             await super().on_night(bot, player, game)
 
-    def can_do_action(self, _game):
+    async def on_pm_command(self, ctx, game, player, args):
         if self.guilty:
-            return False, ''
+            return await ctx.send('You cannot shoot anymore.')
+        await super().on_pm_command(ctx, game, player, args)
+
+    def can_do_action(self, _game):
         if self.bullets <= 0:
             return False, 'You ran out of bullets!'
         return True, ''
