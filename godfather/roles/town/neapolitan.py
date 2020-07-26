@@ -22,7 +22,7 @@ class Neapolitan(Townie, SingleAction):
         self.action_gerund = 'checking'
         self.action_priority = Priority.COP
         self.action_text = 'check a player'
-        self.categories.append('Town Investigative (not for use in setups where investigative roles can vary)')
+        self.categories.remove('Random Town')
 
     async def tear_down(self, actions, player, target):
         await player.user.send(f"Your target is{' ' if target.display_role == 'Town Vanilla' else ' not '}a Town Vanilla.")
