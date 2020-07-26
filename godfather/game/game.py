@@ -160,6 +160,9 @@ class Game:
         return (False, None, independent_wins)
 
     async def increment_phase(self):
+        # this might cause the double phase increments
+        if self.phase == Phase.STANDBY:
+            return
         # If it is day, `phase_t` should be equal to night_duration and vice versa.
         # `phase_duration` is used at the end of the function.
         # `phase_t` is used in day/night starting messages.
