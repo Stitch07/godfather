@@ -9,11 +9,12 @@ from godfather.game.game_config import GameConfig
 from godfather.game.player_manager import PlayerManager
 from godfather.game.vote_manager import VoteManager
 from godfather.utils import alive_or_recent_jester, choice
+from godfather.game.types import STALEMATE_PRIORITY_ORDER
 
 from .night_actions import NightActions
 from .player import Player
-from godfather.game.types import STALEMATE_PRIORITY_ORDER
 
+IDLE_TIMEOUT = 15 * 60  # 15 minutes
 
 default_game_config = {
     'day_duration': 5 * 60,  # In seconds
@@ -32,7 +33,6 @@ class Game:
     def __init__(self, channel: discord.channel.TextChannel, bot):
         self.channel = channel
         self.bot = bot
-        self.guild = channel.guild
         self.players = PlayerManager(self)
         self.phase = Phase.PREGAME
         self.cycle = 0
@@ -48,16 +48,26 @@ class Game:
         self.day_with_no_lynch = False
         self.night_with_no_kills = False
         self.cycles_with_no_kills = 0
+        # for deleting idle games
+        self.created_at = None
 
     @classmethod
     def create(cls, ctx, bot):
         new_game = cls(ctx.channel, bot)
         new_game.host = ctx.author
         new_game.players.add(ctx.author)
+        new_game.created_at = datetime.now()
         return new_game
 
     async def update(self):
-        if not self.has_started or self.phase == Phase.STANDBY:
+        if not self.has_started:
+            diff = datetime.now() - self.created_at
+            if diff.seconds >= IDLE_TIMEOUT:
+                await self.channel.send('The game took too long to start, deleting it.')
+                self.bot.games.pop(self.channel.id)
+                return
+
+        if self.phase == Phase.STANDBY:
             return
 
         curr_t = datetime.now()
