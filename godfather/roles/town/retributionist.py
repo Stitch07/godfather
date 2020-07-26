@@ -15,7 +15,7 @@ class Retributionist(Townie, SingleAction):
     """
     name = 'Retributionist'
     description = DESCRIPTION
-    unique = False
+    unique = True
 
     def __init__(self):
         super().__init__()
