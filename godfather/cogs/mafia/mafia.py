@@ -165,7 +165,7 @@ class Mafia(commands.Cog):
     async def setupinfo(self, ctx: CustomContext, setup_name: typing.Optional[str] = None):
         # show the current setup if a game is ongoing
         found_setup = None
-        if (ctx.channel.id in ctx.bot.games and ctx.game.setup):
+        if (ctx.game and ctx.game.setup and setup_name is None):
             found_setup = ctx.game.setup
 
         if (found_setup is None and setup_name is None) or setup_name == 'all':
