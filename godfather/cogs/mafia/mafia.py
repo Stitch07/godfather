@@ -170,7 +170,7 @@ class Mafia(commands.Cog):
 
         if (found_setup is None and setup_name is None) or setup_name == 'all':
             txt = ('**All available setups:** (to view a specific setup, use '
-                   f'{ctx.prefix}setupinfo <name>)')
+                   f'{self.bot.global_prefix}setupinfo <name>)')
             txt += '```\n'
             for setup in self.bot.setups.values():
                 txt += f'{setup.name} ({len(setup.roles)} players)\n'
@@ -182,7 +182,7 @@ class Mafia(commands.Cog):
 
         if not found_setup:
             return await ctx.send(
-                f"Couldn't find {setup_name}, use {ctx.prefix}setupinfo to view all setups."
+                f"Couldn't find {setup_name}, use {self.bot.global_prefix}setupinfo to view all setups."
             )
 
         txt = [
@@ -314,7 +314,7 @@ class Mafia(commands.Cog):
         if len(no_dms) > 0:
             no_dms = [*map(lambda usr: usr.name, no_dms)]
             await ctx.send(f"I couldn't DM {', '.join(no_dms)}."
-                           f" Use the {ctx.prefix}rolepm command to receive your PM.")
+                           f" Use the {self.bot.global_prefix}rolepm command to receive your PM.")
 
         # flags
         flags = {flag_name: game.setup.flags[flag_name]

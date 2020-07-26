@@ -30,7 +30,14 @@ from godfather.game import Phase
 
 
 config = json.load(open('config.json'))
-prefix = config.get('prefix', '=')
+global_prefix = config.get('prefix', '=')
+
+
+def prefix_callable(bot, _msg: discord.Message):
+    # The `discord.Message` parameter is required because of how `discord.py` calls it interally.
+    bot_id = bot.user.id
+
+    return [global_prefix, f'<@{bot_id}> ', f'<@!{bot_id}> ']
 
 
 def remove_prefix(text, prefix):
@@ -40,11 +47,11 @@ def remove_prefix(text, prefix):
 class Godfather(commands.Bot):
     def __init__(self):
         super().__init__(
-            command_prefix=prefix,
+            command_prefix=prefix_callable,
             help_command=CustomHelp(verify_checks=False),
             description='A Discord bot for automatically hosting games of Mafia/Werewolf.',
             activity=discord.Activity(
-                type=discord.ActivityType.listening, name='{}help'.format(prefix))
+                type=discord.ActivityType.listening, name='{}help'.format(global_prefix))
         )
 
         self.__version__ = (0, 9, 0)
@@ -101,7 +108,7 @@ class Godfather(commands.Bot):
 
     async def on_message(self, message):
         if message.content.replace('!', '') == self.user.mention:
-            return await message.channel.send('My prefix in this server is: `{}`'.format(prefix))
+            return await message.channel.send('My prefix in this server is: `{}`'.format(global_prefix))
         return await super().on_message(message)
 
     async def on_guild_join(self, guild: discord.Guild):
@@ -129,7 +136,7 @@ class Godfather(commands.Bot):
             return
         if isinstance(error, commands.CommandNotFound):
             args = remove_prefix(ctx.message.content,
-                                 ctx.prefix).split(' ')
+                                 ctx.bot.global_prefix).split(' ')
             command = args[0]
             # logging for an unexpected bug
             self.logger.debug('%s using command %s', ctx.author, command)
@@ -204,6 +211,10 @@ class Godfather(commands.Bot):
             except commands.ExtensionError as err:
                 self.logger.error('Error loading extension %s', file.stem)
                 self.logger.exception(err, exc_info=True, stack_info=True)
+
+    @property
+    def global_prefix(self):
+        return global_prefix
 
 
 if __name__ == "__main__":
