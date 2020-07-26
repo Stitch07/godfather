@@ -26,6 +26,11 @@ class Doctor(Townie, SingleAction):
         self.can_self_target = True  # one self-heal allowed
         self.categories.append('Town Protective')
 
+    def can_target(self, player, target):
+        if player == target and not self.can_self_target:
+            return False, 'You can self-heal only once.'
+        return super().can_target(player, target)
+
     async def run_action(self, actions, player, target):
         pl_record = actions.record[target.user.id]
         if player.user.id == target.user.id:

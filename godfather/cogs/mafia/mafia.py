@@ -17,7 +17,7 @@ from godfather.game.vote_manager import VoteError
 from godfather.game.setup import Setup, SetupLoadError
 from godfather.roles import all_roles
 from godfather.utils import (CustomContext, confirm, from_now,
-                             get_random_sequence, emotes)
+                             emotes)
 
 
 class Mafia(commands.Cog):
@@ -449,7 +449,7 @@ class Mafia(commands.Cog):
         elif (ctx.game.phase == Phase.STANDBY):
             return await ctx.send('The bot is currently processing the game. Sit tight! 👀')
         embed = discord.Embed()
-        phase_str = '**Day {}** 🌅' if ctx.game.phase == Phase.DAY else '**Night {}** 🌃'
+        phase_str = 'Day {} 🌅' if ctx.game.phase == Phase.DAY else 'Night {} 🌃'
 
         embed.add_field(name='Host', value=ctx.game.host)
         embed.add_field(name='Phase', value=phase_str.format(ctx.game.cycle))
