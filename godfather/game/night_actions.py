@@ -55,8 +55,13 @@ class NightActions(list):
                 continue
             # some actions such as jester haunt don't visit
             to_visit = action.get('can_visit', True)
-            if not target.user.id == player.user.id and to_visit:
-                await target.visit(player, self)
+            if to_visit:
+                # double targets
+                if isinstance(target, list):
+                    for individual in target:
+                        await individual.visit(player, self)
+                else:
+                    await target.visit(player, self)
             await player.role.run_action(self, player, target)
 
          # tear_down is for roles to reset states initialized in set_up, report action success/failure

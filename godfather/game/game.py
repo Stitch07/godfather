@@ -160,6 +160,9 @@ class Game:
         return (False, None, independent_wins)
 
     async def increment_phase(self):
+        # this might cause the double phase increments
+        if self.phase == Phase.STANDBY:
+            return
         # If it is day, `phase_t` should be equal to night_duration and vice versa.
         # `phase_duration` is used at the end of the function.
         # `phase_t` is used in day/night starting messages.
@@ -231,7 +234,6 @@ class Game:
             if self.cycles_with_no_kills >= 3:
                 _, _, independent_wins = self.check_endgame()
                 await self.channel.send('Nobody was lynched on 3 consecutive days. Ending game...')
-                print(independent_wins)
                 return await self.end(None, independent_wins)
 
             await self.channel.send(f'Night **{self.cycle}** will last {phase_t} minutes. '

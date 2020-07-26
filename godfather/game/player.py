@@ -20,6 +20,9 @@ class Player:
         self.visitors = []
         # when roles change: Goon -> GF, Exe -> Jester
         self.previous_roles = []
+        # retributionist stuff
+        self.is_revived = False
+        self.revived_on = None
 
     # generates the role's PM
     @property
@@ -54,6 +57,8 @@ class Player:
         return f'{self.role.faction} {self.role.display_role()}'
 
     async def visit(self, visitor, actions):
+        if visitor == self:
+            return
         self.visitors.append(visitor)
         if hasattr(self.role, 'on_visit'):
             await self.role.on_visit(self, visitor, actions)

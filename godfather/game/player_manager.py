@@ -93,11 +93,17 @@ class PlayerManager:
             if codeblock:
                 if player.is_alive:
                     usrname += f'+ {num}. {player.user}'
+                    if player.is_revived:
+                        usrname += '({}; revived D{})'.format(player.role.name,
+                                                              player.revived_on)
                 else:
                     usrname += f'- {num}. {player.user} ({player.display_role}; {player.death_reason})'
             else:
                 if player.is_alive:
                     usrname += f'{num}. {player.user}'
+                    if player.is_revived:
+                        usrname += '({}; revived N{})'.format(
+                            player.role.name, player.revived_on)
                 else:
                     usrname += f'{num}. ~~{player.user}~~ ({player.display_role}; {player.death_reason})'
 
