@@ -5,6 +5,18 @@ DESCRIPTION = 'You may transport 2 people every night, swapping all targets on t
 
 
 class Transporter(Townie, DoubleTarget):
+    """
+    A  retired taxi driver who transports people without asking any questions.
+
+    - Win Condition: Lynch every criminal and evildoer.
+
+
+    + Abilities: Choose two people to transport at night.
+    + Transporting two people will swap all targets against them.
+    + You may transport yourself.
+    + Your targets will know if they were transported.
+    + You cannot transport someone with themselves.
+    """
     name = 'Transporter'
     description = DESCRIPTION
 
