@@ -34,6 +34,17 @@ class Mafia(commands.Cog):
         if ctx.channel.id in self.bot.games:
             return await ctx.send('A game of mafia is already running '
                                   'in this channel.')
+
+        # prevent the user from joining if they are already in a different game
+        other_games = list(filter(
+            lambda game: ctx.author in game.players, self.bot.games.values()))
+        if len(other_games) > 0:
+            other_game = other_games[0]
+            return await ctx.send(
+                'You are already playing another game in the channel {} ({})'.format(
+                    other_game.channel.mention, other_game.channel.guild.name)
+            )
+
         new_game = Game.create(ctx, self.bot)
         self.bot.games[ctx.channel.id] = new_game
         return await ctx.send('Started a game of mafia in '
@@ -47,6 +58,16 @@ class Mafia(commands.Cog):
         Adds you to the playerlist of an ongoing game.
         """
         game = self.bot.games[ctx.channel.id]
+
+        # prevent the user from joining if they are already in a different game
+        other_games = list(filter(
+            lambda game: ctx.author in game.players, self.bot.games.values()))
+        if len(other_games) > 0:
+            other_game = other_games[0]
+            return await ctx.send(
+                'You are already playing another game in the channel {} ({}).'.format(
+                    other_game.channel.mention, other_game.channel.guild.name)
+            )
 
         if ctx.author in game.players:
             return await ctx.send('You have already joined this game.')
@@ -428,6 +449,19 @@ class Mafia(commands.Cog):
     @host_only()
     @game_only()
     async def usesetup(self, ctx: CustomContext, *, setup_data: str):
+        """
+        Lets you use a custom setup for your game.
+
+        The simplest form is a list of roles separated by commas, for example `usesetup Vigilante, Goon, Vanilla x5`
+
+        To add your own name and start games at night, you may need to use [YAML](https://yaml.org/). The format for that is:
+
+        ```yaml
+        roles: [Vigilante, Goon, Vanilla x5]
+        night_start: true
+        name: your_setup_name
+        ```
+        """
         setup_data = setup_data.strip('```yaml\n')
         try:
             ctx.game.setup = Setup(setup_data)
