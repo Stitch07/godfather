@@ -54,7 +54,7 @@ class Misc(commands.Cog):
             'and much more!',
             '',
             'To add {} to your Discord server, use the `{}invite` command.'.format(
-                self.bot.user.name, ctx.prefix
+                self.bot.user.name, self.bot.global_prefix
             )
         ]
         return await ctx.send('\n'.join(info_text))
@@ -91,7 +91,7 @@ class Misc(commands.Cog):
         version = '{}-{}'.format('.'.join(map(str, self.bot.__version__)),
                                  self.bot.__release__)
         invite_header = 'To add {} to your Discord server, use the `{}invite` command.'.format(
-            self.bot.user.name, ctx.prefix)
+            self.bot.user.name, self.bot.global_prefix)
         footer_text = 'Running {} v{}'.format(
             self.bot.user.name, version)
 
