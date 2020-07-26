@@ -34,6 +34,8 @@ class Transporter(Townie, DoubleTarget):
     async def set_up(self, actions, _player, target):
         target1, target2 = target
         for action in actions:
+            if not action.get('can_transport', True):
+                continue
             if action['target'] == target1:
                 action['target'] = target2
             elif action['target'] == target2:
