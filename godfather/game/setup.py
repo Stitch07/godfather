@@ -125,7 +125,9 @@ class Setup:
         self.total_players = len(self.roles)
 
         if self.total_players < 3:
-            raise SetupLoadError("Setup must have at least 3 players.")
+            raise SetupLoadError("Setups must have at least 3 players.")
+        if self.total_players > 18:
+            raise SetupLoadError('Setups can have at most 18 players.')
 
     async def assign_roles(self, game):
         roles = copy.deepcopy(self.roles)
