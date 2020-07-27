@@ -42,7 +42,7 @@ class Amnesiac(SingleAction):
     async def tear_down(self, actions, player, target):
         new_role = all_roles.get(target.role.name)
         player.previous_roles.append(player.role)
-        player.role = new_role
+        player.role = new_role()
         await player.user.send('You have remembered that you were a {}!'.format(new_role))
         if player.role.faction.informed:
             teammates = actions.game.players.filter(
