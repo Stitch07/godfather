@@ -111,6 +111,8 @@ class Game:
         if len(possible_setups) == 0:
             # wip: custom exception types?
             raise ValueError('No possible setups found.')
+        if len(possible_setups) == 1:
+            return possible_setups[0]
 
         setup = await choice(
             self.bot, self.bot.get_user(self.host.id), self.channel,
