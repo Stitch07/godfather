@@ -36,9 +36,9 @@ class Transporter(Townie, DoubleTarget):
         for action in actions:
             if not action.get('can_transport', True):
                 continue
-            if action['target'] == target1:
+            if 'target' in action and action['target'] == target1:
                 action['target'] = target2
-            elif action['target'] == target2:
+            elif 'target' in action and action['target'] == target2:
                 action['target'] = target1
 
     async def tear_down(self, _actions, _player, target):
