@@ -130,6 +130,34 @@ class Godfather(commands.Bot):
     async def on_guild_channel_delete(self, channel: discord.abc.GuildChannel):
         self.games.pop(channel.id, None)
 
+    async def on_member_remove(self, member: discord.Member):
+        for game in self.games.values():
+            if member in game.players:
+                player = game.players.get(member)
+                if len(game.players.replacements) == 0:
+                    # Modkill user if no replacements.
+                    async with game.channel.typing():
+                        phase_str = 'd' if game.phase == Phase.DAY else 'n'
+                        await game.channel.send(
+                            f'{player.user.name} was modkilled for leaving the server.'
+                            f' They were a *{player.display_role}*.'
+                        )
+                        await player.remove(game, f'modkilled {phase_str}{game.cycle}', modkill=True)
+                        game_ended, winning_faction, independent_wins = game.check_endgame()
+                        if game_ended:
+                            await game.end(winning_faction, independent_wins)
+                        return
+                else:
+                    # Replace user.
+                    replacement = game.players.replacements.popleft()
+                    player.user = replacement
+                    await game.channel.send(
+                        f'{member} left the server.'
+                        f'\n{replacement} has replaced {member}.'
+                    )
+                    await replacement.send(player.role_pm)
+                    return
+
     async def on_command_error(self, ctx, error):
         # pylint: disable=too-many-return-statements, arguments-differ, too-many-branches
         if hasattr(ctx.command, 'on_error'):
