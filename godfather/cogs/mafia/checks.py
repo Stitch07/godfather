@@ -5,6 +5,9 @@ from godfather.game.game import Phase
 
 def game_only():
     async def predicate(ctx):
+        if not ctx.guild:
+            raise CheckFailure(
+                'This command cannot be used in private messages.')
         if ctx.channel.id not in ctx.bot.games:
             raise CheckFailure('No game is currently running in this channel.')
         return True

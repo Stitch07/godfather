@@ -25,6 +25,7 @@ class Mafia(commands.Cog):
         self.bot = bot
 
     @commands.command(aliases=['create', 'create-game'])
+    @commands.guild_only()
     async def creategame(self, ctx: CustomContext):
         """
         Creates a game of mafia in this channel.
