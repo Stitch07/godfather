@@ -12,13 +12,13 @@ class CustomHelp(DefaultHelpCommand):
         embed.color = EMBED_COLOR
         embed.description = '\n'.join([
             self.context.bot.description +
-            ' My prefix is `{}`.'.format(self.clean_prefix),
+            ' My prefix is `{}`.'.format(self.context.bot.global_prefix),
             '[Support Server]({})'.format(SUPPORT_SERVER)
         ])
         embed.set_author(name=self.context.bot.user.name,
                          icon_url=self.context.bot.user.avatar_url)
         embed.set_footer(text='For information on a specific command, use {}help <command>'.format(
-            self.clean_prefix))
+            self.context.bot.global_prefix))
 
         for cog, commands in mapping.items():
             cog_name = getattr(cog, '__cog_name__', 'Default')

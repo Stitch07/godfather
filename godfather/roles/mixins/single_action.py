@@ -14,8 +14,8 @@ class SingleAction(Role):
         self.can_visit = True
 
     async def on_night(self, bot, player, game):
-        output = f'It is now night {game.cycle}. Use the {bot.command_prefix}{self.action} command to {self.action_text}. ' \
-            + f'Use {bot.command_prefix}noaction to stay home.\n'
+        output = f'It is now night {game.cycle}. Use the {bot.global_prefix}{self.action} command to {self.action_text}. ' \
+            + f'Use {bot.global_prefix}noaction to stay home.\n'
         output += f'```diff\n{game.players.show(codeblock=True)}```'
         await player.user.send(output)
 
