@@ -2,6 +2,7 @@ import copy
 from godfather.roles.mixins import SingleAction
 from godfather.factions import AmnesiacNeutral
 from godfather.game.types import Priority
+from godfather.roles import all_roles
 
 DESCRIPTION = 'You may remember who you were by selecting a dead player.'
 
@@ -39,7 +40,7 @@ class Amnesiac(SingleAction):
                 actions.remove(other_amne)
 
     async def tear_down(self, actions, player, target):
-        new_role = copy.deepcopy(target.role)
+        new_role = all_roles.get(target.role.name)
         player.previous_roles.append(player.role)
         player.role = new_role
         await player.user.send('You have remembered that you were a {}!'.format(new_role))
