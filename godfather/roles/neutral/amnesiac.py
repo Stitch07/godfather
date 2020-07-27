@@ -57,6 +57,8 @@ class Amnesiac(SingleAction):
             return False, 'You can only remember dead roles.'
         if target.role.cleaned:
             return False, 'You cannot remember cleaned roles.'
+        if target.role.unique and target.role.faction.name == 'Town':
+            return False, 'You cannot remember unique town roles.'
         if target.user.id == player.user.id:
             return False, f'As a {self.display_role()}, you cannot self target.'
         return True, ''
