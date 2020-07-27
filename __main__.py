@@ -54,7 +54,7 @@ class Godfather(commands.Bot):
                 type=discord.ActivityType.listening, name='{}help'.format(global_prefix))
         )
 
-        self.__version__ = (0, 9, 0)
+        self.__version__ = (0, 9, 1)
         self.__release__ = 'beta'
         # needed for showing uptime
         self.connected_at = None
