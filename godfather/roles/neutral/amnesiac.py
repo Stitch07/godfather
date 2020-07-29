@@ -25,7 +25,7 @@ class Amnesiac(SingleAction):
         self.action = 'remember'
         self.action_gerund = 'remembering'
         self.action_priority = Priority.SURVIVOR
-        self.action_text = 'remember your role.'
+        self.action_text = 'remember your role'
         self.categories.append('Neutral Benign')
 
     async def set_up(self, actions, player, target):
@@ -62,4 +62,15 @@ class Amnesiac(SingleAction):
             return False, 'You cannot remember unique town roles.'
         if target.user.id == player.user.id:
             return False, f'As a {self.display_role()}, you cannot self target.'
+        return True, ''
+
+    def can_do_action(self, game):
+        def filter_target(player):
+            if player.role.faction.name == 'Town' and player.role.unique:
+                return False
+            return not player.is_alive
+
+        valid_targets = filter(filter_target, game.players)
+        if not list(valid_targets):
+            return False, 'There are not valid targets.'
         return True, ''

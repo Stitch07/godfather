@@ -35,9 +35,13 @@ class Retributionist(Townie, SingleAction):
         await actions.game.channel.send('**{}** was resurrected back to life!'.format(target.user))
         await target.user.send('You were revived by a Retributionist!')
 
-    def can_do_action(self, _game):
+    def can_do_action(self, game):
         if self.has_revived:
             return False, 'You can only revive one player.'
+        valid_targets = filter(
+            lambda player: not player.is_alive and player.role.faction.name == 'Town', game.players)
+        if not list(valid_targets):
+            return False, 'There are not valid targets.'
         return True, ''
 
     def can_target(self, player, target):

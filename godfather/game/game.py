@@ -240,6 +240,9 @@ class Game:
             # recently lynched jesters and alive players are allowed to send in actions
             for player in filter(lambda p: alive_or_recent_jester(p, self), self.players):
                 if hasattr(player.role, 'on_night'):
+                    can_do, _ = player.role.can_do_action(self)
+                    if not can_do:
+                        continue
                     await player.role.on_night(self.bot, player, self)
 
             self.phase = Phase.NIGHT
