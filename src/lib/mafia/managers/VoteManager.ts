@@ -3,28 +3,28 @@ import Game from '@mafia/Game';
 
 export interface Vote {
 	by: Player;
-	weight?: number;
+	weight: number;
 }
 
 export class VoteProxy extends Array<Vote> {
 
-	// Flattens weighted votes and gives the number of actual votes on an Array<Vote
+	// Flattens weighted votes and gives the number of actual votes on a Vote[]
 	public count(): number {
 		return this.reduce((acc, vote) => acc + (vote.weight ?? 1), 0);
 	}
 
 }
 
-export const notVoting = 'notVoting';
-export const noLynch = 'noLynch';
+export const NotVoting = 'notVoting';
+export const NoLynch = 'noLynch';
 
 export default class VoteManager extends Map<string, VoteProxy> {
 
 	public constructor(public game: Game) {
 		super();
 		// special keys for not voting and no lynch.
-		this.set(notVoting, new VoteProxy());
-		this.set(noLynch, new VoteProxy());
+		this.set(NotVoting, new VoteProxy());
+		this.set(NotVoting, new VoteProxy());
 	}
 
 	public vote(voter: Player, target: Player, weight = 1): boolean {
@@ -34,14 +34,14 @@ export default class VoteManager extends Map<string, VoteProxy> {
 		else if (votes.find(vote => vote.by === voter)) throw `You have already voted for ${target}`;
 		// clear all other votes
 		for (const votes of this.values()) {
-			for (const [n, vote] of votes.entries()) if (vote.by === voter) delete votes[n];
+			for (const vote of votes) if (vote.by === voter) votes.splice(votes.indexOf(vote), 1);
 		}
 		votes.push({
 			by: voter,
 			weight
 		});
 		this.set(target.user.id, votes);
-		return this.on(voter).count() >= this.game.majorityVotes;
+		return this.on(target).count() >= this.game.majorityVotes;
 	}
 
 	public noLynch(voter: Player, weight = 1): boolean {
@@ -49,14 +49,40 @@ export default class VoteManager extends Map<string, VoteProxy> {
 		if (votes.find(vote => vote.by === voter)) throw 'You have already voted to no-lynch.';
 		// clear all other votes
 		for (const votes of this.values()) {
-			for (const [n, vote] of votes.entries()) if (vote.by === voter) delete votes[n];
+			for (const vote of votes) if (vote.by === voter) votes.splice(votes.indexOf(vote), 1);
 		}
 		votes.push({
 			by: voter,
 			weight
 		});
-		this.set(noLynch, votes);
-		return this.on(voter).count() >= this.game.majorityVotes;
+		this.set(NoLynch, votes);
+		return this.get(NoLynch)!.count() >= this.game.majorityVotes;
+	}
+
+	public unvote(voter: Player) {
+		for (const [target, votes] of this) {
+			if (target === NotVoting || !votes.find(vote => vote.by === voter)) continue;
+			votes.splice(votes.findIndex(vote => vote.by === voter), 1);
+			this.get(NotVoting)!.push({ by: voter, weight: 1 });
+			return true;
+		}
+		return false;
+	}
+
+	public show(): string {
+		const voteText = ['**Vote Count**'];
+		const sortedVotes = Array.from(this.entries()).filter(votes => votes[0] !== NotVoting).sort((a, b) => a[1].count() - b[1].count());
+		for (const [targetID, votes] of sortedVotes) {
+			if (votes.count() === 0) continue;
+			const target = this.game.players.find(player => player.user.id === targetID);
+			if (!target) continue;
+			voteText.push(`${target.user.username} (${votes.count()}): ${votes.map(voterMapping).join(', ')}`);
+		}
+		const notVoting = this.get(NotVoting);
+		if (notVoting!.count() > 0) {
+			voteText.push(`Not Voting (${notVoting!.count()}): ${notVoting!.map(voterMapping).join(', ')}`);
+		}
+		return voteText.join('\n');
 	}
 
 	public on(player: Player) {
@@ -65,8 +91,14 @@ export default class VoteManager extends Map<string, VoteProxy> {
 
 	public reset() {
 		this.clear();
-		this.set(notVoting, new VoteProxy());
-		this.set(noLynch, new VoteProxy());
+		this.set(NotVoting, new VoteProxy());
+		this.set(NotVoting, new VoteProxy());
 	}
 
 }
+
+const voterMapping = (vote: Vote) => {
+	let text = `${vote.by.user.username}`;
+	if (vote.weight > 1) text += ` (${vote.weight}x)`;
+	return text;
+};

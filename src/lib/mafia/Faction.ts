@@ -7,6 +7,7 @@ class Faction {
 	// whether the faction is informed about their teammates
 	public informed = false;
 	public name = '';
+	public winCondition = '';
 
 }
 

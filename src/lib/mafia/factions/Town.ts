@@ -7,6 +7,8 @@ export default class TownFaction extends Faction {
 
 	public name = 'Town';
 
+	public winCondition = 'Lynch every evildoer.';
+
 	public hasWon(player: Player): boolean {
 		// source: https://town-of-salem.fandom.com/wiki/Victory
 		// Town Victory will occur when the Town is the last standing faction alive when all members of the Mafia,

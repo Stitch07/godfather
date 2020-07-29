@@ -1,4 +1,4 @@
-import { KlasaMessage } from 'klasa';
+import { KlasaMessage, KlasaUser } from 'klasa';
 import { ApplyOptions } from '@skyra/decorators';
 import { ChannelType } from '@klasa/dapi-types';
 import Game from '@mafia/Game';
@@ -22,7 +22,7 @@ export default class extends GodfatherCommand {
 		if (this.client.games.has(msg.channel.id)) {
 			throw 'A game of Mafia is already running in this channel.';
 		}
-		const game = new Game(msg.author, msg.channel as GodfatherChannel);
+		const game = new Game(msg.author as KlasaUser, msg.channel as GodfatherChannel);
 		this.client.games.set(msg.channel.id, game);
 		return msg.sendMessage(`Started a game of Mafia in ${msg.channel} hosted by **${msg.author.tag}**.`);
 	}

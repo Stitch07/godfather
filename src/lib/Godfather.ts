@@ -1,4 +1,5 @@
 import '@lib/extenders';
+import '@lib/settings';
 
 import { KlasaClient } from 'klasa';
 import Game from '@mafia/Game';
@@ -13,6 +14,9 @@ export default class Godfather extends KlasaClient {
 			commands: {
 				logging: true,
 				prefix: 'g!'
+			},
+			pieces: {
+				createFolders: false
 			}
 		});
 

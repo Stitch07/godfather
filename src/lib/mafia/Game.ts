@@ -1,12 +1,15 @@
 import { KlasaUser } from 'klasa';
+import { Duration } from '@klasa/duration';
 
 import Phase from '@mafia/Phase';
 import PlayerManager from '@mafia/managers/PlayerManager';
 import Godfather from '@lib/Godfather';
 import Player from '@mafia/Player';
-import VoteManager, { notVoting } from '@mafia/managers/VoteManager';
+import VoteManager, { NotVoting } from '@mafia/managers/VoteManager';
 import GodfatherChannel from '@lib/extensions/GodfatherChannel';
 import NightActionsManager from '@mafia/managers/NightActionsManager';
+import Setup from './Setup';
+import { GuildSettings } from '@lib/types/settings/GuildSettings';
 
 export default class Game {
 
@@ -16,8 +19,9 @@ export default class Game {
 	public votes: VoteManager;
 	public settings: GameSettings;
 	public nightActions: NightActionsManager;
-	public phaseEndAt?: Date;
+	public phaseEndAt?: Date = undefined;
 	public cycle = 0;
+	public setup?: Setup = undefined;
 	public constructor(public host: KlasaUser, public channel: GodfatherChannel) {
 		this.client = channel.client as Godfather;
 		this.phase = Phase.STANDBY;
@@ -26,10 +30,9 @@ export default class Game {
 		this.votes = new VoteManager(this);
 		this.nightActions = new NightActionsManager(this);
 		this.settings = {
-			dayDuration: channel.guild.settings.get('defaultDayDuration') as number,
-			nightDuration: channel.guild.settings.get('defaultNightDuration') as number
+			dayDuration: channel.guild.settings.get(GuildSettings.DefaultDayDuration) as number,
+			nightDuration: channel.guild.settings.get(GuildSettings.DefaultNightDuration) as number
 		};
-		this.phaseEndAt = undefined;
 	}
 
 	public async startDay() {
@@ -53,22 +56,24 @@ export default class Game {
 		// populate voting cache
 		this.votes.reset();
 		for (const alivePlayer of alivePlayers) {
-			this.votes.get(notVoting)!.push({ by: alivePlayer });
+			this.votes.get(NotVoting)!.push({ by: alivePlayer, weight: 1 });
 		}
+		this.phaseEndAt = new Date();
+		this.phaseEndAt.setSeconds(this.phaseEndAt.getSeconds() + (this.settings.dayDuration));
 
 		await this.channel.sendMessage([
-			`Day **${this.cycle}** will last ${Math.round(this.settings.dayDuration / 60)} minutes.`,
+			`Day **${this.cycle}** will last ${Duration.toNow(this.phaseEndAt)}`,
 			`With ${alivePlayers.length} alive, it takes ${this.majorityVotes} to lynch.`
 		].join('\n'));
 	}
 
 	public get hasStarted(): boolean {
-		return this.phase === Phase.PREGAME;
+		return this.phase !== Phase.PREGAME;
 	}
 
 	public get majorityVotes(): number {
 		const alivePlayers = this.players.filter(player => player.isAlive);
-		return Math.floor(alivePlayers.length / 2) + 1;
+		return Math.ceil(alivePlayers.length / 2);
 	}
 
 	public delete(): void {

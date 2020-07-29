@@ -5,7 +5,7 @@ import Role from './Role';
 
 export interface SetupOptions extends PieceOptions {
 	// the names of the roles/categories used
-	roles?: Array<string>;
+	roles?: string[];
 	// whether the setup should start at N0 instead of day 1
 	nightStart?: boolean;
 }
@@ -13,12 +13,12 @@ export interface SetupOptions extends PieceOptions {
 export const DEFAULT_SETUP_OPTIONS = {
 	name: 'unnamed',
 	nightStart: false,
-	roles: [] as Array<string>
+	roles: [] as string[]
 };
 
 export default class Setup extends Piece {
 
-	public roles: Array<string>;
+	public roles: string[];
 	public nightStart: boolean;
 	public constructor(store: SetupStore, directory: string, file: readonly string[], options: SetupOptions = {}) {
 		super(store, directory, file, options as SetupOptions);
@@ -38,6 +38,10 @@ export default class Setup extends Piece {
 	// checks for exe with no townies/single jester setups are handled here
 	public ok(): boolean {
 		return true;
+	}
+
+	public get totalPlayers() {
+		return this.roles.length;
 	}
 
 }

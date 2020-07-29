@@ -4,6 +4,7 @@ import Faction from './Faction';
 abstract class Role {
 
 	public name = '';
+	public description = '';
 	public constructor(public player: Player) {
 	}
 
@@ -13,7 +14,7 @@ abstract class Role {
 	}
 
 	// Role categories such as Random Town, Neutral Evil
-	public static categories: Array<string> = [];
+	public static categories: string[] = [];
 
 	// Docs used in roleinfo command
 	public static documentation = '';
@@ -21,7 +22,7 @@ abstract class Role {
 }
 
 interface Role {
-	onEvent(name: string, ...args: Array<any>): Promise<any>;
+	onEvent(name: string, ...args: any[]): Promise<any>;
 	faction: Faction;
 }
 

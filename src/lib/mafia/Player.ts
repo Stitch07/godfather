@@ -13,6 +13,20 @@ export default class Player {
 
 	}
 
+	public async sendPM() {
+		const rolePM = [
+			`Hello ${this.user}, you are a **${this.role!.display}**. ${this.role!.description}`,
+			`Win Condition: ${this.role!.faction.winCondition}`
+		].join('\n');
+		await this.user.sendMessage(rolePM);
+		if (this.role!.faction.informed) {
+			const team = this.game.players.filter(player => player.role!.faction.name === this.role!.faction.name);
+			if (team.length > 1) {
+				await this.user.sendMessage(`Your team consists of: ${team.map(player => player.user).join(', ')}`);
+			}
+		}
+	}
+
 	public toString(): string {
 		return this.user.username;
 	}

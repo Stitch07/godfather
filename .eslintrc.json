@@ -8,12 +8,14 @@
                 "selector": "variable",
                 "format": [
                     "camelCase",
-                    "UPPER_CASE"
+                    "UPPER_CASE",
+                    "PascalCase"
                 ]
             }
         ],
         "@typescript-eslint/no-use-before-define": [
             "off"
-        ]
+        ],
+        "@typescript-eslint/no-namespace": "off"
     }
 }

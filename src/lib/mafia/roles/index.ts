@@ -6,7 +6,7 @@ import Role from '@mafia/Role';
 // A map of role names to the constructor of its corresponding role Class
 export const allRoles = new Map<string, Constructor<Role>>();
 // A map of role categories to an array of role constructors belonging to that category
-export const roleCategories = new Map<string, Array<Constructor<Role>>>();
+export const roleCategories = new Map<string, Constructor<Role>[]>();
 
 export const init = async () => {
 	const scannedFiles = await scan('dist/lib/mafia/roles', {
@@ -18,8 +18,8 @@ export const init = async () => {
 		const roleName = parse(file.name).name.split('_').join(' ');
 		allRoles.set(roleName, roleClass);
 		// append to category array here
-		for (const category of roleClass.categories as Array<string>) {
-			const categoryArray = roleCategories.get(category) ?? [];
+		for (const category of roleClass.categories as string[]) {
+			const categoryArray = roleCategories.get(category) ?? ([] as Array<Constructor<Role>>);
 			categoryArray.push(roleClass);
 			roleCategories.set(category, categoryArray);
 		}

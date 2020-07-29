@@ -4,7 +4,7 @@ import { ApplyOptions } from '@skyra/decorators';
 
 @ApplyOptions<SetupOptions>({
 	name: 'ss3',
-	roles: ['Super Saint', 'Vanilla', 'Goon']
+	roles: ['Super Saint', 'Vanilla', 'Vanilla']
 })
 export default class extends BasicSetup {
 }

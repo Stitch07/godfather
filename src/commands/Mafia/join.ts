@@ -1,6 +1,6 @@
 import GodfatherCommand, { GodfatherCommandOptions } from '@lib/GodfatherCommand';
 import { ApplyOptions } from '@skyra/decorators';
-import { KlasaMessage } from 'klasa';
+import { KlasaMessage, KlasaUser } from 'klasa';
 import GodfatherChannel from '@lib/extensions/GodfatherChannel';
 import Player from '@mafia/Player';
 
@@ -19,7 +19,7 @@ export default class extends GodfatherCommand {
 		if (game!.hasStarted) {
 			// do replacements here sometime
 		}
-		game!.players.push(new Player(msg.author, game!));
+		game!.players.push(new Player(msg.author as KlasaUser, game!));
 		return msg.sendMessage('✅ Successfully joined.');
 	}
 

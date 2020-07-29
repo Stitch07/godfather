@@ -1,4 +1,4 @@
-import { Message, TextChannel } from '@klasa/core';
+import { Message, TextChannel, User } from '@klasa/core';
 
 declare module 'klasa' {
 	interface KlasaChannel extends TextChannel {
@@ -8,5 +8,9 @@ declare module 'klasa' {
 	interface KlasaMessage extends Message {
 		sendMessage(content: string): Promise<Message[]>;
 		prompt(promptMessage: string): Promise<boolean>;
+	}
+
+	interface KlasaUser extends User {
+		sendMessage(content: string): Promise<Message[]>;
 	}
 }
