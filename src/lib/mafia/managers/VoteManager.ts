@@ -8,9 +8,9 @@ export interface Vote {
 
 export class VoteProxy extends Array<Vote> {
 
-	// Flattens weighted votes and gives the number of actual votes on a Vote[]
+	// Flattens weighted votes and gives the number of actual votes on a player
 	public count(): number {
-		return this.reduce((acc, vote) => acc + (vote.weight ?? 1), 0);
+		return this.reduce((acc, vote) => acc + vote.weight, 0);
 	}
 
 }
