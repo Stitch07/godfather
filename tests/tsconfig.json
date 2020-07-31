@@ -1,0 +1,28 @@
+{
+	"extends": "@skyra/eslint-config",
+	"compilerOptions": {
+		"target": "ES2019",
+		"useDefineForClassFields": true,
+		"resolveJsonModule": true,
+		"outDir": "../dist",
+		"rootDir": "../",
+		"baseUrl": ".",
+		"composite": true,
+		"declaration": true,
+		"paths": {
+			"@mafia/*": [
+				"../src/lib/mafia/*"
+			],
+			"@lib/*": [
+				"../src/lib/*",
+			],
+			"@util/*": [
+				"../src/lib/util/*"
+			]
+		}
+	},
+	"include": [
+		".",
+		"../src/**/*"
+	]
+}
