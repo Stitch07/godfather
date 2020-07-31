@@ -2,9 +2,9 @@
 
 ## How to run:
 
-`npm install`
+`yarn install --prod=true` 
 
-`npm run build`
+`yarn build`
 
 `node .`
 
@@ -13,3 +13,13 @@
 ```typescript
 export const token = 'BOT TOKEN HERE';
 ```
+
+## Unit Tests
+
+Install all dev dependencies:
+
+`yarn`
+
+Run tests:
+
+`yarn test`

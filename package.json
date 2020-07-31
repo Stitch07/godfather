@@ -10,14 +10,22 @@
   "scripts": {
     "build": "tsc -p src",
     "watch": "tsc -b src -w",
-    "lint": "eslint src --ext ts --fix"
+    "lint": "eslint src --ext ts --fix",
+    "test": "jest"
   },
   "devDependencies": {
+    "@babel/core": "^7.11.0",
+    "@babel/preset-env": "^7.11.0",
     "@skyra/eslint-config": "^5.2.1",
+    "@types/jest": "^26.0.8",
     "@types/module-alias": "^2.0.0",
     "@typescript-eslint/eslint-plugin": "^3.7.0",
     "@typescript-eslint/parser": "^3.7.0",
+    "babel-jest": "^26.2.2",
     "eslint": "^7.5.0",
+    "jest": "^26.2.2",
+    "jest-mock-extended": "^1.0.9",
+    "ts-jest": "^26.1.4",
     "typescript": "^3.9.7"
   },
   "dependencies": {

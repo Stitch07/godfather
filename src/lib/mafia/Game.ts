@@ -5,7 +5,7 @@ import Phase from '@mafia/Phase';
 import PlayerManager from '@mafia/managers/PlayerManager';
 import Godfather from '@lib/Godfather';
 import Player from '@mafia/Player';
-import VoteManager, { NotVoting } from '@mafia/managers/VoteManager';
+import VoteManager from '@mafia/managers/VoteManager';
 import GodfatherChannel from '@lib/extensions/GodfatherChannel';
 import NightActionsManager from '@mafia/managers/NightActionsManager';
 import Setup from './Setup';
@@ -30,8 +30,8 @@ export default class Game {
 		this.votes = new VoteManager(this);
 		this.nightActions = new NightActionsManager(this);
 		this.settings = {
-			dayDuration: channel.guild.settings.get(GuildSettings.DefaultDayDuration) as number,
-			nightDuration: channel.guild.settings.get(GuildSettings.DefaultNightDuration) as number
+			dayDuration: channel.guild.settings?.get(GuildSettings.DefaultDayDuration) as number,
+			nightDuration: channel.guild.settings?.get(GuildSettings.DefaultNightDuration) as number
 		};
 	}
 
@@ -55,9 +55,6 @@ export default class Game {
 		const alivePlayers = this.players.filter(player => player.isAlive);
 		// populate voting cache
 		this.votes.reset();
-		for (const alivePlayer of alivePlayers) {
-			this.votes.get(NotVoting)!.push({ by: alivePlayer, weight: 1 });
-		}
 		this.phaseEndAt = new Date();
 		this.phaseEndAt.setSeconds(this.phaseEndAt.getSeconds() + (this.settings.dayDuration));
 
@@ -73,7 +70,7 @@ export default class Game {
 
 	public get majorityVotes(): number {
 		const alivePlayers = this.players.filter(player => player.isAlive);
-		return Math.ceil(alivePlayers.length / 2);
+		return Math.floor(alivePlayers.length / 2) + 1;
 	}
 
 	public delete(): void {

@@ -5,6 +5,7 @@ abstract class Role {
 
 	public name = '';
 	public description = '';
+	public readonly voteWeight = 1;
 	public constructor(public player: Player) {
 	}
 
