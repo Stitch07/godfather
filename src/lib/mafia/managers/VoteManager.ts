@@ -27,7 +27,7 @@ export default class VoteManager extends Map<string, VoteProxy> {
 
 	public vote(voter: Player, target: Player): boolean {
 		if (!target.isAlive) throw 'You can\'t vote a dead player.';
-		const votes = this.on(voter);
+		const votes = this.on(target);
 		if (voter === target) throw 'Self-voting is not allowed.';
 		else if (votes.find(vote => vote.by === voter)) throw `You have already voted for ${target}`;
 		// clear all other votes
@@ -43,7 +43,7 @@ export default class VoteManager extends Map<string, VoteProxy> {
 	}
 
 	public noLynch(voter: Player): boolean {
-		const votes = this.on(voter);
+		const votes = this.get(NoLynch) ?? new VoteProxy();
 		if (votes.find(vote => vote.by === voter)) throw 'You have already voted to no-lynch.';
 		// clear all other votes
 		for (const votes of this.values()) {

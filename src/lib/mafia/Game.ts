@@ -24,7 +24,7 @@ export default class Game {
 	public setup?: Setup = undefined;
 	public constructor(public host: KlasaUser, public channel: GodfatherChannel) {
 		this.client = channel.client as Godfather;
-		this.phase = Phase.STANDBY;
+		this.phase = Phase.PREGAME;
 		this.players = new PlayerManager(this);
 		this.players.push(new Player(host, this));
 		this.votes = new VoteManager(this);

@@ -35,7 +35,7 @@ export default class PlayerManager extends Array<Player> {
 
 		if (this.replacements.length > 0) {
 			const replacement = this.replacements.shift();
-			await this.game.channel.sendMessage(`${replacement!.tag} has replaced ${player.user.username}.`);
+			await this.game.channel.sendMessage(`${replacement!.tag} has replaced ${player.user.tag}.`);
 			player.user = replacement!;
 			await player.sendPM();
 			return true;
@@ -43,7 +43,7 @@ export default class PlayerManager extends Array<Player> {
 
 		// modkill if nobody is replacing
 		const phaseStr = this.game.phase === Phase.DAY ? 'd' : 'n';
-		await this.game.channel.sendMessage(`${player.user.username} was modkilled. They were a *${player.role!.display}*.`);
+		await this.game.channel.sendMessage(`${player.user.tag} was modkilled. They were a *${player.role!.display}*.`);
 		player.kill(`modkilled ${phaseStr}${this.game.cycle}`);
 		return true;
 	}
@@ -54,21 +54,21 @@ export default class PlayerManager extends Array<Player> {
 			let playerName = '';
 			if (options.codeblock) {
 				if (player.isAlive) {
-					playerName = `+ ${n + 1}. ${player.user.username}`;
+					playerName = `+ ${n + 1}. ${player.user.tag}`;
 				} else {
-					playerName = `- ${n + 1}. ${player.user.username} (${player.role!.display}; ${player.deathReason})`;
+					playerName = `- ${n + 1}. ${player.user.tag} (${player.role!.display}; ${player.deathReason})`;
 				}
 			} else if (player.isAlive) {
-				playerName = `${n + 1}. ${player.user.username}`;
+				playerName = `${n + 1}. ${player.user.tag}`;
 			} else {
-				playerName = `${n + 1}. ~~${player.user.username}~~ (${player.role!.display}; ${player.deathReason})`;
+				playerName = `${n + 1}. ~~${player.user.tag}~~ (${player.role!.display}; ${player.deathReason})`;
 			}
 			playerList.push(playerName);
 
 		}
 
 		if (this.replacements.length > 0 && options.showReplacements) {
-			playerList.push(`\nReplacements: ${this.replacements.map(user => user.username).join(', ')}`);
+			playerList.push(`\nReplacements: ${this.replacements.map(user => user.tag).join(', ')}`);
 		}
 
 		return playerList.join('\n');
