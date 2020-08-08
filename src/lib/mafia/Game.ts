@@ -7,7 +7,7 @@ import Godfather from '@lib/Godfather';
 import Player from '@mafia/Player';
 import VoteManager from '@mafia/managers/VoteManager';
 import GodfatherChannel from '@lib/extensions/GodfatherChannel';
-import NightActionsManager from '@mafia/managers/NightActionsManager';
+import NightActionsManager, { RoleEvent } from '@mafia/managers/NightActionsManager';
 import Setup from './Setup';
 import { GuildSettings } from '@lib/types/settings/GuildSettings';
 
@@ -22,7 +22,7 @@ export default class Game {
 	public phaseEndAt?: Date = undefined;
 	public cycle = 0;
 	public setup?: Setup = undefined;
-	public constructor(public host: KlasaUser, public channel: GodfatherChannel) {
+	public constructor(host: KlasaUser, public channel: GodfatherChannel) {
 		this.client = channel.client as Godfather;
 		this.phase = Phase.PREGAME;
 		this.players = new PlayerManager(this);
@@ -62,6 +62,24 @@ export default class Game {
 			`Day **${this.cycle}** will last ${Duration.toNow(this.phaseEndAt)}`,
 			`With ${alivePlayers.length} alive, it takes ${this.majorityVotes} to lynch.`
 		].join('\n'));
+	}
+
+	public async startNight() {
+		this.phase = Phase.STANDBY;
+		this.votes.reset();
+		this.phaseEndAt = new Date();
+		this.phaseEndAt.setSeconds(this.phaseEndAt.getSeconds() + this.settings.nightDuration);
+
+		await this.channel.sendMessage(`Night **${this.cycle}** will last ${Duration.toNow(this.phaseEndAt)}. Send in your actions quickly!`);
+		for (const player of this.players.filter(player => player.role!.canUseAction().check)) {
+			await player.role!.onEvent(RoleEvent.NIGHT_START);
+		}
+
+		this.phase = Phase.NIGHT;
+	}
+
+	public get host() {
+		return this.players[0];
 	}
 
 	public get hasStarted(): boolean {

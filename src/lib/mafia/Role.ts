@@ -1,5 +1,11 @@
 import Player from '@mafia/Player';
 import Faction from './Faction';
+import { RoleEvent } from './managers/NightActionsManager';
+
+export interface CanUseActionData {
+	check: boolean;
+	reason?: string;
+}
 
 abstract class Role {
 
@@ -14,6 +20,10 @@ abstract class Role {
 		return this.name;
 	}
 
+	public canUseAction(): CanUseActionData {
+		return { check: false, reason: '' };
+	}
+
 	// Role categories such as Random Town, Neutral Evil
 	public static categories: string[] = [];
 
@@ -23,7 +33,9 @@ abstract class Role {
 }
 
 interface Role {
-	onEvent(name: string, ...args: any[]): Promise<any>;
+	onEvent(event: RoleEvent, ...args: any[]): Promise<any>;
+	onEvent(event: RoleEvent.NIGHT_START): Promise<any>;
+	onEvent(event: RoleEvent.PM_COMMAND, ...args: string[]): Promise<any>;
 	faction: Faction;
 }
 

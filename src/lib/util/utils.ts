@@ -1,3 +1,5 @@
+import Player from '@mafia/Player';
+
 export const shuffle = <T>(array: readonly T[]): T[] => {
 	const clone = array.slice();
 	const shuffled = [];
@@ -11,3 +13,8 @@ export const shuffle = <T>(array: readonly T[]): T[] => {
 };
 
 export const randomArray = <T>(array: readonly T[]): T => array[Math.floor(Math.random() * array.length)];
+
+export const aliveOrRecentJester = (player: Player) => {
+	if (!player.isAlive && player.role!.name === 'Jester' && player.deathReason === `lynched d${player.game.cycle}`) return true;
+	return player.isAlive;
+};

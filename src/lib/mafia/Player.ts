@@ -36,4 +36,11 @@ export default class Player {
 		this.deathReason = reason;
 	}
 
+	public static resolve(game: Game, arg: string) {
+		if (Number.isInteger(parseInt(arg, 10)) && Number(arg) <= game.players.length && Number(arg) >= 1) {
+			return game.players[Number(arg) - 1];
+		}
+		return null;
+	}
+
 }

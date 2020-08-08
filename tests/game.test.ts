@@ -23,7 +23,7 @@ describe('game testing', () => {
 	}
 
 	test('basic variables', () => {
-		expect(game.host.username).toBe('Host');
+		expect(game.host.user.username).toBe('Host');
 		expect(game.channel.name).toBe('godfather-test');
 		expect(game.majorityVotes).toBe(4);
 		expect(game.players.length).toBe(6);
@@ -79,5 +79,12 @@ describe('game testing', () => {
 		].join('\n'));
 		// check if the voting cache was successfully populated
 		expect(game.votes.get(NotVoting)).toHaveLength(5);
+	});
+
+	test('starting nights', async () => {
+		await game.startNight();
+		expect(game.phase).toBe(Phase.NIGHT);
+		expect(game.channel.sendMessage).toHaveBeenCalledWith('Night **1** will last 2 minutes. Send in your actions quickly!');
+		expect(game.host.role!.canUseAction().check).toBe(false);
 	});
 });
