@@ -22,7 +22,7 @@ export default class PlayerManager extends Array<Player> {
 	}
 
 	public async remove(player: Player): Promise<boolean> {
-		if (player.user === this.game.host) throw 'The host cannot leave the game.';
+		if (player === this.game.host) throw 'The host cannot leave the game.';
 		if (!this.game.hasStarted) {
 			this.splice(this.indexOf(player), 1);
 			return true;

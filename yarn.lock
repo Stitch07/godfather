@@ -1082,9 +1082,9 @@
     "@klasa/timestamp" "^0.0.1"
     "@klasa/utils" "^0.0.8"
 
-"@klasa/core@dirigeants/core#build":
+"@klasa/core@DirigeantsPreservationProject/core#build":
   version "0.0.3"
-  resolved "https://codeload.github.com/dirigeants/core/tar.gz/d35e31e175ad0ea330ceb3cb11268d914b5923bc"
+  resolved "https://codeload.github.com/DirigeantsPreservationProject/core/tar.gz/a41149d4b3e86da01b0c4f18b230d9b85614687a"
   dependencies:
     "@klasa/bitfield" "^0.0.4"
     "@klasa/cache" "^0.0.3"
@@ -1095,7 +1095,7 @@
     "@klasa/timer-manager" "^0.0.1"
     "@klasa/utils" "^0.1.0"
     "@klasa/ws" "^0.0.14"
-    "@types/node" "^14.0.24"
+    "@types/node" "^14.0.26"
     "@types/node-fetch" "^2.5.7"
     fs-nextra "^0.5.1"
 
@@ -1315,10 +1315,15 @@
     "@types/node" "*"
     form-data "^3.0.0"
 
-"@types/node@*", "@types/node@^14.0.24":
+"@types/node@*":
   version "14.0.24"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-14.0.24.tgz#b0f86f58564fa02a28b68f8b55d4cdec42e3b9d6"
   integrity sha512-btt/oNOiDWcSuI721MdL8VQGnjsKjlTMdrKyTcLCKeQp/n4AAMFJ961wMbp+09y8WuGPClDEv07RIItdXKIXAA==
+
+"@types/node@^14.0.26":
+  version "14.0.27"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.0.27.tgz#a151873af5a5e851b51b3b065c9e63390a9e0eb1"
+  integrity sha512-kVrqXhbclHNHGu9ztnAwSncIgJv/FaxmzXJvGXNdcCpV1b8u1/Mi6z6m0vwy0LzKeXFTPLH0NzwmoJ3fNCIq0g==
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.0"
@@ -3478,9 +3483,9 @@ kind-of@^6.0.0, kind-of@^6.0.2:
   resolved "https://registry.yarnpkg.com/kind-of/-/kind-of-6.0.3.tgz#07c05034a6c349fa06e24fa35aa76db4580ce4dd"
   integrity sha512-dcS1ul+9tmeD95T+x28/ehLgd9mENa3LsvDTtzm3vyBEO7RPptvAD+t44WVXaUjTBRcrpFeFlC8WCruUR456hw==
 
-klasa@dirigeants/klasa#build:
+klasa@DirigeantsPreservationProject/klasa#build:
   version "0.6.0-dev"
-  resolved "https://codeload.github.com/dirigeants/klasa/tar.gz/a24c092e93237708f5ec298747ae9a33ef14a4a0"
+  resolved "https://codeload.github.com/DirigeantsPreservationProject/klasa/tar.gz/a71aa13614effa693c10474c8398250979322110"
   dependencies:
     "@klasa/cache" "^0.0.3"
     "@klasa/console" "^0.0.3"
