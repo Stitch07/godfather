@@ -22,7 +22,7 @@ class Bodyguard(Townie, SingleAction):
         self.action_gerund = 'guarding'
         self.action_priority = Priority.BODYGUARD
         self.action_text = 'guard a player'
-        self.can_self_target = True  # one self-heal allowed
+        self.can_self_target = False
         self.categories.append('Town Protective')
 
     async def run_action(self, actions, player, target):
