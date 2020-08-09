@@ -23,7 +23,7 @@ class Role:
                 Jester = all_roles['Jester']
                 exe.previous_roles.append(exe.role)
                 exe.role = Jester()
-                await exe.user.send(exe.role_pm)
+                await exe.send_pm(game)
 
     # str representation of role
     def __str__(self):

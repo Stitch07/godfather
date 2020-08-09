@@ -24,6 +24,22 @@ class Player:
         self.is_revived = False
         self.revived_on = None
 
+    async def send_pm(self, game, no_teammates=False):
+        role_pm = (
+            f'Hello {self.user}, you are a **{self.display_role}**. '
+            f'{self.role.description}'  # This follows the previous line.
+            f'\nWin Condition: {self.role.faction.win_con}'
+        )
+
+        await self.user.send(role_pm)
+        if no_teammates:
+            return
+        if self.role.faction.informed:
+            teammates = map(lambda player: f'{player.user.name} ({player.role.name})', game.players.filter(
+                faction=self.role.faction.id, is_alive=True))
+            if len(teammates) > 1:
+                await self.user.send('Your team consists of: {}'.format(', '.join(teammates)))
+
     # generates the role's PM
     @property
     def role_pm(self):

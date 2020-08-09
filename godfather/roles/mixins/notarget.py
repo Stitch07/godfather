@@ -1,5 +1,6 @@
 from godfather.roles.base import Role
 from godfather.errors import PhaseChangeError
+from godfather.game import Phase
 
 
 class NoTarget(Role):
@@ -53,6 +54,7 @@ class NoTarget(Role):
 
         if len(game.players.filter(action_only=True)) == len(game.night_actions):
             try:
-                await game.increment_phase()
+                if not game.phase == Phase.STANDBY:
+                    await game.increment_phase()
             except Exception as exc:
                 raise PhaseChangeError(None, *exc.args)

@@ -5,7 +5,7 @@ from enum import IntEnum, auto
 import discord
 
 from godfather.errors import PhaseChangeError
-from godfather.game.game_config import GameConfig
+from godfather.game.game_config import GameConfig, GameConfigException
 from godfather.game.player_manager import PlayerManager
 from godfather.game.vote_manager import VoteManager
 from godfather.utils import alive_or_recent_jester, choice
@@ -16,10 +16,41 @@ from .player import Player
 
 IDLE_TIMEOUT = 15 * 60  # 15 minutes
 
-default_game_config = {
-    'day_duration': 5 * 60,  # In seconds
-    'night_duration': 2 * 60  # In seconds
+DEFAULT_CONFIG = {
+    'day_duration': 5 * 60,
+    'night_duration': 2 * 60,
+    'max_players': None
 }
+
+
+def resolve_duration(arg: str):
+    if not arg.isdigit():
+        raise GameConfigException('Duration must be a valid number.')
+    num = int(arg)
+    if num < 30 or num > 1800:
+        raise GameConfigException(
+            'Duration must be between 30 seconds and 30 minutes.')
+    return num
+
+
+def resolve_max_players(arg: str):
+    if arg == 'reset':
+        return 18
+    if not arg.isdigit():
+        raise GameConfigException('Duration must be a valid number.')
+    num = int(arg)
+    if num < 3 or num > 18:
+        raise GameConfigException('Maximum players must be between 3 and 18.')
+    return num
+
+
+def config_message(key, value):
+    if key == 'day_duration':
+        return 'Days will now last {} minutes.'.format(round(value / 60, 1))
+    elif key == 'night_duration':
+        return 'Nights will now last {} minutes.'.format(round(value / 60, 1))
+    elif key == 'max_players':
+        return 'This game will now accept up-to {} players'.format(value)
 
 
 class Phase(IntEnum):
@@ -36,13 +67,17 @@ class Game:
         self.players = PlayerManager(self)
         self.phase = Phase.PREGAME
         self.cycle = 0
-        self.host = None  # assigned to the user creating the game
         # time at which the current phase ends
         self.phase_end_at: datetime = None
         self.night_actions = NightActions(self)
         self.setup = None  # the setup used
         # host-configurable stuff
-        self.config = GameConfig(default_game_config, channel=channel)
+        self.config = GameConfig(DEFAULT_CONFIG)
+        self.config.add_key('day_duration', resolve_duration, config_message)
+        self.config.add_key(
+            'night_duration', resolve_duration, config_message)
+        self.config.add_key('max_players', resolve_max_players, config_message)
+
         self.votes = VoteManager(self)
         # for drawing by timeout
         self.day_with_no_lynch = False
@@ -51,10 +86,9 @@ class Game:
         # for deleting idle games
         self.created_at = None
 
-    @classmethod
+    @ classmethod
     def create(cls, ctx, bot):
         new_game = cls(ctx.channel, bot)
-        new_game.host = ctx.author
         new_game.players.add(ctx.author)
         new_game.created_at = datetime.now()
         return new_game
@@ -260,6 +294,14 @@ class Game:
         self.cycles_with_no_kills = 0
         await target.remove(self, f'lynched D{self.cycle}')
 
+    def replace(self, player: Player, replacement: discord.User):
+        if self.phase == Phase.DAY:
+            # swap all possible votes on player with the replacement
+            votes_on_player = self.votes[player.user.id]
+            self.votes[replacement.id] = votes_on_player
+            del self.votes[player.user.id]
+        player.user = replacement  
+
     # WIP: End the game
     # If a winning faction is not provided, game is ended
     # as if host ended the game without letting it finish
@@ -303,10 +345,14 @@ class Game:
             bot.logger.debug(
                 'Added stats for {} players.'.format(len(self.players)))
 
-    @property
+    @ property
+    def host(self):
+        return self.players[0].user
+
+    @ property
     def has_started(self):  # this might be useful
         return not self.phase == Phase.PREGAME
 
-    @property
+    @ property
     def majority_votes(self):
         return math.floor(len(self.players.filter(is_alive=True)) / 2) + 1

@@ -2,6 +2,7 @@ from godfather.roles.base import Role
 from godfather.errors import PhaseChangeError
 from godfather.game.types import Attack, Defense, Priority
 from godfather.factions import ArsonistNeutral
+from godfather.game import Phase
 
 DESCRIPTION = 'You may douse someone every night, and then ignite all your doused targets.'
 
@@ -72,7 +73,8 @@ class Arsonist(Role):
                 'priority': 0
             })
             if len(game.players.filter(action_only=True)) == len(game.night_actions):
-                await game.increment_phase()
+                if not game.phase == Phase.STANDBY:
+                    await game.increment_phase()
             return await ctx.send('You decided to stay home tonight.')
 
         if command == 'ignite':
@@ -93,7 +95,8 @@ class Arsonist(Role):
             expected_total = total_actions + len(self.doused) - 1
             if expected_total == len(game.night_actions):
                 try:
-                    await game.increment_phase()
+                    if not game.phase == Phase.STANDBY:
+                        await game.increment_phase()
                 except Exception as exc:
                     raise PhaseChangeError(None, *exc.args)
             return
@@ -129,7 +132,8 @@ class Arsonist(Role):
 
         if len(game.players.filter(action_only=True)) == len(game.night_actions):
             try:
-                await game.increment_phase()
+                if not game.phase == Phase.STANDBY:
+                    await game.increment_phase()
             except Exception as exc:
                 raise PhaseChangeError(None, *exc.args)
 

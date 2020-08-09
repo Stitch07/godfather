@@ -1,6 +1,7 @@
 from discord.ext import commands
 from godfather.roles.base import Role
 from godfather.errors import PhaseChangeError
+from godfather.game import Phase
 
 conv = commands.MemberConverter()
 
@@ -38,7 +39,8 @@ class SingleAction(Role):
                 'priority': 0
             })
             if len(game.players.filter(action_only=True)) == len(game.night_actions):
-                await game.increment_phase()
+                if not game.phase == Phase.STANDBY:
+                    await game.increment_phase()
             return await ctx.send('You decided to stay home tonight.')
 
         if not args.isdigit():
@@ -90,7 +92,8 @@ class SingleAction(Role):
 
         if len(game.players.filter(action_only=True)) == len(game.night_actions):
             try:
-                await game.increment_phase()
+                if not game.phase == Phase.STANDBY:
+                    await game.increment_phase()
             except Exception as exc:
                 raise PhaseChangeError(None, *exc.args)
 
