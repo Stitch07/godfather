@@ -36,6 +36,7 @@ interface Role {
 	onEvent(event: RoleEvent, ...args: any[]): Promise<any>;
 	onEvent(event: RoleEvent.NIGHT_START): Promise<any>;
 	onEvent(event: RoleEvent.PM_COMMAND, ...args: string[]): Promise<any>;
+	onLynch(): Promise<any>;
 	faction: Faction;
 }
 

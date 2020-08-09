@@ -16,6 +16,7 @@ export default class extends GodfatherCommand {
 
 	public async run(msg: GodfatherMessage, [setup = '']) {
 		const { game } = msg.channel as GodfatherChannel;
+		
 		if (setup === '') {
 			// attempt to find a setup
 			// TODO: prompt for multiple setups here
@@ -27,7 +28,6 @@ export default class extends GodfatherCommand {
 		const roleGen = game!.setup!.generate();
 		for (const player of game!.players) {
 			player.role = new (roleGen.next().value as Constructor<Role>)(player);
-			// player.isAlive = true;
 			await player.sendPM();
 		}
 		const msgs = await msg.sendMessage('Sent all role PMs!');

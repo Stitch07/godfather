@@ -26,8 +26,6 @@ export default class VoteManager extends Map<string, VoteProxy> {
 	}
 
 	public vote(voter: Player, target: Player): boolean {
-		console.log(voter);
-		console.log(target);
 		if (!target.isAlive) throw 'You can\'t vote a dead player.';
 		const votes = this.on(target);
 		if (voter === target) throw 'Self-voting is not allowed.';
