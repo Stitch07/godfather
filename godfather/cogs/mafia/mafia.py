@@ -4,6 +4,7 @@ from datetime import datetime
 import typing
 from collections import defaultdict
 from functools import reduce
+import math
 
 import discord
 from discord.ext import commands
@@ -15,7 +16,7 @@ from godfather.errors import PhaseChangeError
 from godfather.game import Game, Phase, Player
 from godfather.game.vote_manager import VoteError
 from godfather.game.setup import Setup, SetupLoadError
-from godfather.roles import all_roles
+from godfather.roles import all_roles, role_categories
 from godfather.utils import (CustomContext, confirm, from_now,
                              emotes)
 
@@ -60,6 +61,9 @@ class Mafia(commands.Cog):
         """
         game = self.bot.games[ctx.channel.id]
 
+        if ctx.author in game.players:
+            return await ctx.send('You have already joined this game.')
+
         # prevent the user from joining if they are already in a different game
         other_games = list(filter(
             lambda game: ctx.author in game.players, self.bot.games.values()))
@@ -69,9 +73,6 @@ class Mafia(commands.Cog):
                 'You are already playing another game in the channel {} ({}).'.format(
                     other_game.channel.mention, other_game.channel.guild.name)
             )
-
-        if ctx.author in game.players:
-            return await ctx.send('You have already joined this game.')
 
         # If game has already started, can only be replacement
         if game.has_started:
@@ -91,8 +92,12 @@ class Mafia(commands.Cog):
             game.players.add(ctx.author, replacement=True)
             return await ctx.send('You have decided to become a replacement.')
 
+        max_players = game.config['max_players']
+        if max_players and len(game.players) >= max_players:
+            return await ctx.send('This game can accept a maximum of {} players.'.format(max_players))
+
         game.players.add(ctx.author)
-        return await ctx.send('✅ Game joined successfully.')
+        return await ctx.send(' Game joined successfully.')
 
     @commands.command(aliases=['out'])
     @game_only()
@@ -142,9 +147,9 @@ class Mafia(commands.Cog):
 
             else:
                 replacement = game.players.replacements.popleft()
-                player.user = replacement
+                game.replace(player, replacement)
                 await ctx.send(f'{replacement} has replaced {ctx.author}.')
-                await replacement.send(player.role_pm)
+                await player.send_pm(game)
                 return
 
         else:
@@ -246,6 +251,9 @@ class Mafia(commands.Cog):
                 embed.description += '\n'
             return await ctx.send(embed=embed)
 
+        if rolename in role_categories:
+            return await ctx.invoke(self.bot.get_command('categoryinfo'), category=rolename)
+
         for role in all_roles.values():
             role = role()  # initialize the class
             if role.name.lower() == rolename.lower():
@@ -291,7 +299,7 @@ class Mafia(commands.Cog):
         """
         player = ctx.game.players[ctx.author]
         try:
-            await player.user.send(player.role_pm)
+            await player.send_pm(game)
             can_do, _ = player.role.can_do_action(ctx.game)
             if ctx.game.phase == Phase.NIGHT and can_do:
                 await player.role.on_night(ctx.bot, player, ctx.game)
@@ -476,6 +484,9 @@ class Mafia(commands.Cog):
     @commands.command()
     @game_only()
     async def status(self, ctx: CustomContext):
+        """
+        Shows useful information about the game.
+        """
         if (ctx.game.phase == Phase.PREGAME):
             return await ctx.send(
                 'The game in {} hasn\'t started yet. Use {}in to join it!'.format(
@@ -493,3 +504,49 @@ class Mafia(commands.Cog):
         embed.add_field(name='Players', value='```diff\n{}```'.format(
             ctx.game.players.show(codeblock=True)))
         return await ctx.send(embed=embed)
+
+    @commands.command(name='changehost')
+    @game_only()
+    @player_only()
+    async def change_host(self, ctx: CustomContext):
+        """
+        Votes to change the host. With a majority vote, the next player on the playerlist becomes the new host.
+        If the host uses this command, they are changed immediately.
+        """
+        to_change = False
+        game = ctx.game
+        if game.has_started:
+            return await ctx.send('You cannot change the host after the game has started.')
+        if len(game.players) < 3:
+            return await ctx.send('You need at least 3 players to change the host.')
+
+        if ctx.author == game.host:
+            to_change = True
+        else:
+            if ctx.author.id in game.players.vote_kicks:
+                return await ctx.send('You have already voted to change the host.')
+            game.players.vote_kicks.add(ctx.author.id)
+            await ctx.message.add_reaction('✅')
+            majority_votes = math.floor(len(game.players) / 2) + 1
+            if len(game.players.vote_kicks) >= majority_votes:
+                to_change = True
+
+        if to_change:
+            # host is always player #1, so preserve that order adding the new host to #1 and moving the old host to the bottom
+            # why doesn't playermanage extend list yet??
+            old_host = game.players.players.pop(0)
+            game.players.players.insert(len(game.players), old_host)
+            game.players.vote_kicks.clear()
+            return await ctx.send('The host is now {}'.format(game.host))
+
+    @commands.command(aliases=['category'])
+    async def categoryinfo(self, ctx: CustomContext, *, category: str):
+        """
+        Shows the list of roles in a specific category
+        """
+        if category not in role_categories:
+            return await ctx.send('Category "{}" not found'.format(category))
+        category_roles = role_categories.get(category)
+        out = 'Roles in {}: {}'.format(category, ', '.join(
+            map(lambda role: role.name, category_roles)))
+        return await ctx.send(out)

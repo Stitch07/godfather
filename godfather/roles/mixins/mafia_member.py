@@ -28,16 +28,16 @@ class MafiaMember:
                     new_goon.previous_roles.append(new_goon.role)
                     new_goon.role = all_roles['Goon']()
                     await new_goon.user.send('You have been promoted to a Goon!')
-                    await new_goon.user.send(new_goon.role_pm)
+                    await new_goon.send_pm(game)
                     return
                 return
 
             goon = game.players.filter(role='Goon')[0]
             goon.previous_roles.append(goon.role)
             # goon becomes the new Godfather
-            goon.role = player.role
+            goon.role = all_roles['Godfather']()
             await goon.user.send('You have been promoted to a Godfather!')
-            await goon.user.send(goon.role_pm)
+            await goon.send_pm(game)
 
         # other roles become new goon
         if player.role.name == 'Goon':
@@ -46,6 +46,6 @@ class MafiaMember:
                 return
             new_goon = other_mafia[0]
             new_goon.previous_roles.append(new_goon.role)
-            new_goon.role = player.role
+            new_goon.role = all_roles['Goon']()
             await new_goon.user.send('You have been promoted to a Goon!')
-            await new_goon.user.send(new_goon.role_pm)
+            await new_goon.send_pm(game)

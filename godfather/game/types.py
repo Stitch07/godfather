@@ -3,7 +3,8 @@ from enum import IntEnum, auto
 
 STALEMATE_PRIORITY_ORDER = [
     'Escort',
-    'Mafioso',
+    'Goon',
+    'Transporter',
     'Godfather',
     'Serial Killer',
     'Arsonist'

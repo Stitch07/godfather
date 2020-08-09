@@ -146,6 +146,10 @@ class Setup:
                 if random_role.unique:
                     unique_roles.add(random_role.name)
                 roles[n] = random_role.name
+            else:
+                role_cls = all_roles.get(role)
+                if role_cls.unique:
+                    unique_roles.add(role_cls.name)
 
         # Create a random sequence of role indexes, enumerate the player list.
         # And assign the nth number in the random sequence to the nth player.
@@ -163,7 +167,7 @@ class Setup:
 
                 # send role PMs
                 try:
-                    await player.user.send(player.role_pm)
+                    await player.send_pm(game, no_teammates=True)
                 except discord.Forbidden:
                     no_dms.append(player.user)
 
@@ -171,7 +175,7 @@ class Setup:
                 teammates = game.players.filter(faction=player.role.faction.id)
                 if len(teammates) > 1:
                     await player.user.send(
-                        f'Your team consists of: {", ".join(map(lambda pl: pl.user.name, teammates))}'
+                        f'Your team consists of: {", ".join(map(lambda player: f"{player.user.name} ({player.role.name})", teammates))}'
                     )
 
             for player in game.players.filter(role='Executioner'):

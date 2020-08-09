@@ -22,8 +22,12 @@ class Goon(MafiaMember, Shooter, SingleAction):
         self.categories.append('Mafia Killing')
 
     async def on_pm_command(self, ctx, game, player, args):
-        if any(filter(lambda action: action['player'].role.name == 'Godfather', game.night_actions)):
-            return await ctx.send('The Godfather has ordered you to shoot someone.')
+        if any(gf_action := list(filter(lambda action: action['player'].role.name == 'Godfather', game.night_actions))):
+            gf_action = gf_action[0]
+            text = 'The Godfather has ordered you to stay home' \
+                if gf_action['action'] is None \
+                else 'The Godfather has ordered you to shoot {}'.format(gf_action['target'].user.name)
+            return await ctx.send(text)
         await super().on_pm_command(ctx, game, player, args)
 
     async def tear_down(self, actions, player, target):

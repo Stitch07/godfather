@@ -13,6 +13,8 @@ class PlayerManager:
         self.game = game
         self.players: List[Player] = list()
         self.replacements: Deque[User] = deque()
+        # used for vote-kicking the host
+        self.vote_kicks = set()
 
     def add(self, member: User, replacement=False):
         if replacement:
@@ -122,7 +124,7 @@ class PlayerManager:
         else:
             raise TypeError(
                 'PlayerManager.__contains__ must be called with a discord.abc.User or Player instance.')
-
+    
     def __len__(self):
         return len(self.players)
 
