@@ -155,7 +155,7 @@ class Godfather(commands.Bot):
                         f'{member} left the server.'
                         f'\n{replacement} has replaced {member}.'
                     )
-                    await replacement.send(player.role_pm)
+                    await player.send_pm(game)
                     return
 
     async def on_command_error(self, ctx, error):
@@ -166,6 +166,7 @@ class Godfather(commands.Bot):
             args = remove_prefix(ctx.message.content,
                                  ctx.bot.global_prefix).split(' ')
             command = args[0]
+
             if ctx.guild is not None:  # DM only
                 return
             games = [
