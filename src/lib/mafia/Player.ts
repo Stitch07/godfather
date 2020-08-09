@@ -36,6 +36,11 @@ export default class Player {
 		this.deathReason = reason;
 	}
 
+	public isInnocent() {
+		// This will do for now, but this will have to be changed as more roles are implemented.
+		return this.role?.faction.name == 'Town';
+	}
+
 	public static resolve(game: Game, arg: string) {
 		if (Number.isInteger(parseInt(arg, 10)) && Number(arg) <= game.players.length && Number(arg) >= 1) {
 			return game.players[Number(arg) - 1];

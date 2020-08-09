@@ -85,7 +85,8 @@ export interface NightRecordEntry {
 }
 
 export const enum NightActionCommand {
-	SHOOT = 'shoot'
+	SHOOT = 'shoot',
+	CHECK = 'check'
 }
 
 export enum NightActionPriority {
