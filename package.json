@@ -1,44 +1,44 @@
 {
-  "name": "godfather",
-  "version": "1.0.0",
-  "description": "A Discord bot that hosts games of Mafia.",
-  "main": "dist/index.js",
-  "repository": "https://github.com/Soumil07/tvm-bot.git",
-  "author": "Soumil07",
-  "license": "GPL-3.0",
-  "private": false,
-  "scripts": {
-    "build": "tsc -p src",
-    "watch": "tsc -b src -w",
-    "lint": "eslint src --ext ts --fix",
-    "test": "jest"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.11.0",
-    "@babel/preset-env": "^7.11.0",
-    "@skyra/eslint-config": "^5.2.1",
-    "@types/jest": "^26.0.8",
-    "@types/module-alias": "^2.0.0",
-    "@typescript-eslint/eslint-plugin": "^3.7.0",
-    "@typescript-eslint/parser": "^3.7.0",
-    "babel-jest": "^26.2.2",
-    "eslint": "^7.5.0",
-    "jest": "^26.2.2",
-    "jest-mock-extended": "^1.0.9",
-    "ts-jest": "^26.1.4",
-    "typescript": "^3.9.7"
-  },
-  "dependencies": {
-    "@klasa/core": "dirigeants/core#build",
-    "@klasa/dapi-types": "^0.3.0",
-    "@skyra/decorators": "^2.2.0",
-    "fs-nextra": "^0.5.1",
-    "klasa": "dirigeants/klasa#build",
-    "module-alias": "^2.2.2"
-  },
-  "_moduleAliases": {
-    "@lib": "dist/lib",
-    "@mafia": "dist/lib/mafia",
-    "@util": "dist/lib/util"
-  }
+	"name": "godfather",
+	"version": "1.0.0",
+	"description": "A Discord bot that hosts games of Mafia.",
+	"main": "dist/index.js",
+	"repository": "https://github.com/Soumil07/tvm-bot.git",
+	"author": "Soumil07",
+	"license": "GPL-3.0",
+	"private": false,
+	"scripts": {
+		"build": "tsc -p src",
+		"watch": "tsc -b src -w",
+		"lint": "eslint src --ext ts --fix",
+		"test": "jest"
+	},
+	"devDependencies": {
+		"@babel/core": "^7.11.0",
+		"@babel/preset-env": "^7.11.0",
+		"@skyra/eslint-config": "^5.2.1",
+		"@types/jest": "^26.0.8",
+		"@types/module-alias": "^2.0.0",
+		"@typescript-eslint/eslint-plugin": "^3.7.0",
+		"@typescript-eslint/parser": "^3.7.0",
+		"babel-jest": "^26.2.2",
+		"eslint": "^7.5.0",
+		"jest": "^26.2.2",
+		"jest-mock-extended": "^1.0.9",
+		"ts-jest": "^26.1.4",
+		"typescript": "^3.9.7"
+	},
+	"dependencies": {
+		"@klasa/core": "DirigeantsPreservationProject/core#build",
+		"@klasa/dapi-types": "^0.3.0",
+		"@skyra/decorators": "^2.2.0",
+		"fs-nextra": "^0.5.1",
+		"klasa": "DirigeantsPreservationProject/klasa#build",
+		"module-alias": "^2.2.2"
+	},
+	"_moduleAliases": {
+		"@lib": "dist/lib",
+		"@mafia": "dist/lib/mafia",
+		"@util": "dist/lib/util"
+	}
 }
