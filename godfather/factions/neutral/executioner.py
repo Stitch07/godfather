@@ -12,6 +12,6 @@ class ExecutionerNeutral(Faction):
         return 'Neutral'
 
     def has_won_independent(self, player: Player):
-        if not player.target.is_alive and player.target.death_reason.startswith('lynched'):
+        if player.is_alive and not player.target.is_alive and player.target.death_reason.startswith('lynched'):
             return True
         return False
