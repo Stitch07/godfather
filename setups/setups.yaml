@@ -1,9 +1,3 @@
-- name: ss3
-  roles:
-  - Vanilla
-  - Goon
-  - Super Saint
-
 - name: dethy
   night_start: true
   roles:
