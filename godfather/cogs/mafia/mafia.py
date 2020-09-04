@@ -240,7 +240,7 @@ class Mafia(commands.Cog):
             embed.set_author(name='All supported roles',
                              icon_url=self.bot.user.avatar_url)
             embed.set_footer(
-                text='For information on a specific role, use the roleinfo <rolename>.')
+                text='For information on a specific role, use roleinfo command.')
             embed.description = ''
             for faction, roles in fac_roles.items():
                 roles.sort()
