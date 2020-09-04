@@ -299,7 +299,7 @@ class Mafia(commands.Cog):
         """
         player = ctx.game.players[ctx.author]
         try:
-            await player.send_pm(game)
+            await player.send_pm(ctx.game)
             can_do, _ = player.role.can_do_action(ctx.game)
             if ctx.game.phase == Phase.NIGHT and can_do:
                 await player.role.on_night(ctx.bot, player, ctx.game)

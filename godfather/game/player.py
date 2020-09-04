@@ -6,7 +6,7 @@ from discord.ext.commands import errors
 
 conv = commands.MemberConverter()
 
-INNOCENT_FACTIONS = ['town', 'neutral.executioner', 'neutral.jester']
+INNOCENT_FACTIONS = ['town', 'neutral.executioner', 'neutral.jester', 'neutral.survivor', 'neutral.amnesiac']
 
 
 class Player:
