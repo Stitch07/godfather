@@ -34,6 +34,9 @@ export const aliveOrRecentJester = (player: Player) => {
 
 export const sleep = promisify(setTimeout);
 
+// The next 2 functions have been sourced from https://github.com/skyra-project/decorators
+// Copyright © 2018-2020 Kyra
+// #region skyra decorators
 export function createClassDecorator<TFunction extends(...args: any[]) => void>(fn: TFunction): ClassDecorator {
 	return fn;
 }
@@ -50,3 +53,4 @@ export function ApplyOptions<T extends PieceOptions>(options: T): ClassDecorator
 			}
 	);
 }
+// #endregion
