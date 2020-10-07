@@ -54,11 +54,6 @@ const DEFAULT_NIGHT_ENTRY = {
 	by: []
 };
 
-export const enum RoleEvent {
-	PM_COMMAND = 'pmCommand',
-	NIGHT_START = 'nightStart'
-}
-
 export class NightRecord extends DefaultMap<string, DefaultMap<string, NightRecordEntry>> {
 
 	public constructor() {

@@ -1,7 +1,7 @@
 import { basename, extname, parse } from 'path';
 import { scan } from 'fs-nextra';
-import { Constructor } from '@klasa/core';
 import Role from '@mafia/Role';
+import { Constructor } from '@lib/types/definitions';
 
 // A map of role names to the constructor of its corresponding role Class
 export const allRoles = new Map<string, Constructor<Role>>();

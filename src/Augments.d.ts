@@ -1,16 +1,43 @@
-import { Message, TextChannel, User } from '@klasa/core';
+import { Branding } from '@lib/util/utils';
+import Game from '@mafia/Game';
+import Player from '@mafia/Player';
+import SetupStore from '@mafia/SetupStore';
+import { Collection, Guild } from 'discord.js';
 
-declare module 'klasa' {
-	interface KlasaChannel extends TextChannel {
-		sendMessage(content: string): Promise<Message[]>;
+interface ChannelExtendables {
+	readonly attachable: boolean;
+	readonly embedable: boolean;
+	readonly postable: boolean;
+	readonly readable: boolean;
+}
+
+
+declare module 'discord.js' {
+	interface Client {
+		readonly release: Branding.Release;
+		readonly version: string;
+		readonly invite: string;
+		ownerID: string | undefined;
+		games: Collection<string, Game>;
+		setups: SetupStore;
+		fetchGuildPrefix(guild: Guild): Promise<string>;
 	}
 
-	interface KlasaMessage extends Message {
-		sendMessage(content: string): Promise<Message[]>;
-		prompt(promptMessage: string): Promise<boolean>;
+	interface TextChannel {
+		prompt(promptMessage: string, promptUser: User): Promise<boolean>;
+		readonly game: Game | undefined;
 	}
 
-	interface KlasaUser extends User {
-		sendMessage(content: string): Promise<Message[]>;
+	interface TextChannel extends ChannelExtendables { }
+
+	interface DMChannel extends ChannelExtendables { }
+
+	interface NewsChannel extends ChannelExtendables { }
+}
+
+declare module '@sapphire/framework' {
+	interface ArgType {
+		player: Player;
 	}
 }
+

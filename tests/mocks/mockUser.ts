@@ -1,6 +1,6 @@
-import { mergeDefault } from '@klasa/utils';
+import { mergeDefault } from '@sapphire/utilities';
+import { User } from 'discord.js';
 import { mock } from 'jest-mock-extended';
-import { KlasaUser } from 'klasa';
 import { createID } from './createID';
 
 const DEFAULT_USER_INFO = {
@@ -15,7 +15,7 @@ export interface MockUserParams {
 
 export const createMockUser = (params: MockUserParams = DEFAULT_USER_INFO) => {
 	params = mergeDefault(DEFAULT_USER_INFO, params);
-	const mockUser = mock<KlasaUser>();
+	const mockUser = mock<User>();
 	mockUser.username = params.username!;
 	mockUser.discriminator = params.discriminator!;
 	// id is readonly so we cannot directly edit it

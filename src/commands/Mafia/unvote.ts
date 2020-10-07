@@ -1,19 +1,15 @@
-import { ApplyOptions } from '@skyra/decorators';
-import { KlasaMessage } from 'klasa';
-import GodfatherCommand, { GodfatherCommandOptions } from '@lib/GodfatherCommand';
-import GodfatherChannel from '@lib/extensions/GodfatherChannel';
+import { ApplyOptions } from '@util/utils';
+import { Message, TextChannel } from 'discord.js';
+import { Command, CommandOptions } from '@sapphire/framework';
 
-@ApplyOptions<GodfatherCommandOptions>({
+@ApplyOptions<CommandOptions>({
 	description: 'Remove your vote from a player/nolynch.',
-	gameOnly: true,
-	gameStartedOnly: true,
-	playerOnly: true,
-	alivePlayerOnly: true
+	preconditions: ['GuildOnly', 'GameOnly', 'GameStartedOnly', 'PlayerOnly', 'AlivePlayerOnly']
 })
-export default class extends GodfatherCommand {
+export default class extends Command {
 
-	public async run(msg: KlasaMessage) {
-		const { game } = msg.channel as GodfatherChannel;
+	public async run(msg: Message) {
+		const { game } = msg.channel as TextChannel;
 		const voter = game!.players.get(msg.author)!;
 		const unvoted = game!.votes.unvote(voter);
 
@@ -21,7 +17,7 @@ export default class extends GodfatherCommand {
 			await msg.reactions.add('✅');
 			return [];
 		}
-		return msg.sendMessage('No votes to remove!');
+		return msg.channel.send('No votes to remove!');
 	}
 
 }

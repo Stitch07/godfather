@@ -1,12 +1,11 @@
 require('module-alias/register');
 
 import Godfather from '@lib/Godfather';
-import { token } from './config';
+import { TOKEN } from './config';
 import { init } from '@mafia/roles/index';
 
 init();
 
 const client = new Godfather();
-client.token = token;
 
-client.connect();
+client.login(TOKEN);

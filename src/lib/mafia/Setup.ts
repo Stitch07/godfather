@@ -1,7 +1,8 @@
-import { Piece, PieceOptions, Constructor } from '@klasa/core';
-import { mergeDefault } from '@klasa/utils';
-import SetupStore from './SetupStore';
+import { BasePiece } from '@sapphire/framework';
+import { PieceContext, PieceOptions } from '@sapphire/pieces';
+import { mergeDefault } from '@sapphire/utilities';
 import Role from './Role';
+import { Constructor } from '@lib/types/definitions';
 
 export interface SetupOptions extends PieceOptions {
 	// the names of the roles/categories used
@@ -16,14 +17,13 @@ export const DEFAULT_SETUP_OPTIONS = {
 	roles: [] as string[]
 };
 
-export default class Setup extends Piece {
+export default class Setup extends BasePiece {
 
 	public roles: string[];
 	public nightStart: boolean;
-	public constructor(store: SetupStore, directory: string, file: readonly string[], options: SetupOptions = {}) {
-		super(store, directory, file, options as SetupOptions);
+	public constructor(context: PieceContext, options: SetupOptions = {}) {
+		super(context, { ...options, name: (options.name ?? context.name).toLowerCase() });
 		options = mergeDefault(DEFAULT_SETUP_OPTIONS, options);
-		this.name = options.name!;
 		this.roles = options.roles!;
 		this.nightStart = options.nightStart!;
 	}

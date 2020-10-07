@@ -1,16 +1,14 @@
-import GodfatherCommand, { GodfatherCommandOptions } from '@lib/GodfatherCommand';
-import { ApplyOptions } from '@skyra/decorators';
-import { KlasaMessage } from 'klasa';
-import GodfatherChannel from '@lib/extensions/GodfatherChannel';
+import { Command, CommandOptions } from '@sapphire/framework';
+import { ApplyOptions } from '@util/utils';
+import { Message, TextChannel } from 'discord.js';
 
-@ApplyOptions<GodfatherCommandOptions>({
-	gameOnly: true,
-	playerOnly: true
+@ApplyOptions<CommandOptions>({
+	preconditions: ['GuildOnly', 'GameOnly', 'PlayerOnly', 'AlivePlayerOnly']
 })
-export default class extends GodfatherCommand {
+export default class extends Command {
 
-	public async run(msg: KlasaMessage) {
-		const { game } = msg.channel as GodfatherChannel;
+	public async run(msg: Message) {
+		const { game } = msg.channel as TextChannel;
 		if (await game!.players.remove(game!.players.get(msg.author)!)) {
 			await msg.reactions.add('✅');
 		}

@@ -2,17 +2,13 @@
 
 ## How to run:
 
+After creating `src/config.ts`:
+
 `yarn install --prod=true` 
 
 `yarn build`
 
 `node .`
-
-## Config file (src/config.ts)
-
-```typescript
-export const token = 'BOT TOKEN HERE';
-```
 
 ## Unit Tests
 

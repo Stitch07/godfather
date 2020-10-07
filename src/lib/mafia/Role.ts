@@ -1,6 +1,5 @@
 import Player from '@mafia/Player';
 import Faction from './Faction';
-import { RoleEvent } from './managers/NightActionsManager';
 
 export interface CanUseActionData {
 	check: boolean;
@@ -20,6 +19,19 @@ abstract class Role {
 		return this.name;
 	}
 
+	// just for easier accessibility
+	public get game() {
+		return this.player.game;
+	}
+
+	public onDeath() {
+		// noop
+	}
+
+	public onNight() {
+		// noop
+	}
+
 	public canUseAction(): CanUseActionData {
 		return { check: false, reason: '' };
 	}
@@ -33,9 +45,9 @@ abstract class Role {
 }
 
 interface Role {
-	onEvent(event: RoleEvent, ...args: any[]): Promise<any>;
-	onEvent(event: RoleEvent.NIGHT_START): Promise<any>;
-	onEvent(event: RoleEvent.PM_COMMAND, ...args: string[]): Promise<any>;
+	onPmCommand(...args: string[]): void;
+	onNight(): void;
+	onDeath(): void;
 	faction: Faction;
 }
 

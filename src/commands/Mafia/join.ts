@@ -1,26 +1,25 @@
-import GodfatherCommand, { GodfatherCommandOptions } from '@lib/GodfatherCommand';
-import { ApplyOptions } from '@skyra/decorators';
-import { KlasaMessage, KlasaUser } from 'klasa';
-import GodfatherChannel from '@lib/extensions/GodfatherChannel';
+import { ApplyOptions } from '@util/utils';
 import Player from '@mafia/Player';
+import { Message, TextChannel } from 'discord.js';
+import { Command, CommandOptions } from '@sapphire/framework';
 
-@ApplyOptions<GodfatherCommandOptions>({
+@ApplyOptions<CommandOptions>({
 	aliases: ['in'],
 	description: 'Adds you to the playerlist of an ongoing game.',
-	gameOnly: true
+	preconditions: ['GuildOnly', 'GameOnly']
 })
-export default class extends GodfatherCommand {
+export default class extends Command {
 
-	public run(msg: KlasaMessage) {
-		const { game } = msg.channel as GodfatherChannel;
+	public run(msg: Message) {
+		const { game } = msg.channel as TextChannel;
 		if (game!.players.find(player => player.user.id === msg.author.id)) {
 			throw 'You have already joined.';
 		}
 		if (game!.hasStarted) {
 			// do replacements here sometime
 		}
-		game!.players.push(new Player(msg.author as KlasaUser, game!));
-		return msg.sendMessage('✅ Successfully joined.');
+		game!.players.push(new Player(msg.author, game!));
+		return msg.channel.send('✅ Successfully joined.');
 	}
 
 }

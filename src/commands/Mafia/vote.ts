@@ -1,29 +1,25 @@
-import { ApplyOptions } from '@skyra/decorators';
-import { KlasaMessage } from 'klasa';
-import GodfatherCommand, { GodfatherCommandOptions } from '@lib/GodfatherCommand';
-import GodfatherChannel from '@lib/extensions/GodfatherChannel';
-import Player from '@mafia/Player';
+import { ApplyOptions } from '@util/utils';
+import { Args, Command, CommandOptions } from '@sapphire/framework';
+import { Message, TextChannel } from 'discord.js';
 
-@ApplyOptions<GodfatherCommandOptions>({
+@ApplyOptions<CommandOptions>({
 	aliases: ['vtl', 'vt'],
 	description: 'Vote to lynch a player',
-	usage: '<target:player>',
-	gameOnly: true,
-	gameStartedOnly: true,
-	playerOnly: true,
-	alivePlayerOnly: true
+	preconditions: ['GuildOnly', 'GameOnly', 'GameStartedOnly', 'PlayerOnly', 'AlivePlayerOnly']
 })
-export default class extends GodfatherCommand {
+export default class extends Command {
 
-	public async run(msg: KlasaMessage, [target]: [Player]) {
-		const { game } = msg.channel as GodfatherChannel;
+	public async run(msg: Message, args: Args) {
+		const target = await args.pick('player');
+		const { game } = msg.channel as TextChannel;
 
 		const voter = game!.players.get(msg.author)!;
 		const hammered = game!.votes.vote(voter, target);
 
-		await (msg.channel as GodfatherChannel).sendMessage(`Voted ${target.user.tag}.`);
+		await msg.channel.send(`Voted ${target.user.tag}.`);
+
 		if (hammered) {
-			return (msg.channel as GodfatherChannel).sendMessage('Hammered?');
+			await game!.hammer(target);
 		}
 		return [];
 	}

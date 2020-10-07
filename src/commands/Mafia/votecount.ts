@@ -1,19 +1,17 @@
-import { ApplyOptions } from '@skyra/decorators';
-import { KlasaMessage } from 'klasa';
-import GodfatherCommand, { GodfatherCommandOptions } from '@lib/GodfatherCommand';
-import GodfatherChannel from '@lib/extensions/GodfatherChannel';
+import { ApplyOptions } from '@util/utils';
+import { Command, CommandOptions } from '@sapphire/framework';
+import { Message, TextChannel } from 'discord.js';
 
-@ApplyOptions<GodfatherCommandOptions>({
+@ApplyOptions<CommandOptions>({
 	aliases: ['vc'],
 	description: 'Shows the current vote count.',
-	gameOnly: true,
-	gameStartedOnly: true
+	preconditions: ['GuildOnly', 'GameOnly']
 })
-export default class extends GodfatherCommand {
+export default class extends Command {
 
-	public async run(msg: KlasaMessage) {
-		const { game } = msg.channel as GodfatherChannel;
-		return msg.sendMessage(game!.votes.show());
+	public async run(msg: Message) {
+		const { game } = msg.channel as TextChannel;
+		return msg.channel.send(game!.votes.show());
 	}
 
 }

@@ -18,6 +18,9 @@
 			],
 			"@util/*": [
 				"../src/lib/util/*"
+			],
+			"@mocks/*": [
+				"./mocks/*"
 			]
 		}
 	},

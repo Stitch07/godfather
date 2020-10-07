@@ -1,8 +1,8 @@
-import { Constructor } from '@klasa/core';
 import Setup from './Setup';
 import Role from './Role';
 import { shuffle, randomArray } from '@lib/util/utils';
 import { allRoles, roleCategories } from './roles';
+import { Constructor } from '@lib/types/definitions';
 
 export default class BasicSetup extends Setup {
 

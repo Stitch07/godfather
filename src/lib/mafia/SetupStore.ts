@@ -1,11 +1,10 @@
-import { Store, PieceConstructor } from '@klasa/core';
-import { KlasaClient } from 'klasa';
+import { BaseStore, SapphireClient } from '@sapphire/framework';
 import Setup from './Setup';
 
-export default class SetupStore extends Store<Setup> {
+export default class SetupStore extends BaseStore<Setup> {
 
-	public constructor(client: KlasaClient) {
-		super(client, 'setups', Setup as PieceConstructor<Setup>);
+	public constructor(client: SapphireClient) {
+		super(client, Setup, { name: 'setups' });
 	}
 
 }

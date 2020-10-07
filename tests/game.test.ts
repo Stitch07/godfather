@@ -1,18 +1,21 @@
-import Game from '@mafia/Game';
+import Game, { Phase } from '@mafia/Game';
 import { createMockUser } from './mocks/mockUser';
 import { createMockChannel } from './mocks/mockChannel';
 import Player from '@mafia/Player';
 import Vanilla from '@mafia/roles/town/Vanilla';
-import Phase from '@mafia/Phase';
 import { NotVoting } from '@mafia/managers/VoteManager';
 
+
+// This file tests a full Mafia Game from start to finish
 describe('game testing', () => {
 	const mockChannel = createMockChannel({ name: 'godfather-test' });
 	const mockUser = createMockUser({ username: 'Host', discriminator: '0000' });
 
 	expect(mockUser.tag).toBe('Host#0000');
 
+	// @ts-expect-error https://github.com/microsoft/TypeScript/issues/34933
 	const game = new Game(mockUser, mockChannel);
+	game.host.role = new Vanilla(game.host);
 	game.settings.dayDuration = 5 * 60;
 	game.settings.nightDuration = 2 * 60;
 
@@ -30,13 +33,9 @@ describe('game testing', () => {
 	});
 
 	test('player manager', () => {
-		const host = game.players[0];
-		host.role = new Vanilla(host);
-		host.kill('killed d1');
-
 		const EXPECTED_PLAYERLIST = [
 			'**Players: 6**',
-			'1. ~~Host#0000~~ (Vanilla; killed d1)',
+			'1. Host#0000',
 			'2. Player1#0001',
 			'3. Player2#0002',
 			'4. Player3#0003',
@@ -73,18 +72,25 @@ describe('game testing', () => {
 		await game.startDay();
 		expect(game.phase).toBe(Phase.DAY);
 		expect(game.cycle).toBe(1);
-		expect(game.channel.sendMessage).toHaveBeenCalledWith([
+		expect(game.channel.send).toHaveBeenCalledWith([
 			'Day **1** will last 5 minutes',
-			'With 5 alive, it takes 3 to lynch.'
+			'With 6 alive, it takes 4 to lynch.'
 		].join('\n'));
 		// check if the voting cache was successfully populated
-		expect(game.votes.get(NotVoting)).toHaveLength(5);
+		expect(game.votes.get(NotVoting)).toHaveLength(6);
+	});
+
+	test('hammering logic', async () => {
+		await game.hammer(game.players[1]);
+		expect(game.players[1].isAlive).toBe(false);
+		expect(game.players[1].deathReason).toBe('lynched d1');
+		expect(game.channel.send).toHaveBeenCalledWith(`Player1#0001 was hammered. They were a **Vanilla**.`);
 	});
 
 	test('starting nights', async () => {
 		await game.startNight();
 		expect(game.phase).toBe(Phase.NIGHT);
-		expect(game.channel.sendMessage).toHaveBeenCalledWith('Night **1** will last 2 minutes. Send in your actions quickly!');
+		expect(game.channel.send).toHaveBeenCalledWith('Night **1** will last 2 minutes. Send in your actions quickly!');
 		expect(game.host.role!.canUseAction().check).toBe(false);
 	});
 });
