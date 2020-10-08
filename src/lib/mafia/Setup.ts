@@ -1,8 +1,7 @@
 import { BasePiece } from '@sapphire/framework';
 import { PieceContext, PieceOptions } from '@sapphire/pieces';
-import { mergeDefault } from '@sapphire/utilities';
+import { mergeDefault, Constructor } from '@sapphire/utilities';
 import Role from './Role';
-import { Constructor } from '@lib/types/definitions';
 
 export interface SetupOptions extends PieceOptions {
 	// the names of the roles/categories used

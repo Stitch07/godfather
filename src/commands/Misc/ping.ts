@@ -3,12 +3,14 @@ import { Command, CommandOptions } from '@sapphire/framework';
 import { Message } from 'discord.js';
 
 @ApplyOptions<CommandOptions>({
-	description: 'Self explanatory...'
+	description: 'Runs a connection test to Discord.'
 })
 export default class extends Command {
 
 	public async run(message: Message) {
-		return message.channel.send('Pong!');
+		const sent = await message.channel.send('Pinging...');
+		const ping = sent.createdTimestamp - message.createdTimestamp;
+		return sent.edit(`Pong! That took ${ping}ms. Latency: ${this.client.ws.ping}ms`);
 	}
 
 }

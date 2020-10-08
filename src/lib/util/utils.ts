@@ -1,7 +1,9 @@
 import { promisify } from 'util';
 import Player from '@mafia/Player';
 import { PieceContext, PieceOptions, Piece } from '@sapphire/pieces';
-import { Constructor } from '@sapphire/utilities';
+import { Constructor, isThenable } from '@sapphire/utilities';
+import { Client } from 'discord.js';
+import { Events } from '@sapphire/framework';
 
 export namespace Branding {
 	export const PrimaryColor = '#000000';
@@ -33,6 +35,10 @@ export const aliveOrRecentJester = (player: Player) => {
 };
 
 export const sleep = promisify(setTimeout);
+
+export function floatPromise(client: Client, promise: Promise<unknown>) {
+	if (isThenable(promise)) promise.catch(error => client.emit(Events.Error, error));
+}
 
 // The next 2 functions have been sourced from https://github.com/skyra-project/decorators
 // Copyright © 2018-2020 Kyra

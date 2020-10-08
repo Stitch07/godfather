@@ -2,7 +2,7 @@ import Setup from './Setup';
 import Role from './Role';
 import { shuffle, randomArray } from '@lib/util/utils';
 import { allRoles, roleCategories } from './roles';
-import { Constructor } from '@lib/types/definitions';
+import { Constructor } from '@sapphire/utilities';
 
 export default class BasicSetup extends Setup {
 

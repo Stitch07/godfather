@@ -1,11 +1,15 @@
 import '@lib/extenders';
 
 import { join } from 'path';
-import { LogLevel, SapphireClient } from '@sapphire/framework';
+import { SapphireClient } from '@sapphire/framework';
 import { Collection, Guild, Message } from 'discord.js';
 import Game from '@mafia/Game';
 import SetupStore from '@mafia/SetupStore';
 import { Branding } from './util/utils';
+import { PREFIX } from '@root/config';
+import { getCustomRepository } from 'typeorm';
+import GuildSettingRepository from './orm/repositories/GuildSettingRepository';
+import Logger from './Logger';
 
 export default class Godfather extends SapphireClient {
 
@@ -17,7 +21,7 @@ export default class Godfather extends SapphireClient {
 	public constructor() {
 		super({
 			logger: {
-				level: LogLevel.Debug
+				instance: new Logger()
 			}
 		});
 
@@ -29,12 +33,15 @@ export default class Godfather extends SapphireClient {
 		this.commands.registerPath(join(__dirname, '..', 'commands'));
 		this.events.registerPath(join(__dirname, '..', 'events'));
 		this.preconditions.registerPath(join(__dirname, '..', 'preconditions'));
+		this.setups.registerPath(join(__dirname, '..', 'setups'));
 	}
 
 	// TODO: configurable prefixes
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	public fetchGuildPrefix(guild: Guild | null) {
-		return Promise.resolve('gd!');
+	public async fetchGuildPrefix(guild: Guild | null) {
+		if (!guild) return PREFIX;
+		const guildSettings = await getCustomRepository(GuildSettingRepository).get(guild);
+		return guildSettings.prefix;
 	}
 
 	public get version() {
