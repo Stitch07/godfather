@@ -1,4 +1,5 @@
 dist/
 node_modules/
-.vscode
 src/config.ts
+error.log
+combined.log

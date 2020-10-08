@@ -1,0 +1,73 @@
+{
+	// Place your godfather workspace snippets here. Each snippet is defined under a snippet name and has a scope, prefix, body and 
+	// description. Add comma separated ids of the languages where the snippet is applicable in the scope field. If scope 
+	// is left empty or omitted, the snippet gets applied to all languages. The prefix is what is 
+	// used to trigger the snippet and the body will be expanded and inserted. Possible variables are: 
+	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. 
+	// Placeholders with the same ids are connected.
+	// Example:
+	// "Print to console": {
+	// 	"scope": "javascript,typescript",
+	// 	"prefix": "log",
+	// 	"body": [
+	// 		"console.log('$1');",
+	// 		"$2"
+	// 	],
+	// 	"description": "Log output to console"
+	// }
+	"GodfatherCommand": {
+		"scope": "typescript",
+		"prefix": "command",
+		"body": [
+			"import { Command, CommandOptions } from '@sapphire/framework';",
+			"import { ApplyOptions } from '@util/utils';",
+			"import { Message } from 'discord.js';",
+			"",
+			"@ApplyOptions<CommandOptions>({",
+			"\tpreconditions: []",
+			"})",
+			"export default class extends Command {",
+			"\tpublic async run(message: Message) {",
+			"\t}",
+			"}",
+			""
+		],
+		"description": "Creates a Command"
+	},
+	"GodfatherEvent": {
+		"scope": "typescript",
+		"prefix": "event",
+		"body": [
+			"import { Event, Events, PieceContext } from '@sapphire/framework';",
+			"",
+			"export default class extends Event<Events.${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g}> {",
+			"",
+			"\tpublic constructor(context: PieceContext) {",
+			"\t\tsuper(context, { event: Events.${TM_FILENAME_BASE/(.*)/${1:/pascalcase}/g} });",
+			"\t}",
+			"",
+			"\tpublic run() {",
+			"\t}",
+			"",
+			"}",
+			""
+		]
+	},
+	"GodfatherPrecondition": {
+		"scope": "typescript",
+		"prefix": "precondition",
+		"body": [
+			"import { Precondition } from '@sapphire/framework';",
+			"import { Message } from 'discord.js';",
+			"",
+			"export default class extends Precondition {",
+			"",
+			"\tpublic run(message: Message) {",
+			"\t\t",
+			"\t}",
+			"",
+			"}",
+			""
+		]
+	}
+}

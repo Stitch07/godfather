@@ -12,7 +12,8 @@ export default class implements Logger {
 
 	public constructor() {
 		this.inner = createLogger({
-			level: PRODUCTION ? 'info' : 'debug'
+			level: PRODUCTION ? 'info' : 'debug',
+			format: format.json()
 		});
 
 		if (PRODUCTION) {

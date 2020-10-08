@@ -1,0 +1,5 @@
+{
+    "eslint.enable": true,
+    "editor.insertSpaces": false,
+    "files.eol": "\n"
+}
