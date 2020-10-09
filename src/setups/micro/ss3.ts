@@ -1,6 +1,6 @@
 import { SetupOptions } from '@mafia/Setup';
 import BasicSetup from '@mafia/BasicSetup';
-import { ApplyOptions } from '@util/utils';
+import { ApplyOptions } from '@sapphire/decorators';
 
 @ApplyOptions<SetupOptions>({
 	name: 'ss3',

@@ -1,4 +1,4 @@
-import { ApplyOptions } from '@lib/util/utils';
+import { ApplyOptions } from '@sapphire/decorators';
 import { Command, CommandOptions } from '@sapphire/framework';
 import { Message } from 'discord.js';
 

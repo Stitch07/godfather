@@ -7,9 +7,10 @@ import Game from '@mafia/Game';
 import SetupStore from '@mafia/SetupStore';
 import { Branding } from './util/utils';
 import { PREFIX } from '@root/config';
-import { getCustomRepository } from 'typeorm';
 import GuildSettingRepository from './orm/repositories/GuildSettingRepository';
 import Logger from './Logger';
+import GuildSettings from './orm/entities/GuildSettings';
+import { getCustomRepository } from 'typeorm';
 
 export default class Godfather extends SapphireClient {
 
@@ -17,6 +18,7 @@ export default class Godfather extends SapphireClient {
 	public setups: SetupStore;
 	public release = Branding.Release.Development;
 	public ownerID: string | undefined = undefined;
+	public settingsCache = new Map<string, GuildSettings>();
 	private _version = [1, 0, 0];
 	public constructor() {
 		super({
@@ -40,7 +42,7 @@ export default class Godfather extends SapphireClient {
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	public async fetchGuildPrefix(guild: Guild | null) {
 		if (!guild) return PREFIX;
-		const guildSettings = await getCustomRepository(GuildSettingRepository).get(guild);
+		const guildSettings: GuildSettings = await getCustomRepository(GuildSettingRepository).ensure(this, guild);
 		return guildSettings.prefix;
 	}
 

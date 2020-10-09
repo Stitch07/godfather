@@ -1,4 +1,4 @@
-import { ApplyOptions } from '@util/utils';
+import { ApplyOptions } from '@sapphire/decorators';
 import Game from '@mafia/Game';
 import { Message, TextChannel } from 'discord.js';
 import { Command, CommandOptions } from '@sapphire/framework';

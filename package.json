@@ -34,6 +34,7 @@
 	},
 	"dependencies": {
 		"@klasa/duration": "^0.0.3",
+		"@sapphire/decorators": "^1.0.1",
 		"@sapphire/framework": "sapphire-project/framework#build",
 		"@sapphire/utilities": "^1.0.1",
 		"discord.js": "^12.3.1",

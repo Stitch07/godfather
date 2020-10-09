@@ -20,7 +20,7 @@
 		"prefix": "command",
 		"body": [
 			"import { Command, CommandOptions } from '@sapphire/framework';",
-			"import { ApplyOptions } from '@util/utils';",
+			"import { ApplyOptions } from '@sapphire/decorators';",
 			"import { Message } from 'discord.js';",
 			"",
 			"@ApplyOptions<CommandOptions>({",

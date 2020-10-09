@@ -3,6 +3,7 @@ import Game from '@mafia/Game';
 import Player from '@mafia/Player';
 import SetupStore from '@mafia/SetupStore';
 import { Collection, Guild } from 'discord.js';
+import GuildSettings from './lib/orm/entities/GuildSettings';
 
 interface ChannelExtendables {
 	readonly attachable: boolean;
@@ -20,6 +21,7 @@ declare module 'discord.js' {
 		ownerID: string | undefined;
 		games: Collection<string, Game>;
 		setups: SetupStore;
+		settingsCache: Map<string, GuildSettings>;
 		fetchGuildPrefix(guild: Guild): Promise<string>;
 	}
 

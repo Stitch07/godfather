@@ -1,4 +1,5 @@
-import { ApplyOptions, Branding } from '@lib/util/utils';
+import { Branding } from '@lib/util/utils';
+import { ApplyOptions } from '@sapphire/decorators';
 import { Command, CommandOptions } from '@sapphire/framework';
 import { roundNumber } from '@sapphire/utilities';
 import { Message, MessageEmbed } from 'discord.js';

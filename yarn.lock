@@ -1108,6 +1108,11 @@
   dependencies:
     "@klasa/cache" "^0.0.3"
 
+"@sapphire/decorators@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@sapphire/decorators/-/decorators-1.0.1.tgz#4b848b4f16ba5bbefb84d08b43d2bbe20652c3d3"
+  integrity sha512-3z4EHwi8/v4zpFgVd5YGQzsXcjO7azYqofqDtWbhFrQ3aNDme4JTxo6uQx/Lqq73nzpxswKZuUc/LX1sWDI57A==
+
 "@sapphire/framework@sapphire-project/framework#build":
   version "0.0.1"
   resolved "https://codeload.github.com/sapphire-project/framework/tar.gz/219db01ff31c4979269313bad1b2e3e4b733df8d"
