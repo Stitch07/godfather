@@ -19,3 +19,7 @@ Install all dev dependencies:
 Run tests:
 
 `yarn test`
+
+## Requirements
+
+You will need to have [`node.js`](https://nodejs.org/en/) and [`yarn`](https://yarnpkg.com/) installed to run this 
