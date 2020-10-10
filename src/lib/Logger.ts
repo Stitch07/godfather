@@ -35,37 +35,46 @@ export default class implements Logger {
 
 	public trace(...values: readonly unknown[]) {
 		// @ts-ignore idk ill figure this later
-		this.inner.silly(...values);
+		this.inner.silly(this._transform(values));
 	}
 
 	public debug(...values: readonly unknown[]) {
 		// @ts-ignore idk ill figure this later
-		this.inner.debug(...values);
+		this.inner.debug(this._transform(values));
 	}
 
 	public info(...values: readonly unknown[]) {
 		// @ts-ignore idk ill figure this later
-		this.inner.info(...values);
+		this.inner.info(this._transform(values));
 	}
 
 	public warn(...values: readonly unknown[]) {
 		// @ts-ignore idk ill figure this later
-		this.inner.warn(...values);
+		this.inner.warn(this._transform(values));
 	}
 
 	public error(...values: readonly unknown[]) {
-		// @ts-ignore idk ill figure this later
-		this.inner.error(values);
+		for (const value of values) {
+			if (value instanceof Error) this.inner.error(value.stack || value);
+			else this.inner.error(value);
+		}
 	}
 
 	public fatal(...values: readonly unknown[]) {
-		// @ts-ignore idk ill figure this later
-		this.inner.error(values);
+		this.error(...values);
 	}
 
 	public write(level: LogLevel, ...values: readonly unknown[]) {
 		// @ts-ignore idk ill figure this later
 		this.inner.log(WINSTON_LEVELS[level], ...values);
+	}
+
+	private _transform(value: unknown): unknown {
+		if (Array.isArray(value)) {
+			if (value.length === 1) return value[0];
+			return `[${value.map(ele => this._transform(ele)).join('\n')}]`;
+		}
+		return value;
 	}
 
 }

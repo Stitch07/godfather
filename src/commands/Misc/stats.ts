@@ -1,6 +1,7 @@
-import { Branding } from '@lib/util/utils';
+import GodfatherCommand from '@lib/GodfatherCommand';
+import { Branding } from '@util/utils';
 import { ApplyOptions } from '@sapphire/decorators';
-import { Command, CommandOptions } from '@sapphire/framework';
+import { CommandOptions } from '@sapphire/framework';
 import { roundNumber } from '@sapphire/utilities';
 import { Message, MessageEmbed } from 'discord.js';
 import { cpus } from 'os';
@@ -8,7 +9,7 @@ import { cpus } from 'os';
 @ApplyOptions<CommandOptions>({
 	description: 'Get an invite link to the bot and support server.'
 })
-export default class extends Command {
+export default class extends GodfatherCommand {
 
 	public async run(message: Message) {
 		return message.channel.send(await this.buildEmbed(message));

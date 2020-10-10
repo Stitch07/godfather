@@ -1,7 +1,6 @@
 import Role from '@mafia/Role';
 import MafiaFaction from '@mafia/factions/Mafia';
-
-type Constructor<T> = new (...args: any[]) => T;
+import { Constructor } from '@sapphire/utilities';
 
 export default function MafiaRole<TBaseRole extends Constructor<Role>>(BaseRole: TBaseRole) {
 
@@ -10,7 +9,7 @@ export default function MafiaRole<TBaseRole extends Constructor<Role>>(BaseRole:
 		public faction = new MafiaFaction();
 
 		public async onDeath() {
-		// if the GF died, try promoting the Goon
+			// if the GF died, try promoting the Goon
 			if (this.player.role!.name === 'Godfather') {
 				const goon = this.game.players.find(player => player.isAlive && player.role!.name === 'Goon');
 				if (!goon) {

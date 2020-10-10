@@ -9,19 +9,19 @@ export default class Player {
 	public cleaned = false;
 	public deathReason = '';
 	public previousRoles = [] as Role[];
-	public role?: Role;
+	public role!: Role;
 	public constructor(public user: User, public game: Game) {
 	}
 
 	public async sendPM() {
 		const rolePM = [
-			`Hello ${this.user.tag}, you are a **${this.role!.display}**. ${this.role!.description}`,
+			`Hello ${this.user.tag}, you are a **${this.role.display}**. ${this.role.description}`,
 			`Win Condition: ${this.role!.faction.winCondition}`
 		].join('\n');
 		await this.user.send(rolePM);
 
-		if (this.role!.faction.informed) {
-			const team = this.game.players.filter(player => player.role!.faction.name === this.role!.faction.name);
+		if (this.role.faction.informed) {
+			const team = this.game.players.filter(player => player.role.faction.name === this.role.faction.name);
 			if (team.length > 1) {
 				await this.user.send(`Your team consists of: ${team.map(player => player.user).join(', ')}`);
 			}

@@ -1,12 +1,13 @@
+import GodfatherCommand from '@lib/GodfatherCommand';
 import { ApplyOptions } from '@sapphire/decorators';
 import { Message, TextChannel } from 'discord.js';
-import { Command, CommandOptions } from '@sapphire/framework';
+import { CommandOptions } from '@sapphire/framework';
 
 @ApplyOptions<CommandOptions>({
 	description: 'Remove your vote from a player/nolynch.',
 	preconditions: ['GuildOnly', 'GameOnly', 'GameStartedOnly', 'PlayerOnly', 'AlivePlayerOnly']
 })
-export default class extends Command {
+export default class extends GodfatherCommand {
 
 	public async run(msg: Message) {
 		const { game } = msg.channel as TextChannel;

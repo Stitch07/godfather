@@ -1,3 +1,4 @@
+import { exec as childProcessExec } from 'child_process';
 import { promisify } from 'util';
 import Player from '@mafia/Player';
 import { isThenable } from '@sapphire/utilities';
@@ -34,6 +35,8 @@ export const aliveOrRecentJester = (player: Player) => {
 };
 
 export const sleep = promisify(setTimeout);
+
+export const exec = promisify(childProcessExec);
 
 export function floatPromise(client: Client, promise: Promise<unknown>) {
 	if (isThenable(promise)) promise.catch(error => client.emit(Events.Error, error));

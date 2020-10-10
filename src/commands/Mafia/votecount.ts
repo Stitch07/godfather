@@ -1,5 +1,6 @@
+import GodfatherCommand from '@lib/GodfatherCommand';
 import { ApplyOptions } from '@sapphire/decorators';
-import { Command, CommandOptions } from '@sapphire/framework';
+import { CommandOptions } from '@sapphire/framework';
 import { Message, TextChannel } from 'discord.js';
 
 @ApplyOptions<CommandOptions>({
@@ -7,7 +8,7 @@ import { Message, TextChannel } from 'discord.js';
 	description: 'Shows the current vote count.',
 	preconditions: ['GuildOnly', 'GameOnly']
 })
-export default class extends Command {
+export default class extends GodfatherCommand {
 
 	public async run(msg: Message) {
 		const { game } = msg.channel as TextChannel;

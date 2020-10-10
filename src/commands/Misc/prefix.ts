@@ -1,13 +1,15 @@
-import GuildSettingRepository from '@root/lib/orm/repositories/GuildSettingRepository';
-import { Args, Command, CommandOptions } from '@sapphire/framework';
+import GuildSettingRepository from '@lib/orm/repositories/GuildSettingRepository';
+import GodfatherCommand from '@lib/GodfatherCommand';
+import { Args, CommandOptions } from '@sapphire/framework';
 import { ApplyOptions } from '@sapphire/decorators';
 import { Message } from 'discord.js';
 import { getCustomRepository } from 'typeorm';
+import { PGSQL_DATABASE_USER } from '@root/config';
 
 @ApplyOptions<CommandOptions>({
 	preconditions: ['GuildOnly', 'AdminOnly']
 })
-export default class extends Command {
+export default class extends GodfatherCommand {
 
 	public async run(message: Message, args: Args) {
 		const newPrefix = await args.restResult('string');
@@ -20,6 +22,14 @@ export default class extends Command {
 		guildSettings.prefix = newPrefix.value;
 		await getCustomRepository(GuildSettingRepository).updateSettings(this.client, guildSettings);
 		return message.channel.send(`Successfully updated this server's prefix to: \`${newPrefix.value}\``);
+	}
+
+	public onLoad() {
+		if (String(PGSQL_DATABASE_USER) === '') {
+			this.enabled = false;
+			// TODO: remove this when sapphire underps it
+			this.store.delete(this.name);
+		}
 	}
 
 }

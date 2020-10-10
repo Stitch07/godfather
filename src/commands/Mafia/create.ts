@@ -1,7 +1,8 @@
 import { ApplyOptions } from '@sapphire/decorators';
+import GodfatherCommand from '@lib/GodfatherCommand';
 import Game from '@mafia/Game';
 import { Message, TextChannel } from 'discord.js';
-import { Command, CommandOptions } from '@sapphire/framework';
+import { CommandOptions } from '@sapphire/framework';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['creategame'],
@@ -12,7 +13,7 @@ import { Command, CommandOptions } from '@sapphire/framework';
 	].join('\n'),
 	preconditions: ['GuildOnly']
 })
-export default class extends Command {
+export default class extends GodfatherCommand {
 
 	public async run(msg: Message) {
 		if (this.client.games.has(msg.channel.id)) {

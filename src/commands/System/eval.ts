@@ -1,5 +1,6 @@
+import GodfatherCommand from '@lib/GodfatherCommand';
 import { ApplyOptions } from '@sapphire/decorators';
-import { Args, Command, CommandOptions } from '@sapphire/framework';
+import { Args, CommandOptions } from '@sapphire/framework';
 import { codeBlock, isThenable } from '@sapphire/utilities';
 import { Message } from 'discord.js';
 import { inspect } from 'util';
@@ -8,7 +9,7 @@ import { inspect } from 'util';
 	quotes: [],
 	preconditions: ['OwnerOnly']
 })
-export default class extends Command {
+export default class extends GodfatherCommand {
 
 	public async run(message: Message, args: Args) {
 		const code = await args.restResult('string');

@@ -1,13 +1,14 @@
+import GodfatherCommand from '@lib/GodfatherCommand';
 import { ApplyOptions } from '@sapphire/decorators';
-import { Args, Command, CommandOptions } from '@sapphire/framework';
+import { Args, CommandOptions } from '@sapphire/framework';
 import { Message, TextChannel } from 'discord.js';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['vtl', 'vt'],
 	description: 'Vote to lynch a player',
-	preconditions: ['GuildOnly', 'GameOnly', 'GameStartedOnly', 'PlayerOnly', 'AlivePlayerOnly']
+	preconditions: ['GuildOnly', 'GameOnly', 'PlayerOnly', 'AlivePlayerOnly']
 })
-export default class extends Command {
+export default class extends GodfatherCommand {
 
 	public async run(msg: Message, args: Args) {
 		const target = await args.pick('player');

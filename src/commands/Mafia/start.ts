@@ -1,18 +1,22 @@
 import { ApplyOptions } from '@sapphire/decorators';
+import GodfatherCommand from '@lib/GodfatherCommand';
 import Role from '@mafia/Role';
-import { Args, Command, CommandOptions } from '@sapphire/framework';
+import { Args, CommandOptions } from '@sapphire/framework';
 import { Message, TextChannel } from 'discord.js';
 import { Constructor } from '@sapphire/utilities';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['startgame'],
-	description: 'Starts a game of Mafia in this server.'
+	description: 'Starts a game of Mafia in this server.',
+	preconditions: ['GuildOnly', 'GameOnly', 'HostOnly']
 })
-export default class extends Command {
+export default class extends GodfatherCommand {
 
 	public async run(msg: Message, args: Args) {
 		const setup = await args.rest('string').catch(() => '');
 		const { game } = msg.channel as TextChannel;
+
+		if (game!.hasStarted) throw 'The game has already started!';
 
 		if (setup === '') {
 			// attempt to find a setup

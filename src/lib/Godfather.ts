@@ -1,12 +1,11 @@
 import '@lib/extenders';
 
-import { join } from 'path';
 import { SapphireClient } from '@sapphire/framework';
 import { Collection, Guild, Message } from 'discord.js';
 import Game from '@mafia/Game';
 import SetupStore from '@mafia/SetupStore';
 import { Branding } from './util/utils';
-import { PREFIX } from '@root/config';
+import { PGSQL_DATABASE_USER, PREFIX } from '@root/config';
 import GuildSettingRepository from './orm/repositories/GuildSettingRepository';
 import Logger from './Logger';
 import GuildSettings from './orm/entities/GuildSettings';
@@ -31,17 +30,13 @@ export default class Godfather extends SapphireClient {
 		this.registerStore(this.setups);
 		this.fetchPrefix = (message: Message) => this.fetchGuildPrefix(message.guild);
 
-		this.arguments.registerPath(join(__dirname, '..', 'arguments'));
-		this.commands.registerPath(join(__dirname, '..', 'commands'));
-		this.events.registerPath(join(__dirname, '..', 'events'));
-		this.preconditions.registerPath(join(__dirname, '..', 'preconditions'));
-		this.setups.registerPath(join(__dirname, '..', 'setups'));
+		this.registerUserDirectories();
 	}
 
 	// TODO: configurable prefixes
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	public async fetchGuildPrefix(guild: Guild | null) {
-		if (!guild) return PREFIX;
+		if (!guild || String(PGSQL_DATABASE_USER) === '') return PREFIX;
 		const guildSettings: GuildSettings = await getCustomRepository(GuildSettingRepository).ensure(this, guild);
 		return guildSettings.prefix;
 	}

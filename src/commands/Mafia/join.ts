@@ -1,14 +1,15 @@
 import { ApplyOptions } from '@sapphire/decorators';
+import GodfatherCommand from '@lib/GodfatherCommand';
 import Player from '@mafia/Player';
 import { Message, TextChannel } from 'discord.js';
-import { Command, CommandOptions } from '@sapphire/framework';
+import { CommandOptions } from '@sapphire/framework';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['in'],
 	description: 'Adds you to the playerlist of an ongoing game.',
 	preconditions: ['GuildOnly', 'GameOnly']
 })
-export default class extends Command {
+export default class extends GodfatherCommand {
 
 	public run(msg: Message) {
 		const { game } = msg.channel as TextChannel;
