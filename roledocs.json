@@ -1,0 +1,305 @@
+[                  
+    {
+        "name":"Town Vanilla",
+        "detailedDescription": [
+            "A regular townie without any powers.",
+            "",
+            "- Win condition: lynch every criminal and evildoer "
+        ]
+    },
+    {
+        "name":"BodyGuard",
+        "detailedDescription": [
+            "An ex-army soldier who now protects people for a living.",
+            "",
+            "- Win Condition: lynch every criminal and evildoer",
+            "",
+            "+ Abilities: Protect a player from direct attacks at night.",
+            "+ If your target is attacked, then you and the visitor will fight to the death, if you successfully protect someone you can still be healed."
+        ]
+    },
+    {
+        "name":"Cop",
+        "detailedDescription": [
+            "The law enforcer of town, on the hunt to find the mafia, always constantly in the danger of being killed.",
+            "",
+            "- Win Condition: lynch every criminal and evildoer",
+            "",
+            "+ Abilities: Interrogate one person each night for suspicious activity.",
+            "+ You will know if your target is suspicious or innocent."
+        ]
+    },
+    {
+        "name": "Doctor",
+        "detailedDescription": [
+            "An experienced surgeon in trauma care who secretly heals people.",
+            "",
+            "- Win Condition: lynch every criminal and evildoer",
+            "",
+            "+ Abilities: Choose to heal one person at night, granting them powerful defense.",
+            "+ You will know if your target is attacked.",
+            "+ You can only choose to heal yourself once every game."
+        ]
+    },
+    {
+        "name":"Escort",
+        "detailedDescription": [
+            "A very beautiful woman skilled in distracting her targets.",
+            "",
+            "- Win Condition: lynch every criminal and evildoer",
+            "",
+            "+ Abilities: Choose one person each night to block them from using their role’s night ability. (roleblock)",
+            "+ You cannot be roleblocked."
+        ]
+    },
+    {
+        "name":"Lookout",
+        "detailedDescription": [
+            "Some think he has got eagle’s eyes. An observer who is master at camping outside homes to gain information.",
+            "",
+            "- Win Condition: lynch every criminal and evildoer",
+            "",
+            "+ Abilities: Choose to watch one person at night to see who visits them.",
+            "+ You will exactly know who visited your target at night, showing their names."
+        ]
+    },
+    {
+        "name":"Neapolitan",
+        "detailedDescription": [
+            "Like a cop, but with less powerful investigations.",
+            "",
+            "- Win Condition: lynch every criminal and evildoer",
+            "",
+            "+ Abilities: Check if a target is or is not a Vanilla Town.",
+            "+ Your check cannot be modified by framing."
+        ]
+    },
+    {
+        "name":"Retributionist",
+        "detailedDescription": [
+            "A powerful mystic that can revive the dead.",
+            "",
+            "- Win Condition: lynch every criminal and evildoer",
+            "",
+            "+ Abilities: You may revive one dead townie per game. "
+        ]
+    },
+    {
+        "name":"SuperSaint",
+        "detailedDescription": [
+            "A vengeful lunatic who will explode on getting lynched.",
+            "",
+            "- Win condition: lynch every criminal and evildoer ",
+            "",
+            "+ Abilities: Once the super saint gets lynched during the day, the person last voted to lynch will die."
+        ]
+    },
+    {
+        "name":"Tracker",
+        "detailedDescription": [
+            "Belongs to a very respected tribe, he follows his prey to any destination.",
+            "",
+            "- Win Condition: lynch every criminal and evildoer",
+            "",
+            "+ Abilities: Choose one person to track them at night, to see who they visit.",
+            "+ You will exactly know who your target visited at night, giving their exact name."
+        ]
+    },
+    {
+        "name":"Transporter",
+        "detailedDescription": [
+            "A retired taxi driver who transports people without asking any questions.",
+            "",
+            "- Win Condition: lynch every criminal and evildoer",
+            "",
+            "+ Abilities: Choose two people to transport at night.",
+            "+ Transporting two people will swap all targets against them.",
+            "+ You may transport yourself.",
+            "+ Your targets will know if they were transported.",
+            "+ You cannot transport someone with themselves.",
+            "+ You cannot be roleblocked."
+        ]
+    },
+    {
+        "name":"Veteran",
+        "detailedDescription": [
+            "A very scared and paranoid war hero who does not want to get visited by anyone.",
+            "",
+            "- Win Condition: lynch every criminal and evildoer",
+            "",
+            "+ Abilities: Decide if you want to go on alert during each night or not.",
+            "+ If you go on alert, you gain a basic defense, attacking any person who visits you at night. If you do not go on alert, you stay at home and do not attack.",
+            "+ you can only go on alert 3 times.",
+            "+ you cannot be roleblocked."
+        ]
+    },
+    {
+        "name":"Vigilante",
+        "detailedDescription": [
+            "A militant officer who takes laws in his own hands.",
+            "",
+            "- Win Condition: lynch every criminal and evildoer",
+            "",
+            "+ Abilities: take justics in your own hand and shoot someone at night.",
+            "+ You can only choose to shoot 3 times in a game.",
+            "+ If you shoot another town member, you will commit suicide over the guilt of killing your own member next night."
+        ]
+    },
+    
+    {
+        "name":"Consigliere",
+        "detailedDescription": [
+            "A corrupted investigator who has been bribed to gather information for Mafia.",
+            "",
+            "- Win condition: kill anyone who will not submit to the Mafia",
+            "",
+            "+ Abilities: Check one person for their exact role each night.",
+            "+ If there are no mafia roles left who are capable of killing then you will become the goon.",
+            "+ You can talk with other mafia members."
+        ]
+    },
+    {
+        "name":"Consort",
+        "detailedDescription": [
+            "A beautiful bar dancer now working for organised crime.",
+            "",
+            "- Win condition: kill anyone who will not submit to the Mafia",
+            "",
+            "+ Abilities: Choose one person each night to block them from using their role’s night ability. (roleblock)",
+            "+ If there are no mafia roles left who are capable of killing then you will become the goon.",
+            "+ You can talk with other mafia members."
+        ]
+    },
+    {
+        "name":"Framer",
+        "detailedDescription": [
+            "A skilled counterfeiter who manipulates information.",
+            "",
+            "- Win condition: kill anyone who will not submit to the Mafia",
+            "",
+            "+ Abilities: Your target will appear suspicious to cops if they are innocent, and vice versa. (reversing their innocence)",
+            "+ You may choose one person at night to frame them as a suspicious townie.",
+            "+ If there are no mafia roles left who are capable of killing then you will become the goon.",
+            "+ You can talk with other mafia members."
+        ]
+    },
+    {
+        "name":"Godfather",
+        "detailedDescription": [
+            "The leader of organized crime.",
+            "",
+            "- Win condition: kill anyone who will not submit to the Mafia",
+            "",
+            "+ Abilities: You may order the Goon to attack your target.",
+            "+ If there is no Goon/the Goon is roleblocked, you will attack the target instead.",
+            "+ You have a Basic Defense, and you will appear as innocent to the Cop.",
+            "+ You can talk with other mafia members."
+        ]
+    },
+    {
+        "name":"Goon",
+        "detailedDescription": [
+            "A member of organized crime, trying to work their way to the top.",
+            "",
+            "- Win condition: kill anyone who will not submit to the Mafia",
+            "",
+            "+ Abilities: You can choose to attack if the Godfather doesn't give orders.",
+            "+ If the Godfather dies, you will become the next Godfather.",
+            "+ You can talk with other mafia members."
+        ]
+    },
+    {
+        "name":"Janitor",
+        "detailedDescription": [
+            "A sanitisation expert working for organised crime.",
+            "",
+            "- Win condition: kill anyone who will not submit to the Mafia",
+            "",
+            "+ Abilities: Choose a target who will be potentially killed by mafia.",
+            "+ If your target dies, their role will not be revealed to anyone except you.",
+            "+ You can only perform 3 cleanings in a game.",
+            "+ You can talk with other mafia members."
+        ]
+    },
+    {
+        "name":"Vanilla Mafia",
+        "detailedDescription": [
+            "A regular mafia without any special powers.",
+            "",
+            "- Win condition: kill anyone who will not submit to the Mafia",
+            "",
+            "+ Abilities: If the goon dies, you will turn into goon and you will be given the final say over nightkill selection.",
+            "+ You can talk with other mafia members."
+        ]
+    },
+
+    {
+        "name":"Amnesiac",
+        "detailedDescription": [
+            "A trauma patient that does not remember who he was.",
+            "",
+            "- Win Condition: Remember who you were and complete that role's win condition",
+            "",
+            "+ Abilities: When you choose a role it will be revealed to all players in the game."
+        ]
+    },
+    {
+        "name":"Arsonist",
+        "detailedDescription": [
+            "He wants to see the world burn.",
+            "",
+            "- Win Condition: Live to see everyone burn",
+            "",
+            "+ Abilities: You may douse someone each night in gasoline or ignite doused targets.",
+            "+ Igniting doused people will deal an unstoppable attack to all doused targets."
+        ]
+    },
+    {
+        "name":"Executioner",
+        "detailedDescription": [
+            "An obsessed lyncher who will execute his target by any means necessary.",
+            "",
+            "- Win condition: Trick and influence the town into lynching your target.",
+            "",
+            "+ Abilities: At the beginning of each game you will be given a target, who you need to get executed by any means.",
+            "+ If your target gets lynched at day, you win the game.",
+            "+ If your target dies at night, you will turn into a Jester."
+        ]
+    },
+    {
+        "name":"Jester",
+        "detailedDescription": [
+            "A crazed lunatic whose life goal is to be publicly executed.",
+            "",
+            "- Win Condition: Get yourself lynched by any means necessary",
+            "",
+            "+ Abilities: If you are lynched at day, you will attack one of your guilty voters the following night with an Unstoppable attack.",
+            "+ You can only haunt once, right after you get lynched.",
+            "+ You cannot attack people who have not voted you at day.",
+            "+ If you die at night, you lose the game."
+        ]
+    },
+    {
+        "name":"Serial Killer",
+        "detailedDescription": [
+            "An insane person who wants everyone to die.",
+            "",
+            "- Win condition: Kill anyone who would oppose you",
+            "",
+            "+ Abilities: You may choose to stab a person each night.",
+            "+ If you are roleblocked you will attack the roleblocker instead of your target.",
+            "+ You have a basic defense throughout the game."
+        ]
+    },
+    {
+        "name":"Survivor",
+        "detailedDescription": [
+            "A neutral character who just wants to live and is too afraid to die.",
+            "",
+            "- Win condition: Live until the end of the game",
+            "",
+            "+ Abilities: Decide if you want to put on a bulletproof vest at night. Bullet proof vest gives you a basic defense.",
+            "+ You can only use the bulletproof vest 4 times."
+        ]
+    }
+]
