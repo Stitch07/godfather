@@ -4,7 +4,7 @@
         "detailedDescription": [
             "A regular townie without any powers.",
             "",
-            "- Win condition: lynch every criminal and evildoer "
+            "- Win condition: lynch every criminal and evildoer"
         ]
     },
     {
@@ -89,7 +89,7 @@
         "detailedDescription": [
             "A vengeful lunatic who will explode on getting lynched.",
             "",
-            "- Win condition: lynch every criminal and evildoer ",
+            "- Win condition: lynch every criminal and evildoer",
             "",
             "+ Abilities: Once the super saint gets lynched during the day, the person last voted to lynch will die."
         ]
