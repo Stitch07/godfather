@@ -1,5 +1,6 @@
 import PlayerManager from '@mafia/managers/PlayerManager';
 import Godfather from '@lib/Godfather';
+import Faction from '@mafia/Faction';
 import Player from '@mafia/Player';
 import VoteManager from '@mafia/managers/VoteManager';
 import NightActionsManager from '@mafia/managers/NightActionsManager';
@@ -7,6 +8,9 @@ import Setup from './Setup';
 
 import { TextChannel, User } from 'discord.js';
 import { Duration } from '@klasa/duration';
+import { codeBlock } from '@sapphire/utilities';
+
+const MAX_DELAY = 5 * 60 * 1000; // 15 minutes
 
 export const enum Phase {
 	PREGAME = 1,
@@ -26,6 +30,7 @@ export default class Game {
 	public phaseEndAt?: Date = undefined;
 	public cycle = 0;
 	public setup?: Setup = undefined;
+	public createdAt!: Date;
 	public constructor(host: User, public channel: TextChannel) {
 		this.client = channel.client as Godfather;
 		this.phase = Phase.PREGAME;
@@ -40,6 +45,12 @@ export default class Game {
 	}
 
 	public async startDay() {
+		const winCheck = this.checkEndgame();
+		if (winCheck.ended) {
+			await this.end(winCheck);
+			return;
+		}
+
 		this.phase = Phase.STANDBY;
 		const deadPlayers = await this.nightActions.resolve();
 		if (deadPlayers.length > 0) {
@@ -69,6 +80,12 @@ export default class Game {
 	}
 
 	public async startNight() {
+		const winCheck = this.checkEndgame();
+		if (winCheck.ended) {
+			await this.end(winCheck);
+			return;
+		}
+
 		this.phase = Phase.STANDBY;
 		this.votes.reset();
 		this.phaseEndAt = new Date();
@@ -84,10 +101,30 @@ export default class Game {
 
 	public async hammer(player: Player) {
 		if (this.phase === Phase.STANDBY) return;
+		await this.channel.send(`${player.user.tag} was hammered. They were a **${player.role!.display}**.`);
 		await player.kill(`lynched d${this.cycle}`);
 
-		await this.channel.send(`${player.user.tag} was hammered. They were a **${player.role!.display}**.`);
 		await this.startNight();
+	}
+
+	public async update() {
+		if (!this.hasStarted) {
+			const diff = Date.now() - this.createdAt.getTime();
+			if (diff > MAX_DELAY) {
+				await this.channel.send('The game took too long to start!');
+				return this.delete();
+			}
+		}
+
+		if (this.phase === Phase.STANDBY) return;
+		if (this.phaseEndAt && Date.now() > this.phaseEndAt.getTime()) {
+			if (this.phase === Phase.DAY) {
+				await this.channel.send('Nobody was lynched!');
+				return this.startNight();
+			}
+
+			return this.startDay();
+		}
 	}
 
 	public get host() {
@@ -103,6 +140,42 @@ export default class Game {
 		return Math.floor(alivePlayers.length / 2) + 1;
 	}
 
+	public checkEndgame(): EndgameCheckData {
+		let winningFaction: Faction | null = null;
+		let independentWins: Faction[] = [];
+
+		for (const player of this.players) {
+			if (player.role.faction.independent && player.role.faction.hasWonIndependent(player)) {
+				independentWins.push(player.role.faction);
+			} else if (player.role.faction.hasWon(this)) {
+				winningFaction = player.role.faction;
+			}
+		}
+
+		return {
+			ended: winningFaction !== null,
+			winningFaction,
+			independentWins
+		};
+	}
+
+	public async end(data: EndgameCheckData) {
+		await this.channel.send(data.winningFaction === null ? 'The game is over. Nobody wins!' : `The game is over. ${data.winningFaction.name} wins! 🎉`);
+
+		const playerMapping = (player: Player, i: number) => {
+			const roleText = player.previousRoles.length === 0
+				? player.role.name
+				: [...player.previousRoles, player.role].map(role => role.name).join('->');
+			return `${i + 1}. ${player} (${roleText})`;
+		};
+		await this.channel.send([
+			'**Final Rolelist**:',
+			codeBlock('', this.players.map(playerMapping).join('\n'))
+		].join('\n'));
+		// TODO: win/loss logs here
+		this.delete();
+	}
+
 	public delete(): void {
 		this.client.games.delete(this.channel.id);
 	}
@@ -112,4 +185,10 @@ export default class Game {
 export interface GameSettings {
 	dayDuration: number;
 	nightDuration: number;
+}
+
+export interface EndgameCheckData {
+	ended: boolean;
+	winningFaction: Faction | null;
+	independentWins: Faction[];
 }

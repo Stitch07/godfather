@@ -20,6 +20,7 @@ export default class extends GodfatherCommand {
 			throw 'A game of Mafia is already running in this channel.';
 		}
 		const game = new Game(msg.author, msg.channel as TextChannel);
+		game.createdAt = new Date();
 		this.client.games.set(msg.channel.id, game);
 		return msg.channel.send(`Started a game of Mafia in <#${msg.channel.id}> hosted by **${msg.author.tag}**.`);
 	}

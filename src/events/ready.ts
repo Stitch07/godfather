@@ -21,6 +21,12 @@ export default class extends Event<Events.Ready> {
 			}
 		});
 		if (String(PGSQL_DATABASE_USER) !== '') floatPromise(this.client, connect());
+
+		// start event loop
+		this.client.eventLoop = setInterval(async () => {
+			for (const game of this.client.games.values()) await game.update();
+		}, 10 * 1000); // 10 seconds
+
 		this.client.logger.info(`Ready! Logged in as ${this.client.user!.tag} and connected to ${this.client.guilds.cache.size} guilds.`);
 	}
 

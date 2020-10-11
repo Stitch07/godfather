@@ -25,17 +25,16 @@ export default class extends GodfatherCommand {
 			if (!foundSetup) throw `No setups found for ${game!.players.length} players.`;
 			game!.setup = foundSetup!;
 		}
-		await msg.channel.send(`Chose the setup **${game!.setup!.name}**. Randomizing roles...`);
+		const sent = await msg.channel.send(`Chose the setup **${game!.setup!.name}**. Randomizing roles...`);
 		const roleGen = game!.setup!.generate();
 		for (const player of game!.players) {
 			player.role = new (roleGen.next().value as Constructor<Role>)(player);
 			await player.sendPM();
 		}
-		const msgs = await msg.channel.send('Sent all role PMs!');
+		await sent.edit('Sent all role PMs!');
 		if (!game!.setup!.nightStart) {
 			await game!.startDay();
 		}
-		return msgs;
 	}
 
 }

@@ -16,7 +16,7 @@ export default class SuperSaint extends Townie {
 			lastVoter.kill('blown up by Super Saint');
 			await game.channel.send('💣 **BOOOOOOOOOOOOOOM!!!**');
 			await sleep(2 * 1000);
-			await game.channel.send(`${lastVoter} hammered the Super Saint and was blown up!`);
+			await game.channel.send(`${lastVoter} hammered the Super Saint and was blown up! They were a **${lastVoter.role.name}**`);
 		}
 	}
 

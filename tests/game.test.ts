@@ -3,6 +3,7 @@ import { createMockUser } from './mocks/mockUser';
 import { createMockChannel } from './mocks/mockChannel';
 import Player from '@mafia/Player';
 import Vanilla from '@mafia/roles/town/Vanilla';
+import Mafia_Vanilla from '@mafia/roles/mafia/Mafia_Vanilla';
 import { NotVoting } from '@mafia/managers/VoteManager';
 
 
@@ -13,17 +14,21 @@ describe('game testing', () => {
 
 	expect(mockUser.tag).toBe('Host#0000');
 
-	// @ts-expect-error https://github.com/microsoft/TypeScript/issues/34933
+	// @ts-ignore https://github.com/microsoft/TypeScript/issues/34933
 	const game = new Game(mockUser, mockChannel);
 	game.host.role = new Vanilla(game.host);
 	game.settings.dayDuration = 5 * 60;
 	game.settings.nightDuration = 2 * 60;
 
-	for (let i = 0; i < 5; i++) {
+	for (let i = 0; i < 4; i++) {
 		const player = new Player(createMockUser({ username: `Player${i + 1}`, discriminator: `000${i + 1}` }), game);
 		player.role = new Vanilla(player);
 		game.players.push(player);
 	}
+
+	const mafioso = new Player(createMockUser({ username: 'Player5', discriminator: '0005' }), game);
+	mafioso.role = new Mafia_Vanilla(mafioso);
+	game.players.push(mafioso);
 
 	test('basic variables', () => {
 		expect(game.host.user.username).toBe('Host');

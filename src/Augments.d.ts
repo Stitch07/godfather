@@ -22,6 +22,7 @@ declare module 'discord.js' {
 		games: Collection<string, Game>;
 		setups: SetupStore;
 		settingsCache: Map<string, GuildSettings>;
+		eventLoop: NodeJS.Timeout;
 		fetchGuildPrefix(guild: Guild): Promise<string>;
 	}
 
