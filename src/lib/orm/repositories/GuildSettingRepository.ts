@@ -1,9 +1,9 @@
 import { Client, Guild } from 'discord.js';
 import { EntityRepository, Repository } from 'typeorm';
-import GuildSettings from '../entities/GuildSettings';
+import GuildSettingsEntity from '../entities/GuildSettings';
 
-@EntityRepository(GuildSettings)
-export default class GuildSettingRepository extends Repository<GuildSettings> {
+@EntityRepository(GuildSettingsEntity)
+export default class GuildSettingRepository extends Repository<GuildSettingsEntity> {
 
 	public async ensure(client: Client, guild: Guild) {
 		const cached = client.settingsCache.get(guild.id);
@@ -15,13 +15,13 @@ export default class GuildSettingRepository extends Repository<GuildSettings> {
 			return settings;
 		}
 
-		settings = new GuildSettings();
+		settings = new GuildSettingsEntity();
 		settings.id = guild.id;
 		client.settingsCache.set(guild.id, settings);
 		return settings;
 	}
 
-	public async updateSettings(client: Client, settings: GuildSettings) {
+	public async updateSettings(client: Client, settings: GuildSettingsEntity) {
 		if (client.settingsCache.has(settings.id)) client.settingsCache.delete(settings.id);
 		await this.save(settings);
 		client.settingsCache.set(settings.id, settings);

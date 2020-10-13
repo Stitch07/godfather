@@ -1,7 +1,8 @@
 import { sleep } from '@lib/util/utils';
 import Townie from '@mafia/mixins/Townie';
+import Role from '../../Role';
 
-export default class SuperSaint extends Townie {
+class SuperSaint extends Role {
 
 	public name = 'Super Saint';
 
@@ -23,3 +24,5 @@ export default class SuperSaint extends Townie {
 	public static documentation = 'Roleinfo docs here.';
 
 }
+
+export default Townie(SuperSaint);

@@ -9,8 +9,10 @@ import Setup from './Setup';
 import { TextChannel, User } from 'discord.js';
 import { Duration } from '@klasa/duration';
 import { codeBlock } from '@sapphire/utilities';
+import GameEntity from '../orm/entities/Game';
+import { getRepository } from 'typeorm';
 
-const MAX_DELAY = 5 * 60 * 1000; // 15 minutes
+const MAX_DELAY = 15 * 60 * 1000; // 15 minutes
 
 export const enum Phase {
 	PREGAME = 1,
@@ -101,6 +103,9 @@ export default class Game {
 
 	public async hammer(player: Player) {
 		if (this.phase === Phase.STANDBY) return;
+
+		// locks against multiple calls to hammer()
+		this.phase = Phase.STANDBY;
 		await this.channel.send(`${player.user.tag} was hammered. They were a **${player.role!.display}**.`);
 		await player.kill(`lynched d${this.cycle}`);
 
@@ -141,7 +146,7 @@ export default class Game {
 	}
 
 	public checkEndgame(): EndgameCheckData {
-		let winningFaction: Faction | null = null;
+		let winningFaction: Faction | undefined = undefined;
 		let independentWins: Faction[] = [];
 
 		for (const player of this.players) {
@@ -153,14 +158,14 @@ export default class Game {
 		}
 
 		return {
-			ended: winningFaction !== null,
+			ended: winningFaction !== undefined,
 			winningFaction,
 			independentWins
 		};
 	}
 
 	public async end(data: EndgameCheckData) {
-		await this.channel.send(data.winningFaction === null ? 'The game is over. Nobody wins!' : `The game is over. ${data.winningFaction.name} wins! 🎉`);
+		await this.channel.send(data.winningFaction === undefined ? 'The game is over. Nobody wins!' : `The game is over. ${data.winningFaction.name} wins! 🎉`);
 
 		const playerMapping = (player: Player, i: number) => {
 			const roleText = player.previousRoles.length === 0
@@ -172,7 +177,14 @@ export default class Game {
 			'**Final Rolelist**:',
 			codeBlock('', this.players.map(playerMapping).join('\n'))
 		].join('\n'));
-		// TODO: win/loss logs here
+
+		const entity = new GameEntity();
+		entity.setupName = this.setup!.name;
+		entity.winningFaction = data.winningFaction?.name;
+		entity.independentWins = data.independentWins.map(faction => faction.name);
+		entity.guildID = this.channel.guild.id;
+
+		await getRepository(GameEntity).save(entity);
 		this.delete();
 	}
 
@@ -189,6 +201,6 @@ export interface GameSettings {
 
 export interface EndgameCheckData {
 	ended: boolean;
-	winningFaction: Faction | null;
+	winningFaction: Faction | undefined;
 	independentWins: Faction[];
 }

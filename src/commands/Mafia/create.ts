@@ -19,6 +19,11 @@ export default class extends GodfatherCommand {
 		if (this.client.games.has(msg.channel.id)) {
 			throw 'A game of Mafia is already running in this channel.';
 		}
+		// prevent players from joining 2 games simultaneously
+		for (const otherGame of this.client.games.values()) {
+			if (otherGame.players.get(msg.author)) throw `You are already playing another game in ${otherGame.channel} (${otherGame.channel.guild.name})`;
+		}
+
 		const game = new Game(msg.author, msg.channel as TextChannel);
 		game.createdAt = new Date();
 		this.client.games.set(msg.channel.id, game);

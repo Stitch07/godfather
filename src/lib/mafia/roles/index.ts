@@ -1,12 +1,13 @@
 import { basename, extname, parse } from 'path';
 import { scan } from 'fs-nextra';
 import Role from '@mafia/Role';
-import { Constructor } from '@sapphire/utilities';
+import { Constructor, toTitleCase } from '@sapphire/utilities';
+import { Collection } from 'discord.js';
 
 // A map of role names to the constructor of its corresponding role Class
-export const allRoles = new Map<string, Constructor<Role>>();
+export const allRoles = new Collection<string, Constructor<Role>>();
 // A map of role categories to an array of role constructors belonging to that category
-export const roleCategories = new Map<string, Constructor<Role>[]>();
+export const roleCategories = new Collection<string, Constructor<Role>[]>();
 
 export const init = async () => {
 	const scannedFiles = await scan('dist/lib/mafia/roles', {
@@ -23,5 +24,12 @@ export const init = async () => {
 			categoryArray.push(roleClass);
 			roleCategories.set(category, categoryArray);
 		}
+	}
+
+	// add category aliases (RT for Random Town)
+	for (const [category, roles] of roleCategories.entries()) {
+		if (category.split(' ').length !== 2) continue;
+		const alias = category.split(' ').map(word => toTitleCase(word[0])).join('');
+		roleCategories.set(alias, roles);
 	}
 };

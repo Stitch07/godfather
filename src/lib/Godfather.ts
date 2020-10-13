@@ -8,7 +8,7 @@ import { Branding } from './util/utils';
 import { PGSQL_DATABASE_USER, PREFIX } from '@root/config';
 import GuildSettingRepository from './orm/repositories/GuildSettingRepository';
 import Logger from './Logger';
-import GuildSettings from './orm/entities/GuildSettings';
+import GuildSettingsEntity from './orm/entities/GuildSettings';
 import { getCustomRepository } from 'typeorm';
 
 export default class Godfather extends SapphireClient {
@@ -17,7 +17,7 @@ export default class Godfather extends SapphireClient {
 	public setups: SetupStore;
 	public release = Branding.Release.Development;
 	public ownerID: string | undefined = undefined;
-	public settingsCache = new Map<string, GuildSettings>();
+	public settingsCache = new Map<string, GuildSettingsEntity>();
 	public eventLoop!: NodeJS.Timeout;
 	private _version = [1, 0, 0];
 	public constructor() {
@@ -29,16 +29,19 @@ export default class Godfather extends SapphireClient {
 
 		this.setups = new SetupStore(this);
 		this.registerStore(this.setups);
-		this.fetchPrefix = (message: Message) => this.fetchGuildPrefix(message.guild);
+		this.fetchPrefix = async (message: Message) => {
+			if (!message.guild) return [PREFIX, ''];
+			return this.fetchGuildPrefix(message.guild);
+		};
 
 		this.registerUserDirectories();
 	}
 
 	// TODO: configurable prefixes
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	public async fetchGuildPrefix(guild: Guild | null) {
-		if (!guild || String(PGSQL_DATABASE_USER) === '') return PREFIX;
-		const guildSettings: GuildSettings = await getCustomRepository(GuildSettingRepository).ensure(this, guild);
+	public async fetchGuildPrefix(guild: Guild) {
+		if (String(PGSQL_DATABASE_USER) === '') return PREFIX;
+		const guildSettings: GuildSettingsEntity = await getCustomRepository(GuildSettingRepository).ensure(this, guild);
 		return guildSettings.prefix;
 	}
 

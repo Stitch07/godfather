@@ -19,8 +19,9 @@
 		"scope": "typescript",
 		"prefix": "command",
 		"body": [
-			"import { Command, CommandOptions } from '@sapphire/framework';",
+			"import { CommandOptions } from '@sapphire/framework';",
 			"import { ApplyOptions } from '@sapphire/decorators';",
+			"import GodfatherCommand from '@lib/GodfatherCommand';",
 			"import { Message } from 'discord.js';",
 			"",
 			"@ApplyOptions<CommandOptions>({",

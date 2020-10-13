@@ -1,9 +1,13 @@
 import { exec as childProcessExec } from 'child_process';
 import { promisify } from 'util';
 import Player from '@mafia/Player';
-import { isThenable } from '@sapphire/utilities';
+import { isThenable, regExpEsc } from '@sapphire/utilities';
 import { Client } from 'discord.js';
 import { Events } from '@sapphire/framework';
+import { TOKEN } from '@root/config';
+
+const TOKENS = [process.cwd(), TOKEN];
+const sensitiveTokens = new RegExp(TOKENS.map(regExpEsc).join('|'), 'gi');
 
 export namespace Branding {
 	export const PrimaryColor = '#000000';
@@ -40,4 +44,22 @@ export const exec = promisify(childProcessExec);
 
 export function floatPromise(client: Client, promise: Promise<unknown>) {
 	if (isThenable(promise)) promise.catch(error => client.emit(Events.Error, error));
+}
+
+export const clean = (text: string) => text.replace(sensitiveTokens, '「ｒｅｄａｃｔｅｄ」');
+
+/**
+ * Just an easier way of writing (value as T)
+ * @param from The value to cast as
+ */
+export const cast = <T>(from: unknown) => (from as T);
+
+/**
+ * Python's enumerate()
+ * @param array The array to iterate over
+ */
+export function *enumerate <T>(array: readonly T[]): Generator<[number, T]> {
+	for (let i = 0; i < array.length; i++) {
+		yield [i, array[i]];
+	}
 }

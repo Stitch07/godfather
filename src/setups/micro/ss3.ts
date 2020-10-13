@@ -7,4 +7,7 @@ import { ApplyOptions } from '@sapphire/decorators';
 	roles: ['Super Saint', 'Vanilla', 'Mafia Vanilla']
 })
 export default class extends BasicSetup {
+
+	public description = 'Super Saint 3 (https://wiki.mafiascum.net/index.php?title=SS3)';
+
 }

@@ -8,8 +8,7 @@ export default class extends Event<Events.UnknownCommand> {
 		super(context, { event: Events.UnknownCommand });
 	}
 
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	public run(message: Message, command: string) {
+	public async run(message: Message, command: string, prefix: string) {
 		// actions are accepted in DMs only
 		if (message.guild) return;
 
@@ -20,7 +19,9 @@ export default class extends Event<Events.UnknownCommand> {
 		if (!(player.role! instanceof ActionRole)) return;
 
 		if (player.role!.actionPhase !== game.phase) return;
-		// await player.role!.onPmCommand(commandText, ...message.args as string[]);
+		const prefixLess = message.content.slice(prefix.length);
+		const [commandText, ...parameters] = prefixLess.split(' ');
+		await player.role!.onPmCommand(commandText, ...parameters);
 	}
 
 }

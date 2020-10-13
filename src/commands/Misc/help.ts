@@ -32,7 +32,7 @@ export default class extends GodfatherCommand {
 			.setColor(Branding.PrimaryColor)
 			.setAuthor(this.client.user!.username, this.client.user!.displayAvatarURL())
 			.setDescription([
-				`A Discord Bot that automatically hosts games of Mafia. My prefix here is \`${prefix}\``,
+				`A Discord Bot that automatically hosts games of Mafia. My prefix here is \`${Array.isArray(prefix) ? prefix[0] : prefix}\``,
 				`[Support Server](${SUPPORT_SERVER})`
 			].join('\n'))
 			.setFooter(`For information about a specific command, run ${prefix}help <command>.`);

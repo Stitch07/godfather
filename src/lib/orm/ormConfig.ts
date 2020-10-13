@@ -11,7 +11,7 @@ export const config: ConnectionOptions = {
 	password: PGSQL_DATABASE_PASSWORD,
 	database: PGSQL_DATABASE_NAME,
 	entities: [join(__dirname, 'entities/*.js')],
-	migrations: [join(__dirname, 'migrations/*.ts')],
+	migrations: [join(__dirname, 'migrations/*.js')],
 	cli: {
 		entitiesDir: 'src/lib/orm/entities',
 		migrationsDir: 'dist/lib/orm/migrations',

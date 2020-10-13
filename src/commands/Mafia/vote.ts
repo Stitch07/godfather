@@ -6,12 +6,13 @@ import { Message, TextChannel } from 'discord.js';
 @ApplyOptions<CommandOptions>({
 	aliases: ['vtl', 'vt'],
 	description: 'Vote to lynch a player',
-	preconditions: ['GuildOnly', 'GameOnly', 'PlayerOnly', 'AlivePlayerOnly']
+	preconditions: ['GuildOnly', 'GameOnly', 'PlayerOnly', 'AlivePlayerOnly', 'GameStartedOnly']
 })
 export default class extends GodfatherCommand {
 
 	public async run(msg: Message, args: Args) {
-		const target = await args.pick('player');
+		const target = await args.pick('player')
+			.catch(() => { throw 'An invalid player was provided.'; });
 		const { game } = msg.channel as TextChannel;
 
 		const voter = game!.players.get(msg.author)!;
@@ -22,7 +23,6 @@ export default class extends GodfatherCommand {
 		if (hammered) {
 			await game!.hammer(target);
 		}
-		return [];
 	}
 
 }

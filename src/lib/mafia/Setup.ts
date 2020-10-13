@@ -20,6 +20,8 @@ export default class Setup extends BasePiece {
 
 	public roles: string[];
 	public nightStart: boolean;
+	public generatedRoles: Constructor<Role>[] = [];
+	public description!: string;
 	public constructor(context: PieceContext, options: SetupOptions = {}) {
 		super(context, { ...options, name: (options.name ?? context.name).toLowerCase() });
 		options = mergeDefault(DEFAULT_SETUP_OPTIONS, options);
@@ -27,9 +29,8 @@ export default class Setup extends BasePiece {
 		this.nightStart = options.nightStart!;
 	}
 
-	// Returns an iterator of roles, this function is called when actually assigning roles.
 	// Any algorithms used to randomize roles should be handled here.
-	public *generate(): Iterator<Constructor<Role>> {
+	public generate(): void {
 		// noop
 	}
 

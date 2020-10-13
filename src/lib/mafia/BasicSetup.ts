@@ -1,22 +1,67 @@
 import Setup from './Setup';
 import Role from './Role';
 import { shuffle, randomArray } from '@lib/util/utils';
+import yaml = require('js-yaml');
 import { allRoles, roleCategories } from './roles';
 import { Constructor } from '@sapphire/utilities';
 
 export default class BasicSetup extends Setup {
 
-	public *generate(): Iterator<Constructor<Role>> {
+	public generate(): void {
 		const shuffled = shuffle(this.roles);
 		// TODO: category resolving goes here
 		for (const roleName of shuffled) {
-			if (!allRoles.has(roleName)) {
-				// assume category, because ok() should have failed for an invalid category name
-				// TODO: unique roles can only be used once
-				yield randomArray(roleCategories.get(roleName)!);
-			}
-			yield allRoles.get(roleName)!;
+			this.generatedRoles.push(BasicSetup.resolve(roleName));
 		}
 	}
 
+	public static resolve(roleName: string): Constructor<Role> {
+		if (allRoles.has(roleName)) return allRoles.get(roleName)!;
+		else if (roleCategories.has(roleName)) return randomArray(roleCategories.get(roleName)!);
+
+		// Role1 | Role2 (one of these 2)
+		if (/(\w+) ?\| ?(\w+)/.test(roleName)) {
+			const possibleRoles = /(\w+) ?\| ?(\w+)/.exec(roleName)!.slice(1, 3);
+			return this.resolve(randomArray(possibleRoles));
+		}
+
+		throw `Invalid role provided: \`${roleName}\`.`;
+	}
+
+	/**
+	 * Returns a Setup class from a user supplied string
+	 * @param data The setup data the user supplies
+	 */
+	public static create(data: string): BasicSetup {
+		// eslint-disable-next-line @typescript-eslint/init-declarations
+		let setupData: SetupData;
+		const rawData = yaml.safeLoad(data);
+		if (typeof rawData === 'string' && rawData.includes(',')) {
+			setupData = { roles: rawData.split(',').map(role => role.trim()) };
+		} else if (Array.isArray(rawData)) {
+			setupData = { roles: rawData as string[] };
+		} else if (typeof rawData === 'object' && Reflect.has(rawData, 'roles')) {
+			setupData = rawData as SetupData;
+		} else {
+			throw 'Invalid setup format provided.'; // TODO: better error msg
+		}
+
+		for (const role of setupData.roles) {
+			// this will throw if an invalid role was provided
+			BasicSetup.resolve(role);
+		}
+
+		// @ts-ignore this is a hack, but is required
+		const setup = new BasicSetup({ path: '', store: null }, { name: setupData.name ?? 'Custom' });
+		setup.roles = setupData.roles;
+		setup.nightStart = setupData.nightStart ?? false;
+		return setup;
+	}
+
+}
+
+export interface SetupData {
+	name?: string;
+	roles: string[];
+	nightStart?: boolean;
 }

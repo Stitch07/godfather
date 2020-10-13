@@ -10,9 +10,13 @@ class ActionRole extends Role {
 
 	public actionPhase = Phase.NIGHT;
 
+	public constructor(player: Player) {
+		super(player);
+	}
+
 	public async onNight() {
 		const { game } = this.player;
-		const prefix = this.client.fetchGuildPrefix(game.channel.guild);
+		const prefix = await this.client.fetchGuildPrefix(game.channel.guild);
 		let actionText = `It is now night ${game.cycle}. Use the ${prefix}${this.action} command to ${this.actionText}. Use ${prefix}noaction to stay home.\n`;
 		actionText += `${codeBlock('diff', game.players.show({ codeblock: true }))}`;
 		await this.player.user.send(actionText);

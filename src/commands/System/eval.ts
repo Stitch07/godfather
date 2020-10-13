@@ -1,4 +1,5 @@
 import GodfatherCommand from '@lib/GodfatherCommand';
+import { clean } from '@util/utils';
 import { ApplyOptions } from '@sapphire/decorators';
 import { Args, CommandOptions } from '@sapphire/framework';
 import { codeBlock, isThenable } from '@sapphire/utilities';
@@ -16,9 +17,9 @@ export default class extends GodfatherCommand {
 		if (!code.success) throw 'Missing required argument: code';
 
 		const { result, success } = await this.eval(message, code.value, { async: args.getFlags('async') });
-		const output = success
+		const output = clean(success
 			? codeBlock('js', result)
-			: `**ERROR**: ${codeBlock('bash', result)}`;
+			: `**ERROR**: ${codeBlock('bash', result)}`);
 		if (args.getFlags('silent', 's')) return null;
 
 		if (output.length > 2000) {

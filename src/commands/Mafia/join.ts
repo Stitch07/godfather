@@ -16,8 +16,13 @@ export default class extends GodfatherCommand {
 		if (game!.players.find(player => player.user.id === msg.author.id)) {
 			throw 'You have already joined.';
 		}
+		// prevent players from joining 2 games simultaneously
+		for (const otherGame of this.client.games.values()) {
+			if (otherGame.players.get(msg.author)) throw `You are already playing another game in ${otherGame.channel} (${otherGame.channel.guild.name})`;
+		}
 		if (game!.hasStarted) {
 			// do replacements here sometime
+			return;
 		}
 		game!.players.push(new Player(msg.author, game!));
 		return msg.channel.send('✅ Successfully joined.');

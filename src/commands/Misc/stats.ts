@@ -21,7 +21,7 @@ export default class extends GodfatherCommand {
 		return new MessageEmbed()
 			.setColor(Branding.PrimaryColor)
 			.setAuthor(this.client.user!.username, this.client.user!.displayAvatarURL({ format: 'png' }))
-			.setDescription(`To add ${this.client.user!.username} to your server, use the \`${prefix}invite\` command.`)
+			.setDescription(`To add ${this.client.user!.username} to your server, use the \`${Array.isArray(prefix) ? prefix[0] : prefix}invite\` command.`)
 			.addField('Connected To', [
 				`**Servers**: ${generalStatistics.guilds}`,
 				`**Users**: ${generalStatistics.users}`,

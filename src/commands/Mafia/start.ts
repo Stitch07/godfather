@@ -1,9 +1,7 @@
 import { ApplyOptions } from '@sapphire/decorators';
 import GodfatherCommand from '@lib/GodfatherCommand';
-import Role from '@mafia/Role';
 import { Args, CommandOptions } from '@sapphire/framework';
 import { Message, TextChannel } from 'discord.js';
-import { Constructor } from '@sapphire/utilities';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['startgame'],
@@ -18,7 +16,7 @@ export default class extends GodfatherCommand {
 
 		if (game!.hasStarted) throw 'The game has already started!';
 
-		if (setup === '') {
+		if (!game!.setup && setup === '') {
 			// attempt to find a setup
 			// TODO: prompt for multiple setups here
 			const foundSetup = this.client.setups.find(setup => setup.totalPlayers === game?.players.length);
@@ -26,9 +24,9 @@ export default class extends GodfatherCommand {
 			game!.setup = foundSetup!;
 		}
 		const sent = await msg.channel.send(`Chose the setup **${game!.setup!.name}**. Randomizing roles...`);
-		const roleGen = game!.setup!.generate();
+		game!.setup!.generate();
 		for (const player of game!.players) {
-			player.role = new (roleGen.next().value as Constructor<Role>)(player);
+			player.role = new (game!.setup!.generatedRoles.shift()!)(player);
 			await player.sendPM();
 		}
 		await sent.edit('Sent all role PMs!');

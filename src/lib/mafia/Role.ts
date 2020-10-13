@@ -1,6 +1,8 @@
 import Player from '@mafia/Player';
 import Faction from './Faction';
 
+const INNOCENT_FACTIONS = ['Town'];
+
 export interface CanUseActionData {
 	check: boolean;
 	reason?: string;
@@ -24,6 +26,10 @@ abstract class Role {
 		return this.player.game;
 	}
 
+	public get innocence() {
+		return INNOCENT_FACTIONS.includes(this.faction.name);
+	}
+
 	public onDeath() {
 		// noop
 	}
@@ -37,7 +43,7 @@ abstract class Role {
 	}
 
 	// Role categories such as Random Town, Neutral Evil
-	public static categories: string[] = [];
+	public static categories: string[] = ['Any'];
 
 	// Docs used in roleinfo command
 	public static documentation = '';

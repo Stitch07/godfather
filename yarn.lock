@@ -1128,6 +1128,10 @@
   dependencies:
     "@discordjs/collection" "^0.1.6"
 
+"@sapphire/ratelimits@sapphire-project/utilities#build-ratelimits":
+  version "0.0.1"
+  resolved "https://codeload.github.com/sapphire-project/utilities/tar.gz/7ecedf72fe1f7658630de420ab80d43653c3ccd5"
+
 "@sapphire/utilities@^1.0.1":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@sapphire/utilities/-/utilities-1.0.1.tgz#4f26d69a9491b521da4587a0aecb608bd6b1fff1"
@@ -1236,6 +1240,11 @@
   dependencies:
     jest-diff "^25.2.1"
     pretty-format "^25.2.1"
+
+"@types/js-yaml@^3.12.5":
+  version "3.12.5"
+  resolved "https://registry.yarnpkg.com/@types/js-yaml/-/js-yaml-3.12.5.tgz#136d5e6a57a931e1cce6f9d8126aa98a9c92a6bb"
+  integrity sha512-JCcp6J0GV66Y4ZMDAQCXot4xprYB+Zfd3meK9+INSJeVZwJmHAW30BBEEkPzXswMXuiyReUGOP3GxrADc9wPww==
 
 "@types/json-schema@^7.0.3":
   version "7.0.6"
