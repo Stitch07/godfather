@@ -16,12 +16,18 @@ export default class extends Event<Events.UnknownCommand> {
 		if (!game) return;
 
 		const player = game.players.get(message.author)!;
-		if (!(player.role! instanceof ActionRole)) return;
+		if (!player.isAlive) return;
+		if (!Reflect.has(player.role, 'action')) return;
 
-		if (player.role!.actionPhase !== game.phase) return;
+		if ((player.role! as ActionRole).actionPhase !== game.phase) return;
 		const prefixLess = message.content.slice(prefix.length);
 		const [commandText, ...parameters] = prefixLess.split(' ');
-		await player.role!.onPmCommand(commandText, ...parameters);
+		try {
+			await player.role!.onPmCommand(message, commandText, ...parameters);
+		} catch (error) {
+			if (typeof error === 'string') return message.channel.send(error);
+			this.client.logger.error(error);
+		}
 	}
 
 }

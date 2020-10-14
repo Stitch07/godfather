@@ -1,4 +1,5 @@
 import Player from '@mafia/Player';
+import { Message } from 'discord.js';
 import Faction from './Faction';
 
 const INNOCENT_FACTIONS = ['Town'];
@@ -12,7 +13,6 @@ abstract class Role {
 
 	public name = '';
 	public description = '';
-	public readonly voteWeight = 1;
 	public constructor(public player: Player) {
 	}
 
@@ -30,11 +30,20 @@ abstract class Role {
 		return INNOCENT_FACTIONS.includes(this.faction.name);
 	}
 
-	public onDeath() {
+	// eslint-disable-next-line @typescript-eslint/class-literal-property-style
+	public get voteWeight() {
+		return 1;
+	}
+
+	public async onDeath() {
 		// noop
 	}
 
-	public onNight() {
+	public async onNight() {
+		// noop
+	}
+
+	public async onDay() {
 		// noop
 	}
 
@@ -51,9 +60,10 @@ abstract class Role {
 }
 
 interface Role {
-	onPmCommand(...args: string[]): void;
-	onNight(): void;
-	onDeath(): void;
+	onPmCommand(message: Message, command: string, ...args: string[]): void;
+	onNight(): Promise<void>;
+	onDay(): Promise<void>;
+	onDeath(): Promise<void>;
 	faction: Faction;
 }
 

@@ -1,11 +1,11 @@
 import '@lib/extenders';
 
-import { SapphireClient } from '@sapphire/framework';
+import { LogLevel, SapphireClient } from '@sapphire/framework';
 import { Collection, Guild, Message } from 'discord.js';
 import Game from '@mafia/Game';
 import SetupStore from '@mafia/SetupStore';
 import { Branding } from './util/utils';
-import { PGSQL_DATABASE_USER, PREFIX } from '@root/config';
+import { PGSQL_DATABASE_USER, PREFIX, PRODUCTION } from '@root/config';
 import GuildSettingRepository from './orm/repositories/GuildSettingRepository';
 import Logger from './Logger';
 import GuildSettingsEntity from './orm/entities/GuildSettings';
@@ -23,7 +23,8 @@ export default class Godfather extends SapphireClient {
 	public constructor() {
 		super({
 			logger: {
-				instance: new Logger()
+				instance: new Logger(),
+				level: PRODUCTION ? LogLevel.Info : LogLevel.Trace
 			}
 		});
 

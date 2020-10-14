@@ -21,7 +21,7 @@ export const init = async () => {
 		// append to category array here
 		for (const category of roleClass.categories as string[]) {
 			const categoryArray = roleCategories.get(category) ?? ([] as Array<Constructor<Role>>);
-			categoryArray.push(roleClass);
+			if (!categoryArray.includes(roleClass)) categoryArray.push(roleClass);
 			roleCategories.set(category, categoryArray);
 		}
 	}

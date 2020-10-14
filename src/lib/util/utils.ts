@@ -63,3 +63,13 @@ export function *enumerate <T>(array: readonly T[]): Generator<[number, T]> {
 		yield [i, array[i]];
 	}
 }
+
+/**
+ * Removes an element from an array
+ * @param array The array to modify
+ * @param element A callback returning the element to remove
+ */
+export const remove = <T>(array: T[], element: (value: T, index?: number, obj?: T[]) => unknown) => {
+	const index = array.findIndex(element);
+	if (index !== -1) array.splice(index, 1);
+};

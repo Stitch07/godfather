@@ -16,7 +16,6 @@ export default class extends GodfatherCommand {
 
 		if (unvoted) {
 			await msg.reactions.add('✅');
-			return [];
 		}
 		return msg.channel.send('No votes to remove!');
 	}

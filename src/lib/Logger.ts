@@ -2,7 +2,12 @@ import { PRODUCTION } from '@root/config';
 import { Logger, LogLevel } from '@sapphire/framework';
 import { createLogger, Logger as WinstonLogger, format, transports } from 'winston';
 
-const colorizer = format.colorize();
+const colorizer = format.colorize({
+	colors: {
+		info: 'blue',
+		debug: 'magenta'
+	}
+});
 
 export default class implements Logger {
 

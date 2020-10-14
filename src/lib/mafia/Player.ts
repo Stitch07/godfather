@@ -9,7 +9,7 @@ export default class Player {
 	public cleaned = false;
 	public deathReason = '';
 	public previousRoles = [] as Role[];
-	public role!: Role;
+	private _role!: Role;
 	public constructor(public user: User, public game: Game) {
 	}
 
@@ -44,6 +44,15 @@ export default class Player {
 			return game.players[Number(arg) - 1];
 		}
 		return null;
+	}
+
+	public get role() {
+		return this._role;
+	}
+
+	public set role(role: Role) {
+		if (this.role) this.previousRoles.push(this.role);
+		this._role = role;
 	}
 
 }

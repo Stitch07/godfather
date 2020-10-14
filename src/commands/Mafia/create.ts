@@ -1,6 +1,7 @@
 import { ApplyOptions } from '@sapphire/decorators';
 import GodfatherCommand from '@lib/GodfatherCommand';
 import Game from '@mafia/Game';
+import { cast } from '@util/utils';
 import { Message, TextChannel } from 'discord.js';
 import { CommandOptions } from '@sapphire/framework';
 
@@ -24,7 +25,7 @@ export default class extends GodfatherCommand {
 			if (otherGame.players.get(msg.author)) throw `You are already playing another game in ${otherGame.channel} (${otherGame.channel.guild.name})`;
 		}
 
-		const game = new Game(msg.author, msg.channel as TextChannel);
+		const game = new Game(msg.author, cast<TextChannel>(msg.channel));
 		game.createdAt = new Date();
 		this.client.games.set(msg.channel.id, game);
 		return msg.channel.send(`Started a game of Mafia in <#${msg.channel.id}> hosted by **${msg.author.tag}**.`);

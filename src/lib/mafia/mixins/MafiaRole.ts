@@ -1,10 +1,10 @@
 import Role from '@mafia/Role';
 import MafiaFaction from '@mafia/factions/Mafia';
-import { Constructor } from '@sapphire/utilities';
 
-export default function MafiaRole<TBaseRole extends Constructor<Role>>(BaseRole: TBaseRole) {
+export default function MafiaRole<TBaseRole extends typeof Role>(BaseRole: TBaseRole) {
 
-	return class MafiaRole extends BaseRole {
+	// @ts-ignore tsc bug
+	class MafiaRole extends BaseRole {
 
 		public faction = new MafiaFaction();
 
@@ -17,14 +17,12 @@ export default function MafiaRole<TBaseRole extends Constructor<Role>>(BaseRole:
 					const otherMafia = this.game.players.find(player => player.isAlive && player.role!.faction.name === 'Mafia' && !['Godfather', 'Goon'].includes(player.role!.name));
 					if (!otherMafia) return;
 
-					otherMafia.previousRoles.push(otherMafia.role!);
 					// otherMafia.role = new Goon()
 					await otherMafia.user.send('You have been promoted to a Goon!');
 					await otherMafia.sendPM();
 					return;
 				}
 
-				goon.previousRoles.push(goon.role!);
 				// goon.role = new Godfather()
 				await goon.user.send('You have been promoted to the Godfather!');
 				await goon.sendPM();
@@ -42,6 +40,9 @@ export default function MafiaRole<TBaseRole extends Constructor<Role>>(BaseRole:
 			return super.onDeath();
 		}
 
-	};
+	}
+
+	MafiaRole.categories.push('Random Mafia');
+	return MafiaRole;
 
 }

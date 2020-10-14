@@ -11,14 +11,15 @@ import { Duration } from '@klasa/duration';
 import { codeBlock } from '@sapphire/utilities';
 import GameEntity from '../orm/entities/Game';
 import { getRepository } from 'typeorm';
+import ActionRole from './mixins/ActionRole';
 
 const MAX_DELAY = 15 * 60 * 1000; // 15 minutes
 
 export const enum Phase {
-	PREGAME = 1,
-	STANDBY,
-	DAY,
-	NIGHT
+	Pregame = 1,
+	Standby,
+	Day,
+	Night
 }
 
 export default class Game {
@@ -29,20 +30,31 @@ export default class Game {
 	public votes: VoteManager;
 	public nightActions: NightActionsManager;
 	public settings: GameSettings;
+	/**
+	 * When the current phase ends at
+	 */
 	public phaseEndAt?: Date = undefined;
 	public cycle = 0;
 	public setup?: Setup = undefined;
+	/**
+	 * When this game was created at - used for timing out inactive lobbies
+	 */
 	public createdAt!: Date;
+	/**
+	 * An array of user IDs of muted players
+	 */
+	public permissionOverwrites: string[] = [];
 	public constructor(host: User, public channel: TextChannel) {
 		this.client = channel.client as Godfather;
-		this.phase = Phase.PREGAME;
+		this.phase = Phase.Pregame;
 		this.players = new PlayerManager(this);
 		this.players.push(new Player(host, this));
 		this.votes = new VoteManager(this);
 		this.nightActions = new NightActionsManager(this);
 		this.settings = {
 			dayDuration: 5 * 60,
-			nightDuration: 2 * 60
+			nightDuration: 2 * 60,
+			overwritePermissions: true
 		};
 	}
 
@@ -53,7 +65,7 @@ export default class Game {
 			return;
 		}
 
-		this.phase = Phase.STANDBY;
+		this.phase = Phase.Standby;
 		const deadPlayers = await this.nightActions.resolve();
 		if (deadPlayers.length > 0) {
 			const deadText = [];
@@ -67,13 +79,20 @@ export default class Game {
 		}
 		// start voting phase
 		this.nightActions.reset();
-		this.phase = Phase.DAY;
+		this.phase = Phase.Day;
 		this.cycle++;
 		const alivePlayers = this.players.filter(player => player.isAlive);
 		// populate voting cache
 		this.votes.reset();
 		this.phaseEndAt = new Date();
 		this.phaseEndAt.setSeconds(this.phaseEndAt.getSeconds() + (this.settings.dayDuration));
+
+		// send all day action pms
+		for (const player of this.players) {
+			if (player.isAlive && player.role.canUseAction().check && (player.role as ActionRole).actionPhase === Phase.Day) {
+				await player.role.onDay();
+			}
+		}
 
 		await this.channel.send([
 			`Day **${this.cycle}** will last ${Duration.toNow(this.phaseEndAt)}`,
@@ -88,26 +107,34 @@ export default class Game {
 			return;
 		}
 
-		this.phase = Phase.STANDBY;
+		this.phase = Phase.Standby;
 		this.votes.reset();
 		this.phaseEndAt = new Date();
 		this.phaseEndAt.setSeconds(this.phaseEndAt.getSeconds() + this.settings.nightDuration);
 
 		await this.channel.send(`Night **${this.cycle}** will last ${Duration.toNow(this.phaseEndAt)}. Send in your actions quickly!`);
-		for (const player of this.players.filter(player => player.role!.canUseAction().check)) {
+		for (const player of this.players.filter(player => player.isAlive && player.role!.canUseAction().check && (player.role! as ActionRole).actionPhase === Phase.Night)) {
 			await player.role!.onNight();
 		}
 
-		this.phase = Phase.NIGHT;
+		this.phase = Phase.Night;
 	}
 
 	public async hammer(player: Player) {
-		if (this.phase === Phase.STANDBY) return;
+		if (this.phase === Phase.Standby) return;
 
 		// locks against multiple calls to hammer()
-		this.phase = Phase.STANDBY;
+		this.phase = Phase.Standby;
 		await this.channel.send(`${player.user.tag} was hammered. They were a **${player.role!.display}**.`);
 		await player.kill(`lynched d${this.cycle}`);
+
+		// mute dead player if enabled
+		if (this.overwritePermissions) {
+			await this.channel.updateOverwrite(player.user, {
+				SEND_MESSAGES: false
+			});
+			this.permissionOverwrites.push(player.user.id);
+		}
 
 		await this.startNight();
 	}
@@ -121,9 +148,9 @@ export default class Game {
 			}
 		}
 
-		if (this.phase === Phase.STANDBY) return;
+		if (this.phase === Phase.Standby) return;
 		if (this.phaseEndAt && Date.now() > this.phaseEndAt.getTime()) {
-			if (this.phase === Phase.DAY) {
+			if (this.phase === Phase.Day) {
 				await this.channel.send('Nobody was lynched!');
 				return this.startNight();
 			}
@@ -137,7 +164,7 @@ export default class Game {
 	}
 
 	public get hasStarted(): boolean {
-		return this.phase !== Phase.PREGAME;
+		return this.phase !== Phase.Pregame;
 	}
 
 	public get majorityVotes(): number {
@@ -185,11 +212,22 @@ export default class Game {
 		entity.guildID = this.channel.guild.id;
 
 		await getRepository(GameEntity).save(entity);
-		this.delete();
+		await this.delete();
 	}
 
-	public delete(): void {
+	public async delete() {
+		// free all permission overwrites
+		if (this.overwritePermissions) {
+			for (const userID of this.permissionOverwrites) {
+				const overwrite = this.channel.permissionOverwrites.find(permission => permission.type === 'member' && permission.id === userID);
+				if (overwrite) await overwrite.update({ SEND_MESSAGES: true });
+			}
+		}
 		this.client.games.delete(this.channel.id);
+	}
+
+	public get overwritePermissions() {
+		return this.settings.overwritePermissions && this.channel.permissionsFor(this.client.user!)?.has('MANAGE_CHANNELS');
 	}
 
 }
@@ -197,6 +235,7 @@ export default class Game {
 export interface GameSettings {
 	dayDuration: number;
 	nightDuration: number;
+	overwritePermissions: boolean;
 }
 
 export interface EndgameCheckData {

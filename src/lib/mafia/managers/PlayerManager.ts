@@ -39,26 +39,26 @@ export default class PlayerManager extends Array<Player> {
 		}
 
 		// modkill if nobody is replacing
-		const phaseStr = this.game.phase === Phase.DAY ? 'd' : 'n';
+		const phaseStr = this.game.phase === Phase.Day ? 'd' : 'n';
 		await this.game.channel.send(`${player.user.tag} was modkilled. They were a *${player.role!.display}*.`);
 		player.kill(`modkilled ${phaseStr}${this.game.cycle}`);
 		return true;
 	}
 
 	public show(options: PlayerManagerShowOptions = { codeblock: false, showReplacements: true }): string {
-		const playerList = [`**Players: ${this.length}**`];
+		const playerList = options.codeblock ? [] : [`**Players: ${this.length}**`];
 		for (const [n, player] of this.entries()) {
 			let playerName = '';
 			if (options.codeblock) {
 				if (player.isAlive) {
-					playerName = `+ ${n + 1}. ${player.user.tag}`;
+					playerName = `+ ${n + 1}. ${player.user.tag} ${this.getPlayerFlags(player)}`;
 				} else {
-					playerName = `- ${n + 1}. ${player.user.tag} (${player.role!.display}; ${player.deathReason})`;
+					playerName = `- ${n + 1}. ${player.user.tag} ${this.getPlayerFlags(player)}`;
 				}
 			} else if (player.isAlive) {
-				playerName = `${n + 1}. ${player.user.tag}`;
+				playerName = `${n + 1}. ${player.user.tag} ${this.getPlayerFlags(player)}`;
 			} else {
-				playerName = `${n + 1}. ~~${player.user.tag}~~ (${player.role!.display}; ${player.deathReason})`;
+				playerName = `${n + 1}. ~~${player.user.tag}~~ ${this.getPlayerFlags(player)}`;
 			}
 			playerList.push(playerName);
 
@@ -69,6 +69,13 @@ export default class PlayerManager extends Array<Player> {
 		}
 
 		return playerList.join('\n');
+	}
+
+	private getPlayerFlags(player: Player) {
+		const flags = [];
+		if (!player.isAlive) flags.push(player.role.display, player.deathReason);
+		if (player.role.name === 'Mayor' && Reflect.get(player.role, 'hasRevealed') === true) flags.push('Mayor');
+		return flags.length ? `(${flags.join('; ')})` : '';
 	}
 
 }

@@ -1,5 +1,5 @@
 import ActionRole from '@mafia/mixins/ActionRole';
-import NightActionsManager, { NightActionCommand } from '@mafia/managers/NightActionsManager';
+import NightActionsManager, { NightActionCommand, NightActionPriority } from '@mafia/managers/NightActionsManager';
 import Player from '@mafia/Player';
 import Townie from '../../mixins/Townie';
 
@@ -9,12 +9,14 @@ class Cop extends ActionRole {
 
 	public action = NightActionCommand.Check;
 	public actionGerund = 'checking';
-	public actionText = 'check a player.';
+	public actionText = 'check a player';
 	public flags = {
 		canBlock: true,
 		canTransport: true,
 		canVisit: true
 	};
+
+	public priority = NightActionPriority.COP;
 
 	public async tearDown(actions: NightActionsManager, target: Player) {
 		const innocence = this.innocenceModifier(target.role.innocence);

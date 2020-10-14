@@ -15,6 +15,7 @@ export default class extends GodfatherCommand {
 		const { game } = msg.channel as TextChannel;
 
 		if (game!.hasStarted) throw 'The game has already started!';
+		if (game!.setup && game!.setup.totalPlayers !== game!.players.length) throw `The setup **${game!.setup.name}** requires ${game!.setup.totalPlayers} players.`;
 
 		if (!game!.setup && setup === '') {
 			// attempt to find a setup

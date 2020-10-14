@@ -28,8 +28,10 @@
 			"\tpreconditions: []",
 			"})",
 			"export default class extends GodfatherCommand {",
+			"",
 			"\tpublic async run(message: Message) {",
 			"\t}",
+			"",
 			"}",
 			""
 		],
