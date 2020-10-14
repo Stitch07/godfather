@@ -1,6 +1,7 @@
 import Player from '@mafia/Player';
 import { Message } from 'discord.js';
 import Faction from './Faction';
+import { Defense } from './managers/NightActionsManager';
 
 const INNOCENT_FACTIONS = ['Town'];
 
@@ -28,6 +29,10 @@ abstract class Role {
 
 	public get innocence() {
 		return INNOCENT_FACTIONS.includes(this.faction.name);
+	}
+
+	public get defense() {
+		return Defense.None;
 	}
 
 	// eslint-disable-next-line @typescript-eslint/class-literal-property-style

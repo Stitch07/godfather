@@ -25,9 +25,9 @@ export default class extends GodfatherCommand {
 			game!.setup = foundSetup!;
 		}
 		const sent = await msg.channel.send(`Chose the setup **${game!.setup!.name}**. Randomizing roles...`);
-		game!.setup!.generate();
+		const generatedRoles = game!.setup!.generate();
 		for (const player of game!.players) {
-			player.role = new (game!.setup!.generatedRoles.shift()!)(player);
+			player.role = new (generatedRoles.shift()!)(player);
 			await player.sendPM();
 		}
 		await sent.edit('Sent all role PMs!');

@@ -59,12 +59,6 @@ export default class Game {
 	}
 
 	public async startDay() {
-		const winCheck = this.checkEndgame();
-		if (winCheck.ended) {
-			await this.end(winCheck);
-			return;
-		}
-
 		this.phase = Phase.Standby;
 		const deadPlayers = await this.nightActions.resolve();
 		if (deadPlayers.length > 0) {
@@ -77,6 +71,13 @@ export default class Game {
 			}
 			await this.channel.send(deadText.join('\n'));
 		}
+
+		const winCheck = this.checkEndgame();
+		if (winCheck.ended) {
+			await this.end(winCheck);
+			return;
+		}
+
 		// start voting phase
 		this.nightActions.reset();
 		this.phase = Phase.Day;
@@ -127,14 +128,6 @@ export default class Game {
 		this.phase = Phase.Standby;
 		await this.channel.send(`${player.user.tag} was hammered. They were a **${player.role!.display}**.`);
 		await player.kill(`lynched d${this.cycle}`);
-
-		// mute dead player if enabled
-		if (this.overwritePermissions) {
-			await this.channel.updateOverwrite(player.user, {
-				SEND_MESSAGES: false
-			});
-			this.permissionOverwrites.push(player.user.id);
-		}
 
 		await this.startNight();
 	}

@@ -16,11 +16,10 @@ export const DEFAULT_SETUP_OPTIONS = {
 	roles: [] as string[]
 };
 
-export default class Setup extends BasePiece {
+export default abstract class Setup extends BasePiece {
 
 	public roles: string[];
 	public nightStart: boolean;
-	public generatedRoles: Constructor<Role>[] = [];
 	public description!: string;
 	public constructor(context: PieceContext, options: SetupOptions = {}) {
 		super(context, { ...options, name: (options.name ?? context.name).toLowerCase() });
@@ -30,9 +29,7 @@ export default class Setup extends BasePiece {
 	}
 
 	// Any algorithms used to randomize roles should be handled here.
-	public generate(): void {
-		// noop
-	}
+	public abstract generate(): Constructor<Role>[];
 
 	// ok() is called while loading the setup, to check if the setup is functional
 	// checks for exe with no townies/single jester setups are handled here

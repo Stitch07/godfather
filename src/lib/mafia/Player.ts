@@ -36,6 +36,14 @@ export default class Player {
 		this.isAlive = false;
 		this.deathReason = reason;
 
+		// mute dead people
+		if (this.game.overwritePermissions) {
+			await this.game.channel.updateOverwrite(this.user, {
+				SEND_MESSAGES: false
+			});
+			this.game.permissionOverwrites.push(this.user.id);
+		}
+
 		await this.role!.onDeath();
 	}
 

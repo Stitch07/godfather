@@ -7,12 +7,15 @@ import { Constructor } from '@sapphire/utilities';
 
 export default class BasicSetup extends Setup {
 
-	public generate(): void {
+	public generate() {
+		const generatedRoles = [];
 		const shuffled = shuffle(this.roles);
 		// TODO: category resolving goes here
 		for (const roleName of shuffled) {
-			this.generatedRoles.push(BasicSetup.resolve(roleName));
+			generatedRoles.push(BasicSetup.resolve(roleName));
 		}
+
+		return generatedRoles;
 	}
 
 	public static resolve(roleName: string): Constructor<Role> {

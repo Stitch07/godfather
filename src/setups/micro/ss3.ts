@@ -4,7 +4,7 @@ import { ApplyOptions } from '@sapphire/decorators';
 
 @ApplyOptions<SetupOptions>({
 	name: 'ss3',
-	roles: ['Super Saint', 'Vanilla', 'Mafia Vanilla']
+	roles: ['Super Saint', 'Vanilla', 'Goon']
 })
 export default class extends BasicSetup {
 

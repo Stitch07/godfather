@@ -31,7 +31,7 @@ class ActionRole extends Role {
 		await this.player.user.send(actionText);
 	}
 
-	public onPmCommand(message: Message, command: string, ...args: string[]) {
+	public async onPmCommand(message: Message, command: string, ...args: string[]) {
 		// day commands use a completely different action flow
 		let { check, reason } = this.canUseAction();
 		if (!check) throw `You cannot use your action. ${reason}`;
@@ -46,7 +46,7 @@ class ActionRole extends Role {
 
 		remove(this.game.nightActions, action => action.actor === this.player);
 
-		this.player.game.nightActions.push({
+		await this.player.game.nightActions.addAction({
 			action: this.action,
 			actor: this.player,
 			target,
@@ -63,17 +63,17 @@ class ActionRole extends Role {
 	}
 
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	public async setUp(actions: NightActionsManager, target?: Player) {
+	public async setUp(actions: NightActionsManager, target?: Player): Promise<any> {
 		// noop
 	}
 
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	public async runAction(actions: NightActionsManager, target?: Player) {
+	public async runAction(actions: NightActionsManager, target?: Player): Promise<any> {
 		// noop
 	}
 
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	public async tearDown(actions: NightActionsManager, target?: Player) {
+	public async tearDown(actions: NightActionsManager, target?: Player): Promise<any> {
 		// noop
 	}
 

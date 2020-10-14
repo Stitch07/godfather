@@ -1,6 +1,6 @@
 import Player from '@mafia/Player';
 import DefaultMap from '@util/DefaultMap';
-import Game from '@mafia/Game';
+import Game, { Phase } from '@mafia/Game';
 import ActionRole from '@mafia/mixins/ActionRole';
 
 export default class NightActionsManager extends Array<NightAction> {
@@ -9,6 +9,12 @@ export default class NightActionsManager extends Array<NightAction> {
 	public framedPlayers: Player[] = [];
 	public constructor(public game: Game) {
 		super();
+	}
+
+	public async addAction(action: NightAction) {
+		const possibleActions = this.game.players.filter(player => player.role.canUseAction().check && Reflect.get(player.role, 'actionPhase') === Phase.Night);
+		this.push(action);
+		if (this.length <= possibleActions.length) await this.game.startDay();
 	}
 
 	public async resolve(): Promise<Player[]> {
@@ -22,7 +28,7 @@ export default class NightActionsManager extends Array<NightAction> {
 		for (const { action, actor, target, flags } of this) {
 			if (action === undefined) continue;
 			await (actor.role! as ActionRole).runAction(this, target);
-			if (actor !== target && flags.canVisit) {
+			if (actor !== target && flags?.canVisit) {
 				// visit player here
 			}
 		}
@@ -35,7 +41,10 @@ export default class NightActionsManager extends Array<NightAction> {
 		for (const [playerID, record] of this.record.entries()) {
 			if (record.get('nightkill').result) {
 				const deadPlayer = this.game.players.find(player => player.user.id === playerID);
-				deadPlayers.push(deadPlayer!);
+				if (deadPlayer) {
+					deadPlayer.kill(`killed N${this.game.cycle}`);
+					deadPlayers.push(deadPlayer!);
+				}
 			}
 		}
 		return deadPlayers;
@@ -60,6 +69,17 @@ export class NightRecord extends DefaultMap<string, DefaultMap<string, NightReco
 		super(new DefaultMap(DEFAULT_NIGHT_ENTRY));
 	}
 
+	public setAction(targetID: string, recordEntry: string, item: NightRecordEntry) {
+		const record = this.get(targetID);
+		const entry = record.get(recordEntry);
+		entry.result = item.result;
+		if (item.type) entry.type = item.type;
+		for (const player of item.by) entry.by.push(player);
+		// set all values back in
+		record.set(recordEntry, entry);
+		this.set(targetID, record);
+	}
+
 }
 
 export interface NightAction {
@@ -67,7 +87,7 @@ export interface NightAction {
 	actor: Player;
 	priority: NightActionPriority;
 	target?: Player;
-	flags: {
+	flags?: {
 		canBlock: boolean;
 		canTransport: boolean;
 		canVisit: boolean;
@@ -77,11 +97,21 @@ export interface NightAction {
 export interface NightRecordEntry {
 	result: boolean;
 	by: Player[];
+	type?: Attack;
 }
 
 export const enum NightActionCommand {
 	Shoot = 'shoot',
 	Check = 'check'
+}
+
+export const enum Attack {
+	Basic
+}
+
+export const enum Defense {
+	None,
+	Basic
 }
 
 export enum NightActionPriority {
@@ -93,7 +123,7 @@ export enum NightActionPriority {
 	// modify night actions directly
 	ESCORT = 1,
 	TRANSPORTER = 1,
-	SHOOTER = 2,  // godfather/goon/vigilante
+	Shooter = 2,  // godfather/goon/vigilante
 	SERIAL_KILLER = 2,
 	// healers always act after shooters
 	DOCTOR = 3,
