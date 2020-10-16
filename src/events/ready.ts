@@ -1,4 +1,4 @@
-import { PGSQL_DATABASE_USER, PREFIX } from '@root/config';
+import { PGSQL_ENABLED, PREFIX } from '@root/config';
 import { connect } from '@root/lib/orm/ormConfig';
 import { floatPromise } from '@root/lib/util/utils';
 import { Event, Events, PieceContext } from '@sapphire/framework';
@@ -20,7 +20,7 @@ export default class extends Event<Events.Ready> {
 				name: `${PREFIX}help`
 			}
 		});
-		if (String(PGSQL_DATABASE_USER) !== '') floatPromise(this.client, connect());
+		if (PGSQL_ENABLED) floatPromise(this.client, connect());
 
 		// start event loop
 		this.client.eventLoop = setInterval(async () => {

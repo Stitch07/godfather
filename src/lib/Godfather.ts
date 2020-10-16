@@ -5,7 +5,7 @@ import { Collection, Guild, Message } from 'discord.js';
 import Game from '@mafia/Game';
 import SetupStore from '@mafia/SetupStore';
 import { Branding } from './util/utils';
-import { PGSQL_DATABASE_USER, PREFIX, PRODUCTION } from '@root/config';
+import { PGSQL_ENABLED, PREFIX, PRODUCTION } from '@root/config';
 import GuildSettingRepository from './orm/repositories/GuildSettingRepository';
 import Logger from './Logger';
 import GuildSettingsEntity from './orm/entities/GuildSettings';
@@ -41,7 +41,7 @@ export default class Godfather extends SapphireClient {
 	// TODO: configurable prefixes
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	public async fetchGuildPrefix(guild: Guild) {
-		if (String(PGSQL_DATABASE_USER) === '') return PREFIX;
+		if (!PGSQL_ENABLED) return PREFIX;
 		const guildSettings: GuildSettingsEntity = await getCustomRepository(GuildSettingRepository).ensure(this, guild);
 		return guildSettings.prefix;
 	}

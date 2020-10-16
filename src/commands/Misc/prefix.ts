@@ -4,7 +4,7 @@ import { Args, CommandOptions } from '@sapphire/framework';
 import { ApplyOptions } from '@sapphire/decorators';
 import { Message } from 'discord.js';
 import { getCustomRepository } from 'typeorm';
-import { PGSQL_DATABASE_USER } from '@root/config';
+import { PGSQL_ENABLED } from '@root/config';
 
 @ApplyOptions<CommandOptions>({
 	preconditions: ['GuildOnly', 'AdminOnly']
@@ -25,7 +25,7 @@ export default class extends GodfatherCommand {
 	}
 
 	public onLoad() {
-		if (String(PGSQL_DATABASE_USER) === '') {
+		if (!PGSQL_ENABLED) {
 			this.enabled = false;
 			// TODO: remove this when sapphire underps it
 			this.store.delete(this.name);

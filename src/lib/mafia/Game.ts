@@ -12,6 +12,7 @@ import { codeBlock } from '@sapphire/utilities';
 import GameEntity from '../orm/entities/Game';
 import { getRepository } from 'typeorm';
 import ActionRole from './mixins/ActionRole';
+import { PGSQL_ENABLED } from '@root/config';
 
 const MAX_DELAY = 15 * 60 * 1000; // 15 minutes
 
@@ -198,13 +199,15 @@ export default class Game {
 			codeBlock('', this.players.map(playerMapping).join('\n'))
 		].join('\n'));
 
-		const entity = new GameEntity();
-		entity.setupName = this.setup!.name;
-		entity.winningFaction = data.winningFaction?.name;
-		entity.independentWins = data.independentWins.map(faction => faction.name);
-		entity.guildID = this.channel.guild.id;
+		if (PGSQL_ENABLED) {
+			const entity = new GameEntity();
+			entity.setupName = this.setup!.name;
+			entity.winningFaction = data.winningFaction?.name;
+			entity.independentWins = data.independentWins.map(faction => faction.name);
+			entity.guildID = this.channel.guild.id;
+			await getRepository(GameEntity).save(entity);
+		}
 
-		await getRepository(GameEntity).save(entity);
 		await this.delete();
 	}
 
