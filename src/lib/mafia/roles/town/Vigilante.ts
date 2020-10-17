@@ -41,7 +41,7 @@ class Vigilante extends Shooter {
 			return this.player.user.send('Your target was too strong to kill!');
 		}
 
-		if (target.role.innocence) {
+		if (target.role.faction.name == 'Town') {
 			this.guilt = true;
 		}
 		return target.user.send('You were shot by a Vigilante. You have died!');
