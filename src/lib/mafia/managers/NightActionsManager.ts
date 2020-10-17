@@ -14,7 +14,7 @@ export default class NightActionsManager extends Array<NightAction> {
 	public async addAction(action: NightAction) {
 		const possibleActions = this.game.players.filter(player => player.role.canUseAction().check && Reflect.get(player.role, 'actionPhase') === Phase.Night);
 		this.push(action);
-		if (this.length <= possibleActions.length) await this.game.startDay();
+		if (this.length == possibleActions.length) await this.game.startDay();
 	}
 
 	public async resolve(): Promise<Player[]> {
