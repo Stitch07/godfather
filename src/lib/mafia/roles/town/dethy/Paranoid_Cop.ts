@@ -1,4 +1,4 @@
-import Townie from "@root/lib/mafia/mixins/Townie";
+import Townie from "@mafia/mixins/Townie";
 import Cop from "../Cop";
 
 // @ts-ignore
@@ -6,11 +6,11 @@ class Paranoid_Cop extends Cop {
 
 	public name = 'Paranoid Cop';
 
-	get displayName() {
+	get display() {
 		return 'Cop';
 	}
 
-	innocenceModifer(innocence: boolean) {
+	public innocenceModifer(innocence: boolean) {
 		return false;
 	}
 

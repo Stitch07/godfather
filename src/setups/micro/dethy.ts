@@ -8,6 +8,6 @@ import { ApplyOptions } from '@sapphire/decorators';
 })
 export default class extends BasicSetup {
 
-	public description = 'not done';
+	public description = '4 cops, only one normal, must find the mafia among them';
 
 }
