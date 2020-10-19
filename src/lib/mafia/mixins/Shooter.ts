@@ -5,7 +5,7 @@ import ActionRole from './ActionRole';
 export default class Shooter extends ActionRole {
 
 	public action = NightActionCommand.Shoot;
-	public actionText = 'shoot a plater';
+	public actionText = 'shoot a player';
 	public actionGerund = 'shooting';
 	public priority = NightActionPriority.Shooter;
 	public bullets = Infinity;
