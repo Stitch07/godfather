@@ -1,16 +1,17 @@
-import Townie from "@mafia/mixins/Townie";
-import Cop from "../Cop";
+import Townie from '@mafia/mixins/Townie';
+import Cop from '../Cop';
 
-// @ts-ignore
+// @ts-ignore werid error
 class Naive_Cop extends Cop {
 
 	public name = 'Naive Cop';
 
-	get display() {
-		return 'Cop';
+	private readonly _display = 'Cop';
+	public get display() {
+		return this._display;
 	}
 
-	public innocenceModifer(innocence: boolean) {
+	public innocenceModifer() {
 		return true;
 	}
 

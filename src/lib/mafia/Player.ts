@@ -7,6 +7,7 @@ export default class Player {
 	public isAlive = true;
 	// whether this player was cleaned by a janitor
 	public cleaned = false;
+	public framed = false;
 	public deathReason = '';
 	public previousRoles = [] as Role[];
 	private _role!: Role;

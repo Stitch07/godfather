@@ -75,7 +75,7 @@ describe('game testing', () => {
 
 	test('starting days', async () => {
 		await game.startDay();
-		expect(game.phase).toBe(Phase.DAY);
+		expect(game.phase).toBe(Phase.Day);
 		expect(game.cycle).toBe(1);
 		expect(game.channel.send).toHaveBeenCalledWith([
 			'Day **1** will last 5 minutes',
@@ -94,7 +94,7 @@ describe('game testing', () => {
 
 	test('starting nights', async () => {
 		await game.startNight();
-		expect(game.phase).toBe(Phase.NIGHT);
+		expect(game.phase).toBe(Phase.Night);
 		expect(game.channel.send).toHaveBeenCalledWith('Night **1** will last 2 minutes. Send in your actions quickly!');
 		expect(game.host.role!.canUseAction().check).toBe(false);
 	});

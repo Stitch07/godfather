@@ -14,7 +14,7 @@ export default class NightActionsManager extends Array<NightAction> {
 	public async addAction(action: NightAction) {
 		const possibleActions = this.game.players.filter(player => player.role.canUseAction().check && Reflect.get(player.role, 'actionPhase') === Phase.Night);
 		this.push(action);
-		if (this.length <= possibleActions.length) await this.game.startDay();
+		if (this.length === possibleActions.length) await this.game.startDay();
 	}
 
 	public async resolve(): Promise<Player[]> {
@@ -102,7 +102,8 @@ export interface NightRecordEntry {
 
 export const enum NightActionCommand {
 	Shoot = 'shoot',
-	Check = 'check'
+	Check = 'check',
+	Frame = 'frame'
 }
 
 export const enum Attack {
@@ -130,12 +131,14 @@ export enum NightActionPriority {
 	BODYGUARD = 3,
 	// these roles deal Powerful attacks that cannot be healed
 	ARSONIST = 4,
-	// investigative roles usually only rely on tearDown, so they can safely go last
-	COP = 5,
-	LOOKOUT = 5,
-	CONSIG = 5,
-	TRACKER = 5,
+	// roles that affect investigative results
 	FRAMER = 5,
+	// investigative roles usually only rely on tearDown, so they can safely go last
+	COP = 6,
+	LOOKOUT = 6,
+	CONSIG = 6,
+	TRACKER = 6,
+	NEOPOLITAN = 6,
 	// janitor cleans after killing roles have already killed them
-	JANITOR = 6,
+	JANITOR = 7,
 }

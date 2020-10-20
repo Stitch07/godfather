@@ -19,10 +19,15 @@ class Cop extends ActionRole {
 	public priority = NightActionPriority.COP;
 
 	public async tearDown(actions: NightActionsManager, target: Player) {
-		const innocence = this.innocenceModifier(target.role.innocence);
-		await this.player.user.send(
-			innocence ? 'Your target is innocent.' : 'Your target is suspicious.'
-		);
+		if (target.framed === false) {
+			const innocence = this.innocenceModifier(target.role.innocence);
+			await this.player.user.send(
+				innocence ? 'Your target is innocent.' : 'Your target is suspicious.'
+			);
+		} else {
+			await this.player.user.send('Your target is suspicious.');
+			target.framed = false;
+		}
 	}
 
 	public innocenceModifier(innocence: boolean) {

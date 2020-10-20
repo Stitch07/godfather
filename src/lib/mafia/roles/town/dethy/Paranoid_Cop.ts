@@ -1,16 +1,17 @@
-import Townie from "@mafia/mixins/Townie";
-import Cop from "../Cop";
+import Townie from '@mafia/mixins/Townie';
+import Cop from '../Cop';
 
-// @ts-ignore
+// @ts-ignore weird error
 class Paranoid_Cop extends Cop {
 
 	public name = 'Paranoid Cop';
 
-	get display() {
-		return 'Cop';
+	private _display = 'Cop';
+	public get display() {
+		return this._display;
 	}
 
-	public innocenceModifer(innocence: boolean) {
+	public innocenceModifer() {
 		return false;
 	}
 
