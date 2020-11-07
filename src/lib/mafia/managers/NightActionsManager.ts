@@ -14,7 +14,7 @@ export default class NightActionsManager extends Array<NightAction> {
 	public async addAction(action: NightAction) {
 		const possibleActions = this.game.players.filter(player => player.role.canUseAction().check && Reflect.get(player.role, 'actionPhase') === Phase.Night);
 		this.push(action);
-		if (this.length <= possibleActions.length) await this.game.startDay();
+		if (this.length >= possibleActions.length) await this.game.startDay();
 	}
 
 	public async resolve(): Promise<Player[]> {
@@ -66,7 +66,7 @@ const DEFAULT_NIGHT_ENTRY = {
 export class NightRecord extends DefaultMap<string, DefaultMap<string, NightRecordEntry>> {
 
 	public constructor() {
-		super(new DefaultMap(DEFAULT_NIGHT_ENTRY));
+		super(() => new DefaultMap(() => DEFAULT_NIGHT_ENTRY));
 	}
 
 	public setAction(targetID: string, recordEntry: string, item: NightRecordEntry) {
@@ -102,16 +102,21 @@ export interface NightRecordEntry {
 
 export const enum NightActionCommand {
 	Shoot = 'shoot',
-	Check = 'check'
+	Check = 'check',
+	Heal = 'heal'
 }
 
 export const enum Attack {
-	Basic
+	Basic = 1,
+	Powerful,
+	Unstoppable
 }
 
 export const enum Defense {
-	None,
-	Basic
+	None = 1,
+	Basic,
+	Powerful,
+	Invincible
 }
 
 export enum NightActionPriority {

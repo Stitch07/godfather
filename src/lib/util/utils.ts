@@ -6,7 +6,7 @@ import { Client } from 'discord.js';
 import { Events } from '@sapphire/framework';
 import { TOKEN } from '@root/config';
 
-const TOKENS = [process.cwd(), TOKEN];
+const TOKENS = [process.cwd(), process.cwd().replace(/\\/g, '\\\\'), TOKEN];
 const sensitiveTokens = new RegExp(TOKENS.map(regExpEsc).join('|'), 'gi');
 
 export namespace Branding {

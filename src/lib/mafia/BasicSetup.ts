@@ -10,8 +10,17 @@ export default class BasicSetup extends Setup {
 	public generate() {
 		const generatedRoles = [];
 		const shuffled = shuffle(this.roles);
-		// TODO: category resolving goes here
+
 		for (const roleName of shuffled) {
+			// Role x2 becomes Role, Role
+			if (/(\w+ ?\w+ ?) ?x(\d)/.test(roleName)) {
+				const matches = /(\w+ ?\w+ ?) ?x(\d)/.exec(roleName)!;
+				console.log(matches);
+				for (let i = 0; i < Number(matches[2]); i++) {
+					generatedRoles.push(BasicSetup.resolve(matches[1]));
+				}
+				continue;
+			}
 			generatedRoles.push(BasicSetup.resolve(roleName));
 		}
 
@@ -51,6 +60,7 @@ export default class BasicSetup extends Setup {
 
 		for (const role of setupData.roles) {
 			// this will throw if an invalid role was provided
+			if (/(\w+ ?\w+ ?) ?x(\d)/.test(role)) continue;
 			BasicSetup.resolve(role);
 		}
 

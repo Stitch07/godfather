@@ -9,15 +9,15 @@ import { CommandOptions } from '@sapphire/framework';
 })
 export default class extends GodfatherCommand {
 
-	public async run(msg: Message) {
-		const { game } = msg.channel as TextChannel;
-		const voter = game!.players.get(msg.author)!;
+	public async run(message: Message) {
+		const { game } = message.channel as TextChannel;
+		const voter = game!.players.get(message.author)!;
 		const unvoted = game!.votes.unvote(voter);
 
 		if (unvoted) {
-			await msg.reactions.add('✅');
+			await message.react('✅');
 		}
-		return msg.channel.send('No votes to remove!');
+		return message.channel.send('No votes to remove!');
 	}
 
 }

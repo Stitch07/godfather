@@ -12,9 +12,9 @@ export default class extends GodfatherCommand {
 
 	public async run(message: Message, args: Args) {
 		const setupName = await args.restResult('string');
-		if (setupName.success) {
-			const setup = this.client.setups.get(setupName.value.toLowerCase());
-			if (!setup) throw `I couldn't find a setup named "${setupName.value}"`;
+		if (setupName.success || message.channel.game?.setup) {
+			if (setupName.success && !this.client.setups.has(setupName.value)) throw `I couldn't find a setup named "${setupName.value}"`;
+			const setup = setupName.success ? this.client.setups.get(setupName.value.toLowerCase())! : message.channel.game!.setup!;
 			const output = [
 				`= ${setup.name} - ${setup.totalPlayers} players`,
 				`* Description: ${setup.description}`,
