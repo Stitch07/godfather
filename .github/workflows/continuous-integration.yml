@@ -3,7 +3,8 @@ name: Continuous Integration
 on:
   push:
     branches:
-      - main
+      - ts-rewrite
+      - github-ci
   pull_request:
 
 jobs:
