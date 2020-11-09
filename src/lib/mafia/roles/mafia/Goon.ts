@@ -8,6 +8,13 @@ class Goon extends Shooter {
 	public name = 'Goon';
 	public description = 'You may shoot someone every night.';
 
+	public canUseAction() {
+		if (this.game.setup!.name === 'dethy' && this.game.cycle === 1) {
+			return { check: false, reason: 'You cannot use your action ' };
+		}
+		return super.canUseAction();
+	}
+
 	public tearDown(actions: NightActionsManager, target: Player) {
 		const record = actions.record.get(target.user.id).get('nightkill');
 		console.log(record, actions.record);

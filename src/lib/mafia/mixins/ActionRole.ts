@@ -2,7 +2,7 @@ import Role from '@mafia/Role';
 import NightActionsManager, { NightActionPriority, NightActionCommand } from '@mafia/managers/NightActionsManager';
 import Player from '@mafia/Player';
 import { Phase } from '@mafia/Game';
-import { codeBlock } from '@sapphire/utilities';
+import { Awaited, codeBlock } from '@sapphire/utilities';
 import { remove } from '@util/utils';
 import { Message } from 'discord.js';
 
@@ -63,17 +63,17 @@ class ActionRole extends Role {
 	}
 
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	public async setUp(actions: NightActionsManager, target?: Player): Promise<any> {
+	public setUp(actions: NightActionsManager, target?: Player): Awaited<any> {
 		// noop
 	}
 
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	public async runAction(actions: NightActionsManager, target?: Player): Promise<any> {
+	public runAction(actions: NightActionsManager, target?: Player): Awaited<any> {
 		// noop
 	}
 
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	public async tearDown(actions: NightActionsManager, target?: Player): Promise<any> {
+	public tearDown(actions: NightActionsManager, target?: Player): Awaited<any> {
 		// noop
 	}
 

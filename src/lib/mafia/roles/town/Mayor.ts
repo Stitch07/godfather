@@ -1,6 +1,6 @@
 import ActionRole from '@mafia/mixins/ActionRole';
 import { Phase } from '@mafia/Game';
-import Townie from '../../mixins/Townie';
+import Townie from '@mafia/mixins/Townie';
 import { Message } from 'discord.js';
 
 class Mayor extends ActionRole {
