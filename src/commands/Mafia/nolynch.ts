@@ -5,7 +5,7 @@ import { Message } from 'discord.js';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['vtnl', 'nl'],
-	preconditions: ['GuildOnly', 'GameOnly', 'PlayerOnly', 'AlivePlayerOnly', 'GameStartedOnly']
+	preconditions: ['GuildOnly', 'GameOnly', 'PlayerOnly', 'AlivePlayerOnly', 'GameStartedOnly', 'DayOnly']
 })
 export default class extends GodfatherCommand {
 
@@ -17,6 +17,7 @@ export default class extends GodfatherCommand {
 		await message.channel.send('You have voted to no-lynch.');
 
 		if (noLynch) {
+			game!.phase = Phase.Standby;
 			await message.channel.send('Nobody was lynched!');
 			await game!.startNight();
 		}

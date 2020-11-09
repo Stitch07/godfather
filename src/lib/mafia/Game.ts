@@ -213,7 +213,7 @@ export default class Game {
 
 	public async delete() {
 		// free all permission overwrites
-		if (this.overwritePermissions) {
+		if (this.canOverwritePermissions) {
 			for (const userID of this.permissionOverwrites) {
 				const overwrite = this.channel.permissionOverwrites.find(permission => permission.type === 'member' && permission.id === userID);
 				if (overwrite) await overwrite.update({ SEND_MESSAGES: true });
@@ -222,7 +222,7 @@ export default class Game {
 		this.client.games.delete(this.channel.id);
 	}
 
-	public get overwritePermissions() {
+	public get canOverwritePermissions() {
 		return this.settings.overwritePermissions && this.channel.permissionsFor(this.client.user!)?.has('MANAGE_CHANNELS');
 	}
 

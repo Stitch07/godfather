@@ -3,6 +3,7 @@ import { scan } from 'fs-nextra';
 import Role from '@mafia/Role';
 import { Constructor, toTitleCase } from '@sapphire/utilities';
 import { Collection } from 'discord.js';
+import { cast } from '@util/utils';
 
 // A map of role names to the constructor of its corresponding role Class
 export const allRoles = new Collection<string, Constructor<Role>>();
@@ -18,6 +19,10 @@ export const init = async () => {
 		// convert Role_Name to Role Name
 		const roleName = parse(file.name).name.split('_').join(' ');
 		allRoles.set(roleName, roleClass);
+		// add role aliases (Vig, Consig)
+		for (const alias of roleClass.aliases) {
+			allRoles.set(cast<string>(alias), roleClass);
+		}
 		// append to category array here
 		for (const category of roleClass.categories as string[]) {
 			const categoryArray = roleCategories.get(category) ?? ([] as Array<Constructor<Role>>);

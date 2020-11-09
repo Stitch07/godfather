@@ -28,5 +28,6 @@ class Goon extends Shooter {
 }
 
 Goon.categories.push('Mafia Killing');
+Goon.aliases.push('Mafioso');
 
 export default MafiaRole(Goon);

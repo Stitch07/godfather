@@ -59,8 +59,7 @@ abstract class Role {
 	// Role categories such as Random Town, Neutral Evil
 	public static categories: string[] = ['Any'];
 
-	// Docs used in roleinfo command
-	public static documentation = '';
+	public static aliases: string[] = [];
 
 }
 

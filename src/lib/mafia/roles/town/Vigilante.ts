@@ -48,6 +48,7 @@ class Vigilante extends Shooter {
 
 }
 
-Vigilante.categories.push('Town Killing');
+Vigilante.categories = ['Town Killing'];
+Vigilante.aliases.push('Vig', 'Vigi');
 
 export default Townie(Vigilante);

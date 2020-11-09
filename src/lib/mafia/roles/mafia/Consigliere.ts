@@ -20,9 +20,11 @@ class Consigliere extends ActionRole {
 	public priority = NightActionPriority.CONSIG;
 
 	public async tearDown(actions: NightActionsManager, target: Player) {
-		await this.player.user.send(`Your targets role is: ${target.role.display}`);
+		await this.player.user.send(`Your target's role is: ${target.role.display}`);
 	}
 
 }
+
+Consigliere.aliases.push('Consig');
 
 export default MafiaRole(Consigliere);

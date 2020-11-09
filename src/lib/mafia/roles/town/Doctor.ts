@@ -55,4 +55,6 @@ class Doctor extends ActionRole {
 
 }
 
+Doctor.aliases.push('Doc');
+
 export default Townie(Doctor);

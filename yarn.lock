@@ -1110,7 +1110,7 @@
   dependencies:
     "@klasa/ratelimits" "^0.1.0"
     "@sapphire/pieces" "github:sapphire-project/pieces#build"
-    "@sapphire/utilities" "^1.0.2"
+    "@sapphire/utilities" "^1.0.1"
     lexure "^0.17.0"
 
 "@sapphire/pieces@github:sapphire-project/pieces#build":
@@ -1123,15 +1123,20 @@
   version "1.0.0"
   resolved "https://codeload.github.com/sapphire-project/utilities/tar.gz/66138e634b0a96e4a6e714d10fdaa8b90ad46e5e"
 
-"@sapphire/utilities@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@sapphire/utilities/-/utilities-1.0.2.tgz#91f4efc7208e5e9bb65096e7ee2c21b7322a2760"
-  integrity sha512-+VeSCI+M1Dd3vVbQjcDmFrS7erqWpKySrv+2qDtCTt57BQNZ+Ca406bUohN34JbJQ0rwAB3vtpCLpaWdOwaqhA==
-
 "@sapphire/type@^1.0.1":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@sapphire/type/-/type-1.0.1.tgz#a55ac265e8efd4a04242615356d5d8cedd56250c"
   integrity sha512-yimZJQNkOcZzGShvQRRVkBebK35WSOvaha9toI/IxRknzpGo1FLdWMolDw3wU0QttRBD+7LlMLUTzhuHYsT76Q==
+
+"@sapphire/utilities@^1.0.1":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@sapphire/utilities/-/utilities-1.1.0.tgz#f0eb237240c4607301eb170f6cc7f27369ae1ab0"
+  integrity sha512-EPZS+Ho+1bVgt/DBlkof1rV4JK4fjS1kIyvFgrhV+AvJb9/5ohk+CzYDR44k79824DqpX2st6jNcLPybDLy9Pw==
+
+"@sapphire/utilities@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@sapphire/utilities/-/utilities-1.0.2.tgz#91f4efc7208e5e9bb65096e7ee2c21b7322a2760"
+  integrity sha512-+VeSCI+M1Dd3vVbQjcDmFrS7erqWpKySrv+2qDtCTt57BQNZ+Ca406bUohN34JbJQ0rwAB3vtpCLpaWdOwaqhA==
 
 "@sinonjs/commons@^1.7.0":
   version "1.8.1"

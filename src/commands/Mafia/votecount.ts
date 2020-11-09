@@ -7,7 +7,7 @@ import { Message, TextChannel } from 'discord.js';
 @ApplyOptions<CommandOptions>({
 	aliases: ['vc'],
 	description: 'Shows the current vote count.',
-	preconditions: ['GuildOnly', 'GameOnly', { entry: 'Cooldown', context: { type: BucketType.Channel, delay: 5000 } }]
+	preconditions: ['GuildOnly', 'GameOnly', 'DayOnly', { entry: 'Cooldown', context: { type: BucketType.Channel, delay: 5000 } }]
 })
 export default class extends GodfatherCommand {
 

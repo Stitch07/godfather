@@ -5,7 +5,7 @@ import { CommandOptions } from '@sapphire/framework';
 
 @ApplyOptions<CommandOptions>({
 	description: 'Remove your vote from a player/nolynch.',
-	preconditions: ['GuildOnly', 'GameOnly', 'GameStartedOnly', 'PlayerOnly', 'AlivePlayerOnly', 'GameStartedOnly']
+	preconditions: ['GuildOnly', 'GameOnly', 'GameStartedOnly', 'PlayerOnly', 'AlivePlayerOnly', 'GameStartedOnly', 'DayOnly']
 })
 export default class extends GodfatherCommand {
 
