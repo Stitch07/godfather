@@ -1,7 +1,7 @@
 import NightActionsManager, { NightActionCommand, NightActionPriority } from '../../managers/NightActionsManager';
-import ActionRole from '../../mixins/ActionRole';
-import Townie from '../../mixins/Townie';
-import Player from '../../Player';
+import ActionRole from '@mafia/mixins/ActionRole';
+import Townie from '@mafia/mixins/Townie';
+import Player from '@mafia/Player';
 
 class Neapolitan extends ActionRole {
 
@@ -15,7 +15,7 @@ class Neapolitan extends ActionRole {
 	public priority = NightActionPriority.NEOPOLITAN;
 
 	public async tearDown(actions: NightActionsManager, target: Player) {
-		if (target.role.name === 'Vanilla') {
+		if (target.role.name.includes('Vanilla')) {
 			await this.player.user.send('Your target is a Town Vanilla');
 		} else {
 			await this.player.user.send('Your target is not a Town Vanilla');

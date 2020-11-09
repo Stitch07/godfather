@@ -1,12 +1,19 @@
 import Shooter from '@mafia/mixins/Shooter';
 import NightActionsManager from '@mafia/managers/NightActionsManager';
 import Player from '@mafia/Player';
-import MafiaRole from '../../mixins/MafiaRole';
+import MafiaRole from '@mafia/mixins/MafiaRole';
 
 class Goon extends Shooter {
 
 	public name = 'Goon';
 	public description = 'You may shoot someone every night.';
+
+	public canUseAction() {
+		if (this.game.setup!.name === 'dethy' && this.game.cycle === 1) {
+			return { check: false, reason: 'You cannot use your action ' };
+		}
+		return super.canUseAction();
+	}
 
 	public tearDown(actions: NightActionsManager, target: Player) {
 		const record = actions.record.get(target.user.id).get('nightkill');

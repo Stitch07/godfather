@@ -1,6 +1,6 @@
-import NightActionsManager, { Attack, NightActionCommand, NightActionPriority } from '../managers/NightActionsManager';
-import Player from '../Player';
-import ActionRole from './ActionRole';
+import NightActionsManager, { Attack, NightActionCommand, NightActionPriority } from '@mafia/managers/NightActionsManager';
+import Player from '@mafia/Player';
+import ActionRole from '@mafia/mixins/ActionRole';
 
 export default class Shooter extends ActionRole {
 

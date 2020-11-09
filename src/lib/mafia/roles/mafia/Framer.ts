@@ -20,9 +20,8 @@ class Framer extends ActionRole {
 
 	public priority = NightActionPriority.FRAMER;
 
-	// eslint-disable-next-line @typescript-eslint/require-await
-	public async tearDown(actions: NightActionsManager, target: Player) {
-		target.framed = true;
+	public setUp(actions: NightActionsManager, target: Player) {
+		actions.framedPlayers.push(target);
 	}
 
 	public static documentation = 'Roleinfo docs here.';
