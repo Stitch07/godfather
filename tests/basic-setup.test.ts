@@ -7,18 +7,18 @@ beforeAll(async () => {
 	await init();
 });
 
+const classExtends = (a: any, b: any) => Object.create(a.prototype) instanceof b;
+
 describe('different setup types', () => {
 
 	test('basic role names', () => {
 		const resolved = BasicSetup.resolve('Vanilla');
-		console.log(resolved);
-		expect(resolved instanceof Vanilla).toBe(true);
+		expect(classExtends(resolved, Vanilla)).toBe(true);
 	});
 
 	test('basic category names', () => {
 		const resolved = BasicSetup.resolve('Random Town');
-		console.log(resolved);
-		expect(resolved instanceof Vanilla || resolved instanceof Cop).toBe(true);
+		expect(classExtends(resolved, Cop) || classExtends(resolved, Vanilla)).toBe(true);
 	});
 
 });

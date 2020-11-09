@@ -26,12 +26,11 @@ class Vigilante extends Shooter {
 		}
 	}
 
-	public async onPmCommand(message: Message, command: string, ...args: string[]) {
+	public onPmCommand(message: Message, command: string, ...args: string[]) {
 		if (this.guilt) {
 			return this.player.user.send('You cannot shoot tonight due to guilt.');
-		} else {
-			return super.onPmCommand(message, command, args[0]);
 		}
+		return super.onPmCommand(message, command, args[0]);
 	}
 
 	public tearDown(actions: NightActionsManager, target: Player) {
@@ -41,11 +40,12 @@ class Vigilante extends Shooter {
 			return this.player.user.send('Your target was too strong to kill!');
 		}
 
-		if (target.role.faction.name == 'Town') {
+		if (target.role.faction.name === 'Town') {
 			this.guilt = true;
 		}
 		return target.user.send('You were shot by a Vigilante. You have died!');
 	}
+
 }
 
 Vigilante.categories.push('Town Killing');

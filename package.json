@@ -8,8 +8,9 @@
 	"license": "GPL-3.0",
 	"private": false,
 	"scripts": {
-		"build": "tsc -p src",
+		"build": "rimraf dist && tsc -p src",
 		"dev": "yarn build && node .",
+		"clean": "rimraf dist",
 		"watch": "tsc -b src -w",
 		"lint": "eslint src --ext ts --fix",
 		"test": "jest",
@@ -29,6 +30,7 @@
 		"eslint": "^7.5.0",
 		"jest": "^26.2.2",
 		"jest-mock-extended": "^1.0.9",
+		"rimraf": "^3.0.2",
 		"ts-jest": "^26.1.4",
 		"ts-node": "^9.0.0",
 		"typescript": "^3.9.7"
@@ -38,6 +40,7 @@
 		"@sapphire/decorators": "^1.0.1",
 		"@sapphire/framework": "sapphire-project/framework#build",
 		"@sapphire/ratelimits": "sapphire-project/utilities#build-ratelimits",
+		"@sapphire/type": "^1.0.1",
 		"@sapphire/utilities": "^1.0.1",
 		"discord.js": "^12.3.1",
 		"fs-nextra": "^0.5.1",

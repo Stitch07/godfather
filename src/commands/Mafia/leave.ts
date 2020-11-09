@@ -11,7 +11,7 @@ export default class extends GodfatherCommand {
 	public async run(msg: Message) {
 		const { game } = msg.channel as TextChannel;
 		if (await game!.players.remove(game!.players.get(msg.author)!)) {
-			await msg.reactions.add('✅');
+			await msg.react('✅');
 		}
 		return [];
 	}

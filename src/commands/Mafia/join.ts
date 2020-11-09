@@ -3,6 +3,7 @@ import GodfatherCommand from '@lib/GodfatherCommand';
 import Player from '@mafia/Player';
 import { Message, TextChannel } from 'discord.js';
 import { CommandOptions } from '@sapphire/framework';
+import { Phase } from '@root/lib/mafia/Game';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['in'],
@@ -20,7 +21,7 @@ export default class extends GodfatherCommand {
 		for (const otherGame of this.client.games.values()) {
 			if (otherGame.players.get(msg.author)) throw `You are already playing another game in ${otherGame.channel} (${otherGame.channel.guild.name})`;
 		}
-		if (game!.hasStarted) {
+		if (game!.hasStarted || game!.phase === Phase.Standby) {
 			// do replacements here sometime
 			return;
 		}
