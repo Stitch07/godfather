@@ -1,4 +1,4 @@
-# TS Rewrite of Godfather
+# Godfather TS Rewrite
 
 ## How to run:
 

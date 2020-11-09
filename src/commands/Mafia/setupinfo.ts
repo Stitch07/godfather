@@ -31,7 +31,7 @@ export default class extends GodfatherCommand {
 		}
 
 		const prefix = await this.client.fetchPrefix(message);
-		const setups = this.client.setups.map(setup => `${setup.name} ${setup.roles.length ? `(${setup.totalPlayers} players)` : ''}`);
+		const setups = this.client.setups.sort((a, b) => a.totalPlayers - b.totalPlayers).map(setup => `${setup.name} ${setup.roles.length ? `(${setup.totalPlayers} players)` : ''}`);
 		return message.channel.send([
 			`**All available setups**: (to view a specific setup, use ${Array.isArray(prefix) ? prefix[0] : prefix}setupinfo <name>)`,
 			codeBlock('', setups.join('\n'))

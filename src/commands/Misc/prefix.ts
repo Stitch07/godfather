@@ -7,7 +7,7 @@ import { getCustomRepository } from 'typeorm';
 import { PGSQL_ENABLED } from '@root/config';
 
 @ApplyOptions<CommandOptions>({
-	preconditions: ['GuildOnly', 'AdminOnly']
+	preconditions: ['GuildOnly', ['AdminOnly', 'OwnerOnly']]
 })
 export default class extends GodfatherCommand {
 
