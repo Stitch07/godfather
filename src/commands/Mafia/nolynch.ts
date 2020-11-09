@@ -2,6 +2,7 @@ import { CommandOptions } from '@sapphire/framework';
 import { ApplyOptions } from '@sapphire/decorators';
 import GodfatherCommand from '@lib/GodfatherCommand';
 import { Message } from 'discord.js';
+import { Phase } from '@root/lib/mafia/Game';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['vtnl', 'nl'],

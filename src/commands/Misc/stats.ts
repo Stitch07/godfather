@@ -5,6 +5,7 @@ import { CommandOptions } from '@sapphire/framework';
 import { roundNumber } from '@sapphire/utilities';
 import { Message, MessageEmbed } from 'discord.js';
 import { cpus } from 'os';
+import { format } from '@util/durationFormat';
 
 @ApplyOptions<CommandOptions>({
 	description: 'Get an invite link to the bot and support server.'
@@ -24,19 +25,21 @@ export default class extends GodfatherCommand {
 			.setDescription(`To add ${this.client.user!.username} to your server, use the \`${Array.isArray(prefix) ? prefix[0] : prefix}invite\` command.`)
 			.addField('Connected To', [
 				`**Servers**: ${generalStatistics.guilds}`,
-				`**Users**: ${generalStatistics.users}`,
+				`**Users**: ${generalStatistics.members}`,
 				`**Channels**: ${generalStatistics.channels}`
 			].join('\n'), true)
 			.addField('Server Stats', [
 				`**CPU Load**: ${serverStatistics.cpuLoad.map(load => `${load}%`).join(' | ')}`,
-				`**RAM Used**: ${serverStatistics.ramUsed} (Total: ${serverStatistics.ramTotal})`
+				`**RAM Used**: ${serverStatistics.ramUsed} (Total: ${serverStatistics.ramTotal})`,
+				`**Uptime**: ${format(this.client.uptime ?? 0)}`
 			].join('\n'), true);
 	}
 
 	private get generalStatistics() {
 		return {
 			guilds: this.client.guilds.cache.size.toLocaleString('en-US'),
-			users: this.client.users.cache.size.toLocaleString('en-US'),
+			// eslint-disable-next-line @typescript-eslint/restrict-plus-operands
+			members: this.client.guilds.cache.reduce((a, b) => b.memberCount + a, 0).toLocaleString('en-US'),
 			channels: this.client.channels.cache.size.toLocaleString('en-US')
 		};
 	}

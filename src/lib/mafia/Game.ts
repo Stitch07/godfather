@@ -7,14 +7,15 @@ import NightActionsManager from '@mafia/managers/NightActionsManager';
 import Setup from './Setup';
 
 import { TextChannel, User } from 'discord.js';
-import { Duration } from '@klasa/duration';
 import { codeBlock } from '@sapphire/utilities';
 import GameEntity from '../orm/entities/Game';
 import { getRepository } from 'typeorm';
 import ActionRole from './mixins/ActionRole';
 import { PGSQL_ENABLED } from '@root/config';
+import { format } from '@util/durationFormat';
+import { Time } from '@sapphire/time-utilities';
 
-const MAX_DELAY = 15 * 60 * 1000; // 15 minutes
+const MAX_DELAY = 15 * Time.Minute;
 
 export const enum Phase {
 	Pregame = 1,
@@ -97,7 +98,7 @@ export default class Game {
 		}
 
 		await this.channel.send([
-			`Day **${this.cycle}** will last ${Duration.toNow(this.phaseEndAt)}`,
+			`Day **${this.cycle}** will last ${format(this.phaseEndAt.getTime() - Date.now())}`,
 			`With ${alivePlayers.length} alive, it takes ${this.majorityVotes} to lynch.`
 		].join('\n'));
 	}
@@ -114,7 +115,7 @@ export default class Game {
 		this.phaseEndAt = new Date();
 		this.phaseEndAt.setSeconds(this.phaseEndAt.getSeconds() + this.settings.nightDuration);
 
-		await this.channel.send(`Night **${this.cycle}** will last ${Duration.toNow(this.phaseEndAt)}. Send in your actions quickly!`);
+		await this.channel.send(`Night **${this.cycle}** will last ${format(this.phaseEndAt.getTime() - Date.now())}. Send in your actions quickly!`);
 		for (const player of this.players.filter(player => player.isAlive && player.role!.canUseAction().check && (player.role! as ActionRole).actionPhase === Phase.Night)) {
 			await player.role!.onNight();
 		}
