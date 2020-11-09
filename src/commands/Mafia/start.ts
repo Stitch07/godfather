@@ -31,9 +31,10 @@ export default class extends GodfatherCommand {
 			await player.sendPM();
 		}
 		await sent.edit('Sent all role PMs!');
-		if (!game!.setup!.nightStart) {
-			await game!.startDay();
+		if (game!.setup!.nightStart) {
+			return game!.startNight();
 		}
+		return game!.startDay();
 	}
 
 }

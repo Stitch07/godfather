@@ -17,6 +17,7 @@ export default class Shooter extends ActionRole {
 
 	// eslint-disable-next-line @typescript-eslint/require-await
 	public async runAction(actions: NightActionsManager, target: Player) {
+		this.client.logger.debug('shooter called');
 		this.bullets--;
 		if (target.role.defense > this.attackStrength) return;
 		actions.record.setAction(target.user.id, 'nightkill', { result: true, by: [this.player], type: Attack.Basic });

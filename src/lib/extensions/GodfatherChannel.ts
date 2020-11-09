@@ -8,8 +8,8 @@ export default class GodfatherChannel extends Structures.get('TextChannel') {
 
 	public async prompt(promptMessage: string, promptUser: User): Promise<boolean> {
 		const msg = await this.send(promptMessage);
-		await msg!.reactions.add('🇾');
-		await msg!.reactions.add('🇳');
+		await msg!.react('🇾');
+		await msg!.react('🇳');
 
 		const reactions = await msg.awaitReactions(([reaction, user]) => user.id === promptUser.id && ['🇾', '🇳'].includes(reaction.emoji.toString()),
 			{
