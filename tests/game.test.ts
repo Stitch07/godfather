@@ -17,8 +17,6 @@ describe('game testing', () => {
 	// @ts-ignore https://github.com/microsoft/TypeScript/issues/34933
 	const game = new Game(mockUser, mockChannel);
 	game.host.role = new Vanilla(game.host);
-	game.settings.dayDuration = 5 * 60;
-	game.settings.nightDuration = 2 * 60;
 
 	for (let i = 0; i < 4; i++) {
 		const player = new Player(createMockUser({ username: `Player${i + 1}`, discriminator: `000${i + 1}` }), game);
