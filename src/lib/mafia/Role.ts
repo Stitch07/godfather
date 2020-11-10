@@ -1,4 +1,5 @@
 import Player from '@mafia/Player';
+import { Awaited } from '@sapphire/framework';
 import { Message } from 'discord.js';
 import Faction from './Faction';
 import { Defense } from './managers/NightActionsManager';
@@ -40,15 +41,15 @@ abstract class Role {
 		return 1;
 	}
 
-	public async onDeath() {
+	public onDeath() {
 		// noop
 	}
 
-	public async onNight() {
+	public onNight() {
 		// noop
 	}
 
-	public async onDay() {
+	public onDay() {
 		// noop
 	}
 
@@ -65,9 +66,9 @@ abstract class Role {
 
 interface Role {
 	onPmCommand(message: Message, command: string, ...args: string[]): void;
-	onNight(): Promise<void>;
-	onDay(): Promise<void>;
-	onDeath(): Promise<void>;
+	onNight(): Awaited<any>;
+	onDay(): Awaited<any>;
+	onDeath(): Awaited<any>;
 	faction: Faction;
 }
 

@@ -29,12 +29,12 @@ export default class BasicSetup extends Setup {
 
 	public static resolve(roleName: string): Constructor<Role> {
 		if (allRoles.has(roleName)) return allRoles.get(roleName)!;
-		else if (roleCategories.has(roleName)) return randomArray(roleCategories.get(roleName)!);
+		else if (roleCategories.has(roleName)) return randomArray(roleCategories.get(roleName)!)!;
 
 		// Role1 | Role2 (one of these 2)
 		if (/(\w+) ?\| ?(\w+)/.test(roleName)) {
 			const possibleRoles = /(\w+) ?\| ?(\w+)/.exec(roleName)!.slice(1, 3);
-			return this.resolve(randomArray(possibleRoles));
+			return this.resolve(randomArray(possibleRoles)!);
 		}
 
 		throw `Invalid role provided: \`${roleName}\`.`;

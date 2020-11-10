@@ -31,7 +31,10 @@ export const shuffle = <T>(array: readonly T[]): T[] => {
 	return shuffled;
 };
 
-export const randomArray = <T>(array: readonly T[]): T => array[Math.floor(Math.random() * array.length)];
+export const randomArray = <T>(array: readonly T[]): T | null => {
+	if (array.length === 0) return null;
+	return array[Math.floor(Math.random() * array.length)];
+};
 
 export const aliveOrRecentJester = (player: Player) => {
 	if (!player.isAlive && player.role!.name === 'Jester' && player.deathReason === `lynched d${player.game.cycle}`) return true;

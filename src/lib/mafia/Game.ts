@@ -14,6 +14,7 @@ import ActionRole from './mixins/ActionRole';
 import { PGSQL_ENABLED } from '@root/config';
 import { format } from '@util/durationFormat';
 import { Time } from '@sapphire/time-utilities';
+import { aliveOrRecentJester } from '../util/utils';
 
 const MAX_DELAY = 15 * Time.Minute;
 
@@ -116,7 +117,7 @@ export default class Game {
 		this.phaseEndAt.setSeconds(this.phaseEndAt.getSeconds() + this.settings.nightDuration);
 
 		await this.channel.send(`Night **${this.cycle}** will last ${format(this.settings.nightDuration * Time.Second)}. Send in your actions quickly!`);
-		for (const player of this.players.filter(player => player.isAlive && player.role!.canUseAction().check && (player.role! as ActionRole).actionPhase === Phase.Night)) {
+		for (const player of this.players.filter(player => aliveOrRecentJester(player) && player.role!.canUseAction().check && (player.role! as ActionRole).actionPhase === Phase.Night)) {
 			await player.role!.onNight();
 		}
 
@@ -124,8 +125,6 @@ export default class Game {
 	}
 
 	public async hammer(player: Player) {
-		if (this.phase === Phase.Standby) return;
-
 		// locks against multiple calls to hammer()
 		this.phase = Phase.Standby;
 		await this.channel.send(`${player.user.tag} was hammered. They were a **${player.role!.display}**.`);
@@ -174,7 +173,7 @@ export default class Game {
 		for (const player of this.players) {
 			if (player.role.faction.independent && player.role.faction.hasWonIndependent(player)) {
 				independentWins.push(player.role.faction);
-			} else if (player.role.faction.hasWon(this)) {
+			} else if (!player.role.faction.independent && player.role.faction.hasWon(this)) {
 				winningFaction = player.role.faction;
 			}
 		}

@@ -12,7 +12,7 @@ export default class extends GodfatherCommand {
 
 	public async run(message: Message) {
 		const { game } = message.channel;
-		return message.channel.send(`${this.getFullPhase(game!)} ends in ${game!.remaining}`);
+		return message.channel.send(`${this.getFullPhase(game!)} ends in ${game!.remaining()}`);
 	}
 
 	private getFullPhase(game: Game) {
