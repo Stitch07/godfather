@@ -98,7 +98,7 @@ export default class Game {
 		}
 
 		await this.channel.send([
-			`Day **${this.cycle}** will last ${format(this.phaseEndAt.getTime() - Date.now())}`,
+			`Day **${this.cycle}** will last ${format(this.settings.dayDuration * Time.Second)}`,
 			`With ${alivePlayers.length} alive, it takes ${this.majorityVotes} to lynch.`
 		].join('\n'));
 	}
@@ -115,7 +115,7 @@ export default class Game {
 		this.phaseEndAt = new Date();
 		this.phaseEndAt.setSeconds(this.phaseEndAt.getSeconds() + this.settings.nightDuration);
 
-		await this.channel.send(`Night **${this.cycle}** will last ${format(this.phaseEndAt.getTime() - Date.now())}. Send in your actions quickly!`);
+		await this.channel.send(`Night **${this.cycle}** will last ${format(this.settings.nightDuration * Time.Second)}. Send in your actions quickly!`);
 		for (const player of this.players.filter(player => player.isAlive && player.role!.canUseAction().check && (player.role! as ActionRole).actionPhase === Phase.Night)) {
 			await player.role!.onNight();
 		}
@@ -225,6 +225,12 @@ export default class Game {
 
 	public get canOverwritePermissions() {
 		return this.settings.overwritePermissions && this.channel.permissionsFor(this.client.user!)?.has('MANAGE_CHANNELS');
+	}
+
+	public remaining(showIn = false) {
+		const remaining = this.phaseEndAt!.getTime() - Date.now();
+		if (remaining <= 0) return 'any time soon...';
+		return showIn ? `in ${format(remaining)}` : format(remaining);
 	}
 
 }

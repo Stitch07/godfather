@@ -8,6 +8,7 @@ import { Message } from 'discord.js';
 import { inspect } from 'util';
 
 @ApplyOptions<CommandOptions>({
+	aliases: ['ev'],
 	quotes: [],
 	preconditions: ['OwnerOnly'],
 	strategyOptions: {

@@ -26,6 +26,7 @@ export default class extends GodfatherCommand {
 			return;
 		}
 		game!.players.push(new Player(msg.author, game!));
+		game!.createdAt = new Date();
 		return msg.channel.send('✅ Successfully joined.');
 	}
 

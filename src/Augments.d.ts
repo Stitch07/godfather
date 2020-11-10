@@ -33,6 +33,10 @@ declare module 'discord.js' {
 	interface DMChannel extends ChannelExtendables { }
 
 	interface NewsChannel extends ChannelExtendables { }
+
+	interface Message {
+		prompt(promptMessage: string): Promise<boolean>;
+	}
 }
 
 declare module '@sapphire/framework' {
