@@ -13,7 +13,7 @@ export default class extends GodfatherCommand {
 
 	public async run(msg: Message) {
 		const { game } = msg.channel as TextChannel;
-		return msg.channel.send(game!.votes.show());
+		return msg.channel.send(game!.votes.show({ }));
 	}
 
 }

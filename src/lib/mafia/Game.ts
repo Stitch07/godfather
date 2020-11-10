@@ -127,7 +127,7 @@ export default class Game {
 	public async hammer(player: Player) {
 		// locks against multiple calls to hammer()
 		this.phase = Phase.Standby;
-		await this.channel.send(`${player.user.tag} was hammered. They were a **${player.role!.display}**.`);
+		await this.channel.send(`${player.user.tag} was hammered. They were a **${player.role!.display}**.\n${this.votes.show({ header: 'Final Vote Count', codeblock: true })}`);
 		await player.kill(`lynched d${this.cycle}`);
 
 		await this.startNight();
