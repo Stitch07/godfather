@@ -72,6 +72,8 @@ export default class PlayerManager extends Array<Player> {
 	}
 
 	private getPlayerFlags(player: Player) {
+		if (!this.game.hasStarted) return [];
+
 		const flags = [];
 		if (!player.isAlive) flags.push(player.role.display, player.deathReason);
 		if (player.role.name === 'Mayor' && Reflect.get(player.role, 'hasRevealed') === true) flags.push('Mayor');
