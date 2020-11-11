@@ -5,7 +5,7 @@ import { Defense, NightActionPriority } from '@mafia/managers/NightActionsManage
 export default class Survivor extends ActionRole {
 
 	public name = 'Surivor';
-	public description = 'A neutral character who just wants to live and is too afraid to die.';
+	public description = 'A neutral character who just wants to live and is afraid to die.';
 	public faction = new SurivorFaction();
 	public action = 'vest';
 	public actionGerund = 'vesting';
@@ -47,3 +47,5 @@ export default class Survivor extends ActionRole {
 	}
 
 }
+
+Survivor.aliases.push('Surv');
