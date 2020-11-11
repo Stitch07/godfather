@@ -16,9 +16,9 @@ class Neapolitan extends ActionRole {
 
 	public async tearDown(actions: NightActionsManager, target: Player) {
 		if (target.role.name.includes('Vanilla')) {
-			await this.player.user.send('Your target is a Town Vanilla');
+			await this.player.user.send('Your target is a Vanilla');
 		} else {
-			await this.player.user.send('Your target is not a Town Vanilla');
+			await this.player.user.send('Your target is not a Vanilla');
 		}
 	}
 
