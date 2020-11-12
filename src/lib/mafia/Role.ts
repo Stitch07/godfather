@@ -53,6 +53,10 @@ abstract class Role {
 		// noop
 	}
 
+	public onVisit() {
+		// noop
+	}
+
 	public canUseAction(): CanUseActionData {
 		return { check: false, reason: '' };
 	}
@@ -69,6 +73,7 @@ interface Role {
 	onNight(): Awaited<any>;
 	onDay(): Awaited<any>;
 	onDeath(): Awaited<any>;
+	onVisit(visitor: Player): Awaited<any>;
 	faction: Faction;
 }
 

@@ -9,6 +9,7 @@ export default class Player {
 	public cleaned = false;
 	public deathReason = '';
 	public previousRoles = [] as Role[];
+	public visitors: Player[] = [];
 	private _role!: Role;
 	public constructor(public user: User, public game: Game) {
 	}
@@ -45,6 +46,11 @@ export default class Player {
 		}
 
 		await this.role!.onDeath();
+	}
+
+	public async visit(visitor: Player) {
+		this.visitors.push(visitor);
+		await this.role.onVisit(visitor);
 	}
 
 	public static resolve(game: Game, arg: string) {
