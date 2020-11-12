@@ -4,7 +4,7 @@ import { Message } from 'discord.js';
 import Faction from './Faction';
 import { Defense } from './managers/NightActionsManager';
 
-const INNOCENT_FACTIONS = ['Town'];
+const INNOCENT_FACTIONS = ['Town', 'Survivor', 'Jester'];
 
 export interface CanUseActionData {
 	check: boolean;
