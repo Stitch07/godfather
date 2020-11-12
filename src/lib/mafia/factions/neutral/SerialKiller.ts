@@ -13,13 +13,10 @@ export default class SerialKillerFaction extends Faction {
 	public hasWon(game: Game) {
 		const { players } = game;
 
-		const aliveSerialKillers = players.filter(player => player.isAlive && player.role!.faction.name === 'Serial Killer');
+		const aliveSerialKillers = players.filter(player => player.isAlive && player.role.faction.name === 'Serial Killer');
 		const aliveOpposingPrs = players.filter(filterOpposingPowerRoles);
-		const aliveOpposing = players.filter(player => player.isAlive && OPPOSING_FACTIONS.includes(player.role!.faction.name));
 
-		return aliveSerialKillers.length > 0
-			&& aliveSerialKillers.length >= aliveOpposing.length
-			&& aliveOpposingPrs.length === 0;
+		return aliveSerialKillers.length > 0 && aliveOpposingPrs.length === 0;
 	}
 
 }
