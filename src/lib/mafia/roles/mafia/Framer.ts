@@ -23,6 +23,7 @@ class Framer extends ActionRole {
 	public setUp(actions: NightActionsManager, target: Player) {
 		actions.framedPlayers.push(target);
 	}
+
 }
 
 export default MafiaRole(Framer);
