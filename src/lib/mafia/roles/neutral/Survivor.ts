@@ -9,7 +9,7 @@ export default class Survivor extends ActionRole {
 	public faction = new SurivorFaction();
 	public action = 'vest';
 	public actionGerund = 'vesting';
-	public actionText = 'protect yourself at night.';
+	public actionText = 'protect yourself at night';
 	public priority = NightActionPriority.SURVIVOR;
 	public flags = {
 		canBlock: true,
