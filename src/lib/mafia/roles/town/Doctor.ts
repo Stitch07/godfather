@@ -1,20 +1,19 @@
 import ActionRole from '@mafia/mixins/ActionRole';
 import Townie from '@mafia/mixins/Townie';
-import NightActionsManager, { Attack, NightActionCommand, NightActionPriority } from '../../managers/NightActionsManager';
+import NightActionsManager, { Attack, NightActionPriority } from '../../managers/NightActionsManager';
 import Player from '../../Player';
 
 class Doctor extends ActionRole {
 
 	public name = 'Doctor';
 	public description = 'You may heal a player every night, and self-heal once.';
-	public action = NightActionCommand.Heal;
+	public action = 'heal';
 	public actionText = 'heal a player';
 	public actionGerund = 'healing';
 	public priority = NightActionPriority.DOCTOR;
 	public hasSelfHealed = false;
 
-	// eslint-disable-next-line @typescript-eslint/require-await
-	public async runAction(actions: NightActionsManager, target: Player) {
+	public runAction(actions: NightActionsManager, target: Player) {
 		const playerRecord = actions.record.get(target.user.id);
 		const nightKills = playerRecord.get('nightkill');
 
@@ -36,7 +35,7 @@ class Doctor extends ActionRole {
 		}
 	}
 
-	public async tearDown(actions: NightActionsManager, target: Player) {
+	public tearDown(actions: NightActionsManager, target: Player) {
 		const record = actions.record.get(target.user.id).get('heal');
 		const success = record.result && record.by.includes(this.player);
 

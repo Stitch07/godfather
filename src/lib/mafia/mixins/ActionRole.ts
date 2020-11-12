@@ -1,5 +1,5 @@
 import Role from '@mafia/Role';
-import NightActionsManager, { NightActionPriority, NightActionCommand } from '@mafia/managers/NightActionsManager';
+import NightActionsManager, { NightActionPriority } from '@mafia/managers/NightActionsManager';
 import Player from '@mafia/Player';
 import { Phase } from '@mafia/Game';
 import { Awaited, codeBlock } from '@sapphire/utilities';
@@ -63,17 +63,17 @@ class ActionRole extends Role {
 	}
 
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	public setUp(actions: NightActionsManager, target?: Player): Awaited<any> {
+	public setUp(actions: NightActionsManager, target?: Player | Player[]): Awaited<any> {
 		// noop
 	}
 
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	public runAction(actions: NightActionsManager, target?: Player): Awaited<any> {
+	public runAction(actions: NightActionsManager, target?: Player | Player[]): Awaited<any> {
 		// noop
 	}
 
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	public tearDown(actions: NightActionsManager, target?: Player): Awaited<any> {
+	public tearDown(actions: NightActionsManager, target?: Player | Player[]): Awaited<any> {
 		// noop
 	}
 
@@ -97,7 +97,7 @@ class ActionRole extends Role {
 }
 
 interface ActionRole {
-	action: NightActionCommand | string;
+	action: string;
 	actionGerund: string;
 	actionText: string;
 	flags: {

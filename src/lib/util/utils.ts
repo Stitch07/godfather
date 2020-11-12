@@ -76,3 +76,16 @@ export const remove = <T>(array: T[], element: (value: T, index?: number, obj?: 
 	const index = array.findIndex(element);
 	if (index !== -1) array.splice(index, 1);
 };
+
+export const listItems = (array: string[]) => {
+	switch (array.length) {
+		case 0:
+			throw new Error('Wrongly called.');
+		case 1:
+			return array[0];
+		default: {
+			const lastEle = array.pop()!;
+			return `${array.join(', ')} and ${lastEle}`;
+		}
+	}
+};

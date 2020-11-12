@@ -29,7 +29,10 @@ export default class NightActionsManager extends Array<NightAction> {
 			if (action === undefined) continue;
 			await (actor.role! as ActionRole).runAction(this, target);
 			if (actor !== target && flags?.canVisit) {
-				// visit player here
+				const targets = Array.isArray(target) ? target : [target];
+				for (const target of targets) {
+					await target?.visit(actor);
+				}
 			}
 		}
 		for (const { action, actor, target } of this) {
@@ -39,7 +42,7 @@ export default class NightActionsManager extends Array<NightAction> {
 
 		const deadPlayers = [];
 		for (const [playerID, record] of this.record.entries()) {
-			if (record.get('nightkill').result) {
+			if (record.has('nightkill') && record.get('nightkill').result) {
 				const deadPlayer = this.game.players.find(player => player.user.id === playerID);
 				if (deadPlayer) {
 					deadPlayer.kill(`killed N${this.game.cycle}`);
@@ -83,10 +86,10 @@ export class NightRecord extends DefaultMap<string, DefaultMap<string, NightReco
 }
 
 export interface NightAction {
-	action: NightActionCommand | string;
+	action: string;
 	actor: Player;
 	priority: NightActionPriority;
-	target?: Player;
+	target?: Player | Player[];
 	flags?: {
 		canBlock: boolean;
 		canTransport: boolean;
@@ -98,13 +101,6 @@ export interface NightRecordEntry {
 	result: boolean;
 	by: Player[];
 	type?: Attack;
-}
-
-export const enum NightActionCommand {
-	Shoot = 'shoot',
-	Check = 'check',
-	Frame = 'frame',
-	Heal = 'heal'
 }
 
 export const enum Attack {

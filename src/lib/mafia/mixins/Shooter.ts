@@ -1,10 +1,10 @@
-import NightActionsManager, { Attack, NightActionCommand, NightActionPriority } from '@mafia/managers/NightActionsManager';
+import NightActionsManager, { Attack, NightActionPriority } from '@mafia/managers/NightActionsManager';
 import Player from '@mafia/Player';
 import ActionRole from '@mafia/mixins/ActionRole';
 
 export default class Shooter extends ActionRole {
 
-	public action = NightActionCommand.Shoot;
+	public action = 'shoot';
 	public actionText = 'shoot a player';
 	public actionGerund = 'shooting';
 	public priority = NightActionPriority.Shooter;

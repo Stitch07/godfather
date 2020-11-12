@@ -1,4 +1,4 @@
-import NightActionsManager, { NightActionCommand, NightActionPriority } from '../../managers/NightActionsManager';
+import NightActionsManager, { NightActionPriority } from '../../managers/NightActionsManager';
 import ActionRole from '@mafia/mixins/ActionRole';
 import Townie from '@mafia/mixins/Townie';
 import Player from '@mafia/Player';
@@ -8,7 +8,7 @@ class Neapolitan extends ActionRole {
 	public name = 'Neapolitan';
 	public description = 'Like a cop, but with less powerful investigations.';
 
-	public action = NightActionCommand.Check;
+	public action = 'check';
 	public actionGerund = 'checking';
 	public actionText = 'check a player';
 
