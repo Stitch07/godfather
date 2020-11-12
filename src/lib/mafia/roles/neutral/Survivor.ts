@@ -34,6 +34,12 @@ export default class Survivor extends ActionRole {
 		return Defense.None;
 	}
 
+	public async onNight() {
+		// send action PMs
+		await super.onNight();
+		if (this.vests > 0) await this.player.user.send(`You have ${this.vests} vests remaining.`);
+	}
+
 	public setUp() {
 		this.vested = true;
 	}
