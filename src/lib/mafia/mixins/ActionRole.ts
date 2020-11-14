@@ -38,23 +38,38 @@ class ActionRole extends Role {
 
 		if (this.game.phase === Phase.Day) return this.onDayCommand(message, command, ...args);
 		if (!this.possibleActions.includes(command)) return;
-		const target = Player.resolve(this.player.game, args.join(' '));
-		if (!target) throw `Invalid target. Choose a number between 1 and ${this.player.game.players.length}`;
-
-		({ check, reason } = this.canTarget(target));
-		if (!check) throw `You cannot target ${target.user.username}. ${reason}`;
 
 		remove(this.game.nightActions, action => action.actor === this.player);
 
-		await this.player.game.nightActions.addAction({
-			action: this.action,
-			actor: this.player,
-			target,
-			priority: this.priority,
-			flags: this.flags
-		});
+		switch (command) {
+			case 'cancel':
+				return this.player.user.send('You have cancelled your action.');
+			case 'noaction': {
+				await this.game.nightActions.addAction({
+					action: undefined,
+					actor: this.player,
+					priority: this.priority
+				});
+				return this.player.user.send('You decided to stay home tonight.');
+			}
+			default: {
+				const target = Player.resolve(this.player.game, args.join(' '));
+				if (!target) throw `Invalid target. Choose a number between 1 and ${this.player.game.players.length}`;
 
-		return this.player.user.send(`You are ${this.actionGerund} ${target} tonight.`);
+				({ check, reason } = this.canTarget(target));
+				if (!check) throw `You cannot target ${target.user.username}. ${reason}`;
+
+				await this.player.game.nightActions.addAction({
+					action: this.action,
+					actor: this.player,
+					target,
+					priority: this.priority,
+					flags: this.flags
+				});
+
+				return this.player.user.send(`You are ${this.actionGerund} ${target} tonight.`);
+			}
+		}
 	}
 
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars

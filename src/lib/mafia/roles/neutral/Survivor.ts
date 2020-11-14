@@ -1,8 +1,8 @@
-import ActionRole from '@mafia/mixins/ActionRole';
 import SurivorFaction from '@mafia/factions/neutral/Survivor';
 import { Defense, NightActionPriority } from '@mafia/managers/NightActionsManager';
+import NoTarget from '@mafia/mixins/NoTarget';
 
-export default class Survivor extends ActionRole {
+export default class Survivor extends NoTarget {
 
 	public name = 'Survivor';
 	public description = 'You may vest 4 times in a game.';
