@@ -1,10 +1,10 @@
-import Shooter from '@mafia/mixins/Shooter';
+import Killer from '@root/lib/mafia/mixins/Killer';
 import NightActionsManager, { NightActionPriority } from '@mafia/managers/NightActionsManager';
 import Townie from '@mafia/mixins/Townie';
 import Player from '@mafia/Player';
 import { Message } from 'discord.js';
 
-class Vigilante extends Shooter {
+class Vigilante extends Killer {
 
 	public name = 'Vigilante';
 	public description = 'You may shoot someone every night.';
@@ -34,16 +34,10 @@ class Vigilante extends Shooter {
 	}
 
 	public tearDown(actions: NightActionsManager, target: Player) {
-		const record = actions.record.get(target.user.id).get('nightkill');
-		const success = record.result && record.by.includes(this.player);
-		if (!success) {
-			return this.player.user.send('Your target was too strong to kill!');
-		}
-
 		if (target.role.faction.name === 'Town') {
 			this.guilt = true;
 		}
-		return target.user.send('You were shot by a Vigilante. You have died!');
+		return super.tearDown(actions, target);
 	}
 
 }

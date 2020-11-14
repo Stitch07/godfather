@@ -2,12 +2,13 @@ import NightActionsManager, { Attack, NightActionPriority } from '@mafia/manager
 import Player from '@mafia/Player';
 import ActionRole from '@mafia/mixins/ActionRole';
 
-export default class Shooter extends ActionRole {
+export default class Killer extends ActionRole {
 
 	public action = 'shoot';
 	public actionText = 'shoot a player';
 	public actionGerund = 'shooting';
-	public priority = NightActionPriority.Shooter;
+	public actionParticiple = 'shot';
+	public priority = NightActionPriority.KILLER;
 	public bullets = Infinity;
 	public flags = {
 		canBlock: true,
@@ -19,6 +20,15 @@ export default class Shooter extends ActionRole {
 		this.bullets--;
 		if (target.role.defense > this.attackStrength) return;
 		actions.record.setAction(target.user.id, 'nightkill', { result: true, by: [this.player], type: Attack.Basic });
+	}
+
+	public tearDown(actions: NightActionsManager, target: Player) {
+		const record = actions.record.get(target.user.id).get('nightkill');
+		const success = record.result && record.by.some(player => this.player.user.id === player.user.id);
+		if (!success) {
+			return this.player.user.send('Your target was too strong to kill!');
+		}
+		return target.user.send(`You were ${this.actionParticiple} by a ${this.name}. You have died!`);
 	}
 
 	public get attackStrength() {

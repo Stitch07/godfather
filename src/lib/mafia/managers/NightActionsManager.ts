@@ -126,7 +126,7 @@ export enum NightActionPriority {
 	// modify night actions directly
 	ESCORT = 1,
 	TRANSPORTER = 1,
-	Shooter = 2,  // godfather/goon/vigilante
+	KILLER = 2,  // godfather/goon/vigilante
 	SERIAL_KILLER = 2,
 	// healers always act after shooters
 	DOCTOR = 3,
