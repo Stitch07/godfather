@@ -67,3 +67,5 @@ export default class Jester extends ActionRole {
 	}
 
 }
+
+Jester.categories.push('Neutral Evil');

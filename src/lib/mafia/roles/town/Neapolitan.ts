@@ -26,4 +26,6 @@ class Neapolitan extends ActionRole {
 
 }
 
+Neapolitan.categories.push('Town Investigative');
+
 export default Townie(Neapolitan);

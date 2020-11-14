@@ -26,4 +26,7 @@ class SuperSaint extends Role {
 
 }
 
+
+SuperSaint.categories.push('Town Support');
+
 export default Townie(SuperSaint);

@@ -48,4 +48,6 @@ class Ambusher extends ActionRole {
 
 }
 
+Ambusher.categories.push('Mafia Killing');
+
 export default MafiaRole(Ambusher);

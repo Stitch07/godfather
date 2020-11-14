@@ -32,4 +32,6 @@ class Escort extends ActionRole {
 
 }
 
+Escort.categories.push('Town Support');
+
 export default Townie(Escort);

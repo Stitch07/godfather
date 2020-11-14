@@ -23,4 +23,5 @@ class Lookout extends ActionRole {
 
 }
 
+Lookout.categories.push('Town Investigative');
 export default Townie(Lookout);

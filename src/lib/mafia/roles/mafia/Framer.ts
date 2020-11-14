@@ -26,4 +26,6 @@ class Framer extends ActionRole {
 
 }
 
+Framer.categories.push('Mafia Deception');
+
 export default MafiaRole(Framer);
