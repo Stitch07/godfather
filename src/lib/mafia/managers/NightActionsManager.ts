@@ -86,7 +86,7 @@ export class NightRecord extends DefaultMap<string, DefaultMap<string, NightReco
 }
 
 export interface NightAction {
-	action: string;
+	action: string | undefined;
 	actor: Player;
 	priority: NightActionPriority;
 	target?: Player | Player[];
