@@ -25,6 +25,6 @@ class Consigliere extends ActionRole {
 
 }
 
-Consigliere.aliases.push('Consig');
+Consigliere.aliases = ['Consig'];
 
 export default MafiaRole(Consigliere);
