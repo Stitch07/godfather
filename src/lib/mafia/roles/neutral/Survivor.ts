@@ -1,6 +1,7 @@
 import ActionRole from '@mafia/mixins/ActionRole';
 import SurivorFaction from '@mafia/factions/neutral/Survivor';
 import { Defense, NightActionPriority } from '@mafia/managers/NightActionsManager';
+import Player from '@mafia/Player';
 
 export default class Survivor extends ActionRole {
 
@@ -25,6 +26,11 @@ export default class Survivor extends ActionRole {
 			return { check: false, reason: 'You don\'t have any vests left' };
 		}
 		return super.canUseAction();
+	}
+
+	public canTarget(target: Player) {
+		if (target.user.username !== this.player.user.username) return { check: false, reason: 'You can only self-vest' };
+		return { check: true, reason: '' };
 	}
 
 	public get defense() {
