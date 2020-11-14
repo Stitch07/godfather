@@ -1,7 +1,8 @@
 import ActionRole from '@mafia/mixins/ActionRole';
 import MafiaRole from '@mafia/mixins/MafiaRole';
-import NightActionsManager, { NightActionPriority } from '../../managers/NightActionsManager';
-import Player from '../../Player';
+import { randomArray } from '@root/lib/util/utils';
+import NightActionsManager, { Attack, NightActionPriority } from '@mafia/managers/NightActionsManager';
+import Player from '@mafia/Player';
 
 class Ambusher extends ActionRole {
 
@@ -11,31 +12,38 @@ class Ambusher extends ActionRole {
 	public actionText = 'set up a ambush';
 	public actionGerund = 'ambushing';
 	public priority = NightActionPriority.AMBUSHER;
+	private killTarget: Player | null = null;
 
 	public canTarget(target: Player) {
 		if (target.role.faction.name !== 'Mafia') return { check: true, reason: '' };
 		return { check: false, reason: 'You cannot target yourself or your teammates' };
 	}
 
-	public tearDown(actions: NightActionsManager, target: Player) {
-		const visitors = target.visitors.filter(visitor => visitor !== this.player);
-		if (visitors.length === 0) {
-			return this.player.user.send('Nobody visted your target.');
-		}
-		const random = Math.floor(Math.random() * visitors.length);
-		const killTarget = visitors[random];
+	public runAction(actions: NightActionsManager, target: Player) {
+		const visitors = target.visitors.filter(player => player.role.faction.name !== 'Mafia');
+		const killTarget = randomArray(visitors);
 
-		visitors.forEach(e => {
-			void e.user.send(`You saw ${this.player.user.username} preparing an ambush!`);
-		});
-
-		const record = actions.record.get(killTarget.user.id).get('nightkill');
-		const success = record.result && record.by.some(player => this.player.user.id === player.user.id);
-		this.player.user.send('You attacked someone who visted your target.');
-		if (!success) {
-			return this.player.user.send('Your target was too strong to kill!');
+		if (killTarget !== null) {
+			this.killTarget = killTarget;
+			actions.record.setAction(this.killTarget.user.id, 'nightkill', { result: true, by: [this.player], type: Attack.Unstoppable });
 		}
-		return killTarget.user.send('You were attacked by an ambusher. You have died!');
+	}
+
+	public async tearDown(actions: NightActionsManager, target: Player) {
+		if (this.killTarget !== null) {
+			const record = actions.record.get(this.killTarget.user.id).get('nightkill');
+			const success = record.result && record.by.some(player => this.player.user.id === player.user.id);
+
+			for (const visitor of target.visitors) {
+				if (visitor !== this.player && visitor.user.id !== this.killTarget.user.id) await visitor.user.send(`You saw ${this.player.user.username} preparing an ambush for your target.`);
+			}
+			await this.player.user.send('You attacked someone who visted your target.');
+			if (!success) {
+				return this.player.user.send('Your target was too strong to kill!');
+			}
+			await this.killTarget.user.send('You were attacked by an ambusher. You have died!');
+			this.killTarget = null;
+		}
 	}
 
 }
