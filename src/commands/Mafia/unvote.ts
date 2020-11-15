@@ -15,7 +15,7 @@ export default class extends GodfatherCommand {
 		const unvoted = game!.votes.unvote(voter);
 
 		if (unvoted) {
-			await message.react('✅');
+			return message.react('✅');
 		}
 		return message.channel.send('No votes to remove!');
 	}

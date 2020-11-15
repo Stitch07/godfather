@@ -76,11 +76,16 @@ export default class VoteManager extends Map<string, VoteProxy> {
 			if (votes.count() === 0) continue;
 			const target = this.game.players.find(player => player.user.id === targetID);
 			if (!target) continue;
-			voteText.push(`${target.user.username} (${votes.count()}): ${votes.map(voterMapping).join(', ')} ${votes.length === this.game.majorityVotes ? '(Hammered)' : ''}`);
+			voteText.push(`${target.user.username} (${votes.count()}): ${votes.map(voterMapping).join(', ')} ${votes.count() >= this.game.majorityVotes ? '(Hammered)' : ''}`);
+		}
+
+		const noLynches = this.get(NoLynch);
+		if (noLynches && noLynches.count() > 0) {
+			voteText.push(`No Lynch (${noLynches!.count()}): ${noLynches!.map(voterMapping).join(', ')}`);
 		}
 
 		const notVoting = this.get(NotVoting);
-		if (notVoting!.count() > 0) {
+		if (notVoting && notVoting.count() > 0) {
 			voteText.push(`Not Voting (${notVoting!.count()}): ${notVoting!.map(voterMapping).join(', ')}`);
 		}
 

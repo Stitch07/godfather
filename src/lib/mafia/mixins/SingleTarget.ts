@@ -72,6 +72,8 @@ class SingleTarget extends Role {
 					});
 				}
 
+				await this.player.user.send(`You are ${this.actionGerund} ${target} tonight.`);
+
 				await this.player.game.nightActions.addAction({
 					action: this.action,
 					actor: this.player,
@@ -79,8 +81,6 @@ class SingleTarget extends Role {
 					priority: this.priority,
 					flags: this.flags
 				});
-
-				await this.player.user.send(`You are ${this.actionGerund} ${target} tonight.`);
 			}
 		}
 	}
@@ -119,7 +119,7 @@ class SingleTarget extends Role {
 	}
 
 	private get possibleActions() {
-		return [this.action, 'noaction'];
+		return [this.action, 'noaction', 'cancel'];
 	}
 
 }
