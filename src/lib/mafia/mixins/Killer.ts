@@ -19,7 +19,7 @@ export default class Killer extends ActionRole {
 	public runAction(actions: NightActionsManager, target: Player) {
 		this.bullets--;
 		if (target.role.defense > this.attackStrength) return;
-		actions.record.setAction(target.user.id, 'nightkill', { result: true, by: [this.player], type: Attack.Basic });
+		actions.record.setAction(target.user.id, 'nightkill', { result: true, by: [this.player], type: this.attackStrength });
 	}
 
 	public tearDown(actions: NightActionsManager, target: Player) {

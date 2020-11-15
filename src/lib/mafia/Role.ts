@@ -15,6 +15,7 @@ abstract class Role {
 
 	public name = '';
 	public description = '';
+	public unique = false;
 	public constructor(public player: Player) {
 	}
 
