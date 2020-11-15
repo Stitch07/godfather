@@ -1,10 +1,10 @@
-import ActionRole from '@mafia/mixins/ActionRole';
+import SingleTarget from '@root/lib/mafia/mixins/SingleTarget';
 import Townie from '@mafia/mixins/Townie';
 import NightActionsManager, { NightActionPriority } from '@mafia/managers/NightActionsManager';
 import Player from '@mafia/Player';
 import { listItems } from '@util/utils';
 
-class Tracker extends ActionRole {
+class Tracker extends SingleTarget {
 
 	public name = 'Tracker';
 	public description = 'You may track one person at night to find out who they visited.';

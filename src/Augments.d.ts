@@ -1,5 +1,5 @@
 import { Branding } from '@lib/util/utils';
-import Game from '@mafia/Game';
+import Game, { GameSettings } from '@mafia/Game';
 import Player from '@mafia/Player';
 import SetupStore from '@mafia/SetupStore';
 import { Collection, Guild, User } from 'discord.js';
@@ -37,11 +37,17 @@ declare module 'discord.js' {
 	interface Message {
 		prompt(promptMessage: string): Promise<boolean>;
 	}
+
+	interface Guild {
+		readSettings(): Promise<GuildSettingsEntity>;
+	}
 }
 
 declare module '@sapphire/framework' {
 	interface ArgType {
 		player: Player;
+		gameSetting: keyof GameSettings;
+		duration: number;
 	}
 }
 

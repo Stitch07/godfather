@@ -10,34 +10,34 @@ export default function MafiaRole<TBaseRole extends typeof Role>(BaseRole: TBase
 
 		public async onDeath() {
 			// if the GF died, try promoting the Goon
-			// if (this.player.role!.name === 'Godfather') {
-			//	const goon = this.game.players.find(player => player.isAlive && player.role!.name === 'Goon');
-			//	if (!goon) {
-			//	// if there aren't any goons, promote the next mafia member to Goon
-			//		const otherMafia = this.game.players.find(player => player.isAlive && player.role!.faction.name === 'Mafia' && !['Godfather', 'Goon'].includes(player.role!.name));
-			//		if (!otherMafia) return;
+			if (this.player.role!.name === 'Godfather') {
+				const goon = this.game.players.find(player => player.isAlive && player.role!.name === 'Goon');
+				if (!goon) {
+				// if there aren't any goons, promote the next mafia member to Goon
+					const otherMafia = this.game.players.find(player => player.isAlive && player.role!.faction.name === 'Mafia' && !['Godfather', 'Goon'].includes(player.role!.name));
+					if (!otherMafia) return;
 
-			//		// otherMafia.role = new Goon()
-			//		await otherMafia.user.send('You have been promoted to a Goon!');
-			//		await otherMafia.sendPM();
-			//		return;
-			//	}
+					// otherMafia.role = new Goon()
+					await otherMafia.user.send('You have been promoted to a Goon!');
+					await otherMafia.sendPM();
+					return;
+				}
 
-			//	// goon.role = new Godfather()
-			//	await goon.user.send('You have been promoted to the Godfather!');
-			//	await goon.sendPM();
+				// goon.role = new Godfather()
+				await goon.user.send('You have been promoted to the Godfather!');
+				await goon.sendPM();
 
-			// } else if (this.player.role!.name === 'Goon') {
-			//	const otherMafia = this.game.players.find(player => player.isAlive && player.role!.faction.name === 'Mafia' && !['Godfather', 'Goon'].includes(player.role!.name));
-			//	if (!otherMafia) return;
+			 } else if (this.player.role!.name === 'Goon') {
+				const otherMafia = this.game.players.find(player => player.isAlive && player.role!.faction.name === 'Mafia' && !['Godfather', 'Goon'].includes(player.role!.name));
+				if (!otherMafia) return;
 
-			//	otherMafia.previousRoles.push(otherMafia.role!);
-			//	// otherMafia.role = new Goon()
-			//	await otherMafia.user.send('You have been promoted to a Goon!');
-			//	await otherMafia.sendPM();
-			// }
+				otherMafia.previousRoles.push(otherMafia.role!);
+				// otherMafia.role = new Goon()
+				await otherMafia.user.send('You have been promoted to a Goon!');
+				await otherMafia.sendPM();
+			 }
 
-			// return super.onDeath();
+			 return super.onDeath();
 		}
 
 	}

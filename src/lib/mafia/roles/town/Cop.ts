@@ -1,9 +1,9 @@
-import ActionRole from '@mafia/mixins/ActionRole';
+import SingleTarget from '@root/lib/mafia/mixins/SingleTarget';
 import NightActionsManager, { NightActionPriority } from '@mafia/managers/NightActionsManager';
 import Player from '@mafia/Player';
 import Townie from '@mafia/mixins/Townie';
 
-class Cop extends ActionRole {
+class Cop extends SingleTarget {
 
 	public name = 'Cop';
 
@@ -21,7 +21,7 @@ class Cop extends ActionRole {
 	// ensures that Dethy cops don't get PMed their real role
 	public get display(): string {
 		if (this.player.cleaned) return 'Cleaned';
-		return this.name;
+		return 'Cop';
 	}
 
 	public async tearDown(actions: NightActionsManager, target: Player) {

@@ -15,7 +15,6 @@ export default class extends GodfatherCommand {
 		const { game } = message.channel;
 
 		if (game!.hasStarted) throw 'The game has already started!';
-		if (game!.setup && game!.setup.totalPlayers !== game!.players.length) throw `The setup **${game!.setup.name}** requires ${game!.setup.totalPlayers} players.`;
 
 		if (!game!.setup && setupName === '') {
 			// attempt to find a setup
@@ -28,10 +27,15 @@ export default class extends GodfatherCommand {
 			if (!foundSetup) throw `Invalid setup-name: "${foundSetup}"`;
 			game!.setup = foundSetup;
 		}
+
+		if (game!.setup!.totalPlayers !== game!.players.length) throw `The setup **${game!.setup!.name}** requires ${game!.setup!.totalPlayers} players.`;
+
 		const sent = await message.channel.send(`Chose the setup **${game!.setup!.name}**. Randomizing roles...`);
 		const generatedRoles = game!.setup!.generate();
 		for (const player of game!.players) {
 			player.role = new (generatedRoles.shift()!)(player);
+		}
+		for (const player of game!.players) {
 			await player.sendPM();
 		}
 		await sent.edit('Sent all role PMs!');

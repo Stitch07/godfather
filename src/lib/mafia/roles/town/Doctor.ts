@@ -1,9 +1,9 @@
-import ActionRole from '@mafia/mixins/ActionRole';
+import SingleTarget from '@root/lib/mafia/mixins/SingleTarget';
 import Townie from '@mafia/mixins/Townie';
 import NightActionsManager, { Attack, NightActionPriority } from '../../managers/NightActionsManager';
 import Player from '../../Player';
 
-class Doctor extends ActionRole {
+class Doctor extends SingleTarget {
 
 	public name = 'Doctor';
 	public description = 'You may heal a player every night, and self-heal once.';

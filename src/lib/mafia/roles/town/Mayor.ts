@@ -1,9 +1,9 @@
-import ActionRole from '@mafia/mixins/ActionRole';
+import SingleTarget from '@root/lib/mafia/mixins/SingleTarget';
 import { Phase } from '@mafia/Game';
 import Townie from '@mafia/mixins/Townie';
 import { Message } from 'discord.js';
 
-class Mayor extends ActionRole {
+class Mayor extends SingleTarget {
 
 	public name = 'Mayor';
 	public action = 'reveal';

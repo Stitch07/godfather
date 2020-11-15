@@ -7,7 +7,7 @@ import { remove } from '@util/utils';
 import { Message } from 'discord.js';
 
 
-class ActionRole extends Role {
+class SingleTarget extends Role {
 
 	public actionPhase = Phase.Night;
 
@@ -59,6 +59,21 @@ class ActionRole extends Role {
 				({ check, reason } = this.canTarget(target));
 				if (!check) throw `You cannot target ${target.user.username}. ${reason}`;
 
+				if (this.name === 'Godfather' && this.game.players.some(player => player.isAlive && player.role.name === 'Goon')) {
+					// first we remove any older action the goon had
+					this.game.nightActions.splice(this.game.nightActions.findIndex(action => action.actor.role.name === 'Goon'), 1);
+					// the Godfather also orders his Goon to kill
+					await this.game.nightActions.addAction({
+						action: this.action,
+						actor: this.game.players.find(pl => pl.role.name === 'Goon')!,
+						target,
+						priority: this.priority,
+						flags: this.flags
+					});
+				}
+
+				await this.player.user.send(`You are ${this.actionGerund} ${target} tonight.`);
+
 				await this.player.game.nightActions.addAction({
 					action: this.action,
 					actor: this.player,
@@ -66,8 +81,6 @@ class ActionRole extends Role {
 					priority: this.priority,
 					flags: this.flags
 				});
-
-				return this.player.user.send(`You are ${this.actionGerund} ${target} tonight.`);
 			}
 		}
 	}
@@ -106,12 +119,12 @@ class ActionRole extends Role {
 	}
 
 	private get possibleActions() {
-		return [this.action, 'noaction'];
+		return [this.action, 'noaction', 'cancel'];
 	}
 
 }
 
-interface ActionRole {
+interface SingleTarget {
 	action: string;
 	actionGerund: string;
 	actionText: string;
@@ -123,4 +136,4 @@ interface ActionRole {
 	priority: NightActionPriority;
 }
 
-export default ActionRole;
+export default SingleTarget;

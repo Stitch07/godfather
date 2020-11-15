@@ -8,10 +8,10 @@ import Setup from './Setup';
 
 import { TextChannel, User } from 'discord.js';
 import { codeBlock } from '@sapphire/utilities';
-import GameEntity from '../orm/entities/Game';
-import { getRepository } from 'typeorm';
-import ActionRole from './mixins/ActionRole';
-import { PGSQL_ENABLED } from '@root/config';
+// import GameEntity from '../orm/entities/Game';
+// import { getRepository } from 'typeorm';
+import SingleTarget from './mixins/SingleTarget';
+// import { PGSQL_ENABLED } from '@root/config';
 import { format } from '@util/durationFormat';
 import { Time } from '@sapphire/time-utilities';
 import { aliveOrRecentJester } from '../util/utils';
@@ -32,7 +32,6 @@ export default class Game {
 	public players: PlayerManager;
 	public votes: VoteManager;
 	public nightActions: NightActionsManager;
-	public settings: GameSettings;
 	/**
 	 * When the current phase ends at
 	 */
@@ -47,18 +46,13 @@ export default class Game {
 	 * An array of user IDs of muted players
 	 */
 	public permissionOverwrites: string[] = [];
-	public constructor(host: User, public channel: TextChannel) {
+	public constructor(host: User, public channel: TextChannel, public settings: GameSettings) {
 		this.client = channel.client as Godfather;
 		this.phase = Phase.Pregame;
 		this.players = new PlayerManager(this);
 		this.players.push(new Player(host, this));
 		this.votes = new VoteManager(this);
 		this.nightActions = new NightActionsManager(this);
-		this.settings = {
-			dayDuration: 5 * 60,
-			nightDuration: 2 * 60,
-			overwritePermissions: true
-		};
 	}
 
 	public async startDay() {
@@ -88,18 +82,17 @@ export default class Game {
 		const alivePlayers = this.players.filter(player => player.isAlive);
 		// populate voting cache
 		this.votes.reset();
-		this.phaseEndAt = new Date();
-		this.phaseEndAt.setSeconds(this.phaseEndAt.getSeconds() + (this.settings.dayDuration));
+		this.phaseEndAt = new Date(Date.now() + this.settings.dayDuration);
 
 		// send all day action pms
 		for (const player of this.players) {
-			if (player.isAlive && player.role.canUseAction().check && (player.role as ActionRole).actionPhase === Phase.Day) {
+			if (player.isAlive && player.role.canUseAction().check && (player.role as SingleTarget).actionPhase === Phase.Day) {
 				await player.role.onDay();
 			}
 		}
 
 		await this.channel.send([
-			`Day **${this.cycle}** will last ${format(this.settings.dayDuration * Time.Second)}`,
+			`Day **${this.cycle}** will last ${format(this.settings.dayDuration)}`,
 			`With ${alivePlayers.length} alive, it takes ${this.majorityVotes} to lynch.`
 		].join('\n'));
 	}
@@ -113,11 +106,10 @@ export default class Game {
 
 		this.phase = Phase.Standby;
 		this.votes.reset();
-		this.phaseEndAt = new Date();
-		this.phaseEndAt.setSeconds(this.phaseEndAt.getSeconds() + this.settings.nightDuration);
+		this.phaseEndAt = new Date(Date.now() + this.settings.nightDuration);
 
-		await this.channel.send(`Night **${this.cycle}** will last ${format(this.settings.nightDuration * Time.Second)}. Send in your actions quickly!`);
-		for (const player of this.players.filter(player => aliveOrRecentJester(player) && player.role!.canUseAction().check && (player.role! as ActionRole).actionPhase === Phase.Night)) {
+		await this.channel.send(`Night **${this.cycle}** will last ${format(this.settings.nightDuration)}. Send in your actions quickly!`);
+		for (const player of this.players.filter(player => aliveOrRecentJester(player) && player.role!.canUseAction().check && (player.role! as SingleTarget).actionPhase === Phase.Night)) {
 			await player.role!.onNight();
 		}
 
@@ -199,14 +191,14 @@ export default class Game {
 			codeBlock('', this.players.map(playerMapping).join('\n'))
 		].join('\n'));
 
-		if (PGSQL_ENABLED) {
-			const entity = new GameEntity();
-			entity.setupName = this.setup!.name;
-			entity.winningFaction = data.winningFaction?.name;
-			entity.independentWins = data.independentWins.map(faction => faction.name);
-			entity.guildID = this.channel.guild.id;
-			await getRepository(GameEntity).save(entity);
-		}
+		// if (PGSQL_ENABLED) {
+		//	const entity = new GameEntity();
+		//	entity.setupName = this.setup!.name;
+		//	entity.winningFaction = data.winningFaction?.name;
+		//	entity.independentWins = data.independentWins.map(faction => faction.name);
+		//	entity.guildID = this.channel.guild.id;
+		//	await getRepository(GameEntity).save(entity);
+		// }
 
 		await this.delete();
 	}

@@ -60,8 +60,8 @@ export default class extends GodfatherCommand {
 			success = false;
 		}
 
-		if (isThenable(result)) result = await result;
 		const type = new Type(result).toString();
+		if (isThenable(result)) result = await result;
 
 		if (typeof result !== 'string') {
 			result = inspect(result, {

@@ -1,9 +1,9 @@
 import NightActionsManager, { NightActionPriority } from '../../managers/NightActionsManager';
-import ActionRole from '@mafia/mixins/ActionRole';
+import SingleTarget from '@root/lib/mafia/mixins/SingleTarget';
 import Townie from '@mafia/mixins/Townie';
 import Player from '@mafia/Player';
 
-class Neapolitan extends ActionRole {
+class Neapolitan extends SingleTarget {
 
 	public name = 'Neapolitan';
 	public description = 'Like a cop, but with less powerful investigations.';

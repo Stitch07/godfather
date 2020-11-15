@@ -1,10 +1,10 @@
-import ActionRole from '@mafia/mixins/ActionRole';
+import SingleTarget from '@root/lib/mafia/mixins/SingleTarget';
 import JesterFaction from '@mafia/factions/neutral/Jester';
 import NightActionsManager, { Attack, NightActionPriority } from '@mafia/managers/NightActionsManager';
 import Player from '@mafia/Player';
 import { randomArray } from '@util/utils';
 
-export default class Jester extends ActionRole {
+export default class Jester extends SingleTarget {
 
 	public name = 'Jester';
 	public faction = new JesterFaction();

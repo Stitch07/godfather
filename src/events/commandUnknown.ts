@@ -1,4 +1,4 @@
-import ActionRole from '@mafia/mixins/ActionRole';
+import SingleTarget from '@root/lib/mafia/mixins/SingleTarget';
 import { Event, Events, PieceContext } from '@sapphire/framework';
 import { Message } from 'discord.js';
 
@@ -19,7 +19,7 @@ export default class extends Event<Events.UnknownCommand> {
 		if (!player.isAlive) return;
 		if (!Reflect.has(player.role, 'action')) return;
 
-		if ((player.role! as ActionRole).actionPhase !== game.phase) return;
+		if ((player.role! as SingleTarget).actionPhase !== game.phase) return;
 		const prefixLess = message.content.slice(prefix.length);
 		const [commandText, ...parameters] = prefixLess.split(' ');
 		try {

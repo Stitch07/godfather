@@ -1,8 +1,8 @@
 import NightActionsManager, { Attack, NightActionPriority } from '@mafia/managers/NightActionsManager';
 import Player from '@mafia/Player';
-import ActionRole from '@mafia/mixins/ActionRole';
+import SingleTarget from '@root/lib/mafia/mixins/SingleTarget';
 
-export default class Killer extends ActionRole {
+export default class Killer extends SingleTarget {
 
 	public action = 'shoot';
 	public actionText = 'shoot a player';
@@ -19,7 +19,7 @@ export default class Killer extends ActionRole {
 	public runAction(actions: NightActionsManager, target: Player) {
 		this.bullets--;
 		if (target.role.defense > this.attackStrength) return;
-		actions.record.setAction(target.user.id, 'nightkill', { result: true, by: [this.player], type: Attack.Basic });
+		actions.record.setAction(target.user.id, 'nightkill', { result: true, by: [this.player], type: this.attackStrength });
 	}
 
 	public tearDown(actions: NightActionsManager, target: Player) {
