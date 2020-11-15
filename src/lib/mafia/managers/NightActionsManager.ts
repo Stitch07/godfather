@@ -1,7 +1,7 @@
 import Player from '@mafia/Player';
 import DefaultMap from '@util/DefaultMap';
 import Game, { Phase } from '@mafia/Game';
-import ActionRole from '@mafia/mixins/ActionRole';
+import SingleTarget from '@root/lib/mafia/mixins/SingleTarget';
 
 export default class NightActionsManager extends Array<NightAction> {
 
@@ -23,11 +23,11 @@ export default class NightActionsManager extends Array<NightAction> {
 		// run setUp, runAction and tearDown
 		for (const { action, actor, target } of this) {
 			if (action === undefined) continue;
-			await (actor.role! as ActionRole).setUp(this, target);
+			await (actor.role! as SingleTarget).setUp(this, target);
 		}
 		for (const { action, actor, target, flags } of this) {
 			if (action === undefined) continue;
-			await (actor.role! as ActionRole).runAction(this, target);
+			await (actor.role! as SingleTarget).runAction(this, target);
 			if (actor !== target && (flags?.canVisit ?? true)) {
 				const targets = Array.isArray(target) ? target : [target];
 				for (const target of targets) {
@@ -37,7 +37,7 @@ export default class NightActionsManager extends Array<NightAction> {
 		}
 		for (const { action, actor, target } of this) {
 			if (action === undefined) continue;
-			await (actor.role! as ActionRole).tearDown(this, target);
+			await (actor.role! as SingleTarget).tearDown(this, target);
 		}
 
 		const deadPlayers = [];

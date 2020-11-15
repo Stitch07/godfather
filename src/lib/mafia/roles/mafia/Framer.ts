@@ -1,9 +1,9 @@
 import NightActionsManager, { NightActionPriority } from '@mafia/managers/NightActionsManager';
-import ActionRole from '@mafia/mixins/ActionRole';
+import SingleTarget from '@root/lib/mafia/mixins/SingleTarget';
 import MafiaRole from '@mafia/mixins/MafiaRole';
 import Player from '@mafia/Player';
 
-class Framer extends ActionRole {
+class Framer extends SingleTarget {
 
 	public name = 'Framer';
 

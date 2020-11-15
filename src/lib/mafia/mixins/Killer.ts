@@ -1,8 +1,8 @@
 import NightActionsManager, { Attack, NightActionPriority } from '@mafia/managers/NightActionsManager';
 import Player from '@mafia/Player';
-import ActionRole from '@mafia/mixins/ActionRole';
+import SingleTarget from '@root/lib/mafia/mixins/SingleTarget';
 
-export default class Killer extends ActionRole {
+export default class Killer extends SingleTarget {
 
 	public action = 'shoot';
 	public actionText = 'shoot a player';

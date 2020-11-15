@@ -1,9 +1,9 @@
-import ActionRole from '@mafia/mixins/ActionRole';
+import SingleTarget from '@root/lib/mafia/mixins/SingleTarget';
 import Townie from '@mafia/mixins/Townie';
 import NightActionsManager, { NightActionPriority } from '@mafia/managers/NightActionsManager';
 import Player from '@mafia/Player';
 
-class Escort extends ActionRole {
+class Escort extends SingleTarget {
 
 	public name = 'Escort';
 	public description = 'You may roleblock somebody each night.';

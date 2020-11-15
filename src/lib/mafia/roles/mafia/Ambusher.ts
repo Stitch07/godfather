@@ -1,10 +1,10 @@
-import ActionRole from '@mafia/mixins/ActionRole';
+import SingleTarget from '@root/lib/mafia/mixins/SingleTarget';
 import MafiaRole from '@mafia/mixins/MafiaRole';
 import { randomArray } from '@root/lib/util/utils';
 import NightActionsManager, { Attack, NightActionPriority } from '@mafia/managers/NightActionsManager';
 import Player from '@mafia/Player';
 
-class Ambusher extends ActionRole {
+class Ambusher extends SingleTarget {
 
 	public name = 'Ambusher';
 	public description = 'You may set up at someones house each night and kill a visitor';

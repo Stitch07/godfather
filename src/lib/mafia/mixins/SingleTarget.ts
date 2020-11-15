@@ -7,7 +7,7 @@ import { remove } from '@util/utils';
 import { Message } from 'discord.js';
 
 
-class ActionRole extends Role {
+class SingleTarget extends Role {
 
 	public actionPhase = Phase.Night;
 
@@ -124,7 +124,7 @@ class ActionRole extends Role {
 
 }
 
-interface ActionRole {
+interface SingleTarget {
 	action: string;
 	actionGerund: string;
 	actionText: string;
@@ -136,4 +136,4 @@ interface ActionRole {
 	priority: NightActionPriority;
 }
 
-export default ActionRole;
+export default SingleTarget;

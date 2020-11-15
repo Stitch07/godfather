@@ -10,7 +10,7 @@ import { TextChannel, User } from 'discord.js';
 import { codeBlock } from '@sapphire/utilities';
 import GameEntity from '../orm/entities/Game';
 import { getRepository } from 'typeorm';
-import ActionRole from './mixins/ActionRole';
+import SingleTarget from './mixins/SingleTarget';
 import { PGSQL_ENABLED } from '@root/config';
 import { format } from '@util/durationFormat';
 import { Time } from '@sapphire/time-utilities';
@@ -93,7 +93,7 @@ export default class Game {
 
 		// send all day action pms
 		for (const player of this.players) {
-			if (player.isAlive && player.role.canUseAction().check && (player.role as ActionRole).actionPhase === Phase.Day) {
+			if (player.isAlive && player.role.canUseAction().check && (player.role as SingleTarget).actionPhase === Phase.Day) {
 				await player.role.onDay();
 			}
 		}
@@ -117,7 +117,7 @@ export default class Game {
 		this.phaseEndAt.setSeconds(this.phaseEndAt.getSeconds() + this.settings.nightDuration);
 
 		await this.channel.send(`Night **${this.cycle}** will last ${format(this.settings.nightDuration * Time.Second)}. Send in your actions quickly!`);
-		for (const player of this.players.filter(player => aliveOrRecentJester(player) && player.role!.canUseAction().check && (player.role! as ActionRole).actionPhase === Phase.Night)) {
+		for (const player of this.players.filter(player => aliveOrRecentJester(player) && player.role!.canUseAction().check && (player.role! as SingleTarget).actionPhase === Phase.Night)) {
 			await player.role!.onNight();
 		}
 

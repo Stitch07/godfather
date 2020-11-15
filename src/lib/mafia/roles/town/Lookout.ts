@@ -1,10 +1,10 @@
-import ActionRole from '@mafia/mixins/ActionRole';
+import SingleTarget from '@root/lib/mafia/mixins/SingleTarget';
 import Townie from '@mafia/mixins/Townie';
 import NightActionsManager, { NightActionPriority } from '@mafia/managers/NightActionsManager';
 import Player from '@mafia/Player';
 import { listItems } from '@util/utils';
 
-class Lookout extends ActionRole {
+class Lookout extends SingleTarget {
 
 	public name = 'Lookout';
 	public description = 'You may watch a person at night and see who visits them.';
