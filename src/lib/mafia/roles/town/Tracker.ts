@@ -22,4 +22,6 @@ class Tracker extends SingleTarget {
 
 }
 
+Tracker.categories.push('Town Investigative');
+
 export default Townie(Tracker);

@@ -1,4 +1,4 @@
-import Townie from '@mafia/mixins/Townie';
+import DethyCop from '@mafia/mixins/DethyCop';
 import Cop from '../Cop';
 
 // @ts-ignore weird error
@@ -12,4 +12,4 @@ class Naive_Cop extends Cop {
 
 }
 
-export default Townie(Naive_Cop);
+export default DethyCop(Naive_Cop);

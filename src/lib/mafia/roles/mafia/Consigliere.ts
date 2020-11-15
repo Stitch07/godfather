@@ -26,5 +26,6 @@ class Consigliere extends SingleTarget {
 }
 
 Consigliere.aliases = ['Consig'];
+Consigliere.categories.push('Mafia Support');
 
 export default MafiaRole(Consigliere);

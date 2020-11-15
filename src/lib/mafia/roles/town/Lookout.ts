@@ -23,4 +23,5 @@ class Lookout extends SingleTarget {
 
 }
 
+Lookout.categories.push('Town Investigative');
 export default Townie(Lookout);

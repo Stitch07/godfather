@@ -26,4 +26,6 @@ class Framer extends SingleTarget {
 
 }
 
+Framer.categories.push('Mafia Deception');
+
 export default MafiaRole(Framer);

@@ -39,4 +39,6 @@ class Cop extends SingleTarget {
 
 }
 
+Cop.categories.push('Town Investigative');
+
 export default Townie(Cop);

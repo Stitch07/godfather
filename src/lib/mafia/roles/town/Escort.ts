@@ -32,4 +32,6 @@ class Escort extends SingleTarget {
 
 }
 
+Escort.categories.push('Town Support');
+
 export default Townie(Escort);
