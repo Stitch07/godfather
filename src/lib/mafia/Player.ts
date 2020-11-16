@@ -1,6 +1,7 @@
 import Role from './Role';
 import Game from './Game';
 import { User } from 'discord.js';
+import { ENABLE_PRIVATE_CHANNELS } from '@root/config';
 
 export default class Player {
 
@@ -24,7 +25,8 @@ export default class Player {
 		if (this.role.faction.informed) {
 			const team = this.game.players.filter(player => player.role.faction.name === this.role.faction.name);
 			if (team.length > 1) {
-				await this.user.send(`Your team consists of: ${team.map(player => player.user).join(', ')}`);
+				const factionalChannel = ENABLE_PRIVATE_CHANNELS ? await this.role.faction.generateInvite(this.game) : null;
+				await this.user.send(`Your team consists of: ${team.map(player => player.user.tag).join(', ')}\n${factionalChannel ? `Factional channel: ${factionalChannel}` : ''}`);
 			}
 		}
 	}

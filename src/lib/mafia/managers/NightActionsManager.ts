@@ -2,6 +2,7 @@ import Player from '@mafia/Player';
 import DefaultMap from '@util/DefaultMap';
 import Game, { Phase } from '@mafia/Game';
 import SingleTarget from '@root/lib/mafia/mixins/SingleTarget';
+import { listItems } from '@root/lib/util/utils';
 
 export default class NightActionsManager extends Array<NightAction> {
 
@@ -14,6 +15,12 @@ export default class NightActionsManager extends Array<NightAction> {
 	public async addAction(action: NightAction) {
 		const possibleActions = this.game.players.filter(player => player.role.canUseAction().check && Reflect.get(player.role, 'actionPhase') === Phase.Night);
 		this.push(action);
+
+		if (action.actor.role.faction.informed && this.game.factionalChannels.has(action.actor.role.faction.name)) {
+			const [factionalChannel] = this.game.factionalChannels.get(action.actor.role.faction.name)!;
+			const target = action.target ? Array.isArray(action.target) ? action.target : [action.target] : null;
+			await factionalChannel.send(`**${action.actor.user.tag}** is ${(action.actor.role as SingleTarget).actionGerund} ${target ? listItems(target.map(pl => pl.user.tag)) : ''}`);
+		}
 		if (this.length >= possibleActions.length) await this.game.startDay();
 	}
 

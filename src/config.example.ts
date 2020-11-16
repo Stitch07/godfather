@@ -14,3 +14,6 @@ export const PGSQL_DATABASE_PASSWORD = '';
 export const PGSQL_DATABASE_USER = '';
 export const PGSQL_DATABASE_PORT = 5432;
 export const PGSQL_DATABASE_HOST = 'localhost';
+
+export const PRIVATE_CHANNEL_SERVER = '';
+export const ENABLE_PRIVATE_CHANNELS = false;

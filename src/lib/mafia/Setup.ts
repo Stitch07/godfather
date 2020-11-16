@@ -20,7 +20,7 @@ export default abstract class Setup extends BasePiece {
 
 	public roles: string[];
 	public nightStart: boolean;
-	public description!: string;
+	public description: string | null = null;
 	public constructor(context: PieceContext, options: SetupOptions = {}) {
 		super(context, { ...options, name: (options.name ?? context.name).toLowerCase() });
 		options = mergeDefault(DEFAULT_SETUP_OPTIONS, options);

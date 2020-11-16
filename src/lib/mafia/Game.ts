@@ -6,7 +6,7 @@ import VoteManager from '@mafia/managers/VoteManager';
 import NightActionsManager from '@mafia/managers/NightActionsManager';
 import Setup from './Setup';
 
-import { TextChannel, User } from 'discord.js';
+import { Collection, TextChannel, User } from 'discord.js';
 import { codeBlock } from '@sapphire/utilities';
 // import GameEntity from '../orm/entities/Game';
 // import { getRepository } from 'typeorm';
@@ -15,6 +15,7 @@ import SingleTarget from './mixins/SingleTarget';
 import { format } from '@util/durationFormat';
 import { Time } from '@sapphire/time-utilities';
 import { aliveOrRecentJester } from '../util/utils';
+import { ENABLE_PRIVATE_CHANNELS, PRIVATE_CHANNEL_SERVER } from '@root/config';
 
 const MAX_DELAY = 15 * Time.Minute;
 
@@ -46,6 +47,7 @@ export default class Game {
 	 * An array of user IDs of muted players
 	 */
 	public permissionOverwrites: string[] = [];
+	public factionalChannels = new Collection<string, [TextChannel, string]>();
 	public constructor(host: User, public channel: TextChannel, public settings: GameSettings) {
 		this.client = channel.client as Godfather;
 		this.phase = Phase.Pregame;
@@ -86,6 +88,8 @@ export default class Game {
 
 		// send all day action pms
 		for (const player of this.players) {
+			// clear visitors
+			player.visitors = [];
 			if (player.isAlive && player.role.canUseAction().check && (player.role as SingleTarget).actionPhase === Phase.Day) {
 				await player.role.onDay();
 			}
@@ -211,6 +215,23 @@ export default class Game {
 				if (overwrite) await overwrite.update({ SEND_MESSAGES: true });
 			}
 		}
+
+		if (ENABLE_PRIVATE_CHANNELS) {
+			for (const player of this.players) {
+				if (player.role.faction.informed && this.factionalChannels.has(player.role.faction.name)) {
+					const channelServer = this.client.guilds.cache.get(PRIVATE_CHANNEL_SERVER)!;
+					if (channelServer.members.cache.has(player.user.id)) {
+						const member = channelServer.members.cache.get(player.user.id)!;
+						await member.kick().catch(() => null);
+					}
+				}
+			}
+		}
+
+		for (const [factionalChannel] of this.factionalChannels.values()) {
+			await factionalChannel.delete();
+		}
+
 		this.client.games.delete(this.channel.id);
 	}
 

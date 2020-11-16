@@ -15,11 +15,11 @@ class Doctor extends SingleTarget {
 
 	public runAction(actions: NightActionsManager, target: Player) {
 		const playerRecord = actions.record.get(target.user.id);
+		if (!playerRecord.has('nightkill')) return;
+
 		const nightKills = playerRecord.get('nightkill');
 
-		console.log(nightKills);
-
-		if (nightKills.result && nightKills.type && nightKills.type < Attack.Unstoppable) {
+		if (nightKills.result === true && nightKills.type && nightKills.type < Attack.Unstoppable) {
 			nightKills.result = false;
 			nightKills.by = [];
 			playerRecord.set('nightkill', { result: false, by: [] });

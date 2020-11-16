@@ -18,7 +18,7 @@ export default class extends GodfatherCommand {
 			const setup = setupName.success ? this.client.setups.get(setupName.value.toLowerCase())! : message.channel.game!.setup!;
 			const output = [
 				`= ${setup.name} - ${setup.totalPlayers} players`,
-				`* Description: ${setup.description}`,
+				`* Description: ${setup.description ?? 'No description available'}`,
 				''
 			];
 			if (setup.roles.length) {

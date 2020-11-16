@@ -1,5 +1,11 @@
+import { PRIVATE_CHANNEL_SERVER } from '@root/config';
+import { Permissions } from 'discord.js';
 import Game from './Game';
 import Player from './Player';
+
+export const ALLOWED_PERMISSIONS = new Permissions()
+	.add(Permissions.FLAGS.VIEW_CHANNEL)
+	.add(Permissions.FLAGS.SEND_MESSAGES);
 
 class Faction {
 
@@ -9,6 +15,34 @@ class Faction {
 	public informed = false;
 	public name = '';
 	public winCondition = '';
+
+	public async generateInvite(game: Game) {
+		if (game.factionalChannels.has(this.name)) return game.factionalChannels.get(this.name);
+
+		const guild = game.client.guilds.cache.get(PRIVATE_CHANNEL_SERVER)!;
+		const factionMembers = game.players.filter(player => player.role.faction.name === this.name);
+
+		const factionalChannel = await guild.channels.create(`${game.channel.guild.id}-${this.name}`, {
+			topic: `Discussion channel for ${this.name}`,
+			permissionOverwrites: [
+				// deny all permissions for the everyone role
+				{
+					deny: Permissions.ALL,
+					id: guild.id
+				},
+				...factionMembers.map(member => ({
+					allow: ALLOWED_PERMISSIONS,
+					id: member.user.id
+				}))
+			]
+		});
+
+		const invite = await factionalChannel.createInvite({
+			maxUses: factionMembers.length
+		});
+		game.factionalChannels.set(this.name, [factionalChannel, invite.url]);
+		return invite.url;
+	}
 
 }
 

@@ -25,6 +25,9 @@ export default class Godfather extends SapphireClient {
 			logger: {
 				instance: new Logger(),
 				level: PRODUCTION ? LogLevel.Info : LogLevel.Trace
+			},
+			ws: {
+				intents: ['GUILD_MEMBERS', 'GUILD_MESSAGES', 'GUILDS', 'DIRECT_MESSAGES', 'GUILD_MESSAGE_REACTIONS']
 			}
 		});
 

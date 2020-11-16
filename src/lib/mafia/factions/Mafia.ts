@@ -11,6 +11,8 @@ export default class MafiaFaction extends Faction {
 
 	public winCondition = 'Kill all townies and competing evil factions.';
 
+	public informed = true;
+
 	public hasWon(game: Game) {
 		// source: https://town-of-salem.fandom.com/wiki/Victory
 		// The Mafia need at least one member alive, and all opposing factions dead
