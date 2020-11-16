@@ -14,7 +14,7 @@ class Escort extends SingleTarget {
 
 	public setUp(actions: NightActionsManager, target: Player) {
 		for (const action of actions.filter(act => act.actor === target)) {
-			if (!action.flags?.canBlock) continue;
+			if (!action.flags?.canBlock ?? true) continue;
 			// escorts blocking SKs get stabbed instead
 			if (action.actor.role.name === 'Serial Killer') {
 				action.target = this.player;

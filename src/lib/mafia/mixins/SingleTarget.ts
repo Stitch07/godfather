@@ -5,6 +5,7 @@ import { Phase } from '@mafia/Game';
 import { Awaited, codeBlock } from '@sapphire/utilities';
 import { remove } from '@util/utils';
 import { Message } from 'discord.js';
+import { DEFAULT_ACTION_FLAGS } from '@root/lib/constants';
 
 
 class SingleTarget extends Role {
@@ -68,7 +69,7 @@ class SingleTarget extends Role {
 						actor: this.game.players.find(pl => pl.role.name === 'Goon')!,
 						target,
 						priority: this.priority,
-						flags: this.flags
+						flags: this.flags ?? DEFAULT_ACTION_FLAGS
 					});
 				}
 
@@ -128,7 +129,7 @@ interface SingleTarget {
 	action: string;
 	actionGerund: string;
 	actionText: string;
-	flags: {
+	flags?: {
 		canBlock: boolean;
 		canTransport: boolean;
 		canVisit: boolean;

@@ -24,7 +24,7 @@ export default class Jester extends SingleTarget {
 	public playersVoting: Player[] = [];
 
 	public async onNight() {
-		if (!this.wasLynched) return Promise.resolve();
+		if (!this.wasLynched) return;
 		// by default, the Jester should randomly haunt one of their voters
 		const randomHaunt = randomArray(this.playersVoting);
 		if (randomHaunt) {
@@ -37,8 +37,6 @@ export default class Jester extends SingleTarget {
 
 			return super.onNight();
 		}
-
-		return Promise.resolve();
 	}
 
 	public runAction(actions: NightActionsManager, target: Player) {

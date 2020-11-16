@@ -13,6 +13,30 @@ export default class Werewolf extends Killer {
 	public actionText = 'maul a player';
 	public actionParticiple = 'mauled';
 
+	public async onNight() {
+		// rampage at home by default
+		if (!this.canRampage()) return;
+		await this.game.nightActions.addAction({
+			action: 'maul',
+			actor: this.player,
+			target: this.player,
+			priority: this.priority,
+			flags: {
+				canBlock: false,
+				canTransport: false,
+				canVisit: false
+			}
+		});
+
+		return super.onNight();
+	}
+
+	public runAction(actions: NightActionsManager, target: Player) {
+		// WW rampages at home, killing all visitors
+		if (target === this.player) return;
+		return super.runAction(actions, target);
+	}
+
 	public async tearDown(actions: NightActionsManager, target: Player) {
 		// kill all visitors
 		const visitors = target.visitors.filter(player => player !== this.player);
@@ -24,13 +48,13 @@ export default class Werewolf extends Killer {
 	}
 
 	public canUseAction() {
-		if (this.game.cycle % 2 === 1) return { check: false, reason: 'You can only rampage on even nights.' };
+		if (!this.canRampage()) return { check: false, reason: 'You can only rampage on even nights.' };
 		return super.canUseAction();
 	}
 
 	public get innocence() {
 		// Werewolves are innocent on odd nights
-		return this.game.cycle % 2 === 1;
+		return !this.canRampage();
 	}
 
 	public get defense() {
@@ -39,6 +63,11 @@ export default class Werewolf extends Killer {
 
 	public get attackStrength() {
 		return Attack.Powerful;
+	}
+
+	// whether the Werewolf can rampage during this night
+	private canRampage() {
+		return this.game.cycle % 2 === 0;
 	}
 
 }

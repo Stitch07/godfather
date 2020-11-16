@@ -28,10 +28,10 @@ export default class NightActionsManager extends Array<NightAction> {
 		for (const { action, actor, target, flags } of this) {
 			if (action === undefined) continue;
 			await (actor.role! as SingleTarget).runAction(this, target);
-			if (actor !== target && (flags?.canVisit ?? true)) {
+			if (flags?.canVisit) {
 				const targets = Array.isArray(target) ? target : [target];
 				for (const target of targets) {
-					await target?.visit(actor);
+					if (target?.user.id !== actor.user.id) await target?.visit(actor);
 				}
 			}
 		}
