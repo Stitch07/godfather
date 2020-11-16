@@ -54,7 +54,8 @@ abstract class Role {
 		// noop
 	}
 
-	public onVisit() {
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	public onVisit(visitor: Player) {
 		// noop
 	}
 

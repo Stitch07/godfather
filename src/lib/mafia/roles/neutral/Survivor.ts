@@ -21,16 +21,12 @@ export default class Survivor extends NoTarget {
 	private vests = 4;
 
 	public canUseAction() {
-		if (this.vests === 0) {
-			return { check: false, reason: 'You don\'t have any vests left' };
-		}
+		if (this.vests === 0) return { check: false, reason: 'You don\'t have any vests left' };
 		return super.canUseAction();
 	}
 
 	public get defense() {
-		if (this.vested) {
-			return Defense.Basic;
-		}
+		if (this.vested) return Defense.Basic;
 		return Defense.None;
 	}
 
