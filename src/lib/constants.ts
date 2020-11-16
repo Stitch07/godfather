@@ -17,6 +17,12 @@ export const DEFAULT_GAME_SETTINGS: GameSettings = {
 	overwritePermissions: true
 };
 
+export const DEFAULT_ACTION_FLAGS = {
+	canBlock: true,
+	canTransport: true,
+	canVisit: true
+};
+
 export const GUILD_SETTINGS_METADATA: SettingsEntry<keyof ArgType>[] = [
 	{
 		name: 'dayDuration',

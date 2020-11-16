@@ -4,6 +4,7 @@ import { Message } from 'discord.js';
 import NightActionsManager, { NightActionPriority } from '@mafia/managers/NightActionsManager';
 import Role from '@mafia/Role';
 import { Phase } from '@mafia/Game';
+import { DEFAULT_ACTION_FLAGS } from '@root/lib/constants';
 
 class NoTarget extends Role {
 
@@ -41,7 +42,7 @@ class NoTarget extends Role {
 					action: this.action,
 					actor: this.player,
 					priority: this.priority,
-					flags: this.flags
+					flags: this.flags ?? DEFAULT_ACTION_FLAGS
 				});
 		}
 
@@ -77,7 +78,7 @@ interface NoTarget {
 	action: string;
 	actionGerund: string;
 	actionText: string;
-	flags: {
+	flags?: {
 		canBlock: boolean;
 		canTransport: boolean;
 		canVisit: boolean;
