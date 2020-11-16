@@ -6,14 +6,14 @@ import Player from '@mafia/Player';
 class Veteran extends NoTarget {
 
 	public name = 'Veteran';
-	public description = 'You may go on alert 3 times a game, well on alert, you gain a basic defense and deal a Powerful attack against all vistors';
+	public description = 'You may go on alert 3 times a game, killing all visitors.';
 	public action = 'alert';
-	public actionGerund = 'going on alert tonight';
+	public actionGerund = 'going on alert';
 	public actionText = 'go on alert';
 	public priority = NightActionPriority.VETERAN;
 	public flags = {
 		canBlock: false,
-		canTransport: true,
+		canTransport: false,
 		canVisit: false
 	};
 
