@@ -1,6 +1,7 @@
 import NoTarget from '@mafia/mixins/NoTarget';
 import Townie from '@mafia/mixins/Townie';
-import NightActionsManager, { Attack, Defense, NightActionPriority } from '@mafia/managers/NightActionsManager';
+import { Attack, Defense, NightActionPriority } from '@mafia/managers/NightActionsManager';
+import Player from '@mafia/Player';
 
 class Veteran extends NoTarget {
 
@@ -38,25 +39,20 @@ class Veteran extends NoTarget {
 		this.onAlert = true;
 	}
 
-	public runAction(actions: NightActionsManager) {
+	public runAction() {
 		this.alerts--;
-		for (const vistor of this.player.visitors) {
-			actions.record.setAction(vistor.user.id, 'nightkill', { by: [this.player], result: true, type: Attack.Powerful });
+	}
+
+	public async onVisit(visitor: Player) {
+		if (this.onAlert && visitor.role.defense < Defense.Invincible) {
+			this.game.nightActions.record.setAction(visitor.user.id, 'nightkill', { by: [this.player], result: true, type: Attack.Powerful });
+			await visitor.user.send('You were killed by the veteran you visited!');
 			return this.player.user.send('You shot someone who visted you.');
 		}
 	}
 
-	public tearDown(actions: NightActionsManager) {
+	public tearDown() {
 		this.onAlert = false;
-		for (const vistor of this.player.visitors) {
-			const record = actions.record.get(vistor.user.id).get('nightkill');
-			const success = record.result && record.by.some(player => this.player.user.id === player.user.id);
-			if (!success) {
-				// veteran isn't told if their target died or not
-				return vistor.user.send('You were shot by a Veteran you visted!');
-			}
-			return vistor.user.send('You were shot by a Veteran you visted! You have died!');
-		}
 	}
 
 }
