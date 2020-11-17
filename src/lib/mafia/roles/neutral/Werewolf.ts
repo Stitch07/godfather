@@ -65,6 +65,11 @@ export default class Werewolf extends Killer {
 		return Attack.Powerful;
 	}
 
+	public canTarget(target: Player) {
+		if (target === this.player) return { check: true, reason: '' };
+		return super.canTarget(target);
+	}
+
 	// whether the Werewolf can rampage during this night
 	private canRampage() {
 		return this.game.cycle % 2 === 0;
