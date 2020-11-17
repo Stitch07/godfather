@@ -57,7 +57,7 @@ class Veteran extends NoTarget {
 
 }
 
-Veteran.categories.push('Town Killing');
+Veteran.categories = [...Veteran.categories, 'Town Killing'];
 Veteran.aliases = ['Vet'];
 
 export default Townie(Veteran);

@@ -19,4 +19,4 @@ export default class Serial_Killer extends Killer {
 }
 
 Serial_Killer.aliases = ['SK'];
-Serial_Killer.categories.push('Neutral Killing');
+Serial_Killer.categories = [...Serial_Killer.categories, 'Neutral Killing'];

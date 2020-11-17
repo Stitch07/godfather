@@ -26,4 +26,6 @@ class Janitor extends SingleTarget {
 
 }
 
+Janitor.categories = [...Janitor.categories, 'Mafia Deception'];
+
 export default MafiaRole(Janitor);

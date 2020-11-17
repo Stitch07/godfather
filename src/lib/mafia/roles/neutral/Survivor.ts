@@ -51,4 +51,4 @@ export default class Survivor extends NoTarget {
 }
 
 Survivor.aliases = ['Surv'];
-Survivor.categories.push('Neutral Benign');
+Survivor.categories = [...Survivor.categories, 'Neutral Benign'];

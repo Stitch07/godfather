@@ -42,7 +42,7 @@ class Vigilante extends Killer {
 
 }
 
-Vigilante.categories = ['Town Killing'];
+Vigilante.categories = [...Vigilante.categories, 'Town Killing'];
 Vigilante.aliases = ['Vig', 'Vigi'];
 
 export default Townie(Vigilante);

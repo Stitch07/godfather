@@ -14,6 +14,6 @@ export default function DethyCop<TBaseRole extends typeof Role>(BaseRole: TBaseR
 
 	}
 
-	DethyCop.categories = ['Dethy Cop', 'Dethy'];
+	DethyCop.categories = ['Dethy Cop'];
 	return DethyCop;
 }

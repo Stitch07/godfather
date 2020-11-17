@@ -48,6 +48,6 @@ class Ambusher extends SingleTarget {
 
 }
 
-Ambusher.categories.push('Mafia Killing');
+Ambusher.categories = [...Ambusher.categories, 'Mafia Killing'];
 
 export default MafiaRole(Ambusher);

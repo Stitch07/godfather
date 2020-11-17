@@ -31,6 +31,6 @@ class Mayor extends SingleTarget {
 
 }
 
-Mayor.categories.push('Town Support');
+Mayor.categories = [...Mayor.categories, 'Town Support'];
 
 export default Townie(Mayor);

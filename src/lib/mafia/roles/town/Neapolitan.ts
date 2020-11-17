@@ -26,6 +26,6 @@ class Neapolitan extends SingleTarget {
 
 }
 
-Neapolitan.categories.push('Town Investigative');
+Neapolitan.categories = [...Neapolitan.categories, 'Town Investigative'];
 
 export default Townie(Neapolitan);

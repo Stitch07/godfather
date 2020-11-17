@@ -25,7 +25,7 @@ class Goon extends Killer {
 
 }
 
-Goon.categories.push('Mafia Killing');
+Goon.categories = [...Goon.categories, 'Mafia Killing'];
 Goon.aliases = ['Mafioso'];
 
 export default MafiaRole(Goon);

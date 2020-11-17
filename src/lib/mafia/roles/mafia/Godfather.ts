@@ -27,6 +27,7 @@ class Godfather extends Killer {
 
 }
 
+Godfather.categories = [...Godfather.categories, 'Mafia Killing'];
 Godfather.aliases = ['GF'];
 
 export default MafiaRole(Godfather);

@@ -8,4 +8,6 @@ class Consort extends Escort {
 
 }
 
+Consort.categories = ['Any', 'Mafia Support'];
+
 export default MafiaRole(Consort);

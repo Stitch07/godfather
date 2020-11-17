@@ -77,4 +77,5 @@ export default class Werewolf extends Killer {
 
 }
 
-Werewolf.aliases = ['SK'];
+Werewolf.categories = [...Werewolf.categories, 'Neutral Killing'];
+Werewolf.aliases = ['WW'];
