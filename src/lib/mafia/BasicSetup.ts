@@ -10,34 +10,31 @@ export default class BasicSetup extends Setup {
 	public generate() {
 		const generatedRoles = [];
 		const shuffled = shuffle(this.roles);
+		const uniqueRoles: Constructor<Role>[] = [];
 
 		for (const roleName of shuffled) {
 			// Role x2 becomes Role, Role
 			if (/(\w+ ?\w+ ?) ?x(\d)/.test(roleName)) {
 				const matches = /(\w+ ?\w+ ?) ?x(\d)/.exec(roleName)!;
-				console.log(matches);
 				for (let i = 0; i < Number(matches[2]); i++) {
-					generatedRoles.push(BasicSetup.resolve(matches[1]));
+					generatedRoles.push(BasicSetup.resolve(matches[1].trimEnd(), uniqueRoles));
 				}
 				continue;
 			}
-			generatedRoles.push(BasicSetup.resolve(roleName));
+			generatedRoles.push(BasicSetup.resolve(roleName, uniqueRoles));
 		}
 
 		return generatedRoles;
 	}
 
-	public static resolve(roleName: string): Constructor<Role> {
-		if (allRoles.has(roleName)) return allRoles.get(roleName)!;
-		else if (roleCategories.has(roleName)) return randomArray(roleCategories.get(roleName)!)!;
-
-		// Role1 | Role2 (one of these 2)
-		if (/(\w+) ?\| ?(\w+)/.test(roleName)) {
-			const possibleRoles = /(\w+) ?\| ?(\w+)/.exec(roleName)!.slice(1, 3);
-			return this.resolve(randomArray(possibleRoles)!);
+	public static resolve(roleName: string, uniqueRoles: Constructor<Role>[]): Constructor<Role> {
+		const role = BasicSetup._resolve(roleName, uniqueRoles);
+		// @ts-ignore tsc doesn't recognize static fields
+		if (role.unique) {
+			uniqueRoles.push(role);
 		}
 
-		throw `Invalid role provided: \`${roleName}\`.`;
+		return role;
 	}
 
 	/**
@@ -61,7 +58,7 @@ export default class BasicSetup extends Setup {
 		for (const role of setupData.roles) {
 			// this will throw if an invalid role was provided
 			if (/(\w+ ?\w+ ?) ?x(\d)/.test(role)) continue;
-			BasicSetup.resolve(role);
+			BasicSetup.resolve(role, []);
 		}
 
 		// @ts-ignore this is a hack, but is required
@@ -69,6 +66,19 @@ export default class BasicSetup extends Setup {
 		setup.roles = setupData.roles;
 		setup.nightStart = setupData.nightStart ?? false;
 		return setup;
+	}
+
+	private static _resolve(roleName: string, uniqueRoles: Constructor<Role>[]): Constructor<Role> {
+		if (allRoles.has(roleName)) return allRoles.get(roleName)!;
+		else if (roleCategories.has(roleName)) return randomArray(roleCategories.get(roleName)!.filter(role => !uniqueRoles.includes(role)))!;
+
+		// Role1 | Role2 (one of these 2)
+		if (/(\w+) ?\| ?(\w+)/.test(roleName)) {
+			const possibleRoles = /(\w+) ?\| ?(\w+)/.exec(roleName)!.slice(1, 3);
+			return this.resolve(randomArray(possibleRoles)!, uniqueRoles);
+		}
+
+		throw `Invalid role provided: \`${roleName}\`.`;
 	}
 
 }

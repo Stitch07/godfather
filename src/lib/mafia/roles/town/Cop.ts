@@ -35,8 +35,6 @@ class Cop extends SingleTarget {
 		return innocence;
 	}
 
-	public static documentation = 'Roleinfo docs here.';
-
 }
 
 Cop.categories = [...Cop.categories, 'Town Investigative'];

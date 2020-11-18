@@ -209,14 +209,14 @@ export default class Game {
 
 	public async delete() {
 		// free all permission overwrites
-		if (this.canOverwritePermissions) {
+		if (this.canOverwritePermissions && this.hasStarted) {
 			for (const userID of this.permissionOverwrites) {
 				const overwrite = this.channel.permissionOverwrites.find(permission => permission.type === 'member' && permission.id === userID);
 				if (overwrite) await overwrite.update({ SEND_MESSAGES: true });
 			}
 		}
 
-		if (ENABLE_PRIVATE_CHANNELS) {
+		if (ENABLE_PRIVATE_CHANNELS && this.hasStarted) {
 			for (const player of this.players) {
 				if (player.role.faction.informed && this.factionalChannels.has(player.role.faction.name)) {
 					const channelServer = this.client.guilds.cache.get(PRIVATE_CHANNEL_SERVER)!;

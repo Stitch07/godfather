@@ -55,6 +55,8 @@ class Veteran extends NoTarget {
 		this.onAlert = false;
 	}
 
+	public static unique = true;
+
 }
 
 Veteran.categories = [...Veteran.categories, 'Town Killing'];

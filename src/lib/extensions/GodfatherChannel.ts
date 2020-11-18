@@ -11,10 +11,10 @@ export default class GodfatherChannel extends Structures.get('TextChannel') {
 		await msg!.react('🇾');
 		await msg!.react('🇳');
 
-		const reactions = await msg.awaitReactions(([reaction, user]) => user.id === promptUser.id && ['🇾', '🇳'].includes(reaction.emoji.toString()),
+		const reactions = await msg.awaitReactions((reaction, user) => user.id === promptUser.id && ['🇾', '🇳'].includes(reaction.emoji.name),
 			{
 				max: 1,
-				idle: 30 * 1000
+				time: 30 * 1000
 			});
 
 		const emoji = reactions.first()?.emoji.toString() || '🇳';

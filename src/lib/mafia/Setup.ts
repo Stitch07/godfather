@@ -38,7 +38,7 @@ export default abstract class Setup extends BasePiece {
 	}
 
 	public get totalPlayers() {
-		return this.roles.length;
+		return this.generate().length;
 	}
 
 }

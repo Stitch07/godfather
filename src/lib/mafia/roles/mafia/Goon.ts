@@ -23,6 +23,8 @@ class Goon extends Killer {
 		return super.canUseAction();
 	}
 
+	public static unique = true;
+
 }
 
 Goon.categories = [...Goon.categories, 'Mafia Killing'];

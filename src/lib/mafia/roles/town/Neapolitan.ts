@@ -22,8 +22,6 @@ class Neapolitan extends SingleTarget {
 		}
 	}
 
-	public static documentation = 'Roleinfo docs here.';
-
 }
 
 Neapolitan.categories = [...Neapolitan.categories, 'Town Investigative'];

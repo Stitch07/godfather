@@ -22,8 +22,6 @@ class SuperSaint extends Role {
 		}
 	}
 
-	public static documentation = 'Roleinfo docs here.';
-
 }
 
 export default Townie(SuperSaint);

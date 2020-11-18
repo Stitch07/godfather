@@ -15,7 +15,6 @@ abstract class Role {
 
 	public name = '';
 	public description = '';
-	public unique = false;
 	public constructor(public player: Player) {
 	}
 
@@ -67,6 +66,8 @@ abstract class Role {
 	public static categories: string[] = ['Any'];
 
 	public static aliases: string[] = [];
+
+	public static unique = false;
 
 }
 

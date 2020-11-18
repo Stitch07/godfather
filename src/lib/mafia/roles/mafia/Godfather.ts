@@ -6,7 +6,6 @@ class Godfather extends Killer {
 
 	public name = 'Godfather';
 	public description = 'You can order the mafioso to shoot someone every night.';
-	public unique = true;
 
 	public setUp(actions: NightActionsManager) {
 		const goonKills = actions.filter(action => action.actor.role.name === 'Goon');
@@ -24,6 +23,8 @@ class Godfather extends Killer {
 	public get innocence() {
 		return true;
 	}
+
+	public static unique = true;
 
 }
 
