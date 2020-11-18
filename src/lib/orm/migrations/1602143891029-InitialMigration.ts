@@ -1,15 +1,22 @@
-import { MigrationInterface, QueryRunner } from 'typeorm';
+import { PREFIX } from '@root/config';
+import { MigrationInterface, QueryRunner, Table, TableColumn } from 'typeorm';
 
 export class InitialMigration1602143891029 implements MigrationInterface {
 
 	public name = 'InitialMigration1602143891029';
 
 	public async up(queryRunner: QueryRunner): Promise<void> {
-		await queryRunner.query(`CREATE TABLE "guild_settings" ("id" character varying(19) NOT NULL, "prefix" character varying(10) NOT NULL DEFAULT 'g!', CONSTRAINT "PK_259bd839beb2830fe5c2ddd2ff5" PRIMARY KEY ("id"))`);
+		await queryRunner.createTable(new Table({
+			name: 'guild_settings',
+			columns: [
+				new TableColumn({ name: 'id', type: 'varchar', length: '19', isNullable: false, isPrimary: true }),
+				new TableColumn({ 'name': 'prefix', 'type': 'varchar', 'length': '10', 'isNullable': false, 'default': `'${PREFIX}'` })
+			]
+		}));
 	}
 
 	public async down(queryRunner: QueryRunner): Promise<void> {
-		await queryRunner.query(`DROP TABLE "guild_settings"`);
+		await queryRunner.dropTable('guild_settings');
 	}
 
 }
