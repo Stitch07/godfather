@@ -1,4 +1,5 @@
-import SingleTarget from '@root/lib/mafia/mixins/SingleTarget';
+import SingleTarget from '@mafia/mixins/SingleTarget';
+import { aliveOrRecentJester } from '@util/utils';
 import { Event, Events, PieceContext } from '@sapphire/framework';
 import { Message } from 'discord.js';
 
@@ -16,8 +17,7 @@ export default class extends Event<Events.UnknownCommand> {
 		if (!game) return;
 
 		const player = game.players.get(message.author)!;
-		if (!player.isAlive) return;
-		if (!Reflect.has(player.role, 'action')) return;
+		if (!aliveOrRecentJester(player) || !Reflect.has(player.role, 'action')) return;
 
 		if ((player.role! as SingleTarget).actionPhase !== game.phase) return;
 		const prefixLess = message.content.slice(prefix.length);

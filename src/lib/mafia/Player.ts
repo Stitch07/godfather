@@ -26,7 +26,7 @@ export default class Player {
 			const team = this.game.players.filter(player => player.role.faction.name === this.role.faction.name);
 			if (team.length > 1) {
 				const factionalChannel = ENABLE_PRIVATE_CHANNELS ? await this.role.faction.generateInvite(this.game) : null;
-				await this.user.send(`Your team consists of: ${team.map(player => player.user.tag).join(', ')}\n${factionalChannel ? `Factional channel: ${factionalChannel}` : ''}`);
+				await this.user.send(`Your team consists of: ${team.map(player => `${player.user.tag} (${player.role.name})`).join(', ')}\n${factionalChannel ? `Factional channel: ${factionalChannel}` : ''}`);
 			}
 		}
 	}
@@ -42,7 +42,8 @@ export default class Player {
 		// mute dead people
 		if (this.game.canOverwritePermissions) {
 			await this.game.channel.updateOverwrite(this.user, {
-				SEND_MESSAGES: false
+				SEND_MESSAGES: false,
+				ADD_REACTIONS: false
 			});
 			this.game.permissionOverwrites.push(this.user.id);
 		}

@@ -37,7 +37,7 @@ export const randomArray = <T>(array: readonly T[]): T | null => {
 };
 
 export const aliveOrRecentJester = (player: Player) => {
-	if (!player.isAlive && player.role!.name === 'Jester' && player.deathReason === `lynched d${player.game.cycle}`) return true;
+	if (!player.isAlive && player.role!.name === 'Jester' && player.deathReason === `lynched D${player.game.cycle}`) return true;
 	return player.isAlive;
 };
 

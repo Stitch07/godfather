@@ -1084,7 +1084,7 @@
 
 "@sapphire/framework@sapphire-project/framework#build":
   version "0.0.1"
-  resolved "https://codeload.github.com/sapphire-project/framework/tar.gz/d3d453dbfc2562c0d59c6bcdbf1a70a9ec03ae58"
+  resolved "https://codeload.github.com/sapphire-project/framework/tar.gz/2cd1d7422f6aa64122692885350b9fbac1080e62"
   dependencies:
     "@sapphire/pieces" "github:sapphire-project/pieces#build"
     "@sapphire/ratelimits" "^1.0.1"

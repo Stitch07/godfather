@@ -16,4 +16,5 @@ export const PGSQL_DATABASE_PORT = 5432;
 export const PGSQL_DATABASE_HOST = 'localhost';
 
 export const PRIVATE_CHANNEL_SERVER = '';
+export const PRIVATE_CHANNEL_CATEGORY: string | null = null;
 export const ENABLE_PRIVATE_CHANNELS = false;

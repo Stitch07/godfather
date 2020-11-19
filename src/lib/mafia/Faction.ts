@@ -1,4 +1,4 @@
-import { PRIVATE_CHANNEL_SERVER } from '@root/config';
+import { PRIVATE_CHANNEL_CATEGORY, PRIVATE_CHANNEL_SERVER } from '@root/config';
 import { Permissions } from 'discord.js';
 import Game from './Game';
 import Player from './Player';
@@ -34,7 +34,8 @@ class Faction {
 					allow: ALLOWED_PERMISSIONS,
 					id: member.user.id
 				}))
-			]
+			],
+			parent: PRIVATE_CHANNEL_CATEGORY ?? undefined
 		});
 
 		const invite = await factionalChannel.createInvite({

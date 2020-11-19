@@ -14,7 +14,7 @@ export default class SerialKillerFaction extends Faction {
 		const aliveSerialKillers = players.filter(player => player.isAlive && player.role.faction.name === 'Serial Killer');
 		const aliveOpposing = players.filter(player => player.isAlive && OPPOSING_FACTIONS.includes(player.role!.faction.name));
 
-		return aliveSerialKillers.length > 0 && aliveSerialKillers.length >= aliveOpposing.length;
+		return aliveSerialKillers.length > 0 && aliveOpposing.length === 0;
 	}
 
 }

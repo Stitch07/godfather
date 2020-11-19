@@ -46,12 +46,12 @@ class SingleTarget extends Role {
 			case 'cancel':
 				return this.player.user.send('You have cancelled your action.');
 			case 'noaction': {
-				await this.game.nightActions.addAction({
+				await this.player.user.send('You decided to stay home tonight.');
+				return this.game.nightActions.addAction({
 					action: undefined,
 					actor: this.player,
 					priority: this.priority
 				});
-				return this.player.user.send('You decided to stay home tonight.');
 			}
 			default: {
 				const target = Player.resolve(this.player.game, args.join(' '));

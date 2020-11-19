@@ -14,7 +14,7 @@ import SingleTarget from './mixins/SingleTarget';
 // import { PGSQL_ENABLED } from '@root/config';
 import { format } from '@util/durationFormat';
 import { Time } from '@sapphire/time-utilities';
-import { aliveOrRecentJester } from '../util/utils';
+import { aliveOrRecentJester, listItems } from '../util/utils';
 import { ENABLE_PRIVATE_CHANNELS, PRIVATE_CHANNEL_SERVER } from '@root/config';
 
 const MAX_DELAY = 15 * Time.Minute;
@@ -124,7 +124,7 @@ export default class Game {
 		// locks against multiple calls to hammer()
 		this.phase = Phase.Standby;
 		await this.channel.send(`${player.user.tag} was hammered. They were a **${player.role!.display}**.\n${this.votes.show({ header: 'Final Vote Count', codeblock: true })}`);
-		await player.kill(`lynched d${this.cycle}`);
+		await player.kill(`lynched D${this.cycle}`);
 
 		await this.startNight();
 	}
@@ -164,14 +164,22 @@ export default class Game {
 
 	public checkEndgame(): EndgameCheckData {
 		let winningFaction: Faction | undefined = undefined;
-		let independentWins: Faction[] = [];
+		let independentWins: Player[] = [];
 
 		for (const player of this.players) {
 			if (player.role.faction.independent && player.role.faction.hasWonIndependent(player)) {
-				independentWins.push(player.role.faction);
+				independentWins.push(player);
 			} else if (!player.role.faction.independent && player.role.faction.hasWon(this)) {
 				winningFaction = player.role.faction;
 			}
+		}
+
+		if (this.players.filter(player => player.isAlive).length === 0) {
+			return {
+				ended: true,
+				winningFaction: undefined,
+				independentWins
+			};
 		}
 
 		return {
@@ -182,7 +190,10 @@ export default class Game {
 	}
 
 	public async end(data: EndgameCheckData) {
-		await this.channel.send(data.winningFaction === undefined ? 'The game is over. Nobody wins!' : `The game is over. ${data.winningFaction.name} wins! 🎉`);
+		await this.channel.send([
+			data.winningFaction === undefined ? 'The game is over. Nobody wins!' : `The game is over. ${data.winningFaction.name} wins! 🎉`,
+			data.independentWins.length === 0 ? null : `Independent wins: ${listItems(data.independentWins.map(player => `${player.user.username} (${player.role.faction.name})`))}`
+		].filter(text => text !== null).join('\n'));
 
 		const playerMapping = (player: Player, i: number) => {
 			const roleText = player.previousRoles.length === 0
@@ -256,5 +267,5 @@ export interface GameSettings {
 export interface EndgameCheckData {
 	ended: boolean;
 	winningFaction: Faction | undefined;
-	independentWins: Faction[];
+	independentWins: Player[];
 }
