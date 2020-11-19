@@ -8,7 +8,7 @@ import { getCustomRepository } from 'typeorm';
 import GuildSettingRepository from '@root/lib/orm/repositories/GuildSettingRepository';
 
 @ApplyOptions<CommandOptions>({
-	preconditions: ['GuildOnly', 'AdminOnly']
+	preconditions: ['GuildOnly', ['OwnerOnly', 'AdminOnly']]
 })
 export default class extends GodfatherCommand {
 

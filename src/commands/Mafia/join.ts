@@ -1,7 +1,7 @@
 import { ApplyOptions } from '@sapphire/decorators';
 import GodfatherCommand from '@lib/GodfatherCommand';
 import Player from '@mafia/Player';
-import { Message, TextChannel } from 'discord.js';
+import { Message } from 'discord.js';
 import { CommandOptions } from '@sapphire/framework';
 import { Phase } from '@root/lib/mafia/Game';
 
@@ -12,22 +12,24 @@ import { Phase } from '@root/lib/mafia/Game';
 })
 export default class extends GodfatherCommand {
 
-	public run(msg: Message) {
-		const { game } = msg.channel as TextChannel;
-		if (game!.players.find(player => player.user.id === msg.author.id)) {
+	public run(message: Message) {
+		const { game } = message.channel;
+		if (game!.players.find(player => player.user.id === message.author.id)) {
 			throw 'You have already joined.';
 		}
 		// prevent players from joining 2 games simultaneously
 		for (const otherGame of this.client.games.values()) {
-			if (otherGame.players.get(msg.author)) throw `You are already playing another game in ${otherGame.channel} (${otherGame.channel.guild.name})`;
+			if (otherGame.players.get(message.author)) throw `You are already playing another game in ${otherGame.channel} (${otherGame.channel.guild.name})`;
 		}
-		if (game!.hasStarted || game!.phase === Phase.Standby) {
-			// do replacements here sometime
-			return;
+		// do not allow replacing in while the bot is processing the game
+		if (game!.phase === Phase.Standby) throw 'You cannot replace in between phases.';
+		if (game!.hasStarted && game!.phase) {
+			game!.players.replacements.push(message.author);
+			return message.channel.send('You have decided to become a replacement.');
 		}
-		game!.players.push(new Player(msg.author, game!));
+		game!.players.push(new Player(message.author, game!));
 		game!.createdAt = new Date();
-		return msg.channel.send('✅ Successfully joined.');
+		return message.channel.send('✅ Successfully joined.');
 	}
 
 }

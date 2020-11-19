@@ -30,16 +30,22 @@ export default class PlayerManager extends Array<Player> {
 		const leavePrompt = await this.game.channel.prompt(`Are you sure you want to leave? ${promptMessage}`, player.user);
 		if (!leavePrompt) return false;
 
+		// if the player is in an informed faction, remove them from it
+		if (player.role.faction.informed && this.game.factionalChannels.has(player.role.faction.name)) {
+			const [factionalChannel] = this.game.factionalChannels.get(player.role.faction.name)!;
+			const member = await factionalChannel.guild.members.fetch(player.user.id);
+			if (member) await member.kick('Player removed from game.');
+		}
+
 		if (this.replacements.length > 0) {
-			const replacement = this.replacements.shift();
+			const replacement = this.replacements.shift()!;
 			await this.game.channel.send(`${replacement!.tag} has replaced ${player.user.tag}.`);
-			player.user = replacement!;
-			await player.sendPM();
+			await this.replace(player, replacement);
 			return true;
 		}
 
 		// modkill if nobody is replacing
-		const phaseStr = this.game.phase === Phase.Day ? 'd' : 'n';
+		const phaseStr = this.game.phase === Phase.Day ? 'D' : 'N';
 		await this.game.channel.send(`${player.user.tag} was modkilled. They were a *${player.role!.display}*.`);
 		player.kill(`modkilled ${phaseStr}${this.game.cycle}`);
 		return true;
@@ -69,6 +75,20 @@ export default class PlayerManager extends Array<Player> {
 		}
 
 		return playerList.join('\n');
+	}
+
+	public async replace(player: Player, replacement: User) {
+		if (this.game.phase === Phase.Day) {
+			// remove all votes on the old player, and swap with the replacement
+			if (this.game.votes.has(player.user.id)) {
+				const votes = this.game.votes.get(player.user.id)!;
+				this.game.votes.delete(player.user.id);
+				this.game.votes.set(replacement.id, votes);
+			}
+		}
+
+		player.user = replacement;
+		await player.sendPM();
 	}
 
 	private getPlayerFlags(player: Player) {
