@@ -1,9 +1,9 @@
 import Role from '@mafia/Role';
 import NightActionsManager, { NightActionPriority } from '@mafia/managers/NightActionsManager';
 import Player from '@mafia/Player';
-import { Phase } from '@mafia/Game';
+import Game, { Phase } from '@mafia/Game';
 import { Awaited, codeBlock } from '@sapphire/utilities';
-import { remove } from '@util/utils';
+import { listItems, remove } from '@util/utils';
 import { Message } from 'discord.js';
 import { DEFAULT_ACTION_FLAGS } from '@root/lib/constants';
 
@@ -54,11 +54,10 @@ class SingleTarget extends Role {
 				});
 			}
 			default: {
-				const target = Player.resolve(this.player.game, args.join(' '));
-				if (!target) throw `Invalid target. Choose a number between 1 and ${this.player.game.players.length}`;
+				const target = this.getTarget(args, this.game);
 
 				({ check, reason } = this.canTarget(target));
-				if (!check) throw `You cannot target ${target.user.username}. ${reason}`;
+				if (!check) throw Array.isArray(target) ? `You cannot target ${listItems(target.map(tgt => tgt.user.username))} tonight: ${reason}` : `You cannot target ${target.user.username} tonight: ${reason}`;
 
 				if (this.name === 'Godfather' && this.game.players.some(player => player.isAlive && player.role.name === 'Goon')) {
 					// first we remove any older action the goon had
@@ -73,7 +72,7 @@ class SingleTarget extends Role {
 					});
 				}
 
-				await this.player.user.send(`You are ${this.actionGerund} ${target} tonight.`);
+				await this.player.user.send(`You are ${this.actionGerund} ${Array.isArray(target) ? listItems(target.map(tgt => tgt.user.username)) : target} tonight.`);
 
 				await this.player.game.nightActions.addAction({
 					action: this.action,
@@ -84,6 +83,12 @@ class SingleTarget extends Role {
 				});
 			}
 		}
+	}
+
+	public getTarget(args: string[], game: Game): Player[] | Player {
+		const target = Player.resolve(this.player.game, args.join(' '));
+		if (!target) throw `Invalid target. Choose a number between 1 and ${game.players.length}`;
+		return target;
 	}
 
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -107,7 +112,7 @@ class SingleTarget extends Role {
 	}
 
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	public canTarget(target: Player) {
+	public canTarget(target: Player | Player[]) {
 		return { check: target !== this.player, reason: `As a ${this.name}, you cannot self-target.` };
 	}
 

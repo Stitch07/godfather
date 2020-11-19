@@ -101,6 +101,7 @@ export interface NightAction {
 		canBlock: boolean;
 		canTransport: boolean;
 		canVisit: boolean;
+		canWitch?: boolean;
 	};
 }
 
