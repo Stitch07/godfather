@@ -24,11 +24,9 @@ export default class extends GodfatherCommand {
 		return message.channel.send(`Successfully updated this server's prefix to: \`${newPrefix.value}\``);
 	}
 
-	public onLoad() {
+	public async onLoad() {
 		if (!PGSQL_ENABLED) {
-			this.enabled = false;
-			// TODO: remove this when sapphire underps it
-			this.store.delete(this.name);
+			await this.disable();
 		}
 	}
 

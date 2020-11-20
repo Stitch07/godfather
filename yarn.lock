@@ -1084,16 +1084,16 @@
 
 "@sapphire/framework@sapphire-project/framework#build":
   version "0.0.1"
-  resolved "https://codeload.github.com/sapphire-project/framework/tar.gz/2cd1d7422f6aa64122692885350b9fbac1080e62"
+  resolved "https://codeload.github.com/sapphire-project/framework/tar.gz/2d65a8d18dafc7512249dc8f33b448c1bde81d9f"
   dependencies:
     "@sapphire/pieces" "github:sapphire-project/pieces#build"
-    "@sapphire/ratelimits" "^1.0.0"
-    "@sapphire/utilities" "^1.0.1"
+    "@sapphire/ratelimits" "^1.0.1"
+    "@sapphire/utilities" "^1.1.0"
     lexure "^0.17.0"
 
 "@sapphire/pieces@github:sapphire-project/pieces#build":
   version "1.0.0"
-  resolved "https://codeload.github.com/sapphire-project/pieces/tar.gz/9e58d41ee394d349ea1e5cd791d21ee071f5804b"
+  resolved "https://codeload.github.com/sapphire-project/pieces/tar.gz/7857c1e5faa2bb0d00c847b81c3ac40c81714096"
   dependencies:
     "@discordjs/collection" "^0.1.6"
 
@@ -1107,23 +1107,18 @@
   resolved "https://codeload.github.com/sapphire-project/utilities/tar.gz/42bf4b729ea84a544edb0911710fcf88bf0f03ce"
 
 "@sapphire/time-utilities@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@sapphire/time-utilities/-/time-utilities-1.1.0.tgz#d98ffd2e0aaed049cbdfd0adfeb999f4bb6ebc88"
-  integrity sha512-Y9J5uKNZLZ1gQFBrs1RQcOqS90tKJ9Gm3d4iJRuzWJWalyLbpVDKZbju516ewRIeiieApwx4hXZH5Z+FQWsJ6g==
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@sapphire/time-utilities/-/time-utilities-1.2.0.tgz#a632d711b6bcbc63440b005e131cdbd7c1b6a61c"
+  integrity sha512-jzIiJ6FzXrDomwelCACB6yVSQ0Kn0lSNXmR0CzGRC+W8c/yr5CVH+SMEMNsf+ts53RK1EwWIT7EmqQN36ajnPQ==
   dependencies:
-    "@sapphire/utilities" "^1.1.0"
+    "@sapphire/utilities" "^1.1.1"
 
 "@sapphire/type@^1.0.1":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@sapphire/type/-/type-1.0.1.tgz#a55ac265e8efd4a04242615356d5d8cedd56250c"
   integrity sha512-yimZJQNkOcZzGShvQRRVkBebK35WSOvaha9toI/IxRknzpGo1FLdWMolDw3wU0QttRBD+7LlMLUTzhuHYsT76Q==
 
-"@sapphire/utilities@^1.0.1":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@sapphire/utilities/-/utilities-1.1.0.tgz#f0eb237240c4607301eb170f6cc7f27369ae1ab0"
-  integrity sha512-EPZS+Ho+1bVgt/DBlkof1rV4JK4fjS1kIyvFgrhV+AvJb9/5ohk+CzYDR44k79824DqpX2st6jNcLPybDLy9Pw==
-
-"@sapphire/utilities@^1.1.0":
+"@sapphire/utilities@^1.0.1", "@sapphire/utilities@^1.1.0", "@sapphire/utilities@^1.1.1":
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/@sapphire/utilities/-/utilities-1.1.1.tgz#899b033312794ecfb48efa81b6e97ecc7b2879d4"
   integrity sha512-G4I963k2bhBXRS+ZlpOLzDjks51MuZrBPsq8/hA7FUKbRkO1VizQAzY/cTQA1vVZI6jOHPxZRWJD0xWPNbjLuA==
