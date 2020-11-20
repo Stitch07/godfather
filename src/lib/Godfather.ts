@@ -33,12 +33,11 @@ export default class Godfather extends SapphireClient {
 
 		this.setups = new SetupStore(this);
 		this.registerStore(this.setups);
+
 		this.fetchPrefix = async (message: Message) => {
 			if (!message.guild) return [PREFIX, ''];
 			return this.fetchGuildPrefix(message.guild);
 		};
-
-		this.registerUserDirectories();
 	}
 
 	// TODO: configurable prefixes

@@ -35,7 +35,8 @@ export default class extends GodfatherCommand {
 
 	private async getSettings(guild: Guild): Promise<GameSettings> {
 		if (!PGSQL_ENABLED) return DEFAULT_GAME_SETTINGS;
-		return guild.readSettings();
+		const settings = await guild.readSettings();
+		return Object.assign({}, settings);
 	}
 
 }

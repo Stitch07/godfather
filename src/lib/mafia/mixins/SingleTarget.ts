@@ -12,6 +12,12 @@ class SingleTarget extends Role {
 
 	public actionPhase = Phase.Night;
 
+	public flags? = {
+		canBlock: true,
+		canTransport: true,
+		canVisit: true
+	};
+
 	public constructor(player: Player) {
 		super(player);
 	}
@@ -71,7 +77,7 @@ class SingleTarget extends Role {
 						flags: this.flags ?? DEFAULT_ACTION_FLAGS
 					});
 				}
-				if (this.name === 'Witch') await this.player.user.send(`You are controlling ${(target as Player[])[0]} onto ${(target as Player[])[1]} tonight.`);
+				if (this.name === 'Witch' || this.name === 'Mimicer') await this.player.user.send(`You are ${this.actionGerund} ${(target as Player[])[0]} onto ${(target as Player[])[1]} tonight.`);
 				else await this.player.user.send(`You are ${this.actionGerund} ${Array.isArray(target) ? listItems(target.map(tgt => tgt.user.username)) : target} tonight.`);
 
 				await this.player.game.nightActions.addAction({
