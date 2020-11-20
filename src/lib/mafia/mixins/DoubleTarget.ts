@@ -15,7 +15,7 @@ export default class DoubleTarget extends SingleTarget {
 
 	public canTarget(target: Player[]) {
 		if (target[0] === target[1]) return { check: false, reason: `Pick 2 distinct targets.` };
-		if (target.some(player => !player.isAlive)) return { check: false, reason: '' };
+		if (target.some(player => !player.isAlive)) return { check: false, reason: 'You cannot target dead players.' };
 		return { check: true, reason: '' };
 	}
 

@@ -23,22 +23,6 @@ export default class Jester extends SingleTarget {
 	// players hammering the Jester
 	public playersVoting: Player[] = [];
 
-	public async onNight() {
-		if (!this.wasLynched) return;
-		// by default, the Jester should randomly haunt one of their voters
-		const randomHaunt = randomArray(this.playersVoting);
-		if (randomHaunt) {
-			await this.game.nightActions.addAction({
-				actor: this.player,
-				target: randomHaunt,
-				priority: this.priority,
-				action: this.action
-			});
-
-			return super.onNight();
-		}
-	}
-
 	public runAction(actions: NightActionsManager, target: Player) {
 		actions.record.setAction(target.user.id, 'nightkill', { by: [this.player], result: true, type: Attack.Unstoppable });
 	}
@@ -62,6 +46,19 @@ export default class Jester extends SingleTarget {
 
 	public canUseAction() {
 		return { check: this.wasLynched && this.playersVoting.length > 0, reason: '' };
+	}
+
+	public get defaultAction() {
+		const randomHaunt = randomArray(this.playersVoting);
+		if (randomHaunt) {
+			return {
+				actor: this.player,
+				target: randomHaunt,
+				priority: this.priority,
+				action: this.action
+			};
+		}
+		return null;
 	}
 
 }

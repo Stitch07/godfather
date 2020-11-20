@@ -13,24 +13,6 @@ export default class Werewolf extends Killer {
 	public actionText = 'maul a player';
 	public actionParticiple = 'mauled';
 
-	public async onNight() {
-		// rampage at home by default
-		if (!this.canRampage()) return;
-		await this.game.nightActions.addAction({
-			action: 'maul',
-			actor: this.player,
-			target: this.player,
-			priority: this.priority,
-			flags: {
-				canBlock: false,
-				canTransport: false,
-				canVisit: false
-			}
-		});
-
-		return super.onNight();
-	}
-
 	public runAction(actions: NightActionsManager, target: Player) {
 		// WW rampages at home, killing all visitors
 		if (target === this.player) return;
@@ -39,7 +21,7 @@ export default class Werewolf extends Killer {
 
 	public async tearDown(actions: NightActionsManager, target: Player) {
 		// kill all visitors
-		const visitors = target.visitors.filter(player => player !== this.player);
+		const visitors = target.visitors.filter(player => player.user.id !== this.player.user.id);
 		for (const visitor of visitors) {
 			actions.record.setAction(visitor.user.id, 'nightkill', { result: true, by: [this.player], type: this.attackStrength });
 			await visitor.user.send('You were mauled by a Werewolf. You have died!');
@@ -68,6 +50,20 @@ export default class Werewolf extends Killer {
 	public canTarget(target: Player) {
 		if (target === this.player) return { check: true, reason: '' };
 		return super.canTarget(target);
+	}
+
+	public get defaultAction() {
+		return {
+			action: 'maul',
+			actor: this.player,
+			target: this.player,
+			priority: this.priority,
+			flags: {
+				canBlock: false,
+				canTransport: false,
+				canVisit: false
+			}
+		};
 	}
 
 	// whether the Werewolf can rampage during this night

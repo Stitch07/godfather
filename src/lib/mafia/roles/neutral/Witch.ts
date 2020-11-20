@@ -32,7 +32,15 @@ class Witch extends DoubleTarget {
 	}
 
 	public async tearDown(actions: NightActionsManager, [target]: Player[]) {
-		if (this.witched) await target.user.send('You felt a mystical presence dominating you. You were controlled by a witch!');
+		if (this.witched) {
+			await target.user.send('You felt a mystical presence dominating you. You were controlled by a witch!');
+			await this.player.user.send(`You secretly know that your target is a ${target.role.name}.`);
+		}
+	}
+
+	public canTarget(target: Player[]) {
+		if (target.some(player => !player.isAlive)) return { check: false, reason: 'You cannot target dead players.' };
+		return { check: true, reason: '' };
 	}
 
 }

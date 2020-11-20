@@ -25,6 +25,14 @@ export default class NightActionsManager extends Array<NightAction> {
 	}
 
 	public async resolve(): Promise<Player[]> {
+		const possibleActions = this.game.players.filter(player => aliveOrRecentJester(player) && player.role.canUseAction().check && Reflect.get(player.role, 'actionPhase') === Phase.Night);
+		// add any default actions the player has
+		const noActionsSent = possibleActions.filter(player => Reflect.has(player.role, 'action') && !this.find(action => action.actor === player));
+		for (const player of noActionsSent) {
+			const { defaultAction } = player.role as SingleTarget;
+			if (defaultAction) this.push(defaultAction);
+		}
+
 		// sort by ascending priorities
 		this.sort((a, b) => a.priority - b.priority);
 		// run setUp, runAction and tearDown

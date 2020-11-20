@@ -1,5 +1,5 @@
 import Role from '@mafia/Role';
-import NightActionsManager, { NightActionPriority } from '@mafia/managers/NightActionsManager';
+import NightActionsManager, { NightAction, NightActionPriority } from '@mafia/managers/NightActionsManager';
 import Player from '@mafia/Player';
 import Game, { Phase } from '@mafia/Game';
 import { Awaited, codeBlock } from '@sapphire/utilities';
@@ -71,8 +71,8 @@ class SingleTarget extends Role {
 						flags: this.flags ?? DEFAULT_ACTION_FLAGS
 					});
 				}
-
-				await this.player.user.send(`You are ${this.actionGerund} ${Array.isArray(target) ? listItems(target.map(tgt => tgt.user.username)) : target} tonight.`);
+				if (this.name === 'Witch') await this.player.user.send(`You are controlling ${(target as Player[])[0]} onto ${(target as Player[])[1]} tonight.`);
+				else await this.player.user.send(`You are ${this.actionGerund} ${Array.isArray(target) ? listItems(target.map(tgt => tgt.user.username)) : target} tonight.`);
 
 				await this.player.game.nightActions.addAction({
 					action: this.action,
@@ -113,11 +113,17 @@ class SingleTarget extends Role {
 
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	public canTarget(target: Player | Player[]) {
+		if (!(target as Player).isAlive) return { check: false, reason: 'You cannot target dead players.' };
 		return { check: target !== this.player, reason: `As a ${this.name}, you cannot self-target.` };
 	}
 
 	public canUseAction() {
 		return { check: this.player.isAlive, reason: '' };
+	}
+
+	// eslint-disable-next-line @typescript-eslint/class-literal-property-style
+	public get defaultAction(): NightAction | null {
+		return null;
 	}
 
 	public get client() {
