@@ -29,7 +29,7 @@ export default class extends GodfatherCommand {
 			game!.players.voteKicks.add(message.author.id);
 			await message.react('✅');
 
-			const majorityVotes = Math.floor(game!.players.length / 2) + 1;
+			const { majorityVotes } = game!;
 			if (game!.players.voteKicks.size >= majorityVotes) {
 				toChange = true;
 			}
