@@ -1,4 +1,3 @@
-import DethyCop from '@mafia/mixins/DethyCop';
 import Cop from '../Cop';
 
 // @ts-ignore weird error
@@ -6,10 +5,12 @@ class Naive_Cop extends Cop {
 
 	public name = 'Naive Cop';
 
-	public innocenceModifer() {
+	public innocenceModifier() {
 		return true;
 	}
 
 }
 
-export default DethyCop(Naive_Cop);
+Naive_Cop.categories = ['Dethy Cop'];
+
+export default Naive_Cop;

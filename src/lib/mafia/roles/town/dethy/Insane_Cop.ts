@@ -1,4 +1,3 @@
-import DethyCop from '@mafia/mixins/DethyCop';
 import Cop from '../Cop';
 
 // @ts-ignore weird error
@@ -12,4 +11,6 @@ class Insane_Cop extends Cop {
 
 }
 
-export default DethyCop(Insane_Cop);
+Insane_Cop.categories = ['Dethy Cop'];
+
+export default Insane_Cop;
