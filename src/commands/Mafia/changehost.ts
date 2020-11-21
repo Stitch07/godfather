@@ -19,9 +19,9 @@ export default class extends GodfatherCommand {
 			throw 'You need at least 3 players to change the host.';
 		}
 
-		let to_change = false;
-		if (message.author.id == game!.host.user.id) {
-			to_change = true;
+		let toChange = false;
+		if (message.author.id === game!.host.user.id) {
+			toChange = true;
 		} else {
 			if (game!.players.vote_kicks.has(message.author.id)) {
 				throw 'You have already voted to change the host.';
@@ -29,17 +29,17 @@ export default class extends GodfatherCommand {
 			game!.players.vote_kicks.add(message.author.id);
 			await message.react('✅');
 
-			const majority_votes = Math.floor(game!.players.length / 2) + 1;
-			if (game!.players.vote_kicks.size >= majority_votes) {
-				to_change = true;
+			const majorityVotes = Math.floor(game!.players.length / 2) + 1;
+			if (game!.players.vote_kicks.size >= majorityVotes) {
+				toChange = true;
 			}
 		}
 
-		if (to_change) {
+		if (toChange) {
 			// Since host is always player #1, we remove the old host from the beginning
 			// (so #2 becomes host) and add the old host back at the end.
-			const old_host = game!.players.shift()!;
-			game!.players.push(old_host);
+			const oldHost = game!.players.shift()!;
+			game!.players.push(oldHost);
 			game!.players.vote_kicks.clear();
 
 			await message.channel.send(`The host is now ${game!.host}.`);
