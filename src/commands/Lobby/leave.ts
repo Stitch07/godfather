@@ -22,6 +22,11 @@ export default class extends GodfatherCommand {
 
 		if (await game!.players.remove(player)) {
 			await message.react('✅');
+			if (!game!.hasStarted) return;
+			const winCheck = game!.checkEndgame();
+			if (winCheck.ended) {
+				return game!.end(winCheck);
+			}
 		}
 	}
 
