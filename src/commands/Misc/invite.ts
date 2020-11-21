@@ -15,16 +15,11 @@ export default class extends GodfatherCommand {
 	}
 
 	private buildEmbed() {
-		const footer = this.client.release === Branding.Release.Beta
-			? 'Godfather is currently semi-public. Use the `apply` command to apply for approval. Godfather will automatically leave servers that aren\'t approved'
-			: null;
-
 		return new MessageEmbed()
 			.setColor(Branding.PrimaryColor)
 			.setAuthor(this.client.user!.username, this.client.user!.displayAvatarURL({ format: 'png' }))
 			.setDescription([
-				`[Invite](${this.client.invite}) | [Support Server](${SUPPORT_SERVER})`,
-				footer
+				`[Invite](${this.client.invite}) | [Support Server](${SUPPORT_SERVER})`
 			].filter(line => line !== null).join('\n'));
 	}
 
