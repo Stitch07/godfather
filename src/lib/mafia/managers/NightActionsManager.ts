@@ -165,4 +165,7 @@ export enum NightActionPriority {
 	AMBUSHER = 6,
 	// janitor cleans after killing roles have already killed them
 	JANITOR = 7,
+	// ret's position literally doesn't matter
+	RETRIBUTIONIST = 8,
+	AMNESIAC = 9
 }

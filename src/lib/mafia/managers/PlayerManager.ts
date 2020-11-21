@@ -105,6 +105,7 @@ export default class PlayerManager extends Array<Player> {
 		const flags = [];
 		if (!player.isAlive) flags.push(player.role.display, player.deathReason);
 		if (player.role.name === 'Mayor' && Reflect.get(player.role, 'hasRevealed') === true) flags.push('Mayor');
+		if (player.flags.isRevived) flags.push(player.role.display, `revived N${player.flags.revivedOn}`);
 		return flags.length ? `(${flags.join('; ')})` : '';
 	}
 

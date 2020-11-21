@@ -2,6 +2,7 @@ import Role from './Role';
 import Game from './Game';
 import { User } from 'discord.js';
 import { ENABLE_PRIVATE_CHANNELS } from '@root/config';
+import { cast } from '../util/utils';
 
 export default class Player {
 
@@ -11,6 +12,11 @@ export default class Player {
 	public deathReason = '';
 	public previousRoles = [] as Role[];
 	public visitors: Player[] = [];
+	public flags = {
+		isRevived: false,
+		revivedOn: cast<number | null>(null)
+	};
+
 	private _role!: Role;
 	public constructor(public user: User, public game: Game) {
 	}

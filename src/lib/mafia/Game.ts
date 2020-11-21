@@ -47,6 +47,10 @@ export default class Game {
 	 * An array of user IDs of muted players
 	 */
 	public permissionOverwrites: string[] = [];
+	/**
+	 * The number of consecutive phases with zero kills
+	 */
+	public idlePhases = 0;
 	public factionalChannels = new Collection<string, [TextChannel, string]>();
 	public constructor(host: User, public channel: TextChannel, public settings: GameSettings) {
 		this.client = channel.client as Godfather;
@@ -61,6 +65,7 @@ export default class Game {
 		this.phase = Phase.Standby;
 		const deadPlayers = await this.nightActions.resolve();
 		if (deadPlayers.length > 0) {
+			this.idlePhases = 0;
 			const deadText = [];
 			for (const deadPlayer of deadPlayers) {
 				const roleText = deadPlayer.cleaned
@@ -69,12 +74,18 @@ export default class Game {
 				deadText.push(`${deadPlayer} died last night. ${roleText}`);
 			}
 			await this.channel.send(deadText.join('\n'));
+		} else if (this.cycle !== 1) {
+			this.idlePhases++;
 		}
 
 		const winCheck = this.checkEndgame();
 		if (winCheck.ended) {
 			await this.end(winCheck);
 			return;
+		}
+
+		if (this.idlePhases === 6) {
+			return this.end({ ...winCheck, winningFaction: undefined });
 		}
 
 		// start voting phase
@@ -106,6 +117,10 @@ export default class Game {
 		if (winCheck.ended) {
 			await this.end(winCheck);
 			return;
+		}
+
+		if (this.idlePhases === 6) {
+			return this.end({ ...winCheck, winningFaction: undefined });
 		}
 
 		this.phase = Phase.Standby;
