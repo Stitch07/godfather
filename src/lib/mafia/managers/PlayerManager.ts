@@ -14,7 +14,7 @@ export default class PlayerManager extends Array<Player> {
 	/**
 	 * Set of ids of players that have voted to kick the host
 	 */
-	public vote_kicks = new Set<string>();
+	public voteKicks = new Set<string>();
 	public constructor(public game: Game) {
 		super();
 	}

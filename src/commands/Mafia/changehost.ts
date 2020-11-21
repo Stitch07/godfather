@@ -23,14 +23,14 @@ export default class extends GodfatherCommand {
 		if (message.author.id === game!.host.user.id) {
 			toChange = true;
 		} else {
-			if (game!.players.vote_kicks.has(message.author.id)) {
+			if (game!.players.voteKicks.has(message.author.id)) {
 				throw 'You have already voted to change the host.';
 			}
-			game!.players.vote_kicks.add(message.author.id);
+			game!.players.voteKicks.add(message.author.id);
 			await message.react('✅');
 
 			const majorityVotes = Math.floor(game!.players.length / 2) + 1;
-			if (game!.players.vote_kicks.size >= majorityVotes) {
+			if (game!.players.voteKicks.size >= majorityVotes) {
 				toChange = true;
 			}
 		}
@@ -40,7 +40,7 @@ export default class extends GodfatherCommand {
 			// (so #2 becomes host) and add the old host back at the end.
 			const oldHost = game!.players.shift()!;
 			game!.players.push(oldHost);
-			game!.players.vote_kicks.clear();
+			game!.players.voteKicks.clear();
 
 			await message.channel.send(`The host is now ${game!.host}.`);
 		}
