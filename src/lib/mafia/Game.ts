@@ -74,7 +74,7 @@ export default class Game {
 				deadText.push(`${deadPlayer} died last night. ${roleText}`);
 			}
 			await this.channel.send(deadText.join('\n'));
-		} else if (this.cycle !== 1) {
+		} else if (this.cycle !== 0) {
 			this.idlePhases++;
 		}
 
@@ -138,8 +138,11 @@ export default class Game {
 	public async hammer(player: Player) {
 		// locks against multiple calls to hammer()
 		this.phase = Phase.Standby;
+		if (!player.isAlive) return;
+
 		await this.channel.send(`${player.user.tag} was hammered. They were a **${player.role!.display}**.\n${this.votes.show({ header: 'Final Vote Count', codeblock: true })}`);
 		await player.kill(`lynched D${this.cycle}`);
+		this.idlePhases = 0;
 
 		await this.startNight();
 	}
@@ -157,6 +160,7 @@ export default class Game {
 		if (this.phaseEndAt && Date.now() > this.phaseEndAt.getTime()) {
 			if (this.phase === Phase.Day) {
 				await this.channel.send('Nobody was lynched!');
+				this.idlePhases++;
 				return this.startNight();
 			}
 

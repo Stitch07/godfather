@@ -19,6 +19,7 @@ export default class extends GodfatherCommand {
 
 		if (noLynch) {
 			game!.phase = Phase.Standby;
+			game!.idlePhases++;
 			await message.channel.send('Nobody was lynched!');
 			await game!.startNight();
 		}
