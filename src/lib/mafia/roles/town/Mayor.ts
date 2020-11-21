@@ -29,6 +29,8 @@ class Mayor extends SingleTarget {
 		return this.hasRevealed ? 3 : 1;
 	}
 
+	public static unique = true;
+
 }
 
 Mayor.categories = [...Mayor.categories, 'Town Support'];

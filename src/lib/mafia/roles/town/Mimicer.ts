@@ -45,6 +45,8 @@ class Mimicer extends DoubleTarget {
 		return { check: true, reason: '' };
 	}
 
+	public static unique = true;
+
 }
 
 Mimicer.categories = [...Mimicer.categories, 'Town Support'];
