@@ -27,6 +27,9 @@ export default class extends GodfatherCommand {
 			game!.players.replacements.push(message.author);
 			return message.channel.send('You have decided to become a replacement.');
 		}
+
+		if (game!.players.length >= game!.settings.maxPlayers) throw `Maximum player limit has been reached. (${game!.settings.maxPlayers})`;
+
 		game!.players.push(new Player(message.author, game!));
 		game!.createdAt = new Date();
 		return message.channel.send('✅ Successfully joined.');

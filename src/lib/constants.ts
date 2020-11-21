@@ -14,7 +14,8 @@ export interface SettingsEntry<K extends keyof ArgType> {
 export const DEFAULT_GAME_SETTINGS: GameSettings = {
 	dayDuration: Time.Minute * 5,
 	nightDuration: Time.Minute * 2,
-	overwritePermissions: true
+	overwritePermissions: true,
+	maxPlayers: 18
 };
 
 export const DEFAULT_ACTION_FLAGS = {
@@ -42,5 +43,12 @@ export const GUILD_SETTINGS_METADATA: SettingsEntry<keyof ArgType>[] = [
 		name: 'overwritePermissions',
 		type: 'boolean',
 		display: (value: boolean) => value ? 'Enabled' : 'Disabled'
+	},
+	{
+		name: 'maxPlayers',
+		type: 'number',
+		minimum: 3,
+		maximum: 18,
+		display: (value: number) => value.toString()
 	}
 ];

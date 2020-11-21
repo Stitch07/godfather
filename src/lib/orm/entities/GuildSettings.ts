@@ -18,6 +18,9 @@ export default class GuildSettingsEntity implements GameSettings {
 	@Column('integer', { 'default': DEFAULT_GAME_SETTINGS.nightDuration })
 	public nightDuration = DEFAULT_GAME_SETTINGS.nightDuration;
 
+	@Column('integer', { 'default': DEFAULT_GAME_SETTINGS.maxPlayers })
+	public maxPlayers = DEFAULT_GAME_SETTINGS.maxPlayers;
+
 	@Column('boolean', { 'default': true })
 	public overwritePermissions = true;
 

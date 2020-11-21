@@ -5,7 +5,7 @@ import { Message } from 'discord.js';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['deletegame'],
-	preconditions: ['GameOnly', 'HostOnly']
+	preconditions: ['GuildOnly', 'GameOnly', 'HostOnly']
 })
 export default class extends GodfatherCommand {
 

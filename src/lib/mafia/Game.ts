@@ -281,6 +281,7 @@ export interface GameSettings {
 	dayDuration: number;
 	nightDuration: number;
 	overwritePermissions: boolean;
+	maxPlayers: number;
 }
 
 export interface EndgameCheckData {

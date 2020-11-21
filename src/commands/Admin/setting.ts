@@ -20,6 +20,13 @@ export default class extends GodfatherCommand {
 		const schemaKey = await args.pickResult('gameSetting');
 		const inGame = message.channel.game !== undefined;
 
+		if (inGame) {
+			if (message.author !== message.channel.game!.host.user) throw 'This command is host-only.';
+		} else {
+			const result = await this.client.preconditions.get('AdminOnly')!.run(message, this, {});
+			if (!result.success) throw result.error.message;
+		}
+
 		if (!schemaKey.success) {
 			// list all keys
 			const output = [];
