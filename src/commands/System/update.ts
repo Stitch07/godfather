@@ -42,7 +42,7 @@ export default class extends GodfatherCommand {
 
 	private async fetch(message: Message, branch: string) {
 		await this.exec('git fetch');
-		const { stdout, stderr } = await this.exec(`git pull origin ${branch}`);
+		const { stdout, stderr } = await this.exec(`git pull origin ${branch} --rebase=false`);
 
 		// If it's up to date, do nothing
 		if (/already up(?: |-)to(?: |-)date/i.test(stdout)) throw 'Up to date.';
@@ -95,7 +95,7 @@ export default class extends GodfatherCommand {
 	}
 
 	private needsStash(output: string) {
-		return output.includes('please commit or stash them.');
+		return output.includes('Your local changes to the following files would be overwritten by merge');
 	}
 
 	private async exec(script: string) {
