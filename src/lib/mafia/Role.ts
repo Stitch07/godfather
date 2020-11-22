@@ -3,6 +3,8 @@ import { Awaited } from '@sapphire/framework';
 import { Message } from 'discord.js';
 import Faction from './Faction';
 import { Defense } from './managers/NightActionsManager';
+import { allRoles } from './roles';
+import type Executioner from './roles/neutral/Executioner';
 
 const INNOCENT_FACTIONS = ['Town', 'Survivor', 'Jester', 'Amnesiac'];
 
@@ -41,8 +43,22 @@ abstract class Role {
 		return 1;
 	}
 
-	public onDeath() {
+	public init() {
 		// noop
+	}
+
+	public async onDeath() {
+		if (this.faction.name !== 'Town' || this.player.deathReason.includes('lynched')) return;
+
+		const executionersInGame = this.game.players.filter(player => player.role.name === 'Executioner');
+		for (const executioner of executionersInGame) {
+			if (this.player.user.id === (executioner.role as Executioner).target.user.id) {
+				await executioner.user.send('Your target has died! You have become a Jester.');
+				const Jester = allRoles.get('Jester')!;
+				executioner.role = new Jester(executioner);
+				await executioner.sendPM();
+			}
+		}
 	}
 
 	public onNight() {

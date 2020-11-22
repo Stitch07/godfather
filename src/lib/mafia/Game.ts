@@ -217,7 +217,7 @@ export default class Game {
 		const playerMapping = (player: Player, i: number) => {
 			const roleText = player.previousRoles.length === 0
 				? player.role.name
-				: [...player.previousRoles, player.role].map(role => role.name).join('->');
+				: [...player.previousRoles, player.role].map(role => role.name).join(' -> ');
 			return `${i + 1}. ${player} (${roleText})`;
 		};
 		await this.channel.send([

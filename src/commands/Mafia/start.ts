@@ -37,6 +37,7 @@ export default class extends GodfatherCommand {
 		}
 		for (const player of game!.players) {
 			await player.sendPM();
+			await player.role.init();
 		}
 		await sent.edit('Sent all role PMs!');
 		if (game!.setup!.nightStart) {

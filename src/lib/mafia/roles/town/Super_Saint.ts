@@ -20,6 +20,8 @@ class SuperSaint extends Role {
 			await sleep(2 * 1000);
 			await game.channel.send(`${lastVoter} hammered the Super Saint and was blown up! They were a **${lastVoter.role.name}**`);
 		}
+
+		return super.onDeath();
 	}
 
 }

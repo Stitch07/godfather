@@ -4,7 +4,7 @@ import NightActionsManager, { Attack, NightActionPriority } from '@mafia/manager
 import Player from '@mafia/Player';
 import { randomArray } from '@util/utils';
 
-export default class Jester extends SingleTarget {
+class Jester extends SingleTarget {
 
 	public name = 'Jester';
 	public faction = new JesterFaction();
@@ -31,6 +31,7 @@ export default class Jester extends SingleTarget {
 		return target.user.send('You were haunted by a Jester. You have died!');
 	}
 
+	// @ts-ignore weird bug
 	public onDeath() {
 		if (this.player.deathReason.includes('lynched')) {
 			this.wasLynched = true;
@@ -64,3 +65,5 @@ export default class Jester extends SingleTarget {
 }
 
 Jester.categories = [...Jester.categories, 'Neutral Evil'];
+
+export default Jester;
