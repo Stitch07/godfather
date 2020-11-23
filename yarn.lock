@@ -1078,8 +1078,8 @@
   resolved "https://codeload.github.com/sapphire-project/framework/tar.gz/2d65a8d18dafc7512249dc8f33b448c1bde81d9f"
   dependencies:
     "@sapphire/pieces" "github:sapphire-project/pieces#build"
-    "@sapphire/ratelimits" "^1.0.1"
-    "@sapphire/utilities" "^1.1.0"
+    "@sapphire/ratelimits" "^1.0.0"
+    "@sapphire/utilities" "^1.0.1"
     lexure "^0.17.0"
 
 "@sapphire/pieces@github:sapphire-project/pieces#build":
@@ -1088,7 +1088,7 @@
   dependencies:
     "@discordjs/collection" "^0.1.6"
 
-"@sapphire/ratelimits@^1.0.1":
+"@sapphire/ratelimits@^1.0.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@sapphire/ratelimits/-/ratelimits-1.1.0.tgz#274236efe51a785b758a7233708198b0ded710f9"
   integrity sha512-C+3AZ/AoLJR2h4hQK8heyGuYfKDzdOOA9MKlwSZrx0uKa9DypgajEAYjcOjrsAjhzQ9jatKvkQ4XKK5oTzp4LA==
@@ -1109,7 +1109,7 @@
   resolved "https://registry.yarnpkg.com/@sapphire/type/-/type-1.1.0.tgz#4409d3a6d2a50e9410352619acc70c39bbd29358"
   integrity sha512-pBsWF2ZQQU/nHsE0E+tfkEd4CW3Rkc2v4OneSCvvTYv616KKQUaHma4z19NJoXrAw3tqlAsFEll8Gi+6FCal8g==
 
-"@sapphire/utilities@^1.0.1", "@sapphire/utilities@^1.1.0", "@sapphire/utilities@^1.1.1":
+"@sapphire/utilities@^1.0.1", "@sapphire/utilities@^1.1.1":
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/@sapphire/utilities/-/utilities-1.1.1.tgz#899b033312794ecfb48efa81b6e97ecc7b2879d4"
   integrity sha512-G4I963k2bhBXRS+ZlpOLzDjks51MuZrBPsq8/hA7FUKbRkO1VizQAzY/cTQA1vVZI6jOHPxZRWJD0xWPNbjLuA==
