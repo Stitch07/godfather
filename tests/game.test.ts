@@ -5,6 +5,7 @@ import Player from '@mafia/Player';
 import Vanilla from '@mafia/roles/town/Vanilla';
 import Mafia_Vanilla from '@mafia/roles/mafia/Mafia_Vanilla';
 import { NotVoting } from '@mafia/managers/VoteManager';
+import { DEFAULT_GAME_SETTINGS } from '@lib/constants';
 
 
 // This file tests a full Mafia Game from start to finish
@@ -15,10 +16,11 @@ describe('game testing', () => {
 	expect(mockUser.tag).toBe('Host#0000');
 
 	// @ts-ignore https://github.com/microsoft/TypeScript/issues/34933
-	const game = new Game(mockUser, mockChannel);
+	const game = new Game(mockUser, mockChannel, DEFAULT_GAME_SETTINGS);
 	game.host.role = new Vanilla(game.host);
 
 	for (let i = 0; i < 4; i++) {
+		// @ts-ignore https://github.com/microsoft/TypeScript/issues/34933
 		const player = new Player(createMockUser({ username: `Player${i + 1}`, discriminator: `000${i + 1}` }), game);
 		player.role = new Vanilla(player);
 		game.players.push(player);
@@ -38,12 +40,12 @@ describe('game testing', () => {
 	test('player manager', () => {
 		const EXPECTED_PLAYERLIST = [
 			'**Players: 6**',
-			'1. Host#0000',
-			'2. Player1#0001',
-			'3. Player2#0002',
-			'4. Player3#0003',
-			'5. Player4#0004',
-			'6. Player5#0005'
+			'1. Host#0000 ',
+			'2. Player1#0001 ',
+			'3. Player2#0002 ',
+			'4. Player3#0003 ',
+			'5. Player4#0004 ',
+			'6. Player5#0005 '
 		].join('\n');
 
 		expect(game.players.show()).toBe(EXPECTED_PLAYERLIST);
@@ -64,11 +66,11 @@ describe('game testing', () => {
 
 		const EXPECTED_VOTE_COUNT = [
 			'**Vote Count**',
-			'Player1 (4): Player2, Player3, Player4, Host',
+			'Player1 (4): Player2, Player3, Player4, Host (Hammered)',
 			'Not Voting (2): Player1, Player5'
 		].join('\n');
 
-		expect(game.votes.show()).toBe(EXPECTED_VOTE_COUNT);
+		expect(game.votes.show({ })).toBe(EXPECTED_VOTE_COUNT);
 	});
 
 	test('starting days', async () => {
@@ -86,7 +88,7 @@ describe('game testing', () => {
 	test('hammering logic', async () => {
 		await game.hammer(game.players[1]);
 		expect(game.players[1].isAlive).toBe(false);
-		expect(game.players[1].deathReason).toBe('lynched d1');
+		expect(game.players[1].deathReason).toBe('lynched D1');
 		expect(game.channel.send).toHaveBeenCalledWith(`Player1#0001 was hammered. They were a **Vanilla**.`);
 	});
 

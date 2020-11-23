@@ -3,27 +3,21 @@
 [![Discord](https://discordapp.com/api/guilds/723535249073504306/embed.png)](https://discord.gg/gFhvChy)
 ![CI](https://github.com/Soumil07/godfather/workflows/Continuous%20Integration/badge.svg)
 
+## Godfather is a Discord bot that hosts games of Werewolf/Mafia
 
-## How to run:
+## Features
+* More than 30 different roles.
+* Custom setups (and multiple preloaded)
+* Player/Game statistics
+* Mafia chats, and customizable settings
 
-After creating `src/config.ts`:
+## Links
 
-`yarn install --prod=true` 
+### Godfather links:
+* [Invite Godfather](https://discord.com/oauth2/authorize?client_id=579703064173346827&scope=bot)
+* [Join the Support Server](https://discord.gg/gFhvChy)
 
-`yarn build`
+### Libraries used:
+* [Discord.js](https://discord.js.org/#/)
+* [Sapphire Framework](https://github.com/sapphire-project/framework)
 
-`node .`
-
-## Unit Tests
-
-Install all dev dependencies:
-
-`yarn`
-
-Run tests:
-
-`yarn test`
-
-## Requirements
-
-You will need to have [`node.js`](https://nodejs.org/en/) and [`yarn`](https://yarnpkg.com/) installed to run this 
