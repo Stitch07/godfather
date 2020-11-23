@@ -1,11 +1,12 @@
+import GodfatherCommand from '@lib/GodfatherCommand';
 import { ApplyOptions } from '@sapphire/decorators';
-import { Command, CommandOptions } from '@sapphire/framework';
+import { CommandOptions } from '@sapphire/framework';
 import { Message } from 'discord.js';
 
 @ApplyOptions<CommandOptions>({
 	description: 'Runs a connection test to Discord.'
 })
-export default class extends Command {
+export default class extends GodfatherCommand {
 
 	public async run(message: Message) {
 		const sent = await message.channel.send('Pinging...');

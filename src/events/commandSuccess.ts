@@ -1,5 +1,4 @@
-import { Command, Event, Events, PieceContext } from '@sapphire/framework';
-import { Message } from 'discord.js';
+import { CommandSuccessPayload, Event, Events, PieceContext } from '@sapphire/framework';
 
 export default class extends Event<Events.CommandSuccess> {
 
@@ -7,9 +6,9 @@ export default class extends Event<Events.CommandSuccess> {
 		super(context, { event: Events.CommandSuccess });
 	}
 
-	public run(message: Message, command: Command) {
-		const guildName = message.guild ? `${message.guild.name}[${message.guild.id}]` : 'Direct Messages';
-		this.client.logger.info(`${command.name} used by ${message.author.tag}(${message.author.id}) in ${guildName}.`);
+	public run({ message, command, parameters }: CommandSuccessPayload) {
+		const guildName = message.guild ? `${message.guild.name} [${message.guild.id}]` : 'Direct Messages';
+		this.client.logger.debug(`${command.name}(${parameters}) used by ${message.author.tag} [${message.author.id}] in ${guildName}.`);
 	}
 
 }

@@ -8,8 +8,13 @@ export const PRODUCTION = 'PRODUCTION' in process.env ? process.env.PRODUCTION =
 
 export const PREFIX = PRODUCTION ? '=' : 'g!';
 
+export const PGSQL_ENABLED = false;
 export const PGSQL_DATABASE_NAME = 'godfather';
 export const PGSQL_DATABASE_PASSWORD = '';
 export const PGSQL_DATABASE_USER = '';
 export const PGSQL_DATABASE_PORT = 5432;
 export const PGSQL_DATABASE_HOST = 'localhost';
+
+export const PRIVATE_CHANNEL_SERVER = '';
+export const PRIVATE_CHANNEL_CATEGORY: string | null = null;
+export const ENABLE_PRIVATE_CHANNELS = false;

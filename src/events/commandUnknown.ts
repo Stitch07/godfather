@@ -1,4 +1,5 @@
-import ActionRole from '@mafia/mixins/ActionRole';
+import SingleTarget from '@mafia/mixins/SingleTarget';
+import { aliveOrRecentJester } from '@util/utils';
 import { Event, Events, PieceContext } from '@sapphire/framework';
 import { Message } from 'discord.js';
 
@@ -8,8 +9,7 @@ export default class extends Event<Events.UnknownCommand> {
 		super(context, { event: Events.UnknownCommand });
 	}
 
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	public run(message: Message, command: string) {
+	public async run(message: Message, command: string, prefix: string) {
 		// actions are accepted in DMs only
 		if (message.guild) return;
 
@@ -17,10 +17,17 @@ export default class extends Event<Events.UnknownCommand> {
 		if (!game) return;
 
 		const player = game.players.get(message.author)!;
-		if (!(player.role! instanceof ActionRole)) return;
+		if (!aliveOrRecentJester(player) || !Reflect.has(player.role, 'action')) return;
 
-		if (player.role!.actionPhase !== game.phase) return;
-		// await player.role!.onPmCommand(commandText, ...message.args as string[]);
+		if ((player.role! as SingleTarget).actionPhase !== game.phase) return;
+		const prefixLess = message.content.slice(prefix.length);
+		const [commandText, ...parameters] = prefixLess.split(' ');
+		try {
+			await player.role!.onPmCommand(message, commandText, ...parameters);
+		} catch (error) {
+			if (typeof error === 'string') return message.channel.send(error);
+			this.client.logger.error(error);
+		}
 	}
 
 }

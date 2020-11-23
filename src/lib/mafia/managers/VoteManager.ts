@@ -67,19 +67,30 @@ export default class VoteManager extends Map<string, VoteProxy> {
 		return false;
 	}
 
-	public show(): string {
-		const voteText = ['**Vote Count**'];
+	public show({ header = 'Vote Count', codeblock = false }): string {
+		const voteText = [`**${header}**`];
+		if (codeblock) voteText.push('```');
+
 		const sortedVotes = Array.from(this.entries()).filter(votes => votes[0] !== NotVoting).sort((a, b) => a[1].count() - b[1].count());
 		for (const [targetID, votes] of sortedVotes) {
 			if (votes.count() === 0) continue;
 			const target = this.game.players.find(player => player.user.id === targetID);
 			if (!target) continue;
-			voteText.push(`${target.user.username} (${votes.count()}): ${votes.map(voterMapping).join(', ')}`);
+			voteText.push(`${target.user.username} (${votes.count()}): ${votes.map(voterMapping).join(', ')} ${votes.count() >= this.game.majorityVotes ? '(Hammered)' : ''}`);
 		}
+
+		const noLynches = this.get(NoLynch);
+		if (noLynches && noLynches.count() > 0) {
+			voteText.push(`No Lynch (${noLynches!.count()}): ${noLynches!.map(voterMapping).join(', ')}`);
+		}
+
 		const notVoting = this.get(NotVoting);
-		if (notVoting!.count() > 0) {
+		if (notVoting && notVoting.count() > 0) {
 			voteText.push(`Not Voting (${notVoting!.count()}): ${notVoting!.map(voterMapping).join(', ')}`);
 		}
+
+		if (codeblock) voteText.push('```');
+
 		return voteText.join('\n');
 	}
 

@@ -60,7 +60,7 @@ module.exports = {
 	// A set of global variables that need to be available in all test environments
 	globals: {
 		'ts-jest': {
-			tsConfig: '<rootDir>/tests/tsconfig.json'
+			tsconfig: '<rootDir>/tests/tsconfig.json'
 		}
 	},
 
@@ -84,6 +84,7 @@ module.exports = {
 
 	// A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
 	moduleNameMapper: {
+		'^@root/(.*)$': '<rootDir>/src/$1',
 		'^@mafia/(.*)$': '<rootDir>/src/lib/mafia/$1',
 		'^@lib/(.*)$': '<rootDir>/src/lib/$1',
 		'^@util/(.*)$': '<rootDir>/src/lib/util/$1'

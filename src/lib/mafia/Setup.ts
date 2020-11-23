@@ -1,4 +1,4 @@
-import { BasePiece } from '@sapphire/framework';
+import { BasePiece, ok, Result } from '@sapphire/framework';
 import { PieceContext, PieceOptions } from '@sapphire/pieces';
 import { mergeDefault, Constructor } from '@sapphire/utilities';
 import Role from './Role';
@@ -16,10 +16,11 @@ export const DEFAULT_SETUP_OPTIONS = {
 	roles: [] as string[]
 };
 
-export default class Setup extends BasePiece {
+export default abstract class Setup extends BasePiece {
 
 	public roles: string[];
 	public nightStart: boolean;
+	public description: string | null = null;
 	public constructor(context: PieceContext, options: SetupOptions = {}) {
 		super(context, { ...options, name: (options.name ?? context.name).toLowerCase() });
 		options = mergeDefault(DEFAULT_SETUP_OPTIONS, options);
@@ -27,20 +28,18 @@ export default class Setup extends BasePiece {
 		this.nightStart = options.nightStart!;
 	}
 
-	// Returns an iterator of roles, this function is called when actually assigning roles.
 	// Any algorithms used to randomize roles should be handled here.
-	public *generate(): Iterator<Constructor<Role>> {
-		// noop
-	}
+	public abstract generate(): Constructor<Role>[];
 
 	// ok() is called while loading the setup, to check if the setup is functional
 	// checks for exe with no townies/single jester setups are handled here
-	public ok(): boolean {
-		return true;
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	public ok(roles: Constructor<Role>[]): Result<boolean, string> {
+		return ok(true);
 	}
 
 	public get totalPlayers() {
-		return this.roles.length;
+		return this.generate().length;
 	}
 
 }

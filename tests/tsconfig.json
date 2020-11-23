@@ -10,6 +10,9 @@
 		"composite": true,
 		"declaration": true,
 		"paths": {
+			"@root/*": [
+				"../src/*"
+			],
 			"@mafia/*": [
 				"../src/lib/mafia/*"
 			],
@@ -26,6 +29,7 @@
 	},
 	"include": [
 		".",
+		"../src/*",
 		"../src/**/*"
 	]
 }

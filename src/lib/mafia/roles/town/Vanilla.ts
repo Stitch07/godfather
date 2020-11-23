@@ -1,11 +1,12 @@
 import Townie from '@mafia/mixins/Townie';
+import Role from '@mafia/Role';
 
-class Vanilla extends Townie {
+class Vanilla extends Role {
 
 	public name = 'Vanilla';
 
-	public static documentation = 'Roleinfo docs here.';
+	public description = 'You have no night actions. Your vote is your only power.';
 
 }
 
-export default Vanilla;
+export default Townie(Vanilla);

@@ -1,15 +1,17 @@
 import { Branding } from '@lib/util/utils';
-import Game from '@mafia/Game';
+import Game, { GameSettings } from '@mafia/Game';
 import Player from '@mafia/Player';
 import SetupStore from '@mafia/SetupStore';
-import { Collection, Guild } from 'discord.js';
-import GuildSettings from './lib/orm/entities/GuildSettings';
+import { Collection, Guild, User } from 'discord.js';
+import GuildSettingsEntity from './lib/orm/entities/GuildSettings';
 
 interface ChannelExtendables {
 	readonly attachable: boolean;
 	readonly embedable: boolean;
 	readonly postable: boolean;
 	readonly readable: boolean;
+	prompt(promptMessage: string, promptUser: User): Promise<boolean>;
+	readonly game: Game | undefined;
 }
 
 
@@ -21,13 +23,9 @@ declare module 'discord.js' {
 		ownerID: string | undefined;
 		games: Collection<string, Game>;
 		setups: SetupStore;
-		settingsCache: Map<string, GuildSettings>;
+		settingsCache: Map<string, GuildSettingsEntity>;
+		eventLoop: NodeJS.Timeout;
 		fetchGuildPrefix(guild: Guild): Promise<string>;
-	}
-
-	interface TextChannel {
-		prompt(promptMessage: string, promptUser: User): Promise<boolean>;
-		readonly game: Game | undefined;
 	}
 
 	interface TextChannel extends ChannelExtendables { }
@@ -35,11 +33,21 @@ declare module 'discord.js' {
 	interface DMChannel extends ChannelExtendables { }
 
 	interface NewsChannel extends ChannelExtendables { }
+
+	interface Message {
+		prompt(promptMessage: string): Promise<boolean>;
+	}
+
+	interface Guild {
+		readSettings(): Promise<GuildSettingsEntity>;
+	}
 }
 
 declare module '@sapphire/framework' {
 	interface ArgType {
 		player: Player;
+		gameSetting: keyof GameSettings;
+		duration: number;
 	}
 }
 

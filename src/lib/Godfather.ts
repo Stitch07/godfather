@@ -1,15 +1,14 @@
 import '@lib/extenders';
 
-import { join } from 'path';
-import { SapphireClient } from '@sapphire/framework';
+import { LogLevel, SapphireClient } from '@sapphire/framework';
 import { Collection, Guild, Message } from 'discord.js';
 import Game from '@mafia/Game';
 import SetupStore from '@mafia/SetupStore';
 import { Branding } from './util/utils';
-import { PREFIX } from '@root/config';
+import { PGSQL_ENABLED, PREFIX, PRODUCTION } from '@root/config';
 import GuildSettingRepository from './orm/repositories/GuildSettingRepository';
 import Logger from './Logger';
-import GuildSettings from './orm/entities/GuildSettings';
+import GuildSettingsEntity from './orm/entities/GuildSettings';
 import { getCustomRepository } from 'typeorm';
 
 export default class Godfather extends SapphireClient {
@@ -18,31 +17,34 @@ export default class Godfather extends SapphireClient {
 	public setups: SetupStore;
 	public release = Branding.Release.Development;
 	public ownerID: string | undefined = undefined;
-	public settingsCache = new Map<string, GuildSettings>();
+	public settingsCache = new Map<string, GuildSettingsEntity>();
+	public eventLoop!: NodeJS.Timeout;
 	private _version = [1, 0, 0];
 	public constructor() {
 		super({
 			logger: {
-				instance: new Logger()
+				instance: new Logger(),
+				level: PRODUCTION ? LogLevel.Info : LogLevel.Trace
+			},
+			ws: {
+				intents: ['GUILD_MEMBERS', 'GUILD_MESSAGES', 'GUILDS', 'DIRECT_MESSAGES', 'GUILD_MESSAGE_REACTIONS']
 			}
 		});
 
 		this.setups = new SetupStore(this);
 		this.registerStore(this.setups);
-		this.fetchPrefix = (message: Message) => this.fetchGuildPrefix(message.guild);
 
-		this.arguments.registerPath(join(__dirname, '..', 'arguments'));
-		this.commands.registerPath(join(__dirname, '..', 'commands'));
-		this.events.registerPath(join(__dirname, '..', 'events'));
-		this.preconditions.registerPath(join(__dirname, '..', 'preconditions'));
-		this.setups.registerPath(join(__dirname, '..', 'setups'));
+		this.fetchPrefix = async (message: Message) => {
+			if (!message.guild) return [PREFIX, ''];
+			return this.fetchGuildPrefix(message.guild);
+		};
 	}
 
 	// TODO: configurable prefixes
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	public async fetchGuildPrefix(guild: Guild | null) {
-		if (!guild) return PREFIX;
-		const guildSettings: GuildSettings = await getCustomRepository(GuildSettingRepository).ensure(this, guild);
+	public async fetchGuildPrefix(guild: Guild) {
+		if (!PGSQL_ENABLED) return PREFIX;
+		const guildSettings: GuildSettingsEntity = await getCustomRepository(GuildSettingRepository).ensure(this, guild);
 		return guildSettings.prefix;
 	}
 
