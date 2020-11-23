@@ -42,7 +42,7 @@ export default function MafiaRole<TBaseRole extends typeof Role>(BaseRole: TBase
 
 	}
 
-	MafiaRole.categories = [...MafiaRole.categories, 'Random Mafia'];
+	MafiaRole.categories = [...MafiaRole.categories, 'Random Mafia', 'Evil'];
 	return MafiaRole;
 
 }

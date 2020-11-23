@@ -48,4 +48,4 @@ export default class Amnesiac extends SingleTarget {
 }
 
 Amnesiac.aliases = ['Amne'];
-Amnesiac.categories = [...Amnesiac.categories, 'Neutral Benign'];
+Amnesiac.categories = [...Amnesiac.categories, 'Neutral Benign', 'Good'];

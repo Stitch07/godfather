@@ -1,4 +1,4 @@
-import { BasePiece } from '@sapphire/framework';
+import { BasePiece, ok, Result } from '@sapphire/framework';
 import { PieceContext, PieceOptions } from '@sapphire/pieces';
 import { mergeDefault, Constructor } from '@sapphire/utilities';
 import Role from './Role';
@@ -33,8 +33,9 @@ export default abstract class Setup extends BasePiece {
 
 	// ok() is called while loading the setup, to check if the setup is functional
 	// checks for exe with no townies/single jester setups are handled here
-	public ok(): boolean {
-		return true;
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	public ok(roles: Constructor<Role>[]): Result<boolean, string> {
+		return ok(true);
 	}
 
 	public get totalPlayers() {
