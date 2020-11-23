@@ -22,6 +22,7 @@ export default class Godfather extends SapphireClient {
 	private _version = [1, 0, 0];
 	public constructor() {
 		super({
+			caseInsensitiveCommands: true,
 			logger: {
 				instance: new Logger(),
 				level: PRODUCTION ? LogLevel.Info : LogLevel.Trace
