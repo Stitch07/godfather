@@ -30,7 +30,7 @@
         ]
     },
     {
-        "name": "Doctor",
+        "name":"Doctor",
         "detailedDescription": [
             "An experienced surgeon in trauma care who secretly heals people.",
             "",
@@ -61,6 +61,31 @@
             "",
             "+ Abilities: Choose to watch one person at night to see who visits them.",
             "+ You will exactly know who visited your target at night, showing their names."
+        ]
+    },
+    {
+        "name":"Mayor",
+        "detailedDescription":[
+            "The leader of the Town.",
+            "",
+            "- Win Condition: lynch every criminal and evildoer",
+            "",
+            "+ Abilities: You may reveal yourself as the mayor of the Town during the day.",
+            "+ Once you have revealed yourself your vote counts as 3 votes."
+            "+ Once you reveal yourself you may not be healed by doctor during any night.",
+            "+ Once you reveal yourself you cannot whisper someone or be whispered to."
+        ]
+    },
+    {
+        "name":"Mimicer",
+        "detailedDescription": [
+            "An impressionist who fulfills the wishes of people by doing their mimicry.",
+            "",
+            "- Win Condition: lynch every criminal and evildoer",
+            "",
+            "+ Abilities: You may choose to raise a dead Town member every night and once use their ability on a player.",
+            "+ Each dead town member can only be used once every game.",
+            "+ You cannot be roleblocked or controlled."
         ]
     },
     {
@@ -117,7 +142,7 @@
             "+ You may transport yourself.",
             "+ Your targets will know if they were transported.",
             "+ You cannot transport someone with themselves.",
-            "+ You cannot be roleblocked."
+            "+ You cannot be roleblocked or controlled."
         ]
     },
     {
@@ -146,6 +171,20 @@
         ]
     },
     
+    {
+        "name":"Ambusher",
+            "detailedDescription": [
+            "A stealthy killer who waits outside of his target house for the perfect moment to strike.",
+            "",
+            "- Win Condition: kill anyone who will not submit to the Mafia",
+            "",
+            "+ Abilities: You may choose to lie in wait outside your target's house",
+            "+ You will attack one player who visits your target.",
+            "+ All players visiting your target will learn your name.",
+            "+ If there are no mafia roles left who are capable of killing then you will become the goon.",
+            "+ You can talk with other mafia members."
+        ]
+    },
     {
         "name":"Consigliere",
         "detailedDescription": [
@@ -267,6 +306,20 @@
         ]
     },
     {
+        "name":"Guardian Angel",
+        "detailedDescription": [
+            "An Angel whose only goal is the protection of their charge.",
+            "",
+            "- Win condition: Keep your target alive by any means necessary.",
+            "",
+            "+ Abilities: Each game you will be assigned a target who you need to protect by any means necessary.",
+            "+ Twice a game you may heal and purge your target.",
+            "+ Protecting a player gives your target vote immunity for the next day",
+            "+ You can protect your target even if you die.",
+            "+ If your target dies you will become a Survivor with no vests."
+        ]
+    },
+    {
         "name":"Jester",
         "detailedDescription": [
             "A crazed lunatic whose life goal is to be publicly executed.",
@@ -300,6 +353,30 @@
             "",
             "+ Abilities: Decide if you want to put on a bulletproof vest at night. Bullet proof vest gives you a basic defense.",
             "+ You can only use the bulletproof vest 4 times."
+        ]
+    },
+    {
+        "name":"Werewolf,
+        "detailedDescription": [
+            "A normal citizen who transforms into a hungry Werewolf during the Full Moon.",
+            "",
+            "- Win condition: Kill anyone who would oppose you",
+            "",
+            "+ Abilities: You may rampage at player's house or on your own house during even nights.",
+            "+ During odd nights you cannot rampage",
+            "+ If you do not select a target you will stay home and Rampage at your home."
+        ]
+    },
+    {
+        "name":"Witch",
+        "detailedDescription": [
+            "A Voodoo master who can control other people's actions.",
+            "",
+            "- Win condition: Survive to see town lose the game",
+            "",
+            "+ Abilities: You may control someone's actions each night.",
+            "+ You cannot be roleblocked or controlled.",
+            "+ You will know the role of the player you will control."
         ]
     }
 ]
