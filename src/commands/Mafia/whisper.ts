@@ -22,6 +22,7 @@ export default class extends GodfatherCommand {
 		const playerResolver = Args.make(arg => {
 			const player = Player.resolve(game, arg);
 			if (!player) return err(new UserError('ArgumentPlayerInvalid', 'Invalid player provided. Use a valid number.'));
+			if (player.user.id === message.author.id) return err(new UserError('ArgumentPlayerDistinc', "You can't whisper to yourself!"));
 			return ok(player);
 		});
 
