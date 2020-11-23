@@ -18,7 +18,10 @@ export default class extends GodfatherCommand {
 		if (this.client.setups.has(setupData)) {
 			game.setup = this.client.setups.get(setupData);
 		} else {
-			game.setup = BasicSetup.create(setupData);
+			const setup = BasicSetup.create(setupData);
+			const check = setup.ok(setup.generate());
+			if (!check.success) throw `Invalid setup: ${check.error}`;
+			game.setup = setup;
 		}
 
 		return message.channel.send(`Using the setup: \`${game.setup!.name}\``);

@@ -79,7 +79,7 @@ abstract class Role {
 	}
 
 	// Role categories such as Random Town, Neutral Evil
-	public static categories: string[] = ['Any'];
+	public static categories: string[] = [];
 
 	public static aliases: string[] = [];
 

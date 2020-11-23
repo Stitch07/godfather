@@ -14,6 +14,6 @@ export default function Townie<TBaseRole extends typeof Role>(BaseRole: TBaseRol
 
 	}
 
-	Townie.categories = [...Townie.categories, 'Random Town'];
+	Townie.categories = [...Townie.categories, 'Random Town', 'Good'];
 	return Townie;
 }

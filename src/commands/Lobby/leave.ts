@@ -4,6 +4,7 @@ import { ApplyOptions } from '@sapphire/decorators';
 import { Message } from 'discord.js';
 
 @ApplyOptions<CommandOptions>({
+	aliases: ['out'],
 	preconditions: ['GuildOnly', 'GameOnly', 'PlayerOnly', 'AlivePlayerOnly']
 })
 export default class extends GodfatherCommand {
