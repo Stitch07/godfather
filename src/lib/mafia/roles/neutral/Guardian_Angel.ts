@@ -1,10 +1,9 @@
 import NoTarget from '@mafia/mixins/NoTarget';
 import GuardianAngelFaction from '@mafia/factions/neutral/GuardianAngel';
 import Player from '@mafia/Player';
-import { randomArray } from '@root/lib/util/utils';
+import { randomArray, remove } from '@root/lib/util/utils';
 import { allRoles } from '..';
 import NightActionsManager, { Attack, NightActionPriority } from '@mafia/managers/NightActionsManager';
-import type Survivor from './Survivor';
 
 class Guardian_Angel extends NoTarget {
 
@@ -17,15 +16,20 @@ class Guardian_Angel extends NoTarget {
 	public priority = NightActionPriority.GUARDIAN_ANGEL;
 
 	public target!: Player;
-	private protects = 2;
+	private protects: number;
+
+	public constructor(player: Player, context: GuardianAngelContext = {}) {
+		super(player);
+		if (context.protects) this.protects = context.protects;
+		else this.protects = this.getInitialProtects();
+	}
 
 	public async init() {
 		const possibleTargets = this.game.players.filter(player => player.role.name !== 'Jester' && player.role.name !== 'Executioner' && player.role.name !== 'Guardian Angel');
 		if (possibleTargets.length === 0) {
 			await this.player.user.send('There are no valid targets in game. You have become a Survivor!');
-			const survivor = allRoles.get('Survivor')!;
-			this.player.role = new survivor(this.player);
-			(this.player.role as Survivor).vests = 0;
+			const Survivor = allRoles.get('Survivor')!;
+			this.player.role = new Survivor(this.player, { vests: 0 });
 			return this.player.sendPM();
 		}
 
@@ -43,23 +47,22 @@ class Guardian_Angel extends NoTarget {
 		if (!this.target.isAlive) {
 			await this.player.user.send('Your target has died! You have become a survivor.');
 			const Survivor = allRoles.get('Survivor')!;
-			this.player.role = new Survivor(this.player);
-			(this.player.role as Survivor).vests = 0;
+			this.player.role = new Survivor(this.player, { vests: 0 });
 			return this.player.sendPM();
 		}
 	}
 
 	public async onNight() {
-		if (this.game.nightActions.protectedPlayers.includes(this.target)) this.game.nightActions.protectedPlayers.splice(this.game.nightActions.protectedPlayers.indexOf(this.target));
+		remove(this.game.nightActions.protectedPlayers, player => player === this.target);
+
 		if (!this.target.isAlive) {
 			await this.player.user.send('Your target has died! You have become a survivor.');
-			const survivor = allRoles.get('Survivor')!;
-			this.player.role = new survivor(this.player);
-			(this.player.role as Survivor).vests = 0;
+			const Survivor = allRoles.get('Survivor')!;
+			this.player.role = new Survivor(this.player, { vests: 0 });
 			return this.player.sendPM();
 		}
-		await super.onNight();
-		this.player.user.send(`You have ${this.protects} remaining.`);
+
+		return super.onNight();
 	}
 
 	public runAction(actions: NightActionsManager) {
@@ -93,6 +96,21 @@ class Guardian_Angel extends NoTarget {
 		await this.game.channel.send(`A Guardian Angel has protected ${this.target.user.username}!`);
 	}
 
+	public get extraNightContext() {
+		if (this.protects > 0) return `You can protect your target ${this.protects} more time${this.protects === 1 ? '' : 's'}.`;
+		return null;
+	}
+
+	private getInitialProtects() {
+		if (this.game.players.length <= 5) return 1;
+		if (this.game.players.length <= 10) return 2;
+		return 3;
+	}
+
+}
+
+export interface GuardianAngelContext {
+	protects?: number;
 }
 
 Guardian_Angel.aliases = ['GA'];

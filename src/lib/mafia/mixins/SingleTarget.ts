@@ -6,6 +6,7 @@ import { Awaited, codeBlock } from '@sapphire/utilities';
 import { listItems, remove } from '@util/utils';
 import { Message } from 'discord.js';
 import { DEFAULT_ACTION_FLAGS } from '@root/lib/constants';
+import { PREFIX } from '@root/config';
 
 
 class SingleTarget extends Role {
@@ -24,17 +25,20 @@ class SingleTarget extends Role {
 
 	public async onNight() {
 		const { game } = this.player;
-		const prefix = await this.client.fetchGuildPrefix(game.channel.guild);
-		let actionText = `It is now night ${game.cycle}. Use the ${prefix}${this.action} command to ${this.actionText}. Use ${prefix}noaction to stay home.\n`;
-		actionText += `${codeBlock('diff', game.players.show({ codeblock: true }))}`;
+
+		let actionText = `It is now night ${game.cycle}. Use ${PREFIX}${this.action} <number> to ${this.actionText}. Use ${PREFIX}noaction to stay home.\n`;
+		if (this.extraNightContext !== null) actionText += this.extraNightContext;
+		actionText += `\n${codeBlock('diff', game.players.show({ codeblock: true }))}`;
+
 		await this.player.user.send(actionText);
 	}
 
 	public async onDay() {
 		const { game } = this;
-		const prefix = await this.client.fetchGuildPrefix(game.channel.guild);
-		let actionText = `It is now day ${game.cycle}. Use the ${prefix}${this.action} command to ${this.actionText} immediately.`;
+
+		let actionText = `It is now day ${game.cycle}. Use the ${PREFIX}${this.action} command to ${this.actionText} immediately.`;
 		actionText += `${codeBlock('diff', game.players.show({ codeblock: true }))}`;
+
 		await this.player.user.send(actionText);
 	}
 
@@ -77,8 +81,8 @@ class SingleTarget extends Role {
 						flags: this.flags ?? DEFAULT_ACTION_FLAGS
 					});
 				}
-				if (this.name === 'Witch' || this.name === 'Mimicer') await this.player.user.send(`You are ${this.actionGerund} ${(target as Player[])[0]} onto ${(target as Player[])[1]} tonight.`);
-				else await this.player.user.send(`You are ${this.actionGerund} ${Array.isArray(target) ? listItems(target.map(tgt => tgt.user.username)) : target} tonight.`);
+
+				await this.player.user.send(this.actionConfirmation(target));
 
 				await this.player.game.nightActions.addAction({
 					action: this.action,
@@ -127,8 +131,17 @@ class SingleTarget extends Role {
 		return { check: this.player.isAlive, reason: '' };
 	}
 
+	public actionConfirmation(target: Player | Player[]) {
+		return `You are ${this.actionGerund} ${Array.isArray(target) ? listItems(target.map(tgt => tgt.user.username)) : target} tonight.`;
+	}
+
 	// eslint-disable-next-line @typescript-eslint/class-literal-property-style
 	public get defaultAction(): NightAction | null {
+		return null;
+	}
+
+	// eslint-disable-next-line @typescript-eslint/class-literal-property-style
+	public get extraNightContext(): string | null {
 		return null;
 	}
 

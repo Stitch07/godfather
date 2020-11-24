@@ -27,7 +27,7 @@ class Retributionist extends SingleTarget {
 
 	public canUseAction() {
 		if (this.hasRevived) return { check: false, reason: 'You have already revived a player.' };
-		const validTargets = this.game.players.filter(this.canTarget.bind(this));
+		const validTargets = this.game.players.filter(target => this.canTarget(target).check);
 		if (validTargets.length === 0) return { check: false, reason: 'There are no valid targets.' };
 		return { check: true, reason: '' };
 	}

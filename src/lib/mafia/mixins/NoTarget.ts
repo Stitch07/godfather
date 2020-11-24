@@ -4,7 +4,8 @@ import { Message } from 'discord.js';
 import NightActionsManager, { NightActionPriority } from '@mafia/managers/NightActionsManager';
 import Role from '@mafia/Role';
 import { Phase } from '@mafia/Game';
-import { DEFAULT_ACTION_FLAGS } from '@root/lib/constants';
+import { DEFAULT_ACTION_FLAGS } from '@lib/constants';
+import { PREFIX } from '@root/config';
 
 class NoTarget extends Role {
 
@@ -12,8 +13,8 @@ class NoTarget extends Role {
 
 	public async onNight() {
 		const { game } = this.player;
-		const prefix = await this.game.channel.client.fetchGuildPrefix(game.channel.guild);
-		let actionText = `It is now night ${game.cycle}. Use the ${prefix}${this.action} command to ${this.actionText}. Use ${prefix}noaction to stay home.\n`;
+		let actionText = `It is now night ${game.cycle}. Use ${PREFIX}${this.action} to ${this.actionText}. Use ${PREFIX}noaction to stay home.\n`;
+		if (this.extraNightContext !== null) actionText += this.extraNightContext;
 		await this.player.user.send(actionText);
 	}
 
@@ -70,6 +71,11 @@ class NoTarget extends Role {
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	public tearDown(actions: NightActionsManager): Awaited<any> {
 		// noop
+	}
+
+	// eslint-disable-next-line @typescript-eslint/class-literal-property-style
+	public get extraNightContext(): string | null {
+		return null;
 	}
 
 }

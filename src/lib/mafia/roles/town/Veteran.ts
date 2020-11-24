@@ -30,11 +30,6 @@ class Veteran extends NoTarget {
 		return super.canUseAction();
 	}
 
-	public async onNight() {
-		await super.onNight();
-		if (this.alerts > 0) await this.player.user.send(`You have ${this.alerts} alerts remaining.`);
-	}
-
 	public setUp() {
 		this.onAlert = true;
 	}
@@ -53,6 +48,11 @@ class Veteran extends NoTarget {
 
 	public tearDown() {
 		this.onAlert = false;
+	}
+
+	public get extraNightContext() {
+		if (this.alerts > 0) return `You have ${this.alerts} alerts remaining.`;
+		return null;
 	}
 
 	public static unique = true;

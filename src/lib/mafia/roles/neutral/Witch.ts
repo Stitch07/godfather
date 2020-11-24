@@ -43,6 +43,10 @@ class Witch extends DoubleTarget {
 		return { check: true, reason: '' };
 	}
 
+	public actionConfirmation([player1, player2]: Player[]) {
+		return `You are controlling ${player1} onto ${player2} tonight.`;
+	}
+
 }
 
 Witch.categories = [...Witch.categories, 'Neutral Evil', 'Evil'];

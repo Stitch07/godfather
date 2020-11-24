@@ -8,6 +8,7 @@ class Vigilante extends Killer {
 
 	public name = 'Vigilante';
 	public description = 'You may shoot someone every night.';
+	public bullets = 4;
 	private guilt = false;
 
 	public async onNight() {
@@ -38,6 +39,11 @@ class Vigilante extends Killer {
 			this.guilt = true;
 		}
 		return super.tearDown(actions, target);
+	}
+
+	public get extraNightContext() {
+		if (this.bullets > 0) return `You have ${this.bullets} bullets remaining.`;
+		return null;
 	}
 
 }

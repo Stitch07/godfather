@@ -52,6 +52,10 @@ class Doctor extends SingleTarget {
 		return { check: true, reason: '' };
 	}
 
+	public get extraNightContext() {
+		return `You ${this.hasSelfHealed ? 'can' : 'cannot'} self-heal tonight.`;
+	}
+
 }
 
 Doctor.aliases = ['Doc'];

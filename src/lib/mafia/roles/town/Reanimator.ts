@@ -5,17 +5,16 @@ import Player from '@mafia/Player';
 import { Phase } from '../../Game';
 import SingleTarget from '../../mixins/SingleTarget';
 
-const INVALID_ROLES = ['Transporter', 'Mimicer'];
+const INVALID_ROLES = ['Transporter', 'Reanimator'];
 
-class Mimicer extends DoubleTarget {
+class Reanimator extends DoubleTarget {
 
-	public name = 'Mimicer';
-	public description = 'You may mimic a player at night, using their action';
-	public action = 'mimic';
-	public actionText = 'mimic a player';
-	public actionGerund = 'mimicing';
-	public actionParticiple = 'shot';
-	public priority = NightActionPriority.Mimicer;
+	public name = 'Reanimator';
+	public description = 'You may reanimate a dead Townie at night, using their action';
+	public action = 'reanimate';
+	public actionText = 'reanimate a player';
+	public actionGerund = 'reanimating';
+	public priority = NightActionPriority.Reanimator;
 
 	public async setUp(actions: NightActionsManager, [actor, target]: Player[]) {
 		const thisArg = Object.assign(actor.role, { player: this.player });
@@ -33,22 +32,26 @@ class Mimicer extends DoubleTarget {
 	}
 
 	public canUseAction() {
-		const validTargets = this.game.players.filter(player => this.canTarget([player]));
+		const validTargets = this.game.players.filter(player => this.canTarget([player]).check);
 		return { check: validTargets.length > 0, reason: 'You have no valid targets.' };
 	}
 
 	public canTarget([player]: Player[]) {
-		if (player.isAlive) return { check: false, reason: 'You can only mimic dead players.' };
+		if (player.isAlive) return { check: false, reason: 'You can only reanimate dead players.' };
 		if (!Reflect.has(player.role, 'action') || Reflect.get(player.role, 'actionPhase') !== Phase.Night) return { check: false, reason: 'You can only mimic players with night-actions.' };
-		if (player.role.faction.name !== 'Town') return { check: false, reason: 'You can only mimic dead townies.' };
-		if (INVALID_ROLES.includes(player.role.name)) return { check: false, reason: `You cannot mimic a ${player.role.name}.` };
+		if (player.role.faction.name !== 'Town') return { check: false, reason: 'You can only reanimate dead townies.' };
+		if (INVALID_ROLES.includes(player.role.name)) return { check: false, reason: `You cannot reanimate a ${player.role.name}.` };
 		return { check: true, reason: '' };
+	}
+
+	public actionConfirmation([player]: Player[]) {
+		return `You are reanimating ${player} tonight.`;
 	}
 
 	public static unique = true;
 
 }
 
-Mimicer.categories = [...Mimicer.categories, 'Town Support'];
+Reanimator.categories = [...Reanimator.categories, 'Town Support'];
 
-export default Townie(Mimicer);
+export default Townie(Reanimator);
