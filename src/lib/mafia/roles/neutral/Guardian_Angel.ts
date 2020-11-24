@@ -4,6 +4,7 @@ import Player from '@mafia/Player';
 import { randomArray } from '@root/lib/util/utils';
 import { allRoles } from '..';
 import NightActionsManager, { Attack, NightActionPriority } from '@mafia/managers/NightActionsManager';
+import type Survivor from './Survivor';
 
 class Guardian_Angel extends NoTarget {
 
@@ -22,8 +23,9 @@ class Guardian_Angel extends NoTarget {
 		const possibleTargets = this.game.players.filter(player => player.role.name !== 'Jester' && player.role.name !== 'Executioner' && player.role.name !== 'Guardian Angel');
 		if (possibleTargets.length === 0) {
 			await this.player.user.send('There are no valid targets in game. You have become a Survivor!');
-			const Survivor = allRoles.get('Survivor')!;
-			this.player.role = new Survivor(this.player);
+			const survivor = allRoles.get('Survivor')!;
+			this.player.role = new survivor(this.player);
+			(this.player.role as Survivor).vests = 0;
 			return this.player.sendPM();
 		}
 
@@ -42,17 +44,18 @@ class Guardian_Angel extends NoTarget {
 			await this.player.user.send('Your target has died! You have become a survivor.');
 			const Survivor = allRoles.get('Survivor')!;
 			this.player.role = new Survivor(this.player);
+			(this.player.role as Survivor).vests = 0;
 			return this.player.sendPM();
 		}
 	}
 
-	// @ts-ignore idk how to fix this
 	public async onNight() {
-		if (this.game.nightActions.protectedPlayers.includes(this.target)) return this.game.nightActions.protectedPlayers.splice(this.game.nightActions.protectedPlayers.indexOf(this.target));
+		if (this.game.nightActions.protectedPlayers.includes(this.target)) this.game.nightActions.protectedPlayers.splice(this.game.nightActions.protectedPlayers.indexOf(this.target));
 		if (!this.target.isAlive) {
 			await this.player.user.send('Your target has died! You have become a survivor.');
-			const Survivor = allRoles.get('Survivor')!;
-			this.player.role = new Survivor(this.player);
+			const survivor = allRoles.get('Survivor')!;
+			this.player.role = new survivor(this.player);
+			(this.player.role as Survivor).vests = 0;
 			return this.player.sendPM();
 		}
 		await super.onNight();
@@ -64,8 +67,6 @@ class Guardian_Angel extends NoTarget {
 		if (playerRecord.has('nightkill')) {
 			const nightKills = playerRecord.get('nightkill');
 			if (nightKills.result === true && nightKills.type && nightKills.type < Attack.Unstoppable) {
-				nightKills.result = false;
-				nightKills.by = [];
 				playerRecord.set('nightkill', { result: false, by: [] });
 
 				const heals = playerRecord.get('heal');
@@ -74,7 +75,7 @@ class Guardian_Angel extends NoTarget {
 				playerRecord.set('heal', heals);
 
 				actions.record.set(this.target.user.id, playerRecord);
-				this.player.user.send('You target was attacked.');
+				this.player.user.send('Your target was attacked.');
 			}
 		}
 

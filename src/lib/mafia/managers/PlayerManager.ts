@@ -106,6 +106,7 @@ export default class PlayerManager extends Array<Player> {
 		if (!player.isAlive) flags.push(player.role.display, player.deathReason);
 		if (player.role.name === 'Mayor' && Reflect.get(player.role, 'hasRevealed') === true) flags.push('Mayor');
 		if (player.flags.isRevived) flags.push(player.role.display, `revived N${player.flags.revivedOn}`);
+		if (this.game.nightActions.protectedPlayers.includes(player)) flags.push('protected by the Guardian Angel');
 		return flags.length ? `(${flags.join('; ')})` : '';
 	}
 
