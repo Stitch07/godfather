@@ -1,4 +1,4 @@
-import Setup from './Setup';
+import Setup, { SetupOptions } from './Setup';
 import Role from './Role';
 import { shuffle, randomArray } from '@lib/util/utils';
 import yaml = require('js-yaml');
@@ -15,8 +15,8 @@ export default class BasicSetup extends Setup {
 	public randomNK!: Constructor<Role>[];
 	public randomTownies!: Constructor<Role>[];
 
-	public constructor(context: PieceContext) {
-		super(context);
+	public constructor(context: PieceContext, options: SetupOptions) {
+		super(context, options);
 
 		this.randomTownies = roleCategories.get('Random Town')!;
 		this.randomMafia = roleCategories.get('Random Mafia')!;
