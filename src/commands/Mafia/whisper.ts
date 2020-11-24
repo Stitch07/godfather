@@ -16,6 +16,7 @@ export default class extends GodfatherCommand {
 		const game = this.client.games.find(game => Boolean(game.players.get(message.author)));
 		if (!game) throw "You aren't in any active games!";
 
+		if (game.settings.disableWhispers) throw 'Whispering is disabled in this game.';
 		if (!game.hasStarted) throw "The game hasn't started yet!";
 		if (game.phase !== Phase.Day) throw 'You can only whisper during the day.';
 

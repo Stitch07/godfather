@@ -19,7 +19,7 @@ import { codeBlock, cutText } from '@sapphire/utilities';
 export default class extends GodfatherCommand {
 
 	public async run(message: Message, args: Args) {
-		const branchName = await args.rest('string').catch(() => 'ts-rewrite');
+		const branchName = await args.rest('string').catch(() => 'master');
 		// Fetch repository and pull if possible
 		await this.fetch(message, branchName);
 		// Update Yarn dependencies

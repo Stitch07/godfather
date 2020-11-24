@@ -24,4 +24,7 @@ export default class GuildSettingsEntity implements GameSettings {
 	@Column('boolean', { 'default': true })
 	public overwritePermissions = true;
 
+	@Column('boolean', { 'default': false })
+	public disableWhispers = false;
+
 }

@@ -1,6 +1,6 @@
 [                  
     {
-        "name":"Town Vanilla",
+        "name":"Vanilla",
         "detailedDescription": [
             "A regular townie without any powers.",
             "",
@@ -71,7 +71,7 @@
             "- Win Condition: lynch every criminal and evildoer",
             "",
             "+ Abilities: You may reveal yourself as the mayor of the Town during the day.",
-            "+ Once you have revealed yourself your vote counts as 3 votes."
+            "+ Once you have revealed yourself your vote counts as 3 votes.",
             "+ Once you reveal yourself you may not be healed by doctor during any night.",
             "+ Once you reveal yourself you cannot whisper someone or be whispered to."
         ]

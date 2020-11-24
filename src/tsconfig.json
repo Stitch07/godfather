@@ -1,11 +1,15 @@
 {
-    "extends": "@skyra/eslint-config",
+	"extends": "@skyra/eslint-config",
+	"include": [
+		"**/*.ts",
+		"**/*.json"
+	],
     "compilerOptions": {
         "target": "es2017",
         "useDefineForClassFields": true,
         "resolveJsonModule": true,
         "outDir": "../dist",
-        "rootDir": ".",
+		"rootDir": ".",
         "baseUrl": ".",
         "composite": true,
         "declaration": true,

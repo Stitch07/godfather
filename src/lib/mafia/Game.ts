@@ -15,7 +15,10 @@ import SingleTarget from './mixins/SingleTarget';
 import { format } from '@util/durationFormat';
 import { Time } from '@sapphire/time-utilities';
 import { aliveOrRecentJester, listItems } from '../util/utils';
-import { ENABLE_PRIVATE_CHANNELS, PRIVATE_CHANNEL_SERVER } from '@root/config';
+import { ENABLE_PRIVATE_CHANNELS, PGSQL_ENABLED, PRIVATE_CHANNEL_SERVER } from '@root/config';
+import { getConnection, getRepository } from 'typeorm';
+import GameEntity from '../orm/entities/Game';
+import PlayerEntity from '../orm/entities/Player';
 
 const MAX_DELAY = 15 * Time.Minute;
 
@@ -225,14 +228,26 @@ export default class Game {
 			codeBlock('', this.players.map(playerMapping).join('\n'))
 		].join('\n'));
 
-		// if (PGSQL_ENABLED) {
-		//	const entity = new GameEntity();
-		//	entity.setupName = this.setup!.name;
-		//	entity.winningFaction = data.winningFaction?.name;
-		//	entity.independentWins = data.independentWins.map(faction => faction.name);
-		//	entity.guildID = this.channel.guild.id;
-		//	await getRepository(GameEntity).save(entity);
-		// }
+		if (PGSQL_ENABLED) {
+			const entity = new GameEntity();
+			entity.setupName = this.setup!.name;
+			entity.winningFaction = data.winningFaction?.name;
+			entity.independentWins = data.independentWins.map(player => player.user.id);
+			entity.guildID = this.channel.guild.id;
+			await getRepository(GameEntity).save(entity);
+
+			await getConnection()
+				.createQueryBuilder()
+				.insert()
+				.into(PlayerEntity)
+				.values(this.players.map(player => ({
+					userID: player.user.id,
+					faction: player.role.faction.name,
+					roleName: player.role.name,
+					result: data.winningFaction === player.role.faction || data.independentWins.includes(player)
+				})))
+				.execute();
+		}
 
 		await this.delete();
 	}
@@ -282,6 +297,7 @@ export interface GameSettings {
 	nightDuration: number;
 	overwritePermissions: boolean;
 	maxPlayers: number;
+	disableWhispers: boolean;
 }
 
 export interface EndgameCheckData {
