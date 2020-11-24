@@ -8,6 +8,7 @@ export default class NightActionsManager extends Array<NightAction> {
 
 	public record = new NightRecord();
 	public framedPlayers: Player[] = [];
+	public protectedPlayers: Player[] = [];
 	public constructor(public game: Game) {
 		super();
 	}
@@ -154,7 +155,8 @@ export enum NightActionPriority {
 	BODYGUARD = 3,
 	// these roles deal Powerful attacks that cannot be healed
 	ARSONIST = 4,
-	// roles that affect investigative results
+	// roles that affect investigative results or stop powerful attacks
+	GUARDIAN_ANGEL = 5,
 	FRAMER = 5,
 	// investigative roles usually only rely on tearDown, so they can safely go last
 	COP = 6,

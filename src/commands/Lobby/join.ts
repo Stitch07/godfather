@@ -6,7 +6,7 @@ import { CommandOptions } from '@sapphire/framework';
 import { Phase } from '@root/lib/mafia/Game';
 
 @ApplyOptions<CommandOptions>({
-	aliases: ['in'],
+	aliases: ['in', 'j'],
 	description: 'Adds you to the playerlist of an ongoing game.',
 	preconditions: ['GuildOnly', 'GameOnly']
 })

@@ -6,7 +6,7 @@ import { Defense } from './managers/NightActionsManager';
 import { allRoles } from './roles';
 import type Executioner from './roles/neutral/Executioner';
 
-const INNOCENT_FACTIONS = ['Town', 'Survivor', 'Jester', 'Amnesiac'];
+const INNOCENT_FACTIONS = ['Town', 'Survivor', 'Jester', 'Amnesiac', 'Guardian Angel'];
 
 export interface CanUseActionData {
 	check: boolean;

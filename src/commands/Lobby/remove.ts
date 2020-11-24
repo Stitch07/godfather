@@ -13,6 +13,7 @@ export default class extends GodfatherCommand {
 		const player = await args.pick('player')
 			.catch(() => { throw 'Invalid player provided.'; });
 		const { game } = message.channel;
+		if (game?.host.user.id === player.user.id) return message.channel.send('You cannot remove yourself.');
 		if (!game!.hasStarted) {
 			// directly remove the player if the game hasn't started
 			game!.players.remove(player);

@@ -18,7 +18,7 @@ export default class Survivor extends NoTarget {
 	};
 
 	public vested = false;
-	private vests = 4;
+	public vests = 4;
 
 	public canUseAction() {
 		if (this.vests === 0) return { check: false, reason: 'You don\'t have any vests left' };
