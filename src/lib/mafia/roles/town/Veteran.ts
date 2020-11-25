@@ -6,7 +6,6 @@ import Player from '@mafia/Player';
 class Veteran extends NoTarget {
 
 	public name = 'Veteran';
-	public description = 'You may go on alert 3 times a game, killing all visitors.';
 	public action = 'alert';
 	public actionGerund = 'going on alert';
 	public actionText = 'go on alert';
@@ -18,7 +17,13 @@ class Veteran extends NoTarget {
 	};
 
 	private onAlert = false;
-	private alerts = 3;
+	private alerts: number;
+
+	public constructor(player: Player) {
+		super(player);
+		this.alerts = this.getInitialAlerts();
+		this.description = `You may go on alert ${this.alerts} times a game, killing all visitors.`;
+	}
 
 	public get defense() {
 		if (this.onAlert) return Defense.Basic;
@@ -53,6 +58,12 @@ class Veteran extends NoTarget {
 	public get extraNightContext() {
 		if (this.alerts > 0) return `You have ${this.alerts} alerts remaining.`;
 		return null;
+	}
+
+	private getInitialAlerts() {
+		if (this.game.players.length <= 5) return 1;
+		if (this.game.players.length <= 10) return 2;
+		return 3;
 	}
 
 	public static unique = true;

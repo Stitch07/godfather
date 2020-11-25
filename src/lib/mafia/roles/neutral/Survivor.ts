@@ -6,7 +6,6 @@ import Player from '@mafia/Player';
 export default class Survivor extends NoTarget {
 
 	public name = 'Survivor';
-	public description = 'You may vest 4 times in a game.';
 	public faction = new SurivorFaction();
 	public action = 'vest';
 	public actionGerund = 'vesting';
@@ -23,8 +22,10 @@ export default class Survivor extends NoTarget {
 
 	public constructor(player: Player, context: SurvivorContext = {}) {
 		super(player);
-		if (context.vests) this.vests = context.vests;
+		if (typeof context.vests === 'number') this.vests = context.vests;
 		else this.vests = this.getInitialVests();
+
+		this.description = `You may vest ${this.vests} time${this.vests === 1 ? '' : 's'} in a game.`;
 	}
 
 	public canUseAction() {

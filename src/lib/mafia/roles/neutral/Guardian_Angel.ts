@@ -19,7 +19,7 @@ class Guardian_Angel extends NoTarget {
 
 	public constructor(player: Player, context: GuardianAngelContext = {}) {
 		super(player);
-		if (context.protects) this.protects = context.protects;
+		if (typeof context.protects === 'number') this.protects = context.protects;
 		else this.protects = this.getInitialProtects();
 
 		this.description = `Your only goal is to keep your target alive. You may heal and purge your target ${this.protects} time${this.protects === 1 ? '' : 's'}. This may be done after you die.`;
