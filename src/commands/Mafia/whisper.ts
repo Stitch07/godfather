@@ -20,6 +20,10 @@ export default class extends GodfatherCommand {
 		if (!game.hasStarted) throw "The game hasn't started yet!";
 		if (game.phase !== Phase.Day) throw 'You can only whisper during the day.';
 
+		const player = game.players.get(message.author);
+		// @ts-ignore Mayor
+		if (player.role.name === 'Mayor' && player.role.hasRevealed) throw 'As a revealed Mayor, you cannot whisper.';
+
 		const playerResolver = Args.make(arg => {
 			const player = Player.resolve(game, arg);
 			if (!player) return err(new UserError('ArgumentPlayerInvalid', 'Invalid player provided. Use a valid number.'));
@@ -28,6 +32,8 @@ export default class extends GodfatherCommand {
 		});
 
 		const target = await args.pick(playerResolver);
+		// @ts-ignore Mayor
+		if (target.role.name === 'Mayor' && target.role.hasRevealed) throw 'You cannot whisper to a revealed Mayor.';
 		const whisperContent = await args.rest('string')
 			.catch(() => { throw 'What are you trying to whisper?'; });
 

@@ -19,6 +19,8 @@ export default class NightActionsManager extends Array<NightAction> {
 			const { priority } = (action.target as Player[])[0].role as SingleTarget;
 			action.priority = priority;
 		}
+
+		if (action.actor === action.target) action.flags!.canTransport = false;
 		this.push(action);
 
 		if (action.actor.role.faction.informed && this.game.factionalChannels.has(action.actor.role.faction.name)) {

@@ -53,7 +53,7 @@ class Doctor extends SingleTarget {
 	}
 
 	public get extraNightContext() {
-		return `You ${this.hasSelfHealed ? 'can' : 'cannot'} self-heal tonight.`;
+		return `You ${this.hasSelfHealed ? 'cannot' : 'can'} self-heal tonight.`;
 	}
 
 }
