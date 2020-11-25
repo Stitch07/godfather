@@ -21,7 +21,7 @@ class Veteran extends NoTarget {
 
 	public constructor(player: Player) {
 		super(player);
-		this.alerts = this.getInitialAlerts();
+		this.alerts = player === null ? 0 : this.getInitialAlerts();
 		this.description = `You may go on alert ${this.alerts} times a game, killing all visitors.`;
 	}
 
