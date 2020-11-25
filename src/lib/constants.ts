@@ -25,6 +25,15 @@ export const DEFAULT_ACTION_FLAGS = {
 	canVisit: true
 };
 
+export const STALEMATE_PRIORITY_ORDER = [
+	'Escort',
+	'Goon',
+	'Transporter',
+	'Godfather',
+	'Serial Killer',
+	'Arsonist'
+];
+
 export const GUILD_SETTINGS_METADATA: SettingsEntry<keyof ArgType>[] = [
 	{
 		name: 'dayDuration',

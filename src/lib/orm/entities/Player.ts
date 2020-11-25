@@ -6,7 +6,7 @@ export default class PlayerEntity {
 	@PrimaryGeneratedColumn()
 	public id!: number;
 
-	@Column('varchar', { name: 'id', length: 19, nullable: false })
+	@Column('varchar', { length: 19, nullable: false })
 	public userID!: string;
 
 	@Column('varchar', { length: 30, nullable: false })

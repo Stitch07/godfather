@@ -19,6 +19,7 @@ import { ENABLE_PRIVATE_CHANNELS, PGSQL_ENABLED, PRIVATE_CHANNEL_SERVER } from '
 import { getConnection, getRepository } from 'typeorm';
 import GameEntity from '../orm/entities/Game';
 import PlayerEntity from '../orm/entities/Player';
+import { STALEMATE_PRIORITY_ORDER } from '../constants';
 
 const MAX_DELAY = 15 * Time.Minute;
 
@@ -188,6 +189,24 @@ export default class Game {
 		let winningFaction: Faction | undefined = undefined;
 		let independentWins: Player[] = [];
 
+		const alivePlayers = this.players.filter(player => player.isAlive);
+
+		// draw by wipeout
+		if (alivePlayers.length === 0) {
+			return {
+				ended: true,
+				winningFaction: undefined,
+				independentWins
+			};
+		}
+
+		// 1v1 may need to be specially dealt with by the stalemate detector
+		if (alivePlayers.length === 2 && alivePlayers.filter(player => STALEMATE_PRIORITY_ORDER.includes(player.role.name)).length === 2) {
+			const [priorityOne, priorityTwo] = alivePlayers.map(player => STALEMATE_PRIORITY_ORDER.indexOf(player.role.name));
+			if (priorityOne > priorityTwo) winningFaction = alivePlayers[0].role.faction;
+			else if (priorityTwo > priorityOne) winningFaction = alivePlayers[1].role.faction;
+		}
+
 		for (const player of this.players) {
 			if (player.role.faction.independent && player.role.faction.hasWonIndependent(player)) {
 				independentWins.push(player);
@@ -196,7 +215,9 @@ export default class Game {
 			}
 		}
 
-		if (this.players.filter(player => player.isAlive).length === 0) {
+		// if there are no major factions left end game immediately
+		const majorFactions = this.players.filter(player => player.isAlive && !player.role.faction.independent);
+		if (majorFactions.length === 0) {
 			return {
 				ended: true,
 				winningFaction: undefined,
