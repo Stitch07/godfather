@@ -9,11 +9,13 @@ import GodfatherCommand from '@lib/GodfatherCommand';
 import { Message } from 'discord.js';
 import { exec, sleep } from '@util/utils';
 import { codeBlock, cutText } from '@sapphire/utilities';
+import { resolve } from 'path';
+import { rm } from 'fs/promises';
 
 @ApplyOptions<CommandOptions>({
 	preconditions: ['OwnerOnly'],
 	strategyOptions: {
-		flags: ['deps', 'd']
+		flags: ['deps', 'd', 'clean']
 	}
 })
 export default class extends GodfatherCommand {
@@ -24,6 +26,8 @@ export default class extends GodfatherCommand {
 		await this.fetch(message, branchName);
 		// Update Yarn dependencies
 		if (args.getFlags('deps', 'd')) await this.updateDependencies(message);
+		// clean dist folder
+		if (args.getFlags('clean')) await this.cleanDist(message);
 		// Compile TypeScript to JavaScript
 		await this.compile(message);
 	}
@@ -32,6 +36,11 @@ export default class extends GodfatherCommand {
 		const { stderr, code } = await this.exec('yarn build');
 		if (code !== 0 && stderr.length) throw stderr.trim();
 		return message.channel.send('Successfully compiled.');
+	}
+
+	private async cleanDist(message: Message) {
+		await rm(resolve(process.cwd(), 'dist'), { recursive: true, force: true });
+		return message.channel.send(`Successfully cleaned old dist directory.`);
 	}
 
 	private async updateDependencies(message: Message) {

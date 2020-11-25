@@ -14,7 +14,7 @@ import SingleTarget from './mixins/SingleTarget';
 // import { PGSQL_ENABLED } from '@root/config';
 import { format } from '@util/durationFormat';
 import { Time } from '@sapphire/time-utilities';
-import { aliveOrRecentJester, listItems } from '../util/utils';
+import { fauxAlive, listItems } from '../util/utils';
 import { ENABLE_PRIVATE_CHANNELS, PGSQL_ENABLED, PRIVATE_CHANNEL_SERVER } from '@root/config';
 import { getConnection, getRepository } from 'typeorm';
 import GameEntity from '../orm/entities/Game';
@@ -132,7 +132,7 @@ export default class Game {
 		this.phaseEndAt = new Date(Date.now() + this.settings.nightDuration);
 
 		await this.channel.send(`Night **${this.cycle}** will last ${format(this.settings.nightDuration)}. Send in your actions quickly!`);
-		for (const player of this.players.filter(player => aliveOrRecentJester(player) && player.role!.canUseAction().check && (player.role! as SingleTarget).actionPhase === Phase.Night)) {
+		for (const player of this.players.filter(player => fauxAlive(player) && player.role!.canUseAction().check && (player.role! as SingleTarget).actionPhase === Phase.Night)) {
 			await player.role!.onNight();
 		}
 
@@ -253,7 +253,7 @@ export default class Game {
 			const entity = new GameEntity();
 			entity.setupName = this.setup!.name;
 			entity.winningFaction = data.winningFaction?.name;
-			entity.independentWins = data.independentWins.map(player => player.user.id);
+			entity.independentWins = data.independentWins.map(player => player.role.name);
 			entity.guildID = this.channel.guild.id;
 			await getRepository(GameEntity).save(entity);
 

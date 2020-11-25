@@ -8,7 +8,7 @@
 	"license": "GPL-3.0",
 	"private": false,
 	"scripts": {
-		"build": "rimraf dist && tsc -p src",
+		"build": "tsc -p src",
 		"dev": "yarn build && node .",
 		"clean": "rimraf dist",
 		"watch": "tsc -b src -w",

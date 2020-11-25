@@ -8,7 +8,6 @@ import NightActionsManager, { Attack, NightActionPriority } from '@mafia/manager
 class Guardian_Angel extends NoTarget {
 
 	public name = 'Guardian Angel';
-	public description = 'Your only goal is to keep your target alive, twice a game you may heal and purge your target. This may be done after you die.';
 	public faction = new GuardianAngelFaction();
 	public action = 'protect';
 	public actionGerund = 'protecting your target';
@@ -22,6 +21,8 @@ class Guardian_Angel extends NoTarget {
 		super(player);
 		if (context.protects) this.protects = context.protects;
 		else this.protects = this.getInitialProtects();
+
+		this.description = `Your only goal is to keep your target alive. You may heal and purge your target ${this.protects} time${this.protects === 1 ? '' : 's'}. This may be done after you die.`;
 	}
 
 	public async init() {

@@ -36,8 +36,9 @@ export const randomArray = <T>(array: readonly T[]): T | null => {
 	return array[Math.floor(Math.random() * array.length)];
 };
 
-export const aliveOrRecentJester = (player: Player) => {
+export const fauxAlive = (player: Player) => {
 	if (!player.isAlive && player.role!.name === 'Jester' && player.deathReason === `lynched D${player.game.cycle}`) return true;
+	if (player.role.name === 'Guardian Angel' && player.role.canUseAction().check) return true;
 	return player.isAlive;
 };
 

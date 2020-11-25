@@ -2,7 +2,7 @@ import Player from '@mafia/Player';
 import DefaultMap from '@util/DefaultMap';
 import Game, { Phase } from '@mafia/Game';
 import SingleTarget from '@root/lib/mafia/mixins/SingleTarget';
-import { aliveOrRecentJester, listItems } from '@root/lib/util/utils';
+import { fauxAlive, listItems } from '@root/lib/util/utils';
 
 export default class NightActionsManager extends Array<NightAction> {
 
@@ -14,7 +14,7 @@ export default class NightActionsManager extends Array<NightAction> {
 	}
 
 	public async addAction(action: NightAction) {
-		const possibleActions = this.game.players.filter(player => aliveOrRecentJester(player) && player.role.canUseAction().check && Reflect.get(player.role, 'actionPhase') === Phase.Night);
+		const possibleActions = this.game.players.filter(player => fauxAlive(player) && player.role.canUseAction().check && Reflect.get(player.role, 'actionPhase') === Phase.Night);
 		if (action.actor.role.name === 'Reanimator') {
 			const { priority } = (action.target as Player[])[0].role as SingleTarget;
 			action.priority = priority;
@@ -30,7 +30,7 @@ export default class NightActionsManager extends Array<NightAction> {
 	}
 
 	public async resolve(): Promise<Player[]> {
-		const possibleActions = this.game.players.filter(player => aliveOrRecentJester(player) && player.role.canUseAction().check && Reflect.get(player.role, 'actionPhase') === Phase.Night);
+		const possibleActions = this.game.players.filter(player => fauxAlive(player) && player.role.canUseAction().check && Reflect.get(player.role, 'actionPhase') === Phase.Night);
 		// add any default actions the player has
 		const noActionsSent = possibleActions.filter(player => Reflect.has(player.role, 'action') && !this.find(action => action.actor === player));
 		for (const player of noActionsSent) {
