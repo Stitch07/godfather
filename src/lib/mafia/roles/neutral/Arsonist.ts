@@ -8,7 +8,7 @@ import { Phase } from '../../Game';
 import NightActionsManager, { Attack, Defense, NightActionPriority } from '../../managers/NightActionsManager';
 import { Message } from 'discord.js';
 
-export default class Arsonist extends Role {
+class Arsonist extends Role {
 
 	public name = 'Arsonist';
 	public description = 'You may douse someone every night, and then ignite all your doused targets.';
@@ -126,3 +126,8 @@ export default class Arsonist extends Role {
 	}
 
 }
+
+Arsonist.categories = ['Evil', 'Neutral Killing'];
+Arsonist.aliases = ['Arso'];
+
+export default Arsonist;
