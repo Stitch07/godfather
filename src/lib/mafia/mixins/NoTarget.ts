@@ -1,11 +1,11 @@
+import { DEFAULT_ACTION_FLAGS } from '@lib/constants';
+import { Phase } from '@mafia/Game';
+import NightActionsManager, { NightActionPriority } from '@mafia/managers/NightActionsManager';
+import Role from '@mafia/Role';
+import { PREFIX } from '@root/config';
 import { Awaited } from '@sapphire/framework';
 import { remove } from '@util/utils';
 import { Message } from 'discord.js';
-import NightActionsManager, { NightActionPriority } from '@mafia/managers/NightActionsManager';
-import Role from '@mafia/Role';
-import { Phase } from '@mafia/Game';
-import { DEFAULT_ACTION_FLAGS } from '@lib/constants';
-import { PREFIX } from '@root/config';
 
 class NoTarget extends Role {
 
@@ -13,8 +13,10 @@ class NoTarget extends Role {
 
 	public async onNight() {
 		const { game } = this.player;
-		let actionText = `It is now night ${game.cycle}. Use ${PREFIX}${this.action} to ${this.actionText}. Use ${PREFIX}noaction to stay home.\n`;
-		if (this.extraNightContext !== null) actionText += this.extraNightContext;
+		const actionText = [
+			`It is now night ${game.cycle}. Use ${PREFIX}${this.action} to ${this.actionText}. Use ${PREFIX}noaction to stay home.`,
+			this.extraNightContext
+		].filter(text => text !== null).join('\n');
 		await this.player.user.send(actionText);
 	}
 

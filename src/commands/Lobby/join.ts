@@ -24,6 +24,7 @@ export default class extends GodfatherCommand {
 		// do not allow replacing in while the bot is processing the game
 		if (game!.phase === Phase.Standby) throw 'You cannot replace in between phases.';
 		if (game!.hasStarted && game!.phase) {
+			if (game!.players.replacements.includes(message.author)) throw 'You are already a replacement.';
 			game!.players.replacements.push(message.author);
 			return message.channel.send('You have decided to become a replacement.');
 		}

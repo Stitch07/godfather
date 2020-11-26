@@ -5,7 +5,8 @@ import Player from './Player';
 
 export const ALLOWED_PERMISSIONS = new Permissions()
 	.add(Permissions.FLAGS.VIEW_CHANNEL)
-	.add(Permissions.FLAGS.SEND_MESSAGES);
+	.add(Permissions.FLAGS.SEND_MESSAGES)
+	.add(Permissions.FLAGS.READ_MESSAGE_HISTORY);
 
 class Faction {
 

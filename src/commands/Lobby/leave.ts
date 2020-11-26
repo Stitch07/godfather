@@ -5,7 +5,7 @@ import { Message } from 'discord.js';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['out'],
-	preconditions: ['GuildOnly', 'GameOnly', 'PlayerOnly', 'AlivePlayerOnly']
+	preconditions: ['GuildOnly', 'GameOnly']
 })
 export default class extends GodfatherCommand {
 

@@ -27,6 +27,7 @@ export default class PlayerManager extends Array<Player> {
 		if (player === this.game.host) throw 'The host cannot leave the game.';
 		if (!this.game.hasStarted) {
 			this.splice(this.indexOf(player), 1);
+			if (this.voteKicks.has(player.user.id)) this.voteKicks.delete(player.user.id);
 			return true;
 		}
 

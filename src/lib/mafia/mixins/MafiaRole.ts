@@ -1,5 +1,6 @@
 import Role from '@mafia/Role';
 import MafiaFaction from '@mafia/factions/Mafia';
+import { allRoles } from '../roles';
 
 export default function MafiaRole<TBaseRole extends typeof Role>(BaseRole: TBaseRole) {
 
@@ -13,28 +14,31 @@ export default function MafiaRole<TBaseRole extends typeof Role>(BaseRole: TBase
 			if (this.player.role!.name === 'Godfather') {
 				const goon = this.game.players.find(player => player.isAlive && player.role!.name === 'Goon');
 				if (!goon) {
-				// if there aren't any goons, promote the next mafia member to Goon
+					// if there aren't any goons, promote the next mafia member to Goon
 					const otherMafia = this.game.players.find(player => player.isAlive && player.role!.faction.name === 'Mafia' && !['Godfather', 'Goon'].includes(player.role!.name));
 					if (!otherMafia) return;
 
-					// otherMafia.role = new Goon()
+					const Goon = allRoles.get('Goon')!;
+					otherMafia.role = new Goon(otherMafia);
 					await otherMafia.user.send('You have been promoted to a Goon!');
-					await otherMafia.sendPM();
+					await otherMafia.sendPM(false);
 					return;
 				}
 
-				// goon.role = new Godfather()
+				const Godfather = allRoles.get('Godfather')!;
+				goon.role = new Godfather(goon);
 				await goon.user.send('You have been promoted to the Godfather!');
-				await goon.sendPM();
+				await goon.sendPM(false);
 
 			 } else if (this.player.role!.name === 'Goon') {
 				const otherMafia = this.game.players.find(player => player.isAlive && player.role!.faction.name === 'Mafia' && !['Godfather', 'Goon'].includes(player.role!.name));
 				if (!otherMafia) return;
 
 				otherMafia.previousRoles.push(otherMafia.role!);
-				// otherMafia.role = new Goon()
+				const Goon = allRoles.get('Goon')!;
+				otherMafia.role = new Goon(otherMafia);
 				await otherMafia.user.send('You have been promoted to a Goon!');
-				await otherMafia.sendPM();
+				await otherMafia.sendPM(false);
 			 }
 
 			 return super.onDeath();

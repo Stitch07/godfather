@@ -23,7 +23,7 @@ export default class extends GodfatherCommand {
 
 		await message.channel.send(`Voted ${target.user.tag}.`);
 
-		if (hammered) {
+		if (hammered && target.isAlive) {
 			game!.phase = Phase.Standby;
 			await game!.hammer(target);
 		}

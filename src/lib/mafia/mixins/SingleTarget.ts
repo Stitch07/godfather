@@ -26,9 +26,11 @@ class SingleTarget extends Role {
 	public async onNight() {
 		const { game } = this.player;
 
-		let actionText = `It is now night ${game.cycle}. Use ${PREFIX}${this.action} <number> to ${this.actionText}. Use ${PREFIX}noaction to stay home.\n`;
-		if (this.extraNightContext !== null) actionText += this.extraNightContext;
-		actionText += `\n${codeBlock('diff', game.players.show({ codeblock: true }))}`;
+		const actionText = [
+			`It is now night ${game.cycle}. Use ${PREFIX}${this.action} <number> to ${this.actionText}. Use ${PREFIX}noaction to stay home.`,
+			this.extraNightContext,
+			`${codeBlock('diff', game.players.show({ codeblock: true }))}`
+		].filter(text => text !== null).join('\n');
 
 		await this.player.user.send(actionText);
 	}

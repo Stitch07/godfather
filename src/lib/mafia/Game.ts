@@ -130,6 +130,7 @@ export default class Game {
 		this.phase = Phase.Standby;
 		this.votes.reset();
 		this.phaseEndAt = new Date(Date.now() + this.settings.nightDuration);
+		this.nightActions.protectedPlayers = [];
 
 		await this.channel.send(`Night **${this.cycle}** will last ${format(this.settings.nightDuration)}. Send in your actions quickly!`);
 		for (const player of this.players.filter(player => fauxAlive(player) && player.role!.canUseAction().check && (player.role! as SingleTarget).actionPhase === Phase.Night)) {

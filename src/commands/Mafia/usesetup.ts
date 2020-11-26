@@ -12,7 +12,7 @@ export default class extends GodfatherCommand {
 	public async run(message: Message, args: Args) {
 		const game = message.channel.game!;
 		if (game.hasStarted) throw "You can't change the setup after the game has started.";
-		const setupData = await args.rest('string')
+		let setupData = await args.rest('string')
 			.catch(() => { throw 'Missing required argument: setup data/name'; });
 
 		if (this.client.setups.has(setupData)) {

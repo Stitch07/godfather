@@ -21,14 +21,14 @@ export default class Player {
 	public constructor(public user: User, public game: Game) {
 	}
 
-	public async sendPM() {
+	public async sendPM(sendTeamInfo = true) {
 		const rolePM = [
 			`Hello ${this.user.tag}, you are a **${this.role.display}**. ${this.role.description}`,
 			`Win Condition: ${this.role!.faction.winCondition}`
 		].join('\n');
 		await this.user.send(rolePM);
 
-		if (this.role.faction.informed) {
+		if (this.role.faction.informed && sendTeamInfo) {
 			const team = this.game.players.filter(player => player.role.faction.name === this.role.faction.name);
 			if (team.length > 1) {
 				const factionalChannel = ENABLE_PRIVATE_CHANNELS ? await this.role.faction.generateInvite(this.game) : null;
