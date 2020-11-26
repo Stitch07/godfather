@@ -10,7 +10,7 @@ export class CreateGameData1602412778032 implements MigrationInterface {
 			columns: [
 				new TableColumn({ name: 'id', type: 'integer', isPrimary: true, isNullable: false, isGenerated: true, generationStrategy: 'increment' }),
 				new TableColumn({ name: 'setup_name', type: 'varchar', length: '50', isNullable: false }),
-				new TableColumn({ name: 'winning_faction', type: 'varchar', length: '30' }),
+				new TableColumn({ name: 'winning_faction', type: 'varchar', length: '30', isNullable: true }),
 				new TableColumn({ name: 'guild_id', type: 'varchar', length: '19', isNullable: false }),
 				new TableColumn({ 'name': 'independent_wins', 'type': 'varchar', 'isArray': true, 'default': 'ARRAY[]::VARCHAR[]' })
 			]

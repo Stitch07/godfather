@@ -16,7 +16,8 @@ export default class extends Event<Events.GuildMemberAdd> {
 			const [factionalChannel] = game.factionalChannels.get(player.role.faction.name)!;
 			await factionalChannel.updateOverwrite(member, {
 				SEND_MESSAGES: true,
-				VIEW_CHANNEL: true
+				VIEW_CHANNEL: true,
+				READ_MESSAGE_HISTORY: true
 			});
 		}
 	}

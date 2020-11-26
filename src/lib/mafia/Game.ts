@@ -192,15 +192,6 @@ export default class Game {
 
 		const alivePlayers = this.players.filter(player => player.isAlive);
 
-		// draw by wipeout
-		if (alivePlayers.length === 0) {
-			return {
-				ended: true,
-				winningFaction: undefined,
-				independentWins
-			};
-		}
-
 		// 1v1 may need to be specially dealt with by the stalemate detector
 		if (alivePlayers.length === 2 && alivePlayers.filter(player => STALEMATE_PRIORITY_ORDER.includes(player.role.name)).length === 2) {
 			const [priorityOne, priorityTwo] = alivePlayers.map(player => STALEMATE_PRIORITY_ORDER.indexOf(player.role.name));
@@ -219,6 +210,15 @@ export default class Game {
 		// if there are no major factions left end game immediately
 		const majorFactions = this.players.filter(player => player.isAlive && !player.role.faction.independent);
 		if (majorFactions.length === 0) {
+			return {
+				ended: true,
+				winningFaction: undefined,
+				independentWins
+			};
+		}
+
+		// draw by wipeout
+		if (alivePlayers.length === 0) {
 			return {
 				ended: true,
 				winningFaction: undefined,
@@ -266,7 +266,7 @@ export default class Game {
 					userID: player.user.id,
 					faction: player.role.faction.name,
 					roleName: player.role.name,
-					result: data.winningFaction === player.role.faction || data.independentWins.includes(player)
+					result: data.winningFaction?.name === player.role.faction.name || data.independentWins.includes(player)
 				})))
 				.execute();
 		}
