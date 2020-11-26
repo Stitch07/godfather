@@ -6,8 +6,8 @@ import { enumerate } from '@util/utils';
 import { Message } from 'discord.js';
 
 @ApplyOptions<CommandOptions>({
-	aliases: ['setups'],
-	preconditions: [{ entry: 'Cooldown', context: { type: BucketType.Channel, delay: 5000 } }]
+	aliases: ['setups', 'setup'],
+	preconditions: [{ entry: 'Cooldown', context: { bucketType: BucketType.Channel, delay: 5000 } }]
 })
 export default class extends GodfatherCommand {
 

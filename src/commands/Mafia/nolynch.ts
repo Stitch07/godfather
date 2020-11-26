@@ -6,6 +6,7 @@ import { Phase } from '@root/lib/mafia/Game';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['vtnl', 'nl'],
+	description: 'Vote to not lynch.',
 	preconditions: ['GuildOnly', 'GameOnly', 'PlayerOnly', 'AlivePlayerOnly', 'GameStartedOnly', 'DayOnly']
 })
 export default class extends GodfatherCommand {

@@ -1,14 +1,14 @@
 import GodfatherCommand from '@lib/GodfatherCommand';
-import { Branding } from '@util/utils';
 import { ApplyOptions } from '@sapphire/decorators';
 import { CommandOptions } from '@sapphire/framework';
 import { roundNumber } from '@sapphire/utilities';
+import { format } from '@util/durationFormat';
+import { Branding } from '@util/utils';
 import { Message, MessageEmbed } from 'discord.js';
 import { cpus } from 'os';
-import { format } from '@util/durationFormat';
 
 @ApplyOptions<CommandOptions>({
-	description: 'Get an invite link to the bot and support server.'
+	description: 'View bot statistics'
 })
 export default class extends GodfatherCommand {
 

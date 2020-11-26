@@ -1,17 +1,20 @@
-import { Args, CommandContext, CommandOptions } from '@sapphire/framework';
-import { ApplyOptions } from '@sapphire/decorators';
+import { factionEmojis } from '@lib/constants';
 import GodfatherCommand from '@lib/GodfatherCommand';
+import Role from '@mafia/Role';
+import { allRoles } from '@mafia/roles';
+import { ApplyOptions } from '@sapphire/decorators';
+import { Args, BucketType, CommandContext, CommandOptions } from '@sapphire/framework';
+import { Time } from '@sapphire/time-utilities';
+import { codeBlock } from '@sapphire/utilities';
+import DefaultMap from '@util/DefaultMap';
+import { Branding } from '@util/utils';
 import { Collection, Message, MessageEmbed } from 'discord.js';
 import * as roledocs from '../../assets/roledocs.json';
-import { allRoles } from '@mafia/roles';
-import Role from '@mafia/Role';
-import DefaultMap from '@util/DefaultMap';
-import { Branding } from '@root/lib/util/utils';
-import { factionEmojis } from '@root/lib/constants';
-import { codeBlock } from '@sapphire/utilities';
 
 @ApplyOptions<CommandOptions>({
-	preconditions: []
+	aliases: ['role', 'roles'],
+	description: 'Shows a list of all roles, and gives you information on a particular role.',
+	preconditions: [{ entry: 'Cooldown', context: { bucketType: BucketType.Channel, delay: Time.Second * 5 } }]
 })
 export default class extends GodfatherCommand {
 

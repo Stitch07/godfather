@@ -1,12 +1,13 @@
 import GodfatherCommand from '@lib/GodfatherCommand';
 import Game, { Phase } from '@mafia/Game';
 import { ApplyOptions } from '@sapphire/decorators';
-import { CommandOptions } from '@sapphire/framework';
+import { BucketType, CommandOptions } from '@sapphire/framework';
+import { Time } from '@sapphire/time-utilities';
 import { Message } from 'discord.js';
 
 @ApplyOptions<CommandOptions>({
 	description: 'Shows when the current day/night ends.',
-	preconditions: ['GameOnly']
+	preconditions: ['GameOnly', { entry: 'Cooldown', context: { bucketType: BucketType.Channel, delay: Time.Second * 5 } }]
 })
 export default class extends GodfatherCommand {
 

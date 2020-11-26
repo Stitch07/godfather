@@ -1,17 +1,22 @@
-import { Args, CommandOptions } from '@sapphire/framework';
-import { ApplyOptions } from '@sapphire/decorators';
-import GodfatherCommand from '@lib/GodfatherCommand';
-import { Message } from 'discord.js';
 import { DEFAULT_GAME_SETTINGS, GUILD_SETTINGS_METADATA } from '@lib/constants';
-import { codeBlock } from '@sapphire/utilities';
-import { getCustomRepository } from 'typeorm';
-import GuildSettingRepository from '@lib/orm/repositories/GuildSettingRepository';
-import { GameSettings } from '@lib/mafia/Game';
+import GodfatherCommand from '@lib/GodfatherCommand';
 import GuildSettingsEntity from '@lib/orm/entities/GuildSettings';
+import GuildSettingRepository from '@lib/orm/repositories/GuildSettingRepository';
+import { GameSettings } from '@mafia/Game';
+import { ApplyOptions } from '@sapphire/decorators';
+import { Args, CommandOptions } from '@sapphire/framework';
 import { Time } from '@sapphire/time-utilities';
+import { codeBlock } from '@sapphire/utilities';
+import { Message } from 'discord.js';
+import { getCustomRepository } from 'typeorm';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['conf', 'config', 'settings'],
+	description: 'Manages game and server settings.',
+	detailedDescription: [
+		'The settings command let\'s you manage game settings such as dayDuration, nightDuration and overwritePermissions',
+		'If used in a channel without an ongoing game, the settings command will modify server-wide defaults.'
+	].join('\n'),
 	preconditions: ['GuildOnly', { entry: 'Cooldown', context: { delay: Time.Second * 5 } }, ['OwnerOnly', 'AdminOnly']]
 })
 export default class extends GodfatherCommand {

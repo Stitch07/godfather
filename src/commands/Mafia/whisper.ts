@@ -1,10 +1,10 @@
-import { Args, CommandOptions, err, ok, UserError } from '@sapphire/framework';
-import { ApplyOptions } from '@sapphire/decorators';
 import GodfatherCommand from '@lib/GodfatherCommand';
-import { Message } from 'discord.js';
-import Player from '@mafia/Player';
-import { Time } from '@sapphire/time-utilities';
 import { Phase } from '@mafia/Game';
+import Player from '@mafia/Player';
+import { ApplyOptions } from '@sapphire/decorators';
+import { Args, CommandOptions, err, ok, UserError } from '@sapphire/framework';
+import { Time } from '@sapphire/time-utilities';
+import { Message } from 'discord.js';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['w'],

@@ -5,6 +5,7 @@ import { Message } from 'discord.js';
 import { DEFAULT_GAME_SETTINGS } from '@root/lib/constants';
 
 @ApplyOptions<CommandOptions>({
+	description: 'Closes a game lobby, preventing more players from joining it.',
 	preconditions: ['GuildOnly', 'GameOnly', 'HostOnly']
 })
 export default class extends GodfatherCommand {

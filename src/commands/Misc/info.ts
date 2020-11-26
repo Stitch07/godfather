@@ -4,7 +4,7 @@ import { Args, CommandContext, CommandOptions } from '@sapphire/framework';
 import { Message } from 'discord.js';
 
 @ApplyOptions<CommandOptions>({
-	description: 'Receive information about the bot.'
+	description: 'Shows you useful information about the bot.'
 })
 export default class extends GodfatherCommand {
 

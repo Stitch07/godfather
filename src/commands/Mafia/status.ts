@@ -6,7 +6,8 @@ import Game, { Phase } from '@mafia/Game';
 import { codeBlock } from '@sapphire/utilities';
 
 @ApplyOptions<CommandOptions>({
-	preconditions: ['GameOnly', { entry: 'Cooldown', context: { type: BucketType.Channel, delay: 5000 } }]
+	description: 'Shows you useful information about the game.',
+	preconditions: ['GameOnly', { entry: 'Cooldown', context: { bucketType: BucketType.Channel, delay: 5000 } }]
 })
 export default class extends GodfatherCommand {
 

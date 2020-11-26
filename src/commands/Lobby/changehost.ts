@@ -5,6 +5,9 @@ import { Message } from 'discord.js';
 
 @ApplyOptions<CommandOptions>({
 	description: 'Vote to change the host',
+	detailedDescription: [
+		'The host can use this command to instantly make the next player the host.'
+	].join('\n'),
 	preconditions: ['GuildOnly', 'GameOnly', 'PlayerOnly', 'AlivePlayerOnly']
 })
 export default class extends GodfatherCommand {
