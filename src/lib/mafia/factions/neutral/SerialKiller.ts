@@ -1,7 +1,7 @@
 import Faction from '@mafia/Faction';
 import Game from '@mafia/Game';
 
-const OPPOSING_FACTIONS = ['Town', 'Arsonist', 'Mafia'];
+const OPPOSING_FACTIONS = ['Town', 'Arsonist', 'Werewolf', 'Mafia'];
 
 export default class SerialKillerFaction extends Faction {
 
