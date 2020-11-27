@@ -23,6 +23,7 @@ export default class extends GodfatherCommand {
 		const player = game.players.get(message.author);
 		// @ts-ignore Mayor
 		if (player.role.name === 'Mayor' && player.role.hasRevealed) throw 'As a revealed Mayor, you cannot whisper.';
+		if (!player?.isAlive) throw 'You cannot whisper as a dead player.';
 
 		const playerResolver = Args.make(arg => {
 			const player = Player.resolve(game, arg);
@@ -34,6 +35,7 @@ export default class extends GodfatherCommand {
 		const target = await args.pick(playerResolver);
 		// @ts-ignore Mayor
 		if (target.role.name === 'Mayor' && target.role.hasRevealed) throw 'You cannot whisper to a revealed Mayor.';
+		if (!target.isAlive) throw 'You cannot whisper to dead players';
 		const whisperContent = await args.rest('string')
 			.catch(() => { throw 'What are you trying to whisper?'; });
 

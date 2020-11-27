@@ -1,13 +1,14 @@
 import GodfatherCommand from '@lib/GodfatherCommand';
 import { Phase } from '@mafia/Game';
 import { ApplyOptions } from '@sapphire/decorators';
-import { Args, CommandOptions } from '@sapphire/framework';
+import { Args, BucketType, CommandOptions } from '@sapphire/framework';
+import { Time } from '@sapphire/time-utilities';
 import { Message } from 'discord.js';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['vtl', 'vt'],
 	description: 'Vote to lynch a player',
-	preconditions: ['GuildOnly', 'GameOnly', 'PlayerOnly', 'AlivePlayerOnly', 'GameStartedOnly', 'DayOnly', { entry: 'Cooldown', context: { delay: 3000 } }]
+	preconditions: ['GuildOnly', 'GameOnly', 'PlayerOnly', 'AlivePlayerOnly', 'GameStartedOnly', 'DayOnly', { entry: 'Cooldown', context: { bucketType: BucketType.Channel, delay: Number(Time.Second) } }]
 })
 export default class extends GodfatherCommand {
 
