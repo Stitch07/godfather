@@ -40,8 +40,6 @@ export default class Godfather extends SapphireClient {
 		};
 	}
 
-	// TODO: configurable prefixes
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	public async fetchGuildPrefix(guild: Guild) {
 		if (!PGSQL_ENABLED) return PREFIX;
 		const guildSettings: GuildSettingsEntity = await getCustomRepository(GuildSettingRepository).ensure(this, guild);

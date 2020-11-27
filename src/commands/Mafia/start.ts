@@ -1,6 +1,8 @@
-import { ApplyOptions } from '@sapphire/decorators';
 import GodfatherCommand from '@lib/GodfatherCommand';
-import { Args, CommandOptions } from '@sapphire/framework';
+import Player from '@mafia/Player';
+import { listItems } from '@root/lib/util/utils';
+import { ApplyOptions } from '@sapphire/decorators';
+import { Args, CommandContext, CommandOptions } from '@sapphire/framework';
 import { Message } from 'discord.js';
 
 @ApplyOptions<CommandOptions>({
@@ -10,7 +12,7 @@ import { Message } from 'discord.js';
 })
 export default class extends GodfatherCommand {
 
-	public async run(message: Message, args: Args) {
+	public async run(message: Message, args: Args, context: CommandContext) {
 		const setupName = await args.rest('string').catch(() => '');
 		const { game } = message.channel;
 
@@ -35,11 +37,22 @@ export default class extends GodfatherCommand {
 		for (const player of game!.players) {
 			player.role = new (generatedRoles.shift()!)(player);
 		}
+
+		const noPms: Player[] = [];
 		for (const player of game!.players) {
-			await player.sendPM();
+			try {
+				await player.sendPM();
+			} catch {
+				noPms.push(player);
+			}
 			await player.role.init();
 		}
+
 		await sent.edit('Sent all role PMs!');
+		if (noPms.length > 0) {
+			await message.channel.send(`I couldn't DM ${listItems(noPms.map(player => player.toString()))}. Make sure your DMs are enabled and then use ${context.prefix}rolepm to get your PM.`);
+		}
+
 		if (game!.setup!.nightStart) {
 			return game!.startNight();
 		}
