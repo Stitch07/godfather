@@ -1,12 +1,13 @@
 import NightActionsManager, { NightActionPriority } from '../../managers/NightActionsManager';
 import SingleTarget from '@root/lib/mafia/mixins/SingleTarget';
-import Townie from '@mafia/mixins/Townie';
 import Player from '@mafia/Player';
+import TownFaction from '../../factions/Town';
 
-class Neapolitan extends SingleTarget {
+export default class Neapolitan extends SingleTarget {
 
 	public name = 'Neapolitan';
 	public description = 'Like a cop, but with less powerful investigations.';
+	public faction = new TownFaction();
 
 	public action = 'check';
 	public actionGerund = 'checking';
@@ -23,5 +24,3 @@ class Neapolitan extends SingleTarget {
 	}
 
 }
-
-export default Townie(Neapolitan);
