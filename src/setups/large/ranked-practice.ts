@@ -9,6 +9,7 @@ import { ApplyOptions } from '@sapphire/decorators';
 		'Town Killing',
 		'Town Protective',
 		'Random Town x4',
+		'Town Support',
 		'Godfather',
 		'Goon',
 		'Random Mafia x2',
