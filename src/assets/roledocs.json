@@ -30,6 +30,41 @@
         ]
     },
     {
+        "name":"Naive Cop",
+        "detailedDescription": [
+            "The law enforcer of town, believes he’s the best cop and nothing bad would ever happen to the town.",
+            "",
+            "- Win Condition: Lynch every criminal and evildoer",
+            "",
+            "+ Abilities: Interrogate one person each night for suspicious activity.",
+            "+ You will know if your target is suspicious or innocent.",
+            "+ A naive cop will always show innocent results regardless of the roles."
+        ]
+    },
+    {
+        "name":"Insane Cop",
+        "detailedDescription": [
+            "The law enforcer of town, on the hunt to find the mafia, but he acts so furious and insane that he always messes up.",
+            "",
+            "- Win Condition: lynch every criminal and evildoer",
+            "",
+            "+ Abilities: Interrogate one person each night for suspicious activity.",
+            "+ An insane cop will always show the opposite results for suspicion, showing innocent roles as suspicious and suspicious roles as innocent."
+        ]
+    },
+    {
+        "name":"Paranoid Cop",
+        "detailedDescription": [
+            "The law enforcer of town, on the hunt to find the mafia, but he is very frightened.",
+            "",
+            "- Win Condition: Lynch every criminal and evildoer",
+            "",
+            "+ Abilities: Interrogate one person each night for suspicious activity.",
+            "+ A paranoid cop will always show suspicious results regardless of the roles."
+            
+        ]
+    },
+    {
         "name":"Doctor",
         "detailedDescription": [
             "An experienced surgeon in trauma care who secretly heals people.",
