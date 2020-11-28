@@ -126,7 +126,7 @@ class SingleTarget extends Role {
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	public canTarget(target: Player | Player[]) {
 		if (!(target as Player).isAlive) return { check: false, reason: 'You cannot target dead players.' };
-		return { check: target !== this.player, reason: `As a ${this.name}, you cannot self-target.` };
+		return { check: target !== this.player, reason: `As a ${this.display}, you cannot self-target.` };
 	}
 
 	public canUseAction() {
