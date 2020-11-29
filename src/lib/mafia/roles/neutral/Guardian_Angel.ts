@@ -45,7 +45,7 @@ class Guardian_Angel extends NoTarget {
 	}
 
 	public async onDay() {
-		if (!this.target.isAlive) {
+		if (!this.target.isAlive && this.player.isAlive) {
 			await this.player.user.send('Your target has died! You have become a survivor.');
 			const Survivor = allRoles.get('Survivor')!;
 			this.player.role = new Survivor(this.player, { vests: 0 });
@@ -56,7 +56,7 @@ class Guardian_Angel extends NoTarget {
 	public async onNight() {
 		remove(this.game.nightActions.protectedPlayers, player => player === this.target);
 
-		if (!this.target.isAlive) {
+		if (!this.target.isAlive && this.player.isAlive) {
 			await this.player.user.send('Your target has died! You have become a survivor.');
 			const Survivor = allRoles.get('Survivor')!;
 			this.player.role = new Survivor(this.player, { vests: 0 });

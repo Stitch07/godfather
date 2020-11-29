@@ -50,7 +50,7 @@ abstract class Role {
 	public async onDeath() {
 		if (this.faction.name !== 'Town' || this.player.deathReason.includes('lynched')) return;
 
-		const executionersInGame = this.game.players.filter(player => player.role.name === 'Executioner');
+		const executionersInGame = this.game.players.filter(player => player.isAlive && player.role.name === 'Executioner');
 		for (const executioner of executionersInGame) {
 			if (this.player.user.id === (executioner.role as Executioner).target.user.id) {
 				await executioner.user.send('Your target has died! You have become a Jester.');
