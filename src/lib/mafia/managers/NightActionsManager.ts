@@ -160,16 +160,18 @@ export enum NightActionPriority {
 	// roles that affect investigative results or stop powerful attacks
 	GUARDIAN_ANGEL = 5,
 	FRAMER = 5,
+	// roles that deal unstoppable attacks
+	JUGGERNAUT = 6,
 	// investigative roles usually only rely on tearDown, so they can safely go last
-	COP = 6,
-	LOOKOUT = 6,
-	CONSIG = 6,
-	TRACKER = 6,
-	NEOPOLITAN = 6,
-	AMBUSHER = 6,
+	COP = 7,
+	LOOKOUT = 7,
+	CONSIG = 7,
+	TRACKER = 7,
+	NEOPOLITAN = 7,
+	AMBUSHER = 7,
 	// janitor cleans after killing roles have already killed them
-	JANITOR = 7,
+	JANITOR = 8,
 	// ret's position literally doesn't matter
-	RETRIBUTIONIST = 8,
-	AMNESIAC = 9
+	RETRIBUTIONIST = 9,
+	AMNESIAC = 10
 }

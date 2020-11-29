@@ -133,6 +133,7 @@ export default class Game {
 		this.nightActions.protectedPlayers = [];
 
 		await this.channel.send(`Night **${this.cycle}** will last ${format(this.settings.nightDuration)}. Send in your actions quickly!`);
+		if (this.isFullMoon) await this.channel.send('Beware, tonight is a full moon :full_moon:');
 		for (const player of this.players.filter(player => fauxAlive(player) && player.role!.canUseAction().check && (player.role! as SingleTarget).actionPhase === Phase.Night)) {
 			await player.role!.onNight();
 		}
@@ -179,6 +180,10 @@ export default class Game {
 
 	public get hasStarted(): boolean {
 		return this.phase !== Phase.Pregame;
+	}
+
+	public get isFullMoon(): boolean {
+		return this.cycle % 2 === 0;
 	}
 
 	public get majorityVotes(): number {

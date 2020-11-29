@@ -68,7 +68,7 @@ export default class Werewolf extends Killer {
 
 	// whether the Werewolf can rampage during this night
 	private canRampage() {
-		return this.game.cycle % 2 === 0;
+		return this.game.isFullMoon;
 	}
 
 }
