@@ -93,7 +93,7 @@ export default class Game {
 		}
 
 		if (this.canOverwritePermissions) {
-			for (const muted of this.players) {
+			for (const muted of this.players.filter(player => player.isAlive)) {
 				await this.channel.updateOverwrite(muted.user, {
 					SEND_MESSAGES: true,
 					ADD_REACTIONS: true
@@ -142,7 +142,7 @@ export default class Game {
 				await this.channel.updateOverwrite(muted.user, {
 					SEND_MESSAGES: false,
 					ADD_REACTIONS: false
-				}).catch(() => null);
+				});
 				this.permissionOverwrites.push(muted.user.id);
 			}
 		}
@@ -328,7 +328,7 @@ export default class Game {
 	}
 
 	public get canOverwritePermissions() {
-		return this.settings.overwritePermissions && this.channel.permissionsFor(this.client.user!)?.has('MANAGE_CHANNELS');
+		return this.settings.overwritePermissions && this.channel.permissionsFor(this.client.user!)?.has(['MANAGE_CHANNELS', 'MANAGE_ROLES']);
 	}
 
 	public remaining(showIn = false) {
