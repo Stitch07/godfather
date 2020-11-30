@@ -92,6 +92,16 @@ export default class Game {
 			return this.end({ ...winCheck, winningFaction: undefined });
 		}
 
+		if (this.canOverwritePermissions) {
+			for (const muted of this.players) {
+				await this.channel.updateOverwrite(muted.user, {
+					SEND_MESSAGES: true,
+					ADD_REACTIONS: true
+				}).catch(() => null);
+				this.permissionOverwrites.push(muted.user.id);
+			}
+		}
+
 		// start voting phase
 		this.nightActions.reset();
 		this.phase = Phase.Day;
@@ -125,6 +135,16 @@ export default class Game {
 
 		if (this.idlePhases === 6) {
 			return this.end({ ...winCheck, winningFaction: undefined });
+		}
+
+		if (this.canOverwritePermissions) {
+			for (const muted of this.players) {
+				await this.channel.updateOverwrite(muted.user, {
+					SEND_MESSAGES: false,
+					ADD_REACTIONS: false
+				}).catch(() => null);
+				this.permissionOverwrites.push(muted.user.id);
+			}
 		}
 
 		this.phase = Phase.Standby;
