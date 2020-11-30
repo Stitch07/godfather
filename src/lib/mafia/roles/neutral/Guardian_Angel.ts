@@ -1,9 +1,9 @@
-import NoTarget from '@mafia/mixins/NoTarget';
 import GuardianAngelFaction from '@mafia/factions/neutral/GuardianAngel';
-import Player from '@mafia/Player';
-import { randomArray, remove } from '@root/lib/util/utils';
-import { allRoles } from '..';
 import NightActionsManager, { Attack, NightActionPriority } from '@mafia/managers/NightActionsManager';
+import NoTarget from '@mafia/mixins/NoTarget';
+import Player from '@mafia/Player';
+import { pluralize, randomArray, remove } from '@util/utils';
+import { allRoles } from '..';
 
 class Guardian_Angel extends NoTarget {
 
@@ -22,7 +22,7 @@ class Guardian_Angel extends NoTarget {
 		if (typeof context.protects === 'number') this.protects = context.protects;
 		else this.protects = this.getInitialProtects();
 
-		this.description = `Your only goal is to keep your target alive. You may heal and purge your target ${this.protects} time${this.protects === 1 ? '' : 's'}. This may be done after you die.`;
+		this.description = `Your only goal is to keep your target alive. You may heal and purge your target ${pluralize(this.protects, 'time')}. This may be done after you die.`;
 	}
 
 	public async init() {
@@ -98,7 +98,7 @@ class Guardian_Angel extends NoTarget {
 	}
 
 	public get extraNightContext() {
-		if (this.protects > 0) return `You can protect your target ${this.protects} more time${this.protects === 1 ? '' : 's'}.`;
+		if (this.protects > 0) return `You have ${pluralize(this.protects, 'protect')} left.`;
 		return null;
 	}
 

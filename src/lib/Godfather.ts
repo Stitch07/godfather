@@ -15,7 +15,7 @@ export default class Godfather extends SapphireClient {
 
 	public games: Collection<string, Game> = new Collection();
 	public setups: SetupStore;
-	public release = Branding.Release.Development;
+	public release = PRODUCTION ? Branding.Release.Production : Branding.Release.Development;
 	public ownerID: string | undefined = undefined;
 	public settingsCache = new Map<string, GuildSettingsEntity>();
 	public eventLoop!: NodeJS.Timeout;

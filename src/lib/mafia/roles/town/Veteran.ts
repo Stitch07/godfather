@@ -2,6 +2,7 @@ import NoTarget from '@mafia/mixins/NoTarget';
 import Townie from '@mafia/mixins/Townie';
 import { Attack, Defense, NightActionPriority } from '@mafia/managers/NightActionsManager';
 import Player from '@mafia/Player';
+import { pluralize } from '@root/lib/util/utils';
 
 class Veteran extends NoTarget {
 
@@ -22,7 +23,7 @@ class Veteran extends NoTarget {
 	public constructor(player: Player) {
 		super(player);
 		this.alerts = player === null ? 0 : this.getInitialAlerts();
-		this.description = `You may go on alert ${this.alerts} times a game, killing all visitors.`;
+		this.description = `You may go on alert ${pluralize(this.alerts, 'time')} in a game, killing all visitors.`;
 	}
 
 	public get defense() {

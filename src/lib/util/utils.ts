@@ -14,7 +14,6 @@ export namespace Branding {
 
 	export const enum Release {
 		Production = 'prod',
-		Beta = 'beta',
 		Development = 'dev'
 	}
 }
@@ -89,4 +88,9 @@ export const listItems = (array: string[]) => {
 			return `${array.join(', ')} and ${lastEle}`;
 		}
 	}
+};
+
+export const pluralize = (count: number, singular: string, plural = `${singular}s`) => {
+	if (count === 1) return `${count} ${singular}`;
+	return `${count} ${plural}`;
 };

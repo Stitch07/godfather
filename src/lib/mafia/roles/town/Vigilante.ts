@@ -3,13 +3,18 @@ import NightActionsManager, { NightActionPriority } from '@mafia/managers/NightA
 import Townie from '@mafia/mixins/Townie';
 import Player from '@mafia/Player';
 import { Message } from 'discord.js';
+import { pluralize } from '@root/lib/util/utils';
 
 class Vigilante extends Killer {
 
 	public name = 'Vigilante';
 	public description = 'You may shoot someone every night.';
-	public bullets = 4;
 	private guilt = false;
+
+	public constructor(player: Player) {
+		super(player);
+		this.bullets = player ? this.getInitialBullets() : 0;
+	}
 
 	public async onNight() {
 		if (this.guilt) {
@@ -42,8 +47,14 @@ class Vigilante extends Killer {
 	}
 
 	public get extraNightContext() {
-		if (this.bullets > 0) return `You have ${this.bullets} bullets remaining.`;
+		if (this.bullets > 0) return `You have ${pluralize(this.bullets, 'bullet')} remaining.`;
 		return null;
+	}
+
+	private getInitialBullets() {
+		if (this.game.players.length <= 5) return 1;
+		if (this.game.players.length <= 10) return 2;
+		return 4;
 	}
 
 }
