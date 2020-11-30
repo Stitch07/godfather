@@ -30,7 +30,7 @@ export default class Werewolf extends Killer {
 	}
 
 	public canUseAction() {
-		if (!this.canRampage()) return { check: false, reason: 'You can only rampage on even nights.' };
+		if (!this.canRampage()) return { check: false, reason: 'You can only rampage on full moons.' };
 		return super.canUseAction();
 	}
 

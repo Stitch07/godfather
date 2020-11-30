@@ -133,7 +133,7 @@ export default class Game {
 		this.nightActions.protectedPlayers = [];
 
 		await this.channel.send(`Night **${this.cycle}** will last ${format(this.settings.nightDuration)}. Send in your actions quickly!`);
-		if (this.isFullMoon) await this.channel.send('Beware, tonight is a full moon :full_moon:');
+		if (this.isFullMoon) await this.channel.send('Beware, tonight is a full moon 🌕');
 		for (const player of this.players.filter(player => fauxAlive(player) && player.role!.canUseAction().check && (player.role! as SingleTarget).actionPhase === Phase.Night)) {
 			await player.role!.onNight();
 		}

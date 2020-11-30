@@ -20,7 +20,7 @@ class Cop extends SingleTarget {
 
 	// ensures that Dethy cops don't get PMed their real role
 	public get display(): string {
-		if (this.player.cleaned) return 'Cleaned';
+		if (this.player.cleaned && !this.player.isAlive) return 'Cleaned';
 		return 'Cop';
 	}
 

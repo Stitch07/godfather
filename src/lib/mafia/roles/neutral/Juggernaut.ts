@@ -7,13 +7,13 @@ class Juggernaut extends Killer {
 
 	public name = 'Juggernaut';
 	public faction = new JuggernautFaction();
-	public action = 'attack';
-	public actionGerund = 'attacking';
-	public actionText = 'attack a player';
+	public action = 'assault';
+	public actionGerund = 'assaulting';
+	public actionText = 'assault a player';
 	public actionParticiple = 'assaulted';
 	public priority = NightActionPriority.JUGGERNAUT;
 
-	// level 1 lets them attack every night, level 2 lets them rampage, and level 3 gives them a unstoppable attack
+	// level 1 lets them attack every night, level 2 lets them rampage, ands level 3 gives them a unstoppable attack
 	public level = 0;
 
 	public get defense() {
@@ -26,13 +26,12 @@ class Juggernaut extends Killer {
 	}
 
 	public canUseAction() {
-		if (!this.canAttack()) return { check: false, reason: 'You currently can only attack on even nights.' };
+		if (!this.canAttack()) return { check: false, reason: 'You currently can only attack on full moons.' };
 		return super.canUseAction();
 	}
 
-	public async onNight() {
-		await this.player.user.send(`You are currently level ${this.level.toString()}`);
-		return super.onNight();
+	public get extraNightContext() {
+		return `You are currently level ${this.level.toString()}`;
 	}
 
 	public async runAction(actions: NightActionsManager, target: Player) {
