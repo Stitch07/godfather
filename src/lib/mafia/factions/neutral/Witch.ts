@@ -10,7 +10,7 @@ export default class WitchFaction extends Faction {
 	public winCondition = 'Survive to see the Town lose the game.';
 
 	public hasWonIndependent(player: Player) {
-		const aliveTownies = player.game.players.filter(pl => pl.role.name === 'Townie' && pl.isAlive).length;
+		const aliveTownies = player.game.players.filter(pl => pl.role.faction.name === 'Town' && pl.isAlive).length;
 		return player.isAlive && aliveTownies === 0;
 	}
 
