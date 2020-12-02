@@ -14,12 +14,13 @@ class Investigator extends SingleTarget {
 	public priority = NightActionPriority.INVEST;
 
 	public async tearDown(actions: NightActionsManager, target: Player) {
-		let results = this.getResult(target.role);
+		let results = this.getResult(target.role.name);
+		if (actions.framedPlayers.includes(target)) results = this.getResult('Framer');
 		await this.player.user.send(results);
 	}
 
-	private getResult(role: Role) {
-		switch (role.name) {
+	private getResult(roleName: Role['name']) {
+		switch (roleName) {
 			// non-tos roles still need to be added
 			case 'Executioner':
 			case 'Werewolf':
