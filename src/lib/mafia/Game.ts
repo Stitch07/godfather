@@ -67,18 +67,20 @@ export default class Game {
 
 	public async startDay() {
 		this.phase = Phase.Standby;
-		const deadPlayers = await this.nightActions.resolve();
-		if (deadPlayers.length > 0) {
-			this.idlePhases = 0;
-			const deadText = [];
-			for (const deadPlayer of deadPlayers) {
-				const roleText = deadPlayer.cleaned
-					? 'We could not determine their role.'
-					: `They were a ${deadPlayer.role!.display}`;
-				deadText.push(`${deadPlayer} died last night. ${roleText}`);
+		if (this.cycle !== 0) {
+			const deadPlayers = await this.nightActions.resolve();
+			if (deadPlayers.length > 0) {
+				this.idlePhases = 0;
+				const deadText = [];
+				for (const deadPlayer of deadPlayers) {
+					const roleText = deadPlayer.cleaned
+						? 'We could not determine their role.'
+						: `They were a ${deadPlayer.role!.display}`;
+					deadText.push(`${deadPlayer} died last night. ${roleText}`);
+				}
+				await this.channel.send(deadText.join('\n'));
 			}
-			await this.channel.send(deadText.join('\n'));
-		} else if (this.cycle !== 0) {
+
 			this.idlePhases++;
 		}
 

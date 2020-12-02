@@ -6,9 +6,9 @@ import WitchFaction from '@mafia/factions/neutral/Witch';
 class Witch extends DoubleTarget {
 
 	public name = 'Witch';
-	public description = 'You may witch 2 players each night.';
+	public description = 'You may witch one player onto another at night.';
 	public action = 'witch';
-	public actionText = 'witch 2 players ';
+	public actionText = 'witch one player onto another';
 	public actionGerund = 'controlling';
 	public priority = NightActionPriority.Witch;
 
