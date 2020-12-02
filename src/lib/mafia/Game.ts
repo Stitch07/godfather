@@ -6,7 +6,7 @@ import VoteManager from '@mafia/managers/VoteManager';
 import NightActionsManager from '@mafia/managers/NightActionsManager';
 import Setup from './Setup';
 
-import { Collection, TextChannel, User } from 'discord.js';
+import { Collection, GuildMember, TextChannel, User } from 'discord.js';
 import { codeBlock } from '@sapphire/utilities';
 // import GameEntity from '../orm/entities/Game';
 // import { getRepository } from 'typeorm';
@@ -55,6 +55,11 @@ export default class Game {
 	 * The number of consecutive phases with zero kills
 	 */
 	public idlePhases = 0;
+	/**
+	 * A Set of players whose nicknames have been changed
+	 */
+	public numberedNicknames = new Set<GuildMember>();
+
 	public factionalChannels = new Collection<string, [TextChannel, string]>();
 	public constructor(host: User, public channel: TextChannel, public settings: GameSettings) {
 		this.client = channel.client as Godfather;
@@ -319,6 +324,16 @@ export default class Game {
 						await member.kick().catch(() => null);
 					}
 				}
+			}
+		}
+
+		// reset numbered nicknames
+		// TODO: hide this behind a setting
+		for (const member of this.numberedNicknames) {
+			// only reset a nickname if it's in the correct form
+			if (member.nickname && /\[\d+\] (\w+)/.test(member.nickname)) {
+				const [, previousNickname] = /\[\d+\] (\w+)/.exec(member.nickname)!;
+				await member.setNickname(previousNickname).catch(() => null);
 			}
 		}
 

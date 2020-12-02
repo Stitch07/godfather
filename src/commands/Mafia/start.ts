@@ -32,14 +32,16 @@ export default class extends GodfatherCommand {
 		}
 
 		if (game!.setup!.totalPlayers !== game!.players.length) throw `The setup **${game!.setup!.name}** requires ${game!.setup!.totalPlayers} players.`;
-
+		// TODO: hide this behind a setting
 		for (const plr of game!.players) {
-			const member = await message.guild?.members.fetch(plr.user.id);
+			const member = await message.guild!.members.fetch(plr.user.id)!;
 			// eslint-disable-next-line @typescript-eslint/restrict-plus-operands
 			const pos = game!.players.indexOf(plr) + 1;
-			// eslint-disable-next-line @typescript-eslint/unbound-method
-			void member!.setNickname(`[${pos}] ${member!.displayName}`);
+			await member.setNickname(`[${pos}] ${member!.displayName}`)
+				.then(() => game!.numberedNicknames.add(member))
+				.catch(() => null);
 		}
+
 		const sent = await message.channel.send(`Chose the setup **${game!.setup!.name}**. Randomizing roles...`);
 		game!.phase = Phase.Standby;
 		const generatedRoles = game!.setup!.generate();
