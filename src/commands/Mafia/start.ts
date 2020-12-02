@@ -1,5 +1,6 @@
 import GodfatherCommand from '@lib/GodfatherCommand';
 import Player from '@mafia/Player';
+import { Phase } from '@root/lib/mafia/Game';
 import { listItems } from '@root/lib/util/utils';
 import { ApplyOptions } from '@sapphire/decorators';
 import { Args, CommandContext, CommandOptions } from '@sapphire/framework';
@@ -33,6 +34,7 @@ export default class extends GodfatherCommand {
 		if (game!.setup!.totalPlayers !== game!.players.length) throw `The setup **${game!.setup!.name}** requires ${game!.setup!.totalPlayers} players.`;
 
 		const sent = await message.channel.send(`Chose the setup **${game!.setup!.name}**. Randomizing roles...`);
+		game!.phase = Phase.Standby;
 		const generatedRoles = game!.setup!.generate();
 		for (const player of game!.players) {
 			player.role = new (generatedRoles.shift()!)(player);
