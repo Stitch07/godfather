@@ -54,7 +54,7 @@ export default class Godfather extends SapphireClient {
 	}
 
 	public get invite() {
-		return `https://discord.com/oauth2/authorize?client_id=${this.user!.id}&scope=bot`;
+		return `https://discord.com/oauth2/authorize?client_id=${this.user!.id}&scope=bot&permissions=402653200`;
 	}
 
 }
