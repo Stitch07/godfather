@@ -48,7 +48,7 @@ export default class Werewolf extends Killer {
 	}
 
 	public canTarget(target: Player) {
-		if (target === this.player) return { check: true, reason: '' };
+		if (target === this.player && this.player.isAlive) return { check: true, reason: '' };
 		return super.canTarget(target);
 	}
 

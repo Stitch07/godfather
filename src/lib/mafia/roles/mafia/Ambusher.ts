@@ -15,8 +15,8 @@ class Ambusher extends SingleTarget {
 	private killTarget: Player | null = null;
 
 	public canTarget(target: Player) {
-		if (target.role.faction.name !== 'Mafia') return { check: true, reason: '' };
-		return { check: false, reason: 'You cannot target yourself or your teammates' };
+		if (target.role.faction.name === 'Mafia') return { check: false, reason: 'You cannot target yourself or your teammates' };
+		return super.canTarget(target);
 	}
 
 	public runAction(actions: NightActionsManager, target: Player) {

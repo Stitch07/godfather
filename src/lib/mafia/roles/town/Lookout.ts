@@ -21,5 +21,7 @@ class Lookout extends SingleTarget {
 
 }
 
+Lookout.aliases = ['LO'];
 Lookout.categories = [...Lookout.categories, 'Town Investigative'];
+
 export default Townie(Lookout);

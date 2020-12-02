@@ -55,7 +55,7 @@ class Bodyguard extends SingleTarget {
 	public canTarget(player: Player) {
 		// TODO: customizable rule here
 		if (player === this.player && this.hasGuarded) return { check: false, reason: 'You can vest only once per game.' };
-		return { check: true, reason: '' };
+		return super.canTarget(player);
 	}
 
 	public get extraNightContext() {

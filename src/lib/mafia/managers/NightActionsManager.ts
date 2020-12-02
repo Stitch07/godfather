@@ -165,6 +165,7 @@ export enum NightActionPriority {
 	// investigative roles usually only rely on tearDown, so they can safely go last
 	COP = 7,
 	LOOKOUT = 7,
+	INVEST = 7,
 	CONSIG = 7,
 	TRACKER = 7,
 	NEOPOLITAN = 7,

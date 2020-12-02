@@ -14,7 +14,7 @@ import * as roledocs from '../../assets/roledocs.json';
 @ApplyOptions<CommandOptions>({
 	aliases: ['role', 'roles'],
 	description: 'Shows a list of all roles, and gives you information on a particular role.',
-	preconditions: [{ entry: 'Cooldown', context: { bucketType: BucketType.Channel, delay: Time.Second * 5 } }]
+	preconditions: [{ entry: 'Cooldown', context: { bucketType: BucketType.Channel, delay: Time.Second * 3 } }]
 })
 export default class extends GodfatherCommand {
 
