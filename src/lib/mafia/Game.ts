@@ -14,7 +14,7 @@ import SingleTarget from './mixins/SingleTarget';
 // import { PGSQL_ENABLED } from '@root/config';
 import { format } from '@util/durationFormat';
 import { Time } from '@sapphire/time-utilities';
-import { fauxAlive, listItems } from '../util/utils';
+import { canManage, fauxAlive, listItems } from '../util/utils';
 import { ENABLE_PRIVATE_CHANNELS, PGSQL_ENABLED, PRIVATE_CHANNEL_SERVER } from '@root/config';
 import { getConnection, getRepository } from 'typeorm';
 import GameEntity from '../orm/entities/Game';
@@ -328,12 +328,13 @@ export default class Game {
 		}
 
 		// reset numbered nicknames
-		// TODO: hide this behind a setting
-		for (const member of this.numberedNicknames) {
+		if (this.settings.numberedNicknames && this.channel.guild!.me?.hasPermission('MANAGE_NICKNAMES')) {
+			for (const member of this.numberedNicknames) {
 			// only reset a nickname if it's in the correct form
-			if (member.nickname && /\[\d+\] (\w+)/.test(member.nickname)) {
-				const [, previousNickname] = /\[\d+\] (\w+)/.exec(member.nickname)!;
-				await member.setNickname(previousNickname).catch(() => null);
+				if (member.nickname && /\[\d+\] (.+)/.test(member.nickname)) {
+					const [, previousNickname] = /\[\d+\] (.+)/.exec(member.nickname)!;
+					if (this.channel.guild!.me && canManage(this.channel.guild!.me, member)) await member.setNickname(previousNickname).catch(() => null);
+				}
 			}
 		}
 
@@ -362,6 +363,9 @@ export interface GameSettings {
 	overwritePermissions: boolean;
 	maxPlayers: number;
 	disableWhispers: boolean;
+	numberedNicknames: boolean;
+	muteAtNight: boolean;
+	adaptiveSlowmode: boolean;
 }
 
 export interface EndgameCheckData {

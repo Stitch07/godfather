@@ -2,7 +2,7 @@ import { exec as childProcessExec } from 'child_process';
 import { promisify } from 'util';
 import Player from '@mafia/Player';
 import { isThenable, regExpEsc } from '@sapphire/utilities';
-import { Client } from 'discord.js';
+import { Client, GuildMember } from 'discord.js';
 import { Events } from '@sapphire/framework';
 import { TOKEN } from '@root/config';
 
@@ -93,4 +93,10 @@ export const listItems = (array: string[]) => {
 export const pluralize = (count: number, singular: string, plural = `${singular}s`) => {
 	if (count === 1) return `${count} ${singular}`;
 	return `${count} ${plural}`;
+};
+
+export const canManage = (me: GuildMember, target: GuildMember) => {
+	if (target.user.id === me.guild.ownerID) return false;
+	if (me.roles.highest.position <= target.roles.highest.position) return false;
+	return true;
 };

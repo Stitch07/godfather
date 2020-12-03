@@ -16,7 +16,10 @@ export const DEFAULT_GAME_SETTINGS: GameSettings = {
 	nightDuration: Time.Minute * 2,
 	overwritePermissions: true,
 	maxPlayers: 18,
-	disableWhispers: false
+	disableWhispers: false,
+	numberedNicknames: false,
+	muteAtNight: false,
+	adaptiveSlowmode: false
 };
 
 export const DEFAULT_ACTION_FLAGS = {
@@ -63,6 +66,21 @@ export const GUILD_SETTINGS_METADATA: SettingsEntry<keyof ArgType>[] = [
 	},
 	{
 		name: 'disableWhispers',
+		type: 'boolean',
+		display: (value: boolean) => value ? 'Enabled' : 'Disabled'
+	},
+	{
+		name: 'numberedNicknames',
+		type: 'boolean',
+		display: (value: boolean) => value ? 'Enabled' : 'Disabled'
+	},
+	{
+		name: 'muteAtNight',
+		type: 'boolean',
+		display: (value: boolean) => value ? 'Enabled' : 'Disabled'
+	},
+	{
+		name: 'adaptiveSlowmode',
 		type: 'boolean',
 		display: (value: boolean) => value ? 'Enabled' : 'Disabled'
 	}

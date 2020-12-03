@@ -27,4 +27,16 @@ export default class GuildSettingsEntity implements GameSettings {
 	@Column('boolean', { 'default': false })
 	public disableWhispers = false;
 
+	@Column('varchar', { 'length': 19, 'array': true, 'default': () => 'ARRAY[]::VARCHAR[]' })
+	public disabledChannels: string[] = [];
+
+	@Column('boolean', { 'default': false })
+	public numberedNicknames = false;
+
+	@Column('boolean', { 'default': false })
+	public muteAtNight = false;
+
+	@Column('boolean', { 'default': false })
+	public adaptiveSlowmode = false;
+
 }

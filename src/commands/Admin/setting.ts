@@ -14,7 +14,7 @@ import { getCustomRepository } from 'typeorm';
 	aliases: ['conf', 'config', 'settings'],
 	description: 'Manages game and server settings.',
 	detailedDescription: [
-		'The settings command let\'s you manage game settings such as dayDuration, nightDuration and overwritePermissions',
+		'The settings command lets you manage game settings such as dayDuration, nightDuration and overwritePermissions',
 		'If used in a channel without an ongoing game, the settings command will modify server-wide defaults.'
 	].join('\n'),
 	preconditions: ['GuildOnly', { entry: 'Cooldown', context: { delay: Time.Second * 5 } }, ['OwnerOnly', 'AdminOnly']]
