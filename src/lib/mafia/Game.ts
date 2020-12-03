@@ -99,7 +99,7 @@ export default class Game {
 			return this.end({ ...winCheck, winningFaction: undefined });
 		}
 
-		if (this.canOverwritePermissions) {
+		if (this.channel.permissionsFor(this.client.user!)?.has(['MANAGE_CHANNELS', 'MANAGE_ROLES']) && this.settings.muteAtNight) {
 			for (const muted of this.players.filter(player => player.isAlive)) {
 				await this.channel.updateOverwrite(muted.user, {
 					SEND_MESSAGES: true,
@@ -127,6 +127,8 @@ export default class Game {
 			}
 		}
 
+		if (this.channel.permissionsFor(this.client.user!)!.has('MANAGE_CHANNELS') && this.settings.adaptiveSlowmode) await this.updateAdaptiveSlowmode();
+
 		await this.channel.send([
 			`Day **${this.cycle}** will last ${format(this.settings.dayDuration)}`,
 			`With ${alivePlayers.length} alive, it takes ${this.majorityVotes} to lynch.`
@@ -144,15 +146,17 @@ export default class Game {
 			return this.end({ ...winCheck, winningFaction: undefined });
 		}
 
-		if (this.canOverwritePermissions) {
-			for (const muted of this.players) {
-				await this.channel.updateOverwrite(muted.user, {
+		if (this.channel.permissionsFor(this.client.user!)?.has(['MANAGE_CHANNELS', 'MANAGE_ROLES']) && this.settings.muteAtNight) {
+			for (const player of this.players) {
+				await this.channel.updateOverwrite(player.user, {
 					SEND_MESSAGES: false,
 					ADD_REACTIONS: false
 				});
-				this.permissionOverwrites.push(muted.user.id);
+				this.permissionOverwrites.push(player.user.id);
 			}
 		}
+
+		if (this.channel.permissionsFor(this.client.user!)!.has('MANAGE_CHANNELS') && this.settings.adaptiveSlowmode) await this.updateAdaptiveSlowmode();
 
 		this.phase = Phase.Standby;
 		this.votes.reset();
@@ -330,13 +334,16 @@ export default class Game {
 		// reset numbered nicknames
 		if (this.settings.numberedNicknames && this.channel.guild!.me?.hasPermission('MANAGE_NICKNAMES')) {
 			for (const member of this.numberedNicknames) {
-			// only reset a nickname if it's in the correct form
+				// only reset a nickname if it's in the correct form
 				if (member.nickname && /\[\d+\] (.+)/.test(member.nickname)) {
 					const [, previousNickname] = /\[\d+\] (.+)/.exec(member.nickname)!;
 					if (this.channel.guild!.me && canManage(this.channel.guild!.me, member)) await member.setNickname(previousNickname).catch(() => null);
 				}
 			}
 		}
+
+		// reset adaptive slowmode
+		if (this.channel.permissionsFor(this.client.user!)!.has('MANAGE_CHANNELS') && this.settings.adaptiveSlowmode) await this.channel.setRateLimitPerUser(0);
 
 		for (const [factionalChannel] of this.factionalChannels.values()) {
 			await factionalChannel.delete();
@@ -353,6 +360,13 @@ export default class Game {
 		const remaining = this.phaseEndAt!.getTime() - Date.now();
 		if (remaining <= 0) return 'any time soon...';
 		return showIn ? `in ${format(remaining)}` : format(remaining);
+	}
+
+	public async updateAdaptiveSlowmode() {
+		const alivePlayers = this.players.filter(player => player.isAlive).length;
+		if (alivePlayers >= 12) await this.channel.setRateLimitPerUser(5);
+		else if (alivePlayers >= 6) await this.channel.setRateLimitPerUser(3);
+		else await this.channel.setRateLimitPerUser(0);
 	}
 
 }
