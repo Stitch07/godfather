@@ -25,7 +25,7 @@ class Witch extends DoubleTarget {
 		for (const action of actions) {
 			if (!(action.flags?.canWitch ?? true)) continue;
 			if (action.actor === targetOne) {
-				if (action.target) action.target = targetTwo;
+				if (action.target && !Array.isArray(action.target)) action.target = targetTwo;
 				this.witched = true;
 			}
 		}
