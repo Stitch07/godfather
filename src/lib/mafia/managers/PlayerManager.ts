@@ -61,7 +61,7 @@ export default class PlayerManager extends Array<Player> {
 	}
 
 	public show(options: PlayerManagerShowOptions = { codeblock: false, showReplacements: true }): string {
-		const playerList = options.codeblock ? [] : [`**Players: ${this.length}**`];
+		const playerList = options.codeblock ? [] : [this.game.hasStarted ? `**Players: ${this.filter(player => player.isAlive).length}/${this.length} alive**` : `**Players: ${this.length}**`];
 		for (const [n, player] of this.entries()) {
 			let playerName = '';
 			if (options.codeblock) {
