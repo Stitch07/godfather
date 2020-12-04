@@ -72,7 +72,7 @@ export default class Game {
 
 	public async startDay() {
 		this.phase = Phase.Standby;
-		if (this.cycle !== 0) {
+		if (this.cycle !== 0 || this.setup!.nightStart) {
 			const deadPlayers = await this.nightActions.resolve();
 			if (deadPlayers.length > 0) {
 				this.idlePhases = 0;

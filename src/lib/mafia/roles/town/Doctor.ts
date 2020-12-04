@@ -49,7 +49,8 @@ class Doctor extends SingleTarget {
 		if (player === this.player && this.hasSelfHealed) return { check: false, reason: 'You can self-heal once per game.' };
 		// docs cannot heal confirmed mayors
 		if (player.role.name === 'Mayor' && Reflect.get(player.role, 'hasRevealed') === true) return { check: false, reason: 'You cannot heal a confirmed Mayor.' };
-		return super.canTarget(player);
+		if (!player.isAlive) return { check: false, reason: 'You cannot target dead players.' };
+		return { check: true, reason: '' };
 	}
 
 	public get extraNightContext() {
