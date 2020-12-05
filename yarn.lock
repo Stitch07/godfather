@@ -1075,7 +1075,7 @@
 
 "@sapphire/framework@sapphire-project/framework#build":
   version "0.0.1"
-  resolved "https://codeload.github.com/sapphire-project/framework/tar.gz/2d65a8d18dafc7512249dc8f33b448c1bde81d9f"
+  resolved "https://codeload.github.com/sapphire-project/framework/tar.gz/953658437037bd19f1ebf1ea2f0b4d4e3fc5ff82"
   dependencies:
     "@sapphire/pieces" "github:sapphire-project/pieces#build"
     "@sapphire/ratelimits" "^1.0.1"
@@ -1084,16 +1084,11 @@
 
 "@sapphire/pieces@github:sapphire-project/pieces#build":
   version "1.0.0"
-  resolved "https://codeload.github.com/sapphire-project/pieces/tar.gz/7857c1e5faa2bb0d00c847b81c3ac40c81714096"
+  resolved "https://codeload.github.com/sapphire-project/pieces/tar.gz/f06a9ccdfdea9b814ad9573ac86ef439551e2ace"
   dependencies:
     "@discordjs/collection" "^0.1.6"
 
-"@sapphire/ratelimits@^1.0.1":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@sapphire/ratelimits/-/ratelimits-1.1.0.tgz#274236efe51a785b758a7233708198b0ded710f9"
-  integrity sha512-C+3AZ/AoLJR2h4hQK8heyGuYfKDzdOOA9MKlwSZrx0uKa9DypgajEAYjcOjrsAjhzQ9jatKvkQ4XKK5oTzp4LA==
-
-"@sapphire/ratelimits@sapphire-project/utilities#build-ratelimits":
+"@sapphire/ratelimits@^1.0.1", "@sapphire/ratelimits@sapphire-project/utilities#build-ratelimits":
   version "1.1.0"
   resolved "https://codeload.github.com/sapphire-project/utilities/tar.gz/864288bae88daf0bc8530fa0c387499b23e7aabc"
 

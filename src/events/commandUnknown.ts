@@ -23,7 +23,7 @@ export default class extends Event<Events.UnknownCommand> {
 		const prefixLess = message.content.slice(prefix.length);
 		const [commandText, ...parameters] = prefixLess.split(' ');
 		try {
-			await player.role!.onPmCommand(message, commandText, ...parameters);
+			await player.role!.onPmCommand(message, commandText.toLowerCase(), ...parameters);
 		} catch (error) {
 			if (typeof error === 'string') return message.channel.send(error);
 			this.client.logger.error(error);
