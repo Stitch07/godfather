@@ -15,7 +15,7 @@ export default class NightActionsManager extends Array<NightAction> {
 
 	public async addAction(action: NightAction) {
 		const possibleActions = this.game.players.filter(player => fauxAlive(player) && player.role.canUseAction().check && Reflect.get(player.role, 'actionPhase') === Phase.Night);
-		if (action.actor.role.name === 'Reanimator') {
+		if (action.actor.role.name === 'Reanimator' && action.target) {
 			const { priority } = (action.target as Player[])[0].role as SingleTarget;
 			action.priority = priority;
 		}

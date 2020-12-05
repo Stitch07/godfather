@@ -2,7 +2,6 @@ import SingleTarget from '@mafia/mixins/SingleTarget';
 import Townie from '@mafia/mixins/Townie';
 import NightActionsManager, { NightActionPriority } from '@mafia/managers/NightActionsManager';
 import Player from '@mafia/Player';
-import Role from '@mafia/Role';
 
 class Investigator extends SingleTarget {
 
@@ -19,7 +18,7 @@ class Investigator extends SingleTarget {
 		await this.player.user.send(results);
 	}
 
-	private getResult(roleName: Role['name']) {
+	private getResult(roleName: string) {
 		switch (roleName) {
 			// non-tos roles still need to be added
 			case 'Executioner':
@@ -54,21 +53,24 @@ class Investigator extends SingleTarget {
 			case 'Godfather':
 			case 'Arsonist':
 				return 'Your target could be a Bodyguard, Godfather, or Arsonist.';
-			case 'Jaintor':
+			case 'Janitor':
 			case 'Retributionist':
 			case 'Reanimator':
 				return 'Your target could be a Janitor, Retributionist, or Reanimator';
+			case 'Guardian Angel':
 			case 'Amnesiac':
 			case 'Survivor':
-				return 'Your target could be a Survivor or a Amnesiac';
-			case 'Guardian Angel':
-				return 'Your target could be a Guardian Angel';
-				// could be included with the rest of the NBs
+				return 'Your target could be a Survivor, Amnesiac, or Guardian Angel';
 			case 'Serial Killer':
 			case 'Doctor':
 				return 'Your target could be a Doctor or a Serial Killer';
+			case 'Vanilla':
+			case 'Vanilla Mafia':
+			case 'Neapolitan':
+			case 'Super Saint':
+				return 'Your target could be a Vanilla, Vanilla Mafia, Neapolitan, or Super Saint.';
 			default:
-				throw 'You could not find enough information about your target.';
+				return 'You could not find enough information about your target.';
 		}
 	}
 
