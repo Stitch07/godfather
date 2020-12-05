@@ -19,7 +19,7 @@ export default class Godfather extends SapphireClient {
 	public ownerID: string | undefined = undefined;
 	public settingsCache = new Map<string, GuildSettingsEntity>();
 	public eventLoop!: NodeJS.Timeout;
-	private _version = [1, 0, 0];
+	private _version = [1, 1, 0];
 	public constructor() {
 		super({
 			caseInsensitiveCommands: true,
