@@ -7,7 +7,7 @@ import { Args, CommandContext, CommandOptions } from '@sapphire/framework';
 import { Message } from 'discord.js';
 
 @ApplyOptions<CommandOptions>({
-	aliases: ['startgame'],
+	aliases: ['s', 'startgame'],
 	description: 'Starts a game of Mafia in this server.',
 	preconditions: ['GuildOnly', 'GameOnly', 'HostOnly']
 })
