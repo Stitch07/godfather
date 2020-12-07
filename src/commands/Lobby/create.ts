@@ -8,7 +8,7 @@ import { PGSQL_ENABLED } from '@root/config';
 import { DEFAULT_GAME_SETTINGS } from '@lib/constants';
 
 @ApplyOptions<CommandOptions>({
-	aliases: ['creategame'],
+	aliases: ['c', 'creategame'],
 	description: 'Creates a game of mafia in the current channel.',
 	detailedDescription: [
 		'To join an existing game, use the `join` command.',
