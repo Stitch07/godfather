@@ -96,5 +96,6 @@ export const factionEmojis: Record<string, string> = {
 	'Survivor': '🏳️',
 	'Werewolf': '🐺',
 	'Witch': '🧹',
-	'Guardian Angel': '😇'
+	'Guardian Angel': '😇',
+	'Juggernaut': '🥊'
 };
