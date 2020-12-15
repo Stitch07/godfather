@@ -6,7 +6,7 @@ import { Message } from 'discord.js';
 @ApplyOptions<CommandOptions>({
 	aliases: ['del', 'deletegame'],
 	description: 'Deletes an ongoing game.',
-	preconditions: ['GuildOnly', 'GameOnly', 'HostOnly']
+	preconditions: ['GuildOnly', 'GameOnly', ['AdminOnly', 'HostOnly']]
 })
 export default class extends GodfatherCommand {
 

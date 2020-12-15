@@ -8,7 +8,7 @@ export default class extends Event<Events.CommandDenied> {
 
 	public run(error: UserError, { message }: CommandDeniedPayload) {
 		// silently fail owner only commands
-		if (error.identifier === 'OwnerOnly') return null;
+		if (error.identifier === 'OwnerOnly' || error.message === '') return null;
 		return message.channel.send(error.message);
 	}
 

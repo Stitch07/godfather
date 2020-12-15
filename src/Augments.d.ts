@@ -40,6 +40,7 @@ declare module 'discord.js' {
 
 	interface Guild {
 		readSettings(): Promise<GuildSettingsEntity>;
+		updateSettings(newSettings: GuildSettingsEntity): Promise<void>;
 	}
 }
 
