@@ -98,6 +98,9 @@ export default class PlayerManager extends Array<Player> {
 
 		player.user = replacement;
 		await player.sendPM();
+
+		if (this.game.phase === Phase.Night && Reflect.get(player.role, 'actionPhase') === Phase.Night) await player.role.onNight();
+		else if (this.game.phase === Phase.Day && Reflect.get(player.role, 'actionPhase') === Phase.Day) await player.role.onDay();
 	}
 
 	private getPlayerFlags(player: Player) {
