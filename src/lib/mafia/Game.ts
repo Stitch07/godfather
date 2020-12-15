@@ -194,10 +194,7 @@ export default class Game {
 		}
 
 		if (this.phase === Phase.Standby) return;
-		const duration = this.phase === Phase.Day ? this.settings.dayDuration : this.settings.nightDuration;
-		if (this.phaseEndAt && (this.phaseEndAt.getTime() - Date.now()) === duration / 2) {
-			return this.channel.send(`${this.phase} ends in ${this.remaining()}`);
-		}
+
 		if (this.phaseEndAt && Date.now() > this.phaseEndAt.getTime()) {
 			if (this.phase === Phase.Day) {
 				await this.channel.send('Nobody was lynched!');
