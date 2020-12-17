@@ -11,7 +11,7 @@ class Juggernaut extends Killer {
 	public actionGerund = 'assaulting';
 	public actionText = 'assault a player';
 	public actionParticiple = 'assaulted';
-	public priority = NightActionPriority.JUGGERNAUT;
+	public priority = NightActionPriority.KILLER;
 
 	// level 1 lets them attack every night, level 2 lets them rampage, ands level 3 gives them a unstoppable attack
 	public level = 0;
