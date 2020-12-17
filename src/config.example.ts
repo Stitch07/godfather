@@ -2,6 +2,8 @@
 export const TOKEN = 'YOUR_BOT_TOKEN_HERE';
 // #endregion
 
+export const CLIENT_ID = 'YOUR_CLIENT_ID_HERE';
+
 export const SUPPORT_SERVER = 'https://discord.gg/gFhvChy';
 
 export const PRODUCTION = 'PRODUCTION' in process.env ? process.env.PRODUCTION === 'true' : ('PM2_HOME' in process.env);

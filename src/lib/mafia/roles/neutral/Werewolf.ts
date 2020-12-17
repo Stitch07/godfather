@@ -19,12 +19,12 @@ export default class Werewolf extends Killer {
 		return super.runAction(actions, target);
 	}
 
-	public async tearDown(actions: NightActionsManager, target: Player) {
+	public tearDown(actions: NightActionsManager, target: Player) {
 		// kill all visitors
 		const visitors = target.visitors.filter(player => player.user.id !== this.player.user.id);
 		for (const visitor of visitors) {
 			actions.record.setAction(visitor.user.id, 'nightkill', { result: true, by: [this.player], type: this.attackStrength });
-			await visitor.user.send('You were mauled by a Werewolf. You have died!');
+			visitor.queueMessage('You were mauled by a Werewolf. You have died!');
 		}
 		return super.tearDown(actions, target);
 	}

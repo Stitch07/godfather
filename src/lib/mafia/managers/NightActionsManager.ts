@@ -72,6 +72,12 @@ export default class NightActionsManager extends Array<NightAction> {
 				}
 			}
 		}
+
+		// flush all message queues
+		for (const player of this.game.players) {
+			await player.flushQueue();
+		}
+
 		return deadPlayers;
 	}
 

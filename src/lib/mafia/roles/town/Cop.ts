@@ -27,7 +27,7 @@ class Cop extends SingleTarget {
 	public async tearDown(actions: NightActionsManager, target: Player) {
 		let innocence = this.innocenceModifier(target.role.innocence);
 		if (actions.framedPlayers.includes(target)) innocence = !innocence;
-		await this.player.user.send(innocence ? 'Your target is innocent.' : 'Your target is suspicious.');
+		await this.player.queueMessage(innocence ? 'Your target is innocent.' : 'Your target is suspicious.');
 	}
 
 	public innocenceModifier(innocence: boolean) {

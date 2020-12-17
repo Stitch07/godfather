@@ -20,7 +20,7 @@ class Janitor extends SingleTarget {
 	public tearDown(actions: NightActionsManager, target: Player) {
 		const record = actions.record.get(target.user.id).get('nightkill');
 		if (record.result && target.cleaned) {
-			return this.player.user.send(`You secretly know that your target's role was ${target.role.name}`);
+			return this.player.queueMessage(`You secretly know that your target's role was ${target.role.name}`);
 		}
 	}
 

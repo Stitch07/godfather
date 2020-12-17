@@ -39,7 +39,7 @@ class Doctor extends SingleTarget {
 		const success = record.result && record.by.includes(this.player);
 
 		if (success) {
-			return target.user.send('You were attacked but somebody nursed you back to health!');
+			return target.queueMessage('You were attacked but somebody nursed you back to health!');
 		}
 	}
 

@@ -15,8 +15,8 @@ class Lookout extends SingleTarget {
 
 	public tearDown(actions: NightActionsManager, target: Player) {
 		const visitors = target.visitors.filter(visitor => visitor !== this.player);
-		if (visitors.length > 0) return this.player.user.send(`Your target was visited by: ${listItems(visitors.map(visitor => visitor.user.username))}`);
-		return this.player.user.send('Nobody visited your target.');
+		if (visitors.length > 0) return this.player.queueMessage(`Your target was visited by: ${listItems(visitors.map(visitor => visitor.user.username))}`);
+		return this.player.queueMessage('Nobody visited your target.');
 	}
 
 }

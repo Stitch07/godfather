@@ -15,7 +15,7 @@ class Investigator extends SingleTarget {
 	public async tearDown(actions: NightActionsManager, target: Player) {
 		let results = this.getResult(target.role.name);
 		if (actions.framedPlayers.includes(target)) results = this.getResult('Framer');
-		await this.player.user.send(results);
+		await this.player.queueMessage(results);
 	}
 
 	private getResult(roleName: string) {

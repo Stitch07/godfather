@@ -31,10 +31,10 @@ class Witch extends DoubleTarget {
 		}
 	}
 
-	public async tearDown(actions: NightActionsManager, [target]: Player[]) {
+	public tearDown(actions: NightActionsManager, [target]: Player[]) {
 		if (this.witched) {
-			await target.user.send('You felt a mystical presence dominating you. You were controlled by a witch!');
-			await this.player.user.send(`You secretly know that your target is a ${target.role.name}.`);
+			target.queueMessage('You felt a mystical presence dominating you. You were controlled by a witch!');
+			this.player.queueMessage(`You secretly know that your target is a ${target.role.name}.`);
 		}
 	}
 

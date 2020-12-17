@@ -22,7 +22,7 @@ class Retributionist extends SingleTarget {
 		target.flags.revivedOn = this.game.cycle;
 		this.hasRevived = true;
 		await this.game.channel.send(`${target} was resurrected back to life!`);
-		await target.user.send('You were revived by a Retributionist!');
+		await target.queueMessage('You were revived by a Retributionist!');
 
 		if (this.game.canOverwritePermissions) {
 			const overwrite = this.game.channel.permissionOverwrites.find(permission => permission.type === 'member' && permission.id === target.user.id);

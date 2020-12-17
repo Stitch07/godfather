@@ -17,9 +17,9 @@ export default class Neapolitan extends SingleTarget {
 
 	public async tearDown(actions: NightActionsManager, target: Player) {
 		if (target.role.name.includes('Vanilla')) {
-			await this.player.user.send('Your target is a Vanilla');
+			await this.player.queueMessage('Your target is a Vanilla');
 		} else {
-			await this.player.user.send('Your target is not a Vanilla');
+			await this.player.queueMessage('Your target is not a Vanilla');
 		}
 	}
 

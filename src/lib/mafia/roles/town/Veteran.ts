@@ -44,11 +44,11 @@ class Veteran extends NoTarget {
 		this.alerts--;
 	}
 
-	public async onVisit(visitor: Player) {
+	public onVisit(visitor: Player) {
 		if (this.onAlert && visitor.role.defense < Defense.Invincible) {
 			this.game.nightActions.record.setAction(visitor.user.id, 'nightkill', { by: [this.player], result: true, type: Attack.Powerful });
-			await visitor.user.send('You were killed by the veteran you visited!');
-			return this.player.user.send('You shot someone who visited you.');
+			visitor.queueMessage('You were killed by the veteran you visited!');
+			return this.player.queueMessage('You shot someone who visited you.');
 		}
 	}
 

@@ -26,9 +26,9 @@ export default class Killer extends SingleTarget {
 		const record = actions.record.get(target.user.id).get('nightkill');
 		const success = record.result === true && record.by.includes(this.player);
 		if (!success) {
-			return this.player.user.send('Your target was too strong to kill!');
+			return this.player.queueMessage('Your target was too strong to kill!');
 		}
-		return target.user.send(`You were ${this.actionParticiple} by a ${this.name}. You have died!`);
+		return target.queueMessage(`You were ${this.actionParticiple} by a ${this.name}. You have died!`);
 	}
 
 	public get attackStrength() {

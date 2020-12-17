@@ -79,7 +79,7 @@ class Guardian_Angel extends NoTarget {
 				playerRecord.set('heal', heals);
 
 				actions.record.set(this.target.user.id, playerRecord);
-				this.player.user.send('Your target was attacked.');
+				this.player.queueMessage('Your target was attacked.');
 			}
 		}
 
@@ -87,14 +87,14 @@ class Guardian_Angel extends NoTarget {
 		return this.protects--;
 	}
 
-	public async tearDown(actions: NightActionsManager) {
+	public tearDown(actions: NightActionsManager) {
 		const record = actions.record.get(this.target.user.id).get('heal');
 		const success = record.result && record.by.includes(this.player);
 
 		if (success) {
-			await this.target.user.send('You were attacked but your Guardian Angel saved you!');
+			this.target.queueMessage('You were attacked but your Guardian Angel saved you!');
 		}
-		await this.game.channel.send(`A Guardian Angel has protected ${this.target.user.username}!`);
+		return this.game.channel.send(`A Guardian Angel has protected ${this.target.user.username}!`);
 	}
 
 	public get extraNightContext() {
