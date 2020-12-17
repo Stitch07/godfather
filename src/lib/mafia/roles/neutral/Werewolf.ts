@@ -24,7 +24,7 @@ export default class Werewolf extends Killer {
 		const visitors = target.visitors.filter(player => player.user.id !== this.player.user.id);
 		for (const visitor of visitors) {
 			actions.record.setAction(visitor.user.id, 'nightkill', { result: true, by: [this.player], type: this.attackStrength });
-			visitor.queueMessage('You were mauled by a Werewolf. You have died!');
+			visitor.queueMessage('You were mauled by a Werewolf!');
 		}
 		return super.tearDown(actions, target);
 	}

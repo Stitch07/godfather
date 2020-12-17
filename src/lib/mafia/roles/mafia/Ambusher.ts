@@ -41,7 +41,7 @@ class Ambusher extends SingleTarget {
 			if (!success) {
 				return this.player.queueMessage('Your target was too strong to kill!');
 			}
-			this.killTarget.queueMessage('You were attacked by an ambusher. You have died!');
+			this.killTarget.queueMessage('You were attacked by an ambusher!');
 			this.killTarget = null;
 		}
 	}

@@ -68,6 +68,7 @@ export default class NightActionsManager extends Array<NightAction> {
 				const deadPlayer = this.game.players.find(player => player.user.id === playerID);
 				if (deadPlayer) {
 					deadPlayer.kill(`killed N${this.game.cycle}`);
+					deadPlayer.queueMessage('You have died!');
 					deadPlayers.push(deadPlayer!);
 				}
 			}

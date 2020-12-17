@@ -28,7 +28,7 @@ export default class Killer extends SingleTarget {
 		if (!success) {
 			return this.player.queueMessage('Your target was too strong to kill!');
 		}
-		return target.queueMessage(`You were ${this.actionParticiple} by a ${this.name}. You have died!`);
+		return target.queueMessage(`You were ${this.actionParticiple} by a ${this.name}!`);
 	}
 
 	public get attackStrength() {

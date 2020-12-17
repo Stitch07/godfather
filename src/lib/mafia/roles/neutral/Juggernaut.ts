@@ -31,7 +31,7 @@ class Juggernaut extends Killer {
 	}
 
 	public get extraNightContext() {
-		return `You are currently level ${this.level.toString()}`;
+		return `You are currently level ${this.level}`;
 	}
 
 	public runAction(actions: NightActionsManager, target: Player) {
@@ -40,7 +40,7 @@ class Juggernaut extends Killer {
 			for (const visitor of visitors) {
 				actions.record.setAction(visitor.user.id, 'nightkill', { result: true, by: [this.player], type: this.attackStrength });
 				this.player.queueMessage('You assaulted someone who visted your target!');
-				visitor.queueMessage('You were assaulted by a Juggernaut. You have died!');
+				visitor.queueMessage('You were assaulted by a Juggernaut!');
 			}
 		}
 		return super.runAction(actions, target);
@@ -53,7 +53,7 @@ class Juggernaut extends Killer {
 			return this.player.queueMessage('Your target was too strong to kill!');
 		}
 		if (this.level < 3) this.level++;
-		return target.queueMessage('You were assaulted by a Juggernaut. You have died!');
+		return target.queueMessage('You were assaulted by a Juggernaut!');
 	}
 
 	private canAttack() {
