@@ -10,11 +10,13 @@ import GuildSettingRepository from './orm/repositories/GuildSettingRepository';
 import Logger from './Logger';
 import GuildSettingsEntity from './orm/entities/GuildSettings';
 import { getCustomRepository } from 'typeorm';
+import SlashCommandStore from './structures/SlashCommandStore';
 
 export default class Godfather extends SapphireClient {
 
 	public games: Collection<string, Game> = new Collection();
 	public setups: SetupStore;
+	public slashCommands: SlashCommandStore;
 	public release = PRODUCTION ? Branding.Release.Production : Branding.Release.Development;
 	public ownerID: string | undefined = undefined;
 	public settingsCache = new Map<string, GuildSettingsEntity>();
@@ -34,6 +36,9 @@ export default class Godfather extends SapphireClient {
 
 		this.setups = new SetupStore(this);
 		this.registerStore(this.setups);
+
+		this.slashCommands = new SlashCommandStore(this);
+		this.registerStore(this.slashCommands);
 
 		this.fetchPrefix = async (message: Message) => {
 			if (!message.guild) return [PREFIX, ''];

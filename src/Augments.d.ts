@@ -4,6 +4,7 @@ import Player from '@mafia/Player';
 import SetupStore from '@mafia/SetupStore';
 import { Collection, Guild, User } from 'discord.js';
 import GuildSettingsEntity from './lib/orm/entities/GuildSettings';
+import SlashCommandStore from './lib/structures/SlashCommandStore';
 
 interface ChannelExtendables {
 	readonly attachable: boolean;
@@ -24,6 +25,7 @@ declare module 'discord.js' {
 		games: Collection<string, Game>;
 		setups: SetupStore;
 		settingsCache: Map<string, GuildSettingsEntity>;
+		slashCommands: SlashCommandStore;
 		eventLoop: NodeJS.Timeout;
 		fetchGuildPrefix(guild: Guild): Promise<string>;
 	}
