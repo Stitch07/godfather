@@ -1,7 +1,7 @@
 import MafiaRole from '@mafia/mixins/MafiaRole';
 import Role from '@mafia/Role';
 
-class MafiaVanilla extends Role {
+class VanillaMafia extends Role {
 
 	public name = 'Vanilla Mafia';
 
@@ -9,4 +9,6 @@ class MafiaVanilla extends Role {
 
 }
 
-export default MafiaRole(MafiaVanilla);
+VanillaMafia.aliases = [...VanillaMafia.aliases, 'Mafia Vanilla'];
+
+export default MafiaRole(VanillaMafia);

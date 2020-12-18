@@ -4,7 +4,7 @@ import { ApplyOptions } from '@sapphire/decorators';
 
 @ApplyOptions<SetupOptions>({
 	name: 'classic',
-	roles: ['Cop', 'Doctor', 'Vanilla x3', 'Goon', 'Mafia Vanilla']
+	roles: ['Cop', 'Doctor', 'Vanilla x3', 'Goon', 'Vanilla Mafia']
 })
 export default class extends BasicSetup {
 

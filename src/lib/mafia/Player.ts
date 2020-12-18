@@ -85,7 +85,7 @@ export default class Player {
 	}
 
 	public set role(role: Role) {
-		if (this.role) this.previousRoles.push(this.role);
+		if (this._role) this.previousRoles.push(this._role);
 		this._role = role;
 	}
 
