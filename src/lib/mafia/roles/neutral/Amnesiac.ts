@@ -36,6 +36,7 @@ export default class Amnesiac extends SingleTarget {
 		await this.player.user.send(`You have remembered that you were a ${this.player.role.name}!`);
 		await this.player.sendPM();
 		await this.game.channel.send(`An Amnesiac has remembered that they were a **${this.player.role.name}**!`);
+		await this.player.role.init();
 	}
 
 	public canUseAction() {
