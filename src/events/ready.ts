@@ -53,7 +53,12 @@ export default class extends Event<Events.Ready> {
 				return command.reply(interaction, result.error.message);
 			}
 
-			await command.run(interaction);
+			try {
+				await command.run(interaction);
+			} catch (error) {
+				if (typeof error === 'string') return command.reply(interaction, error);
+				this.client.logger.error(error);
+			}
 		});
 	}
 
