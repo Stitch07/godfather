@@ -90,15 +90,10 @@ export default class NightActionsManager extends Array<NightAction> {
 
 }
 
-const DEFAULT_NIGHT_ENTRY = {
-	result: false,
-	by: []
-};
-
 export class NightRecord extends DefaultMap<string, DefaultMap<string, NightRecordEntry>> {
 
 	public constructor() {
-		super(() => new DefaultMap(() => DEFAULT_NIGHT_ENTRY));
+		super(() => new DefaultMap(() => ({ result: true, by: [] })));
 	}
 
 	public setAction(targetID: string, recordEntry: string, item: NightRecordEntry) {
