@@ -11,42 +11,41 @@ export default class extends Event<Events.Ready> {
 	}
 
 	public async run() {
-		if (this.client.ownerID === undefined) {
-			const application = await this.client.fetchApplication();
-			this.client.ownerID = application.owner?.id;
+		if (this.context.client.ownerID === undefined) {
+			const application = await this.context.client.fetchApplication();
+			this.context.client.ownerID = application.owner?.id;
 		}
-		await this.client.user!.setPresence({
+		await this.context.client.user!.setPresence({
 			activity: {
 				type: 'LISTENING',
 				name: `${PREFIX}help`
 			}
 		});
-		if (PGSQL_ENABLED) floatPromise(this.client, connect());
+		if (PGSQL_ENABLED) floatPromise(this.context.client, connect());
 
 		// start event loop
-		this.client.eventLoop = setInterval(async () => {
-			for (const game of this.client.games.values()) await game.update();
+		this.context.client.eventLoop = setInterval(async () => {
+			for (const game of this.context.client.games.values()) await game.update();
 		}, 10 * 1000); // 10 seconds
 
-		this.client.logger.info(`Ready! Logged in as ${this.client.user!.tag} and connected to ${this.client.guilds.cache.size} guilds.`);
+		this.context.client.logger.info(`Ready! Logged in as ${this.context.client.user!.tag} and connected to ${this.context.client.guilds.cache.size} guilds.`);
 
-		for (const command of this.client.slashCommands.values()) {
+		for (const command of this.context.client.slashCommands.values()) {
 			// @ts-ignore more private calls until d.js supports interactions
-			await this.client.api.applications(CLIENT_ID).commands.post({
+			await this.context.client.api.applications(CLIENT_ID).commands.post({
 				data: {
 					name: command.name,
 					description: command.description
 				}
 			});
 		}
-		this.client.logger.info(`Loaded ${this.client.slashCommands.size} slash-commands.`);
 
 		// @ts-ignore d.js needs to be updated first
-		this.client.ws.on('INTERACTION_CREATE', async interaction => {
-			const command = this.client.slashCommands.get(interaction.data.name);
+		this.context.client.ws.on('INTERACTION_CREATE', async interaction => {
+			const command = this.context.client.slashCommands.get(interaction.data.name);
 			if (!command) return null;
 
-			const fauxMessage = { channel: this.client.channels.cache.get(interaction.channel_id)!, guild: this.client.channels.cache.get(interaction.channel_id)! };
+			const fauxMessage = { channel: this.context.client.channels.cache.get(interaction.channel_id)!, guild: this.context.client.channels.cache.get(interaction.channel_id)! };
 			// @ts-ignore more hacks with faux messages
 			const result = await command.preconditions.run(fauxMessage, command);
 			if (isErr(result) && result.error.message !== '') {
@@ -57,7 +56,7 @@ export default class extends Event<Events.Ready> {
 				await command.run(interaction);
 			} catch (error) {
 				if (typeof error === 'string') return command.reply(interaction, error);
-				this.client.logger.error(error);
+				this.context.client.logger.error(error);
 			}
 		});
 	}

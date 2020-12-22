@@ -55,7 +55,7 @@ export default class extends GodfatherCommand {
 			// eslint-disable-next-line no-eval
 			result = eval(code);
 		} catch (error) {
-			if (error && error.stack) this.client.logger.error(error);
+			if (error && error.stack) this.context.client.logger.error(error);
 			result = error;
 			success = false;
 		}

@@ -19,7 +19,7 @@ export default class extends GodfatherCommand {
 			throw 'You have already joined.';
 		}
 		// prevent players from joining 2 games simultaneously
-		for (const otherGame of this.client.games.values()) {
+		for (const otherGame of this.context.client.games.values()) {
 			if (otherGame.players.get(message.author)) throw `You are already playing another game in ${otherGame.channel} (${otherGame.channel.guild.name})`;
 		}
 		// do not allow replacing in while the bot is processing the game

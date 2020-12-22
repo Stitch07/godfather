@@ -29,11 +29,11 @@ export default class extends GodfatherCommand {
 				return acc;
 			}, {} as Record<string, GodfatherCommand[]>);
 
-		const prefix = await this.client.fetchPrefix(message);
+		const prefix = await this.context.client.fetchPrefix(message);
 
 		const embed = new MessageEmbed()
 			.setColor(Branding.PrimaryColor)
-			.setAuthor(this.client.user!.username, this.client.user!.displayAvatarURL())
+			.setAuthor(this.context.client.user!.username, this.context.client.user!.displayAvatarURL())
 			.setDescription([
 				`A Discord Bot that automatically hosts games of Mafia. My prefix here is \`${Array.isArray(prefix) ? prefix[0] : prefix}\``,
 				`[Support Server](${SUPPORT_SERVER})`
@@ -50,13 +50,13 @@ export default class extends GodfatherCommand {
 	public buildCommandHelp(command: GodfatherCommand) {
 		return new MessageEmbed()
 			.setColor(Branding.PrimaryColor)
-			.setAuthor(this.client.user!.username, this.client.user!.displayAvatarURL())
+			.setAuthor(this.context.client.user!.username, this.context.client.user!.displayAvatarURL())
 			.addField([command.name, ...command.aliases].join('|'), command.description === '' ? 'No description available.' : command.description)
 			.addField('Detailed Description', command.detailedDescription === '' ? 'No detailed description available' : command.detailedDescription);
 	}
 
 	public onLoad() {
-		this._commands = this.client.commands.filter(command => (command as GodfatherCommand).category !== 'System');
+		this._commands = this.context.client.commands.filter(command => (command as GodfatherCommand).category !== 'System');
 	}
 
 }

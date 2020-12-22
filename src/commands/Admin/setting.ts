@@ -28,7 +28,7 @@ export default class extends GodfatherCommand {
 		if (inGame) {
 			if (message.author !== message.channel.game!.host.user) throw 'This command is host-only.';
 		} else {
-			const result = await (new PreconditionContainerAll(this.client, [['OwnerOnly', 'AdminOnly']]).run(message, this));
+			const result = await (new PreconditionContainerAll(this.context.client, [['OwnerOnly', 'AdminOnly']]).run(message, this));
 			if (!result.success) throw result.error.message;
 		}
 
@@ -52,7 +52,7 @@ export default class extends GodfatherCommand {
 		if (Reflect.get(guildSettings, schemaKey.value) === newSetting.value) throw `The value of **${schemaKey.value}** is already \`${settingMetadata.display(newSetting.value)}\``;
 
 		Reflect.set(guildSettings, schemaKey.value, newSetting.value);
-		if (!inGame) await getCustomRepository(GuildSettingRepository).updateSettings(this.client, guildSettings as GuildSettingsEntity);
+		if (!inGame) await getCustomRepository(GuildSettingRepository).updateSettings(this.context.client, guildSettings as GuildSettingsEntity);
 
 		return message.channel.send(`Successfully updated ${inGame ? 'game settings' : 'server defaults'} for **${schemaKey.value}** to: \`${settingMetadata.display(newSetting.value)}\``);
 	}

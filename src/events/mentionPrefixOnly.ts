@@ -8,7 +8,7 @@ export default class extends Event<Events.MentionPrefixOnly> {
 	}
 
 	public async run(message: Message) {
-		const prefix = await this.client.fetchPrefix(message);
+		const prefix = await this.context.client.fetchPrefix(message);
 		return message.channel.send(message.guild ? `My prefix in this server is set to: \`${prefix}\`` : "You don't have to use a prefix in Direct Messages.");
 	}
 

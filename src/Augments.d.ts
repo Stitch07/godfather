@@ -2,6 +2,7 @@ import { Branding } from '@lib/util/utils';
 import Game, { GameSettings } from '@mafia/Game';
 import Player from '@mafia/Player';
 import SetupStore from '@mafia/SetupStore';
+import { Piece } from '@sapphire/framework';
 import { Collection, Guild, User } from 'discord.js';
 import GuildSettingsEntity from './lib/orm/entities/GuildSettings';
 import SlashCommandStore from './lib/structures/SlashCommandStore';
@@ -51,6 +52,7 @@ declare module '@sapphire/framework' {
 		player: Player;
 		gameSetting: keyof GameSettings;
 		duration: number;
+		piece: Piece;
 	}
 }
 

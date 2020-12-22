@@ -1,4 +1,4 @@
-import { BasePiece, ok, Result } from '@sapphire/framework';
+import { Piece, ok, Result } from '@sapphire/framework';
 import { PieceContext, PieceOptions } from '@sapphire/pieces';
 import { mergeDefault, Constructor } from '@sapphire/utilities';
 import Role from './Role';
@@ -16,7 +16,7 @@ export const DEFAULT_SETUP_OPTIONS = {
 	roles: [] as string[]
 };
 
-export default abstract class Setup extends BasePiece {
+export default abstract class Setup extends Piece {
 
 	public roles: string[];
 	public nightStart: boolean;

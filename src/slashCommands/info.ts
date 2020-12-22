@@ -14,7 +14,7 @@ export class PlayerlistSlashCommand extends SlashCommand {
 	}
 
 	public async run(interaction: any) {
-		const channel = this.client.channels.cache.get(interaction.channel_id) as TextChannel;
+		const channel = this.context.client.channels.cache.get(interaction.channel_id) as TextChannel;
 		await this.reply(interaction, channel.game!.players.show());
 	}
 
@@ -31,8 +31,8 @@ export class VotecountSlashCommand extends SlashCommand {
 	}
 
 	public async run(interaction: any) {
-		const channel = this.client.channels.cache.get(interaction.channel_id) as TextChannel;
-		await this.reply(interaction, channel.game!.votes.show({ }));
+		const channel = this.context.client.channels.cache.get(interaction.channel_id) as TextChannel;
+		await this.reply(interaction, channel.game!.votes.show({}));
 	}
 
 }
@@ -48,8 +48,8 @@ export class RemainingSlashCommand extends SlashCommand {
 	}
 
 	public async run(interaction: any) {
-		const channel = this.client.channels.cache.get(interaction.channel_id) as TextChannel;
-		const command = this.client.commands.get('remaining')! as RemainingCommand;
+		const channel = this.context.client.channels.cache.get(interaction.channel_id) as TextChannel;
+		const command = this.context.client.commands.get('remaining')! as RemainingCommand;
 		await this.reply(interaction, command.getOutput(channel.game!));
 	}
 
