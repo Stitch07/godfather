@@ -26,8 +26,8 @@ export default class extends GodfatherCommand {
 		let setupData = await args.rest('string')
 			.catch(() => { throw 'Missing required argument: setup data/name'; });
 
-		if (this.client.setups.has(setupData)) {
-			game.setup = this.client.setups.get(setupData);
+		if (this.context.client.setups.has(setupData)) {
+			game.setup = this.context.client.setups.get(setupData);
 		} else {
 			const setup = BasicSetup.create(this.clean(setupData));
 			const check = setup.ok(setup.generate());

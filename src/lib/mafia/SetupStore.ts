@@ -1,11 +1,10 @@
-import { BaseStore, SapphireClient } from '@sapphire/framework';
+import { Store } from '@sapphire/framework';
 import Setup from './Setup';
 
-export default class SetupStore extends BaseStore<Setup> {
+export default class SetupStore extends Store<Setup> {
 
-	public constructor(client: SapphireClient) {
-		// @ts-ignore we cannot pass abstract classes as ctors
-		super(client, Setup, { name: 'setups' });
+	public constructor() {
+		super(Setup as any, { name: 'setups' });
 	}
 
 }

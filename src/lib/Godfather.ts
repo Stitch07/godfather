@@ -34,10 +34,10 @@ export default class Godfather extends SapphireClient {
 			}
 		});
 
-		this.setups = new SetupStore(this);
+		this.setups = new SetupStore();
 		this.registerStore(this.setups);
 
-		this.slashCommands = new SlashCommandStore(this);
+		this.slashCommands = new SlashCommandStore();
 		this.registerStore(this.slashCommands);
 
 		this.fetchPrefix = async (message: Message) => {

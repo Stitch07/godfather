@@ -43,7 +43,7 @@ export default class extends GodfatherCommand {
 			}
 
 			const embed = new MessageEmbed()
-				.setAuthor('Roles', this.client.user!.displayAvatarURL())
+				.setAuthor('Roles', this.context.client.user!.displayAvatarURL())
 				.setColor(Branding.PrimaryColor)
 				.setFooter(`For more information on a specific role, use ${context.prefix}roleinfo <role>.`)
 				.setDescription(description.join('\n'));
@@ -57,7 +57,7 @@ export default class extends GodfatherCommand {
 		if (!docEntry) throw `No documentation for ${role.name} available`;
 
 		const embed = new MessageEmbed()
-			.setAuthor(`${role.name} ${role.faction.name === role.name ? '' : `(${role.faction.name})`}`, this.client.user!.displayAvatarURL())
+			.setAuthor(`${role.name} ${role.faction.name === role.name ? '' : `(${role.faction.name})`}`, this.context.client.user!.displayAvatarURL())
 			.setColor(Branding.PrimaryColor)
 			.setDescription(codeBlock('diff', docEntry.detailedDescription.join('\n')))
 			// @ts-ignore s t a t i c

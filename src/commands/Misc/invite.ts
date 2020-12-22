@@ -17,9 +17,9 @@ export default class extends GodfatherCommand {
 	private buildEmbed() {
 		return new MessageEmbed()
 			.setColor(Branding.PrimaryColor)
-			.setAuthor(this.client.user!.username, this.client.user!.displayAvatarURL({ format: 'png' }))
+			.setAuthor(this.context.client.user!.username, this.context.client.user!.displayAvatarURL({ format: 'png' }))
 			.setDescription([
-				`[Invite](${this.client.invite}) | [Support Server](${SUPPORT_SERVER})`
+				`[Invite](${this.context.client.invite}) | [Support Server](${SUPPORT_SERVER})`
 			].filter(line => line !== null).join('\n'));
 	}
 

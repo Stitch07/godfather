@@ -316,7 +316,7 @@ export default class Game {
 		if (this.canOverwritePermissions && this.hasStarted) {
 			for (const userID of this.permissionOverwrites) {
 				const overwrite = this.channel.permissionOverwrites.find(permission => permission.type === 'member' && permission.id === userID);
-				if (overwrite) await overwrite.update({ SEND_MESSAGES: true, ADD_REACTIONS: true });
+				if (overwrite) await overwrite.delete();
 			}
 		}
 

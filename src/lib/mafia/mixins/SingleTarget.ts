@@ -91,7 +91,7 @@ class SingleTarget extends Role {
 					actor: this.player,
 					target,
 					priority: this.priority,
-					flags: this.flags
+					flags: this.flags ?? DEFAULT_ACTION_FLAGS
 				});
 			}
 		}

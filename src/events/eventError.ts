@@ -7,7 +7,7 @@ export default class extends Event<Events.EventError> {
 	}
 
 	public run(error: unknown) {
-		this.client.logger.error(error);
+		this.context.client.logger.error(error);
 	}
 
 }

@@ -22,11 +22,11 @@ export default class extends GodfatherCommand {
 		if (!game!.setup && setupName === '') {
 			// attempt to find a setup
 			// TODO: prompt for multiple setups here
-			const foundSetup = this.client.setups.find(setup => setup.totalPlayers === game?.players.length);
+			const foundSetup = this.context.client.setups.find(setup => setup.totalPlayers === game?.players.length);
 			if (!foundSetup) throw `No setups found for ${game!.players.length} players.`;
 			game!.setup = foundSetup!;
 		} else if (setupName !== '') {
-			const foundSetup = this.client.setups.find(setup => setup.name === setupName.toLowerCase());
+			const foundSetup = this.context.client.setups.find(setup => setup.name === setupName.toLowerCase());
 			if (!foundSetup) throw `Invalid setup-name: "${foundSetup}"`;
 			game!.setup = foundSetup;
 		}

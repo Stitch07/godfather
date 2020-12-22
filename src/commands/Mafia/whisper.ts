@@ -13,7 +13,7 @@ import { Message } from 'discord.js';
 export default class extends GodfatherCommand {
 
 	public async run(message: Message, args: Args) {
-		const game = this.client.games.find(game => Boolean(game.players.get(message.author)));
+		const game = this.context.client.games.find(game => Boolean(game.players.get(message.author)));
 		if (!game) throw "You aren't in any active games!";
 
 		if (game.settings.disableWhispers) throw 'Whispering is disabled in this game.';

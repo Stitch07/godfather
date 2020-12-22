@@ -17,12 +17,12 @@ export default class extends GodfatherCommand {
 	}
 
 	private async buildEmbed(message: Message) {
-		const prefix = await this.client.fetchPrefix(message);
+		const prefix = await this.context.client.fetchPrefix(message);
 		const { generalStatistics, serverStatistics } = this;
 		return new MessageEmbed()
 			.setColor(Branding.PrimaryColor)
-			.setAuthor(this.client.user!.username, this.client.user!.displayAvatarURL({ format: 'png' }))
-			.setDescription(`To add ${this.client.user!.username} to your server, use the \`${Array.isArray(prefix) ? prefix[0] : prefix}invite\` command.`)
+			.setAuthor(this.context.client.user!.username, this.context.client.user!.displayAvatarURL({ format: 'png' }))
+			.setDescription(`To add ${this.context.client.user!.username} to your server, use the \`${Array.isArray(prefix) ? prefix[0] : prefix}invite\` command.`)
 			.addField('Connected To', [
 				`**Servers**: ${generalStatistics.guilds}`,
 				`**Users**: ${generalStatistics.members}`,
@@ -31,16 +31,16 @@ export default class extends GodfatherCommand {
 			.addField('Server Stats', [
 				`**CPU Load**: ${serverStatistics.cpuLoad.map(load => `${load}%`).join(' | ')}`,
 				`**RAM Used**: ${serverStatistics.ramUsed} (Total: ${serverStatistics.ramTotal})`,
-				`**Uptime**: ${format(this.client.uptime ?? 0)}`
+				`**Uptime**: ${format(this.context.client.uptime ?? 0)}`
 			].join('\n'), true);
 	}
 
 	private get generalStatistics() {
 		return {
-			guilds: this.client.guilds.cache.size.toLocaleString('en-US'),
+			guilds: this.context.client.guilds.cache.size.toLocaleString('en-US'),
 			// eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-			members: this.client.guilds.cache.reduce((a, b) => b.memberCount + a, 0).toLocaleString('en-US'),
-			channels: this.client.channels.cache.size.toLocaleString('en-US')
+			members: this.context.client.guilds.cache.reduce((a, b) => b.memberCount + a, 0).toLocaleString('en-US'),
+			channels: this.context.client.channels.cache.size.toLocaleString('en-US')
 		};
 	}
 
