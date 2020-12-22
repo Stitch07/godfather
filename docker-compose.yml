@@ -1,0 +1,29 @@
+version: '3.7'
+services:
+  bot:
+    container_name: bot
+    image: godfather:alpha
+    restart: always
+    ports:
+      - '4000:8080'
+    build:
+      context:
+        .
+    depends_on:
+      - postgres
+  postgres:
+    container_name: pgsql
+    image: postgres
+    restart: always
+    ports:
+      - '5431:5432'
+    environment:
+      - POSTGRES_DB=godfather
+      - POSTGRES_PASSWORD=godfather
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+volumes:
+  postgres-data:
+    external: true
+
