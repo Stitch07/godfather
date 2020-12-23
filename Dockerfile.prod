@@ -23,7 +23,7 @@ ENV NODE_ENV=production
 
 COPY package.json ./
 COPY yarn.lock ./
-COPY yarn.lock ./
+COPY ormconfig.js ./
 
 RUN yarn install --frozen-lockfile --link-duplicates
 
