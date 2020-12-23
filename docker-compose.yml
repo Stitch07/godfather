@@ -1,29 +1,30 @@
-version: '3.7'
+version: "3.7"
 services:
-  bot:
-    container_name: bot
-    image: godfather:alpha
-    restart: always
-    ports:
-      - '4000:8080'
-    build:
-      context:
-        .
-    depends_on:
-      - postgres
-  postgres:
-    container_name: pgsql
-    image: postgres
-    restart: always
-    ports:
-      - '5431:5432'
-    environment:
-      - POSTGRES_DB=godfather
-      - POSTGRES_PASSWORD=godfather
-    volumes:
-      - postgres-data:/var/lib/postgresql/data
+    bot:
+        image: godfather:alpha
+        build:
+            context: .
+            dockerfile: Dockerfile
+        command: "docker:watch"
+        env_file: .env
+        ports:
+            - "4000:8080"
+        depends_on:
+            - postgres
+        volumes:
+            - ./:/usr/src/app
+    postgres:
+        image: postgres
+        env_file: .env
+        ports:
+            - "$PGSQL_DATABASE_EXPOSED_PORT:5432"
+        environment:
+            - POSTGRES_DB=godfather
+            - "POSTGRES_USER=$PGSQL_DATABASE_USER"
+            - "POSTGRES_PASSWORD=$PGSQL_DATABASE_PASSWORD"
+        volumes:
+            - postgres-data:/var/lib/postgresql/data
 
 volumes:
-  postgres-data:
-    external: true
-
+    postgres-data:
+        external: true

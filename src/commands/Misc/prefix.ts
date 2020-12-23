@@ -4,7 +4,6 @@ import { Args, CommandOptions } from '@sapphire/framework';
 import { ApplyOptions } from '@sapphire/decorators';
 import { Message } from 'discord.js';
 import { getCustomRepository } from 'typeorm';
-import { PGSQL_ENABLED } from '@root/config';
 
 @ApplyOptions<CommandOptions>({
 	description: 'View and change the server prefix.',
@@ -23,12 +22,6 @@ export default class extends GodfatherCommand {
 		guildSettings.prefix = newPrefix.value;
 		await getCustomRepository(GuildSettingRepository).updateSettings(this.context.client, guildSettings);
 		return message.channel.send(`Successfully updated this server's prefix to: \`${newPrefix.value}\``);
-	}
-
-	public async onLoad() {
-		if (!PGSQL_ENABLED) {
-			await this.unload();
-		}
 	}
 
 }

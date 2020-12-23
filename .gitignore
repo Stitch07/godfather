@@ -5,3 +5,5 @@ error.log
 combined.log
 yarn-error.log
 src/setups/test/
+
+.env
