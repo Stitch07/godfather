@@ -1072,18 +1072,20 @@
   resolved "https://registry.yarnpkg.com/@sapphire/decorators/-/decorators-1.1.0.tgz#0b831f4747cea25b766abed67c2a35284d06ff8a"
   integrity sha512-IKFSfvfEWpU2PrncPRuJaFDUw/BnWolwMY1USScBkxTWwRshlUwd2QV7l8L7XiRaH3UuEvzD3HsvSjqaFmA5Ug==
 
-"@sapphire/framework@sapphire-project/framework#build":
-  version "0.0.1"
-  resolved "https://codeload.github.com/sapphire-project/framework/tar.gz/4202ebea8d93b084bf6950cd15e68e3b54717a8c"
+"@sapphire/framework@^1.0.0-alpha.0":
+  version "1.0.0-alpha.0"
+  resolved "https://registry.yarnpkg.com/@sapphire/framework/-/framework-1.0.0-alpha.0.tgz#4cea3ed3bd19cb9ef3f98be4b0f6122943f78274"
+  integrity sha512-x54Q165V9DnK+iUJNAoPKcaILhOV8aJmXfI6L3vfY9u2wdl5BkcsTOq+yKtyAniK/sGkOwNAF0l6xFq/MBjmdw==
   dependencies:
-    "@sapphire/pieces" "github:sapphire-project/pieces#build"
+    "@sapphire/pieces" "^1.0.0"
     "@sapphire/ratelimits" "^1.1.1"
     "@sapphire/utilities" "^1.2.0"
     lexure "^0.17.0"
 
-"@sapphire/pieces@github:sapphire-project/pieces#build":
+"@sapphire/pieces@^1.0.0":
   version "1.0.0"
-  resolved "https://codeload.github.com/sapphire-project/pieces/tar.gz/6857ecd79463cd05355d6395c2375d470cfa717b"
+  resolved "https://registry.yarnpkg.com/@sapphire/pieces/-/pieces-1.0.0.tgz#b3c775f33f524f07d7275ea250b11a09ad3cc459"
+  integrity sha512-zsdLFLbuUbcT2Qz1HMkbQLbuRsXXFfQmf2U/SLtw7wmwhn+dC9z3/sPzwG2tRBwALNydFCFF3hBrlk2gW9g52w==
   dependencies:
     "@discordjs/collection" "^0.1.6"
 
