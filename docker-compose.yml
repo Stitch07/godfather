@@ -1,6 +1,7 @@
 version: "3.7"
 services:
     bot:
+        image: godfather:alpha
         build:
             context: .
             dockerfile: Dockerfile
