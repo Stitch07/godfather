@@ -11,10 +11,15 @@
 		"build": "tsc -p src",
 		"dev": "yarn build && node .",
 		"clean": "rimraf dist",
-		"watch": "tsc -b src -w",
+		"watch": "tsc-watch -b src --onSuccess \"node .\"",
+		"predocker:watch": "yarn",
+		"docker:watch": "yarn watch",
 		"lint": "eslint src --ext ts --fix",
 		"test": "jest",
-		"typeorm": "node -r module-alias/register ./node_modules/typeorm/cli.js"
+		"typeorm": "node -r module-alias/register ./node_modules/typeorm/cli.js",
+		"predev:typeorm": "yarn build",
+		"dev:typeorm": "yarn typeorm",
+		"start": "node dist/"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.11.0",
@@ -34,6 +39,7 @@
 		"rimraf": "^3.0.2",
 		"ts-jest": "^26.1.4",
 		"ts-node": "^9.1.1",
+		"tsc-watch": "^4.2.9",
 		"typescript": "^3.9.7"
 	},
 	"dependencies": {

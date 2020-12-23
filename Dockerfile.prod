@@ -1,0 +1,33 @@
+# Build image
+FROM node:14-alpine as BUILDER
+
+WORKDIR /usr/src/app
+
+COPY package.json ./
+COPY yarn.lock ./
+
+RUN yarn install --frozen-lockfile --link-duplicates
+
+COPY . ./
+
+RUN yarn build
+
+
+
+# Production image
+FROM node:14-alpine
+
+WORKDIR /usr/src/app
+
+ENV NODE_ENV=production
+
+COPY package.json ./
+COPY yarn.lock ./
+COPY yarn.lock ./
+
+RUN yarn install --frozen-lockfile --link-duplicates
+
+COPY --from=BUILDER /usr/src/app/dist/ dist/
+
+ENTRYPOINT [ "yarn" ]
+
