@@ -1089,6 +1089,14 @@
   dependencies:
     "@discordjs/collection" "^0.1.6"
 
+"@sapphire/plugin-logger@1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@sapphire/plugin-logger/-/plugin-logger-1.0.2.tgz#63b9b144b34bd154e808117604d16d63f127c534"
+  integrity sha512-W06szZ9xLTM4682q3VSzOB+Py7IzxJxT24CqnlfqWkamN0HNCf1nHsu+UEqlGzsJMYHRrR1T+Qz+G3YQ9S66LQ==
+  dependencies:
+    "@sapphire/time-utilities" "^1.2.1"
+    colorette "^1.2.1"
+
 "@sapphire/ratelimits@^1.1.1":
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/@sapphire/ratelimits/-/ratelimits-1.1.1.tgz#0e9a0f6b8fa1a4e3d1c909435f964b4755f04dbe"
@@ -1098,7 +1106,7 @@
   version "1.1.1"
   resolved "https://codeload.github.com/sapphire-project/utilities/tar.gz/f36b8f1dde09c2ca269a98cfce8daaae80814997"
 
-"@sapphire/time-utilities@^1.1.0":
+"@sapphire/time-utilities@^1.1.0", "@sapphire/time-utilities@^1.2.1":
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/@sapphire/time-utilities/-/time-utilities-1.2.1.tgz#6ffa9af8256a9c193c2a9dd0932a75165497fb9c"
   integrity sha512-EG0Vc5AwMZsIVZmFUJYphEpq0ldFHRRqmy0RqJJeVWr8nviJ2bcvOmZ+TmIYXbvU9R9giTbl9C6z0F++9JAeeA==

@@ -34,7 +34,8 @@ export const STALEMATE_PRIORITY_ORDER = [
 	'Transporter',
 	'Godfather',
 	'Serial Killer',
-	'Arsonist'
+	'Arsonist',
+	'Juggernaut'
 ];
 
 export const GUILD_SETTINGS_METADATA: SettingsEntry<keyof ArgType>[] = [

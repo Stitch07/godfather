@@ -17,7 +17,7 @@ services:
         image: postgres
         env_file: .env
         ports:
-            - "$PGSQL_DATABASE_EXPOSED_PORT:5432"
+            - "$PGSQL_DATABASE_EXPOSED_PORT:$PGSQL_DATABASE_PORT"
         environment:
             - POSTGRES_DB=godfather
             - "POSTGRES_USER=$PGSQL_DATABASE_USER"

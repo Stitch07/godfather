@@ -45,6 +45,7 @@
 	"dependencies": {
 		"@sapphire/decorators": "^1.0.1",
 		"@sapphire/framework": "^1.0.0-alpha.0",
+		"@sapphire/plugin-logger": "1.0.2",
 		"@sapphire/ratelimits": "sapphire-project/utilities#build-ratelimits",
 		"@sapphire/time-utilities": "^1.1.0",
 		"@sapphire/type": "^1.0.1",

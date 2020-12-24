@@ -40,7 +40,7 @@ export default class Amnesiac extends SingleTarget {
 	}
 
 	public canUseAction() {
-		const validTargets = this.game.players.filter(this.canTarget.bind(this));
+		const validTargets = this.game.players.filter(player => this.canTarget(player).check);
 		if (validTargets.length === 0) return { check: false, reason: 'There are no valid targets.' };
 		return { check: true, reason: '' };
 	}

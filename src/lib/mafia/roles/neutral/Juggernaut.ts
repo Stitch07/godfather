@@ -16,6 +16,11 @@ class Juggernaut extends Killer {
 	// level 1 lets them attack every night, level 2 lets them rampage, ands level 3 gives them a unstoppable attack
 	public level = 0;
 
+	public constructor(player: Player, { level }: { level?: number } = { level: 0 }) {
+		super(player);
+		this.level = level ?? 0;
+	}
+
 	public get defense() {
 		return Defense.Basic;
 	}

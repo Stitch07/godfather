@@ -7,10 +7,11 @@ import SetupStore from '@mafia/SetupStore';
 import { Branding } from './util/utils';
 import { PGSQL_ENABLED, PREFIX, PRODUCTION } from '@root/config';
 import GuildSettingRepository from './orm/repositories/GuildSettingRepository';
-import Logger from './Logger';
 import GuildSettingsEntity from './orm/entities/GuildSettings';
 import { getCustomRepository } from 'typeorm';
 import SlashCommandStore from './structures/SlashCommandStore';
+
+import '@sapphire/plugin-logger/register';
 
 export default class Godfather extends SapphireClient {
 
@@ -26,7 +27,6 @@ export default class Godfather extends SapphireClient {
 		super({
 			caseInsensitiveCommands: true,
 			logger: {
-				instance: new Logger(),
 				level: PRODUCTION ? LogLevel.Info : LogLevel.Trace
 			},
 			ws: {
