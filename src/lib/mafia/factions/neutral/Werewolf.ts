@@ -1,7 +1,7 @@
 import Faction from '@mafia/Faction';
 import Game from '@mafia/Game';
 
-const SUPPORTING_FACTIONS = ['Werewolf', 'Witch', 'Survivor', 'Juggernaut'];
+const SUPPORTING_FACTIONS = ['Werewolf', 'Witch', 'Survivor'];
 
 export default class WerewolfFaction extends Faction {
 
