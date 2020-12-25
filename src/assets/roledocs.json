@@ -371,7 +371,7 @@
 			"",
 			"Cop results: Your target is innocent.",
 			"Investigator results: Your target could be a Bodyguard, Godfather, or Arsonist.",
-			"Attack: Basic | Defense: None"
+			"Attack: Basic | Defense: Basic"
 		]
 	},
 	{
@@ -545,7 +545,7 @@
 			"",
 			"Cop results: Your target is innocent.",
 			"Investigator results: Your target could be a Survivor, Amnesiac, or Guardian Angel.",
-			"Attack: None | Defense: None"
+			"Attack: None | Defense: Basic"
 		]
 	},
 	{
