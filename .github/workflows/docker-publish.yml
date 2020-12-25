@@ -9,6 +9,11 @@ jobs:
     steps:
       - name: Check out the repo
         uses: actions/checkout@v2
+      - name: Create src/config.ts
+        run: |
+          pushd src &&
+          cp config.example.ts config.ts &&
+          popd
       - name: Push to Docker Hub
         uses: docker/build-push-action@v1
         with:
