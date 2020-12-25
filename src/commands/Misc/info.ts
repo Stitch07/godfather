@@ -10,7 +10,7 @@ export default class extends GodfatherCommand {
 
 	public async run(message: Message, args: Args, context: CommandContext) {
 		const messageText = [
-			`Godfather v${this.client.version} is a Discord Bot that hosts games of Werewolf/Mafia, with 24/7 uptime and intuitive commands.`,
+			`Godfather v${this.context.client.version} is a Discord Bot that hosts games of Werewolf/Mafia, with 24/7 uptime and intuitive commands.`,
 			' ',
 			'**Godfather features:**',
 			'• Automatically hosted games of Mafia, with over 30 roles and different factions.',

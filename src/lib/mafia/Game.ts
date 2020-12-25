@@ -6,7 +6,7 @@ import VoteManager from '@mafia/managers/VoteManager';
 import NightActionsManager from '@mafia/managers/NightActionsManager';
 import Setup from './Setup';
 
-import { Collection, TextChannel, User } from 'discord.js';
+import { Collection, GuildMember, TextChannel, User } from 'discord.js';
 import { codeBlock } from '@sapphire/utilities';
 // import GameEntity from '../orm/entities/Game';
 // import { getRepository } from 'typeorm';
@@ -14,7 +14,7 @@ import SingleTarget from './mixins/SingleTarget';
 // import { PGSQL_ENABLED } from '@root/config';
 import { format } from '@util/durationFormat';
 import { Time } from '@sapphire/time-utilities';
-import { fauxAlive, listItems } from '../util/utils';
+import { canManage, fauxAlive, listItems } from '../util/utils';
 import { ENABLE_PRIVATE_CHANNELS, PGSQL_ENABLED, PRIVATE_CHANNEL_SERVER } from '@root/config';
 import { getConnection, getRepository } from 'typeorm';
 import GameEntity from '../orm/entities/Game';
@@ -55,6 +55,11 @@ export default class Game {
 	 * The number of consecutive phases with zero kills
 	 */
 	public idlePhases = 0;
+	/**
+	 * A Set of players whose nicknames have been changed
+	 */
+	public numberedNicknames = new Set<GuildMember>();
+
 	public factionalChannels = new Collection<string, [TextChannel, string]>();
 	public constructor(host: User, public channel: TextChannel, public settings: GameSettings) {
 		this.client = channel.client as Godfather;
@@ -94,6 +99,16 @@ export default class Game {
 			return this.end({ ...winCheck, winningFaction: undefined });
 		}
 
+		if (this.channel.permissionsFor(this.client.user!)?.has(['MANAGE_CHANNELS', 'MANAGE_ROLES']) && this.settings.muteAtNight) {
+			for (const muted of this.players.filter(player => player.isAlive)) {
+				await this.channel.updateOverwrite(muted.user, {
+					SEND_MESSAGES: true,
+					ADD_REACTIONS: true
+				}).catch(() => null);
+				this.permissionOverwrites.push(muted.user.id);
+			}
+		}
+
 		// start voting phase
 		this.nightActions.reset();
 		this.phase = Phase.Day;
@@ -112,6 +127,8 @@ export default class Game {
 			}
 		}
 
+		if (this.channel.permissionsFor(this.client.user!)!.has('MANAGE_CHANNELS') && this.settings.adaptiveSlowmode) await this.updateAdaptiveSlowmode();
+
 		await this.channel.send([
 			`Day **${this.cycle}** will last ${format(this.settings.dayDuration)}`,
 			`With ${alivePlayers.length} alive, it takes ${this.majorityVotes} to lynch.`
@@ -129,12 +146,25 @@ export default class Game {
 			return this.end({ ...winCheck, winningFaction: undefined });
 		}
 
+		if (this.channel.permissionsFor(this.client.user!)?.has(['MANAGE_CHANNELS', 'MANAGE_ROLES']) && this.settings.muteAtNight) {
+			for (const player of this.players) {
+				await this.channel.updateOverwrite(player.user, {
+					SEND_MESSAGES: false,
+					ADD_REACTIONS: false
+				});
+				this.permissionOverwrites.push(player.user.id);
+			}
+		}
+
+		if (this.channel.permissionsFor(this.client.user!)!.has('MANAGE_CHANNELS') && this.settings.adaptiveSlowmode) await this.updateAdaptiveSlowmode();
+
 		this.phase = Phase.Standby;
 		this.votes.reset();
 		this.phaseEndAt = new Date(Date.now() + this.settings.nightDuration);
 		this.nightActions.protectedPlayers = [];
 
 		await this.channel.send(`Night **${this.cycle}** will last ${format(this.settings.nightDuration)}. Send in your actions quickly!`);
+		if (this.isFullMoon) await this.channel.send('Beware, tonight is a full moon 🌕');
 		for (const player of this.players.filter(player => fauxAlive(player) && player.role!.canUseAction().check && (player.role! as SingleTarget).actionPhase === Phase.Night)) {
 			await player.role!.onNight();
 		}
@@ -164,6 +194,7 @@ export default class Game {
 		}
 
 		if (this.phase === Phase.Standby) return;
+
 		if (this.phaseEndAt && Date.now() > this.phaseEndAt.getTime()) {
 			if (this.phase === Phase.Day) {
 				await this.channel.send('Nobody was lynched!');
@@ -181,6 +212,10 @@ export default class Game {
 
 	public get hasStarted(): boolean {
 		return this.phase !== Phase.Pregame;
+	}
+
+	public get isFullMoon(): boolean {
+		return this.cycle % 2 === 0;
 	}
 
 	public get majorityVotes(): number {
@@ -281,7 +316,7 @@ export default class Game {
 		if (this.canOverwritePermissions && this.hasStarted) {
 			for (const userID of this.permissionOverwrites) {
 				const overwrite = this.channel.permissionOverwrites.find(permission => permission.type === 'member' && permission.id === userID);
-				if (overwrite) await overwrite.update({ SEND_MESSAGES: true, ADD_REACTIONS: true });
+				if (overwrite) await overwrite.delete();
 			}
 		}
 
@@ -297,6 +332,20 @@ export default class Game {
 			}
 		}
 
+		// reset numbered nicknames
+		if (this.settings.numberedNicknames && this.channel.guild!.me?.hasPermission('MANAGE_NICKNAMES')) {
+			for (const member of this.numberedNicknames) {
+				// only reset a nickname if it's in the correct form
+				if (member.nickname && /\[\d+\] (.+)/.test(member.nickname)) {
+					const [, previousNickname] = /\[\d+\] (.+)/.exec(member.nickname)!;
+					if (this.channel.guild!.me && canManage(this.channel.guild!.me, member)) await member.setNickname(previousNickname).catch(() => null);
+				}
+			}
+		}
+
+		// reset adaptive slowmode
+		if (this.channel.permissionsFor(this.client.user!)!.has('MANAGE_CHANNELS') && this.settings.adaptiveSlowmode) await this.channel.setRateLimitPerUser(0);
+
 		for (const [factionalChannel] of this.factionalChannels.values()) {
 			await factionalChannel.delete();
 		}
@@ -305,13 +354,20 @@ export default class Game {
 	}
 
 	public get canOverwritePermissions() {
-		return this.settings.overwritePermissions && this.channel.permissionsFor(this.client.user!)?.has('MANAGE_CHANNELS');
+		return this.settings.overwritePermissions && this.channel.permissionsFor(this.client.user!)?.has(['MANAGE_CHANNELS', 'MANAGE_ROLES']);
 	}
 
 	public remaining(showIn = false) {
 		const remaining = this.phaseEndAt!.getTime() - Date.now();
 		if (remaining <= 0) return 'any time soon...';
 		return showIn ? `in ${format(remaining)}` : format(remaining);
+	}
+
+	public async updateAdaptiveSlowmode() {
+		const alivePlayers = this.players.filter(player => player.isAlive).length;
+		if (alivePlayers >= 12) await this.channel.setRateLimitPerUser(5);
+		else if (alivePlayers >= 6) await this.channel.setRateLimitPerUser(3);
+		else await this.channel.setRateLimitPerUser(0);
 	}
 
 }
@@ -322,6 +378,9 @@ export interface GameSettings {
 	overwritePermissions: boolean;
 	maxPlayers: number;
 	disableWhispers: boolean;
+	numberedNicknames: boolean;
+	muteAtNight: boolean;
+	adaptiveSlowmode: boolean;
 }
 
 export interface EndgameCheckData {

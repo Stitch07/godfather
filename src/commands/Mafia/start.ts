@@ -1,7 +1,7 @@
 import GodfatherCommand from '@lib/GodfatherCommand';
 import Player from '@mafia/Player';
 import { Phase } from '@root/lib/mafia/Game';
-import { listItems } from '@root/lib/util/utils';
+import { canManage, listItems } from '@root/lib/util/utils';
 import { ApplyOptions } from '@sapphire/decorators';
 import { Args, CommandContext, CommandOptions } from '@sapphire/framework';
 import { Message } from 'discord.js';
@@ -22,16 +22,29 @@ export default class extends GodfatherCommand {
 		if (!game!.setup && setupName === '') {
 			// attempt to find a setup
 			// TODO: prompt for multiple setups here
-			const foundSetup = this.client.setups.find(setup => setup.totalPlayers === game?.players.length);
+			const foundSetup = this.context.client.setups.find(setup => setup.totalPlayers === game?.players.length);
 			if (!foundSetup) throw `No setups found for ${game!.players.length} players.`;
 			game!.setup = foundSetup!;
 		} else if (setupName !== '') {
-			const foundSetup = this.client.setups.find(setup => setup.name === setupName.toLowerCase());
+			const foundSetup = this.context.client.setups.find(setup => setup.name === setupName.toLowerCase());
 			if (!foundSetup) throw `Invalid setup-name: "${foundSetup}"`;
 			game!.setup = foundSetup;
 		}
 
 		if (game!.setup!.totalPlayers !== game!.players.length) throw `The setup **${game!.setup!.name}** requires ${game!.setup!.totalPlayers} players.`;
+
+		if (game!.settings.numberedNicknames && message.guild!.me?.hasPermission('MANAGE_NICKNAMES')) {
+			for (const plr of game!.players) {
+				const member = await message.guild!.members.fetch(plr.user.id)!;
+				// eslint-disable-next-line @typescript-eslint/restrict-plus-operands
+				const pos = game!.players.indexOf(plr) + 1;
+				if (message.guild!.me && canManage(message.guild!.me, member)) {
+					await member.setNickname(`[${pos}] ${member!.displayName}`)
+						.then(() => game!.numberedNicknames.add(member))
+						.catch(() => null);
+				}
+			}
+		}
 
 		const sent = await message.channel.send(`Chose the setup **${game!.setup!.name}**. Randomizing roles...`);
 		game!.phase = Phase.Standby;

@@ -2,6 +2,7 @@ import SurivorFaction from '@mafia/factions/neutral/Survivor';
 import { Defense, NightActionPriority } from '@mafia/managers/NightActionsManager';
 import NoTarget from '@mafia/mixins/NoTarget';
 import Player from '@mafia/Player';
+import { pluralize } from '@util/utils';
 
 export default class Survivor extends NoTarget {
 
@@ -25,7 +26,7 @@ export default class Survivor extends NoTarget {
 		if (typeof context.vests === 'number') this.vests = context.vests;
 		else this.vests = this.getInitialVests();
 
-		this.description = `You may vest ${this.vests} time${this.vests === 1 ? '' : 's'} in a game.`;
+		this.description = `You may vest ${pluralize(this.vests, 'time')} in a game.`;
 	}
 
 	public canUseAction() {
@@ -51,7 +52,7 @@ export default class Survivor extends NoTarget {
 	}
 
 	public get extraNightContext() {
-		if (this.vests > 0) return `You have ${this.vests} vest${this.vests === 1 ? '' : 's'} remaining.`;
+		if (this.vests > 0) return `You have ${pluralize(this.vests, 'vest')} remaining.`;
 		return null;
 	}
 

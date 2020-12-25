@@ -7,7 +7,7 @@ export default class extends Event {
 	}
 
 	public run(error: Error) {
-		if (error) this.client.logger.error('Uncaught Promise Error: ', error);
+		if (error) this.context.client.logger.error('Uncaught Promise Error: ', error);
 	}
 
 }

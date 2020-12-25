@@ -28,7 +28,7 @@ class Jester extends SingleTarget {
 	}
 
 	public tearDown(actions: NightActionsManager, target: Player) {
-		return target.user.send('You were haunted by a Jester. You have died!');
+		return target.queueMessage('You were haunted by a Jester!');
 	}
 
 	// @ts-ignore weird bug

@@ -1,11 +1,14 @@
-import { ApplyOptions } from '@sapphire/decorators';
+import { DEFAULT_GAME_SETTINGS } from '@lib/constants';
 import GodfatherCommand from '@lib/GodfatherCommand';
 import Game, { GameSettings } from '@mafia/Game';
-import { cast } from '@util/utils';
-import { Guild, Message, TextChannel } from 'discord.js';
-import { Args, CommandContext, CommandOptions } from '@sapphire/framework';
+import Player from '@mafia/Player';
 import { PGSQL_ENABLED } from '@root/config';
-import { DEFAULT_GAME_SETTINGS } from '@lib/constants';
+import { ApplyOptions } from '@sapphire/decorators';
+import { Args, CommandContext, CommandOptions } from '@sapphire/framework';
+import { debounce } from '@sapphire/utilities';
+import { Time } from '@sapphire/time-utilities';
+import { cast, listItems } from '@util/utils';
+import { Guild, Message, MessageReaction, TextChannel, User } from 'discord.js';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['c', 'creategame'],
@@ -19,18 +22,44 @@ import { DEFAULT_GAME_SETTINGS } from '@lib/constants';
 export default class extends GodfatherCommand {
 
 	public async run(message: Message, args: Args, context: CommandContext) {
-		if (this.client.games.has(message.channel.id)) {
+		if (this.context.client.games.has(message.channel.id)) {
 			throw 'A game of Mafia is already running in this channel.';
 		}
 		// prevent players from joining 2 games simultaneously
-		for (const otherGame of this.client.games.values()) {
+		for (const otherGame of this.context.client.games.values()) {
 			if (otherGame.players.get(message.author)) throw `You are already playing another game in ${otherGame.channel} (${otherGame.channel.guild.name})`;
 		}
 
 		const game = new Game(message.author, cast<TextChannel>(message.channel), await this.getSettings(message.guild!));
 		game.createdAt = new Date();
-		this.client.games.set(message.channel.id, game);
-		return message.channel.send(`Started a game of Mafia in <#${message.channel.id}> hosted by **${message.author.tag}**. Use ${context.prefix}join to join it.`);
+		this.context.client.games.set(message.channel.id, game);
+		const output = `Started a game of Mafia in <#${message.channel.id}> hosted by **${message.author.tag}**. Use ${context.prefix}join to join it.`;
+
+		const reactMessage = await message.channel.send(output);
+		// wait one minute for reactions to a message as a means of quickly joining it
+		await reactMessage.react('✅');
+		const playersAdded: User[] = [];
+
+		const collector = reactMessage.createReactionCollector((reaction: MessageReaction, user: User) => !user.bot && reaction.emoji.name === '✅' && !game.players.get(user), {
+			time: 45 * Time.Second
+		});
+
+		const debouncedFn = debounce(() => reactMessage.edit(`${output}\nAdded ${listItems(playersAdded.map(player => player.tag))}`), {
+			maxWait: Time.Second * 2,
+			wait: Time.Second
+		});
+
+		collector.on('collect', async (reaction, user) => {
+			if (game.players.get(user) || game.players.length === game.settings.maxPlayers || game.hasStarted) return;
+			game.players.push(new Player(user, game));
+			playersAdded.push(user);
+			// this needs a debounce
+			await debouncedFn();
+		});
+
+		collector.on('end', async () => {
+			await reactMessage.reactions.removeAll().catch(() => null);
+		});
 	}
 
 	private async getSettings(guild: Guild): Promise<GameSettings> {

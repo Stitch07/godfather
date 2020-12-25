@@ -20,14 +20,14 @@ class Cop extends SingleTarget {
 
 	// ensures that Dethy cops don't get PMed their real role
 	public get display(): string {
-		if (this.player.cleaned) return 'Cleaned';
+		if (this.player.cleaned && !this.player.isAlive) return 'Cleaned';
 		return 'Cop';
 	}
 
 	public async tearDown(actions: NightActionsManager, target: Player) {
 		let innocence = this.innocenceModifier(target.role.innocence);
 		if (actions.framedPlayers.includes(target)) innocence = !innocence;
-		await this.player.user.send(innocence ? 'Your target is innocent.' : 'Your target is suspicious.');
+		await this.player.queueMessage(innocence ? 'Your target is innocent.' : 'Your target is suspicious.');
 	}
 
 	public innocenceModifier(innocence: boolean) {

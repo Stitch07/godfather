@@ -13,7 +13,7 @@ export default class extends Event<Events.UnknownCommand> {
 		// actions are accepted in DMs only
 		if (message.guild) return;
 
-		const game = this.client.games.find(game => Boolean(game.players.get(message.author)));
+		const game = this.context.client.games.find(game => Boolean(game.players.get(message.author)));
 		if (!game) return;
 
 		const player = game.players.get(message.author)!;
@@ -23,10 +23,10 @@ export default class extends Event<Events.UnknownCommand> {
 		const prefixLess = message.content.slice(prefix.length);
 		const [commandText, ...parameters] = prefixLess.split(' ');
 		try {
-			await player.role!.onPmCommand(message, commandText, ...parameters);
+			await player.role!.onPmCommand(message, commandText.toLowerCase(), ...parameters);
 		} catch (error) {
 			if (typeof error === 'string') return message.channel.send(error);
-			this.client.logger.error(error);
+			this.context.client.logger.error(error);
 		}
 	}
 

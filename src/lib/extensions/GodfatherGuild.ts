@@ -10,4 +10,8 @@ export default class GodfatherGuild extends Guild {
 		return guildSettings;
 	}
 
+	public async updateSettings(newSettings: GuildSettingsEntity) {
+		await getCustomRepository(GuildSettingRepository).updateSettings(this.client, newSettings);
+	}
+
 }

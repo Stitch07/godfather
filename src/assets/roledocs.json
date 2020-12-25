@@ -368,6 +368,12 @@
         ]
     },
     {
+        "name":"Juggernaut",
+        "detailedDescription": [
+            "test"
+        ]
+    },
+    {
         "name":"Serial Killer",
         "detailedDescription": [
             "An insane person who wants everyone to die.",

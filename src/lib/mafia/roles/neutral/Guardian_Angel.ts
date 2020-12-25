@@ -1,9 +1,9 @@
-import NoTarget from '@mafia/mixins/NoTarget';
 import GuardianAngelFaction from '@mafia/factions/neutral/GuardianAngel';
-import Player from '@mafia/Player';
-import { randomArray, remove } from '@root/lib/util/utils';
-import { allRoles } from '..';
 import NightActionsManager, { Attack, NightActionPriority } from '@mafia/managers/NightActionsManager';
+import NoTarget from '@mafia/mixins/NoTarget';
+import Player from '@mafia/Player';
+import { pluralize, randomArray, remove } from '@util/utils';
+import { allRoles } from '..';
 
 class Guardian_Angel extends NoTarget {
 
@@ -22,7 +22,7 @@ class Guardian_Angel extends NoTarget {
 		if (typeof context.protects === 'number') this.protects = context.protects;
 		else this.protects = this.getInitialProtects();
 
-		this.description = `Your only goal is to keep your target alive. You may heal and purge your target ${this.protects} time${this.protects === 1 ? '' : 's'}. This may be done after you die.`;
+		this.description = `Your only goal is to keep your target alive. You may heal and purge your target ${pluralize(this.protects, 'time')}. This may be done after you die.`;
 	}
 
 	public async init() {
@@ -79,7 +79,7 @@ class Guardian_Angel extends NoTarget {
 				playerRecord.set('heal', heals);
 
 				actions.record.set(this.target.user.id, playerRecord);
-				this.player.user.send('Your target was attacked.');
+				this.player.queueMessage('Your target was attacked.');
 			}
 		}
 
@@ -87,18 +87,18 @@ class Guardian_Angel extends NoTarget {
 		return this.protects--;
 	}
 
-	public async tearDown(actions: NightActionsManager) {
+	public tearDown(actions: NightActionsManager) {
 		const record = actions.record.get(this.target.user.id).get('heal');
 		const success = record.result && record.by.includes(this.player);
 
 		if (success) {
-			await this.target.user.send('You were attacked but your Guardian Angel saved you!');
+			this.target.queueMessage('You were attacked but your Guardian Angel saved you!');
 		}
-		await this.game.channel.send(`A Guardian Angel has protected ${this.target.user.username}!`);
+		return this.game.channel.send(`A Guardian Angel has protected ${this.target.user.username}!`);
 	}
 
 	public get extraNightContext() {
-		if (this.protects > 0) return `You can protect your target ${this.protects} more time${this.protects === 1 ? '' : 's'}.`;
+		if (this.protects > 0) return `You have ${pluralize(this.protects, 'protect')} left.`;
 		return null;
 	}
 

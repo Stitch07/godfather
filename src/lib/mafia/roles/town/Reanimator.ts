@@ -5,7 +5,7 @@ import Player from '@mafia/Player';
 import { Phase } from '../../Game';
 import SingleTarget from '../../mixins/SingleTarget';
 
-const INVALID_ROLES = ['Transporter', 'Reanimator'];
+const INVALID_ROLES = ['Transporter', 'Reanimator', 'Veteran'];
 
 class Reanimator extends DoubleTarget {
 

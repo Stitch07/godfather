@@ -9,11 +9,15 @@ import { Message } from 'discord.js';
 	description: 'Shows when the current day/night ends.',
 	preconditions: ['GameOnly', { entry: 'Cooldown', context: { bucketType: BucketType.Channel, delay: Time.Second * 5 } }]
 })
-export default class extends GodfatherCommand {
+export default class RemainingCommand extends GodfatherCommand {
 
 	public async run(message: Message) {
 		const { game } = message.channel;
-		return message.channel.send(`${this.getFullPhase(game!)} ends in ${game!.remaining()}`);
+		return message.channel.send(this.getOutput(game!));
+	}
+
+	public getOutput(game: Game) {
+		return `${this.getFullPhase(game)} ends in ${game.remaining()}`;
 	}
 
 	private getFullPhase(game: Game) {

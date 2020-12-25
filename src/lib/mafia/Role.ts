@@ -6,7 +6,7 @@ import { Defense } from './managers/NightActionsManager';
 import { allRoles } from './roles';
 import type Executioner from './roles/neutral/Executioner';
 
-const INNOCENT_FACTIONS = ['Town', 'Survivor', 'Jester', 'Amnesiac', 'Guardian Angel'];
+const INNOCENT_FACTIONS = ['Town', 'Survivor', 'Jester', 'Amnesiac', 'Guardian Angel', 'Juggernaut', 'Godfather', 'Executioner'];
 
 export interface CanUseActionData {
 	check: boolean;
@@ -21,7 +21,7 @@ abstract class Role {
 	}
 
 	public get display(): string {
-		if (this.player.cleaned) return 'Cleaned';
+		if (this.player.cleaned && !this.player.isAlive) return 'Cleaned';
 		return this.name;
 	}
 

@@ -15,7 +15,7 @@ export default class NightActionsManager extends Array<NightAction> {
 
 	public async addAction(action: NightAction) {
 		const possibleActions = this.game.players.filter(player => fauxAlive(player) && player.role.canUseAction().check && Reflect.get(player.role, 'actionPhase') === Phase.Night);
-		if (action.actor.role.name === 'Reanimator') {
+		if (action.actor.role.name === 'Reanimator' && action.target) {
 			const { priority } = (action.target as Player[])[0].role as SingleTarget;
 			action.priority = priority;
 		}
@@ -68,10 +68,17 @@ export default class NightActionsManager extends Array<NightAction> {
 				const deadPlayer = this.game.players.find(player => player.user.id === playerID);
 				if (deadPlayer) {
 					deadPlayer.kill(`killed N${this.game.cycle}`);
+					deadPlayer.queueMessage('You have died!');
 					deadPlayers.push(deadPlayer!);
 				}
 			}
 		}
+
+		// flush all message queues
+		for (const player of this.game.players) {
+			await player.flushQueue();
+		}
+
 		return deadPlayers;
 	}
 
@@ -158,6 +165,7 @@ export enum NightActionPriority {
 	// investigative roles usually only rely on tearDown, so they can safely go last
 	COP = 6,
 	LOOKOUT = 6,
+	INVEST = 6,
 	CONSIG = 6,
 	TRACKER = 6,
 	NEOPOLITAN = 6,

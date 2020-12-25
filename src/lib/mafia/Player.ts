@@ -18,6 +18,7 @@ export default class Player {
 	};
 
 	private _role!: Role;
+	private messageQueue: string[] = [];
 	public constructor(public user: User, public game: Game) {
 	}
 
@@ -57,6 +58,16 @@ export default class Player {
 		await this.role!.onDeath();
 	}
 
+	public queueMessage(content: string) {
+		this.messageQueue.push(content);
+	}
+
+	public async flushQueue() {
+		if (this.messageQueue.length === 0) return;
+		await this.user.send(this.messageQueue.join('\n'));
+		this.messageQueue = [];
+	}
+
 	public async visit(visitor: Player) {
 		this.visitors.push(visitor);
 		await this.role.onVisit(visitor);
@@ -74,7 +85,7 @@ export default class Player {
 	}
 
 	public set role(role: Role) {
-		if (this.role) this.previousRoles.push(this.role);
+		if (this._role) this.previousRoles.push(this._role);
 		this._role = role;
 	}
 

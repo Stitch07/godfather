@@ -1,9 +1,10 @@
-import { Branding } from '@lib/util/utils';
 import Game, { GameSettings } from '@mafia/Game';
 import Player from '@mafia/Player';
 import SetupStore from '@mafia/SetupStore';
+import { Piece } from '@sapphire/framework';
 import { Collection, Guild, User } from 'discord.js';
 import GuildSettingsEntity from './lib/orm/entities/GuildSettings';
+import SlashCommandStore from './lib/structures/SlashCommandStore';
 
 interface ChannelExtendables {
 	readonly attachable: boolean;
@@ -17,13 +18,13 @@ interface ChannelExtendables {
 
 declare module 'discord.js' {
 	interface Client {
-		readonly release: Branding.Release;
 		readonly version: string;
 		readonly invite: string;
 		ownerID: string | undefined;
 		games: Collection<string, Game>;
 		setups: SetupStore;
 		settingsCache: Map<string, GuildSettingsEntity>;
+		slashCommands: SlashCommandStore;
 		eventLoop: NodeJS.Timeout;
 		fetchGuildPrefix(guild: Guild): Promise<string>;
 	}
@@ -40,6 +41,7 @@ declare module 'discord.js' {
 
 	interface Guild {
 		readSettings(): Promise<GuildSettingsEntity>;
+		updateSettings(newSettings: GuildSettingsEntity): Promise<void>;
 	}
 }
 
@@ -48,6 +50,7 @@ declare module '@sapphire/framework' {
 		player: Player;
 		gameSetting: keyof GameSettings;
 		duration: number;
+		piece: Piece;
 	}
 }
 

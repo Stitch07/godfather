@@ -61,7 +61,7 @@ export default class PlayerManager extends Array<Player> {
 	}
 
 	public show(options: PlayerManagerShowOptions = { codeblock: false, showReplacements: true }): string {
-		const playerList = options.codeblock ? [] : [`**Players: ${this.length}**`];
+		const playerList = options.codeblock ? [] : [this.game.hasStarted ? `**Players: ${this.filter(player => player.isAlive).length}/${this.length} alive**` : `**Players: ${this.length}**`];
 		for (const [n, player] of this.entries()) {
 			let playerName = '';
 			if (options.codeblock) {
@@ -98,6 +98,9 @@ export default class PlayerManager extends Array<Player> {
 
 		player.user = replacement;
 		await player.sendPM();
+
+		if (this.game.phase === Phase.Night && Reflect.get(player.role, 'actionPhase') === Phase.Night) await player.role.onNight();
+		else if (this.game.phase === Phase.Day && Reflect.get(player.role, 'actionPhase') === Phase.Day) await player.role.onDay();
 	}
 
 	private getPlayerFlags(player: Player) {

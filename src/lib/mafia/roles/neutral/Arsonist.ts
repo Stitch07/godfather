@@ -108,7 +108,7 @@ class Arsonist extends Role {
 			const record = actions.record.get(target.user.id).get('nightkill');
 			const success = record.result && record.by.includes(this.player);
 			if (success) {
-				await target.user.send('You were ignited by an Arsonist. You have died!');
+				await target.queueMessage('You were ignited by an Arsonist!');
 			}
 		}
 	}

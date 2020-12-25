@@ -14,6 +14,7 @@ class Doctor extends SingleTarget {
 	public hasSelfHealed = false;
 
 	public runAction(actions: NightActionsManager, target: Player) {
+		if (target === this.player) this.hasSelfHealed = true;
 		const playerRecord = actions.record.get(target.user.id);
 		if (!playerRecord.has('nightkill')) return;
 
@@ -29,8 +30,6 @@ class Doctor extends SingleTarget {
 			heals.by.push(this.player);
 			playerRecord.set('heal', heals);
 
-			if (target === this.player) this.hasSelfHealed = true;
-
 			actions.record.set(target.user.id, playerRecord);
 		}
 	}
@@ -40,7 +39,7 @@ class Doctor extends SingleTarget {
 		const success = record.result && record.by.includes(this.player);
 
 		if (success) {
-			return target.user.send('You were attacked but somebody nursed you back to health!');
+			return target.queueMessage('You were attacked but somebody nursed you back to health!');
 		}
 	}
 

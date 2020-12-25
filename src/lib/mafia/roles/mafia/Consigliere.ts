@@ -19,8 +19,8 @@ class Consigliere extends SingleTarget {
 
 	public priority = NightActionPriority.CONSIG;
 
-	public async tearDown(actions: NightActionsManager, target: Player) {
-		await this.player.user.send(`Your target's role is: ${target.role.display}`);
+	public tearDown(actions: NightActionsManager, target: Player) {
+		this.player.queueMessage(`Your target's role is: ${target.role.display}`);
 	}
 
 }

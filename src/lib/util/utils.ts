@@ -2,7 +2,7 @@ import { exec as childProcessExec } from 'child_process';
 import { promisify } from 'util';
 import Player from '@mafia/Player';
 import { isThenable, regExpEsc } from '@sapphire/utilities';
-import { Client } from 'discord.js';
+import { Client, GuildMember } from 'discord.js';
 import { Events } from '@sapphire/framework';
 import { TOKEN } from '@root/config';
 
@@ -11,12 +11,6 @@ const sensitiveTokens = new RegExp(TOKENS.map(regExpEsc).join('|'), 'gi');
 
 export namespace Branding {
 	export const PrimaryColor = '#000000';
-
-	export const enum Release {
-		Production = 'prod',
-		Beta = 'beta',
-		Development = 'dev'
-	}
 }
 
 export const shuffle = <T>(array: readonly T[]): T[] => {
@@ -62,7 +56,7 @@ export const cast = <T>(from: unknown) => (from as T);
  * Python's enumerate()
  * @param array The array to iterate over
  */
-export function *enumerate <T>(array: readonly T[]): Generator<[number, T]> {
+export function *enumerate<T>(array: readonly T[]): Generator<[number, T]> {
 	for (let i = 0; i < array.length; i++) {
 		yield [i, array[i]];
 	}
@@ -89,4 +83,15 @@ export const listItems = (array: string[]) => {
 			return `${array.join(', ')} and ${lastEle}`;
 		}
 	}
+};
+
+export const pluralize = (count: number, singular: string, plural = `${singular}s`) => {
+	if (count === 1) return `${count} ${singular}`;
+	return `${count} ${plural}`;
+};
+
+export const canManage = (me: GuildMember, target: GuildMember) => {
+	if (target.user.id === me.guild.ownerID) return false;
+	if (me.roles.highest.position <= target.roles.highest.position) return false;
+	return true;
 };

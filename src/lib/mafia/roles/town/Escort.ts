@@ -14,7 +14,7 @@ class Escort extends SingleTarget {
 
 	public setUp(actions: NightActionsManager, target: Player) {
 		for (const action of actions.filter(act => act.actor === target)) {
-			if (!action.flags?.canBlock ?? true) continue;
+			if (!(action.flags?.canBlock ?? true)) continue;
 			// escorts blocking SKs get stabbed instead
 			if (action.actor.role.name === 'Serial Killer') {
 				action.target = this.player;
@@ -27,7 +27,7 @@ class Escort extends SingleTarget {
 
 	public tearDown(actions: NightActionsManager, target: Player) {
 		const success = actions.record.get('roleblock').get(target.user.id).by.find(player => player.user.id === this.player.user.id);
-		if (success) return target.user.send('Somebody occupied your night. You were roleblocked!');
+		if (success) return target.queueMessage('Somebody occupied your night. You were roleblocked!');
 	}
 
 }

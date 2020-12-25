@@ -37,8 +37,10 @@ class Bodyguard extends SingleTarget {
 			} else {
 				// kill the BG
 				actions.record.setAction(this.player.user.id, 'nightkill', { result: true, by: [] });
+				this.player.queueMessage('You were killed while defending your target!');
 				// kill the attacker
 				actions.record.setAction(attacker.user.id, 'nightkill', { result: true, by: [this.player] });
+				this.player.queueMessage('You were killed by a Bodyguard!');
 			}
 		}
 	}
@@ -48,14 +50,14 @@ class Bodyguard extends SingleTarget {
 		const success = target.user.id !== this.player.user.id && record.result && record.by.includes(this.player);
 
 		if (success) {
-			return target.user.send('You were attacked but somebody fought off your attacker!');
+			return target.queueMessage('You were attacked but somebody fought off your attacker!');
 		}
 	}
 
 	public canTarget(player: Player) {
 		// TODO: customizable rule here
 		if (player === this.player && this.hasGuarded) return { check: false, reason: 'You can vest only once per game.' };
-		return { check: true, reason: '' };
+		return super.canTarget(player);
 	}
 
 	public get extraNightContext() {

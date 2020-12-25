@@ -1,9 +1,10 @@
-import { ApplyOptions } from '@sapphire/decorators';
 import GodfatherCommand from '@lib/GodfatherCommand';
+import { Phase } from '@mafia/Game';
 import Player from '@mafia/Player';
-import { Message } from 'discord.js';
+import { ApplyOptions } from '@sapphire/decorators';
 import { CommandOptions } from '@sapphire/framework';
-import { Phase } from '@root/lib/mafia/Game';
+import { pluralize } from '@util/utils';
+import { Message } from 'discord.js';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['in', 'j'],
@@ -18,7 +19,7 @@ export default class extends GodfatherCommand {
 			throw 'You have already joined.';
 		}
 		// prevent players from joining 2 games simultaneously
-		for (const otherGame of this.client.games.values()) {
+		for (const otherGame of this.context.client.games.values()) {
 			if (otherGame.players.get(message.author)) throw `You are already playing another game in ${otherGame.channel} (${otherGame.channel.guild.name})`;
 		}
 		// do not allow replacing in while the bot is processing the game
@@ -33,7 +34,7 @@ export default class extends GodfatherCommand {
 
 		game!.players.push(new Player(message.author, game!));
 		game!.createdAt = new Date();
-		return message.channel.send('✅ Successfully joined.');
+		return message.channel.send(`✅ Successfully joined. (${pluralize(game!.players.length, 'player')})`);
 	}
 
 }

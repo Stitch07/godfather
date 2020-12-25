@@ -19,18 +19,18 @@ export default class Werewolf extends Killer {
 		return super.runAction(actions, target);
 	}
 
-	public async tearDown(actions: NightActionsManager, target: Player) {
+	public tearDown(actions: NightActionsManager, target: Player) {
 		// kill all visitors
 		const visitors = target.visitors.filter(player => player.user.id !== this.player.user.id);
 		for (const visitor of visitors) {
 			actions.record.setAction(visitor.user.id, 'nightkill', { result: true, by: [this.player], type: this.attackStrength });
-			await visitor.user.send('You were mauled by a Werewolf. You have died!');
+			visitor.queueMessage('You were mauled by a Werewolf!');
 		}
 		return super.tearDown(actions, target);
 	}
 
 	public canUseAction() {
-		if (!this.canRampage()) return { check: false, reason: 'You can only rampage on even nights.' };
+		if (!this.canRampage()) return { check: false, reason: 'You can only rampage on full moons.' };
 		return super.canUseAction();
 	}
 
@@ -48,7 +48,7 @@ export default class Werewolf extends Killer {
 	}
 
 	public canTarget(target: Player) {
-		if (target === this.player) return { check: true, reason: '' };
+		if (target === this.player && this.player.isAlive) return { check: true, reason: '' };
 		return super.canTarget(target);
 	}
 
@@ -68,7 +68,7 @@ export default class Werewolf extends Killer {
 
 	// whether the Werewolf can rampage during this night
 	private canRampage() {
-		return this.game.cycle % 2 === 0;
+		return this.game.isFullMoon;
 	}
 
 }

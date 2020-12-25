@@ -3,6 +3,8 @@ import SingleTarget from '@mafia/mixins/SingleTarget';
 import AmnesiacFaction from '@mafia/factions/neutral/Amnesiac';
 import Player from '@mafia/Player';
 import { allRoles } from '@mafia/roles';
+import Juggernaut from './Juggernaut';
+import { cast } from '@root/lib/util/utils';
 
 export default class Amnesiac extends SingleTarget {
 
@@ -25,14 +27,20 @@ export default class Amnesiac extends SingleTarget {
 
 	public async tearDown(actions: NightActionsManager, target: Player) {
 		const newRole = allRoles.get(target.role.name)!;
-		this.player.role = new newRole(this.player);
+		if (newRole.name === 'Juggernaut') {
+			const { level } = cast<Juggernaut>(target.role);
+			this.player.role = new newRole(this.player, { level });
+		} else {
+			this.player.role = new newRole(this.player);
+		}
 		await this.player.user.send(`You have remembered that you were a ${this.player.role.name}!`);
 		await this.player.sendPM();
 		await this.game.channel.send(`An Amnesiac has remembered that they were a **${this.player.role.name}**!`);
+		await this.player.role.init();
 	}
 
 	public canUseAction() {
-		const validTargets = this.game.players.filter(this.canTarget.bind(this));
+		const validTargets = this.game.players.filter(player => this.canTarget(player).check);
 		if (validTargets.length === 0) return { check: false, reason: 'There are no valid targets.' };
 		return { check: true, reason: '' };
 	}

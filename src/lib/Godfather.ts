@@ -4,35 +4,44 @@ import { LogLevel, SapphireClient } from '@sapphire/framework';
 import { Collection, Guild, Message } from 'discord.js';
 import Game from '@mafia/Game';
 import SetupStore from '@mafia/SetupStore';
-import { Branding } from './util/utils';
 import { PGSQL_ENABLED, PREFIX, PRODUCTION } from '@root/config';
 import GuildSettingRepository from './orm/repositories/GuildSettingRepository';
-import Logger from './Logger';
 import GuildSettingsEntity from './orm/entities/GuildSettings';
 import { getCustomRepository } from 'typeorm';
+import SlashCommandStore from './structures/SlashCommandStore';
+
+import '@sapphire/plugin-logger/register';
 
 export default class Godfather extends SapphireClient {
 
 	public games: Collection<string, Game> = new Collection();
 	public setups: SetupStore;
-	public release = Branding.Release.Development;
+	public slashCommands: SlashCommandStore;
 	public ownerID: string | undefined = undefined;
 	public settingsCache = new Map<string, GuildSettingsEntity>();
 	public eventLoop!: NodeJS.Timeout;
-	private _version = [1, 0, 0];
+	private _version = [1, 1, 0];
 	public constructor() {
 		super({
+			caseInsensitiveCommands: true,
 			logger: {
-				instance: new Logger(),
-				level: PRODUCTION ? LogLevel.Info : LogLevel.Trace
+				level: PRODUCTION ? LogLevel.Info : LogLevel.Trace,
+				defaultFormat: {
+					timestamp: {
+						utc: false
+					}
+				}
 			},
 			ws: {
 				intents: ['GUILD_MEMBERS', 'GUILD_MESSAGES', 'GUILDS', 'DIRECT_MESSAGES', 'GUILD_MESSAGE_REACTIONS']
 			}
 		});
 
-		this.setups = new SetupStore(this);
+		this.setups = new SetupStore();
 		this.registerStore(this.setups);
+
+		this.slashCommands = new SlashCommandStore();
+		this.registerStore(this.slashCommands);
 
 		this.fetchPrefix = async (message: Message) => {
 			if (!message.guild) return [PREFIX, ''];
@@ -48,13 +57,11 @@ export default class Godfather extends SapphireClient {
 
 	public get version() {
 		const versionStr = this._version.join('.');
-		return this.release === Branding.Release.Production
-			? versionStr
-			: `${versionStr}-${this.release}`;
+		return PRODUCTION ? versionStr : `${versionStr}-dev`;
 	}
 
 	public get invite() {
-		return `https://discord.com/oauth2/authorize?client_id=${this.user!.id}&scope=bot`;
+		return `https://discord.com/oauth2/authorize?client_id=${this.user!.id}&scope=bot%20applications.commands&permissions=402653200`;
 	}
 
 }

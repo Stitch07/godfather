@@ -16,7 +16,7 @@ class Tracker extends SingleTarget {
 	public tearDown(actions: NightActionsManager, target: Player) {
 		const visited = this.game.players.filter(player => player.visitors.includes(target));
 		if (visited.length > 0) {
-			return this.player.user.send(`Your target visited ${listItems(visited.map(player => player.user.username))}`);
+			return this.player.queueMessage(`Your target visited ${listItems(visited.map(player => player.user.username))}`);
 		}
 	}
 

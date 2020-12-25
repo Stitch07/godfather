@@ -23,7 +23,7 @@ class Transporter extends DoubleTarget {
 
 	public async tearDown(actions: NightActionsManager, targets: Player[]) {
 		for (const target of targets) {
-			await target.user.send('You were transported to another location.');
+			await target.queueMessage('You were transported to another location.');
 		}
 	}
 

@@ -2,7 +2,7 @@ import Faction from '@mafia/Faction';
 import Player from '@mafia/Player';
 import Game from '@mafia/Game';
 
-const OPPOSING_FACTIONS = ['Town', 'Arsonist', 'Werewolf', 'Serial Killer'];
+const OPPOSING_FACTIONS = ['Town', 'Arsonist', 'Werewolf', 'Serial Killer', 'Juggernaut'];
 const filterOpposingPowerRoles = (player: Player) => player.isAlive && OPPOSING_FACTIONS.includes(player.role!.faction.name) && (player.role!.canUseAction().check || player.role.name === 'Mayor');
 
 export default class MafiaFaction extends Faction {
