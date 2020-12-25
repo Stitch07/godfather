@@ -62,6 +62,9 @@
 		"typeorm-naming-strategies": "^2.0.0",
 		"utf-8-validate": "^5.0.3"
 	},
+	"resolutions": {
+		"@sapphire/pieces": "github:sapphire-project/pieces#build"
+	},
 	"_moduleAliases": {
 		"@lib": "dist/lib",
 		"@mafia": "dist/lib/mafia",

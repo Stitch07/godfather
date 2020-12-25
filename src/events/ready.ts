@@ -1,7 +1,7 @@
 /* eslint-disable no-negated-condition */
 import { CLIENT_ID, PGSQL_ENABLED, PREFIX } from '@root/config';
 import { connect } from '@root/lib/orm/ormConfig';
-import { floatPromise } from '@root/lib/util/utils';
+import { floatPromise, pluralize } from '@root/lib/util/utils';
 import { Event, Events, isErr, PieceContext } from '@sapphire/framework';
 
 export default class extends Event<Events.Ready> {
@@ -28,7 +28,7 @@ export default class extends Event<Events.Ready> {
 			for (const game of this.context.client.games.values()) await game.update();
 		}, 10 * 1000); // 10 seconds
 
-		this.context.client.logger.info(`Ready! Logged in as ${this.context.client.user!.tag} and connected to ${this.context.client.guilds.cache.size} guilds.`);
+		this.context.client.logger.info(`Ready! Logged in as ${this.context.client.user!.tag} and connected to ${pluralize(this.context.client.guilds.cache.size, 'guild')}.`);
 
 		for (const command of this.context.client.slashCommands.values()) {
 			// @ts-ignore more private calls until d.js supports interactions

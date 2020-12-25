@@ -11,11 +11,6 @@ const sensitiveTokens = new RegExp(TOKENS.map(regExpEsc).join('|'), 'gi');
 
 export namespace Branding {
 	export const PrimaryColor = '#000000';
-
-	export const enum Release {
-		Production = 'prod',
-		Development = 'dev'
-	}
 }
 
 export const shuffle = <T>(array: readonly T[]): T[] => {
@@ -61,7 +56,7 @@ export const cast = <T>(from: unknown) => (from as T);
  * Python's enumerate()
  * @param array The array to iterate over
  */
-export function *enumerate <T>(array: readonly T[]): Generator<[number, T]> {
+export function* enumerate<T>(array: readonly T[]): Generator<[number, T]> {
 	for (let i = 0; i < array.length; i++) {
 		yield [i, array[i]];
 	}

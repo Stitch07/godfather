@@ -25,8 +25,8 @@ export default class extends GodfatherCommand {
 		return message.channel.send(`Successfully updated this server's prefix to: \`${newPrefix.value}\``);
 	}
 
-	public async onLoad() {
-		if (!PGSQL_ENABLED) await this.unload();
+	public onLoad() {
+		if (!PGSQL_ENABLED) this.enabled = false;
 	}
 
 }

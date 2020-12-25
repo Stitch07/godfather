@@ -4,7 +4,6 @@ import { LogLevel, SapphireClient } from '@sapphire/framework';
 import { Collection, Guild, Message } from 'discord.js';
 import Game from '@mafia/Game';
 import SetupStore from '@mafia/SetupStore';
-import { Branding } from './util/utils';
 import { PGSQL_ENABLED, PREFIX, PRODUCTION } from '@root/config';
 import GuildSettingRepository from './orm/repositories/GuildSettingRepository';
 import GuildSettingsEntity from './orm/entities/GuildSettings';
@@ -18,7 +17,6 @@ export default class Godfather extends SapphireClient {
 	public games: Collection<string, Game> = new Collection();
 	public setups: SetupStore;
 	public slashCommands: SlashCommandStore;
-	public release = PRODUCTION ? Branding.Release.Production : Branding.Release.Development;
 	public ownerID: string | undefined = undefined;
 	public settingsCache = new Map<string, GuildSettingsEntity>();
 	public eventLoop!: NodeJS.Timeout;
@@ -27,7 +25,12 @@ export default class Godfather extends SapphireClient {
 		super({
 			caseInsensitiveCommands: true,
 			logger: {
-				level: PRODUCTION ? LogLevel.Info : LogLevel.Trace
+				level: PRODUCTION ? LogLevel.Info : LogLevel.Trace,
+				defaultFormat: {
+					timestamp: {
+						utc: false
+					}
+				}
 			},
 			ws: {
 				intents: ['GUILD_MEMBERS', 'GUILD_MESSAGES', 'GUILDS', 'DIRECT_MESSAGES', 'GUILD_MESSAGE_REACTIONS']
@@ -54,9 +57,7 @@ export default class Godfather extends SapphireClient {
 
 	public get version() {
 		const versionStr = this._version.join('.');
-		return this.release === Branding.Release.Production
-			? versionStr
-			: `${versionStr}-${this.release}`;
+		return PRODUCTION ? versionStr : `${versionStr}-dev`;
 	}
 
 	public get invite() {

@@ -2,6 +2,37 @@
 
 All notable changes to Godfather will be documented in this file.
 
+## v1.1.0
+
+### Features:
+
+* 2 new **roles**: Investigator (Town Investigative) and Juggernaut (Neutral Killing)
+* **Slash commands**: Godfather supports [slash commands](https://i.imgur.com/SckQLM3.png) for votecount, playerlist and remaining. Responses to these commands are only visible to you, so you can quickly check the votecount w/o cluttering the channel.
+* **Join by reaction**: After creating a game, players can join by reacting to a tick-mark on the original message. This prompt lasts for 45 seconds.
+* **Disabling channels**: You can disable bot commands on specific channels using `=disablechannel <channel>`. Run the same command to enable channels again.
+* **Adaptive slowmode**: When enabled (using =set adaptiveSlowmode true), Godfather will change a channel's slowmode depending on how many players are alive.
+* **Numbered nicknames**: When enabled (using =set numberedNicknames true), Godfather will add a player's number to their nickname.
+* **Muting at night**: When enabled (using =set muteAtNight true), Godfather will mute players at night.
+* The bot will now announce Full Moon nights.
+* Night results are sent as one message now.
+* Added a "You have died!" result for dead players.
+* Server admins can delete games, even if they are not the host.
+* Commands are now case insensitive.
+* =playerlist shows the number of alive players.
+* Mafia Vanilla has been renamed to Vanilla Mafia. (with an alias of Mafia Vanilla so it doesn't break existing setups).
+
+### Mechanic Changes:
+* Vigilante bullets are now variable like Veteran alerts:
+  * 3-5 players: 1 bullet
+  * 6-10 players: 2 bullets
+  * 11-18 players: 4 bullets
+
+### Bug Fixes:
+* Reanimators can no longer reanimate (and get shot) by a veteran.
+* Fixed a bug letting doctors self-heal indefinitely.
+* Replacements get action PMs at night.
+* Amnesiacs can remember to be an executioner w/o breaking the bot.
+
 ## 1.0.0
 
 ### Features:

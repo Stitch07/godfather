@@ -9,6 +9,8 @@ services:
         - "4000:8080"
     depends_on:
         - postgres
+    environment:
+        - NO_COLOR=true
   postgres:
     image: postgres
     restart: "always"

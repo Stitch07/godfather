@@ -1073,10 +1073,9 @@
     "@sapphire/utilities" "^1.2.0"
     lexure "^0.17.0"
 
-"@sapphire/pieces@^1.0.0":
+"@sapphire/pieces@^1.0.0", "@sapphire/pieces@github:sapphire-project/pieces#build":
   version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@sapphire/pieces/-/pieces-1.0.0.tgz#b3c775f33f524f07d7275ea250b11a09ad3cc459"
-  integrity sha512-zsdLFLbuUbcT2Qz1HMkbQLbuRsXXFfQmf2U/SLtw7wmwhn+dC9z3/sPzwG2tRBwALNydFCFF3hBrlk2gW9g52w==
+  resolved "https://codeload.github.com/sapphire-project/pieces/tar.gz/59fe9869a78dfe714c548caff543f48ab26c33ed"
   dependencies:
     "@discordjs/collection" "^0.1.6"
 

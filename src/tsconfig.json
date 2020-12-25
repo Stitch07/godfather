@@ -4,28 +4,31 @@
 		"**/*.ts",
 		"**/*.json"
 	],
-    "compilerOptions": {
-        "target": "es2017",
-        "useDefineForClassFields": true,
-        "resolveJsonModule": true,
-        "outDir": "../dist",
+	"compilerOptions": {
+		"target": "es2017",
+		"useDefineForClassFields": true,
+		"resolveJsonModule": true,
+		"outDir": "../dist",
 		"rootDir": ".",
-        "baseUrl": ".",
-        "composite": true,
-        "declaration": true,
-        "paths": {
+		"baseUrl": ".",
+		"composite": true,
+		"declaration": true,
+		"paths": {
 			"@root/*": [
 				"./*"
 			],
-            "@mafia/*": [
-                "lib/mafia/*"
-            ],
-            "@lib/*": [
-                "lib/*",
-            ],
-            "@util/*": [
-                "lib/util/*"
-            ]
-        }
-    }
+			"@mafia/*": [
+				"lib/mafia/*"
+			],
+			"@lib/*": [
+				"lib/*",
+			],
+			"@util/*": [
+				"lib/util/*"
+			]
+		},
+		"types": [
+			"@sapphire/plugin-logger/dist/register"
+		]
+	}
 }

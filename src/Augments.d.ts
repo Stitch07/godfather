@@ -1,4 +1,3 @@
-import { Branding } from '@lib/util/utils';
 import Game, { GameSettings } from '@mafia/Game';
 import Player from '@mafia/Player';
 import SetupStore from '@mafia/SetupStore';
@@ -19,7 +18,6 @@ interface ChannelExtendables {
 
 declare module 'discord.js' {
 	interface Client {
-		readonly release: Branding.Release;
 		readonly version: string;
 		readonly invite: string;
 		ownerID: string | undefined;
