@@ -23,7 +23,7 @@ export default class extends GodfatherCommand {
 				await message.guild!.updateSettings(settings);
 			}
 
-			if (filtered.length === 0) return message.channel.send(`There are no disabled channels. Disable a channel using ${context.prefix}disable #channel.`);
+			if (filtered.length === 0) return message.channel.send(`There are no disabled channels. Disable a channel using ${context.prefix}disablechannel #channel.`);
 
 			return message.channel.send(`**Disabled Channels**: ${filtered.map(mapChannelIDs).join(', ')}`);
 		}
