@@ -4,7 +4,11 @@
 		"detailedDescription": [
 			"A regular townie without any powers.",
 			"",
-			"- Win condition: lynch every criminal and evildoer"
+			"- Win condition: lynch every criminal and evildoer",
+			"",
+			"Cop results: Your target is innocent.",
+			"Investigator results: Your target could be a Vanilla, Vanilla Mafia, Neapolitan, or Super Saint.",
+			"Attack: None | Defense: None"
 		]
 	},
 	{
@@ -15,7 +19,11 @@
 			"- Win Condition: lynch every criminal and evildoer",
 			"",
 			"+ Abilities: Protect a player from direct attacks at night.",
-			"+ If your target is attacked, then you and the visitor will fight to the death, if you successfully protect someone you can still be healed."
+			"+ If your target is attacked, then you and the visitor will fight to the death, if you successfully protect someone you can still be healed.",
+			"",
+			"Cop results: Your target is innocent.",
+			"Investigator results: Your target could be a Bodyguard, Godfather, or Arsonist.",
+			"Attack: Powerful | Defense: None (Basic on self-vest)"
 		]
 	},
 	{
@@ -26,7 +34,11 @@
 			"- Win Condition: lynch every criminal and evildoer",
 			"",
 			"+ Abilities: Interrogate one person each night for suspicious activity.",
-			"+ You will know if your target is suspicious or innocent."
+			"+ You will know if your target is suspicious or innocent.",
+			"",
+			"Cop results: Your target is innocent.",
+			"Investigator results: Your target could be a Cop, Executioner, or Werewolf.",
+			"Attack: None | Defense: None"
 		]
 	},
 	{
@@ -39,6 +51,10 @@
 			"+ Abilities: Interrogate one person each night for suspicious activity.",
 			"+ You will know if your target is suspicious or innocent.",
 			"+ A naive cop will always show innocent results regardless of the roles."
+			"",
+			"Cop results: Your target is innocent.",
+			"Investigator results: Your target could be a Cop, Executioner, or Werewolf.",
+			"Attack: None | Defense: None"
 		]
 	},
 	{
@@ -49,7 +65,11 @@
 			"- Win Condition: lynch every criminal and evildoer",
 			"",
 			"+ Abilities: Interrogate one person each night for suspicious activity.",
-			"+ An insane cop will always show the opposite results for suspicion, showing innocent roles as suspicious and suspicious roles as innocent."
+			"+ An insane cop will always show the opposite results for suspicion, showing innocent roles as suspicious and suspicious roles as innocent.",
+			"",
+			"Cop results: Your target is innocent.",
+			"Investigator results: Your target could be a Cop, Executioner, or Werewolf.",
+			"Attack: None | Defense: None"
 		]
 	},
 	{
@@ -60,7 +80,11 @@
 			"- Win Condition: Lynch every criminal and evildoer",
 			"",
 			"+ Abilities: Interrogate one person each night for suspicious activity.",
-			"+ A paranoid cop will always show suspicious results regardless of the roles."
+			"+ A paranoid cop will always show suspicious results regardless of the roles.",
+			"",
+			"Cop results: Your target is innocent.",
+			"Investigator results: Your target could be a Cop, Executioner, or Werewolf.",
+			"Attack: None | Defense: None"
 		]
 	},
 	{
@@ -73,6 +97,10 @@
 			"+ Abilities: Choose to heal one person at night, granting them powerful defense.",
 			"+ You will know if your target is attacked.",
 			"+ You can only choose to heal yourself once every game."
+			"",
+			"Cop results: Your target is innocent.",
+			"Investigator results: Your target could be a Doctor or a Serial Killer.",
+			"Attack: None | Defense: None"
 		]
 	},
 	{
@@ -84,6 +112,10 @@
 			"",
 			"+ Abilities: Choose one person each night to block them from using their role’s night ability. (roleblock)",
 			"+ You cannot be roleblocked."
+			"",
+			"Cop results: Your target is innocent.",
+			"Investigator results: Your target could be a Escort, Transporter, or Consort.",
+			"Attack: None | Defense: None"
 		]
 	},
 	{
@@ -95,6 +127,10 @@
 			"",
 			"+ Abilities: Choose to watch one person at night to see who visits them.",
 			"+ You will exactly know who visited your target at night, showing their names."
+			"",
+			"Cop results: Your target is innocent.",
+			"Investigator results: Your target could be a Lookout, Witch, or Juggernaut.",
+			"Attack: None | Defense: None"
 		]
 	},
 	{
@@ -108,6 +144,10 @@
 			"+ Once you have revealed yourself your vote counts as 3 votes.",
 			"+ Once you reveal yourself you may not be healed by doctor during any night.",
 			"+ Once you reveal yourself you cannot whisper someone or be whispered to."
+			"",
+			"Cop results: Your target is innocent.",
+			"Investigator results: Your target could be a Investigator, Consigliere, Mayor, or Tracker.",
+			"Attack: None | Defense: None"
 		]
 	},
 	{
@@ -120,6 +160,10 @@
 			"+ Abilities: You may choose to raise a dead Town member every night and once use their ability on a player.",
 			"+ Each dead town member can only be used once every game.",
 			"+ You cannot be roleblocked or controlled."
+			"",
+			"Cop results: Your target is innocent.",
+			"Investigator results: Your target could be a Janitor, Retributionist, or Reanimator.",
+			"Attack: None | Defense: None"
 		]
 	},
 	{
@@ -131,6 +175,10 @@
 			"",
 			"+ Abilities: Check if a target is or is not some form of a Vanilla.",
 			"+ Your check cannot be modified by framing."
+			"",
+			"Cop results: Your target is innocent.",
+			"Investigator results: Your target could be a Vanilla, Vanilla Mafia, Neapolitan, or Super Saint.",
+			"Attack: None | Defense: None"
 		]
 	},
 	{
@@ -141,6 +189,10 @@
 			"- Win Condition: lynch every criminal and evildoer",
 			"",
 			"+ Abilities: You may revive one dead townie per game. "
+			"",
+			"Cop results: Your target is innocent.",
+			"Investigator results: Your target could be a Janitor, Retributionist, or Reanimator.",
+			"Attack: None | Defense: None"
 		]
 	},
 	{
@@ -151,6 +203,10 @@
 			"- Win condition: lynch every criminal and evildoer",
 			"",
 			"+ Abilities: Once the super saint gets lynched during the day, the person last voted to lynch will die."
+			"",
+			"Cop results: Your target is innocent.",
+			"Investigator results: Your target could be a Vanilla, Vanilla Mafia, Neapolitan, or Super Saint.",
+			"Attack: None | Defense: None"
 		]
 	},
 	{
@@ -162,6 +218,10 @@
 			"",
 			"+ Abilities: Choose one person to track them at night, to see who they visit.",
 			"+ You will exactly know who your target visited at night, giving their exact name."
+			"",
+			"Cop results: Your target is innocent.",
+			"Investigator results: Your target could be a Investigator, Consigliere, Mayor, or Tracker.",
+			"Attack: None | Defense: None"
 		]
 	},
 	{
@@ -177,6 +237,10 @@
 			"+ Your targets will know if they were transported.",
 			"+ You cannot transport someone with themselves.",
 			"+ You cannot be roleblocked or controlled."
+			"",
+			"Cop results: Your target is innocent.",
+			"Investigator results: Your target could be a Escort, Transporter, or Consort.",
+			"Attack: None | Defense: None"
 		]
 	},
 	{
@@ -190,6 +254,10 @@
 			"+ If you go on alert, you gain a basic defense, attacking any person who visits you at night. If you do not go on alert, you stay at home and do not attack.",
 			"+ you can only go on alert 3 times.",
 			"+ you cannot be roleblocked."
+			"",
+			"Cop results: Your target is innocent.",
+			"Investigator results: Your target could be a Vigilante, Veteran, Goon, or Ambusher.",
+			"Attack: Powerful | Defense: None (Basic on alert)"
 		]
 	},
 	{
@@ -202,6 +270,10 @@
 			"+ Abilities: take justice in your own hand and shoot someone at night.",
 			"+ You can only choose to shoot 3 times in a game.",
 			"+ If you shoot another town member, you will commit suicide over the guilt of killing your own member next night."
+			"",
+			"Cop results: Your target is innocent.",
+			"Investigator results: Your target could be a Vigilante, Veteran, Goon, or Ambusher.",
+			"Attack: Basic | Defense: None"
 		]
 	},
 	{
@@ -212,6 +284,10 @@
 			"- Win Condition: Lynch every criminal and evildoer",
 			"",
 			"+ Abilities: Investigate one person each night for a clue to their role."
+			"",
+			"Cop results: Your target is innocent.",
+			"Investigator results: Your target could be a Investigator, Consigliere, Mayor, or Tracker.",
+			"Attack: None | Defense: None"
 		]
 	},
 	{
@@ -226,6 +302,10 @@
 			"+ All players visiting your target will learn your name.",
 			"+ If there are no mafia roles left who are capable of killing then you will become the goon.",
 			"+ You can talk with other mafia members."
+			"",
+			"Cop results: Your target is suspicious.",
+			"Investigator results: Your target could be a Vigilante, Veteran, Goon, or Ambusher.",
+			"Attack: Basic | Defense: None"
 		]
 	},
 	{
@@ -238,6 +318,10 @@
 			"+ Abilities: Check one person for their exact role each night.",
 			"+ If there are no mafia roles left who are capable of killing then you will become the goon.",
 			"+ You can talk with other mafia members."
+			"",
+			"Cop results: Your target is suspicious.",
+			"Investigator results: Your target could be a Investigator, Consigliere, Mayor, or Tracker.",
+			"Attack: None | Defense: None"
 		]
 	},
 	{
@@ -250,6 +334,10 @@
 			"+ Abilities: Choose one person each night to block them from using their role’s night ability. (roleblock)",
 			"+ If there are no mafia roles left who are capable of killing then you will become the goon.",
 			"+ You can talk with other mafia members."
+			"",
+			"Cop results: Your target is suspicious.",
+			"Investigator results: Your target could be a Escort, Transporter, or Consort.",
+			"Attack: None | Defense: None"
 		]
 	},
 	{
@@ -263,6 +351,10 @@
 			"+ You may choose one person at night to frame them as a suspicious townie.",
 			"+ If there are no mafia roles left who are capable of killing then you will become the goon.",
 			"+ You can talk with other mafia members."
+			"",
+			"Cop results: Your target is suspicious.",
+			"Investigator results: Your target could be a Framer or Jester.",
+			"Attack: None | Defense: None"
 		]
 	},
 	{
@@ -276,6 +368,10 @@
 			"+ If there is no Goon/the Goon is roleblocked, you will attack the target instead.",
 			"+ You have a Basic Defense, and you will appear as innocent to the Cop.",
 			"+ You can talk with other mafia members."
+			"",
+			"Cop results: Your target is innocent.",
+			"Investigator results: Your target could be a Bodyguard, Godfather, or Arsonist.",
+			"Attack: Basic | Defense: None"
 		]
 	},
 	{
@@ -288,6 +384,10 @@
 			"+ Abilities: You can choose to attack if the Godfather doesn't give orders.",
 			"+ If the Godfather dies, you will become the next Godfather.",
 			"+ You can talk with other mafia members."
+			"",
+			"Cop results: Your target is suspicious.",
+			"Investigator results: Your target could be a Vigilante, Veteran, Goon, or Ambusher.",
+			"Attack: Basic | Defense: None"
 		]
 	},
 	{
@@ -301,6 +401,10 @@
 			"+ If your target dies, their role will not be revealed to anyone except you.",
 			"+ You can only perform 3 cleanings in a game.",
 			"+ You can talk with other mafia members."
+			"",
+			"Cop results: Your target is suspicious.",
+			"Investigator results: Your target could be a Janitor, Retributionist, or Reanimator.",
+			"Attack: None | Defense: None"
 		]
 	},
 	{
@@ -312,6 +416,10 @@
 			"",
 			"+ Abilities: If the goon dies, you will turn into goon and you will be given the final say over nightkill selection.",
 			"+ You can talk with other mafia members."
+			"",
+			"Cop results: Your target is suspicious.",
+			"Investigator results: Your target could be a Vanilla, Vanilla Mafia, Neapolitan, or Super Saint.",
+			"Attack: None | Defense: None"
 		]
 	},
 	{
@@ -322,6 +430,10 @@
 			"- Win Condition: Remember who you were and complete that role's win condition",
 			"",
 			"+ Abilities: When you choose a role it will be revealed to all players in the game."
+			"",
+			"Cop results: Your target is innocent.",
+			"Investigator results: Your target could be a Survivor, Amnesiac, or Guardian Angel.",
+			"Attack: None | Defense: None"
 		]
 	},
 	{
@@ -333,6 +445,10 @@
 			"",
 			"+ Abilities: You may douse someone each night in gasoline or ignite doused targets.",
 			"+ Igniting doused people will deal an unstoppable attack to all doused targets."
+			"",
+			"Cop results: Your target is suspicious.",
+			"Investigator results: Your target could be a Bodyguard, Godfather, or Arsonist.",
+			"Attack: Unstoppable | Defense: Basic"
 		]
 	},
 	{
@@ -345,6 +461,10 @@
 			"+ Abilities: At the beginning of each game you will be given a target, who you need to get executed by any means.",
 			"+ If your target gets lynched at day, you win the game.",
 			"+ If your target dies at night, you will turn into a Jester."
+			"",
+			"Cop results: Your target is innocent.",
+			"Investigator results: Your target could be a Cop, Executioner, or Werewolf."
+			"Attack: None | Defense: Basic"
 		]
 	},
 	{
@@ -359,6 +479,10 @@
 			"+ Protecting a player gives your target vote immunity for the next day",
 			"+ You can protect your target even if you die.",
 			"+ If your target dies you will become a Survivor with no vests."
+			"",
+			"Cop results: Your target is innocent.",
+			"Investigator results: Your target could be a Survivor, Amnesiac, or Guardian Angel.",
+			"Attack: None | Defense: None"
 		]
 	},
 	{
@@ -372,6 +496,10 @@
 			"+ You can only haunt once, right after you get lynched.",
 			"+ You cannot attack people who have not voted you at day.",
 			"+ If you die at night, you lose the game."
+			"",
+			"Cop results: Your target is innocent.",
+			"Investigator results: Your target could be a Framer or Jester.",
+			"Attack: Unstoppable | Defense: None"
 		]
 	},
 	{
@@ -383,6 +511,10 @@
 			"",
 			"+ Abilities: You may choose to attack a player on Full Moon nights.",
 			"+ With each kill your powers grow."
+			"",
+			"Cop results: On odd nights -> Innocent | On even nights -> Suspicious.",
+			"Investigator results: Your target could be a Lookout, Witch, or Juggernaut."
+			"Attack: Powerful (Unstoppable after third kill) | Defense: Basic"
 		]
 	},
 	{
@@ -395,6 +527,10 @@
 			"+ Abilities: You may choose to stab a person each night.",
 			"+ If you are roleblocked you will attack the roleblocker instead of your target.",
 			"+ You have a basic defense throughout the game."
+			"",
+			"Cop results: Your target is suspicious.",
+			"Investigator results: Your target could be a Doctor or a Serial Killer.",
+			"Attack: Basic | Defense: Basic"
 		]
 	},
 	{
@@ -406,6 +542,10 @@
 			"",
 			"+ Abilities: Decide if you want to put on a bulletproof vest at night. Bullet proof vest gives you a basic defense.",
 			"+ You can only use the bulletproof vest 4 times."
+			"",
+			"Cop results: Your target is innocent.",
+			"Investigator results: Your target could be a Survivor, Amnesiac, or Guardian Angel.",
+			"Attack: None | Defense: None"
 		]
 	},
 	{
@@ -418,6 +558,10 @@
 			"+ Abilities: You may rampage at player's house or on your own house during even nights.",
 			"+ During odd nights you cannot rampage",
 			"+ If you do not select a target you will stay home and Rampage at your home."
+			"",
+			"Cop results: On odd nights -> Innocent | On even nights -> Suspicious.",
+			"Investigator results: Your target could be a Cop, Executioner, or Werewolf.",
+			"Attack: Powerful | Defense: Basic"
 		]
 	},
 	{
@@ -430,6 +574,10 @@
 			"+ Abilities: You may control someone's actions each night.",
 			"+ You cannot be roleblocked or controlled.",
 			"+ You will know the role of the player you will control."
+			"",
+			"Cop results: Your target is suspicious.",
+			"Investigator results: Your target could be a Lookout, Witch, or Juggernaut.",
+			"Attack: None | Defense: Basic"
 		]
 	}
 ]
