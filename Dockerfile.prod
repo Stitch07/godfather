@@ -9,9 +9,9 @@ COPY yarn.lock ./
 RUN yarn install --frozen-lockfile --link-duplicates
 
 COPY . ./
+COPY src/config.example.ts src/config.ts
 
 RUN yarn build
-
 
 
 # Production image
@@ -30,4 +30,3 @@ RUN yarn install --frozen-lockfile --link-duplicates
 COPY --from=BUILDER /usr/src/app/dist/ dist/
 
 ENTRYPOINT [ "yarn" ]
-
