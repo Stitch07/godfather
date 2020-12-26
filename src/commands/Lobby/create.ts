@@ -51,9 +51,10 @@ export default class extends GodfatherCommand {
 
 		collector.on('collect', async (reaction, user) => {
 			if (game.players.get(user) || game.players.length === game.settings.maxPlayers || game.hasStarted) return;
+			for (const game of this.context.client.games.values()) {
+				if (game.players.get(user)) return;
+			}
 			game.players.push(new Player(user, game));
-			playersAdded.push(user);
-			// this needs a debounce
 			await debouncedFn();
 		});
 
