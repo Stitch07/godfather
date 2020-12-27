@@ -1,4 +1,4 @@
-import GodfatherCommand from '@lib/GodfatherCommand';
+import GodfatherCommand from '#lib/GodfatherCommand';
 import { ApplyOptions } from '@sapphire/decorators';
 import { BucketType, CommandOptions } from '@sapphire/framework';
 import { Message, TextChannel } from 'discord.js';
@@ -12,7 +12,7 @@ export default class extends GodfatherCommand {
 
 	public async run(msg: Message) {
 		const { game } = msg.channel as TextChannel;
-		return msg.channel.send(game!.votes.show({ }));
+		return msg.channel.send(game!.votes.show({}));
 	}
 
 }

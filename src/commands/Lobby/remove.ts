@@ -1,6 +1,6 @@
 import { Args, CommandOptions } from '@sapphire/framework';
 import { ApplyOptions } from '@sapphire/decorators';
-import GodfatherCommand from '@lib/GodfatherCommand';
+import GodfatherCommand from '#lib/GodfatherCommand';
 import { Message, MessageReaction, User } from 'discord.js';
 import { Time } from '@sapphire/time-utilities';
 

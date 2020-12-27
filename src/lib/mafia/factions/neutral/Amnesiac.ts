@@ -1,4 +1,4 @@
-import Faction from '@mafia/Faction';
+import Faction from '#mafia/Faction';
 
 export default class AmnesiacFaction extends Faction {
 

@@ -1,6 +1,6 @@
-import GodfatherCommand from '@lib/GodfatherCommand';
-import { Phase } from '@mafia/Game';
-import Player from '@mafia/Player';
+import GodfatherCommand from '#lib/GodfatherCommand';
+import { Phase } from '#mafia/Game';
+import Player from '#mafia/Player';
 import { ApplyOptions } from '@sapphire/decorators';
 import { Args, CommandOptions, err, ok, UserError } from '@sapphire/framework';
 import { Time } from '@sapphire/time-utilities';

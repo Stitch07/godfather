@@ -1,6 +1,6 @@
 import Setup, { SetupOptions } from './Setup';
 import Role from './Role';
-import { shuffle, randomArray } from '@lib/util/utils';
+import { shuffle, randomArray } from '#lib/util/utils';
 import yaml = require('js-yaml');
 import { allRoles, roleCategories } from './roles';
 import { Constructor } from '@sapphire/utilities';

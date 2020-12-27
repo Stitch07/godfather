@@ -1,6 +1,6 @@
-import SingleTarget from '@root/lib/mafia/mixins/SingleTarget';
-import { Phase } from '@mafia/Game';
-import Townie from '@mafia/mixins/Townie';
+import SingleTarget from '#root/lib/mafia/mixins/SingleTarget';
+import { Phase } from '#mafia/Game';
+import Townie from '#mafia/mixins/Townie';
 import { Message } from 'discord.js';
 
 class Mayor extends SingleTarget {

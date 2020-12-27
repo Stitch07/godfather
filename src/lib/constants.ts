@@ -1,4 +1,4 @@
-import { GameSettings } from '@mafia/Game';
+import { GameSettings } from '#mafia/Game';
 import { ArgType } from '@sapphire/framework';
 import { Time } from '@sapphire/time-utilities';
 import { format } from './util/durationFormat';

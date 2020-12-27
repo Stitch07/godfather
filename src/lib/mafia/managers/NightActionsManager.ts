@@ -1,8 +1,8 @@
-import Player from '@mafia/Player';
-import DefaultMap from '@util/DefaultMap';
-import Game, { Phase } from '@mafia/Game';
-import SingleTarget from '@root/lib/mafia/mixins/SingleTarget';
-import { fauxAlive, listItems } from '@root/lib/util/utils';
+import Player from '#mafia/Player';
+import DefaultMap from '#util/DefaultMap';
+import Game, { Phase } from '#mafia/Game';
+import SingleTarget from '#root/lib/mafia/mixins/SingleTarget';
+import { fauxAlive, listItems } from '#root/lib/util/utils';
 
 export default class NightActionsManager extends Array<NightAction> {
 

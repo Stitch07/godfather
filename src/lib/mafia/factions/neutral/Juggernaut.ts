@@ -1,5 +1,5 @@
-import Faction from '@mafia/Faction';
-import Game from '@mafia/Game';
+import Faction from '#mafia/Faction';
+import Game from '#mafia/Game';
 
 const SUPPORTING_FACTIONS = ['Juggernaut', 'Witch', 'Survivor'];
 

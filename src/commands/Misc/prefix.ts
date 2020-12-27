@@ -1,10 +1,10 @@
-import GuildSettingRepository from '@lib/orm/repositories/GuildSettingRepository';
-import GodfatherCommand from '@lib/GodfatherCommand';
+import GuildSettingRepository from '#lib/orm/repositories/GuildSettingRepository';
+import GodfatherCommand from '#lib/GodfatherCommand';
 import { Args, CommandOptions } from '@sapphire/framework';
 import { ApplyOptions } from '@sapphire/decorators';
 import { Message } from 'discord.js';
 import { getCustomRepository } from 'typeorm';
-import { PGSQL_ENABLED } from '@root/config';
+import { PGSQL_ENABLED } from '#root/config';
 
 @ApplyOptions<CommandOptions>({
 	description: 'View and change the server prefix.',

@@ -1,6 +1,6 @@
-import { sleep } from '@lib/util/utils';
-import Townie from '@mafia/mixins/Townie';
-import Role from '@mafia/Role';
+import { sleep } from '#lib/util/utils';
+import Townie from '#mafia/mixins/Townie';
+import Role from '#mafia/Role';
 
 class SuperSaint extends Role {
 

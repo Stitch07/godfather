@@ -1,7 +1,7 @@
-import NightActionsManager, { NightActionPriority } from '@mafia/managers/NightActionsManager';
-import SingleTarget from '@root/lib/mafia/mixins/SingleTarget';
-import MafiaRole from '@mafia/mixins/MafiaRole';
-import Player from '@mafia/Player';
+import NightActionsManager, { NightActionPriority } from '#mafia/managers/NightActionsManager';
+import SingleTarget from '#root/lib/mafia/mixins/SingleTarget';
+import MafiaRole from '#mafia/mixins/MafiaRole';
+import Player from '#mafia/Player';
 
 class Consigliere extends SingleTarget {
 

@@ -1,7 +1,7 @@
 /* eslint-disable no-negated-condition */
-import { CLIENT_ID, PGSQL_ENABLED, PREFIX } from '@root/config';
-import { connect } from '@root/lib/orm/ormConfig';
-import { floatPromise, pluralize } from '@root/lib/util/utils';
+import { CLIENT_ID, PGSQL_ENABLED, PREFIX } from '#root/config';
+import { connect } from '#root/lib/orm/ormConfig';
+import { floatPromise, pluralize } from '#root/lib/util/utils';
 import { Event, Events, isErr, PieceContext } from '@sapphire/framework';
 
 export default class extends Event<Events.Ready> {

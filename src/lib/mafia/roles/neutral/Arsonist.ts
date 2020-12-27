@@ -1,5 +1,5 @@
-import { PREFIX } from '@root/config';
-import { cast, listItems, remove } from '@util/utils';
+import { PREFIX } from '#root/config';
+import { cast, listItems, remove } from '#util/utils';
 import { codeBlock } from '@sapphire/utilities';
 import ArsonistFaction from '../../factions/neutral/Arsonist';
 import Player from '../../Player';

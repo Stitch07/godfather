@@ -1,6 +1,6 @@
-import Game, { GameSettings } from '@mafia/Game';
-import Player from '@mafia/Player';
-import SetupStore from '@mafia/SetupStore';
+import Game, { GameSettings } from '#mafia/Game';
+import Player from '#mafia/Player';
+import SetupStore from '#mafia/SetupStore';
 import { Piece } from '@sapphire/framework';
 import { Collection, Guild, User } from 'discord.js';
 import GuildSettingsEntity from './lib/orm/entities/GuildSettings';

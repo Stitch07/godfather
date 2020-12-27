@@ -1,5 +1,5 @@
-import Player from '@mafia/Player';
-import Game from '@mafia/Game';
+import Player from '#mafia/Player';
+import Game from '#mafia/Game';
 
 export interface Vote {
 	by: Player;

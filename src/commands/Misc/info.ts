@@ -1,4 +1,4 @@
-import GodfatherCommand from '@root/lib/GodfatherCommand';
+import GodfatherCommand from '#root/lib/GodfatherCommand';
 import { ApplyOptions } from '@sapphire/decorators';
 import { Args, CommandContext, CommandOptions } from '@sapphire/framework';
 import { Message } from 'discord.js';

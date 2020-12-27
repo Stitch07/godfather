@@ -1,19 +1,19 @@
-import Role from '@mafia/Role';
-import NightActionsManager, { NightAction, NightActionPriority } from '@mafia/managers/NightActionsManager';
-import Player from '@mafia/Player';
-import Game, { Phase } from '@mafia/Game';
+import Role from '#mafia/Role';
+import NightActionsManager, { NightAction, NightActionPriority } from '#mafia/managers/NightActionsManager';
+import Player from '#mafia/Player';
+import Game, { Phase } from '#mafia/Game';
 import { Awaited, codeBlock } from '@sapphire/utilities';
-import { listItems, remove } from '@util/utils';
+import { listItems, remove } from '#util/utils';
 import { Message } from 'discord.js';
-import { DEFAULT_ACTION_FLAGS } from '@root/lib/constants';
-import { PREFIX } from '@root/config';
+import { DEFAULT_ACTION_FLAGS } from '#root/lib/constants';
+import { PREFIX } from '#root/config';
 
 
 class SingleTarget extends Role {
 
 	public actionPhase = Phase.Night;
 
-	public flags? = {
+	public flags?= {
 		canBlock: true,
 		canTransport: true,
 		canVisit: true

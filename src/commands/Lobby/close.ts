@@ -1,8 +1,8 @@
 import { CommandOptions } from '@sapphire/framework';
 import { ApplyOptions } from '@sapphire/decorators';
-import GodfatherCommand from '@lib/GodfatherCommand';
+import GodfatherCommand from '#lib/GodfatherCommand';
 import { Message } from 'discord.js';
-import { DEFAULT_GAME_SETTINGS } from '@root/lib/constants';
+import { DEFAULT_GAME_SETTINGS } from '#root/lib/constants';
 
 @ApplyOptions<CommandOptions>({
 	description: 'Closes a game lobby, preventing more players from joining it.',

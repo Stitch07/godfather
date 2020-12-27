@@ -1,5 +1,5 @@
-import { SetupOptions } from '@mafia/Setup';
-import BasicSetup from '@mafia/BasicSetup';
+import { SetupOptions } from '#mafia/Setup';
+import BasicSetup from '#mafia/BasicSetup';
 import { ApplyOptions } from '@sapphire/decorators';
 
 @ApplyOptions<SetupOptions>({

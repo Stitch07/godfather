@@ -1,9 +1,9 @@
-import Killer from '@root/lib/mafia/mixins/Killer';
-import NightActionsManager, { NightActionPriority } from '@mafia/managers/NightActionsManager';
-import Townie from '@mafia/mixins/Townie';
-import Player from '@mafia/Player';
+import Killer from '#root/lib/mafia/mixins/Killer';
+import NightActionsManager, { NightActionPriority } from '#mafia/managers/NightActionsManager';
+import Townie from '#mafia/mixins/Townie';
+import Player from '#mafia/Player';
 import { Message } from 'discord.js';
-import { pluralize } from '@root/lib/util/utils';
+import { pluralize } from '#root/lib/util/utils';
 
 class Vigilante extends Killer {
 

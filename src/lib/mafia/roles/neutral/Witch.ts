@@ -1,7 +1,7 @@
-import DoubleTarget from '@root/lib/mafia/mixins/DoubleTarget';
-import NightActionsManager, { Defense, NightActionPriority } from '@mafia/managers/NightActionsManager';
-import Player from '@mafia/Player';
-import WitchFaction from '@mafia/factions/neutral/Witch';
+import DoubleTarget from '#root/lib/mafia/mixins/DoubleTarget';
+import NightActionsManager, { Defense, NightActionPriority } from '#mafia/managers/NightActionsManager';
+import Player from '#mafia/Player';
+import WitchFaction from '#mafia/factions/neutral/Witch';
 
 class Witch extends DoubleTarget {
 

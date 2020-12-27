@@ -1,5 +1,5 @@
-import { DEFAULT_GAME_SETTINGS } from '@lib/constants';
-import { GameSettings } from '@lib/mafia/Game';
+import { DEFAULT_GAME_SETTINGS } from '#lib/constants';
+import { GameSettings } from '#lib/mafia/Game';
 import { Argument, ArgumentResult } from '@sapphire/framework';
 
 export default class extends Argument<keyof GameSettings> {

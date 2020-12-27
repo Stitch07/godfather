@@ -1,10 +1,10 @@
-import '@lib/extenders';
+import '#lib/extenders';
 
 import { LogLevel, SapphireClient } from '@sapphire/framework';
 import { Collection, Guild, Message } from 'discord.js';
-import Game from '@mafia/Game';
-import SetupStore from '@mafia/SetupStore';
-import { PGSQL_ENABLED, PREFIX, PRODUCTION } from '@root/config';
+import Game from '#mafia/Game';
+import SetupStore from '#mafia/SetupStore';
+import { PGSQL_ENABLED, PREFIX, PRODUCTION } from '#root/config';
 import GuildSettingRepository from './orm/repositories/GuildSettingRepository';
 import GuildSettingsEntity from './orm/entities/GuildSettings';
 import { getCustomRepository } from 'typeorm';

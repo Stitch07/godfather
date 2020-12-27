@@ -1,5 +1,5 @@
-import SingleTarget from '@mafia/mixins/SingleTarget';
-import { fauxAlive } from '@util/utils';
+import SingleTarget from '#mafia/mixins/SingleTarget';
+import { fauxAlive } from '#util/utils';
 import { Event, Events, PieceContext } from '@sapphire/framework';
 import { Message } from 'discord.js';
 

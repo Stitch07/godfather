@@ -1,7 +1,7 @@
-import GodfatherCommand from '@lib/GodfatherCommand';
-import Player from '@mafia/Player';
-import { Phase } from '@root/lib/mafia/Game';
-import { canManage, listItems } from '@root/lib/util/utils';
+import GodfatherCommand from '#lib/GodfatherCommand';
+import Player from '#mafia/Player';
+import { Phase } from '#root/lib/mafia/Game';
+import { canManage, listItems } from '#root/lib/util/utils';
 import { ApplyOptions } from '@sapphire/decorators';
 import { Args, CommandContext, CommandOptions } from '@sapphire/framework';
 import { Message } from 'discord.js';

@@ -1,5 +1,5 @@
-import SlashCommand from '@lib/structures/SlashCommand';
-import RemainingCommand from '@root/commands/Mafia/remaining';
+import SlashCommand from '#lib/structures/SlashCommand';
+import RemainingCommand from '#root/commands/Mafia/remaining';
 import { PieceContext } from '@sapphire/framework';
 import { TextChannel } from 'discord.js';
 

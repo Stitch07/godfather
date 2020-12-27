@@ -1,13 +1,13 @@
-import { factionEmojis } from '@lib/constants';
-import GodfatherCommand from '@lib/GodfatherCommand';
-import Role from '@mafia/Role';
-import { allRoles } from '@mafia/roles';
+import { factionEmojis } from '#lib/constants';
+import GodfatherCommand from '#lib/GodfatherCommand';
+import Role from '#mafia/Role';
+import { allRoles } from '#mafia/roles';
 import { ApplyOptions } from '@sapphire/decorators';
 import { Args, BucketType, CommandContext, CommandOptions } from '@sapphire/framework';
 import { Time } from '@sapphire/time-utilities';
 import { codeBlock } from '@sapphire/utilities';
-import DefaultMap from '@util/DefaultMap';
-import { Branding } from '@util/utils';
+import DefaultMap from '#util/DefaultMap';
+import { Branding } from '#util/utils';
 import { Collection, Message, MessageEmbed } from 'discord.js';
 import * as roledocs from '../../assets/roledocs.json';
 

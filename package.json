@@ -7,6 +7,14 @@
 	"author": "Soumil07",
 	"license": "GPL-3.0",
 	"private": false,
+	"imports": {
+		"#lib/*": "./dist/lib/*.js",
+		"#mafia/*": "./dist/lib/mafia/*.js",
+		"#util/*": "./dist/lib/util/*.js",
+		"#root/*": "./dist/*.js",
+		"#mafia/roles": "./dist/lib/mafia/roles/index.js",
+		"#mafia/roles/*.js": "./dist/lib/mafia/roles/*.js"
+	},
 	"scripts": {
 		"build": "tsc -p src",
 		"dev": "yarn build && node .",
@@ -54,7 +62,6 @@
 		"discord.js": "^12.3.1",
 		"fs-nextra": "^0.5.1",
 		"js-yaml": "^3.14.1",
-		"module-alias": "^2.2.2",
 		"node-fetch": "^2.6.1",
 		"pg": "^8.4.0",
 		"reflect-metadata": "^0.1.13",
@@ -64,11 +71,5 @@
 	},
 	"resolutions": {
 		"@sapphire/pieces": "github:sapphire-project/pieces#build"
-	},
-	"_moduleAliases": {
-		"@lib": "dist/lib",
-		"@mafia": "dist/lib/mafia",
-		"@util": "dist/lib/util",
-		"@root": "dist/"
 	}
 }

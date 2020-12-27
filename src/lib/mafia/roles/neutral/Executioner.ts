@@ -1,8 +1,8 @@
-import Role from '@mafia/Role';
-import Player from '@mafia/Player';
-import { randomArray } from '@util/utils';
-import { allRoles } from '@mafia/roles';
-import ExecutionerFaction from '@mafia/factions/neutral/Executioner';
+import Role from '#mafia/Role';
+import Player from '#mafia/Player';
+import { randomArray } from '#util/utils';
+import { allRoles } from '#mafia/roles';
+import ExecutionerFaction from '#mafia/factions/neutral/Executioner';
 
 class Executioner extends Role {
 

@@ -84,10 +84,10 @@ module.exports = {
 
 	// A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
 	moduleNameMapper: {
-		'^@root/(.*)$': '<rootDir>/src/$1',
-		'^@mafia/(.*)$': '<rootDir>/src/lib/mafia/$1',
-		'^@lib/(.*)$': '<rootDir>/src/lib/$1',
-		'^@util/(.*)$': '<rootDir>/src/lib/util/$1'
+		'^#root/(.*)$': '<rootDir>/src/$1',
+		'^#mafia/(.*)$': '<rootDir>/src/lib/mafia/$1',
+		'^#lib/(.*)$': '<rootDir>/src/lib/$1',
+		'^#util/(.*)$': '<rootDir>/src/lib/util/$1'
 	},
 
 	// An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader

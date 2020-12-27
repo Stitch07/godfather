@@ -1,9 +1,9 @@
 import { basename, extname, parse } from 'path';
 import { scan } from 'fs-nextra';
-import Role from '@mafia/Role';
+import Role from '#mafia/Role';
 import { Constructor, toTitleCase } from '@sapphire/utilities';
 import { Collection } from 'discord.js';
-import { cast } from '@util/utils';
+import { cast } from '#util/utils';
 
 // A map of role names to the constructor of its corresponding role Class
 export const allRoles = new Collection<string, Constructor<Role>>();

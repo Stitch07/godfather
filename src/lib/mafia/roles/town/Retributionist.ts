@@ -1,7 +1,7 @@
-import SingleTarget from '@root/lib/mafia/mixins/SingleTarget';
-import Townie from '@mafia/mixins/Townie';
-import NightActionsManager, { NightActionPriority } from '@mafia/managers/NightActionsManager';
-import Player from '@mafia/Player';
+import SingleTarget from '#root/lib/mafia/mixins/SingleTarget';
+import Townie from '#mafia/mixins/Townie';
+import NightActionsManager, { NightActionPriority } from '#mafia/managers/NightActionsManager';
+import Player from '#mafia/Player';
 
 
 class Retributionist extends SingleTarget {

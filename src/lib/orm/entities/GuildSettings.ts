@@ -1,5 +1,5 @@
-import { PREFIX } from '@root/config';
-import { DEFAULT_GAME_SETTINGS } from '@lib/constants';
+import { PREFIX } from '#root/config';
+import { DEFAULT_GAME_SETTINGS } from '#lib/constants';
 import { GameSettings } from 'lib/mafia/Game';
 import { Column, Entity, PrimaryColumn } from 'typeorm';
 

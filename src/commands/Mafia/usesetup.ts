@@ -1,5 +1,5 @@
-import GodfatherCommand from '@lib/GodfatherCommand';
-import BasicSetup from '@lib/mafia/BasicSetup';
+import GodfatherCommand from '#lib/GodfatherCommand';
+import BasicSetup from '#lib/mafia/BasicSetup';
 import { ApplyOptions } from '@sapphire/decorators';
 import { Args, CommandOptions } from '@sapphire/framework';
 import { Message } from 'discord.js';

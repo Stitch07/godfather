@@ -1,7 +1,7 @@
 import { CommandOptions } from '@sapphire/framework';
 import { ApplyOptions } from '@sapphire/decorators';
-import GodfatherCommand from '@lib/GodfatherCommand';
-import { DEFAULT_GAME_SETTINGS } from '@lib/constants';
+import GodfatherCommand from '#lib/GodfatherCommand';
+import { DEFAULT_GAME_SETTINGS } from '#lib/constants';
 import { Message } from 'discord.js';
 
 @ApplyOptions<CommandOptions>({

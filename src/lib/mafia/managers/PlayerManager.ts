@@ -1,5 +1,5 @@
-import Game, { Phase } from '@mafia/Game';
-import Player from '@mafia/Player';
+import Game, { Phase } from '#mafia/Game';
+import Player from '#mafia/Player';
 import { User } from 'discord.js';
 
 export interface PlayerManagerShowOptions {

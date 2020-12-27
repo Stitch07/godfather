@@ -1,4 +1,4 @@
-import { DEFAULT_GAME_SETTINGS } from '@root/lib/constants';
+import { DEFAULT_GAME_SETTINGS } from '#root/lib/constants';
 import { MigrationInterface, QueryRunner, TableColumn } from 'typeorm';
 
 export class GameSettings1605441341946 implements MigrationInterface {
