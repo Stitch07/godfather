@@ -1,6 +1,6 @@
-import Role from '#mafia/Role';
+import Role from '#mafia/structures/Role';
 import TownFaction from '#mafia/factions/Town';
-import Player from '#mafia/Player';
+import Player from '#mafia/structures/Player';
 
 export default function Townie<TBaseRole extends typeof Role>(BaseRole: TBaseRole) {
 	// @ts-ignore tsc bug

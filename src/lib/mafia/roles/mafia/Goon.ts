@@ -1,7 +1,7 @@
-import Killer from '#root/lib/mafia/mixins/Killer';
+import Killer from '#mafia/mixins/Killer';
 import MafiaRole from '#mafia/mixins/MafiaRole';
 import { Message } from 'discord.js';
-import Player from '#mafia/Player';
+import Player from '#mafia/structures/Player';
 
 class Goon extends Killer {
 

@@ -1,7 +1,7 @@
 import GuardianAngelFaction from '#mafia/factions/neutral/GuardianAngel';
 import NightActionsManager, { Attack, NightActionPriority } from '#mafia/managers/NightActionsManager';
 import NoTarget from '#mafia/mixins/NoTarget';
-import Player from '#mafia/Player';
+import Player from '#mafia/structures/Player';
 import { pluralize, randomArray, remove } from '#util/utils';
 import { allRoles } from '..';
 

@@ -1,6 +1,6 @@
 import { exec as childProcessExec } from 'child_process';
 import { promisify } from 'util';
-import Player from '#mafia/Player';
+import Player from '#mafia/structures/Player';
 import { isThenable, regExpEsc } from '@sapphire/utilities';
 import { Client, GuildMember } from 'discord.js';
 import { Events } from '@sapphire/framework';

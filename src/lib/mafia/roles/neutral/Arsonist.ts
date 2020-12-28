@@ -2,9 +2,9 @@ import { PREFIX } from '#root/config';
 import { cast, listItems, remove } from '#util/utils';
 import { codeBlock } from '@sapphire/utilities';
 import ArsonistFaction from '../../factions/neutral/Arsonist';
-import Player from '../../Player';
-import Role from '../../Role';
-import { Phase } from '../../Game';
+import Player from '../../structures/Player';
+import Role from '../../structures/Role';
+import { Phase } from '../../structures/Game';
 import NightActionsManager, { Attack, Defense, NightActionPriority } from '../../managers/NightActionsManager';
 import { Message } from 'discord.js';
 

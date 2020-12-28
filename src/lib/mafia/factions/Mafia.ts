@@ -1,6 +1,6 @@
-import Faction from '#mafia/Faction';
-import Player from '#mafia/Player';
-import Game from '#mafia/Game';
+import Faction from '#mafia/structures/Faction';
+import Player from '#mafia/structures/Player';
+import Game from '#mafia/structures/Game';
 
 const OPPOSING_FACTIONS = ['Town', 'Arsonist', 'Werewolf', 'Serial Killer', 'Juggernaut'];
 const filterOpposingPowerRoles = (player: Player) => player.isAlive && OPPOSING_FACTIONS.includes(player.role!.faction.name) && (player.role!.canUseAction().check || player.role.name === 'Mayor');

@@ -1,5 +1,5 @@
-import Role from '#mafia/Role';
-import Player from '#mafia/Player';
+import Role from '#mafia/structures/Role';
+import Player from '#mafia/structures/Player';
 import { randomArray } from '#util/utils';
 import { allRoles } from '#mafia/roles';
 import ExecutionerFaction from '#mafia/factions/neutral/Executioner';

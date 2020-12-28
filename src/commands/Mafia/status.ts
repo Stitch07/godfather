@@ -2,7 +2,7 @@ import { Args, BucketType, CommandContext, CommandOptions } from '@sapphire/fram
 import { ApplyOptions } from '@sapphire/decorators';
 import GodfatherCommand from '#lib/GodfatherCommand';
 import { Message, MessageEmbed } from 'discord.js';
-import Game, { Phase } from '#mafia/Game';
+import Game, { Phase } from '#mafia/structures/Game';
 import { codeBlock } from '@sapphire/utilities';
 
 @ApplyOptions<CommandOptions>({

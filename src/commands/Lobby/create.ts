@@ -1,7 +1,7 @@
 import { DEFAULT_GAME_SETTINGS } from '#lib/constants';
 import GodfatherCommand from '#lib/GodfatherCommand';
-import Game, { GameSettings } from '#mafia/Game';
-import Player from '#mafia/Player';
+import Game, { GameSettings } from '#mafia/structures/Game';
+import Player from '#mafia/structures/Player';
 import { PGSQL_ENABLED } from '#root/config';
 import { ApplyOptions } from '@sapphire/decorators';
 import { Args, CommandContext, CommandOptions } from '@sapphire/framework';

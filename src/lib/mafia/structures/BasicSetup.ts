@@ -1,13 +1,13 @@
 import Setup, { SetupOptions } from './Setup';
 import Role from './Role';
-import { shuffle, randomArray } from '#lib/util/utils';
+import { shuffle, randomArray } from '#util/utils';
 import yaml = require('js-yaml');
-import { allRoles, roleCategories } from './roles';
+import { allRoles, roleCategories } from '../roles';
 import { Constructor } from '@sapphire/utilities';
 import { err, ok, PieceContext } from '@sapphire/framework';
-import Executioner from './roles/neutral/Executioner';
-import Mayor from './roles/town/Mayor';
-import { DEFAULT_GAME_SETTINGS } from '../constants';
+import Executioner from '../roles/neutral/Executioner';
+import Mayor from '../roles/town/Mayor';
+import { DEFAULT_GAME_SETTINGS } from '../../constants';
 
 export default class BasicSetup extends Setup {
 

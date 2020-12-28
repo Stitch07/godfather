@@ -1,6 +1,6 @@
 import { PREFIX } from '#root/config';
 import { DEFAULT_GAME_SETTINGS } from '#lib/constants';
-import { GameSettings } from 'lib/mafia/Game';
+import { GameSettings } from '#mafia/structures/Game';
 import { Column, Entity, PrimaryColumn } from 'typeorm';
 
 @Entity({ name: 'guild_settings' })

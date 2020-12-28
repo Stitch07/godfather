@@ -1,7 +1,7 @@
-import Killer from '#root/lib/mafia/mixins/Killer';
+import Killer from '#mafia/mixins/Killer';
 import NightActionsManager, { NightActionPriority } from '#mafia/managers/NightActionsManager';
 import Townie from '#mafia/mixins/Townie';
-import Player from '#mafia/Player';
+import Player from '#mafia/structures/Player';
 import { Message } from 'discord.js';
 import { pluralize } from '#root/lib/util/utils';
 

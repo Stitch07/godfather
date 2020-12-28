@@ -2,7 +2,7 @@ import Role from './Role';
 import Game from './Game';
 import { User } from 'discord.js';
 import { ENABLE_PRIVATE_CHANNELS } from '#root/config';
-import { cast } from '../util/utils';
+import { cast } from '../../util/utils';
 
 export default class Player {
 

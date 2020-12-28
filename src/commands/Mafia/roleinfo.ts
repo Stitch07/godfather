@@ -1,6 +1,6 @@
 import { factionEmojis } from '#lib/constants';
 import GodfatherCommand from '#lib/GodfatherCommand';
-import Role from '#mafia/Role';
+import Role from '#mafia/structures/Role';
 import { allRoles } from '#mafia/roles';
 import { ApplyOptions } from '@sapphire/decorators';
 import { Args, BucketType, CommandContext, CommandOptions } from '@sapphire/framework';

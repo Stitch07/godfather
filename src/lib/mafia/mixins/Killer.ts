@@ -1,6 +1,6 @@
 import NightActionsManager, { Attack, NightActionPriority } from '#mafia/managers/NightActionsManager';
-import Player from '#mafia/Player';
-import SingleTarget from '#root/lib/mafia/mixins/SingleTarget';
+import Player from '#mafia/structures/Player';
+import SingleTarget from '#mafia/mixins/SingleTarget';
 
 export default class Killer extends SingleTarget {
 

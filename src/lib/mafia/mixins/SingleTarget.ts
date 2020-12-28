@@ -1,7 +1,7 @@
-import Role from '#mafia/Role';
+import Role from '#mafia/structures/Role';
 import NightActionsManager, { NightAction, NightActionPriority } from '#mafia/managers/NightActionsManager';
-import Player from '#mafia/Player';
-import Game, { Phase } from '#mafia/Game';
+import Player from '#mafia/structures/Player';
+import Game, { Phase } from '#mafia/structures/Game';
 import { Awaited, codeBlock } from '@sapphire/utilities';
 import { listItems, remove } from '#util/utils';
 import { Message } from 'discord.js';

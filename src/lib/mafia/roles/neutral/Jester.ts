@@ -1,7 +1,7 @@
-import SingleTarget from '#root/lib/mafia/mixins/SingleTarget';
+import SingleTarget from '#mafia/mixins/SingleTarget';
 import JesterFaction from '#mafia/factions/neutral/Jester';
 import NightActionsManager, { Attack, NightActionPriority } from '#mafia/managers/NightActionsManager';
-import Player from '#mafia/Player';
+import Player from '#mafia/structures/Player';
 import { randomArray } from '#util/utils';
 
 class Jester extends SingleTarget {

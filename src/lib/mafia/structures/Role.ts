@@ -1,10 +1,10 @@
-import Player from '#mafia/Player';
+import Player from '#mafia/structures/Player';
 import { Awaited } from '@sapphire/framework';
 import { Message } from 'discord.js';
 import Faction from './Faction';
-import { Defense } from './managers/NightActionsManager';
-import { allRoles } from './roles';
-import type Executioner from './roles/neutral/Executioner';
+import { Defense } from '../managers/NightActionsManager';
+import { allRoles } from '../roles';
+import type Executioner from '../roles/neutral/Executioner';
 
 const INNOCENT_FACTIONS = ['Town', 'Survivor', 'Jester', 'Amnesiac', 'Guardian Angel', 'Juggernaut', 'Godfather', 'Executioner'];
 
