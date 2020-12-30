@@ -23,15 +23,6 @@
       ]
     },
     {
-      "login": "MeDerpWasTaken",
-      "name": "MeDerpWasTaken",
-      "avatar_url": "https://avatars1.githubusercontent.com/u/62511835?v=4",
-      "profile": "https://github.com/MeDerpWasTaken",
-      "contributions": [
-        "code"
-      ]
-    },
-    {
       "login": "SamirMishra27",
       "name": "SamirMishra27",
       "avatar_url": "https://avatars2.githubusercontent.com/u/68955143?v=4",
@@ -40,6 +31,15 @@
         "doc",
         "design",
         "business"
+      ]
+    },
+        {
+      "login": "MeDerpWasTaken",
+      "name": "MeDerpWasTaken",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/62511835?v=4",
+      "profile": "https://github.com/MeDerpWasTaken",
+      "contributions": [
+        "code"
       ]
     },
     {
