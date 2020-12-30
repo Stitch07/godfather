@@ -1,6 +1,7 @@
-import { Piece, ok, Result } from '@sapphire/framework';
+import { Piece, ok, Result, SapphireClient } from '@sapphire/framework';
 import { PieceContext, PieceOptions } from '@sapphire/pieces';
 import { mergeDefault, Constructor } from '@sapphire/utilities';
+import { RoleResolverData } from './BasicSetup';
 import Role from './Role';
 
 export interface SetupOptions extends PieceOptions {
@@ -29,7 +30,7 @@ export default abstract class Setup extends Piece {
 	}
 
 	// Any algorithms used to randomize roles should be handled here.
-	public abstract generate(): Constructor<Role>[];
+	public abstract generate(client: SapphireClient): RoleResolverData[];
 
 	// ok() is called while loading the setup, to check if the setup is functional
 	// checks for exe with no townies/single jester setups are handled here
@@ -39,7 +40,7 @@ export default abstract class Setup extends Piece {
 	}
 
 	public get totalPlayers() {
-		return this.generate().length;
+		return this.generate(this.context.client).length;
 	}
 
 }

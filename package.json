@@ -17,6 +17,7 @@
 	},
 	"scripts": {
 		"build": "tsc -p src",
+		"build:prod": "tsc -p src --sourceMap false --declaration false",
 		"dev": "yarn build && node .",
 		"clean": "rimraf dist",
 		"watch": "tsc-watch -b src --onSuccess \"node .\"",
@@ -53,6 +54,7 @@
 	"dependencies": {
 		"@sapphire/decorators": "^1.0.1",
 		"@sapphire/framework": "^1.0.0-alpha.0",
+		"@sapphire/pieces": "github:sapphire-project/pieces#build",
 		"@sapphire/plugin-logger": "1.0.2",
 		"@sapphire/ratelimits": "sapphire-project/utilities#build-ratelimits",
 		"@sapphire/time-utilities": "^1.1.0",

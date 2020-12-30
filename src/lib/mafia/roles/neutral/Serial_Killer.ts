@@ -1,5 +1,5 @@
 import Killer from '#mafia/mixins/Killer';
-import { Defense } from '#mafia/managers/NightActionsManager';
+import { Defence } from '#mafia/managers/NightActionsManager';
 import SerialKillerFaction from '#mafia/factions/neutral/SerialKiller';
 
 export default class Serial_Killer extends Killer {
@@ -12,8 +12,8 @@ export default class Serial_Killer extends Killer {
 	public actionText = 'stab a player';
 	public actionParticiple = 'stabbed';
 
-	public get defense() {
-		return Defense.Basic;
+	public get defence() {
+		return Defence.Basic;
 	}
 
 }

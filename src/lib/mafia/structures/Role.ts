@@ -2,7 +2,7 @@ import Player from '#mafia/structures/Player';
 import { Awaited } from '@sapphire/framework';
 import { Message } from 'discord.js';
 import Faction from './Faction';
-import { Defense } from '../managers/NightActionsManager';
+import { Attack, Defence } from '../managers/NightActionsManager';
 import { allRoles } from '../roles';
 import type Executioner from '../roles/neutral/Executioner';
 
@@ -17,6 +17,13 @@ abstract class Role {
 
 	public name = '';
 	public description = '';
+	public modifiers: RoleModifiers = {
+		voteWeight: 1,
+		innocence: null,
+		defence: null,
+		attack: null
+	};
+
 	public constructor(public player: Player) {
 	}
 
@@ -34,13 +41,17 @@ abstract class Role {
 		return INNOCENT_FACTIONS.includes(this.faction.name);
 	}
 
-	public get defense() {
-		return Defense.None;
+	public get defence() {
+		return Defence.None;
+	}
+
+	public get actualDefence() {
+		return this.modifiers.defence ?? this.defence;
 	}
 
 	// eslint-disable-next-line @typescript-eslint/class-literal-property-style
 	public get voteWeight() {
-		return 1;
+		return this.modifiers.voteWeight;
 	}
 
 	public init() {
@@ -94,6 +105,13 @@ interface Role {
 	onDeath(): Awaited<any>;
 	onVisit(visitor: Player): Awaited<any>;
 	faction: Faction;
+}
+
+export interface RoleModifiers {
+	voteWeight: number;
+	innocence: boolean | null;
+	defence: Defence | null;
+	attack: Attack | null;
 }
 
 export default Role;

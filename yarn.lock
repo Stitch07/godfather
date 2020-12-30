@@ -1074,8 +1074,9 @@
     lexure "^0.17.0"
 
 "@sapphire/pieces@^1.0.0", "@sapphire/pieces@github:sapphire-project/pieces#build":
-  version "1.0.0"
-  resolved "https://codeload.github.com/sapphire-project/pieces/tar.gz/59fe9869a78dfe714c548caff543f48ab26c33ed"
+  version "1.0.1"
+  uid "2fddbd8214016eb24aa0473f6eb8bafff8b28746"
+  resolved "https://codeload.github.com/sapphire-project/pieces/tar.gz/2fddbd8214016eb24aa0473f6eb8bafff8b28746"
   dependencies:
     "@discordjs/collection" "^0.1.6"
 

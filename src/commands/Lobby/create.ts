@@ -55,6 +55,7 @@ export default class extends GodfatherCommand {
 				if (game.players.get(user)) return;
 			}
 			game.players.push(new Player(user, game));
+			playersAdded.push(user);
 			await debouncedFn();
 		});
 

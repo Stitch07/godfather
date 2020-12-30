@@ -134,7 +134,7 @@ export const enum Attack {
 	Unstoppable
 }
 
-export const enum Defense {
+export const enum Defence {
 	None = 1,
 	Basic,
 	Powerful,

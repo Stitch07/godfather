@@ -48,16 +48,21 @@ export default class extends GodfatherCommand {
 
 		const sent = await message.channel.send(`Chose the setup **${game!.setup!.name}**. Randomizing roles...`);
 		game!.phase = Phase.Standby;
-		const generatedRoles = game!.setup!.generate();
+		const generatedRoles = game!.setup!.generate(this.context.client);
 		for (const player of game!.players) {
-			player.role = new (generatedRoles.shift()!)(player);
+			const { role, modifiers } = generatedRoles.shift()!;
+			player.role = new role(player);
+			for (const { modifier, context } of modifiers) {
+				if (modifier.canPatch(player.role)) modifier.patch(player.role, context);
+			}
 		}
 
 		const noPms: Player[] = [];
 		for (const player of game!.players) {
 			try {
 				await player.sendPM();
-			} catch {
+			} catch (error) {
+				this.context.client.logger.error(error);
 				noPms.push(player);
 			}
 			await player.role.init();

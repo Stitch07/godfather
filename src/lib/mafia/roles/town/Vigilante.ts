@@ -3,7 +3,6 @@ import NightActionsManager, { NightActionPriority } from '#mafia/managers/NightA
 import Townie from '#mafia/mixins/Townie';
 import Player from '#mafia/structures/Player';
 import { Message } from 'discord.js';
-import { pluralize } from '#root/lib/util/utils';
 
 class Vigilante extends Killer {
 
@@ -44,11 +43,6 @@ class Vigilante extends Killer {
 			this.guilt = true;
 		}
 		return super.tearDown(actions, target);
-	}
-
-	public get extraNightContext() {
-		if (this.bullets > 0) return `You have ${pluralize(this.bullets, 'bullet')} remaining.`;
-		return null;
 	}
 
 	private getInitialBullets() {
