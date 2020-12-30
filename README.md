@@ -31,7 +31,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- markdownlint-disable -->
 <table>
   <tr>
-    <td align="center"><a href="https://github.com/Soumil07"><img src="https://avatars0.githubusercontent.com/u/29275227?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Soumil07</b></sub></a><br /><a href="https://github.com/Soumil07/Godfather/commits?author=Soumil07" title="Code">💻</a> <a href="#mentoring-Soumil07" title="Mentoring">🧑‍🏫</a></td>
+    <td align="center"><a href="https://github.com/Soumil07"><img src="https://avatars0.githubusercontent.com/u/29275227?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Soumil07</b></sub></a><br /><a href="https://github.com/Soumil07/Godfather/commits?author=Soumil07" title="Code">💻</a> <a href="#mentoring-Soumil07" title="Mentoring">🧑‍🏫</a> <a href="#projectManagement-Soumil07" title="Project Management">📆</a></td>
   </tr>
 </table>
 
