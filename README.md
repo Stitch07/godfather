@@ -33,6 +33,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tr>
     <td align="center"><a href="https://github.com/Soumil07"><img src="https://avatars0.githubusercontent.com/u/29275227?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Soumil07</b></sub></a><br /><a href="https://github.com/Soumil07/Godfather/commits?author=Soumil07" title="Code">💻</a> <a href="#mentoring-Soumil07" title="Mentoring">🧑‍🏫</a> <a href="#projectManagement-Soumil07" title="Project Management">📆</a> <a href="https://github.com/Soumil07/Godfather/commits?author=Soumil07" title="Tests">⚠️</a></td>
     <td align="center"><a href="https://github.com/MeDerpWasTaken"><img src="https://avatars1.githubusercontent.com/u/62511835?v=4?s=100" width="100px;" alt=""/><br /><sub><b>MeDerpWasTaken</b></sub></a><br /><a href="https://github.com/Soumil07/Godfather/commits?author=MeDerpWasTaken" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/SamirMishra27"><img src="https://avatars2.githubusercontent.com/u/68955143?v=4?s=100" width="100px;" alt=""/><br /><sub><b>SamirMishra27</b></sub></a><br /><a href="https://github.com/Soumil07/Godfather/commits?author=SamirMishra27" title="Documentation">📖</a></td>
   </tr>
 </table>
 
