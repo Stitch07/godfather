@@ -1,0 +1,24 @@
+{
+  "projectName": "Godfather",
+  "projectOwner": "Soumil07",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": true,
+  "commitConvention": "eslint",
+  "contributors": [
+    {
+      "login": "Soumil07",
+      "name": "Soumil07",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/29275227?v=4",
+      "profile": "https://github.com/Soumil07",
+      "contributions": [
+        "code"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7
+}
