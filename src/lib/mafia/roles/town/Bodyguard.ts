@@ -14,6 +14,8 @@ class Bodyguard extends SingleTarget {
 	public hasGuarded = false;
 
 	public runAction(actions: NightActionsManager, target: Player) {
+		if (target.user.id === this.player.user.id) this.hasGuarded = true;
+
 		const playerRecord = actions.record.get(target.user.id);
 		if (!playerRecord.has('nightkill')) return;
 
@@ -32,9 +34,7 @@ class Bodyguard extends SingleTarget {
 			actions.record.set(target.user.id, playerRecord);
 
 			// self-vesting doesn't "guard" the player
-			if (target.user.id === this.player.user.id) {
-				this.hasGuarded = true;
-			} else {
+			if (target.user.id !== this.player.user.id) {
 				// kill the BG
 				actions.record.setAction(this.player.user.id, 'nightkill', { result: true, by: [] });
 				this.player.queueMessage('You were killed while defending your target!');
@@ -57,7 +57,8 @@ class Bodyguard extends SingleTarget {
 	public canTarget(player: Player) {
 		// TODO: customizable rule here
 		if (player === this.player && this.hasGuarded) return { check: false, reason: 'You can vest only once per game.' };
-		return super.canTarget(player);
+		if (!player.isAlive) return { check: false, reason: 'You cannot target dead players.' };
+		return { check: true, reason: '' };
 	}
 
 	public get extraNightContext() {
