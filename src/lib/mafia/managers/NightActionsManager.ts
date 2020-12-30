@@ -85,7 +85,6 @@ export default class NightActionsManager extends Array<NightAction> {
 	public reset() {
 		this.record = new NightRecord();
 		this.length = 0; // dumb way of clearing an array but it's necessary
-		this.framedPlayers.length = 0;
 	}
 
 }
@@ -134,7 +133,7 @@ export const enum Attack {
 	Unstoppable
 }
 
-export const enum Defense {
+export const enum Defence {
 	None = 1,
 	Basic,
 	Powerful,

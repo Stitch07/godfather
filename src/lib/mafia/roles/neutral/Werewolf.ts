@@ -1,5 +1,5 @@
 import Killer from '#mafia/mixins/Killer';
-import NightActionsManager, { Attack, Defense } from '#mafia/managers/NightActionsManager';
+import NightActionsManager, { Attack, Defence } from '#mafia/managers/NightActionsManager';
 import WerewolfFaction from '#mafia/factions/neutral/Werewolf';
 import Player from '#mafia/structures/Player';
 
@@ -23,6 +23,7 @@ export default class Werewolf extends Killer {
 		// kill all visitors
 		const visitors = target.visitors.filter(player => player.user.id !== this.player.user.id);
 		for (const visitor of visitors) {
+			if (visitor.role.actualDefence > this.attackStrength) continue;
 			actions.record.setAction(visitor.user.id, 'nightkill', { result: true, by: [this.player], type: this.attackStrength });
 			visitor.queueMessage('You were mauled by a Werewolf!');
 		}
@@ -39,8 +40,8 @@ export default class Werewolf extends Killer {
 		return !this.canRampage();
 	}
 
-	public get defense() {
-		return Defense.Basic;
+	public get defence() {
+		return Defence.Basic;
 	}
 
 	public get attackStrength() {

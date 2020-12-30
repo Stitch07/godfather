@@ -1,5 +1,5 @@
 import SurivorFaction from '#mafia/factions/neutral/Survivor';
-import { Defense, NightActionPriority } from '#mafia/managers/NightActionsManager';
+import { Defence, NightActionPriority } from '#mafia/managers/NightActionsManager';
 import NoTarget from '#mafia/mixins/NoTarget';
 import Player from '#mafia/structures/Player';
 import { pluralize } from '#util/utils';
@@ -34,9 +34,9 @@ export default class Survivor extends NoTarget {
 		return super.canUseAction();
 	}
 
-	public get defense() {
-		if (this.vested) return Defense.Basic;
-		return Defense.None;
+	public get defence() {
+		if (this.vested) return Defence.Basic;
+		return Defence.None;
 	}
 
 	public setUp() {

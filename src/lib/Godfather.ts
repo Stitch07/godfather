@@ -11,6 +11,7 @@ import { getCustomRepository } from 'typeorm';
 import SlashCommandStore from './structures/SlashCommandStore';
 
 import '@sapphire/plugin-logger/register';
+import ModifierStore from './mafia/structures/ModifierStore';
 
 export default class Godfather extends SapphireClient {
 
@@ -42,6 +43,10 @@ export default class Godfather extends SapphireClient {
 
 		this.slashCommands = new SlashCommandStore();
 		this.registerStore(this.slashCommands);
+
+		this.modifiers = new ModifierStore();
+		this.registerStore(this.modifiers);
+		this.modifiers.registerPath(`${process.cwd()}/dist/lib/mafia/modifiers`);
 
 		this.fetchPrefix = async (message: Message) => {
 			if (!message.guild) return [PREFIX, ''];
