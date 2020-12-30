@@ -17,7 +17,7 @@
 	},
 	"scripts": {
 		"build": "tsc -p src",
-		"build:prod": "tsc -p src --sourceMap false --declaration false",
+		"build:prod": "tsc -p src --sourceMap false",
 		"dev": "yarn build && node .",
 		"clean": "rimraf dist",
 		"watch": "tsc-watch -b src --onSuccess \"node .\"",
