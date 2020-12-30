@@ -21,6 +21,15 @@
         "projectManagement",
         "test"
       ]
+    },
+    {
+      "login": "MeDerpWasTaken",
+      "name": "MeDerpWasTaken",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/62511835?v=4",
+      "profile": "https://github.com/MeDerpWasTaken",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7
