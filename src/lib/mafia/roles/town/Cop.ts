@@ -1,7 +1,7 @@
-import SingleTarget from '@root/lib/mafia/mixins/SingleTarget';
-import NightActionsManager, { NightActionPriority } from '@mafia/managers/NightActionsManager';
-import Player from '@mafia/Player';
-import Townie from '@mafia/mixins/Townie';
+import SingleTarget from '#mafia/mixins/SingleTarget';
+import NightActionsManager, { NightActionPriority } from '#mafia/managers/NightActionsManager';
+import Player from '#mafia/structures/Player';
+import Townie from '#mafia/mixins/Townie';
 
 class Cop extends SingleTarget {
 
@@ -25,8 +25,11 @@ class Cop extends SingleTarget {
 	}
 
 	public async tearDown(actions: NightActionsManager, target: Player) {
-		let innocence = this.innocenceModifier(target.role.innocence);
-		if (actions.framedPlayers.includes(target)) innocence = !innocence;
+		let innocence = this.innocenceModifier(target.role.modifiers.innocence ?? target.role.innocence);
+		if (actions.framedPlayers.includes(target)) {
+			innocence = !innocence;
+			actions.framedPlayers.splice(actions.framedPlayers.indexOf(target), 1);
+		}
 		await this.player.queueMessage(innocence ? 'Your target is innocent.' : 'Your target is suspicious.');
 	}
 

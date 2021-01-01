@@ -1,7 +1,7 @@
-import JuggernautFaction from '@mafia/factions/neutral/Juggernaut';
-import NightActionsManager, { Attack, Defense, NightActionPriority } from '@mafia/managers/NightActionsManager';
-import Killer from '@mafia/mixins/Killer';
-import Player from '@mafia/Player';
+import JuggernautFaction from '#mafia/factions/neutral/Juggernaut';
+import NightActionsManager, { Attack, Defence, NightActionPriority } from '#mafia/managers/NightActionsManager';
+import Killer from '#mafia/mixins/Killer';
+import Player from '#mafia/structures/Player';
 
 class Juggernaut extends Killer {
 
@@ -21,8 +21,8 @@ class Juggernaut extends Killer {
 		this.level = level ?? 0;
 	}
 
-	public get defense() {
-		return Defense.Basic;
+	public get defence() {
+		return Defence.Basic;
 	}
 
 	public get attackStrength() {
@@ -43,6 +43,7 @@ class Juggernaut extends Killer {
 		if (this.level >= 2) {
 			const visitors = target.visitors.filter(player => player.user.id !== this.player.user.id);
 			for (const visitor of visitors) {
+				if (visitor.role.actualDefence > this.attackStrength) continue;
 				actions.record.setAction(visitor.user.id, 'nightkill', { result: true, by: [this.player], type: this.attackStrength });
 				this.player.queueMessage('You assaulted someone who visted your target!');
 				visitor.queueMessage('You were assaulted by a Juggernaut!');

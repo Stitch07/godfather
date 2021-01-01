@@ -1,4 +1,4 @@
-import { DEFAULT_GAME_SETTINGS } from '@lib/constants';
+import { DEFAULT_GAME_SETTINGS } from '#lib/constants';
 import { MigrationInterface, QueryRunner, TableColumn } from 'typeorm';
 
 export class AddMaxPlayers1605974977083 implements MigrationInterface {

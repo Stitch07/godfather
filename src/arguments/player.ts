@@ -1,5 +1,5 @@
-import GodfatherChannel from '@lib/extensions/GodfatherChannel';
-import Player from '@mafia/Player';
+import GodfatherChannel from '#lib/extensions/GodfatherChannel';
+import Player from '#mafia/structures/Player';
 import { Argument, ArgumentContext, ArgumentStore, AsyncArgumentResult, Result, UserError } from '@sapphire/framework';
 import { User } from 'discord.js';
 

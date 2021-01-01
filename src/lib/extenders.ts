@@ -1,5 +1,5 @@
 import { Structures } from 'discord.js';
-import GodfatherChannel, { GodfatherDMChannel } from '@lib/extensions/GodfatherChannel';
+import GodfatherChannel, { GodfatherDMChannel } from '#lib/extensions/GodfatherChannel';
 import GodfatherMessage from './extensions/GodfatherMessage';
 import GodfatherGuild from './extensions/GodfatherGuild';
 

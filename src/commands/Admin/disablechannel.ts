@@ -1,8 +1,8 @@
 import { Args, CommandContext, CommandOptions } from '@sapphire/framework';
 import { ApplyOptions } from '@sapphire/decorators';
-import GodfatherCommand from '@lib/GodfatherCommand';
+import GodfatherCommand from '#lib/GodfatherCommand';
 import { Message, TextChannel } from 'discord.js';
-import GuildSettingsEntity from '@root/lib/orm/entities/GuildSettings';
+import GuildSettingsEntity from '#root/lib/orm/entities/GuildSettings';
 
 const mapChannelIDs = (channelID: string) => `<#${channelID}>`;
 

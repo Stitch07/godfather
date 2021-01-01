@@ -10,16 +10,16 @@
 		"composite": true,
 		"declaration": true,
 		"paths": {
-			"@root/*": [
+			"#root/*": [
 				"../src/*"
 			],
-			"@mafia/*": [
+			"#mafia/*": [
 				"../src/lib/mafia/*"
 			],
-			"@lib/*": [
+			"#lib/*": [
 				"../src/lib/*",
 			],
-			"@util/*": [
+			"#util/*": [
 				"../src/lib/util/*"
 			],
 			"@mocks/*": [

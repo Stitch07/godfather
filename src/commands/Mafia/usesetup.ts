@@ -1,5 +1,5 @@
-import GodfatherCommand from '@lib/GodfatherCommand';
-import BasicSetup from '@lib/mafia/BasicSetup';
+import GodfatherCommand from '#lib/GodfatherCommand';
+import BasicSetup from '#mafia/structures/BasicSetup';
 import { ApplyOptions } from '@sapphire/decorators';
 import { Args, CommandOptions } from '@sapphire/framework';
 import { Message } from 'discord.js';
@@ -29,8 +29,8 @@ export default class extends GodfatherCommand {
 		if (this.context.client.setups.has(setupData)) {
 			game.setup = this.context.client.setups.get(setupData);
 		} else {
-			const setup = BasicSetup.create(this.clean(setupData));
-			const check = setup.ok(setup.generate());
+			const setup = BasicSetup.create(this.context.client, this.clean(setupData));
+			const check = setup.ok(setup.generate(this.context.client).map(data => data.role));
 			if (!check.success) throw `Invalid setup: ${check.error}`;
 			game.setup = setup;
 		}

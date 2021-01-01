@@ -1,4 +1,4 @@
-import { PRIVATE_CHANNEL_CATEGORY, PRIVATE_CHANNEL_SERVER } from '@root/config';
+import { PRIVATE_CHANNEL_CATEGORY, PRIVATE_CHANNEL_SERVER } from '#root/config';
 import { Permissions } from 'discord.js';
 import Game from './Game';
 import Player from './Player';

@@ -1,8 +1,8 @@
 import { createMockChannel, createMockUser } from '@mocks/index';
-import Setup from '@mafia/Setup';
-import Game from '@mafia/Game';
-import Player from '@mafia/Player';
-import Role from '@mafia/Role';
+import Setup from '#mafia/Setup';
+import Game from '#mafia/Game';
+import Player from '#mafia/Player';
+import Role from '#mafia/Role';
 import { Constructor } from '@sapphire/utilities';
 
 interface MockGameParams {

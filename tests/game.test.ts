@@ -1,11 +1,11 @@
-import Game, { Phase } from '@mafia/Game';
+import Game, { Phase } from '#mafia/Game';
 import { createMockUser } from './mocks/mockUser';
 import { createMockChannel } from './mocks/mockChannel';
-import Player from '@mafia/Player';
-import Vanilla from '@mafia/roles/town/Vanilla';
-import Mafia_Vanilla from '@mafia/roles/mafia/Mafia_Vanilla';
-import { NotVoting } from '@mafia/managers/VoteManager';
-import { DEFAULT_GAME_SETTINGS } from '@lib/constants';
+import Player from '#mafia/Player';
+import Vanilla from '#mafia/roles/town/Vanilla';
+import Mafia_Vanilla from '#mafia/roles/mafia/Mafia_Vanilla';
+import { NotVoting } from '#mafia/managers/VoteManager';
+import { DEFAULT_GAME_SETTINGS } from '#lib/constants';
 
 
 // This file tests a full Mafia Game from start to finish
@@ -70,7 +70,7 @@ describe('game testing', () => {
 			'Not Voting (2): Player1, Player5'
 		].join('\n');
 
-		expect(game.votes.show({ })).toBe(EXPECTED_VOTE_COUNT);
+		expect(game.votes.show({})).toBe(EXPECTED_VOTE_COUNT);
 	});
 
 	test('starting days', async () => {

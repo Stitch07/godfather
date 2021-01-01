@@ -1,5 +1,5 @@
-import GodfatherCommand from '@lib/GodfatherCommand';
-import Game, { Phase } from '@mafia/Game';
+import GodfatherCommand from '#lib/GodfatherCommand';
+import Game, { Phase } from '#mafia/structures/Game';
 import { ApplyOptions } from '@sapphire/decorators';
 import { BucketType, CommandOptions } from '@sapphire/framework';
 import { Time } from '@sapphire/time-utilities';

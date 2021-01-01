@@ -1,5 +1,5 @@
-import Townie from '@mafia/mixins/Townie';
-import Role from '@mafia/Role';
+import Townie from '#mafia/mixins/Townie';
+import Role from '#mafia/structures/Role';
 
 class Vanilla extends Role {
 

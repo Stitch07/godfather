@@ -1,7 +1,7 @@
-import Faction from '@mafia/Faction';
-import Player from '@mafia/Player';
-import Executioner from '@mafia/roles/neutral/Executioner';
-import { cast } from '@util/utils';
+import Faction from '#mafia/structures/Faction';
+import Player from '#mafia/structures/Player';
+import Executioner from '#mafia/roles/neutral/Executioner';
+import { cast } from '#util/utils';
 
 export default class ExecutionerFaction extends Faction {
 

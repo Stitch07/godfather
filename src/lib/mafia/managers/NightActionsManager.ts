@@ -1,8 +1,8 @@
-import Player from '@mafia/Player';
-import DefaultMap from '@util/DefaultMap';
-import Game, { Phase } from '@mafia/Game';
-import SingleTarget from '@root/lib/mafia/mixins/SingleTarget';
-import { fauxAlive, listItems } from '@root/lib/util/utils';
+import Player from '#mafia/structures/Player';
+import DefaultMap from '#util/DefaultMap';
+import Game, { Phase } from '#mafia/structures/Game';
+import SingleTarget from '#mafia/mixins/SingleTarget';
+import { fauxAlive, listItems } from '#root/lib/util/utils';
 
 export default class NightActionsManager extends Array<NightAction> {
 
@@ -85,7 +85,6 @@ export default class NightActionsManager extends Array<NightAction> {
 	public reset() {
 		this.record = new NightRecord();
 		this.length = 0; // dumb way of clearing an array but it's necessary
-		this.framedPlayers.length = 0;
 	}
 
 }
@@ -134,7 +133,7 @@ export const enum Attack {
 	Unstoppable
 }
 
-export const enum Defense {
+export const enum Defence {
 	None = 1,
 	Basic,
 	Powerful,

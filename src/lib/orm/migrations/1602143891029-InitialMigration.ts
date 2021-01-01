@@ -1,4 +1,4 @@
-import { PREFIX } from '@root/config';
+import { PREFIX } from '#root/config';
 import { MigrationInterface, QueryRunner, Table, TableColumn } from 'typeorm';
 
 export class InitialMigration1602143891029 implements MigrationInterface {

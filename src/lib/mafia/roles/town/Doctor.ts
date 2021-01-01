@@ -1,7 +1,7 @@
-import SingleTarget from '@root/lib/mafia/mixins/SingleTarget';
-import Townie from '@mafia/mixins/Townie';
+import SingleTarget from '#mafia/mixins/SingleTarget';
+import Townie from '#mafia/mixins/Townie';
 import NightActionsManager, { Attack, NightActionPriority } from '../../managers/NightActionsManager';
-import Player from '../../Player';
+import Player from '../../structures/Player';
 
 class Doctor extends SingleTarget {
 

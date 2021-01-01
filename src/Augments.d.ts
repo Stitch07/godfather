@@ -1,8 +1,9 @@
-import Game, { GameSettings } from '@mafia/Game';
-import Player from '@mafia/Player';
-import SetupStore from '@mafia/SetupStore';
+import Game, { GameSettings } from '#mafia/structures/Game';
+import Player from '#mafia/structures/Player';
+import SetupStore from '#mafia/structures/SetupStore';
 import { Piece } from '@sapphire/framework';
 import { Collection, Guild, User } from 'discord.js';
+import ModifierStore from './lib/mafia/structures/ModifierStore';
 import GuildSettingsEntity from './lib/orm/entities/GuildSettings';
 import SlashCommandStore from './lib/structures/SlashCommandStore';
 
@@ -22,6 +23,7 @@ declare module 'discord.js' {
 		readonly invite: string;
 		ownerID: string | undefined;
 		games: Collection<string, Game>;
+		modifiers: ModifierStore;
 		setups: SetupStore;
 		settingsCache: Map<string, GuildSettingsEntity>;
 		slashCommands: SlashCommandStore;

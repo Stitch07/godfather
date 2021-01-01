@@ -1,8 +1,8 @@
-import { DEFAULT_GAME_SETTINGS, GUILD_SETTINGS_METADATA } from '@lib/constants';
-import GodfatherCommand from '@lib/GodfatherCommand';
-import GuildSettingsEntity from '@lib/orm/entities/GuildSettings';
-import GuildSettingRepository from '@lib/orm/repositories/GuildSettingRepository';
-import { GameSettings } from '@mafia/Game';
+import { DEFAULT_GAME_SETTINGS, GUILD_SETTINGS_METADATA } from '#lib/constants';
+import GodfatherCommand from '#lib/GodfatherCommand';
+import GuildSettingsEntity from '#lib/orm/entities/GuildSettings';
+import GuildSettingRepository from '#lib/orm/repositories/GuildSettingRepository';
+import { GameSettings } from '#mafia/structures/Game';
 import { ApplyOptions } from '@sapphire/decorators';
 import { Args, CommandOptions, PreconditionContainerAll } from '@sapphire/framework';
 import { Time } from '@sapphire/time-utilities';

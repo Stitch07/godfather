@@ -1,5 +1,5 @@
-import SingleTarget from '@mafia/mixins/SingleTarget';
-import { fauxAlive } from '@util/utils';
+import SingleTarget from '#mafia/mixins/SingleTarget';
+import { fauxAlive } from '#util/utils';
 import { Event, Events, PieceContext } from '@sapphire/framework';
 import { Message } from 'discord.js';
 
@@ -14,7 +14,7 @@ export default class extends Event<Events.UnknownCommand> {
 		if (message.guild) return;
 
 		const game = this.context.client.games.find(game => Boolean(game.players.get(message.author)));
-		if (!game) return;
+		if (!game || !game.hasStarted) return;
 
 		const player = game.players.get(message.author)!;
 		if (!fauxAlive(player) || !Reflect.has(player.role, 'action')) return;

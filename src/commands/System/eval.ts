@@ -1,5 +1,5 @@
-import GodfatherCommand from '@lib/GodfatherCommand';
-import { clean } from '@util/utils';
+import GodfatherCommand from '#lib/GodfatherCommand';
+import { clean } from '#util/utils';
 import { ApplyOptions } from '@sapphire/decorators';
 import { Args, CommandOptions } from '@sapphire/framework';
 import { Type } from '@sapphire/type';

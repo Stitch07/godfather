@@ -1,9 +1,9 @@
-import GodfatherCommand from '@lib/GodfatherCommand';
-import { Phase } from '@mafia/Game';
-import Player from '@mafia/Player';
+import GodfatherCommand from '#lib/GodfatherCommand';
+import { Phase } from '#mafia/structures/Game';
+import Player from '#mafia/structures/Player';
 import { ApplyOptions } from '@sapphire/decorators';
 import { CommandOptions } from '@sapphire/framework';
-import { pluralize } from '@util/utils';
+import { pluralize } from '#util/utils';
 import { Message } from 'discord.js';
 
 @ApplyOptions<CommandOptions>({

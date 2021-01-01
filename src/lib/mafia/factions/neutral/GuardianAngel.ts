@@ -1,7 +1,7 @@
-import Faction from '@mafia/Faction';
-import Player from '@mafia/Player';
-import { cast } from '@root/lib/util/utils';
-import Guardian_Angel from '@mafia/roles/neutral/Guardian_Angel';
+import Faction from '#mafia/structures/Faction';
+import Player from '#mafia/structures/Player';
+import { cast } from '#root/lib/util/utils';
+import Guardian_Angel from '#mafia/roles/neutral/Guardian_Angel';
 
 export default class GuardianAngelFaction extends Faction {
 

@@ -1,7 +1,7 @@
-import SingleTarget from '@mafia/mixins/SingleTarget';
-import Townie from '@mafia/mixins/Townie';
-import NightActionsManager, { NightActionPriority } from '@mafia/managers/NightActionsManager';
-import Player from '@mafia/Player';
+import SingleTarget from '#mafia/mixins/SingleTarget';
+import Townie from '#mafia/mixins/Townie';
+import NightActionsManager, { NightActionPriority } from '#mafia/managers/NightActionsManager';
+import Player from '#mafia/structures/Player';
 
 class Investigator extends SingleTarget {
 
@@ -14,7 +14,10 @@ class Investigator extends SingleTarget {
 
 	public async tearDown(actions: NightActionsManager, target: Player) {
 		let results = this.getResult(target.role.name);
-		if (actions.framedPlayers.includes(target)) results = this.getResult('Framer');
+		if (actions.framedPlayers.includes(target)) {
+			results = this.getResult('Framer');
+			actions.framedPlayers.splice(actions.framedPlayers.indexOf(target), 1);
+		}
 		await this.player.queueMessage(results);
 	}
 

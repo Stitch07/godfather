@@ -1,6 +1,6 @@
 import NightActionsManager, { NightActionPriority } from '../../managers/NightActionsManager';
-import SingleTarget from '@root/lib/mafia/mixins/SingleTarget';
-import Player from '@mafia/Player';
+import SingleTarget from '#mafia/mixins/SingleTarget';
+import Player from '#mafia/structures/Player';
 import TownFaction from '../../factions/Town';
 
 export default class Neapolitan extends SingleTarget {
