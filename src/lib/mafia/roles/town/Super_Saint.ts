@@ -18,7 +18,8 @@ class SuperSaint extends Role {
 			lastVoter.kill('blown up by Super Saint');
 			await game.channel.send('💣 **BOOOOOOOOOOOOOOM!!!**');
 			await sleep(2 * 1000);
-			await game.channel.send(`${lastVoter} hammered the Super Saint and was blown up! They were a **${lastVoter.role.name}**`);
+
+			await game.channel.send(`${lastVoter} hammered the Super Saint and was blown up! ${lastVoter.displayRoleAndWill()}`);
 		}
 
 		return super.onDeath();

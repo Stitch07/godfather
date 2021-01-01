@@ -39,4 +39,7 @@ export default class GuildSettingsEntity implements GameSettings {
 	@Column('boolean', { 'default': false })
 	public adaptiveSlowmode = false;
 
+	@Column('boolean', { 'default': false })
+	public disableWills = false;
+
 }

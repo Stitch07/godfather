@@ -55,7 +55,7 @@ export default class PlayerManager extends Array<Player> {
 
 		// modkill if nobody is replacing
 		const phaseStr = this.game.phase === Phase.Day ? 'D' : 'N';
-		await this.game.channel.send(`${player.user.tag} was modkilled. They were a *${player.role!.display}*.`);
+		await this.game.channel.send(`${player.user.tag} was modkilled. ${player.displayRoleAndWill(this.game.phase === Phase.Night)}`);
 		player.kill(`modkilled ${phaseStr}${this.game.cycle}`);
 		return true;
 	}

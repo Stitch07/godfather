@@ -78,10 +78,7 @@ export default class Game {
 				this.idlePhases = 0;
 				const deadText = [];
 				for (const deadPlayer of deadPlayers) {
-					const roleText = deadPlayer.cleaned
-						? 'We could not determine their role.'
-						: `They were a ${deadPlayer.role!.display}`;
-					deadText.push(`${deadPlayer} died last night. ${roleText}`);
+					deadText.push(`${deadPlayer} died last night. ${deadPlayer.displayRoleAndWill(true)}`);
 				}
 				await this.channel.send(deadText.join('\n'));
 			}
@@ -177,7 +174,7 @@ export default class Game {
 		this.phase = Phase.Standby;
 		if (!player.isAlive) return;
 
-		await this.channel.send(`${player.user.tag} was hammered. They were a **${player.role!.display}**.\n${this.votes.show({ header: 'Final Vote Count', codeblock: true })}`);
+		await this.channel.send(`${player.user.tag} was hammered. ${player.displayRoleAndWill()}\n${this.votes.show({ header: 'Final Vote Count', codeblock: true })}`);
 		await player.kill(`lynched D${this.cycle}`);
 		this.idlePhases = 0;
 
@@ -381,6 +378,7 @@ export interface GameSettings {
 	numberedNicknames: boolean;
 	muteAtNight: boolean;
 	adaptiveSlowmode: boolean;
+	disableWills: boolean;
 }
 
 export interface EndgameCheckData {
