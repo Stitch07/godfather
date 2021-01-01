@@ -56,7 +56,7 @@ export const cast = <T>(from: unknown) => (from as T);
  * Python's enumerate()
  * @param array The array to iterate over
  */
-export function* enumerate<T>(array: readonly T[]): Generator<[number, T]> {
+export function *enumerate<T>(array: readonly T[]): Generator<[number, T]> {
 	for (let i = 0; i < array.length; i++) {
 		yield [i, array[i]];
 	}

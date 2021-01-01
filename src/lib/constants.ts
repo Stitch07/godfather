@@ -19,7 +19,8 @@ export const DEFAULT_GAME_SETTINGS: GameSettings = {
 	disableWhispers: false,
 	numberedNicknames: false,
 	muteAtNight: false,
-	adaptiveSlowmode: false
+	adaptiveSlowmode: false,
+	disableWills: false
 };
 
 export const DEFAULT_ACTION_FLAGS = {
@@ -82,6 +83,11 @@ export const GUILD_SETTINGS_METADATA: SettingsEntry<keyof ArgType>[] = [
 	},
 	{
 		name: 'adaptiveSlowmode',
+		type: 'boolean',
+		display: (value: boolean) => value ? 'Enabled' : 'Disabled'
+	},
+	{
+		name: 'disableWills',
 		type: 'boolean',
 		display: (value: boolean) => value ? 'Enabled' : 'Disabled'
 	}
