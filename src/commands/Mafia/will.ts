@@ -21,9 +21,9 @@ export default class extends GodfatherCommand {
 		const will = await args.rest('string')
 			.catch(() => { throw 'Missing required argument: will'; });
 
-		if (will.length > 400) throw 'Wills cannot be more then 400 characters.';
+		if (will.length > 400) throw 'Wills cannot be more than 400 characters.';
 
-		if (will.split('\n').length > 8) throw 'Wills cannot be more then 8 lines.';
+		if (will.split('\n').length > 8) throw 'Wills cannot be more than 8 lines.';
 
 		player.will = will;
 
