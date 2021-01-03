@@ -3,6 +3,7 @@ import { ApplyOptions } from '@sapphire/decorators';
 import GodfatherCommand from '@lib/GodfatherCommand';
 import { Message, MessageReaction, User } from 'discord.js';
 import { Time } from '@sapphire/time-utilities';
+import { handleRequiredArg } from '@util/utils';
 
 @ApplyOptions<CommandOptions>({
 	description: 'Removes a player from the game.',
@@ -15,8 +16,7 @@ import { Time } from '@sapphire/time-utilities';
 export default class extends GodfatherCommand {
 
 	public async run(message: Message, args: Args) {
-		const player = await args.pick('player')
-			.catch(() => { throw 'Invalid player provided.'; });
+		const player = await args.pick('player').catch(handleRequiredArg('player'));
 		const { game } = message.channel;
 		if (game?.host.user.id === player.user.id) return message.channel.send('You cannot remove yourself.');
 		if (!game!.hasStarted) {

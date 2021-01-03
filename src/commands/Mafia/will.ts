@@ -17,8 +17,7 @@ export default class extends GodfatherCommand {
 		if (game.settings.disableWills) throw 'Wills are disabled in this game.';
 		if (!game.hasStarted) throw "The game hasn't started yet!";
 
-		let player = game.players.get(message.author)!;
-
+		const player = game.players.get(message.author)!;
 		const will = await args.rest('string', { maximum: 400 })
 			.catch(() => { throw 'Missing required argument: will'; });
 

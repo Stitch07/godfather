@@ -16,7 +16,7 @@ export default class extends Argument<Player> {
 		const player = game!.players.get(user.value);
 
 		if (player) return this.ok(player);
-		return this.error(argument, 'ArgumentPlayerInvalidPlayer', 'Invalid player.');
+		return this.error(argument, 'ArgumentPlayerInvalidPlayer', 'That user is not playing.');
 	}
 
 }

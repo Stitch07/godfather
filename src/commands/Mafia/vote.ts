@@ -3,6 +3,7 @@ import { Phase } from '@mafia/structures/Game';
 import { ApplyOptions } from '@sapphire/decorators';
 import { Args, BucketType, CommandOptions } from '@sapphire/framework';
 import { Time } from '@sapphire/time-utilities';
+import { handleRequiredArg } from '@util/utils';
 import { Message } from 'discord.js';
 
 @ApplyOptions<CommandOptions>({
@@ -13,8 +14,7 @@ import { Message } from 'discord.js';
 export default class extends GodfatherCommand {
 
 	public async run(message: Message, args: Args) {
-		const target = await args.pick('player')
-			.catch(() => { throw 'An invalid player was provided.'; });
+		const target = await args.pick('player').catch(handleRequiredArg('player'));
 		const { game } = message.channel;
 
 		if (game?.nightActions.protectedPlayers.includes(target)) return game.channel.send('You cannot vote targets protected by a Guardian Angel');
