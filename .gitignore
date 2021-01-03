@@ -6,3 +6,7 @@ config.json
 **/.ropeproject
 database/data
 .coverage
+
+dist/
+src/
+node_modules/
