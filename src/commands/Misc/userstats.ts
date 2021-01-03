@@ -8,7 +8,7 @@ import { Message } from 'discord.js';
 import { getConnection } from 'typeorm';
 
 @ApplyOptions<CommandOptions>({
-	preconditions: [{ entry: 'Cooldown', context: { bucketType: BucketType.Channel, delay: Time.Second * 5 } }],
+	preconditions: [{ name: 'Cooldown', context: { bucketType: BucketType.Channel, delay: Time.Second * 5 } }],
 	strategyOptions: {
 		options: ['faction', 'role']
 	}

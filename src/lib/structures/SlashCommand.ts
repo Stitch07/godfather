@@ -1,17 +1,17 @@
-import { Awaited, Piece, PieceContext, PreconditionContainerAll, PreconditionContainerResolvable } from '@sapphire/framework';
+import { Awaited, IPreconditionContainer, Piece, PieceContext, PreconditionContainerArray, PreconditionArrayResolvable } from '@sapphire/framework';
 import { PieceOptions } from '@sapphire/pieces';
 
 export default abstract class SlashCommand extends Piece {
 
 	public description: string;
 
-	public preconditions: PreconditionContainerAll;
+	public preconditions: IPreconditionContainer;
 
 	public constructor(context: PieceContext, options: SlashCommandOptions) {
 		super(context, options);
 
 		this.description = options.description;
-		this.preconditions = new PreconditionContainerAll(this.context.client, options.preconditions ?? []);
+		this.preconditions = new PreconditionContainerArray(options.preconditions ?? []);
 	}
 
 	public abstract run(interaction: any): Awaited<any>;
@@ -33,7 +33,7 @@ export default abstract class SlashCommand extends Piece {
 
 export interface SlashCommandOptions extends PieceOptions {
 	description: string;
-	preconditions?: PreconditionContainerResolvable;
+	preconditions?: PreconditionArrayResolvable;
 }
 
 export interface SlashCommandReplyOptions {

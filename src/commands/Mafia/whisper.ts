@@ -8,7 +8,7 @@ import { Message } from 'discord.js';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['w'],
-	preconditions: ['DMOnly', { entry: 'Cooldown', context: { delay: Time.Second * 10 } }]
+	preconditions: ['DMOnly', { name: 'Cooldown', context: { delay: Time.Second * 10 } }]
 })
 export default class extends GodfatherCommand {
 
