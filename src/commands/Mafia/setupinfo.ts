@@ -1,8 +1,8 @@
 import { Args, BucketType, CommandOptions } from '@sapphire/framework';
 import { ApplyOptions } from '@sapphire/decorators';
 import { codeBlock } from '@sapphire/utilities';
-import GodfatherCommand from '#lib/GodfatherCommand';
-import { enumerate } from '#util/utils';
+import GodfatherCommand from '@lib/GodfatherCommand';
+import { enumerate } from '@util/utils';
 import { Message } from 'discord.js';
 
 @ApplyOptions<CommandOptions>({

@@ -1,5 +1,5 @@
 import { AliasPiece } from '@sapphire/framework';
-import Role from '#mafia/structures/Role';
+import Role from '@mafia/structures/Role';
 
 export default abstract class Modifier extends AliasPiece {
 

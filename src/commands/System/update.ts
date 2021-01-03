@@ -5,9 +5,9 @@
  */
 import { Args, CommandOptions } from '@sapphire/framework';
 import { ApplyOptions } from '@sapphire/decorators';
-import GodfatherCommand from '#lib/GodfatherCommand';
+import GodfatherCommand from '@lib/GodfatherCommand';
 import { Message } from 'discord.js';
-import { exec, sleep } from '#util/utils';
+import { exec, sleep } from '@util/utils';
 import { codeBlock, cutText } from '@sapphire/utilities';
 import { resolve } from 'path';
 import { rm } from 'fs/promises';

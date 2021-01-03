@@ -1,4 +1,4 @@
-import Player from '#mafia/structures/Player';
+import Player from '@mafia/structures/Player';
 import { Awaited } from '@sapphire/framework';
 import { Message } from 'discord.js';
 import Faction from './Faction';

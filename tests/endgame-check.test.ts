@@ -1,9 +1,9 @@
-import Player from '#mafia/Player';
-import Vanilla from '#mafia/roles/town/Vanilla';
-import Game from '#mafia/Game';
+import Player from '@mafia/Player';
+import Vanilla from '@mafia/roles/town/Vanilla';
+import Game from '@mafia/Game';
 import { createMockChannel, createMockUser } from './mocks';
-import Mafia_Vanilla from '#mafia/roles/mafia/Mafia_Vanilla';
-import { DEFAULT_GAME_SETTINGS } from '#lib/constants';
+import Mafia_Vanilla from '@mafia/roles/mafia/Mafia_Vanilla';
+import { DEFAULT_GAME_SETTINGS } from '@lib/constants';
 
 describe('game testing', () => {
 	const mockChannel = createMockChannel({ name: 'godfather-test' });

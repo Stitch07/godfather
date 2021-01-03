@@ -1,7 +1,7 @@
-import SingleTarget from '#mafia/mixins/SingleTarget';
-import Townie from '#mafia/mixins/Townie';
+import SingleTarget from '@mafia/mixins/SingleTarget';
+import Townie from '@mafia/mixins/Townie';
 import NightActionsManager, { Attack, NightActionPriority } from '../../managers/NightActionsManager';
-import Player from '#mafia/structures/Player';
+import Player from '@mafia/structures/Player';
 
 class Bodyguard extends SingleTarget {
 

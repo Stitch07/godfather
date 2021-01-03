@@ -1,5 +1,5 @@
-import Game, { Phase } from '#mafia/structures/Game';
-import Player from '#mafia/structures/Player';
+import Game, { Phase } from '@mafia/structures/Game';
+import Player from '@mafia/structures/Player';
 import { User } from 'discord.js';
 
 export interface PlayerManagerShowOptions {

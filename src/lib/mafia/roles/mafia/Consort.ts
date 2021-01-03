@@ -1,5 +1,5 @@
-import Escort from '#mafia/roles/town/Escort';
-import MafiaRole from '#mafia/mixins/MafiaRole';
+import Escort from '@mafia/roles/town/Escort';
+import MafiaRole from '@mafia/mixins/MafiaRole';
 
 // @ts-ignore tsc bug
 class Consort extends Escort {

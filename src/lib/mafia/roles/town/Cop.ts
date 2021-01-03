@@ -1,7 +1,7 @@
-import SingleTarget from '#mafia/mixins/SingleTarget';
-import NightActionsManager, { NightActionPriority } from '#mafia/managers/NightActionsManager';
-import Player from '#mafia/structures/Player';
-import Townie from '#mafia/mixins/Townie';
+import SingleTarget from '@mafia/mixins/SingleTarget';
+import NightActionsManager, { NightActionPriority } from '@mafia/managers/NightActionsManager';
+import Player from '@mafia/structures/Player';
+import Townie from '@mafia/mixins/Townie';
 
 class Cop extends SingleTarget {
 

@@ -1,9 +1,9 @@
 import { Args, CommandOptions, CommandStore } from '@sapphire/framework';
 import { ApplyOptions } from '@sapphire/decorators';
 import { Message, MessageEmbed } from 'discord.js';
-import GodfatherCommand from '#lib/GodfatherCommand';
-import { Branding } from '#util/utils';
-import { SUPPORT_SERVER } from '#root/config';
+import GodfatherCommand from '@lib/GodfatherCommand';
+import { Branding } from '@util/utils';
+import { SUPPORT_SERVER } from '@root/config';
 
 @ApplyOptions<CommandOptions>({
 	description: 'Shows you this command!',

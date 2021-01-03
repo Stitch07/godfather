@@ -1,5 +1,5 @@
-import Role from '#mafia/structures/Role';
-import MafiaFaction from '#mafia/factions/Mafia';
+import Role from '@mafia/structures/Role';
+import MafiaFaction from '@mafia/factions/Mafia';
 import { allRoles } from '../roles';
 
 export default function MafiaRole<TBaseRole extends typeof Role>(BaseRole: TBaseRole) {

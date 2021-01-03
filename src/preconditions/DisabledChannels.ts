@@ -1,5 +1,5 @@
-import { PGSQL_ENABLED } from '#root/config';
-import { cast } from '#root/lib/util/utils';
+import { PGSQL_ENABLED } from '@root/config';
+import { cast } from '@root/lib/util/utils';
 import { Command, isErr, Precondition, PreconditionContext } from '@sapphire/framework';
 import { Message } from 'discord.js';
 

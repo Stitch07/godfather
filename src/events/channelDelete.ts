@@ -1,4 +1,4 @@
-import GodfatherChannel from '#root/lib/extensions/GodfatherChannel';
+import GodfatherChannel from '@root/lib/extensions/GodfatherChannel';
 import { Event, Events, PieceContext } from '@sapphire/framework';
 
 export default class extends Event<Events.ChannelDelete> {

@@ -1,4 +1,4 @@
-import { format } from '#root/lib/util/durationFormat';
+import { format } from '@root/lib/util/durationFormat';
 import { Argument, ArgumentContext, ArgumentResult } from '@sapphire/framework';
 import { Duration } from '@sapphire/time-utilities';
 

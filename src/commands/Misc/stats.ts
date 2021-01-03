@@ -1,9 +1,9 @@
-import GodfatherCommand from '#lib/GodfatherCommand';
+import GodfatherCommand from '@lib/GodfatherCommand';
 import { ApplyOptions } from '@sapphire/decorators';
 import { CommandOptions } from '@sapphire/framework';
 import { roundNumber } from '@sapphire/utilities';
-import { format } from '#util/durationFormat';
-import { Branding } from '#util/utils';
+import { format } from '@util/durationFormat';
+import { Branding } from '@util/utils';
 import { Message, MessageEmbed } from 'discord.js';
 import { cpus } from 'os';
 

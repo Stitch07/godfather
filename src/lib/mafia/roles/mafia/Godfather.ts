@@ -1,6 +1,6 @@
-import Killer from '#mafia/mixins/Killer';
-import MafiaRole from '#mafia/mixins/MafiaRole';
-import NightActionsManager, { Defence } from '#mafia/managers/NightActionsManager';
+import Killer from '@mafia/mixins/Killer';
+import MafiaRole from '@mafia/mixins/MafiaRole';
+import NightActionsManager, { Defence } from '@mafia/managers/NightActionsManager';
 
 class Godfather extends Killer {
 

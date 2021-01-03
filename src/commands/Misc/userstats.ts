@@ -1,6 +1,6 @@
-import GodfatherCommand from '#lib/GodfatherCommand';
-import PlayerEntity from '#lib/orm/entities/Player';
-import { PGSQL_ENABLED } from '#root/config';
+import GodfatherCommand from '@lib/GodfatherCommand';
+import PlayerEntity from '@lib/orm/entities/Player';
+import { PGSQL_ENABLED } from '@root/config';
 import { ApplyOptions } from '@sapphire/decorators';
 import { Args, BucketType, CommandOptions } from '@sapphire/framework';
 import { Time } from '@sapphire/time-utilities';

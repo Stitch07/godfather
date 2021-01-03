@@ -1,5 +1,5 @@
-import GodfatherCommand from '#lib/GodfatherCommand';
-import { exec } from '#root/lib/util/utils';
+import GodfatherCommand from '@lib/GodfatherCommand';
+import { exec } from '@root/lib/util/utils';
 import { ApplyOptions } from '@sapphire/decorators';
 import { Args, CommandOptions } from '@sapphire/framework';
 import { codeBlock } from '@sapphire/utilities';

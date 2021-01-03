@@ -1,7 +1,7 @@
 import { Args, CommandOptions, err, ok, UserError } from '@sapphire/framework';
 import Player from '#mafia/structures/Player';
 import { ApplyOptions } from '@sapphire/decorators';
-import GodfatherCommand from '#lib/GodfatherCommand';
+import GodfatherCommand from '@lib/GodfatherCommand';
 import { Message } from 'discord.js';
 
 @ApplyOptions<CommandOptions>({

@@ -1,4 +1,4 @@
-import Faction from '#mafia/structures/Faction';
+import Faction from '@mafia/structures/Faction';
 
 export default class AmnesiacFaction extends Faction {
 

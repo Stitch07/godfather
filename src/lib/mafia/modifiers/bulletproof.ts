@@ -1,7 +1,7 @@
-import Modifier from '#mafia/structures/Modifier';
+import Modifier from '@mafia/structures/Modifier';
 import { PieceContext } from '@sapphire/framework';
-import Role from '#mafia/structures/Role';
-import { Defence } from '#mafia/managers/NightActionsManager';
+import Role from '@mafia/structures/Role';
+import { Defence } from '@mafia/managers/NightActionsManager';
 
 export default class BulletproofModifier extends Modifier {
 

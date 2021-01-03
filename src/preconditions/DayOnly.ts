@@ -1,4 +1,4 @@
-import { Phase } from '#mafia/structures/Game';
+import { Phase } from '@mafia/structures/Game';
 import { Precondition } from '@sapphire/framework';
 import { Message } from 'discord.js';
 

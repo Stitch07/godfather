@@ -1,5 +1,5 @@
-import Modifier from '#mafia/structures/Modifier';
-import Role from '#mafia/structures/Role';
+import Modifier from '@mafia/structures/Modifier';
+import Role from '@mafia/structures/Role';
 import { Attack } from '../managers/NightActionsManager';
 
 const VALID_ROLES = ['Vigilante', 'Goon', 'Godfather', 'Serial Killer'];

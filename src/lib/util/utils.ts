@@ -1,10 +1,10 @@
 import { exec as childProcessExec } from 'child_process';
 import { promisify } from 'util';
-import Player from '#mafia/structures/Player';
+import Player from '@mafia/structures/Player';
 import { isThenable, regExpEsc } from '@sapphire/utilities';
 import { Client, GuildMember } from 'discord.js';
 import { Events } from '@sapphire/framework';
-import { TOKEN } from '#root/config';
+import { TOKEN } from '@root/config';
 
 const TOKENS = [process.cwd(), process.cwd().replace(/\\/g, '\\\\'), TOKEN];
 const sensitiveTokens = new RegExp(TOKENS.map(regExpEsc).join('|'), 'gi');
@@ -56,7 +56,7 @@ export const cast = <T>(from: unknown) => (from as T);
  * Python's enumerate()
  * @param array The array to iterate over
  */
-export function *enumerate<T>(array: readonly T[]): Generator<[number, T]> {
+export function* enumerate<T>(array: readonly T[]): Generator<[number, T]> {
 	for (let i = 0; i < array.length; i++) {
 		yield [i, array[i]];
 	}

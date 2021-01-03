@@ -1,8 +1,8 @@
-import SurivorFaction from '#mafia/factions/neutral/Survivor';
-import { Defence, NightActionPriority } from '#mafia/managers/NightActionsManager';
-import NoTarget from '#mafia/mixins/NoTarget';
-import Player from '#mafia/structures/Player';
-import { pluralize } from '#util/utils';
+import SurivorFaction from '@mafia/factions/neutral/Survivor';
+import { Defence, NightActionPriority } from '@mafia/managers/NightActionsManager';
+import NoTarget from '@mafia/mixins/NoTarget';
+import Player from '@mafia/structures/Player';
+import { pluralize } from '@util/utils';
 
 export default class Survivor extends NoTarget {
 

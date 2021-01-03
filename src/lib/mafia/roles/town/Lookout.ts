@@ -1,8 +1,8 @@
-import SingleTarget from '#mafia/mixins/SingleTarget';
-import Townie from '#mafia/mixins/Townie';
-import NightActionsManager, { NightActionPriority } from '#mafia/managers/NightActionsManager';
-import Player from '#mafia/structures/Player';
-import { listItems } from '#util/utils';
+import SingleTarget from '@mafia/mixins/SingleTarget';
+import Townie from '@mafia/mixins/Townie';
+import NightActionsManager, { NightActionPriority } from '@mafia/managers/NightActionsManager';
+import Player from '@mafia/structures/Player';
+import { listItems } from '@util/utils';
 
 class Lookout extends SingleTarget {
 
