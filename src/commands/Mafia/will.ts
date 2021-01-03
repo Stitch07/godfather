@@ -4,6 +4,7 @@ import GodfatherCommand from '@lib/GodfatherCommand';
 import { Message } from 'discord.js';
 
 @ApplyOptions<CommandOptions>({
+	aliases: ['setwill'],
 	description: 'Sets given message as your will.',
 	preconditions: ['DMOnly']
 })
@@ -18,13 +19,10 @@ export default class extends GodfatherCommand {
 
 		let player = game.players.get(message.author)!;
 
-		const will = await args.rest('string')
+		const will = await args.rest('string', { maximum: 400 })
 			.catch(() => { throw 'Missing required argument: will'; });
 
-		if (will.length > 400) throw 'Wills cannot be more than 400 characters.';
-
 		if (will.split('\n').length > 8) throw 'Wills cannot be more than 8 lines.';
-
 		player.will = will;
 
 		await message.channel.send('Your will has been set.');

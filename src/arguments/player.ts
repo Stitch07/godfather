@@ -1,12 +1,12 @@
-import GodfatherChannel from '@lib/extensions/GodfatherChannel';
 import Player from '@mafia/structures/Player';
+import Game from '@root/lib/mafia/structures/Game';
 import { Argument, ArgumentContext, ArgumentStore, AsyncArgumentResult, Result, UserError } from '@sapphire/framework';
 import { User } from 'discord.js';
 
 export default class extends Argument<Player> {
 
-	public async run(argument: string, context: ArgumentContext): AsyncArgumentResult<Player> {
-		const { game } = context.message.channel as GodfatherChannel;
+	public async run(argument: string, context: PlayerArgumentContext): AsyncArgumentResult<Player> {
+		const game = context.game ?? context.message.channel.game;
 
 		const resolved = Player.resolve(game!, argument);
 		if (resolved) return this.ok(resolved);
@@ -19,4 +19,8 @@ export default class extends Argument<Player> {
 		return this.error(argument, 'ArgumentPlayerInvalidPlayer', 'Invalid player.');
 	}
 
+}
+
+export interface PlayerArgumentContext extends ArgumentContext {
+	game?: Game;
 }
