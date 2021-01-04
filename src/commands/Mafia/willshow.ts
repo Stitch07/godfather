@@ -24,10 +24,13 @@ export default class extends GodfatherCommand {
 			return p;
 		}, () => game.players.get(message.author)!);
 
+		const { start, end, subject } = player.user === message.author
+			? { start: 'You have', end: ' yet', subject: 'Your' }
+			: { start: `${player.user.username} has`, end: '', subject: `${player.user.username}'s` };
+
 		if (!player.will.trim()) {
-			return message.channel.send('You have not set a will yet.');
+			return message.channel.send(`${start} not set a will${end}.`);
 		}
-		const subject = player.user === message.author ? 'Your' : `${player.user.username}'s`;
 
 		return message.channel.send(`${subject} will is:\n\`\`\`${player.will}\`\`\``);
 	}
