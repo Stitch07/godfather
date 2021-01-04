@@ -18,6 +18,8 @@ export default class extends GodfatherCommand {
 		if (!game.hasStarted) throw "The game hasn't started yet!";
 
 		const player = game.players.get(message.author)!;
+		if (!player?.isAlive) throw 'You cannot set a will as a dead player.';
+
 		const will = await args.rest('string', { maximum: 400 })
 			.catch(() => { throw 'Missing required argument: will'; });
 
