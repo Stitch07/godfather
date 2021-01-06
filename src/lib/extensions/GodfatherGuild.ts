@@ -1,7 +1,7 @@
 import { Guild } from 'discord.js';
 import { getCustomRepository } from 'typeorm';
-import GuildSettingsEntity from '#lib/orm/entities/GuildSettings';
-import GuildSettingRepository from '#lib/orm/repositories/GuildSettingRepository';
+import GuildSettingsEntity from '@lib/orm/entities/GuildSettings';
+import GuildSettingRepository from '@lib/orm/repositories/GuildSettingRepository';
 
 export default class GodfatherGuild extends Guild {
 

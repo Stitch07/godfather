@@ -1,7 +1,7 @@
 import Role from './Role';
 import Game from './Game';
 import { User } from 'discord.js';
-import { ENABLE_PRIVATE_CHANNELS } from '#root/config';
+import { ENABLE_PRIVATE_CHANNELS } from '@root/config';
 import { cast } from '../../util/utils';
 
 export default class Player {
@@ -16,6 +16,8 @@ export default class Player {
 		isRevived: false,
 		revivedOn: cast<number | null>(null)
 	};
+
+	public will = '';
 
 	private _role!: Role;
 	private messageQueue: string[] = [];
@@ -71,6 +73,20 @@ export default class Player {
 	public async visit(visitor: Player) {
 		this.visitors.push(visitor);
 		await this.role.onVisit(visitor);
+	}
+
+	public displayRoleAndWill(night = false): string {
+		const roleText = this.cleaned && night
+			? 'We could not determine their role.'
+			: `They were a **${this.role!.display}**.`;
+
+		const willText = this.game.settings.disableWills
+			? ''
+			: this.will && !(this.cleaned && night)
+				? ` They left a will:\n\`\`\`${this.will}\`\`\`\n`
+				: ' We could not find a will.';
+
+		return `${roleText}${willText}`;
 	}
 
 	public static resolve(game: Game, arg: string) {

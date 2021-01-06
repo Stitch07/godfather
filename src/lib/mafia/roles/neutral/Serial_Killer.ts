@@ -1,6 +1,6 @@
-import Killer from '#mafia/mixins/Killer';
-import { Defence } from '#mafia/managers/NightActionsManager';
-import SerialKillerFaction from '#mafia/factions/neutral/SerialKiller';
+import Killer from '@mafia/mixins/Killer';
+import { Defence } from '@mafia/managers/NightActionsManager';
+import SerialKillerFaction from '@mafia/factions/neutral/SerialKiller';
 
 export default class Serial_Killer extends Killer {
 

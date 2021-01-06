@@ -1,7 +1,7 @@
-import { Branding } from '#util/utils';
-import GodfatherCommand from '#lib/GodfatherCommand';
+import { Branding } from '@util/utils';
+import GodfatherCommand from '@lib/GodfatherCommand';
 import { CommandOptions } from '@sapphire/framework';
-import { SUPPORT_SERVER } from '#root/config';
+import { SUPPORT_SERVER } from '@root/config';
 import { Message, MessageEmbed } from 'discord.js';
 import { ApplyOptions } from '@sapphire/decorators';
 

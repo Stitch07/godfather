@@ -1,10 +1,10 @@
 import { exec as childProcessExec } from 'child_process';
 import { promisify } from 'util';
-import Player from '#mafia/structures/Player';
+import Player from '@mafia/structures/Player';
 import { isThenable, regExpEsc } from '@sapphire/utilities';
 import { Client, GuildMember } from 'discord.js';
-import { Events } from '@sapphire/framework';
-import { TOKEN } from '#root/config';
+import { Events, UserError } from '@sapphire/framework';
+import { TOKEN } from '@root/config';
 
 const TOKENS = [process.cwd(), process.cwd().replace(/\\/g, '\\\\'), TOKEN];
 const sensitiveTokens = new RegExp(TOKENS.map(regExpEsc).join('|'), 'gi');
@@ -94,4 +94,9 @@ export const canManage = (me: GuildMember, target: GuildMember) => {
 	if (target.user.id === me.guild.ownerID) return false;
 	if (me.roles.highest.position <= target.roles.highest.position) return false;
 	return true;
+};
+
+export const handleRequiredArg = (name: string) => (error: UserError) => {
+	if (error.identifier === 'MissingArguments') throw `Missing required argument: ${name}`;
+	throw error.message;
 };

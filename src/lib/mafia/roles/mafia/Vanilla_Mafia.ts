@@ -1,5 +1,5 @@
-import MafiaRole from '#mafia/mixins/MafiaRole';
-import Role from '#mafia/structures/Role';
+import MafiaRole from '@mafia/mixins/MafiaRole';
+import Role from '@mafia/structures/Role';
 
 class VanillaMafia extends Role {
 

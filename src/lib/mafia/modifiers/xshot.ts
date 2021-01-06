@@ -1,6 +1,6 @@
-import Modifier from '#mafia/structures/Modifier';
-import Role from '#mafia/structures/Role';
-import { cast } from '#util/utils';
+import Modifier from '@mafia/structures/Modifier';
+import Role from '@mafia/structures/Role';
+import { cast } from '@util/utils';
 import { PieceContext } from '@sapphire/framework';
 import Killer from '../mixins/Killer';
 

@@ -1,14 +1,14 @@
-import GodfatherCommand from '#lib/GodfatherCommand';
-import { Phase } from '#mafia/structures/Game';
-import Player from '#mafia/structures/Player';
+import GodfatherCommand from '@lib/GodfatherCommand';
+import { Phase } from '@mafia/structures/Game';
 import { ApplyOptions } from '@sapphire/decorators';
-import { Args, CommandOptions, err, ok, UserError } from '@sapphire/framework';
+import { Args, CommandOptions } from '@sapphire/framework';
 import { Time } from '@sapphire/time-utilities';
+import { handleRequiredArg } from '@util/utils';
 import { Message } from 'discord.js';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['w'],
-	preconditions: ['DMOnly', { entry: 'Cooldown', context: { delay: Time.Second * 10 } }]
+	preconditions: ['DMOnly', { name: 'Cooldown', context: { delay: Time.Second * 10 } }]
 })
 export default class extends GodfatherCommand {
 
@@ -25,14 +25,7 @@ export default class extends GodfatherCommand {
 		if (player.role.name === 'Mayor' && player.role.hasRevealed) throw 'As a revealed Mayor, you cannot whisper.';
 		if (!player?.isAlive) throw 'You cannot whisper as a dead player.';
 
-		const playerResolver = Args.make(arg => {
-			const player = Player.resolve(game, arg);
-			if (!player) return err(new UserError('ArgumentPlayerInvalid', 'Invalid player provided. Use a valid number.'));
-			if (player.user.id === message.author.id) return err(new UserError('ArgumentPlayerDistinc', "You can't whisper to yourself!"));
-			return ok(player);
-		});
-
-		const target = await args.pick(playerResolver);
+		const target = await args.pick('player', { game }).catch(handleRequiredArg('player'));
 		// @ts-ignore Mayor
 		if (target.role.name === 'Mayor' && target.role.hasRevealed) throw 'You cannot whisper to a revealed Mayor.';
 		if (!target.isAlive) throw 'You cannot whisper to dead players';

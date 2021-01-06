@@ -1,4 +1,4 @@
-import GodfatherCommand from '#lib/GodfatherCommand';
+import GodfatherCommand from '@lib/GodfatherCommand';
 import { ApplyOptions } from '@sapphire/decorators';
 import { BucketType, CommandOptions } from '@sapphire/framework';
 import { Message, TextChannel } from 'discord.js';
@@ -6,7 +6,7 @@ import { Message, TextChannel } from 'discord.js';
 @ApplyOptions<CommandOptions>({
 	aliases: ['vc'],
 	description: 'Shows the current vote count.',
-	preconditions: ['GuildOnly', 'GameOnly', 'GameStartedOnly', 'DayOnly', { entry: 'Cooldown', context: { bucketType: BucketType.Channel, delay: 5000 } }]
+	preconditions: ['GuildOnly', 'GameOnly', 'GameStartedOnly', 'DayOnly', { name: 'Cooldown', context: { bucketType: BucketType.Channel, delay: 5000 } }]
 })
 export default class extends GodfatherCommand {
 

@@ -1,10 +1,10 @@
-import '#lib/extenders';
+import '@lib/extenders';
 
 import { LogLevel, SapphireClient } from '@sapphire/framework';
 import { Collection, Guild, Message } from 'discord.js';
-import Game from '#mafia/structures/Game';
-import SetupStore from '#mafia/structures/SetupStore';
-import { PGSQL_ENABLED, PREFIX, PRODUCTION } from '#root/config';
+import Game from '@mafia/structures/Game';
+import SetupStore from '@mafia/structures/SetupStore';
+import { PGSQL_ENABLED, PREFIX, PRODUCTION } from '@root/config';
 import GuildSettingRepository from './orm/repositories/GuildSettingRepository';
 import GuildSettingsEntity from './orm/entities/GuildSettings';
 import { getCustomRepository } from 'typeorm';
@@ -21,7 +21,7 @@ export default class Godfather extends SapphireClient {
 	public ownerID: string | undefined = undefined;
 	public settingsCache = new Map<string, GuildSettingsEntity>();
 	public eventLoop!: NodeJS.Timeout;
-	private _version = [1, 1, 0];
+	private _version = [1, 2, 0];
 	public constructor() {
 		super({
 			caseInsensitiveCommands: true,

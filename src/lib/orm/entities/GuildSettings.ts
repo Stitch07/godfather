@@ -1,6 +1,6 @@
-import { PREFIX } from '#root/config';
-import { DEFAULT_GAME_SETTINGS } from '#lib/constants';
-import { GameSettings } from '#mafia/structures/Game';
+import { PREFIX } from '@root/config';
+import { DEFAULT_GAME_SETTINGS } from '@lib/constants';
+import { GameSettings } from '@mafia/structures/Game';
 import { Column, Entity, PrimaryColumn } from 'typeorm';
 
 @Entity({ name: 'guild_settings' })
@@ -38,5 +38,8 @@ export default class GuildSettingsEntity implements GameSettings {
 
 	@Column('boolean', { 'default': false })
 	public adaptiveSlowmode = false;
+
+	@Column('boolean', { 'default': false })
+	public disableWills = false;
 
 }

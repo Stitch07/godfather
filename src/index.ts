@@ -1,9 +1,8 @@
-import Godfather from '#lib/Godfather';
-import { init } from '#mafia/roles/index';
-import { TOKEN } from '#root/config';
-import { Store } from '@sapphire/framework';
+require('module-alias/register');
 
-Store.defaultStrategy.onLoadAll = (store: Store<any>) => store.context.client.logger.debug(`Loaded ${store.size} ${store.name}`);
+import Godfather from '@lib/Godfather';
+import { init } from '@mafia/roles/index';
+import { TOKEN } from '@root/config';
 
 init();
 

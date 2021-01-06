@@ -1,8 +1,9 @@
 /* eslint-disable no-negated-condition */
-import { CLIENT_ID, PGSQL_ENABLED, PREFIX } from '#root/config';
-import { connect } from '#root/lib/orm/ormConfig';
-import { floatPromise, pluralize } from '#root/lib/util/utils';
-import { Event, Events, isErr, PieceContext } from '@sapphire/framework';
+import { green, gray, magenta, yellow } from 'colorette';
+import { connect } from '@lib/orm/ormConfig';
+import { CLIENT_ID, PGSQL_ENABLED, PREFIX } from '@root/config';
+import { Event, Events, isErr, PieceContext, Store } from '@sapphire/framework';
+import { floatPromise } from '@util/utils';
 
 export default class extends Event<Events.Ready> {
 
@@ -28,8 +29,6 @@ export default class extends Event<Events.Ready> {
 			for (const game of this.context.client.games.values()) await game.update();
 		}, 10 * 1000); // 10 seconds
 
-		this.context.client.logger.info(`Ready! Logged in as ${this.context.client.user!.tag} and connected to ${pluralize(this.context.client.guilds.cache.size, 'guild')}.`);
-
 		for (const command of this.context.client.slashCommands.values()) {
 			// @ts-ignore more private calls until d.js supports interactions
 			await this.context.client.api.applications(CLIENT_ID).commands.post({
@@ -39,6 +38,8 @@ export default class extends Event<Events.Ready> {
 				}
 			});
 		}
+
+		this.logReady();
 
 		// @ts-ignore d.js needs to be updated first
 		this.context.client.ws.on('INTERACTION_CREATE', async interaction => {
@@ -59,6 +60,44 @@ export default class extends Event<Events.Ready> {
 				this.context.client.logger.error(error);
 			}
 		});
+	}
+
+	private logReady() {
+		const { logger } = this.context.client;
+		logger.info(`${this.header} ${this.tag} ${this.guilds} ${this.users}`);
+		this.logStoreInformation();
+	}
+
+	private get header() {
+		return `${yellow(`Godfather ${this.context.client.version}`)} ready!`;
+	}
+
+	private get tag() {
+		const { tag } = this.context.client.user!;
+		return `[ ${green(tag)} ]`;
+	}
+
+	private get guilds() {
+		const count = this.context.client.guilds.cache.size.toString();
+		return `[ ${magenta(count)} [G] ]`;
+	}
+
+	private get users() {
+		const count = this.context.client.guilds.cache.reduce((a, b) => a + b.memberCount, 0).toString();
+		return `[ ${magenta(count)} [U] ]`;
+	}
+
+	private logStoreInformation() {
+		const { logger } = this.context.client;
+		const stores = [...this.context.client.stores.values()];
+		const last = stores.pop()!;
+
+		for (const store of stores) logger.debug(this.styleStore(store, false));
+		logger.debug(this.styleStore(last, true));
+	}
+
+	private styleStore(store: Store<any>, last: boolean) {
+		return gray(`${last ? '└─' : '├─'} Loaded ${yellow(store.size.toString())} ${store.name}`);
 	}
 
 }

@@ -1,5 +1,5 @@
-import Player from '#mafia/structures/Player';
-import Game from '#mafia/structures/Game';
+import Player from '@mafia/structures/Player';
+import Game from '@mafia/structures/Game';
 
 export interface Vote {
 	by: Player;

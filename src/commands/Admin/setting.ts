@@ -1,10 +1,10 @@
-import { DEFAULT_GAME_SETTINGS, GUILD_SETTINGS_METADATA } from '#lib/constants';
-import GodfatherCommand from '#lib/GodfatherCommand';
-import GuildSettingsEntity from '#lib/orm/entities/GuildSettings';
-import GuildSettingRepository from '#lib/orm/repositories/GuildSettingRepository';
-import { GameSettings } from '#mafia/structures/Game';
+import { DEFAULT_GAME_SETTINGS, GUILD_SETTINGS_METADATA } from '@lib/constants';
+import GodfatherCommand from '@lib/GodfatherCommand';
+import GuildSettingsEntity from '@lib/orm/entities/GuildSettings';
+import GuildSettingRepository from '@lib/orm/repositories/GuildSettingRepository';
+import { GameSettings } from '@mafia/structures/Game';
 import { ApplyOptions } from '@sapphire/decorators';
-import { Args, CommandOptions, PreconditionContainerAll } from '@sapphire/framework';
+import { Args, CommandOptions, PreconditionContainerArray } from '@sapphire/framework';
 import { Time } from '@sapphire/time-utilities';
 import { codeBlock } from '@sapphire/utilities';
 import { Message } from 'discord.js';
@@ -17,7 +17,7 @@ import { getCustomRepository } from 'typeorm';
 		'The settings command lets you manage game settings such as dayDuration, nightDuration and overwritePermissions',
 		'If used in a channel without an ongoing game, the settings command will modify server-wide defaults.'
 	].join('\n'),
-	preconditions: ['GuildOnly', { entry: 'Cooldown', context: { delay: Time.Second * 5 } }]
+	preconditions: ['GuildOnly', { name: 'Cooldown', context: { delay: Time.Second * 5 } }]
 })
 export default class extends GodfatherCommand {
 
@@ -28,7 +28,7 @@ export default class extends GodfatherCommand {
 		if (inGame) {
 			if (message.author !== message.channel.game!.host.user) throw 'This command is host-only.';
 		} else {
-			const result = await (new PreconditionContainerAll(this.context.client, [['OwnerOnly', 'AdminOnly']]).run(message, this));
+			const result = await (new PreconditionContainerArray([['OwnerOnly', 'AdminOnly']]).run(message, this));
 			if (!result.success) throw result.error.message;
 		}
 

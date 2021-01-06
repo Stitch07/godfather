@@ -1,6 +1,6 @@
-import Game, { GameSettings } from '#mafia/structures/Game';
-import Player from '#mafia/structures/Player';
-import SetupStore from '#mafia/structures/SetupStore';
+import Game, { GameSettings } from '@mafia/structures/Game';
+import Player from '@mafia/structures/Player';
+import SetupStore from '@mafia/structures/SetupStore';
 import { Piece } from '@sapphire/framework';
 import { Collection, Guild, User } from 'discord.js';
 import ModifierStore from './lib/mafia/structures/ModifierStore';

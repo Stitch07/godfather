@@ -1,5 +1,5 @@
-import Faction from '#mafia/structures/Faction';
-import Game from '#mafia/structures/Game';
+import Faction from '@mafia/structures/Faction';
+import Game from '@mafia/structures/Game';
 
 const OPPOSING_FACTIONS = ['Town', 'Arsonist', 'Werewolf', 'Mafia', 'Juggernaut'];
 

@@ -1,4 +1,4 @@
-import { PGSQL_DATABASE_HOST, PGSQL_DATABASE_NAME, PGSQL_DATABASE_PASSWORD, PGSQL_DATABASE_PORT, PGSQL_DATABASE_USER, PRODUCTION } from '#root/config';
+import { PGSQL_DATABASE_HOST, PGSQL_DATABASE_NAME, PGSQL_DATABASE_PASSWORD, PGSQL_DATABASE_PORT, PGSQL_DATABASE_USER, PRODUCTION } from '@root/config';
 import { join } from 'path';
 import { Connection, ConnectionOptions, createConnection, getConnection } from 'typeorm';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';

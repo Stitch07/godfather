@@ -1,7 +1,7 @@
-import JuggernautFaction from '#mafia/factions/neutral/Juggernaut';
-import NightActionsManager, { Attack, Defence, NightActionPriority } from '#mafia/managers/NightActionsManager';
-import Killer from '#mafia/mixins/Killer';
-import Player from '#mafia/structures/Player';
+import JuggernautFaction from '@mafia/factions/neutral/Juggernaut';
+import NightActionsManager, { Attack, Defence, NightActionPriority } from '@mafia/managers/NightActionsManager';
+import Killer from '@mafia/mixins/Killer';
+import Player from '@mafia/structures/Player';
 
 class Juggernaut extends Killer {
 

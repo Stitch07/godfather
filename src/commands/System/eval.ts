@@ -1,5 +1,5 @@
-import GodfatherCommand from '#lib/GodfatherCommand';
-import { clean } from '#util/utils';
+import GodfatherCommand from '@lib/GodfatherCommand';
+import { clean, handleRequiredArg } from '@util/utils';
 import { ApplyOptions } from '@sapphire/decorators';
 import { Args, CommandOptions } from '@sapphire/framework';
 import { Type } from '@sapphire/type';
@@ -19,10 +19,9 @@ import { inspect } from 'util';
 export default class extends GodfatherCommand {
 
 	public async run(message: Message, args: Args) {
-		const code = await args.restResult('string');
-		if (!code.success) throw 'Missing required argument: code';
+		const code = await args.rest('string').catch(handleRequiredArg('code'));
 
-		const { result, success, type } = await this.eval(message, code.value, {
+		const { result, success, type } = await this.eval(message, code, {
 			async: args.getFlags('async'),
 			depth: Number(args.getOption('depth')) ?? 0,
 			showHidden: args.getFlags('hidden', 'showHidden')

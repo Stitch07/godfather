@@ -1,8 +1,8 @@
-import NoTarget from '#mafia/mixins/NoTarget';
-import Townie from '#mafia/mixins/Townie';
-import { Attack, Defence, NightActionPriority } from '#mafia/managers/NightActionsManager';
-import Player from '#mafia/structures/Player';
-import { pluralize } from '#root/lib/util/utils';
+import NoTarget from '@mafia/mixins/NoTarget';
+import Townie from '@mafia/mixins/Townie';
+import { Attack, Defence, NightActionPriority } from '@mafia/managers/NightActionsManager';
+import Player from '@mafia/structures/Player';
+import { pluralize } from '@root/lib/util/utils';
 
 class Veteran extends NoTarget {
 

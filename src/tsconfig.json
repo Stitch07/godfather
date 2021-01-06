@@ -14,16 +14,16 @@
 		"composite": true,
 		"declaration": true,
 		"paths": {
-			"#root/*": [
+			"@root/*": [
 				"./*"
 			],
-			"#mafia/*": [
+			"@mafia/*": [
 				"lib/mafia/*"
 			],
-			"#lib/*": [
+			"@lib/*": [
 				"lib/*",
 			],
-			"#util/*": [
+			"@util/*": [
 				"lib/util/*"
 			]
 		},

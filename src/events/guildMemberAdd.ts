@@ -1,4 +1,4 @@
-import { ENABLE_PRIVATE_CHANNELS, PRIVATE_CHANNEL_SERVER } from '#root/config';
+import { ENABLE_PRIVATE_CHANNELS, PRIVATE_CHANNEL_SERVER } from '@root/config';
 import { Event, Events, PieceContext } from '@sapphire/framework';
 import { GuildMember } from 'discord.js';
 

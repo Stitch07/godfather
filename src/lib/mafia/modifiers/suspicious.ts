@@ -1,6 +1,6 @@
-import Modifier from '#mafia/structures/Modifier';
+import Modifier from '@mafia/structures/Modifier';
 import { PieceContext } from '@sapphire/framework';
-import Role from '#mafia/structures/Role';
+import Role from '@mafia/structures/Role';
 
 export default class SuspiciousModifier extends Modifier {
 

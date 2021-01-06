@@ -1,7 +1,7 @@
-import DoubleTarget from '#mafia/mixins/DoubleTarget';
-import Townie from '#mafia/mixins/Townie';
-import NightActionsManager, { NightActionPriority } from '#mafia/managers/NightActionsManager';
-import Player from '#mafia/structures/Player';
+import DoubleTarget from '@mafia/mixins/DoubleTarget';
+import Townie from '@mafia/mixins/Townie';
+import NightActionsManager, { NightActionPriority } from '@mafia/managers/NightActionsManager';
+import Player from '@mafia/structures/Player';
 
 class Transporter extends DoubleTarget {
 

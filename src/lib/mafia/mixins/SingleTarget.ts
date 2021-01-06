@@ -1,12 +1,12 @@
-import Role from '#mafia/structures/Role';
-import NightActionsManager, { NightAction, NightActionPriority } from '#mafia/managers/NightActionsManager';
-import Player from '#mafia/structures/Player';
-import Game, { Phase } from '#mafia/structures/Game';
+import Role from '@mafia/structures/Role';
+import NightActionsManager, { NightAction, NightActionPriority } from '@mafia/managers/NightActionsManager';
+import Player from '@mafia/structures/Player';
+import Game, { Phase } from '@mafia/structures/Game';
 import { Awaited, codeBlock } from '@sapphire/utilities';
-import { listItems, remove } from '#util/utils';
+import { listItems, remove } from '@util/utils';
 import { Message } from 'discord.js';
-import { DEFAULT_ACTION_FLAGS } from '#root/lib/constants';
-import { PREFIX } from '#root/config';
+import { DEFAULT_ACTION_FLAGS } from '@root/lib/constants';
+import { PREFIX } from '@root/config';
 
 
 class SingleTarget extends Role {

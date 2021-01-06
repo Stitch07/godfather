@@ -1,6 +1,6 @@
-import GodfatherCommand from '#lib/GodfatherCommand';
-import PlayerEntity from '#lib/orm/entities/Player';
-import { PGSQL_ENABLED } from '#root/config';
+import GodfatherCommand from '@lib/GodfatherCommand';
+import PlayerEntity from '@lib/orm/entities/Player';
+import { PGSQL_ENABLED } from '@root/config';
 import { ApplyOptions } from '@sapphire/decorators';
 import { Args, BucketType, CommandOptions } from '@sapphire/framework';
 import { Time } from '@sapphire/time-utilities';
@@ -8,7 +8,7 @@ import { Message } from 'discord.js';
 import { getConnection } from 'typeorm';
 
 @ApplyOptions<CommandOptions>({
-	preconditions: [{ entry: 'Cooldown', context: { bucketType: BucketType.Channel, delay: Time.Second * 5 } }],
+	preconditions: [{ name: 'Cooldown', context: { bucketType: BucketType.Channel, delay: Time.Second * 5 } }],
 	strategyOptions: {
 		options: ['faction', 'role']
 	}
