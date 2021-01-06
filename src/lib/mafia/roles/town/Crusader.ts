@@ -10,37 +10,37 @@ class Crusader extends SingleTarget {
 	public action = 'protect';
 	public actionText = 'protect a player';
 	public actionGerund = 'protecting';
-    public priority = NightActionPriority.CRUSADER;
-    private isTargetAttacked = false;
+	public priority = NightActionPriority.CRUSADER;
+	private isTargetAttacked = false;
 
 	public runAction(actions: NightActionsManager, target: Player) {
-        const playerRecord = actions.record.get(target.user.id);
-        if (playerRecord.size == 0) {
-            return;
+		const playerRecord = actions.record.get(target.user.id);
+		if (playerRecord.size === 0) {
+			return;
 		}
 
 		// Select visitor to be killed.
-		var visitors : Set<Player> = new Set();
-		var actionNames = [...playerRecord.keys()]
+		let visitors: Set<Player> = new Set();
+		let actionNames = [...playerRecord.keys()];
 		for (let i = 0; i < playerRecord.size; i++) {
-			let actionName = actionNames[i]
-			playerRecord.get(actionName).by.forEach(visitor => visitors.add(visitor))
+			let actionName = actionNames[i];
+			playerRecord.get(actionName).by.forEach(visitor => visitors.add(visitor));
 		}
-		var playerToKill : Player = Array.from(visitors)[Math.floor(Math.random() * visitors.size)]
-		
+		let playerToKill: Player = Array.from(visitors)[Math.floor(Math.random() * visitors.size)];
+
 		// Block all nightkills.
 		const nightKills = playerRecord.get('nightkill');
 		if (nightKills && nightKills.result === true && nightKills.type && nightKills.type < Attack.Unstoppable) {
 			this.isTargetAttacked = true;
 			playerRecord.set('nightkill', { result: false, by: [] });
 		}
-			
+
 		const protects = playerRecord.get('protect');
 		protects.result = true;
 		protects.by.push(this.player);
 		playerRecord.set('protect', protects);
 		actions.record.set(target.user.id, playerRecord);
-		
+
 		// Kill the visitor.
 		actions.record.setAction(playerToKill.user.id, 'nightkill', { result: true, by: [this.player] });
 		playerToKill.queueMessage('You were killed by a Crusader!');
@@ -60,8 +60,8 @@ class Crusader extends SingleTarget {
 		// TODO: customizable rule here
 		if (player === this.player) return { check: false, reason: 'You cannot target yourself.' };
 		return super.canTarget(player);
-    }
-    
+	}
+
 	public actionConfirmation(target: Player) {
 		return `You are ${this.actionGerund} ${target} tonight.`;
 	}
