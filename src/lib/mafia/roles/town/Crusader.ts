@@ -2,6 +2,7 @@ import SingleTarget from '@mafia/mixins/SingleTarget';
 import Townie from '@mafia/mixins/Townie';
 import NightActionsManager, { Attack, NightActionPriority } from '@mafia/managers/NightActionsManager';
 import Player from '@mafia/structures/Player';
+import { randomArray } from '@root/lib/util/utils';
 
 class Crusader extends SingleTarget {
 
@@ -20,13 +21,8 @@ class Crusader extends SingleTarget {
 		}
 
 		// Select visitor to be killed.
-		let visitors: Set<Player> = new Set();
-		let actionNames = [...playerRecord.keys()];
-		for (let i = 0; i < playerRecord.size; i++) {
-			let actionName = actionNames[i];
-			playerRecord.get(actionName).by.forEach(visitor => visitors.add(visitor));
-		}
-		let playerToKill: Player = Array.from(visitors)[Math.floor(Math.random() * visitors.size)];
+		const visitors = target.visitors.filter(player => player.user.id !== this.player.user.id);
+		let playerToKill = randomArray(visitors)!;
 
 		// Block all nightkills.
 		const nightKills = playerRecord.get('nightkill');
@@ -43,7 +39,7 @@ class Crusader extends SingleTarget {
 
 		// Kill the visitor.
 		actions.record.setAction(playerToKill.user.id, 'nightkill', { result: true, by: [this.player] });
-		playerToKill.queueMessage('You were killed by a Crusader!');
+		playerToKill.queueMessage('You were attacked by a Crusader!');
 	}
 
 	public tearDown(actions: NightActionsManager, target: Player) {
@@ -51,8 +47,8 @@ class Crusader extends SingleTarget {
 		const success = target.user.id !== this.player.user.id && record.result && record.by.includes(this.player);
 
 		if (success && this.isTargetAttacked) {
-			return target.queueMessage('You were attacked but somebody fought off your attacker!');
 			this.isTargetAttacked = false;
+			return target.queueMessage('You were attacked but somebody fought off your attacker!');
 		}
 	}
 
@@ -68,6 +64,7 @@ class Crusader extends SingleTarget {
 
 }
 
+Crusader.aliases = ['Crus'];
 Crusader.categories = [...Crusader.categories, 'Town Protective'];
 
 export default Townie(Crusader);
