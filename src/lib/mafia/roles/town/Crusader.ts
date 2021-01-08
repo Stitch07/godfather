@@ -57,11 +57,6 @@ class Crusader extends SingleTarget {
 		if (player === this.player) return { check: false, reason: 'You cannot target yourself.' };
 		return super.canTarget(player);
 	}
-
-	public actionConfirmation(target: Player) {
-		return `You are ${this.actionGerund} ${target} tonight.`;
-	}
-
 }
 
 Crusader.aliases = ['Crus'];
