@@ -40,7 +40,7 @@ class Bodyguard extends SingleTarget {
 				this.player.queueMessage('You were killed while defending your target!');
 				// kill the attacker
 				actions.record.setAction(attacker.user.id, 'nightkill', { result: true, by: [this.player] });
-				this.player.queueMessage('You were killed by a Bodyguard!');
+				attacker.queueMessage('You were killed by a Bodyguard!');
 			}
 		}
 	}

@@ -159,6 +159,7 @@ export enum NightActionPriority {
 	// these roles deal Powerful attacks that cannot be healed
 	ARSONIST = 4,
 	// roles that affect investigative results or stop powerful attacks
+	CRUSADER = 5,
 	GUARDIAN_ANGEL = 5,
 	FRAMER = 5,
 	// investigative roles usually only rely on tearDown, so they can safely go last
