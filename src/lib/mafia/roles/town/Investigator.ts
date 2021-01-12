@@ -12,13 +12,13 @@ class Investigator extends SingleTarget {
 	public actionText = 'investigate a player';
 	public priority = NightActionPriority.INVEST;
 
-	public async tearDown(actions: NightActionsManager, target: Player) {
+	public tearDown(actions: NightActionsManager, target: Player) {
 		let results = this.getResult(target.role.name);
 		if (actions.framedPlayers.includes(target)) {
 			results = this.getResult('Framer');
 			actions.framedPlayers.splice(actions.framedPlayers.indexOf(target), 1);
 		}
-		await this.player.queueMessage(results);
+		return this.player.queueMessage(results);
 	}
 
 	private getResult(roleName: string) {
@@ -55,7 +55,8 @@ class Investigator extends SingleTarget {
 			case 'Bodyguard':
 			case 'Godfather':
 			case 'Arsonist':
-				return 'Your target could be a Bodyguard, Godfather, or Arsonist.';
+			case 'Crusader':
+				return 'Your target could be a Bodyguard, Godfather, Arsonist, or Crusader.';
 			case 'Janitor':
 			case 'Retributionist':
 			case 'Reanimator':
