@@ -50,11 +50,7 @@ export default class Player {
 
 		// mute dead people
 		if (this.game.canOverwritePermissions) {
-			await this.game.channel.updateOverwrite(this.user, {
-				SEND_MESSAGES: false,
-				ADD_REACTIONS: false
-			});
-			this.game.permissionOverwrites.push(this.user.id);
+			await this.game.mute(this);
 		}
 
 		await this.role!.onDeath();

@@ -2,7 +2,7 @@ import PlayerManager from '@mafia/managers/PlayerManager';
 import Godfather from '@lib/Godfather';
 import Faction from '@mafia/structures/Faction';
 import Player from '@mafia/structures/Player';
-import VoteManager from '@mafia/managers/VoteManager';
+import VoteManager, { TrialVote, TrialVoteType, WeightedArrayProxy } from '@mafia/managers/VoteManager';
 import NightActionsManager from '@mafia/managers/NightActionsManager';
 import Setup from './Setup';
 
@@ -22,11 +22,15 @@ import PlayerEntity from '../../orm/entities/Player';
 import { STALEMATE_PRIORITY_ORDER } from '../../constants';
 
 const MAX_DELAY = 15 * Time.Minute;
+const TRIAL_DURATION = 30 * Time.Second;
+const TRIAL_VOTING_DURATION = 30 * Time.Second;
 
 export const enum Phase {
 	Pregame = 1,
 	Standby,
 	Day,
+	Trial,
+	TrialVoting,
 	Night
 }
 
@@ -61,6 +65,11 @@ export default class Game {
 	public numberedNicknames = new Set<GuildMember>();
 
 	public factionalChannels = new Collection<string, [TextChannel, string]>();
+
+	private dayTimeLeft = 0;
+
+	private totalTrials = 0;
+
 	public constructor(host: User, public channel: TextChannel, public settings: GameSettings) {
 		this.client = channel.client as Godfather;
 		this.phase = Phase.Pregame;
@@ -96,13 +105,9 @@ export default class Game {
 			return this.end({ ...winCheck, winningFaction: undefined });
 		}
 
-		if (this.channel.permissionsFor(this.client.user!)?.has(['MANAGE_CHANNELS', 'MANAGE_ROLES']) && this.settings.muteAtNight) {
+		if (this.canOverwritePermissions) {
 			for (const muted of this.players.filter(player => player.isAlive)) {
-				await this.channel.updateOverwrite(muted.user, {
-					SEND_MESSAGES: true,
-					ADD_REACTIONS: true
-				}).catch(() => null);
-				this.permissionOverwrites.push(muted.user.id);
+				await this.releaseMute(muted);
 			}
 		}
 
@@ -143,13 +148,9 @@ export default class Game {
 			return this.end({ ...winCheck, winningFaction: undefined });
 		}
 
-		if (this.channel.permissionsFor(this.client.user!)?.has(['MANAGE_CHANNELS', 'MANAGE_ROLES']) && this.settings.muteAtNight) {
+		if (this.canOverwritePermissions) {
 			for (const player of this.players) {
-				await this.channel.updateOverwrite(player.user, {
-					SEND_MESSAGES: false,
-					ADD_REACTIONS: false
-				});
-				this.permissionOverwrites.push(player.user.id);
+				await this.mute(player);
 			}
 		}
 
@@ -158,6 +159,8 @@ export default class Game {
 		this.phase = Phase.Standby;
 		this.votes.reset();
 		this.phaseEndAt = new Date(Date.now() + this.settings.nightDuration);
+		this.dayTimeLeft = 0;
+		this.totalTrials = 0;
 		this.nightActions.protectedPlayers = [];
 
 		await this.channel.send(`Night **${this.cycle}** will last ${format(this.settings.nightDuration)}. Send in your actions quickly!`);
@@ -169,10 +172,84 @@ export default class Game {
 		this.phase = Phase.Night;
 	}
 
-	public async hammer(player: Player) {
+	public async startTrial() {
+		// mute everyone except the person on trial
+		if (this.canOverwritePermissions) {
+			for (const player of this.players) {
+				if (player.user.id === this.votes.playerOnTrial?.user.id) continue;
+				await this.mute(player);
+			}
+		}
+
+		await this.channel.send(`**${this.votes.playerOnTrial!.user.tag}**, you have 30 seconds to present your case.`);
+		this.phaseEndAt = new Date(Date.now() + TRIAL_DURATION);
+		this.phase = Phase.Trial;
+		this.totalTrials++;
+	}
+
+	public async startTrialVoting() {
+		// unmute everyone who isn't dead
+		if (this.canOverwritePermissions) {
+			for (const player of this.players.filter(player => player.isAlive)) {
+				await this.releaseMute(player);
+			}
+		}
+
+		await this.channel.send(`The town may now vote on the Fate of ${this.votes.playerOnTrial!.user.tag}! Use the commands \`innocent\`, \`guilty\`, and \`abstain\` in Direct Messages to vote. (you have 30 seconds)`);
+		this.phaseEndAt = new Date(Date.now() + TRIAL_VOTING_DURATION);
+		this.phase = Phase.TrialVoting;
+	}
+
+	public async endTrial() {
+		const { trialVotes: votes } = this.votes;
+		const [
+			innocentVotes,
+			guiltyVotes,
+			abstainingVotes
+		] = [
+			(votes.filter(vote => vote.type === TrialVoteType.Innocent) as WeightedArrayProxy<TrialVote>).count(),
+			(votes.filter(vote => vote.type === TrialVoteType.Guilty) as WeightedArrayProxy<TrialVote>).count(),
+			(votes.filter(vote => vote.type === TrialVoteType.Abstain) as WeightedArrayProxy<TrialVote>).count()
+		];
+
+		await this.channel.send([
+			'**Votes**:\n',
+			`Innocent: ${innocentVotes}`,
+			`Guilty: ${guiltyVotes}`,
+			`Abstain: ${abstainingVotes}`
+		].join('\n'));
+
+		const result = Math.max(innocentVotes, guiltyVotes);
+
+		if (result === innocentVotes || innocentVotes === guiltyVotes) {
+			// after max trials are reached, end day without a lynch
+			if (this.totalTrials === this.settings.maxTrials) {
+				this.phase = Phase.Standby;
+				this.idlePhases++;
+				await this.channel.send('Maximum trials reached. Nobody was lynched!');
+				await this.startNight();
+			}
+			// add carried over day-time
+			this.phaseEndAt = new Date(Date.now() + this.dayTimeLeft);
+			this.votes.reset();
+			this.phase = Phase.Day;
+			return;
+		}
+
+		return this.hammer(this.votes.playerOnTrial!, true);
+	}
+
+	public async hammer(player: Player, force = false) {
 		// locks against multiple calls to hammer()
 		this.phase = Phase.Standby;
 		if (!player.isAlive) return;
+
+		if (this.settings.enableTrials && !force) {
+			this.votes.playerOnTrial = player;
+			// any time remaining in this day carries over
+			this.dayTimeLeft = Date.now() > this.phaseEndAt!.getTime() ? 0 : (this.phaseEndAt!.getTime() - Date.now());
+			return this.startTrial();
+		}
 
 		await this.channel.send(`${player.user.tag} was hammered. ${player.displayRoleAndWill()}\n${this.votes.show({ header: 'Final Vote Count', codeblock: true })}`);
 		await player.kill(`lynched D${this.cycle}`);
@@ -193,13 +270,29 @@ export default class Game {
 		if (this.phase === Phase.Standby) return;
 
 		if (this.phaseEndAt && Date.now() > this.phaseEndAt.getTime()) {
-			if (this.phase === Phase.Day) {
-				await this.channel.send('Nobody was lynched!');
-				this.idlePhases++;
-				return this.startNight();
-			}
 
-			return this.startDay();
+			switch (this.phase) {
+				case Phase.Day: {
+					await this.channel.send('Nobody was lynched!');
+					this.idlePhases++;
+					return this.startNight();
+				}
+
+				case Phase.Night: {
+					return this.startDay();
+				}
+
+				case Phase.Trial: {
+					return this.startTrialVoting();
+				}
+
+				case Phase.TrialVoting: {
+					return this.endTrial();
+				}
+
+				case Phase.Pregame:
+					// noop
+			}
 		}
 	}
 
@@ -367,6 +460,22 @@ export default class Game {
 		else await this.channel.setRateLimitPerUser(0);
 	}
 
+	public async mute(player: Player) {
+		await this.channel.updateOverwrite(player.user, {
+			SEND_MESSAGES: false,
+			ADD_REACTIONS: false
+		});
+		this.permissionOverwrites.push(player.user.id);
+	}
+
+	public async releaseMute(player: Player) {
+		await this.channel.updateOverwrite(player.user, {
+			SEND_MESSAGES: true,
+			ADD_REACTIONS: true
+		}).catch(() => null);
+		this.permissionOverwrites.splice(this.permissionOverwrites.indexOf(player.user.id, 1));
+	}
+
 }
 
 export interface GameSettings {
@@ -379,6 +488,8 @@ export interface GameSettings {
 	muteAtNight: boolean;
 	adaptiveSlowmode: boolean;
 	disableWills: boolean;
+	enableTrials: boolean;
+	maxTrials: number;
 }
 
 export interface EndgameCheckData {

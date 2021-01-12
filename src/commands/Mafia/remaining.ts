@@ -26,6 +26,10 @@ export default class RemainingCommand extends GodfatherCommand {
 				return `Day ${game.cycle}`;
 			case Phase.Night:
 				return `Night ${game.cycle}`;
+			case Phase.Trial:
+				return `The current trial`;
+			case Phase.TrialVoting:
+				return `The current trial-vote`;
 			case Phase.Pregame:
 				throw 'The game hasn\'t started yet!';
 			default:

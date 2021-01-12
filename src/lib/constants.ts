@@ -20,7 +20,9 @@ export const DEFAULT_GAME_SETTINGS: GameSettings = {
 	numberedNicknames: false,
 	muteAtNight: false,
 	adaptiveSlowmode: false,
-	disableWills: false
+	disableWills: false,
+	enableTrials: false,
+	maxTrials: 2
 };
 
 export const DEFAULT_ACTION_FLAGS = {
@@ -90,6 +92,18 @@ export const GUILD_SETTINGS_METADATA: SettingsEntry<keyof ArgType>[] = [
 		name: 'disableWills',
 		type: 'boolean',
 		display: (value: boolean) => value ? 'Enabled' : 'Disabled'
+	},
+	{
+		name: 'enableTrials',
+		type: 'boolean',
+		display: (value: boolean) => value ? 'Enabled' : 'Disabled'
+	},
+	{
+		name: 'maxTrials',
+		type: 'number',
+		minimum: 1,
+		maximum: 5,
+		display: (value: number) => value.toString()
 	}
 ];
 

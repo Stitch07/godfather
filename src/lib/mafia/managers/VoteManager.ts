@@ -1,12 +1,26 @@
 import Player from '@mafia/structures/Player';
 import Game from '@mafia/structures/Game';
+import { remove } from '@root/lib/util/utils';
 
-export interface Vote {
-	by: Player;
+export interface WeightedData {
 	weight: number;
 }
 
-export class VoteProxy extends Array<Vote> {
+export interface Vote extends WeightedData {
+	by: Player;
+}
+
+export enum TrialVoteType {
+	Innocent,
+	Guilty,
+	Abstain
+}
+
+export interface TrialVote extends Vote {
+	type: TrialVoteType;
+}
+
+export class WeightedArrayProxy<T extends WeightedData> extends Array<T> {
 
 	// Flattens weighted votes and gives the number of actual votes on a player
 	public count(): number {
@@ -15,14 +29,34 @@ export class VoteProxy extends Array<Vote> {
 
 }
 
+export class VoteProxy extends WeightedArrayProxy<Vote> {}
+
 export const NotVoting = 'notVoting';
 export const NoLynch = 'noLynch';
 
 export default class VoteManager extends Map<string, VoteProxy> {
 
+	public trialVotes: WeightedArrayProxy<TrialVote> = new WeightedArrayProxy();
+
+	public playerOnTrial: Player | null = null;
+
 	public constructor(public game: Game) {
 		super();
 		this.reset();
+	}
+
+	public trialVote(voter: Player, type: TrialVoteType) {
+		if (voter.user.id === this.playerOnTrial!.user.id) throw "You're on trial, you can't vote!";
+		if (!voter.isAlive) throw 'Dead players cannot vote in trials.';
+		remove(this.trialVotes, vote => vote.by.user.id === voter.user.id);
+
+		this.trialVotes.push({
+			by: voter,
+			type,
+			weight: voter.role.voteWeight
+		});
+
+		return this.game.channel.send(`${voter} has voted.`);
 	}
 
 	public vote(voter: Player, target: Player): boolean {
@@ -102,6 +136,8 @@ export default class VoteManager extends Map<string, VoteProxy> {
 		this.clear();
 		this.set(NotVoting, new VoteProxy());
 		this.set(NotVoting, new VoteProxy());
+		this.trialVotes = new WeightedArrayProxy<TrialVote>();
+		this.playerOnTrial = null;
 
 		// populate voting cache
 		const alivePlayers = this.game.players.filter(player => player.isAlive);
