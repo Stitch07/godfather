@@ -74,6 +74,7 @@ export default class extends GodfatherCommand {
 		}
 
 		if (game!.setup!.nightStart) {
+			game!.cycle++;
 			return game!.startNight();
 		}
 		return game!.startDay();
