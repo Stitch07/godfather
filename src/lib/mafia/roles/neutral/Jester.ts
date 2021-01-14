@@ -3,6 +3,7 @@ import JesterFaction from '@mafia/factions/neutral/Jester';
 import NightActionsManager, { Attack, NightActionPriority } from '@mafia/managers/NightActionsManager';
 import Player from '@mafia/structures/Player';
 import { randomArray } from '@util/utils';
+import { TrialVoteType } from '../../managers/VoteManager';
 
 class Jester extends SingleTarget {
 
@@ -35,7 +36,11 @@ class Jester extends SingleTarget {
 	public onDeath() {
 		if (this.player.deathReason.includes('lynched')) {
 			this.wasLynched = true;
-			this.playersVoting = this.game.votes.on(this.player).map(vote => vote.by);
+			// in trials, jester can haunt people who don't vote innocent
+			this.playersVoting = this.game.settings.enableTrials
+				? this.game.votes.trialVotes.filter(vote => vote.type !== TrialVoteType.Innocent).map(vote => vote.by)
+				: this.game.votes.on(this.player).map(vote => vote.by);
+
 			return this.game.channel.send('**The Jester will get revenge from his grave!**');
 		}
 	}

@@ -181,7 +181,7 @@ export default class Game {
 			}
 		}
 
-		await this.channel.send(`**${this.votes.playerOnTrial!.user.tag}**, you have 30 seconds to present your case.`);
+		await this.channel.send(`${this.votes.playerOnTrial!.user.toString()}, you have 30 seconds to convince the Town not to lynch you.`);
 		this.phaseEndAt = new Date(Date.now() + TRIAL_DURATION);
 		this.phase = Phase.Trial;
 		this.totalTrials++;
@@ -195,14 +195,14 @@ export default class Game {
 			}
 		}
 
-		await this.channel.send(`The town may now vote on the Fate of ${this.votes.playerOnTrial!.user.tag}! Use the commands \`innocent\`, \`guilty\`, and \`abstain\` in Direct Messages to vote. (you have 30 seconds)`);
+		await this.channel.send(`The town may now vote on the Fate of ${this.votes.playerOnTrial!.user.tag}! Use the commands \`innocent\`, \`guilty\`, and \`abstain\` in Direct Messages to vote. (you have 30 seconds; ${this.settings.maxTrials - this.totalTrials} trials left today)`);
 		this.phaseEndAt = new Date(Date.now() + TRIAL_VOTING_DURATION);
 		this.phase = Phase.TrialVoting;
 	}
 
 	public async endTrial() {
 		const { trialVotes: votes } = this.votes;
-		const [
+		let [
 			innocentVotes,
 			guiltyVotes,
 			abstainingVotes
@@ -211,6 +211,13 @@ export default class Game {
 			(votes.filter(vote => vote.type === TrialVoteType.Guilty) as WeightedArrayProxy<TrialVote>).count(),
 			(votes.filter(vote => vote.type === TrialVoteType.Abstain) as WeightedArrayProxy<TrialVote>).count()
 		];
+
+		// players who did not vote count as abstain
+		for (const player of this.players) {
+			if (player !== this.votes.playerOnTrial && !this.votes.trialVotes.some(vote => vote.by === player)) {
+				abstainingVotes += player.role.voteWeight;
+			}
+		}
 
 		await this.channel.send([
 			'**Votes**:\n',
@@ -229,6 +236,7 @@ export default class Game {
 				await this.channel.send('Maximum trials reached. Nobody was lynched!');
 				await this.startNight();
 			}
+			if (this.dayTimeLeft !== 0) await this.channel.send(`${this.votes.playerOnTrial!.user.tag} was acquitted.`);
 			// add carried over day-time
 			this.phaseEndAt = new Date(Date.now() + this.dayTimeLeft);
 			this.votes.reset();
@@ -243,8 +251,8 @@ export default class Game {
 		// locks against multiple calls to hammer()
 		this.phase = Phase.Standby;
 		if (!player.isAlive) return;
-
-		if (this.settings.enableTrials && !force) {
+		// super saint forces a hammer
+		if (this.settings.enableTrials && !force && player.role.name !== 'Super Saint') {
 			this.votes.playerOnTrial = player;
 			// any time remaining in this day carries over
 			this.dayTimeLeft = Date.now() > this.phaseEndAt!.getTime() ? 0 : (this.phaseEndAt!.getTime() - Date.now());
