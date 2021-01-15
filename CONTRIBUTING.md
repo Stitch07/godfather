@@ -6,10 +6,10 @@ To contribute to this repository, feel free to create a new fork of the reposito
 submit a pull request. We highly suggest [ESLint] to be installed
 in your text editor or IDE of your choice to ensure builds from GitHub Actions do not fail.
 
-1. Fork, clone, and select the **main** branch.
+1. Fork, clone, and select the **master** branch.
 2. Create a new branch in your fork.
 3. Make your changes.
-4. Ensure your linting passes by running `yarn lint`
+4. Ensure your linting passes and unit-tests work by running `yarn lint` and `yarn test` respectively.
 5. Commit your changes, and push them.
 6. Submit a Pull Request [here]!
 
@@ -48,6 +48,13 @@ Godfather uses PostgreSQL to store data such as server-settings, game results an
 3. Build Godfather using `yarn build`.
 4. Run all TypeORM migrations using `yarn typeorm migration:run`.
 5. Start the bot, with complete database support!
+
+## Running Godfather on Docker (recommended)
+
+1. Install [Docker].
+2. Make a `.env` file referencing `.env.example`.
+3. Run `docker-compose up` to start the bot in development mode.
+4. The bot runs in watch-mode, and will compile and reboot on every TS file change.
 
 ## Credits
 
