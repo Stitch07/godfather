@@ -21,10 +21,10 @@ export default class extends GodfatherCommand {
 	public roles!: Collection<string, Role>;
 
 	public async run(message: Message, args: Args, context: CommandContext) {
-		const roleName = await args.restResult('string');
+		const roleName = args.finished ? null : await args.pick('string');
 		const uniqueRoles = [...new Set(this.roles.values())];
 
-		if (!roleName.success) {
+		if (!roleName) {
 			// maps roles from faction -> role
 			const factionalRoles = new Map([...uniqueRoles.reduce((coll, role) => {
 				const facRoles = coll.get(role.faction.name);
@@ -51,8 +51,8 @@ export default class extends GodfatherCommand {
 			return message.channel.send(embed);
 		}
 
-		const role = uniqueRoles.find(r => r.name.toLowerCase() === roleName.value.toLowerCase());
-		if (!role) throw `I found no role named "${roleName.value}"`;
+		const role = uniqueRoles.find(r => r.name.toLowerCase() === roleName.toLowerCase());
+		if (!role) throw `I found no role named "${roleName}"`;
 		const docEntry = roledocs.find(entry => entry.name.toLowerCase() === role.name.toLowerCase());
 		if (!docEntry) throw `No documentation for ${role.name} available`;
 

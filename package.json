@@ -46,7 +46,7 @@
 	},
 	"dependencies": {
 		"@sapphire/decorators": "^1.0.1",
-		"@sapphire/framework": "1.0.0-alpha.2",
+		"@sapphire/framework": "1.0.0-alpha.3",
 		"@sapphire/pieces": "github:sapphire-project/pieces#build",
 		"@sapphire/plugin-logger": "1.0.2",
 		"@sapphire/ratelimits": "sapphire-project/utilities#build-ratelimits",
