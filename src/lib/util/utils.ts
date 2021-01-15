@@ -6,8 +6,12 @@ import { Client, GuildMember } from 'discord.js';
 import { Events, UserError } from '@sapphire/framework';
 import { TOKEN } from '@root/config';
 
-const TOKENS = [process.cwd(), process.cwd().replace(/\\/g, '\\\\'), TOKEN];
-const sensitiveTokens = new RegExp(TOKENS.map(regExpEsc).join('|'), 'gi');
+let sensitiveTokens: RegExp | null = null;
+
+export const initUtils = () => {
+	const TOKENS = [process.cwd(), process.cwd().replace(/\\/g, '\\\\'), TOKEN];
+	sensitiveTokens = new RegExp(TOKENS.map(regExpEsc).join('|'), 'gi');
+};
 
 export namespace Branding {
 	export const PrimaryColor = '#000000';
@@ -44,7 +48,7 @@ export function floatPromise(client: Client, promise: Promise<unknown>) {
 	if (isThenable(promise)) promise.catch(error => client.emit(Events.Error, error));
 }
 
-export const clean = (text: string) => text.replace(sensitiveTokens, '「ｒｅｄａｃｔｅｄ」');
+export const clean = (text: string) => text.replace(sensitiveTokens!, '「ｒｅｄａｃｔｅｄ」');
 
 /**
  * Just an easier way of writing (value as T)

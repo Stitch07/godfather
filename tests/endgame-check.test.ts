@@ -1,8 +1,8 @@
-import Player from '@mafia/Player';
+import Player from '@mafia/structures/Player';
 import Vanilla from '@mafia/roles/town/Vanilla';
-import Game from '@mafia/Game';
+import Game from '@mafia/structures/Game';
 import { createMockChannel, createMockUser } from './mocks';
-import Mafia_Vanilla from '@mafia/roles/mafia/Mafia_Vanilla';
+import Mafia_Vanilla from '@mafia/roles/mafia/Vanilla_Mafia';
 import { DEFAULT_GAME_SETTINGS } from '@lib/constants';
 
 describe('game testing', () => {

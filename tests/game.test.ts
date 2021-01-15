@@ -1,11 +1,13 @@
-import Game, { Phase } from '@mafia/Game';
+import Game, { Phase } from '@mafia/structures/Game';
 import { createMockUser } from './mocks/mockUser';
 import { createMockChannel } from './mocks/mockChannel';
-import Player from '@mafia/Player';
+import Player from '@mafia/structures/Player';
 import Vanilla from '@mafia/roles/town/Vanilla';
-import Mafia_Vanilla from '@mafia/roles/mafia/Mafia_Vanilla';
+import Mafia_Vanilla from '@mafia/roles/mafia/Vanilla_Mafia';
 import { NotVoting } from '@mafia/managers/VoteManager';
 import { DEFAULT_GAME_SETTINGS } from '@lib/constants';
+import { mock } from 'jest-mock-extended';
+import BasicSetup from '@root/lib/mafia/structures/BasicSetup';
 
 
 // This file tests a full Mafia Game from start to finish
@@ -17,6 +19,8 @@ describe('game testing', () => {
 
 	// @ts-ignore https://github.com/microsoft/TypeScript/issues/34933
 	const game = new Game(mockUser, mockChannel, DEFAULT_GAME_SETTINGS);
+	game.setup = mock<BasicSetup>();
+	game.setup.nightStart = false;
 	game.host.role = new Vanilla(game.host);
 
 	for (let i = 0; i < 4; i++) {
@@ -51,6 +55,18 @@ describe('game testing', () => {
 		expect(game.players.show()).toBe(EXPECTED_PLAYERLIST);
 	});
 
+	test('starting days', async () => {
+		await game.startDay();
+		expect(game.phase).toBe(Phase.Day);
+		expect(game.cycle).toBe(1);
+		expect(game.channel.send).toHaveBeenNthCalledWith(1, [
+			'Day **1** will last 5 minutes',
+			'With 6 alive, it takes 4 to lynch.'
+		].join('\n'));
+		// check if the voting cache was successfully populated
+		expect(game.votes.get(NotVoting)).toHaveLength(6);
+	});
+
 	test('voting manager', () => {
 		// this call to reset() is required to populate the voting cache
 		game.votes.reset();
@@ -73,29 +89,23 @@ describe('game testing', () => {
 		expect(game.votes.show({})).toBe(EXPECTED_VOTE_COUNT);
 	});
 
-	test('starting days', async () => {
-		await game.startDay();
-		expect(game.phase).toBe(Phase.Day);
-		expect(game.cycle).toBe(1);
-		expect(game.channel.send).toHaveBeenCalledWith([
-			'Day **1** will last 5 minutes',
-			'With 6 alive, it takes 4 to lynch.'
-		].join('\n'));
-		// check if the voting cache was successfully populated
-		expect(game.votes.get(NotVoting)).toHaveLength(6);
-	});
-
 	test('hammering logic', async () => {
 		await game.hammer(game.players[1]);
 		expect(game.players[1].isAlive).toBe(false);
 		expect(game.players[1].deathReason).toBe('lynched D1');
-		expect(game.channel.send).toHaveBeenCalledWith(`Player1#0001 was hammered. They were a **Vanilla**.`);
+		expect(game.channel.send).toHaveBeenNthCalledWith(2, [
+			`Player1#0001 was hammered. They were a **Vanilla**. We could not find a will.`,
+			`**Final Vote Count**`,
+			'```',
+			'Player1 (4): Player2, Player3, Player4, Host (Hammered)',
+			'Not Voting (2): Player1, Player5',
+			'```'
+		].join('\n'));
+		expect(game.channel.send).toHaveBeenNthCalledWith(3, 'Night **1** will last 2 minutes. Send in your actions quickly!');
 	});
 
-	test('starting nights', async () => {
-		await game.startNight();
+	test('starting nights', () => {
 		expect(game.phase).toBe(Phase.Night);
-		expect(game.channel.send).toHaveBeenCalledWith('Night **1** will last 2 minutes. Send in your actions quickly!');
 		expect(game.host.role!.canUseAction().check).toBe(false);
 	});
 });

@@ -129,7 +129,7 @@ export default class Game {
 			}
 		}
 
-		if (this.channel.permissionsFor(this.client.user!)!.has('MANAGE_CHANNELS') && this.settings.adaptiveSlowmode) await this.updateAdaptiveSlowmode();
+		if (this.channel.permissionsFor(this.client.user!)?.has('MANAGE_CHANNELS') && this.settings.adaptiveSlowmode) await this.updateAdaptiveSlowmode();
 
 		await this.channel.send([
 			`Day **${this.cycle}** will last ${format(this.settings.dayDuration)}`,
@@ -154,7 +154,7 @@ export default class Game {
 			}
 		}
 
-		if (this.channel.permissionsFor(this.client.user!)!.has('MANAGE_CHANNELS') && this.settings.adaptiveSlowmode) await this.updateAdaptiveSlowmode();
+		if (this.channel.permissionsFor(this.client.user!)?.has('MANAGE_CHANNELS') && this.settings.adaptiveSlowmode) await this.updateAdaptiveSlowmode();
 
 		this.phase = Phase.Standby;
 		this.votes.reset();

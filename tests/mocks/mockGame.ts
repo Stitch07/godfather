@@ -1,9 +1,9 @@
 import { createMockChannel, createMockUser } from '@mocks/index';
-import Setup from '@mafia/Setup';
-import Game from '@mafia/Game';
-import Player from '@mafia/Player';
-import Role from '@mafia/Role';
-import { Constructor } from '@sapphire/utilities';
+import Setup from '@mafia/structures/Setup';
+import Game from '@mafia/structures/Game';
+import Player from '@mafia/structures/Player';
+import { DEFAULT_GAME_SETTINGS } from '@root/lib/constants';
+import { allRoles } from '@root/lib/mafia/roles';
 
 interface MockGameParams {
 	numPlayers: number;
@@ -11,18 +11,20 @@ interface MockGameParams {
 }
 
 export const createMockGame = (params: MockGameParams) => {
-	const game = new Game(createMockUser({ username: 'Host', discriminator: '0000' }), createMockChannel({ name: 'games' }));
+	// @ts-ignore type instantiation bs
+	const game = new Game(createMockUser({ username: 'Host', discriminator: '0000' }), createMockChannel({ name: 'games' }), DEFAULT_GAME_SETTINGS);
 	// the first player is always the host, so we need to add one less player
 	for (let i = 1; i <= params.numPlayers - 1; i++) {
+		// @ts-ignore type instantiation bs
 		const player = new Player(createMockUser({ username: `Player${i}`, discriminator: `000${i}` }), game);
 		game.players.push(player);
 	}
 
 	game.setup = params.setup;
-	const roleGen = game.setup!.generate();
+	const { roles } = game.setup!;
 
 	for (const player of game.players) {
-		player.role = new (roleGen.next().value as Constructor<Role>)();
+		player.role = new (allRoles.get(roles.shift()!)!)();
 	}
 
 	return game;
