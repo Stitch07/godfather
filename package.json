@@ -16,7 +16,7 @@
 		"predocker:watch": "yarn",
 		"docker:watch": "yarn watch",
 		"lint": "eslint src --ext ts --fix",
-		"test": "jest",
+		"test": "jest --runInBand",
 		"typeorm": "node -r module-alias/register ./node_modules/typeorm/cli.js",
 		"predev:typeorm": "yarn build",
 		"dev:typeorm": "yarn typeorm",

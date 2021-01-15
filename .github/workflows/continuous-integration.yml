@@ -3,8 +3,7 @@ name: Continuous Integration
 on:
   push:
     branches:
-      - master
-      - v1.1.0
+      - '**'
   pull_request:
 
 jobs:
@@ -28,6 +27,31 @@ jobs:
         run: yarn --ignore-scripts --frozen-lockfile
       - name: Run ESLint
         uses: icrawl/action-eslint@v1
+
+  Testing:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Project
+        uses: actions/checkout@v2
+      - name: Use Node.js v14
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14
+      - name: Restore CI Cache
+        uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-15-${{ hashFiles('**/yarn.lock') }}
+      - name: Install Dependencies
+        run: yarn --frozen-lockfile
+      - name: Copy Configuration
+        run: |
+          pushd src &&
+          cp config.example.ts config.ts &&
+          popd
+      - name: Run tests
+        run: yarn test
 
   Building:
     name: Compile source code
