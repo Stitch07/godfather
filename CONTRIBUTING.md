@@ -53,6 +53,7 @@ Godfather uses PostgreSQL to store data such as server-settings, game results an
 
 1. Install [Docker].
 2. Make a `.env` file referencing `.env.example`.
+ - If you're running Godfather on Docker for the first time, or have new TypeORM migrations, start the database individually with `docker-compose up -d postgres` and `yarn dev:typeorm migration:run`.
 3. Run `docker-compose up` to start the bot in development mode.
 4. The bot runs in watch-mode, and will compile and reboot on every TS file change.
 
