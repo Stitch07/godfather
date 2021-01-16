@@ -61,7 +61,7 @@ jobs:
           cp config.example.ts config.ts &&
           popd
       - name: Run tests
-        run: yarn test
+        run: yarn build && yarn test
 
   Building:
     name: Compile source code
