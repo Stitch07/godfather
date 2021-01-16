@@ -3,6 +3,7 @@ import DefaultMap from '@util/DefaultMap';
 import Game, { Phase } from '@mafia/structures/Game';
 import SingleTarget from '@mafia/mixins/SingleTarget';
 import { fauxAlive, listItems } from '@root/lib/util/utils';
+import { DEFAULT_ACTION_FLAGS } from '@root/lib/constants';
 
 export default class NightActionsManager extends Array<NightAction> {
 
@@ -47,10 +48,11 @@ export default class NightActionsManager extends Array<NightAction> {
 			if (action === undefined) continue;
 			await (actor.role! as SingleTarget).setUp(this, target);
 		}
-		for (const { action, actor, target, flags } of this) {
+		for (let { action, actor, target, flags } of this) {
+			if (!flags) flags = DEFAULT_ACTION_FLAGS;
 			if (action === undefined) continue;
 			await (actor.role! as SingleTarget).runAction(this, target);
-			if (flags?.canVisit) {
+			if (flags.canVisit) {
 				const targets = Array.isArray(target) ? target : [target];
 				for (const target of targets) {
 					if (target?.user.id !== actor.user.id) await target?.visit(actor);

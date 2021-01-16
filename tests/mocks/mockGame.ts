@@ -11,6 +11,7 @@ import Vanilla from '@mafia/roles/town/Vanilla';
 import Goon from '@root/lib/mafia/roles/mafia/Goon';
 import Cop from '@root/lib/mafia/roles/town/Cop';
 import Doctor from '@root/lib/mafia/roles/town/Doctor';
+import Escort from '@root/lib/mafia/roles/town/Escort';
 
 
 const allRoles = new Map<string, Constructor<Role>>([
@@ -18,7 +19,8 @@ const allRoles = new Map<string, Constructor<Role>>([
 	['Vanilla Mafia', Vanilla_Mafia],
 	['Doctor', Doctor],
 	['Cop', Cop],
-	['Goon', Goon]
+	['Goon', Goon],
+	['Escort', Escort]
 ]);
 
 interface MockGameParams {

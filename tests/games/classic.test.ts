@@ -12,7 +12,7 @@ describe('classic setup', () => {
 	const game = createMockGame({
 		numPlayers: 7,
 		setup: createMockSetup({
-			roles: ['Cop', 'Doctor', 'Vanilla', 'Vanilla', 'Vanilla', 'Goon', 'Vanilla Mafia'],
+			roles: ['Cop', 'Doctor', 'Escort', 'Vanilla', 'Vanilla', 'Goon', 'Vanilla Mafia'],
 			nightStart: true
 		})
 	});
@@ -44,14 +44,21 @@ describe('classic setup', () => {
 			target: game.players[4],
 			priority: NightActionPriority.KILLER
 		});
+
+		game.nightActions.push({
+			action: 'roleblock',
+			actor: game.players[2],
+			target: game.players[5],
+			priority: NightActionPriority.ESCORT
+		});
 	});
 
 	test('day 2', async () => {
 		await game.startDay();
 		// check if action results worked
 		expect(game.players[0].user.send).toHaveBeenNthCalledWith(2, 'Your target is suspicious.');
-		expect(game.players[4].user.send).toHaveBeenNthCalledWith(1, 'You were attacked but somebody nursed you back to health!');
-		expect(game.players[5].user.send).toHaveBeenNthCalledWith(2, 'Your target was too strong to kill!');
+		// expect(game.players[4].user.send).toHaveBeenNthCalledWith(1, 'You were attacked but somebody nursed you back to health!');
+		expect(game.players[5].user.send).toHaveBeenNthCalledWith(2, 'Somebody occupied your night. You were roleblocked!');
 		// day 2 voting
 		game.votes.vote(game.players[0], game.players[5]);
 		game.votes.vote(game.players[1], game.players[5]);
