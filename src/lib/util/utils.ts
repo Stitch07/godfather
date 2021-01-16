@@ -8,7 +8,7 @@ import { TOKEN } from '@root/config';
 
 let sensitiveTokens: RegExp | null = null;
 
-export const initUtils = () => {
+export const initClean = () => {
 	const TOKENS = [process.cwd(), process.cwd().replace(/\\/g, '\\\\'), TOKEN];
 	sensitiveTokens = new RegExp(TOKENS.map(regExpEsc).join('|'), 'gi');
 };

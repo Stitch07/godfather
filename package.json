@@ -37,6 +37,7 @@
 		"babel-jest": "^26.2.2",
 		"eslint": "^7.5.0",
 		"jest": "^26.2.2",
+		"jest-circus": "^26.6.3",
 		"jest-mock-extended": "^1.0.9",
 		"rimraf": "^3.0.2",
 		"ts-jest": "^26.1.4",
