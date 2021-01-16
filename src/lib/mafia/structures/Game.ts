@@ -190,7 +190,7 @@ export default class Game {
 	public async startTrialVoting() {
 		// unmute everyone who isn't dead
 		if (this.canOverwritePermissions) {
-			for (const player of this.players.filter(player => player.isAlive)) {
+			for (const player of this.players.filter(player => player.isAlive && player.user.id !== this.votes.playerOnTrial?.user.id)) {
 				await this.releaseMute(player);
 			}
 		}
@@ -477,11 +477,14 @@ export default class Game {
 	}
 
 	public async releaseMute(player: Player) {
+		// calls to splice() with invalid indexes have unexpected behavior
+		const index = this.permissionOverwrites.indexOf(player.user.id);
+		if (index === -1) return;
 		await this.channel.updateOverwrite(player.user, {
 			SEND_MESSAGES: true,
 			ADD_REACTIONS: true
 		}).catch(() => null);
-		this.permissionOverwrites.splice(this.permissionOverwrites.indexOf(player.user.id, 1));
+		this.permissionOverwrites.splice(index, 1);
 	}
 
 }
