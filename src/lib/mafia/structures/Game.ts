@@ -212,8 +212,8 @@ export default class Game {
 			(votes.filter(vote => vote.type === TrialVoteType.Abstain) as WeightedArrayProxy<TrialVote>).count()
 		];
 
-		// players who did not vote count as abstain
-		for (const player of this.players) {
+		// alive players who did not vote count as abstain
+		for (const player of this.players.filter(player => player.isAlive)) {
 			if (player !== this.votes.playerOnTrial && !this.votes.trialVotes.some(vote => vote.by === player)) {
 				abstainingVotes += player.role.voteWeight;
 			}
