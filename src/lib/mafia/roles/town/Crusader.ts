@@ -38,7 +38,7 @@ class Crusader extends SingleTarget {
 		actions.record.set(target.user.id, playerRecord);
 
 		// Kill the visitor.
-		actions.record.setAction(playerToKill.user.id, 'nightkill', { result: true, by: [this.player] });
+		actions.record.setAction(playerToKill.user.id, 'nightkill', { result: true, by: [this.player], type: Attack.Basic });
 		playerToKill.queueMessage('You were attacked by a Crusader!');
 	}
 
