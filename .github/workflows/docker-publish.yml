@@ -3,6 +3,11 @@ name: ci
 on:
   release:
     types: [published]
+  workflow_dispatch:
+    inputs:
+      tag_name:
+        description: 'The name of the tag.'
+        required: true
 
 jobs:
   main:
@@ -17,12 +22,21 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Build and push
+      - name: Push Release build
         id: docker_build
         uses: docker/build-push-action@v2
+        if:  ${{ github.event_name == 'release' }}
         with:
           file: ./Dockerfile.prod
           push: true
           tags: soumil07/godfather:${{ github.event.release.tag_name }}
+      - name: Push Alpha build
+        id: docker_build_alpha
+        uses: docker/build-push-action@v2
+        if:  ${{ github.event_name == 'workflow_dispatch' }}
+        with:
+          file: ./Dockerfile.prod
+          push: true
+          tags: soumil07/godfather:${{ github.event.inputs.tag_name }}
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
