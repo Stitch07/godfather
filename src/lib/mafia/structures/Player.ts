@@ -85,6 +85,26 @@ export default class Player {
 		return `${roleText}${willText}`;
 	}
 
+	public toJSON(): Record<string, unknown> {
+		return {
+			user: this.user.toJSON(),
+			role: this.role
+				? {
+					name: this.role.name,
+					modifiers: this.role.modifiers
+				}
+				: null,
+			previousRoles: this.previousRoles.map(role => ({ name: role.name, modifiers: role.modifiers })),
+			isAlive: this.isAlive,
+			cleaned: this.cleaned,
+			flags: this.flags,
+			deathReason: this.deathReason,
+			will: this.will,
+			messageQueue: this.messageQueue,
+			visitors: this.visitors.map(visitor => visitor.toJSON())
+		};
+	}
+
 	public static resolve(game: Game, arg: string) {
 		if (Number.isInteger(parseInt(arg, 10)) && Number(arg) <= game.players.length && Number(arg) >= 1) {
 			return game.players[Number(arg) - 1];

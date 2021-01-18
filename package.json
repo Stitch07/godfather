@@ -12,7 +12,7 @@
 		"build:prod": "tsc -p src --sourceMap false",
 		"dev": "yarn build && node .",
 		"clean": "rimraf dist",
-		"watch": "tsc-watch -b src --onSuccess \"node .\"",
+		"watch": "tsc-watch -b src --onSuccess \"node -r source-map-support/register .\"",
 		"predocker:watch": "yarn",
 		"docker:watch": "yarn watch",
 		"lint": "eslint src --ext ts --fix",
@@ -20,7 +20,7 @@
 		"typeorm": "node -r module-alias/register ./node_modules/typeorm/cli.js",
 		"predev:typeorm": "yarn build",
 		"dev:typeorm": "yarn typeorm",
-		"start": "node dist/"
+		"start": "node -r source-map-support/register dist/"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.11.0",
@@ -55,6 +55,8 @@
 		"@sapphire/type": "^1.0.1",
 		"@sapphire/utilities": "^1.0.1",
 		"bufferutil": "^4.0.3",
+		"@sentry/integrations": "^5.30.0",
+		"@sentry/node": "^5.30.0",
 		"discord.js": "^12.3.1",
 		"fs-nextra": "^0.5.1",
 		"js-yaml": "^3.14.1",

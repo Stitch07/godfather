@@ -487,6 +487,22 @@ export default class Game {
 		this.permissionOverwrites.splice(index, 1);
 	}
 
+	public toJSON() {
+		return {
+			cycle: this.cycle,
+			phase: this.phase,
+			players: this.players.map(player => player.toJSON()),
+			votes: this.votes,
+			setup: {
+				name: this.setup?.name,
+				roles: this.setup?.roles
+			},
+			permissionOverwrites: this.permissionOverwrites,
+			createdAt: this.createdAt,
+			nightActions: this.nightActions.map(action => action)
+		};
+	}
+
 }
 
 export interface GameSettings {

@@ -1,9 +1,11 @@
 /* eslint-disable no-negated-condition */
 import { green, gray, magenta, yellow } from 'colorette';
 import { connect } from '@lib/orm/ormConfig';
-import { CLIENT_ID, PGSQL_ENABLED, PREFIX } from '@root/config';
+import { CLIENT_ID, PGSQL_ENABLED, PREFIX, SENTRY_DSN } from '@root/config';
 import { Event, Events, isErr, PieceContext, Store } from '@sapphire/framework';
 import { floatPromise } from '@util/utils';
+
+import * as Sentry from '@sentry/node';
 
 export default class extends Event<Events.Ready> {
 
@@ -26,7 +28,27 @@ export default class extends Event<Events.Ready> {
 
 		// start event loop
 		this.context.client.eventLoop = setInterval(async () => {
-			for (const game of this.context.client.games.values()) await game.update();
+			for (const game of this.context.client.games.values()) {
+				try {
+					await game.update();
+				} catch (error) {
+					if (SENTRY_DSN) {
+						Sentry.captureException(error, {
+							tags: {
+								game: game.channel.id
+							},
+							contexts: {
+								game: game.toJSON(),
+								action: {
+									type: 'phase_update'
+								}
+							}
+						});
+					} else {
+						this.context.client.logger.error(error);
+					}
+				}
+			}
 		}, 10 * 1000); // 10 seconds
 
 		for (const command of this.context.client.slashCommands.values()) {
