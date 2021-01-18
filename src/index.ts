@@ -17,6 +17,7 @@ async function init() {
 			dsn: SENTRY_DSN,
 			environment: PRODUCTION ? 'production' : 'development',
 			integrations: [
+				new Sentry.Integrations.OnUnhandledRejection(),
 				new Sentry.Integrations.Modules(),
 				new Sentry.Integrations.FunctionToString(),
 				new Sentry.Integrations.LinkedErrors(),

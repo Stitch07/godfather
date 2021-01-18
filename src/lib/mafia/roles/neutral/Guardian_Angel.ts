@@ -70,7 +70,9 @@ class Guardian_Angel extends NoTarget {
 		const playerRecord = actions.record.get(this.target.user.id);
 		if (playerRecord.has('nightkill')) {
 			const nightKills = playerRecord.get('nightkill');
-			if (nightKills.result === true && nightKills.type && nightKills.type < Attack.Unstoppable) {
+			const isClConverting = actions.find(action => action.actor.role.name === 'Cult Leader' && action.target === this.target);
+
+			if (isClConverting || (nightKills.result === true && nightKills.type && nightKills.type < Attack.Unstoppable)) {
 				playerRecord.set('nightkill', { result: false, by: [] });
 
 				const heals = playerRecord.get('heal');

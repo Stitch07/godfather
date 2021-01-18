@@ -69,7 +69,7 @@ export default class NightActionsManager extends Array<NightAction> {
 			if (record.has('nightkill') && record.get('nightkill').result) {
 				const deadPlayer = this.game.players.find(player => player.user.id === playerID);
 				if (deadPlayer) {
-					deadPlayer.kill(`killed N${this.game.cycle}`);
+					await deadPlayer.kill(`killed N${this.game.cycle}`);
 					deadPlayer.queueMessage('You have died!');
 					deadPlayers.push(deadPlayer!);
 				}
@@ -94,7 +94,7 @@ export default class NightActionsManager extends Array<NightAction> {
 export class NightRecord extends DefaultMap<string, DefaultMap<string, NightRecordEntry>> {
 
 	public constructor() {
-		super(() => new DefaultMap(() => ({ result: true, by: [] })));
+		super(() => new DefaultMap(() => ({ result: false, by: [] })));
 	}
 
 	public setAction(targetID: string, recordEntry: string, item: NightRecordEntry) {
@@ -176,5 +176,7 @@ export enum NightActionPriority {
 	JANITOR = 7,
 	// ret's position literally doesn't matter
 	RETRIBUTIONIST = 8,
-	AMNESIAC = 9
+	AMNESIAC = 9,
+	// CL should ALWAYS be last
+	CultLeader = 10
 }

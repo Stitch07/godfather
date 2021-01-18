@@ -12,6 +12,9 @@ import Goon from '@root/lib/mafia/roles/mafia/Goon';
 import Cop from '@root/lib/mafia/roles/town/Cop';
 import Doctor from '@root/lib/mafia/roles/town/Doctor';
 import Escort from '@root/lib/mafia/roles/town/Escort';
+import Godfather from '@root/lib/mafia/roles/mafia/Godfather';
+import CultLeader from '@root/lib/mafia/roles/cult/Cult_Leader';
+import Consigliere from '@root/lib/mafia/roles/mafia/Consigliere';
 
 
 const allRoles = new Map<string, Constructor<Role>>([
@@ -20,7 +23,10 @@ const allRoles = new Map<string, Constructor<Role>>([
 	['Doctor', Doctor],
 	['Cop', Cop],
 	['Goon', Goon],
-	['Escort', Escort]
+	['Escort', Escort],
+	['Godfather', Godfather],
+	['Consigliere', Consigliere],
+	['Cult Leader', CultLeader]
 ]);
 
 interface MockGameParams {

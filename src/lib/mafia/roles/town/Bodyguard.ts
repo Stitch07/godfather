@@ -20,8 +20,9 @@ class Bodyguard extends SingleTarget {
 		if (!playerRecord.has('nightkill')) return;
 
 		const nightKills = playerRecord.get('nightkill');
+		const isClConverting = actions.find(action => action.actor.role.name === 'Cult Leader' && action.target === target);
 
-		if (nightKills.result === true && nightKills.type && nightKills.type < Attack.Unstoppable) {
+		if (isClConverting || (nightKills.result === true && nightKills.type && nightKills.type < Attack.Unstoppable)) {
 			const attacker = nightKills.by.pop()!;
 			// BG only protects from one of the attackers
 			playerRecord.set('nightkill', { result: false, by: [] });
