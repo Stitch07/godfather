@@ -3,7 +3,7 @@ import SingleTarget from '@mafia/mixins/SingleTarget';
 import Player from '@mafia/structures/Player';
 import TownFaction from '../../factions/Town';
 
-const VANILLA_ROLES = ['Cult Member', 'Vanilla', 'Vanilla Mafia']
+const VANILLA_ROLES = ['Cult Member', 'Vanilla', 'Vanilla Mafia'];
 
 export default class Neapolitan extends SingleTarget {
 
