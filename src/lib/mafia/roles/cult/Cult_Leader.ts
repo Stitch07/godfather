@@ -68,4 +68,6 @@ export default class CultLeader extends SingleTarget {
 		}
 	}
 
+	public static unique = true;
+
 }
