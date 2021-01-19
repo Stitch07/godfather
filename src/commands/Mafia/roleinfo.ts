@@ -39,7 +39,7 @@ export default class extends GodfatherCommand {
 				for (const role of roles) {
 					description.push(`${emote} **${role}**`);
 				}
-				if (faction === 'Town' || faction === 'Mafia') description.push('');
+				if (faction === 'Town' || faction === 'Mafia' || faction === 'Cult') description.push('');
 			}
 
 			const embed = new MessageEmbed()

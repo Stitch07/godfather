@@ -110,6 +110,7 @@ export const GUILD_SETTINGS_METADATA: SettingsEntry<keyof ArgType>[] = [
 export const factionEmojis: Record<string, string> = {
 	'Town': '<:townie:735134943507644436>',
 	'Mafia': '<:goon:735136200041562183>',
+	'Cult':	'👥',
 	'Arsonist': '<:arso:735136511732744333>',
 	'Executioner': '<:exe:735136679408697375>',
 	'Jester': '🤡',
