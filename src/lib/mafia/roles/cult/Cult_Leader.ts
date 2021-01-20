@@ -2,6 +2,7 @@ import SingleTarget from '@mafia/mixins/SingleTarget';
 import { allRoles } from '..';
 import CultFaction from '../../factions/Cult';
 import NightActionsManager, { Attack, Defence, NightActionPriority } from '../../managers/NightActionsManager';
+import { Phase } from '../../structures/Game';
 import Player from '../../structures/Player';
 
 // the factions that the CL can convert
@@ -68,9 +69,10 @@ class CultLeader extends SingleTarget {
 
 	public async onDeath() {
 		const followers = this.game.players.filter(player => player.isAlive && player.role.name === 'Cult Member');
+		const phaseStr = this.game.phase === Phase.Night ? 'night' : 'day';
 		for (const follower of followers) {
-			await follower.kill(`committed suicide; N${this.game.cycle}`);
-			await this.game.channel.send(`${follower} died last night. ${follower.displayRoleAndWill(true)}`);
+			await follower.kill(`committed suicide; ${phaseStr[0].toUpperCase()}${this.game.cycle}`);
+			await this.game.channel.send(`${follower} died. ${follower.displayRoleAndWill(true)}`);
 			follower.queueMessage('You committed suicide after losing your Cult Leader!');
 		}
 	}

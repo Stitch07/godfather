@@ -12,6 +12,13 @@ class Retributionist extends SingleTarget {
 	public actionText = 'revive a player';
 	public actionGerund = 'reviving';
 	public priority = NightActionPriority.RETRIBUTIONIST;
+	public flags = {
+		canBlock: true,
+		canTransport: false,
+		canVisit: false,
+		canWitch: false
+	};
+
 	// whether the Ret has already revived a player
 	private hasRevived = false;
 

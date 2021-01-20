@@ -39,4 +39,18 @@ jobs:
           push: true
           tags: soumil07/godfather:${{ github.event.inputs.tag_name }}
       - name: Image digest
-        run: echo ${{ steps.docker_build.outputs.digest }}
+        run: echo ${{ steps.docker_build.outputs.digest || steps.docker_build_alpha.outputs.digest }}
+      - name: Discord Webhook (Alpha)
+        run: "curl -i --fail \
+              -X POST \
+              -H 'Content-Type: application/json' \
+              -d '{\"embeds\": [{\"color\": 899053, \"author\": {\"icon_url\": \"https://www.docker.com/sites/default/files/d8/styles/role_icon/public/2019-07/Docker-Logo-White-RGB_Moby.png?itok=VwIPWvAs\", \"name\": \"Docker Hub\"}, \"description\": \"Image pushed to [soumil07/godfather:${{ github.events.input.tag_name }}](https://hub.docker.com/r/soumil07/godfather) by soumil07.\", \"fields\": [{ \"name\": \"Image Digest(s)\", \"value\": \"${{steps.docker_build_alpha.outputs.digest}}\"}] }]}'
+              \"${{ secrets.DISCORD_WEBHOOK }}\""
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+      - name: Discord Webhook (Production)
+        run: "curl -i --fail \
+              -X POST \
+              -H 'Content-Type: application/json' \
+              -d '{\"embeds\": [{\"color\": 899053, \"author\": {\"icon_url\": \"https://www.docker.com/sites/default/files/d8/styles/role_icon/public/2019-07/Docker-Logo-White-RGB_Moby.png?itok=VwIPWvAs\", \"name\": \"Docker Hub\"}, \"description\": \"Image pushed to [soumil07/godfather:${{ github.event.release.tag_name }}](https://hub.docker.com/r/soumil07/godfather) by soumil07.\", \"fields\": [{ \"name\": \"Image Digest(s)\", \"value\": \"${{steps.docker_build.outputs.digest}}\"}] }]}'
+              \"${{ secrets.DISCORD_WEBHOOK }}\""
+        if: ${{ github.event_name == 'release' }}
