@@ -7,7 +7,7 @@ import Player from '../../structures/Player';
 // the factions that the CL can convert
 const CAN_CONVERT = ['Town', 'Survivor', 'Amnesiac', 'Jester'];
 
-export default class CultLeader extends SingleTarget {
+class CultLeader extends SingleTarget {
 
 	public faction = new CultFaction();
 	public name = 'Cult Leader';
@@ -17,9 +17,16 @@ export default class CultLeader extends SingleTarget {
 	public actionGerund = 'converting';
 	public priority = NightActionPriority.CultLeader;
 
+	// whether the CL was already attacked once
+	public attacked = false;
+
 	// the last cycle with a successful conversion. setting it to -1 lets the CL convert someone on N1
 	private lastConverted = -1;
 	private successfulConversion = false;
+
+	public get defence() {
+		return this.attacked ? Defence.None : Defence.Basic;
+	}
 
 	public canUseAction() {
 		if (this.game.cycle - this.lastConverted < 2) return { check: false, reason: 'You cannot convert on 2 consecutive nights.' };
@@ -71,3 +78,7 @@ export default class CultLeader extends SingleTarget {
 	public static unique = true;
 
 }
+
+CultLeader.aliases = ['CL'];
+
+export default CultLeader;

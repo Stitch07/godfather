@@ -1,7 +1,9 @@
 import NightActionsManager, { Attack, NightActionPriority } from '@mafia/managers/NightActionsManager';
 import Player from '@mafia/structures/Player';
 import SingleTarget from '@mafia/mixins/SingleTarget';
-import { pluralize } from '@util/utils';
+import { cast, pluralize } from '@util/utils';
+import Witch from '../roles/neutral/Witch';
+import CultLeader from '../roles/cult/Cult_Leader';
 
 export default class Killer extends SingleTarget {
 
@@ -25,7 +27,11 @@ export default class Killer extends SingleTarget {
 
 	public runAction(actions: NightActionsManager, target: Player) {
 		this.bullets--;
-		if (target.role.actualDefence > this.attackStrength) return;
+		if (target.role.actualDefence > this.attackStrength) {
+			// witch defence: after attacked once, revert back to Basic
+			if (['Witch', 'Cult Leader'].includes(target.role.name)) cast<Witch | CultLeader>(target.role).attacked = true;
+			return;
+		}
 		actions.record.setAction(target.user.id, 'nightkill', { result: true, by: [this.player], type: this.attackStrength });
 	}
 
