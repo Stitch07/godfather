@@ -128,9 +128,4 @@ describe('cult mechanics', () => {
 		expect(cl.role.canUseAction().check).toBe(false);
 	});
 
-	test('day 6', async () => {
-		await game.startDay();
-		expect(true).toBe(true);
-	});
-
 });
