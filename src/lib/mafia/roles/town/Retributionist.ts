@@ -13,7 +13,6 @@ class Retributionist extends SingleTarget {
 	public actionGerund = 'reviving';
 	public priority = NightActionPriority.RETRIBUTIONIST;
 	public flags = {
-		canBlock: true,
 		canTransport: false,
 		canVisit: false,
 		canWitch: false
