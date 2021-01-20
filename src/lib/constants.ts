@@ -20,7 +20,10 @@ export const DEFAULT_GAME_SETTINGS: GameSettings = {
 	numberedNicknames: false,
 	muteAtNight: false,
 	adaptiveSlowmode: false,
-	disableWills: false
+	disableWills: false,
+	enableTrials: false,
+	enablePlurality: false, // This could be refactored into an enum. For now, don't enable both trials and plurality at once.
+	maxTrials: 2
 };
 
 export const DEFAULT_ACTION_FLAGS = {
@@ -90,12 +93,30 @@ export const GUILD_SETTINGS_METADATA: SettingsEntry<keyof ArgType>[] = [
 		name: 'disableWills',
 		type: 'boolean',
 		display: (value: boolean) => value ? 'Enabled' : 'Disabled'
+	},
+	{
+		name: 'enableTrials',
+		type: 'boolean',
+		display: (value: boolean) => value ? 'Enabled' : 'Disabled'
+	},
+	{
+		name: 'maxTrials',
+		type: 'number',
+		minimum: 1,
+		maximum: 5,
+		display: (value: number) => value.toString()
+	},
+	{
+		name: 'enablePlurality',
+		type: 'boolean',
+		display: (value: boolean) => value ? 'Enabled' : 'Disabled'
 	}
 ];
 
 export const factionEmojis: Record<string, string> = {
 	'Town': '<:townie:735134943507644436>',
 	'Mafia': '<:goon:735136200041562183>',
+	'Cult':	'👥',
 	'Arsonist': '<:arso:735136511732744333>',
 	'Executioner': '<:exe:735136679408697375>',
 	'Jester': '🤡',

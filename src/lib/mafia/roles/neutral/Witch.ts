@@ -14,10 +14,12 @@ class Witch extends DoubleTarget {
 
 	public faction = new WitchFaction();
 
+	// whether the witch has been attacked already
+	public attacked = false;
 	private witched = false;
 
 	public get defence() {
-		return Defence.Basic;
+		return this.attacked ? Defence.None : Defence.Basic;
 	}
 
 	public setUp(actions: NightActionsManager, targets: Player[]) {

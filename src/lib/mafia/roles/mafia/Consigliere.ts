@@ -11,11 +11,6 @@ class Consigliere extends SingleTarget {
 	public action = 'check';
 	public actionGerund = 'investigating';
 	public actionText = 'investigate a player';
-	public flags = {
-		canBlock: true,
-		canTransport: true,
-		canVisit: true
-	};
 
 	public priority = NightActionPriority.CONSIG;
 

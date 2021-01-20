@@ -7,6 +7,8 @@ import { codeBlock, isThenable } from '@sapphire/utilities';
 import { Message } from 'discord.js';
 import { inspect } from 'util';
 
+import * as Sentry from '@sentry/node';
+
 @ApplyOptions<CommandOptions>({
 	aliases: ['ev'],
 	quotes: [],
@@ -54,7 +56,10 @@ export default class extends GodfatherCommand {
 			// eslint-disable-next-line no-eval
 			result = eval(code);
 		} catch (error) {
-			if (error && error.stack) this.context.client.logger.error(error);
+			if (error && error.stack) {
+				this.context.client.logger.error(error);
+				Sentry.captureException(error);
+			}
 			result = error;
 			success = false;
 		}

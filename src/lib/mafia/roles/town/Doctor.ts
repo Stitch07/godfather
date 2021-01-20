@@ -16,11 +16,11 @@ class Doctor extends SingleTarget {
 	public runAction(actions: NightActionsManager, target: Player) {
 		if (target === this.player) this.hasSelfHealed = true;
 		const playerRecord = actions.record.get(target.user.id);
-		if (!playerRecord.has('nightkill')) return;
 
 		const nightKills = playerRecord.get('nightkill');
+		const isClConverting = actions.find(action => action.actor.role.name === 'Cult Leader' && action.target === target);
 
-		if (nightKills.result === true && nightKills.type && nightKills.type < Attack.Unstoppable) {
+		if (isClConverting || (nightKills.result === true && nightKills.type && nightKills.type < Attack.Unstoppable)) {
 			nightKills.result = false;
 			nightKills.by = [];
 			playerRecord.set('nightkill', { result: false, by: [] });

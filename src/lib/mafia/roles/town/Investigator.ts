@@ -12,13 +12,13 @@ class Investigator extends SingleTarget {
 	public actionText = 'investigate a player';
 	public priority = NightActionPriority.INVEST;
 
-	public async tearDown(actions: NightActionsManager, target: Player) {
+	public tearDown(actions: NightActionsManager, target: Player) {
 		let results = this.getResult(target.role.name);
 		if (actions.framedPlayers.includes(target)) {
 			results = this.getResult('Framer');
 			actions.framedPlayers.splice(actions.framedPlayers.indexOf(target), 1);
 		}
-		await this.player.queueMessage(results);
+		return this.player.queueMessage(results);
 	}
 
 	private getResult(roleName: string) {
@@ -51,11 +51,13 @@ class Investigator extends SingleTarget {
 				return 'Your target could be a Lookout, Witch, or Juggernaut.';
 			case 'Framer':
 			case 'Jester':
-				return 'Your target could be a Framer or Jester.';
+			case 'Cult Leader':
+				return 'Your target could be a Framer, Cult Leader, or Jester.';
 			case 'Bodyguard':
 			case 'Godfather':
 			case 'Arsonist':
-				return 'Your target could be a Bodyguard, Godfather, or Arsonist.';
+			case 'Crusader':
+				return 'Your target could be a Bodyguard, Godfather, Arsonist, or Crusader.';
 			case 'Janitor':
 			case 'Retributionist':
 			case 'Reanimator':
@@ -71,7 +73,8 @@ class Investigator extends SingleTarget {
 			case 'Vanilla Mafia':
 			case 'Neapolitan':
 			case 'Super Saint':
-				return 'Your target could be a Vanilla, Vanilla Mafia, Neapolitan, or Super Saint.';
+			case 'Cult Member':
+				return 'Your target could be a Vanilla, Vanilla Mafia, Neapolitan, Cult Member, or Super Saint.';
 			default:
 				return 'You could not find enough information about your target.';
 		}

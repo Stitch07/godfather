@@ -1,6 +1,6 @@
 import GodfatherCommand from '@lib/GodfatherCommand';
 import { ApplyOptions } from '@sapphire/decorators';
-import { CommandOptions } from '@sapphire/framework';
+import { CommandOptions, PermissionsPrecondition } from '@sapphire/framework';
 import { roundNumber } from '@sapphire/utilities';
 import { format } from '@util/durationFormat';
 import { Branding } from '@util/utils';
@@ -8,7 +8,8 @@ import { Message, MessageEmbed } from 'discord.js';
 import { cpus } from 'os';
 
 @ApplyOptions<CommandOptions>({
-	description: 'View bot statistics'
+	description: 'View bot statistics',
+	preconditions: [new PermissionsPrecondition('EMBED_LINKS')]
 })
 export default class extends GodfatherCommand {
 

@@ -26,7 +26,8 @@ class Escort extends SingleTarget {
 	}
 
 	public tearDown(actions: NightActionsManager, target: Player) {
-		const success = actions.record.get('roleblock').get(target.user.id).by.find(player => player.user.id === this.player.user.id);
+		const record = actions.record.get(target.user.id).get('roleblock');
+		const success = record.result && record.by.includes(this.player);
 		if (success) return target.queueMessage('Somebody occupied your night. You were roleblocked!');
 	}
 

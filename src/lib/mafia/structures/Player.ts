@@ -50,11 +50,7 @@ export default class Player {
 
 		// mute dead people
 		if (this.game.canOverwritePermissions) {
-			await this.game.channel.updateOverwrite(this.user, {
-				SEND_MESSAGES: false,
-				ADD_REACTIONS: false
-			});
-			this.game.permissionOverwrites.push(this.user.id);
+			await this.game.mute(this);
 		}
 
 		await this.role!.onDeath();
@@ -87,6 +83,26 @@ export default class Player {
 				: ' We could not find a will.';
 
 		return `${roleText}${willText}`;
+	}
+
+	public toJSON(): Record<string, unknown> {
+		return {
+			user: this.user.toJSON(),
+			role: this.role
+				? {
+					name: this.role.name,
+					modifiers: this.role.modifiers
+				}
+				: null,
+			previousRoles: this.previousRoles.map(role => ({ name: role.name, modifiers: role.modifiers })),
+			isAlive: this.isAlive,
+			cleaned: this.cleaned,
+			flags: this.flags,
+			deathReason: this.deathReason,
+			will: this.will,
+			messageQueue: this.messageQueue,
+			visitors: this.visitors.map(visitor => visitor.toJSON())
+		};
 	}
 
 	public static resolve(game: Game, arg: string) {
