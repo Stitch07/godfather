@@ -7,7 +7,6 @@
  * On N3, the CL tries to convert the Vanilla (healed by the Doc) and fails
  * On N4, the CL tries to convert the Vanilla and is successful
  * On N5, the CL does not have an action
- * On N6, the CL converts the Doctor, however the Godfather shoots him and all Cultists die. The Mafia wins
  */
 
 import { NightActionPriority } from '@root/lib/mafia/managers/NightActionsManager';
@@ -132,30 +131,6 @@ describe('cult mechanics', () => {
 	test('day 6', async () => {
 		await game.startDay();
 		expect(true).toBe(true);
-	});
-
-	test('night 6', async () => {
-		await game.startNight();
-		expect(true).toBe(true);
-
-		game.nightActions.push({
-			actor: cl,
-			target: game.players[2],
-			action: 'convert',
-			priority: NightActionPriority.CultLeader
-		});
-
-		game.nightActions.push({
-			actor: game.players[1],
-			target: cl,
-			action: 'shoot',
-			priority: NightActionPriority.KILLER
-		});
-
-		await game.nightActions.resolve();
-		expect(cl.isAlive).toBe(false);
-		expect(game.players[2].isAlive).toBe(false);
-		expect(game.players[3].isAlive).toBe(false);
 	});
 
 });
