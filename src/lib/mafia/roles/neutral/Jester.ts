@@ -16,7 +16,8 @@ class Jester extends SingleTarget {
 	public flags = {
 		canBlock: false,
 		canTransport: false,
-		canVisit: false
+		canVisit: false,
+		canWitch: false
 	};
 
 	// whether the Jester has been lynched

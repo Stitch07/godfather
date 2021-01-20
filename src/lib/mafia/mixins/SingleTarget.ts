@@ -13,13 +13,6 @@ class SingleTarget extends Role {
 
 	public actionPhase = Phase.Night;
 
-	public flags? = {
-		canBlock: true,
-		canTransport: true,
-		canVisit: true,
-		canWitch: true
-	};
-
 	public constructor(player: Player) {
 		super(player);
 	}
@@ -163,10 +156,10 @@ interface SingleTarget {
 	actionGerund: string;
 	actionText: string;
 	flags?: {
-		canBlock: boolean;
-		canTransport: boolean;
-		canVisit: boolean;
-		canWitch: boolean;
+		canBlock?: boolean;
+		canTransport?: boolean;
+		canVisit?: boolean;
+		canWitch?: boolean;
 	};
 	priority: NightActionPriority;
 }

@@ -4,6 +4,7 @@ import Game, { Phase } from '@mafia/structures/Game';
 import SingleTarget from '@mafia/mixins/SingleTarget';
 import { fauxAlive, listItems } from '@root/lib/util/utils';
 import { DEFAULT_ACTION_FLAGS } from '@root/lib/constants';
+import { mergeDefault } from '@sapphire/utilities';
 
 export default class NightActionsManager extends Array<NightAction> {
 
@@ -21,6 +22,7 @@ export default class NightActionsManager extends Array<NightAction> {
 			action.priority = priority;
 		}
 
+		action.flags = mergeDefault(DEFAULT_ACTION_FLAGS, action.flags ?? {});
 		if (action.actor === action.target) action.flags!.canTransport = false;
 		this.push(action);
 
@@ -53,7 +55,7 @@ export default class NightActionsManager extends Array<NightAction> {
 			if (action === undefined) continue;
 			await (actor.role! as SingleTarget).runAction(this, target);
 			if (flags.canVisit) {
-				const targets = Array.isArray(target) ? target : [target];
+				const targets = Array.isArray(target) ? actor.role.name === 'Witch' ? [target[0]] : target : [target];
 				for (const target of targets) {
 					if (target?.user.id !== actor.user.id) await target?.visit(actor);
 				}
@@ -116,9 +118,9 @@ export interface NightAction {
 	priority: NightActionPriority;
 	target?: Player | Player[];
 	flags?: {
-		canBlock: boolean;
-		canTransport: boolean;
-		canVisit: boolean;
+		canBlock?: boolean;
+		canTransport?: boolean;
+		canVisit?: boolean;
 		canWitch?: boolean;
 	};
 }

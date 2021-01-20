@@ -12,11 +12,6 @@ class Framer extends SingleTarget {
 	public action = 'frame';
 	public actionGerund = 'framing';
 	public actionText = 'frame a player';
-	public flags = {
-		canBlock: true,
-		canTransport: true,
-		canVisit: true
-	};
 
 	public priority = NightActionPriority.FRAMER;
 

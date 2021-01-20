@@ -28,7 +28,8 @@ export const DEFAULT_GAME_SETTINGS: GameSettings = {
 export const DEFAULT_ACTION_FLAGS = {
 	canBlock: true,
 	canTransport: true,
-	canVisit: true
+	canVisit: true,
+	canWitch: true
 };
 
 export const STALEMATE_PRIORITY_ORDER = [

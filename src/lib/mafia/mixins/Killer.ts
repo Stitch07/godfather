@@ -14,11 +14,6 @@ export default class Killer extends SingleTarget {
 	public shootingMechanism = 'bullet';
 	public priority = NightActionPriority.KILLER;
 	public bullets = Infinity;
-	public flags = {
-		canBlock: true,
-		canTransport: true,
-		canVisit: true
-	};
 
 	public canUseAction() {
 		if (this.bullets === 0) return { check: false, reason: `You have 0 ${this.shootingMechanism}s left.` };

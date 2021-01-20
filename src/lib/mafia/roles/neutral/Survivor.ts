@@ -12,11 +12,6 @@ export default class Survivor extends NoTarget {
 	public actionGerund = 'vesting';
 	public actionText = 'protect yourself at night';
 	public priority = NightActionPriority.SURVIVOR;
-	public flags = {
-		canBlock: true,
-		canTransport: true,
-		canVisit: false
-	};
 
 	private vested = false;
 	private vests: number;

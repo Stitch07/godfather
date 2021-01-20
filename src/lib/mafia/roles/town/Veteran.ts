@@ -14,7 +14,8 @@ class Veteran extends NoTarget {
 	public flags = {
 		canBlock: false,
 		canTransport: false,
-		canVisit: false
+		canVisit: false,
+		canWitch: false
 	};
 
 	private onAlert = false;
