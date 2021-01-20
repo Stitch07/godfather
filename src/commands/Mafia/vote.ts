@@ -7,7 +7,7 @@ import { Message } from 'discord.js';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['vtl', 'vt'],
-	description: 'Vote to lynch a player',
+	description: 'Vote to eliminate a player',
 	preconditions: ['GuildOnly', 'GameOnly', 'PlayerOnly', 'AlivePlayerOnly', 'GameStartedOnly', 'DayOnly', { entry: 'Cooldown', context: { bucketType: BucketType.Channel, delay: Number(Time.Second) } }]
 })
 export default class extends GodfatherCommand {

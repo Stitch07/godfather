@@ -131,7 +131,7 @@ export default class Game {
 
 		await this.channel.send([
 			`Day **${this.cycle}** will last ${format(this.settings.dayDuration)}`,
-			`With ${alivePlayers.length} alive, it takes ${this.majorityVotes} to lynch.`
+			`With ${alivePlayers.length} alive, it takes ${this.majorityVotes} to eliminate.`
 		].join('\n'));
 	}
 
@@ -178,7 +178,7 @@ export default class Game {
 		if (!player.isAlive) return;
 
 		await this.channel.send(`${player.user.tag} was hammered. They were a **${player.role!.display}**.\n${this.votes.show({ header: 'Final Vote Count', codeblock: true })}`);
-		await player.kill(`lynched D${this.cycle}`);
+		await player.kill(`eliminated D${this.cycle}`);
 		this.idlePhases = 0;
 
 		await this.startNight();
@@ -197,7 +197,7 @@ export default class Game {
 
 		if (this.phaseEndAt && Date.now() > this.phaseEndAt.getTime()) {
 			if (this.phase === Phase.Day) {
-				await this.channel.send('Nobody was lynched!');
+				await this.channel.send('Nobody was eliminated!');
 				this.idlePhases++;
 				return this.startNight();
 			}

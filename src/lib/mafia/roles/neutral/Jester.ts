@@ -18,8 +18,8 @@ class Jester extends SingleTarget {
 		canVisit: false
 	};
 
-	// whether the Jester has been lynched
-	public wasLynched = false;
+	// whether the Jester has been eliminated
+	public wasEliminated = false;
 	// players hammering the Jester
 	public playersVoting: Player[] = [];
 
@@ -33,8 +33,8 @@ class Jester extends SingleTarget {
 
 	// @ts-ignore weird bug
 	public onDeath() {
-		if (this.player.deathReason.includes('lynched')) {
-			this.wasLynched = true;
+		if (this.player.deathReason.includes('eliminated')) {
+			this.wasEliminated = true;
 			this.playersVoting = this.game.votes.on(this.player).map(vote => vote.by);
 			return this.game.channel.send('**The Jester will get revenge from his grave!**');
 		}
@@ -46,7 +46,7 @@ class Jester extends SingleTarget {
 	}
 
 	public canUseAction() {
-		return { check: this.wasLynched && this.playersVoting.length > 0, reason: '' };
+		return { check: this.wasEliminated && this.playersVoting.length > 0, reason: '' };
 	}
 
 	public get defaultAction() {
