@@ -7,7 +7,7 @@ export default class TownFaction extends Faction {
 
 	public name = 'Town';
 
-	public winCondition = 'Lynch every evildoer.';
+	public winCondition = 'Eliminate every evildoer.';
 
 	public hasWon(game: Game): boolean {
 		// source: https://town-of-salem.fandom.com/wiki/Victory

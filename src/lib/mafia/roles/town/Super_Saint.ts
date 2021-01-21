@@ -6,10 +6,10 @@ class SuperSaint extends Role {
 
 	public name = 'Super Saint';
 
-	public description = 'If lynched, you kill the last person voting you.';
+	public description = 'If eliminated, you kill the last person voting you.';
 
 	public async onDeath() {
-		if (this.player.deathReason.startsWith('lynched')) {
+		if (this.player.deathReason.startsWith('eliminated')) {
 			const { game } = this.player;
 
 			const votesOnSaint = game.votes.on(this.player);
