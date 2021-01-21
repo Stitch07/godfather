@@ -481,8 +481,8 @@ export default class Game {
 		const index = this.permissionOverwrites.indexOf(player.user.id);
 		if (index === -1) return;
 		await this.channel.updateOverwrite(player.user, {
-			SEND_MESSAGES: true,
-			ADD_REACTIONS: true
+			SEND_MESSAGES: null,
+			ADD_REACTIONS: null
 		}).catch(() => null);
 		this.permissionOverwrites.splice(index, 1);
 	}
