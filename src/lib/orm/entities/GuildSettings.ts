@@ -45,6 +45,9 @@ export default class GuildSettingsEntity implements GameSettings {
 	@Column('boolean', { 'default': false })
 	public enableTrials = false;
 
+	@Column('boolean', { 'default': false })
+	public enablePlurality = true;
+
 	@Column('integer', { 'default': DEFAULT_GAME_SETTINGS.maxTrials })
 	public maxTrials = DEFAULT_GAME_SETTINGS.maxTrials;
 

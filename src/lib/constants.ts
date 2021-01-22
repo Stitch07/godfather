@@ -22,6 +22,7 @@ export const DEFAULT_GAME_SETTINGS: GameSettings = {
 	adaptiveSlowmode: false,
 	disableWills: false,
 	enableTrials: false,
+	enablePlurality: false, // This could be refactored into an enum. For now, don't enable both trials and plurality at once.
 	maxTrials: 2
 };
 
@@ -105,6 +106,11 @@ export const GUILD_SETTINGS_METADATA: SettingsEntry<keyof ArgType>[] = [
 		minimum: 1,
 		maximum: 5,
 		display: (value: number) => value.toString()
+	},
+	{
+		name: 'enablePlurality',
+		type: 'boolean',
+		display: (value: boolean) => value ? 'Enabled' : 'Disabled'
 	}
 ];
 

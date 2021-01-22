@@ -14,7 +14,7 @@ import SingleTarget from '../mixins/SingleTarget';
 // import { PGSQL_ENABLED } from '@root/config';
 import { format } from '@util/durationFormat';
 import { Time } from '@sapphire/time-utilities';
-import { canManage, fauxAlive, listItems } from '../../util/utils';
+import { canManage, fauxAlive, listItems, randomArray } from '../../util/utils';
 import { ENABLE_PRIVATE_CHANNELS, PGSQL_ENABLED, PRIVATE_CHANNEL_SERVER } from '@root/config';
 import { getConnection, getRepository } from 'typeorm';
 import GameEntity from '../../orm/entities/Game';
@@ -281,8 +281,21 @@ export default class Game {
 
 			switch (this.phase) {
 				case Phase.Day: {
-					await this.channel.send('Nobody was eliminated!');
-					this.idlePhases++;
+					if (this.settings.enablePlurality) {
+						let largestVoteCount = 0;
+						for (const player of this.players) {
+							largestVoteCount = Math.max(largestVoteCount, this.votes.on(player).count());
+						}
+
+						const candidates = this.players.filter(player => this.votes.on(player).count() === largestVoteCount);
+						let eliminatedPlayer = randomArray(candidates)!;
+						await this.channel.send(`${eliminatedPlayer.user.tag} was lynched. ${eliminatedPlayer.displayRoleAndWill()}\n${this.votes.show({ header: 'Final Vote Count', codeblock: true })}`);
+						await eliminatedPlayer.kill(`eliminated D${this.cycle}`);
+						this.idlePhases = 0;
+					} else {
+						await this.channel.send('Nobody was eliminated!');
+						this.idlePhases++;
+					}
 					return this.startNight();
 				}
 
@@ -516,6 +529,7 @@ export interface GameSettings {
 	adaptiveSlowmode: boolean;
 	disableWills: boolean;
 	enableTrials: boolean;
+	enablePlurality: boolean;
 	maxTrials: number;
 }
 
