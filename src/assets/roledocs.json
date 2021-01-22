@@ -4,7 +4,7 @@
 		"detailedDescription": [
 			"A regular townie without any powers.",
 			"",
-			"- Win condition: lynch every criminal and evildoer",
+			"- Win condition: Eliminate every criminal and evildoer",
 			"",
 			"Cop results: Your target is innocent.",
 			"Investigator results: Your target could be a Vanilla, Vanilla Mafia, Neapolitan, or Super Saint.",
@@ -16,7 +16,7 @@
 		"detailedDescription": [
 			"An ex-army soldier who now protects people for a living.",
 			"",
-			"- Win Condition: lynch every criminal and evildoer",
+			"- Win Condition: Eliminate every criminal and evildoer",
 			"",
 			"+ Abilities: Protect a player from direct attacks at night.",
 			"+ If your target is attacked, then you and the visitor will fight to the death, if you successfully protect someone you can still be healed.",
@@ -31,7 +31,7 @@
 		"detailedDescription": [
 			"The law enforcer of town, on the hunt to find the mafia, always constantly in the danger of being killed.",
 			"",
-			"- Win Condition: lynch every criminal and evildoer",
+			"- Win Condition: Eliminate every criminal and evildoer",
 			"",
 			"+ Abilities: Interrogate one person each night for suspicious activity.",
 			"+ You will know if your target is suspicious or innocent.",
@@ -46,7 +46,7 @@
 		"detailedDescription": [
 			"The law enforcer of town, believes he’s the best cop and nothing bad would ever happen to the town.",
 			"",
-			"- Win Condition: Lynch every criminal and evildoer",
+			"- Win Condition: Eliminate every criminal and evildoer",
 			"",
 			"+ Abilities: Interrogate one person each night for suspicious activity.",
 			"+ You will know if your target is suspicious or innocent.",
@@ -62,7 +62,7 @@
 		"detailedDescription": [
 			"The law enforcer of town, on the hunt to find the mafia, but he acts so furious and insane that he always messes up.",
 			"",
-			"- Win Condition: lynch every criminal and evildoer",
+			"- Win Condition: Eliminate every criminal and evildoer",
 			"",
 			"+ Abilities: Interrogate one person each night for suspicious activity.",
 			"+ An insane cop will always show the opposite results for suspicion, showing innocent roles as suspicious and suspicious roles as innocent.",
@@ -77,7 +77,7 @@
 		"detailedDescription": [
 			"The law enforcer of town, on the hunt to find the mafia, but he is very frightened.",
 			"",
-			"- Win Condition: Lynch every criminal and evildoer",
+			"- Win Condition: Eliminate every criminal and evildoer",
 			"",
 			"+ Abilities: Interrogate one person each night for suspicious activity.",
 			"+ A paranoid cop will always show suspicious results regardless of the roles.",
@@ -92,7 +92,7 @@
 		"detailedDescription": [
 			"An experienced surgeon in trauma care who secretly heals people.",
 			"",
-			"- Win Condition: lynch every criminal and evildoer",
+			"- Win Condition: Eliminate every criminal and evildoer",
 			"",
 			"+ Abilities: Choose to heal one person at night, granting them powerful defense.",
 			"+ You will know if your target is attacked.",
@@ -108,7 +108,7 @@
 		"detailedDescription": [
 			"A very beautiful woman skilled in distracting her targets.",
 			"",
-			"- Win Condition: lynch every criminal and evildoer",
+			"- Win Condition: Eliminate every criminal and evildoer",
 			"",
 			"+ Abilities: Choose one person each night to block them from using their role’s night ability. (roleblock)",
 			"+ You cannot be roleblocked.",
@@ -123,7 +123,7 @@
 		"detailedDescription": [
 			"Some think he has got eagle’s eyes. An observer who is master at camping outside homes to gain information.",
 			"",
-			"- Win Condition: lynch every criminal and evildoer",
+			"- Win Condition: Eliminate every criminal and evildoer",
 			"",
 			"+ Abilities: Choose to watch one person at night to see who visits them.",
 			"+ You will exactly know who visited your target at night, showing their names.",
@@ -138,7 +138,7 @@
 		"detailedDescription": [
 			"The leader of the Town.",
 			"",
-			"- Win Condition: lynch every criminal and evildoer",
+			"- Win Condition: Eliminate every criminal and evildoer",
 			"",
 			"+ Abilities: You may reveal yourself as the mayor of the Town during the day.",
 			"+ Once you have revealed yourself your vote counts as 3 votes.",
@@ -155,7 +155,7 @@
 		"detailedDescription": [
 			"An impressionist who fulfills the wishes of people by doing their mimicry.",
 			"",
-			"- Win Condition: lynch every criminal and evildoer",
+			"- Win Condition: Eliminate every criminal and evildoer",
 			"",
 			"+ Abilities: You may choose to raise a dead Town member every night and once use their ability on a player.",
 			"+ Each dead town member can only be used once every game.",
@@ -171,7 +171,7 @@
 		"detailedDescription": [
 			"Like a cop, but with less powerful investigations.",
 			"",
-			"- Win Condition: lynch every criminal and evildoer",
+			"- Win Condition: Eliminate every criminal and evildoer",
 			"",
 			"+ Abilities: Check if a target is or is not some form of a Vanilla.",
 			"+ Your check cannot be modified by framing.",
@@ -186,7 +186,7 @@
 		"detailedDescription": [
 			"A powerful mystic that can revive the dead.",
 			"",
-			"- Win Condition: lynch every criminal and evildoer",
+			"- Win Condition: Eliminate every criminal and evildoer",
 			"",
 			"+ Abilities: You may revive one dead townie per game. ",
 			"",
@@ -198,11 +198,11 @@
 	{
 		"name": "Super Saint",
 		"detailedDescription": [
-			"A vengeful lunatic who will explode on getting lynched.",
+			"A vengeful lunatic who will explode on getting eliminated.",
 			"",
-			"- Win condition: lynch every criminal and evildoer",
+			"- Win condition: Eliminate every criminal and evildoer",
 			"",
-			"+ Abilities: Once the super saint gets lynched during the day, the person last voted to lynch will die.",
+			"+ Abilities: Once the super saint gets eliminated during the day, the person last voted to eliminate will die.",
 			"",
 			"Cop results: Your target is innocent.",
 			"Investigator results: Your target could be a Vanilla, Vanilla Mafia, Neapolitan, or Super Saint.",
@@ -214,7 +214,7 @@
 		"detailedDescription": [
 			"Belongs to a very respected tribe, he follows his prey to any destination.",
 			"",
-			"- Win Condition: lynch every criminal and evildoer",
+			"- Win Condition: Eliminate every criminal and evildoer",
 			"",
 			"+ Abilities: Choose one person to track them at night, to see who they visit.",
 			"+ You will exactly know who your target visited at night, giving their exact name.",
@@ -229,7 +229,7 @@
 		"detailedDescription": [
 			"A retired taxi driver who transports people without asking any questions.",
 			"",
-			"- Win Condition: lynch every criminal and evildoer",
+			"- Win Condition: Eliminate every criminal and evildoer",
 			"",
 			"+ Abilities: Choose two people to transport at night.",
 			"+ Transporting two people will swap all targets against them.",
@@ -248,7 +248,7 @@
 		"detailedDescription": [
 			"A very scared and paranoid war hero who does not want to get visited by anyone.",
 			"",
-			"- Win Condition: lynch every criminal and evildoer",
+			"- Win Condition: Eliminate every criminal and evildoer",
 			"",
 			"+ Abilities: Decide if you want to go on alert during each night or not.",
 			"+ If you go on alert, you gain a basic defense, attacking any person who visits you at night. If you do not go on alert, you stay at home and do not attack.",
@@ -265,7 +265,7 @@
 		"detailedDescription": [
 			"A militant officer who takes laws in his own hands.",
 			"",
-			"- Win Condition: lynch every criminal and evildoer",
+			"- Win Condition: Eliminate every criminal and evildoer",
 			"",
 			"+ Abilities: take justice in your own hand and shoot someone at night.",
 			"+ You can only choose to shoot 3 times in a game.",
@@ -281,7 +281,7 @@
 		"detailedDescription": [
 			"A private eye who secretly gathers information.",
 			"",
-			"- Win Condition: Lynch every criminal and evildoer",
+			"- Win Condition: Eliminate every criminal and evildoer",
 			"",
 			"+ Abilities: Investigate one person each night for a clue to their role.",
 			"",
@@ -454,12 +454,12 @@
 	{
 		"name": "Executioner",
 		"detailedDescription": [
-			"An obsessed lyncher who will execute his target by any means necessary.",
+			"A psychopath who wants to execute his target by any means necessary.",
 			"",
-			"- Win condition: Trick and influence the town into lynching your target.",
+			"- Win condition: Trick and influence the town into eliminating your target.",
 			"",
 			"+ Abilities: At the beginning of each game you will be given a target, who you need to get executed by any means.",
-			"+ If your target gets lynched at day, you win the game.",
+			"+ If your target gets eliminated at day, you win the game.",
 			"+ If your target dies at night, you will turn into a Jester.",
 			"",
 			"Cop results: Your target is innocent.",
@@ -490,10 +490,10 @@
 		"detailedDescription": [
 			"A crazed lunatic whose life goal is to be publicly executed.",
 			"",
-			"- Win Condition: Get yourself lynched by any means necessary",
+			"- Win Condition: Get yourself eliminated by any means necessary",
 			"",
-			"+ Abilities: If you are lynched at day, you will attack one of your guilty voters the following night with an Unstoppable attack.",
-			"+ You can only haunt once, right after you get lynched.",
+			"+ Abilities: If you are eliminated at day, you will attack one of your guilty voters the following night with an Unstoppable attack.",
+			"+ You can only haunt once, right after you get eliminated.",
 			"+ You cannot attack people who have not voted you at day.",
 			"+ If you die at night, you lose the game.",
 			"",

@@ -59,7 +59,7 @@ abstract class Role {
 	}
 
 	public async onDeath() {
-		if (this.faction.name !== 'Town' || this.player.deathReason.includes('lynched')) return;
+		if (this.faction.name !== 'Town' || this.player.deathReason.includes('eliminated')) return;
 
 		const executionersInGame = this.game.players.filter(player => player.isAlive && player.role.name === 'Executioner');
 		for (const executioner of executionersInGame) {

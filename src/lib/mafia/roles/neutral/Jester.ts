@@ -20,8 +20,8 @@ class Jester extends SingleTarget {
 		canWitch: false
 	};
 
-	// whether the Jester has been lynched
-	public wasLynched = false;
+	// whether the Jester has been eliminated
+	public wasEliminated = false;
 	// players hammering the Jester
 	public playersVoting: Player[] = [];
 
@@ -35,8 +35,8 @@ class Jester extends SingleTarget {
 
 	// @ts-ignore weird bug
 	public onDeath() {
-		if (this.player.deathReason.includes('lynched')) {
-			this.wasLynched = true;
+		if (this.player.deathReason.includes('eliminated')) {
+			this.wasEliminated = true;
 			// in trials, jester can haunt people who don't vote innocent
 			this.playersVoting = this.game.settings.enableTrials
 				? this.game.votes.trialVotes.filter(vote => vote.type !== TrialVoteType.Innocent).map(vote => vote.by)
@@ -52,7 +52,7 @@ class Jester extends SingleTarget {
 	}
 
 	public canUseAction() {
-		return { check: this.wasLynched && this.playersVoting.length > 0, reason: '' };
+		return { check: this.wasEliminated && this.playersVoting.length > 0, reason: '' };
 	}
 
 	public get defaultAction() {

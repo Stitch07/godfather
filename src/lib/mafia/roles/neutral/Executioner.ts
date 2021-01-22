@@ -7,7 +7,7 @@ import ExecutionerFaction from '@mafia/factions/neutral/Executioner';
 class Executioner extends Role {
 
 	public name = 'Executioner';
-	public description = 'You must get your target lynched by all means necessary.';
+	public description = 'You must get your target eliminated by all means necessary.';
 	public target!: Player;
 	public faction = new ExecutionerFaction();
 

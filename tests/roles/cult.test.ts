@@ -9,10 +9,10 @@
  * On N5, the CL does not have an action
  */
 
-import { NightActionPriority } from '@root/lib/mafia/managers/NightActionsManager';
-import { Phase } from '@root/lib/mafia/structures/Game';
+import { NightActionPriority } from '@mafia/managers/NightActionsManager';
+import { Phase } from '@mafia/structures/Game';
 import { createMockGame, createMockSetup } from '../mocks/';
-import { init } from '@root/lib/mafia/roles';
+import { init } from '@mafia/roles';
 
 beforeAll(async done => {
 	await init();

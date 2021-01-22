@@ -39,7 +39,7 @@ describe('game testing', () => {
 		expect(game.cycle).toBe(1);
 		expect(game.channel.send).toHaveBeenNthCalledWith(1, [
 			'Day **1** will last 5 minutes',
-			'With 6 alive, it takes 4 to lynch.'
+			'With 6 alive, it takes 4 to eliminate.'
 		].join('\n'));
 		// check if the voting cache was successfully populated
 		expect(game.votes.get(NotVoting)).toHaveLength(6);
@@ -70,7 +70,7 @@ describe('game testing', () => {
 	test('hammering logic', async () => {
 		await game.hammer(game.players[1]);
 		expect(game.players[1].isAlive).toBe(false);
-		expect(game.players[1].deathReason).toBe('lynched D1');
+		expect(game.players[1].deathReason).toBe('eliminated D1');
 		expect(game.channel.send).toHaveBeenNthCalledWith(2, [
 			`Player2#0002 was hammered. They were a **Vanilla**. We could not find a will.`,
 			`**Final Vote Count**`,
