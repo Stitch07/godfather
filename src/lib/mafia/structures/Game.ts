@@ -290,7 +290,7 @@ export default class Game {
 						const candidates = this.players.filter(player => this.votes.on(player).count() === largestVoteCount);
 						let eliminatedPlayer = randomArray(candidates)!;
 						await this.channel.send(`${eliminatedPlayer.user.tag} was lynched. ${eliminatedPlayer.displayRoleAndWill()}\n${this.votes.show({ header: 'Final Vote Count', codeblock: true })}`);
-						await eliminatedPlayer.kill(`lynched D${this.cycle}`);
+						await eliminatedPlayer.kill(`eliminated D${this.cycle}`);
 						this.idlePhases = 0;
 					} else {
 						await this.channel.send('Nobody was lynched!');
