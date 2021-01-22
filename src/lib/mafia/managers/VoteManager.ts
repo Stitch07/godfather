@@ -32,7 +32,7 @@ export class WeightedArrayProxy<T extends WeightedData> extends Array<T> {
 export class VoteProxy extends WeightedArrayProxy<Vote> {}
 
 export const NotVoting = 'notVoting';
-export const NoLynch = 'noLynch';
+export const NoEliminate = 'noEliminate';
 
 export default class VoteManager extends Map<string, VoteProxy> {
 
@@ -76,9 +76,9 @@ export default class VoteManager extends Map<string, VoteProxy> {
 		return this.on(target).count() >= this.game.majorityVotes;
 	}
 
-	public noLynch(voter: Player): boolean {
-		const votes = this.get(NoLynch) ?? new VoteProxy();
-		if (votes.find(vote => vote.by === voter)) throw 'You have already voted to no-lynch.';
+	public noEliminate(voter: Player): boolean {
+		const votes = this.get(NoEliminate) ?? new VoteProxy();
+		if (votes.find(vote => vote.by === voter)) throw 'You have already voted not to eliminate.';
 		// clear all other votes
 		for (const votes of this.values()) {
 			for (const vote of votes) if (vote.by === voter) votes.splice(votes.indexOf(vote), 1);
@@ -87,8 +87,8 @@ export default class VoteManager extends Map<string, VoteProxy> {
 			by: voter,
 			weight: voter.role!.voteWeight
 		});
-		this.set(NoLynch, votes);
-		return this.get(NoLynch)!.count() >= this.game.majorityVotes;
+		this.set(NoEliminate, votes);
+		return this.get(NoEliminate)!.count() >= this.game.majorityVotes;
 	}
 
 	public unvote(voter: Player) {
@@ -113,9 +113,9 @@ export default class VoteManager extends Map<string, VoteProxy> {
 			voteText.push(`${target.user.username} (${votes.count()}): ${votes.map(voterMapping).join(', ')} ${votes.count() >= this.game.majorityVotes ? '(Hammered)' : ''}`);
 		}
 
-		const noLynches = this.get(NoLynch);
-		if (noLynches && noLynches.count() > 0) {
-			voteText.push(`No Lynch (${noLynches!.count()}): ${noLynches!.map(voterMapping).join(', ')}`);
+		const noElims = this.get(NoEliminate);
+		if (noElims && noElims.count() > 0) {
+			voteText.push(`No Eliminations (${noElims!.count()}): ${noElims!.map(voterMapping).join(', ')}`);
 		}
 
 		const notVoting = this.get(NotVoting);

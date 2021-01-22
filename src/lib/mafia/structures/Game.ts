@@ -133,7 +133,7 @@ export default class Game {
 
 		await this.channel.send([
 			`Day **${this.cycle}** will last ${format(this.settings.dayDuration)}`,
-			`With ${alivePlayers.length} alive, it takes ${this.majorityVotes} to lynch.`
+			`With ${alivePlayers.length} alive, it takes ${this.majorityVotes} to eliminate.`
 		].join('\n'));
 	}
 
@@ -260,7 +260,7 @@ export default class Game {
 		}
 
 		await this.channel.send(`${player.user.tag} was hammered. ${player.displayRoleAndWill()}\n${this.votes.show({ header: 'Final Vote Count', codeblock: true })}`);
-		await player.kill(`lynched D${this.cycle}`);
+		await player.kill(`eliminated D${this.cycle}`);
 		this.idlePhases = 0;
 
 		await this.startNight();
@@ -293,7 +293,7 @@ export default class Game {
 						await eliminatedPlayer.kill(`eliminated D${this.cycle}`);
 						this.idlePhases = 0;
 					} else {
-						await this.channel.send('Nobody was lynched!');
+						await this.channel.send('Nobody was eliminated!');
 						this.idlePhases++;
 					}
 					return this.startNight();
@@ -494,8 +494,8 @@ export default class Game {
 		const index = this.permissionOverwrites.indexOf(player.user.id);
 		if (index === -1) return;
 		await this.channel.updateOverwrite(player.user, {
-			SEND_MESSAGES: true,
-			ADD_REACTIONS: true
+			SEND_MESSAGES: null,
+			ADD_REACTIONS: null
 		}).catch(() => null);
 		this.permissionOverwrites.splice(index, 1);
 	}
