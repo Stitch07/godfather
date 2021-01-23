@@ -49,7 +49,7 @@
 		"@sapphire/decorators": "^1.2.1",
 		"@sapphire/framework": "1.0.0-alpha.3",
 		"@sapphire/pieces": "github:sapphire-project/pieces#build",
-		"@sapphire/plugin-logger": "1.0.2",
+		"@sapphire/plugin-logger": "1.0.5",
 		"@sapphire/ratelimits": "sapphire-project/utilities#build-ratelimits",
 		"@sapphire/time-utilities": "^1.2.2",
 		"@sapphire/type": "^1.1.2",
