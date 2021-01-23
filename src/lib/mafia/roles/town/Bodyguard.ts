@@ -1,7 +1,7 @@
-import SingleTarget from '@root/lib/mafia/mixins/SingleTarget';
+import SingleTarget from '@mafia/mixins/SingleTarget';
 import Townie from '@mafia/mixins/Townie';
 import NightActionsManager, { Attack, NightActionPriority } from '../../managers/NightActionsManager';
-import Player from '@mafia/Player';
+import Player from '@mafia/structures/Player';
 
 class Bodyguard extends SingleTarget {
 
@@ -20,8 +20,9 @@ class Bodyguard extends SingleTarget {
 		if (!playerRecord.has('nightkill')) return;
 
 		const nightKills = playerRecord.get('nightkill');
+		const isClConverting = actions.find(action => action.actor.role.name === 'Cult Leader' && action.target === target);
 
-		if (nightKills.result === true && nightKills.type && nightKills.type < Attack.Unstoppable) {
+		if (isClConverting || (nightKills.result === true && nightKills.type && nightKills.type < Attack.Unstoppable)) {
 			const attacker = nightKills.by.pop()!;
 			// BG only protects from one of the attackers
 			playerRecord.set('nightkill', { result: false, by: [] });
@@ -40,7 +41,7 @@ class Bodyguard extends SingleTarget {
 				this.player.queueMessage('You were killed while defending your target!');
 				// kill the attacker
 				actions.record.setAction(attacker.user.id, 'nightkill', { result: true, by: [this.player] });
-				this.player.queueMessage('You were killed by a Bodyguard!');
+				attacker.queueMessage('You were killed by a Bodyguard!');
 			}
 		}
 	}

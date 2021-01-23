@@ -1,7 +1,7 @@
 import NightActionsManager, { NightActionPriority } from '@mafia/managers/NightActionsManager';
 import SingleTarget from '@mafia/mixins/SingleTarget';
 import AmnesiacFaction from '@mafia/factions/neutral/Amnesiac';
-import Player from '@mafia/Player';
+import Player from '@mafia/structures/Player';
 import { allRoles } from '@mafia/roles';
 import Juggernaut from './Juggernaut';
 import { cast } from '@root/lib/util/utils';

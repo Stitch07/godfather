@@ -1,7 +1,7 @@
-import Role from '@mafia/Role';
+import Role from '@mafia/structures/Role';
 import NightActionsManager, { NightAction, NightActionPriority } from '@mafia/managers/NightActionsManager';
-import Player from '@mafia/Player';
-import Game, { Phase } from '@mafia/Game';
+import Player from '@mafia/structures/Player';
+import Game, { Phase } from '@mafia/structures/Game';
 import { Awaited, codeBlock } from '@sapphire/utilities';
 import { listItems, remove } from '@util/utils';
 import { Message } from 'discord.js';
@@ -12,12 +12,6 @@ import { PREFIX } from '@root/config';
 class SingleTarget extends Role {
 
 	public actionPhase = Phase.Night;
-
-	public flags? = {
-		canBlock: true,
-		canTransport: true,
-		canVisit: true
-	};
 
 	public constructor(player: Player) {
 		super(player);
@@ -162,9 +156,10 @@ interface SingleTarget {
 	actionGerund: string;
 	actionText: string;
 	flags?: {
-		canBlock: boolean;
-		canTransport: boolean;
-		canVisit: boolean;
+		canBlock?: boolean;
+		canTransport?: boolean;
+		canVisit?: boolean;
+		canWitch?: boolean;
 	};
 	priority: NightActionPriority;
 }

@@ -6,13 +6,13 @@ import { Message, TextChannel } from 'discord.js';
 @ApplyOptions<CommandOptions>({
 	aliases: ['vc'],
 	description: 'Shows the current vote count.',
-	preconditions: ['GuildOnly', 'GameOnly', 'GameStartedOnly', 'DayOnly', { entry: 'Cooldown', context: { bucketType: BucketType.Channel, delay: 5000 } }]
+	preconditions: ['GuildOnly', 'GameOnly', 'GameStartedOnly', 'DayOnly', { name: 'Cooldown', context: { bucketType: BucketType.Channel, delay: 5000 } }]
 })
 export default class extends GodfatherCommand {
 
 	public async run(msg: Message) {
 		const { game } = msg.channel as TextChannel;
-		return msg.channel.send(game!.votes.show({ }));
+		return msg.channel.send(game!.votes.show({}));
 	}
 
 }

@@ -1,4 +1,4 @@
-import { GameSettings } from '@mafia/Game';
+import { GameSettings } from '@mafia/structures/Game';
 import { ArgType } from '@sapphire/framework';
 import { Time } from '@sapphire/time-utilities';
 import { format } from './util/durationFormat';
@@ -19,13 +19,18 @@ export const DEFAULT_GAME_SETTINGS: GameSettings = {
 	disableWhispers: false,
 	numberedNicknames: false,
 	muteAtNight: false,
-	adaptiveSlowmode: false
+	adaptiveSlowmode: false,
+	disableWills: false,
+	enableTrials: false,
+	enablePlurality: false, // This could be refactored into an enum. For now, don't enable both trials and plurality at once.
+	maxTrials: 2
 };
 
 export const DEFAULT_ACTION_FLAGS = {
 	canBlock: true,
 	canTransport: true,
-	canVisit: true
+	canVisit: true,
+	canWitch: true
 };
 
 export const STALEMATE_PRIORITY_ORDER = [
@@ -84,12 +89,35 @@ export const GUILD_SETTINGS_METADATA: SettingsEntry<keyof ArgType>[] = [
 		name: 'adaptiveSlowmode',
 		type: 'boolean',
 		display: (value: boolean) => value ? 'Enabled' : 'Disabled'
+	},
+	{
+		name: 'disableWills',
+		type: 'boolean',
+		display: (value: boolean) => value ? 'Enabled' : 'Disabled'
+	},
+	{
+		name: 'enableTrials',
+		type: 'boolean',
+		display: (value: boolean) => value ? 'Enabled' : 'Disabled'
+	},
+	{
+		name: 'maxTrials',
+		type: 'number',
+		minimum: 1,
+		maximum: 5,
+		display: (value: number) => value.toString()
+	},
+	{
+		name: 'enablePlurality',
+		type: 'boolean',
+		display: (value: boolean) => value ? 'Enabled' : 'Disabled'
 	}
 ];
 
 export const factionEmojis: Record<string, string> = {
 	'Town': '<:townie:735134943507644436>',
 	'Mafia': '<:goon:735136200041562183>',
+	'Cult':	'👥',
 	'Arsonist': '<:arso:735136511732744333>',
 	'Executioner': '<:exe:735136679408697375>',
 	'Jester': '🤡',

@@ -1,8 +1,10 @@
-import Player from '@mafia/Player';
+import Player from '@mafia/structures/Player';
 import DefaultMap from '@util/DefaultMap';
-import Game, { Phase } from '@mafia/Game';
-import SingleTarget from '@root/lib/mafia/mixins/SingleTarget';
+import Game, { Phase } from '@mafia/structures/Game';
+import SingleTarget from '@mafia/mixins/SingleTarget';
 import { fauxAlive, listItems } from '@root/lib/util/utils';
+import { DEFAULT_ACTION_FLAGS } from '@root/lib/constants';
+import { mergeDefault } from '@sapphire/utilities';
 
 export default class NightActionsManager extends Array<NightAction> {
 
@@ -20,6 +22,7 @@ export default class NightActionsManager extends Array<NightAction> {
 			action.priority = priority;
 		}
 
+		action.flags = mergeDefault(DEFAULT_ACTION_FLAGS, action.flags ?? {});
 		if (action.actor === action.target) action.flags!.canTransport = false;
 		this.push(action);
 
@@ -47,11 +50,12 @@ export default class NightActionsManager extends Array<NightAction> {
 			if (action === undefined) continue;
 			await (actor.role! as SingleTarget).setUp(this, target);
 		}
-		for (const { action, actor, target, flags } of this) {
+		for (let { action, actor, target, flags } of this) {
+			if (!flags) flags = DEFAULT_ACTION_FLAGS;
 			if (action === undefined) continue;
 			await (actor.role! as SingleTarget).runAction(this, target);
-			if (flags?.canVisit) {
-				const targets = Array.isArray(target) ? target : [target];
+			if (flags.canVisit) {
+				const targets = Array.isArray(target) ? actor.role.name === 'Witch' ? [target[0]] : target : [target];
 				for (const target of targets) {
 					if (target?.user.id !== actor.user.id) await target?.visit(actor);
 				}
@@ -67,7 +71,7 @@ export default class NightActionsManager extends Array<NightAction> {
 			if (record.has('nightkill') && record.get('nightkill').result) {
 				const deadPlayer = this.game.players.find(player => player.user.id === playerID);
 				if (deadPlayer) {
-					deadPlayer.kill(`killed N${this.game.cycle}`);
+					await deadPlayer.kill(`killed N${this.game.cycle}`);
 					deadPlayer.queueMessage('You have died!');
 					deadPlayers.push(deadPlayer!);
 				}
@@ -85,7 +89,6 @@ export default class NightActionsManager extends Array<NightAction> {
 	public reset() {
 		this.record = new NightRecord();
 		this.length = 0; // dumb way of clearing an array but it's necessary
-		this.framedPlayers.length = 0;
 	}
 
 }
@@ -93,7 +96,7 @@ export default class NightActionsManager extends Array<NightAction> {
 export class NightRecord extends DefaultMap<string, DefaultMap<string, NightRecordEntry>> {
 
 	public constructor() {
-		super(() => new DefaultMap(() => ({ result: true, by: [] })));
+		super(() => new DefaultMap(() => ({ result: false, by: [] })));
 	}
 
 	public setAction(targetID: string, recordEntry: string, item: NightRecordEntry) {
@@ -115,9 +118,9 @@ export interface NightAction {
 	priority: NightActionPriority;
 	target?: Player | Player[];
 	flags?: {
-		canBlock: boolean;
-		canTransport: boolean;
-		canVisit: boolean;
+		canBlock?: boolean;
+		canTransport?: boolean;
+		canVisit?: boolean;
 		canWitch?: boolean;
 	};
 }
@@ -134,7 +137,7 @@ export const enum Attack {
 	Unstoppable
 }
 
-export const enum Defense {
+export const enum Defence {
 	None = 1,
 	Basic,
 	Powerful,
@@ -160,6 +163,7 @@ export enum NightActionPriority {
 	// these roles deal Powerful attacks that cannot be healed
 	ARSONIST = 4,
 	// roles that affect investigative results or stop powerful attacks
+	CRUSADER = 5,
 	GUARDIAN_ANGEL = 5,
 	FRAMER = 5,
 	// investigative roles usually only rely on tearDown, so they can safely go last
@@ -174,5 +178,7 @@ export enum NightActionPriority {
 	JANITOR = 7,
 	// ret's position literally doesn't matter
 	RETRIBUTIONIST = 8,
-	AMNESIAC = 9
+	AMNESIAC = 9,
+	// CL should ALWAYS be last
+	CultLeader = 10
 }

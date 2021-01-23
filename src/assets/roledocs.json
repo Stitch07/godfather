@@ -7,7 +7,7 @@
 			"- Win condition: Eliminate every criminal and evildoer",
 			"",
 			"Cop results: Your target is innocent.",
-			"Investigator results: Your target could be a Vanilla, Vanilla Mafia, Neapolitan, or Super Saint.",
+			"Investigator results: Your target could be a Vanilla, Vanilla Mafia, Neapolitan, or Cult Member.",
 			"Attack: None | Defense: None"
 		]
 	},
@@ -22,7 +22,7 @@
 			"+ If your target is attacked, then you and the visitor will fight to the death, if you successfully protect someone you can still be healed.",
 			"",
 			"Cop results: Your target is innocent.",
-			"Investigator results: Your target could be a Bodyguard, Godfather, or Arsonist.",
+			"Investigator results: Your target could be a Bodyguard, Godfather, Arsonist, or Crusader.",
 			"Attack: Powerful | Defense: None (Basic on self-vest)"
 		]
 	},
@@ -95,7 +95,6 @@
 			"- Win Condition: Eliminate every criminal and evildoer",
 			"",
 			"+ Abilities: Choose to heal one person at night, granting them powerful defense.",
-			"+ You will know if your target is attacked.",
 			"+ You can only choose to heal yourself once every game.",
 			"",
 			"Cop results: Your target is innocent.",
@@ -177,7 +176,7 @@
 			"+ Your check cannot be modified by framing.",
 			"",
 			"Cop results: Your target is innocent.",
-			"Investigator results: Your target could be a Vanilla, Vanilla Mafia, Neapolitan, or Super Saint.",
+			"Investigator results: Your target could be a Vanilla, Vanilla Mafia, Neapolitan, or Cult Member.",
 			"Attack: None | Defense: None"
 		]
 	},
@@ -205,7 +204,7 @@
 			"+ Abilities: Once the super saint gets eliminated during the day, the person last voted to eliminate will die.",
 			"",
 			"Cop results: Your target is innocent.",
-			"Investigator results: Your target could be a Vanilla, Vanilla Mafia, Neapolitan, or Super Saint.",
+			"Investigator results: Your target could be a Framer, Cult Leader, Super Saint, or Jester.",
 			"Attack: None | Defense: None"
 		]
 	},
@@ -353,7 +352,7 @@
 			"+ You can talk with other mafia members.",
 			"",
 			"Cop results: Your target is suspicious.",
-			"Investigator results: Your target could be a Framer or Jester.",
+			"Investigator results: Your target could be a Framer, Cult Leader, Super Saint, or Jester.",
 			"Attack: None | Defense: None"
 		]
 	},
@@ -370,7 +369,7 @@
 			"+ You can talk with other mafia members.",
 			"",
 			"Cop results: Your target is innocent.",
-			"Investigator results: Your target could be a Bodyguard, Godfather, or Arsonist.",
+			"Investigator results: Your target could be a Bodyguard, Godfather, Arsonist, or Crusader.",
 			"Attack: Basic | Defense: Basic"
 		]
 	},
@@ -418,7 +417,7 @@
 			"+ You can talk with other mafia members.",
 			"",
 			"Cop results: Your target is suspicious.",
-			"Investigator results: Your target could be a Vanilla, Vanilla Mafia, Neapolitan, or Super Saint.",
+			"Investigator results: Your target could be a Vanilla, Vanilla Mafia, Neapolitan, or Cult Member.",
 			"Attack: None | Defense: None"
 		]
 	},
@@ -447,7 +446,7 @@
 			"+ Igniting doused people will deal an unstoppable attack to all doused targets.",
 			"",
 			"Cop results: Your target is suspicious.",
-			"Investigator results: Your target could be a Bodyguard, Godfather, or Arsonist.",
+			"Investigator results: Your target could be a Bodyguard, Godfather, Arsonist, or Crusader.",
 			"Attack: Unstoppable | Defense: Basic"
 		]
 	},
@@ -498,7 +497,7 @@
 			"+ If you die at night, you lose the game.",
 			"",
 			"Cop results: Your target is innocent.",
-			"Investigator results: Your target could be a Framer or Jester.",
+			"Investigator results: Your target could be a Framer, Cult Leader, Super Saint, or Jester.",
 			"Attack: Unstoppable | Defense: None"
 		]
 	},
@@ -577,7 +576,52 @@
 			"",
 			"Cop results: Your target is suspicious.",
 			"Investigator results: Your target could be a Lookout, Witch, or Juggernaut.",
-			"Attack: None | Defense: Basic"
+			"Attack: None | Defense: Basic (None after being attacked once)"
+		]
+	},
+	{
+		"name": "Cult Leader",
+		"detailedDescription": [
+			"You are a crafty manipulator who wants to convert everybody to your cult.",
+			"",
+			"- Win condition: Convert or kill all who oppose you.",
+			"",
+			"+ Abilities:  Convert someone each night. They turn into a Cult Member. You cannot convert the night after a successful conversion.",
+			"+ If you attempt to convert a mafia member, they resist your conversion attempts and you will be forced to shoot them.",
+			"+ You can talk with other cult members.",
+			"+ If you die, everyone else in your cult will commit suicide.",
+			"",
+			"Cop results: Your target is suspicious",
+			"Investigator results: Your target could be a Framer, Cult Leader, Super Saint, or Jester",
+			"Attack: Basic | Defense: Basic (None after being attacked once)"
+		]
+	},
+	{
+		"name": "Cult Member",
+		"detailedDescription": [
+			"You have been converted by the Cult Leader and will now do anything to make it flourish.",
+			"",
+			"- Win condition: Convert or kill all who oppose you.",
+			"",
+			"- Once the Cult Leader dies, you commit suicide.",
+			"",
+			"Cop results: Your target is suspicious",
+			"Investigator results: Your target could be a Vanilla, Vanilla Mafia, Neapolitan, or Cult Member."
+		]
+	},
+	{
+		"name": "Crusader",
+		"detailedDescription": [
+			"A divine protector skilled in the art of combat.",
+			"",
+			"- Win Condition: Eliminate every criminal and evildoer.",
+			"",
+			"+ Abilities: Protect someone else each night, granting them powerful defense.",
+			"+ You will attack one random person visiting your target.",
+			"+ You and your target will be notified of a successful protection.",
+			"",
+			"Cop results: Your target is innocent.",
+			"Investigator results: Your target could be a Bodyguard, Godfather, Arsonist, or Crusader."
 		]
 	}
 ]

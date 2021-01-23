@@ -2,6 +2,35 @@
 
 All notable changes to Godfather will be documented in this file.
 
+## v1.2.0
+
+### Features:
+
+* 3 new **roles** and 1 new **faction**: Crusader (Town), Cult Leader and Cult Member (Cult).
+* **Trials**: When enabled (using the setting `enableTrials`), hammered players aren't eliminated, but put on trial and given 30 seconds to defend themselves. After that, the Town can decide whether they're guilty, innocent or abstain from voting.
+	1. Hammering a super saint will force an elimination.
+	2. When trials are enabled, eliminated Jesters can only haunt people voting guilty or abstaining.
+* **Role Modifiers**: Role modifiers let you apply changes to a role. To use modifiers on a role in a setup, use `Rolename +Mod1 +Mod2`. For example: `Serial Killer +innocent +strongman`. Available role modifiers include:
+	1. Innocent: The target will show up as innocent to cops.
+	2. Suspicious: The target will show up as suspicious to cops.
+	3. <N>Vote: The role will have <N> votes. (+3Vote)
+	4. <N>Shot: (killing roles only) The role will have <N> bullets.
+	5. Strongman: (killing roles only) The role will have a powerful attack.
+* **Wills**: Allow players to set their will using `=will <message>`. Wills can be disabled by the setting `disableWills`.
+* **Plurality Votes**: When enabled (using the setting `enablePlurality`), the player with the most votes is auto-hammered at EoD, in case a lynch cannot be achieved.
+
+### Mechanics:
+
+* **Framer**: A Framer's effects last until an investigative role checks their target.
+* **Witch**: Instead of a permanent Basic defence, Witches now have a one-time Basic defence.
+
+### Bug Fixes:
+
+* Fixed Escort not notifying targets of being roleblocked.
+* Fixed Executioner not having Basic defence.
+* Retributionists can no longer be controlled by Witches.
+*  Guilty vigilantes revived by Retributionists no longer shoot themselves the next night.
+
 ## v1.1.0
 
 ### Features:

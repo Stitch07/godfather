@@ -1,6 +1,6 @@
 import { basename, extname, parse } from 'path';
 import { scan } from 'fs-nextra';
-import Role from '@mafia/Role';
+import Role from '@mafia/structures/Role';
 import { Constructor, toTitleCase } from '@sapphire/utilities';
 import { Collection } from 'discord.js';
 import { cast } from '@util/utils';

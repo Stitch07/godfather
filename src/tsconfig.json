@@ -27,6 +27,7 @@
 				"lib/util/*"
 			]
 		},
+		"lib": ["ES2015", "DOM"],
 		"types": [
 			"@sapphire/plugin-logger/dist/register"
 		]

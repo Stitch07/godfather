@@ -1,7 +1,7 @@
 import NightActionsManager, { NightActionPriority } from '@mafia/managers/NightActionsManager';
-import SingleTarget from '@root/lib/mafia/mixins/SingleTarget';
+import SingleTarget from '@mafia/mixins/SingleTarget';
 import MafiaRole from '@mafia/mixins/MafiaRole';
-import Player from '@mafia/Player';
+import Player from '@mafia/structures/Player';
 
 class Framer extends SingleTarget {
 
@@ -12,11 +12,6 @@ class Framer extends SingleTarget {
 	public action = 'frame';
 	public actionGerund = 'framing';
 	public actionText = 'frame a player';
-	public flags = {
-		canBlock: true,
-		canTransport: true,
-		canVisit: true
-	};
 
 	public priority = NightActionPriority.FRAMER;
 

@@ -1,5 +1,5 @@
 import GodfatherCommand from '@lib/GodfatherCommand';
-import Game, { Phase } from '@mafia/Game';
+import Game, { Phase } from '@mafia/structures/Game';
 import { ApplyOptions } from '@sapphire/decorators';
 import { BucketType, CommandOptions } from '@sapphire/framework';
 import { Time } from '@sapphire/time-utilities';
@@ -7,7 +7,7 @@ import { Message } from 'discord.js';
 
 @ApplyOptions<CommandOptions>({
 	description: 'Shows when the current day/night ends.',
-	preconditions: ['GameOnly', { entry: 'Cooldown', context: { bucketType: BucketType.Channel, delay: Time.Second * 5 } }]
+	preconditions: ['GameOnly', { name: 'Cooldown', context: { bucketType: BucketType.Channel, delay: Time.Second * 5 } }]
 })
 export default class RemainingCommand extends GodfatherCommand {
 
@@ -26,6 +26,10 @@ export default class RemainingCommand extends GodfatherCommand {
 				return `Day ${game.cycle}`;
 			case Phase.Night:
 				return `Night ${game.cycle}`;
+			case Phase.Trial:
+				return `The current trial`;
+			case Phase.TrialVoting:
+				return `The current trial-vote`;
 			case Phase.Pregame:
 				throw 'The game hasn\'t started yet!';
 			default:

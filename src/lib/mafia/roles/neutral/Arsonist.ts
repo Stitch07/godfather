@@ -2,10 +2,10 @@ import { PREFIX } from '@root/config';
 import { cast, listItems, remove } from '@util/utils';
 import { codeBlock } from '@sapphire/utilities';
 import ArsonistFaction from '../../factions/neutral/Arsonist';
-import Player from '../../Player';
-import Role from '../../Role';
-import { Phase } from '../../Game';
-import NightActionsManager, { Attack, Defense, NightActionPriority } from '../../managers/NightActionsManager';
+import Player from '../../structures/Player';
+import Role from '../../structures/Role';
+import { Phase } from '../../structures/Game';
+import NightActionsManager, { Attack, Defence, NightActionPriority } from '../../managers/NightActionsManager';
 import { Message } from 'discord.js';
 
 class Arsonist extends Role {
@@ -113,8 +113,8 @@ class Arsonist extends Role {
 		}
 	}
 
-	public get defense() {
-		return Defense.Basic;
+	public get defence() {
+		return Defence.Basic;
 	}
 
 	public canUseAction() {

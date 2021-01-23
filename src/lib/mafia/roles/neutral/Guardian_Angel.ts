@@ -1,7 +1,7 @@
 import GuardianAngelFaction from '@mafia/factions/neutral/GuardianAngel';
 import NightActionsManager, { Attack, NightActionPriority } from '@mafia/managers/NightActionsManager';
 import NoTarget from '@mafia/mixins/NoTarget';
-import Player from '@mafia/Player';
+import Player from '@mafia/structures/Player';
 import { pluralize, randomArray, remove } from '@util/utils';
 import { allRoles } from '..';
 
@@ -70,7 +70,9 @@ class Guardian_Angel extends NoTarget {
 		const playerRecord = actions.record.get(this.target.user.id);
 		if (playerRecord.has('nightkill')) {
 			const nightKills = playerRecord.get('nightkill');
-			if (nightKills.result === true && nightKills.type && nightKills.type < Attack.Unstoppable) {
+			const isClConverting = actions.find(action => action.actor.role.name === 'Cult Leader' && action.target === this.target);
+
+			if (isClConverting || (nightKills.result === true && nightKills.type && nightKills.type < Attack.Unstoppable)) {
 				playerRecord.set('nightkill', { result: false, by: [] });
 
 				const heals = playerRecord.get('heal');

@@ -1,7 +1,7 @@
 import SingleTarget from '@mafia/mixins/SingleTarget';
 import Townie from '@mafia/mixins/Townie';
 import NightActionsManager, { NightActionPriority } from '@mafia/managers/NightActionsManager';
-import Player from '@mafia/Player';
+import Player from '@mafia/structures/Player';
 
 class Investigator extends SingleTarget {
 
@@ -12,10 +12,13 @@ class Investigator extends SingleTarget {
 	public actionText = 'investigate a player';
 	public priority = NightActionPriority.INVEST;
 
-	public async tearDown(actions: NightActionsManager, target: Player) {
+	public tearDown(actions: NightActionsManager, target: Player) {
 		let results = this.getResult(target.role.name);
-		if (actions.framedPlayers.includes(target)) results = this.getResult('Framer');
-		await this.player.queueMessage(results);
+		if (actions.framedPlayers.includes(target)) {
+			results = this.getResult('Framer');
+			actions.framedPlayers.splice(actions.framedPlayers.indexOf(target), 1);
+		}
+		return this.player.queueMessage(results);
 	}
 
 	private getResult(roleName: string) {
@@ -48,11 +51,14 @@ class Investigator extends SingleTarget {
 				return 'Your target could be a Lookout, Witch, or Juggernaut.';
 			case 'Framer':
 			case 'Jester':
-				return 'Your target could be a Framer or Jester.';
+			case 'Cult Leader':
+			case 'Super Saint':
+				return 'Your target could be a Framer, Cult Leader, Super Saint, or Jester.';
 			case 'Bodyguard':
 			case 'Godfather':
 			case 'Arsonist':
-				return 'Your target could be a Bodyguard, Godfather, or Arsonist.';
+			case 'Crusader':
+				return 'Your target could be a Bodyguard, Godfather, Arsonist, or Crusader.';
 			case 'Janitor':
 			case 'Retributionist':
 			case 'Reanimator':
@@ -67,8 +73,8 @@ class Investigator extends SingleTarget {
 			case 'Vanilla':
 			case 'Vanilla Mafia':
 			case 'Neapolitan':
-			case 'Super Saint':
-				return 'Your target could be a Vanilla, Vanilla Mafia, Neapolitan, or Super Saint.';
+			case 'Cult Member':
+				return 'Your target could be a Vanilla, Vanilla Mafia, Neapolitan, or Cult Member.';
 			default:
 				return 'You could not find enough information about your target.';
 		}

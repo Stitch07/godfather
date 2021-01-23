@@ -1,6 +1,6 @@
-import DoubleTarget from '@root/lib/mafia/mixins/DoubleTarget';
-import NightActionsManager, { Defense, NightActionPriority } from '@mafia/managers/NightActionsManager';
-import Player from '@mafia/Player';
+import DoubleTarget from '@mafia/mixins/DoubleTarget';
+import NightActionsManager, { Defence, NightActionPriority } from '@mafia/managers/NightActionsManager';
+import Player from '@mafia/structures/Player';
 import WitchFaction from '@mafia/factions/neutral/Witch';
 
 class Witch extends DoubleTarget {
@@ -14,10 +14,12 @@ class Witch extends DoubleTarget {
 
 	public faction = new WitchFaction();
 
+	// whether the witch has been attacked already
+	public attacked = false;
 	private witched = false;
 
-	public get defense() {
-		return Defense.Basic;
+	public get defence() {
+		return this.attacked ? Defence.None : Defence.Basic;
 	}
 
 	public setUp(actions: NightActionsManager, targets: Player[]) {

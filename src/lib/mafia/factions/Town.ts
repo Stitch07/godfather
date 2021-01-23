@@ -1,7 +1,7 @@
-import Faction from '@mafia/Faction';
-import Game from '../Game';
+import Faction from '@mafia/structures/Faction';
+import Game from '../structures/Game';
 
-const OPPOSING_FACTIONS = ['Mafia', 'Serial Killer', 'Arsonist', 'Werewolf', 'Juggernaut'];
+const OPPOSING_FACTIONS = ['Mafia', 'Serial Killer', 'Arsonist', 'Werewolf', 'Juggernaut', 'Cult'];
 
 export default class TownFaction extends Faction {
 

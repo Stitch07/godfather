@@ -1,6 +1,6 @@
 import GodfatherCommand from '@lib/GodfatherCommand';
-import Player from '@mafia/Player';
-import { Phase } from '@root/lib/mafia/Game';
+import Player from '@mafia/structures/Player';
+import { Phase } from '@mafia/structures/Game';
 import { canManage, listItems } from '@root/lib/util/utils';
 import { ApplyOptions } from '@sapphire/decorators';
 import { Args, CommandContext, CommandOptions } from '@sapphire/framework';
@@ -48,16 +48,21 @@ export default class extends GodfatherCommand {
 
 		const sent = await message.channel.send(`Chose the setup **${game!.setup!.name}**. Randomizing roles...`);
 		game!.phase = Phase.Standby;
-		const generatedRoles = game!.setup!.generate();
+		const generatedRoles = game!.setup!.generate(this.context.client);
 		for (const player of game!.players) {
-			player.role = new (generatedRoles.shift()!)(player);
+			const { role, modifiers } = generatedRoles.shift()!;
+			player.role = new role(player);
+			for (const { modifier, context } of modifiers) {
+				if (modifier.canPatch(player.role)) modifier.patch(player.role, context);
+			}
 		}
 
 		const noPms: Player[] = [];
 		for (const player of game!.players) {
 			try {
 				await player.sendPM();
-			} catch {
+			} catch (error) {
+				this.context.client.logger.error(error);
 				noPms.push(player);
 			}
 			await player.role.init();
@@ -69,6 +74,7 @@ export default class extends GodfatherCommand {
 		}
 
 		if (game!.setup!.nightStart) {
+			game!.cycle++;
 			return game!.startNight();
 		}
 		return game!.startDay();

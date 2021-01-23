@@ -1,6 +1,6 @@
 import Killer from '@mafia/mixins/Killer';
 import MafiaRole from '@mafia/mixins/MafiaRole';
-import NightActionsManager, { Defense } from '@mafia/managers/NightActionsManager';
+import NightActionsManager, { Defence } from '@mafia/managers/NightActionsManager';
 
 class Godfather extends Killer {
 
@@ -15,8 +15,8 @@ class Godfather extends Killer {
 		}
 	}
 
-	public get defense() {
-		return Defense.Basic;
+	public get defence() {
+		return Defence.Basic;
 	}
 
 	// eslint-disable-next-line @typescript-eslint/class-literal-property-style

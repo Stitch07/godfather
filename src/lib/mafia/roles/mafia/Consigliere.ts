@@ -1,7 +1,7 @@
 import NightActionsManager, { NightActionPriority } from '@mafia/managers/NightActionsManager';
-import SingleTarget from '@root/lib/mafia/mixins/SingleTarget';
+import SingleTarget from '@mafia/mixins/SingleTarget';
 import MafiaRole from '@mafia/mixins/MafiaRole';
-import Player from '@mafia/Player';
+import Player from '@mafia/structures/Player';
 
 class Consigliere extends SingleTarget {
 
@@ -11,11 +11,6 @@ class Consigliere extends SingleTarget {
 	public action = 'check';
 	public actionGerund = 'investigating';
 	public actionText = 'investigate a player';
-	public flags = {
-		canBlock: true,
-		canTransport: true,
-		canVisit: true
-	};
 
 	public priority = NightActionPriority.CONSIG;
 

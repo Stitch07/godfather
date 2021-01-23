@@ -1,11 +1,13 @@
 import GodfatherCommand from '@lib/GodfatherCommand';
-import { clean } from '@util/utils';
+import { clean, handleRequiredArg } from '@util/utils';
 import { ApplyOptions } from '@sapphire/decorators';
 import { Args, CommandOptions } from '@sapphire/framework';
 import { Type } from '@sapphire/type';
 import { codeBlock, isThenable } from '@sapphire/utilities';
 import { Message } from 'discord.js';
 import { inspect } from 'util';
+
+import * as Sentry from '@sentry/node';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['ev'],
@@ -19,10 +21,9 @@ import { inspect } from 'util';
 export default class extends GodfatherCommand {
 
 	public async run(message: Message, args: Args) {
-		const code = await args.restResult('string');
-		if (!code.success) throw 'Missing required argument: code';
+		const code = await args.rest('string').catch(handleRequiredArg('code'));
 
-		const { result, success, type } = await this.eval(message, code.value, {
+		const { result, success, type } = await this.eval(message, code, {
 			async: args.getFlags('async'),
 			depth: Number(args.getOption('depth')) ?? 0,
 			showHidden: args.getFlags('hidden', 'showHidden')
@@ -55,7 +56,10 @@ export default class extends GodfatherCommand {
 			// eslint-disable-next-line no-eval
 			result = eval(code);
 		} catch (error) {
-			if (error && error.stack) this.context.client.logger.error(error);
+			if (error && error.stack) {
+				this.context.client.logger.error(error);
+				Sentry.captureException(error);
+			}
 			result = error;
 			success = false;
 		}

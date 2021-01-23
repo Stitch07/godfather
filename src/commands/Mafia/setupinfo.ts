@@ -7,7 +7,7 @@ import { Message } from 'discord.js';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['setups', 'setup'],
-	preconditions: [{ entry: 'Cooldown', context: { bucketType: BucketType.Channel, delay: 5000 } }]
+	preconditions: [{ name: 'Cooldown', context: { bucketType: BucketType.Channel, delay: 5000 } }]
 })
 export default class extends GodfatherCommand {
 

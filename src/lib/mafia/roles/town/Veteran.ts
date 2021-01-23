@@ -1,7 +1,7 @@
 import NoTarget from '@mafia/mixins/NoTarget';
 import Townie from '@mafia/mixins/Townie';
-import { Attack, Defense, NightActionPriority } from '@mafia/managers/NightActionsManager';
-import Player from '@mafia/Player';
+import { Attack, Defence, NightActionPriority } from '@mafia/managers/NightActionsManager';
+import Player from '@mafia/structures/Player';
 import { pluralize } from '@root/lib/util/utils';
 
 class Veteran extends NoTarget {
@@ -14,7 +14,8 @@ class Veteran extends NoTarget {
 	public flags = {
 		canBlock: false,
 		canTransport: false,
-		canVisit: false
+		canVisit: false,
+		canWitch: false
 	};
 
 	private onAlert = false;
@@ -26,9 +27,9 @@ class Veteran extends NoTarget {
 		this.description = `You may go on alert ${pluralize(this.alerts, 'time')} in a game, killing all visitors.`;
 	}
 
-	public get defense() {
-		if (this.onAlert) return Defense.Basic;
-		return Defense.None;
+	public get defence() {
+		if (this.onAlert) return Defence.Basic;
+		return Defence.None;
 	}
 
 	public canUseAction() {
@@ -45,7 +46,7 @@ class Veteran extends NoTarget {
 	}
 
 	public onVisit(visitor: Player) {
-		if (this.onAlert && visitor.role.defense < Defense.Invincible) {
+		if (this.onAlert && visitor.role.actualDefence < Defence.Invincible) {
 			this.game.nightActions.record.setAction(visitor.user.id, 'nightkill', { by: [this.player], result: true, type: Attack.Powerful });
 			visitor.queueMessage('You were killed by the veteran you visited!');
 			return this.player.queueMessage('You shot someone who visited you.');

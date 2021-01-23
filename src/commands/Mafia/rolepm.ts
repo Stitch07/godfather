@@ -6,7 +6,7 @@ import { Time } from '@sapphire/time-utilities';
 
 @ApplyOptions<CommandOptions>({
 	description: 'Get your role PM.',
-	preconditions: ['GuildOnly', 'GameOnly', 'PlayerOnly', 'AlivePlayerOnly', 'GameStartedOnly', { entry: 'Cooldown', context: { delay: 30 * Time.Second } }]
+	preconditions: ['GuildOnly', 'GameOnly', 'PlayerOnly', 'AlivePlayerOnly', 'GameStartedOnly', { name: 'Cooldown', context: { delay: 30 * Time.Second } }]
 })
 export default class extends GodfatherCommand {
 

@@ -1,14 +1,38 @@
 require('module-alias/register');
 
 import Godfather from '@lib/Godfather';
-import { TOKEN } from './config';
-import { init } from '@mafia/roles/index';
-import { Store } from '@sapphire/framework';
+import { init as roleInit } from '@mafia/roles/index';
+import { PRODUCTION, TOKEN, SENTRY_DSN } from '@root/config';
+import { floatPromise, initClean } from './lib/util/utils';
 
-Store.defaultStrategy.onLoadAll = (store: Store<any>) => store.context.client.logger.debug(`Loaded ${store.size} ${store.name}`);
-
-init();
+import * as Sentry from '@sentry/node';
+import { RewriteFrames } from '@sentry/integrations';
+import { join } from 'path';
 
 const client = new Godfather();
 
-client.login(TOKEN);
+async function init() {
+	if (SENTRY_DSN !== '') {
+		Sentry.init({
+			dsn: SENTRY_DSN,
+			environment: PRODUCTION ? 'production' : 'development',
+			integrations: [
+				new Sentry.Integrations.OnUnhandledRejection(),
+				new Sentry.Integrations.Modules(),
+				new Sentry.Integrations.FunctionToString(),
+				new Sentry.Integrations.LinkedErrors(),
+				new Sentry.Integrations.Console(),
+				new Sentry.Integrations.Http({ breadcrumbs: true, tracing: true }),
+				new RewriteFrames({ root: join(__dirname, '..') })
+			],
+			release: `godfather@${client.version}`
+		});
+	}
+
+	roleInit();
+	initClean();
+
+	await client.login(TOKEN);
+}
+
+floatPromise(client, init());

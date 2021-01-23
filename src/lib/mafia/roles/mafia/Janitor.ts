@@ -1,7 +1,7 @@
 import NightActionsManager, { NightActionPriority } from '@mafia/managers/NightActionsManager';
-import SingleTarget from '@root/lib/mafia/mixins/SingleTarget';
+import SingleTarget from '@mafia/mixins/SingleTarget';
 import MafiaRole from '@mafia/mixins/MafiaRole';
-import Player from '@mafia/Player';
+import Player from '@mafia/structures/Player';
 
 class Janitor extends SingleTarget {
 

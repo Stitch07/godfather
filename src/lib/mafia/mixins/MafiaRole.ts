@@ -1,4 +1,4 @@
-import Role from '@mafia/Role';
+import Role from '@mafia/structures/Role';
 import MafiaFaction from '@mafia/factions/Mafia';
 import { allRoles } from '../roles';
 

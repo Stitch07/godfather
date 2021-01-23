@@ -1,7 +1,7 @@
-import SingleTarget from '@root/lib/mafia/mixins/SingleTarget';
+import SingleTarget from '@mafia/mixins/SingleTarget';
 import Townie from '@mafia/mixins/Townie';
 import NightActionsManager, { NightActionPriority } from '@mafia/managers/NightActionsManager';
-import Player from '@mafia/Player';
+import Player from '@mafia/structures/Player';
 
 
 class Retributionist extends SingleTarget {
@@ -12,6 +12,12 @@ class Retributionist extends SingleTarget {
 	public actionText = 'revive a player';
 	public actionGerund = 'reviving';
 	public priority = NightActionPriority.RETRIBUTIONIST;
+	public flags = {
+		canTransport: false,
+		canVisit: false,
+		canWitch: false
+	};
+
 	// whether the Ret has already revived a player
 	private hasRevived = false;
 
@@ -23,6 +29,10 @@ class Retributionist extends SingleTarget {
 		this.hasRevived = true;
 		await this.game.channel.send(`${target} was resurrected back to life!`);
 		await target.queueMessage('You were revived by a Retributionist!');
+
+		if (target.role.name === 'Vigilante') {
+			Reflect.set(target.role, 'guilty', true);
+		}
 
 		if (this.game.canOverwritePermissions) {
 			const overwrite = this.game.channel.permissionOverwrites.find(permission => permission.type === 'member' && permission.id === target.user.id);

@@ -1,7 +1,7 @@
 import { DEFAULT_ACTION_FLAGS } from '@lib/constants';
-import { Phase } from '@mafia/Game';
+import { Phase } from '@mafia/structures/Game';
 import NightActionsManager, { NightActionPriority } from '@mafia/managers/NightActionsManager';
-import Role from '@mafia/Role';
+import Role from '@mafia/structures/Role';
 import { PREFIX } from '@root/config';
 import { Awaited } from '@sapphire/framework';
 import { remove } from '@util/utils';

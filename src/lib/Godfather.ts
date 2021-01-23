@@ -2,8 +2,8 @@ import '@lib/extenders';
 
 import { LogLevel, SapphireClient } from '@sapphire/framework';
 import { Collection, Guild, Message } from 'discord.js';
-import Game from '@mafia/Game';
-import SetupStore from '@mafia/SetupStore';
+import Game from '@mafia/structures/Game';
+import SetupStore from '@mafia/structures/SetupStore';
 import { PGSQL_ENABLED, PREFIX, PRODUCTION } from '@root/config';
 import GuildSettingRepository from './orm/repositories/GuildSettingRepository';
 import GuildSettingsEntity from './orm/entities/GuildSettings';
@@ -11,6 +11,7 @@ import { getCustomRepository } from 'typeorm';
 import SlashCommandStore from './structures/SlashCommandStore';
 
 import '@sapphire/plugin-logger/register';
+import ModifierStore from './mafia/structures/ModifierStore';
 
 export default class Godfather extends SapphireClient {
 
@@ -20,7 +21,7 @@ export default class Godfather extends SapphireClient {
 	public ownerID: string | undefined = undefined;
 	public settingsCache = new Map<string, GuildSettingsEntity>();
 	public eventLoop!: NodeJS.Timeout;
-	private _version = [1, 1, 0];
+	private _version = [1, 2, 0];
 	public constructor() {
 		super({
 			caseInsensitiveCommands: true,
@@ -42,6 +43,10 @@ export default class Godfather extends SapphireClient {
 
 		this.slashCommands = new SlashCommandStore();
 		this.registerStore(this.slashCommands);
+
+		this.modifiers = new ModifierStore();
+		this.registerStore(this.modifiers);
+		this.modifiers.registerPath(`${process.cwd()}/dist/lib/mafia/modifiers`);
 
 		this.fetchPrefix = async (message: Message) => {
 			if (!message.guild) return [PREFIX, ''];

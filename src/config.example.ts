@@ -21,3 +21,5 @@ export const PRIVATE_CHANNEL_SERVER = process.env.PRIVATE_CHANNEL_SERVER ?? '732
 export const { PRIVATE_CHANNEL_CATEGORY } = process.env;
 
 export const ENABLE_PRIVATE_CHANNELS = process.env.ENABLE_PRIVATE_CHANNELS ? Boolean(process.env.ENABLE_PRIVATE_CHANNELS) : false;
+
+export const SENTRY_DSN = process.env.SENTRY_DSN ?? '';

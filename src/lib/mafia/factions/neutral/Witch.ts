@@ -1,5 +1,5 @@
-import Faction from '@mafia/Faction';
-import Player from '@mafia/Player';
+import Faction from '@mafia/structures/Faction';
+import Player from '@mafia/structures/Player';
 
 export default class WitchFaction extends Faction {
 

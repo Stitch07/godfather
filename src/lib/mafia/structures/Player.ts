@@ -2,7 +2,7 @@ import Role from './Role';
 import Game from './Game';
 import { User } from 'discord.js';
 import { ENABLE_PRIVATE_CHANNELS } from '@root/config';
-import { cast } from '../util/utils';
+import { cast } from '../../util/utils';
 
 export default class Player {
 
@@ -16,6 +16,8 @@ export default class Player {
 		isRevived: false,
 		revivedOn: cast<number | null>(null)
 	};
+
+	public will = '';
 
 	private _role!: Role;
 	private messageQueue: string[] = [];
@@ -48,11 +50,7 @@ export default class Player {
 
 		// mute dead people
 		if (this.game.canOverwritePermissions) {
-			await this.game.channel.updateOverwrite(this.user, {
-				SEND_MESSAGES: false,
-				ADD_REACTIONS: false
-			});
-			this.game.permissionOverwrites.push(this.user.id);
+			await this.game.mute(this);
 		}
 
 		await this.role!.onDeath();
@@ -71,6 +69,40 @@ export default class Player {
 	public async visit(visitor: Player) {
 		this.visitors.push(visitor);
 		await this.role.onVisit(visitor);
+	}
+
+	public displayRoleAndWill(night = false): string {
+		const roleText = this.cleaned && night
+			? 'We could not determine their role.'
+			: `They were a **${this.role!.display}**.`;
+
+		const willText = this.game.settings.disableWills
+			? ''
+			: this.will && !(this.cleaned && night)
+				? ` They left a will:\n\`\`\`${this.will}\`\`\`\n`
+				: ' We could not find a will.';
+
+		return `${roleText}${willText}`;
+	}
+
+	public toJSON(): Record<string, unknown> {
+		return {
+			user: this.user.toJSON(),
+			role: this.role
+				? {
+					name: this.role.name,
+					modifiers: this.role.modifiers
+				}
+				: null,
+			previousRoles: this.previousRoles.map(role => ({ name: role.name, modifiers: role.modifiers })),
+			isAlive: this.isAlive,
+			cleaned: this.cleaned,
+			flags: this.flags,
+			deathReason: this.deathReason,
+			will: this.will,
+			messageQueue: this.messageQueue,
+			visitors: this.visitors.map(visitor => visitor.toJSON())
+		};
 	}
 
 	public static resolve(game: Game, arg: string) {
