@@ -52,7 +52,8 @@ class Investigator extends SingleTarget {
 			case 'Framer':
 			case 'Jester':
 			case 'Cult Leader':
-				return 'Your target could be a Framer, Cult Leader, or Jester.';
+			case 'Super Saint':
+				return 'Your target could be a Framer, Cult Leader, Super Saint, or Jester.';
 			case 'Bodyguard':
 			case 'Godfather':
 			case 'Arsonist':
@@ -72,9 +73,8 @@ class Investigator extends SingleTarget {
 			case 'Vanilla':
 			case 'Vanilla Mafia':
 			case 'Neapolitan':
-			case 'Super Saint':
 			case 'Cult Member':
-				return 'Your target could be a Vanilla, Vanilla Mafia, Neapolitan, Cult Member, or Super Saint.';
+				return 'Your target could be a Vanilla, Vanilla Mafia, Neapolitan, or Cult Member.';
 			default:
 				return 'You could not find enough information about your target.';
 		}

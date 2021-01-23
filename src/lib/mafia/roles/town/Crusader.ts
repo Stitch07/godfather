@@ -38,6 +38,8 @@ class Crusader extends SingleTarget {
 		actions.record.set(target.user.id, playerRecord);
 
 		// Kill the visitor.
+		// crus only protects against CL, but doesn't attack them
+		if (playerToKill.role.name === 'Cult Leader') return;
 		actions.record.setAction(playerToKill.user.id, 'nightkill', { result: true, by: [this.player], type: Attack.Basic });
 		playerToKill.queueMessage('You were attacked by a Crusader!');
 	}

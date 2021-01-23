@@ -139,12 +139,10 @@ export default class BasicSetup extends Setup {
 		}
 
 		// Category MINUS Role(s)
-		console.log('rolename', roleName);
 		if (/([a-zA-Z0-9_ ,]+) ?- ?{?([a-zA-Z0-9_ ;]+)}?/.test(roleName)) {
 			let [, category, excludedRoles] = /([a-zA-Z0-9_ ,]+) ?- ?{?([a-zA-Z0-9_ ;]+)}?/.exec(roleName)!;
 			category = category.trimEnd();
 			if (!roleCategories.has(category)) throw 'The LHS of the MINUS operator has to be a role category.';
-			console.log(excludedRoles);
 			const excludedRoleCtors = excludedRoles.split(';').map(roleName => {
 				roleName = roleName.trimLeft();
 				if (!allRoles.has(roleName)) throw `"${roleName}" is not a valid role name.`;
@@ -152,8 +150,6 @@ export default class BasicSetup extends Setup {
 			});
 
 			const validRoles = roleCategories.get(category)!.filter(role => !excludedRoleCtors.includes(role));
-			console.log('valid roles: ', validRoles);
-			console.log('excluded roles: ', excludedRoleCtors);
 			if (validRoles.length === 0) throw 'You cannot exclude all roles from a category.';
 			return randomArray(validRoles)!;
 		}

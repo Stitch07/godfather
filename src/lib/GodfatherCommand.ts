@@ -4,7 +4,6 @@ import { sep } from 'path';
 export default abstract class GodfatherCommand extends Command {
 
 	public constructor(context: PieceContext, options: CommandOptions) {
-		// @ts-ignore i cbb typing this
 		options.preconditions = Array.isArray(options.preconditions) ? ['DisabledChannels', ...options.preconditions] : ['DisabledChannels'];
 		super(context, options);
 	}

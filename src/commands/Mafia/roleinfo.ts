@@ -21,7 +21,7 @@ export default class extends GodfatherCommand {
 	public roles!: Collection<string, Role>;
 
 	public async run(message: Message, args: Args, context: CommandContext) {
-		const roleName = args.finished ? null : await args.pick('string');
+		const roleName = args.finished ? null : await args.rest('string');
 		const uniqueRoles = [...new Set(this.roles.values())];
 
 		if (!roleName) {

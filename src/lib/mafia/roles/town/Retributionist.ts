@@ -30,6 +30,10 @@ class Retributionist extends SingleTarget {
 		await this.game.channel.send(`${target} was resurrected back to life!`);
 		await target.queueMessage('You were revived by a Retributionist!');
 
+		if (target.role.name === 'Vigilante') {
+			Reflect.set(target.role, 'guilty', true);
+		}
+
 		if (this.game.canOverwritePermissions) {
 			const overwrite = this.game.channel.permissionOverwrites.find(permission => permission.type === 'member' && permission.id === target.user.id);
 			if (overwrite) await overwrite.update({ SEND_MESSAGES: true, ADD_REACTIONS: true });

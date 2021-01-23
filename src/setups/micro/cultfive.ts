@@ -3,8 +3,8 @@ import BasicSetup from '@mafia/structures/BasicSetup';
 import { ApplyOptions } from '@sapphire/decorators';
 
 @ApplyOptions<SetupOptions>({
-	name: 'classic',
-	roles: ['Cop', 'Doctor', 'Vanilla x3', 'Goon', 'Vanilla Mafia']
+	name: 'cultfive',
+	roles: ['Cult Leader', 'Random Town - {Ret;Reanimator} x4']
 })
 export default class extends BasicSetup {
 

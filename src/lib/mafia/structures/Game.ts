@@ -459,6 +459,9 @@ export default class Game {
 
 		for (const [factionalChannel] of this.factionalChannels.values()) {
 			await factionalChannel.delete();
+			for (const [, invite] of await factionalChannel.fetchInvites()) {
+				if (invite.deletable) await invite.delete();
+			}
 		}
 
 		this.client.games.delete(this.channel.id);

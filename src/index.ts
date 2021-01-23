@@ -24,7 +24,8 @@ async function init() {
 				new Sentry.Integrations.Console(),
 				new Sentry.Integrations.Http({ breadcrumbs: true, tracing: true }),
 				new RewriteFrames({ root: join(__dirname, '..') })
-			]
+			],
+			release: `godfather@${client.version}`
 		});
 	}
 
