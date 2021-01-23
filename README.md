@@ -6,21 +6,23 @@
 ## Godfather is a Discord bot that hosts games of Werewolf/Mafia
 
 ## Features
-* More than 30 different roles.
-* Custom setups (and multiple preloaded)
-* Player/Game statistics
-* Mafia chats, and customizable settings
+
+- More than 30 different roles.
+- Custom setups (and multiple preloaded)
+- Player/Game statistics
+- Mafia chats, and customizable settings
 
 ## Links
 
 ### Godfather links:
-* [Invite Godfather](https://discord.com/oauth2/authorize?client_id=579703064173346827&scope=bot)
-* [Join the Support Server](https://discord.gg/gFhvChy)
+
+- [Invite Godfather](https://discord.com/oauth2/authorize?client_id=579703064173346827&scope=bot)
+- [Join the Support Server](https://discord.gg/gFhvChy)
 
 ### Libraries used:
-* [Discord.js](https://discord.js.org/#/)
-* [Sapphire Framework](https://github.com/sapphire-project/framework)
 
+- [Discord.js](https://discord.js.org/#/)
+- [Sapphire Framework](https://github.com/sapphire-project/framework)
 
 ## Contributors ✨
 

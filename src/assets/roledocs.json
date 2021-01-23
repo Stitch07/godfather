@@ -1,627 +1,627 @@
 [
-	{
-		"name": "Vanilla",
-		"detailedDescription": [
-			"A regular townie without any powers.",
-			"",
-			"- Win condition: Eliminate every criminal and evildoer",
-			"",
-			"Cop results: Your target is innocent.",
-			"Investigator results: Your target could be a Vanilla, Vanilla Mafia, Neapolitan, or Cult Member.",
-			"Attack: None | Defense: None"
-		]
-	},
-	{
-		"name": "Bodyguard",
-		"detailedDescription": [
-			"An ex-army soldier who now protects people for a living.",
-			"",
-			"- Win Condition: Eliminate every criminal and evildoer",
-			"",
-			"+ Abilities: Protect a player from direct attacks at night.",
-			"+ If your target is attacked, then you and the visitor will fight to the death, if you successfully protect someone you can still be healed.",
-			"",
-			"Cop results: Your target is innocent.",
-			"Investigator results: Your target could be a Bodyguard, Godfather, Arsonist, or Crusader.",
-			"Attack: Powerful | Defense: None (Basic on self-vest)"
-		]
-	},
-	{
-		"name": "Cop",
-		"detailedDescription": [
-			"The law enforcer of town, on the hunt to find the mafia, always constantly in the danger of being killed.",
-			"",
-			"- Win Condition: Eliminate every criminal and evildoer",
-			"",
-			"+ Abilities: Interrogate one person each night for suspicious activity.",
-			"+ You will know if your target is suspicious or innocent.",
-			"",
-			"Cop results: Your target is innocent.",
-			"Investigator results: Your target could be a Cop, Executioner, or Werewolf.",
-			"Attack: None | Defense: None"
-		]
-	},
-	{
-		"name": "Naive Cop",
-		"detailedDescription": [
-			"The law enforcer of town, believes he’s the best cop and nothing bad would ever happen to the town.",
-			"",
-			"- Win Condition: Eliminate every criminal and evildoer",
-			"",
-			"+ Abilities: Interrogate one person each night for suspicious activity.",
-			"+ You will know if your target is suspicious or innocent.",
-			"+ A naive cop will always show innocent results regardless of the roles.",
-			"",
-			"Cop results: Your target is innocent.",
-			"Investigator results: Your target could be a Cop, Executioner, or Werewolf.",
-			"Attack: None | Defense: None"
-		]
-	},
-	{
-		"name": "Insane Cop",
-		"detailedDescription": [
-			"The law enforcer of town, on the hunt to find the mafia, but he acts so furious and insane that he always messes up.",
-			"",
-			"- Win Condition: Eliminate every criminal and evildoer",
-			"",
-			"+ Abilities: Interrogate one person each night for suspicious activity.",
-			"+ An insane cop will always show the opposite results for suspicion, showing innocent roles as suspicious and suspicious roles as innocent.",
-			"",
-			"Cop results: Your target is innocent.",
-			"Investigator results: Your target could be a Cop, Executioner, or Werewolf.",
-			"Attack: None | Defense: None"
-		]
-	},
-	{
-		"name": "Paranoid Cop",
-		"detailedDescription": [
-			"The law enforcer of town, on the hunt to find the mafia, but he is very frightened.",
-			"",
-			"- Win Condition: Eliminate every criminal and evildoer",
-			"",
-			"+ Abilities: Interrogate one person each night for suspicious activity.",
-			"+ A paranoid cop will always show suspicious results regardless of the roles.",
-			"",
-			"Cop results: Your target is innocent.",
-			"Investigator results: Your target could be a Cop, Executioner, or Werewolf.",
-			"Attack: None | Defense: None"
-		]
-	},
-	{
-		"name": "Doctor",
-		"detailedDescription": [
-			"An experienced surgeon in trauma care who secretly heals people.",
-			"",
-			"- Win Condition: Eliminate every criminal and evildoer",
-			"",
-			"+ Abilities: Choose to heal one person at night, granting them powerful defense.",
-			"+ You can only choose to heal yourself once every game.",
-			"",
-			"Cop results: Your target is innocent.",
-			"Investigator results: Your target could be a Doctor or a Serial Killer.",
-			"Attack: None | Defense: None"
-		]
-	},
-	{
-		"name": "Escort",
-		"detailedDescription": [
-			"A very beautiful woman skilled in distracting her targets.",
-			"",
-			"- Win Condition: Eliminate every criminal and evildoer",
-			"",
-			"+ Abilities: Choose one person each night to block them from using their role’s night ability. (roleblock)",
-			"+ You cannot be roleblocked.",
-			"",
-			"Cop results: Your target is innocent.",
-			"Investigator results: Your target could be a Escort, Transporter, or Consort.",
-			"Attack: None | Defense: None"
-		]
-	},
-	{
-		"name": "Lookout",
-		"detailedDescription": [
-			"Some think he has got eagle’s eyes. An observer who is master at camping outside homes to gain information.",
-			"",
-			"- Win Condition: Eliminate every criminal and evildoer",
-			"",
-			"+ Abilities: Choose to watch one person at night to see who visits them.",
-			"+ You will exactly know who visited your target at night, showing their names.",
-			"",
-			"Cop results: Your target is innocent.",
-			"Investigator results: Your target could be a Lookout, Witch, or Juggernaut.",
-			"Attack: None | Defense: None"
-		]
-	},
-	{
-		"name": "Mayor",
-		"detailedDescription": [
-			"The leader of the Town.",
-			"",
-			"- Win Condition: Eliminate every criminal and evildoer",
-			"",
-			"+ Abilities: You may reveal yourself as the mayor of the Town during the day.",
-			"+ Once you have revealed yourself your vote counts as 3 votes.",
-			"+ Once you reveal yourself you may not be healed by doctor during any night.",
-			"+ Once you reveal yourself you cannot whisper someone or be whispered to.",
-			"",
-			"Cop results: Your target is innocent.",
-			"Investigator results: Your target could be a Investigator, Consigliere, Mayor, or Tracker.",
-			"Attack: None | Defense: None"
-		]
-	},
-	{
-		"name": "Reanimator",
-		"detailedDescription": [
-			"An impressionist who fulfills the wishes of people by doing their mimicry.",
-			"",
-			"- Win Condition: Eliminate every criminal and evildoer",
-			"",
-			"+ Abilities: You may choose to raise a dead Town member every night and once use their ability on a player.",
-			"+ Each dead town member can only be used once every game.",
-			"+ You cannot be roleblocked or controlled.",
-			"",
-			"Cop results: Your target is innocent.",
-			"Investigator results: Your target could be a Janitor, Retributionist, or Reanimator.",
-			"Attack: None | Defense: None"
-		]
-	},
-	{
-		"name": "Neapolitan",
-		"detailedDescription": [
-			"Like a cop, but with less powerful investigations.",
-			"",
-			"- Win Condition: Eliminate every criminal and evildoer",
-			"",
-			"+ Abilities: Check if a target is or is not some form of a Vanilla.",
-			"+ Your check cannot be modified by framing.",
-			"",
-			"Cop results: Your target is innocent.",
-			"Investigator results: Your target could be a Vanilla, Vanilla Mafia, Neapolitan, or Cult Member.",
-			"Attack: None | Defense: None"
-		]
-	},
-	{
-		"name": "Retributionist",
-		"detailedDescription": [
-			"A powerful mystic that can revive the dead.",
-			"",
-			"- Win Condition: Eliminate every criminal and evildoer",
-			"",
-			"+ Abilities: You may revive one dead townie per game. ",
-			"",
-			"Cop results: Your target is innocent.",
-			"Investigator results: Your target could be a Janitor, Retributionist, or Reanimator.",
-			"Attack: None | Defense: None"
-		]
-	},
-	{
-		"name": "Super Saint",
-		"detailedDescription": [
-			"A vengeful lunatic who will explode on getting eliminated.",
-			"",
-			"- Win condition: Eliminate every criminal and evildoer",
-			"",
-			"+ Abilities: Once the super saint gets eliminated during the day, the person last voted to eliminate will die.",
-			"",
-			"Cop results: Your target is innocent.",
-			"Investigator results: Your target could be a Framer, Cult Leader, Super Saint, or Jester.",
-			"Attack: None | Defense: None"
-		]
-	},
-	{
-		"name": "Tracker",
-		"detailedDescription": [
-			"Belongs to a very respected tribe, he follows his prey to any destination.",
-			"",
-			"- Win Condition: Eliminate every criminal and evildoer",
-			"",
-			"+ Abilities: Choose one person to track them at night, to see who they visit.",
-			"+ You will exactly know who your target visited at night, giving their exact name.",
-			"",
-			"Cop results: Your target is innocent.",
-			"Investigator results: Your target could be a Investigator, Consigliere, Mayor, or Tracker.",
-			"Attack: None | Defense: None"
-		]
-	},
-	{
-		"name": "Transporter",
-		"detailedDescription": [
-			"A retired taxi driver who transports people without asking any questions.",
-			"",
-			"- Win Condition: Eliminate every criminal and evildoer",
-			"",
-			"+ Abilities: Choose two people to transport at night.",
-			"+ Transporting two people will swap all targets against them.",
-			"+ You may transport yourself.",
-			"+ Your targets will know if they were transported.",
-			"+ You cannot transport someone with themselves.",
-			"+ You cannot be roleblocked or controlled.",
-			"",
-			"Cop results: Your target is innocent.",
-			"Investigator results: Your target could be a Escort, Transporter, or Consort.",
-			"Attack: None | Defense: None"
-		]
-	},
-	{
-		"name": "Veteran",
-		"detailedDescription": [
-			"A very scared and paranoid war hero who does not want to get visited by anyone.",
-			"",
-			"- Win Condition: Eliminate every criminal and evildoer",
-			"",
-			"+ Abilities: Decide if you want to go on alert during each night or not.",
-			"+ If you go on alert, you gain a basic defense, attacking any person who visits you at night. If you do not go on alert, you stay at home and do not attack.",
-			"+ you can only go on alert 3 times.",
-			"+ you cannot be roleblocked.",
-			"",
-			"Cop results: Your target is innocent.",
-			"Investigator results: Your target could be a Vigilante, Veteran, Goon, or Ambusher.",
-			"Attack: Powerful | Defense: None (Basic on alert)"
-		]
-	},
-	{
-		"name": "Vigilante",
-		"detailedDescription": [
-			"A militant officer who takes laws in his own hands.",
-			"",
-			"- Win Condition: Eliminate every criminal and evildoer",
-			"",
-			"+ Abilities: take justice in your own hand and shoot someone at night.",
-			"+ You can only choose to shoot 3 times in a game.",
-			"+ If you shoot another town member, you will commit suicide over the guilt of killing your own member next night.",
-			"",
-			"Cop results: Your target is innocent.",
-			"Investigator results: Your target could be a Vigilante, Veteran, Goon, or Ambusher.",
-			"Attack: Basic | Defense: None"
-		]
-	},
-	{
-		"name": "Investigator",
-		"detailedDescription": [
-			"A private eye who secretly gathers information.",
-			"",
-			"- Win Condition: Eliminate every criminal and evildoer",
-			"",
-			"+ Abilities: Investigate one person each night for a clue to their role.",
-			"",
-			"Cop results: Your target is innocent.",
-			"Investigator results: Your target could be a Investigator, Consigliere, Mayor, or Tracker.",
-			"Attack: None | Defense: None"
-		]
-	},
-	{
-		"name": "Ambusher",
-		"detailedDescription": [
-			"A stealthy killer who waits outside of his target house for the perfect moment to strike.",
-			"",
-			"- Win Condition: kill anyone who will not submit to the Mafia",
-			"",
-			"+ Abilities: You may choose to lie in wait outside your target's house",
-			"+ You will attack one player who visits your target.",
-			"+ All players visiting your target will learn your name.",
-			"+ If there are no mafia roles left who are capable of killing then you will become the goon.",
-			"+ You can talk with other mafia members.",
-			"",
-			"Cop results: Your target is suspicious.",
-			"Investigator results: Your target could be a Vigilante, Veteran, Goon, or Ambusher.",
-			"Attack: Basic | Defense: None"
-		]
-	},
-	{
-		"name": "Consigliere",
-		"detailedDescription": [
-			"A corrupted investigator who has been bribed to gather information for Mafia.",
-			"",
-			"- Win condition: kill anyone who will not submit to the Mafia",
-			"",
-			"+ Abilities: Check one person for their exact role each night.",
-			"+ If there are no mafia roles left who are capable of killing then you will become the goon.",
-			"+ You can talk with other mafia members.",
-			"",
-			"Cop results: Your target is suspicious.",
-			"Investigator results: Your target could be a Investigator, Consigliere, Mayor, or Tracker.",
-			"Attack: None | Defense: None"
-		]
-	},
-	{
-		"name": "Consort",
-		"detailedDescription": [
-			"A beautiful bar dancer now working for organised crime.",
-			"",
-			"- Win condition: kill anyone who will not submit to the Mafia",
-			"",
-			"+ Abilities: Choose one person each night to block them from using their role’s night ability. (roleblock)",
-			"+ If there are no mafia roles left who are capable of killing then you will become the goon.",
-			"+ You can talk with other mafia members.",
-			"",
-			"Cop results: Your target is suspicious.",
-			"Investigator results: Your target could be a Escort, Transporter, or Consort.",
-			"Attack: None | Defense: None"
-		]
-	},
-	{
-		"name": "Framer",
-		"detailedDescription": [
-			"A skilled counterfeiter who manipulates information.",
-			"",
-			"- Win condition: kill anyone who will not submit to the Mafia",
-			"",
-			"+ Abilities: Your target will appear suspicious to cops if they are innocent, and vice versa. (reversing their innocence)",
-			"+ You may choose one person at night to frame them as a suspicious townie.",
-			"+ If there are no mafia roles left who are capable of killing then you will become the goon.",
-			"+ You can talk with other mafia members.",
-			"",
-			"Cop results: Your target is suspicious.",
-			"Investigator results: Your target could be a Framer, Cult Leader, Super Saint, or Jester.",
-			"Attack: None | Defense: None"
-		]
-	},
-	{
-		"name": "Godfather",
-		"detailedDescription": [
-			"The leader of organized crime.",
-			"",
-			"- Win condition: kill anyone who will not submit to the Mafia",
-			"",
-			"+ Abilities: You may order the Goon to attack your target.",
-			"+ If there is no Goon/the Goon is roleblocked, you will attack the target instead.",
-			"+ You have a Basic Defense, and you will appear as innocent to the Cop.",
-			"+ You can talk with other mafia members.",
-			"",
-			"Cop results: Your target is innocent.",
-			"Investigator results: Your target could be a Bodyguard, Godfather, Arsonist, or Crusader.",
-			"Attack: Basic | Defense: Basic"
-		]
-	},
-	{
-		"name": "Goon",
-		"detailedDescription": [
-			"A member of organized crime, trying to work their way to the top.",
-			"",
-			"- Win condition: kill anyone who will not submit to the Mafia",
-			"",
-			"+ Abilities: You can choose to attack if the Godfather doesn't give orders.",
-			"+ If the Godfather dies, you will become the next Godfather.",
-			"+ You can talk with other mafia members.",
-			"",
-			"Cop results: Your target is suspicious.",
-			"Investigator results: Your target could be a Vigilante, Veteran, Goon, or Ambusher.",
-			"Attack: Basic | Defense: None"
-		]
-	},
-	{
-		"name": "Janitor",
-		"detailedDescription": [
-			"A sanitisation expert working for organised crime.",
-			"",
-			"- Win condition: kill anyone who will not submit to the Mafia",
-			"",
-			"+ Abilities: Choose a target who will be potentially killed by mafia.",
-			"+ If your target dies, their role will not be revealed to anyone except you.",
-			"+ You can only perform 3 cleanings in a game.",
-			"+ You can talk with other mafia members.",
-			"",
-			"Cop results: Your target is suspicious.",
-			"Investigator results: Your target could be a Janitor, Retributionist, or Reanimator.",
-			"Attack: None | Defense: None"
-		]
-	},
-	{
-		"name": "Vanilla Mafia",
-		"detailedDescription": [
-			"A regular mafia without any special powers.",
-			"",
-			"- Win condition: kill anyone who will not submit to the Mafia",
-			"",
-			"+ Abilities: If the goon dies, you will turn into goon and you will be given the final say over nightkill selection.",
-			"+ You can talk with other mafia members.",
-			"",
-			"Cop results: Your target is suspicious.",
-			"Investigator results: Your target could be a Vanilla, Vanilla Mafia, Neapolitan, or Cult Member.",
-			"Attack: None | Defense: None"
-		]
-	},
-	{
-		"name": "Amnesiac",
-		"detailedDescription": [
-			"A trauma patient that does not remember who he was.",
-			"",
-			"- Win Condition: Remember who you were and complete that role's win condition",
-			"",
-			"+ Abilities: When you choose a role it will be revealed to all players in the game.",
-			"",
-			"Cop results: Your target is innocent.",
-			"Investigator results: Your target could be a Survivor, Amnesiac, or Guardian Angel.",
-			"Attack: None | Defense: None"
-		]
-	},
-	{
-		"name": "Arsonist",
-		"detailedDescription": [
-			"He wants to see the world burn.",
-			"",
-			"- Win Condition: Live to see everyone burn",
-			"",
-			"+ Abilities: You may douse someone each night in gasoline or ignite doused targets.",
-			"+ Igniting doused people will deal an unstoppable attack to all doused targets.",
-			"",
-			"Cop results: Your target is suspicious.",
-			"Investigator results: Your target could be a Bodyguard, Godfather, Arsonist, or Crusader.",
-			"Attack: Unstoppable | Defense: Basic"
-		]
-	},
-	{
-		"name": "Executioner",
-		"detailedDescription": [
-			"A psychopath who wants to execute his target by any means necessary.",
-			"",
-			"- Win condition: Trick and influence the town into eliminating your target.",
-			"",
-			"+ Abilities: At the beginning of each game you will be given a target, who you need to get executed by any means.",
-			"+ If your target gets eliminated at day, you win the game.",
-			"+ If your target dies at night, you will turn into a Jester.",
-			"",
-			"Cop results: Your target is innocent.",
-			"Investigator results: Your target could be a Cop, Executioner, or Werewolf.",
-			"Attack: None | Defense: Basic"
-		]
-	},
-	{
-		"name": "Guardian Angel",
-		"detailedDescription": [
-			"An Angel whose only goal is the protection of their target.",
-			"",
-			"- Win condition: Keep your target alive by any means necessary.",
-			"",
-			"+ Abilities: Each game you will be assigned a target who you need to protect by any means necessary.",
-			"+ Twice a game you may heal and purge your target.",
-			"+ Protecting a player gives your target vote immunity for the next day",
-			"+ You can protect your target even if you die.",
-			"+ If your target dies you will become a Survivor with no vests.",
-			"",
-			"Cop results: Your target is innocent.",
-			"Investigator results: Your target could be a Survivor, Amnesiac, or Guardian Angel.",
-			"Attack: None | Defense: None"
-		]
-	},
-	{
-		"name": "Jester",
-		"detailedDescription": [
-			"A crazed lunatic whose life goal is to be publicly executed.",
-			"",
-			"- Win Condition: Get yourself eliminated by any means necessary",
-			"",
-			"+ Abilities: If you are eliminated at day, you will attack one of your guilty voters the following night with an Unstoppable attack.",
-			"+ You can only haunt once, right after you get eliminated.",
-			"+ You cannot attack people who have not voted you at day.",
-			"+ If you die at night, you lose the game.",
-			"",
-			"Cop results: Your target is innocent.",
-			"Investigator results: Your target could be a Framer, Cult Leader, Super Saint, or Jester.",
-			"Attack: Unstoppable | Defense: None"
-		]
-	},
-	{
-		"name": "Juggernaut",
-		"detailedDescription": [
-			"An unstoppable force that only gets stronger with each kill.",
-			"",
-			"- Win condition: Kill anyone who would oppose you",
-			"",
-			"+ Abilities: You may choose to attack a player on Full Moon nights.",
-			"+ With each kill your powers grow.",
-			"",
-			"Cop results: Your target is innocent.",
-			"Investigator results: Your target could be a Lookout, Witch, or Juggernaut.",
-			"Attack: Powerful (Unstoppable after third kill) | Defense: Basic"
-		]
-	},
-	{
-		"name": "Serial Killer",
-		"detailedDescription": [
-			"An insane person who wants everyone to die.",
-			"",
-			"- Win condition: Kill anyone who would oppose you",
-			"",
-			"+ Abilities: You may choose to stab a person each night.",
-			"+ If you are roleblocked you will attack the roleblocker instead of your target.",
-			"+ You have a basic defense throughout the game.",
-			"",
-			"Cop results: Your target is suspicious.",
-			"Investigator results: Your target could be a Doctor or a Serial Killer.",
-			"Attack: Basic | Defense: Basic"
-		]
-	},
-	{
-		"name": "Survivor",
-		"detailedDescription": [
-			"A neutral character who just wants to live and is too afraid to die.",
-			"",
-			"- Win condition: Live until the end of the game",
-			"",
-			"+ Abilities: Decide if you want to put on a bulletproof vest at night. Bullet proof vest gives you a basic defense.",
-			"+ You can only use the bulletproof vest 4 times.",
-			"",
-			"Cop results: Your target is innocent.",
-			"Investigator results: Your target could be a Survivor, Amnesiac, or Guardian Angel.",
-			"Attack: None | Defense: Basic"
-		]
-	},
-	{
-		"name": "Werewolf",
-		"detailedDescription": [
-			"A normal citizen who transforms into a hungry Werewolf during the Full Moon.",
-			"",
-			"- Win condition: Kill anyone who would oppose you",
-			"",
-			"+ Abilities: You may rampage at player's house or on your own house during even nights.",
-			"+ During odd nights you cannot rampage",
-			"+ If you do not select a target you will stay home and Rampage at your home.",
-			"",
-			"Cop results: On odd nights -> Innocent | On even nights -> Suspicious.",
-			"Investigator results: Your target could be a Cop, Executioner, or Werewolf.",
-			"Attack: Powerful | Defense: Basic"
-		]
-	},
-	{
-		"name": "Witch",
-		"detailedDescription": [
-			"A Voodoo master who can control other people's actions.",
-			"",
-			"- Win condition: Survive to see town lose the game",
-			"",
-			"+ Abilities: You may control someone's actions each night.",
-			"+ You cannot be roleblocked or controlled.",
-			"+ You will know the role of the player you will control.",
-			"",
-			"Cop results: Your target is suspicious.",
-			"Investigator results: Your target could be a Lookout, Witch, or Juggernaut.",
-			"Attack: None | Defense: Basic (None after being attacked once)"
-		]
-	},
-	{
-		"name": "Cult Leader",
-		"detailedDescription": [
-			"You are a crafty manipulator who wants to convert everybody to your cult.",
-			"",
-			"- Win condition: Convert or kill all who oppose you.",
-			"",
-			"+ Abilities:  Convert someone each night. They turn into a Cult Member. You cannot convert the night after a successful conversion.",
-			"+ If you attempt to convert a mafia member, they resist your conversion attempts and you will be forced to shoot them.",
-			"+ You can talk with other cult members.",
-			"+ If you die, everyone else in your cult will commit suicide.",
-			"",
-			"Cop results: Your target is suspicious",
-			"Investigator results: Your target could be a Framer, Cult Leader, Super Saint, or Jester",
-			"Attack: Basic | Defense: Basic (None after being attacked once)"
-		]
-	},
-	{
-		"name": "Cult Member",
-		"detailedDescription": [
-			"You have been converted by the Cult Leader and will now do anything to make it flourish.",
-			"",
-			"- Win condition: Convert or kill all who oppose you.",
-			"",
-			"- Once the Cult Leader dies, you commit suicide.",
-			"",
-			"Cop results: Your target is suspicious",
-			"Investigator results: Your target could be a Vanilla, Vanilla Mafia, Neapolitan, or Cult Member."
-		]
-	},
-	{
-		"name": "Crusader",
-		"detailedDescription": [
-			"A divine protector skilled in the art of combat.",
-			"",
-			"- Win Condition: Eliminate every criminal and evildoer.",
-			"",
-			"+ Abilities: Protect someone else each night, granting them powerful defense.",
-			"+ You will attack one random person visiting your target.",
-			"+ You and your target will be notified of a successful protection.",
-			"",
-			"Cop results: Your target is innocent.",
-			"Investigator results: Your target could be a Bodyguard, Godfather, Arsonist, or Crusader."
-		]
-	}
+  {
+    "name": "Vanilla",
+    "detailedDescription": [
+      "A regular townie without any powers.",
+      "",
+      "- Win condition: Eliminate every criminal and evildoer",
+      "",
+      "Cop results: Your target is innocent.",
+      "Investigator results: Your target could be a Vanilla, Vanilla Mafia, Neapolitan, or Cult Member.",
+      "Attack: None | Defense: None"
+    ]
+  },
+  {
+    "name": "Bodyguard",
+    "detailedDescription": [
+      "An ex-army soldier who now protects people for a living.",
+      "",
+      "- Win Condition: Eliminate every criminal and evildoer",
+      "",
+      "+ Abilities: Protect a player from direct attacks at night.",
+      "+ If your target is attacked, then you and the visitor will fight to the death, if you successfully protect someone you can still be healed.",
+      "",
+      "Cop results: Your target is innocent.",
+      "Investigator results: Your target could be a Bodyguard, Godfather, Arsonist, or Crusader.",
+      "Attack: Powerful | Defense: None (Basic on self-vest)"
+    ]
+  },
+  {
+    "name": "Cop",
+    "detailedDescription": [
+      "The law enforcer of town, on the hunt to find the mafia, always constantly in the danger of being killed.",
+      "",
+      "- Win Condition: Eliminate every criminal and evildoer",
+      "",
+      "+ Abilities: Interrogate one person each night for suspicious activity.",
+      "+ You will know if your target is suspicious or innocent.",
+      "",
+      "Cop results: Your target is innocent.",
+      "Investigator results: Your target could be a Cop, Executioner, or Werewolf.",
+      "Attack: None | Defense: None"
+    ]
+  },
+  {
+    "name": "Naive Cop",
+    "detailedDescription": [
+      "The law enforcer of town, believes he’s the best cop and nothing bad would ever happen to the town.",
+      "",
+      "- Win Condition: Eliminate every criminal and evildoer",
+      "",
+      "+ Abilities: Interrogate one person each night for suspicious activity.",
+      "+ You will know if your target is suspicious or innocent.",
+      "+ A naive cop will always show innocent results regardless of the roles.",
+      "",
+      "Cop results: Your target is innocent.",
+      "Investigator results: Your target could be a Cop, Executioner, or Werewolf.",
+      "Attack: None | Defense: None"
+    ]
+  },
+  {
+    "name": "Insane Cop",
+    "detailedDescription": [
+      "The law enforcer of town, on the hunt to find the mafia, but he acts so furious and insane that he always messes up.",
+      "",
+      "- Win Condition: Eliminate every criminal and evildoer",
+      "",
+      "+ Abilities: Interrogate one person each night for suspicious activity.",
+      "+ An insane cop will always show the opposite results for suspicion, showing innocent roles as suspicious and suspicious roles as innocent.",
+      "",
+      "Cop results: Your target is innocent.",
+      "Investigator results: Your target could be a Cop, Executioner, or Werewolf.",
+      "Attack: None | Defense: None"
+    ]
+  },
+  {
+    "name": "Paranoid Cop",
+    "detailedDescription": [
+      "The law enforcer of town, on the hunt to find the mafia, but he is very frightened.",
+      "",
+      "- Win Condition: Eliminate every criminal and evildoer",
+      "",
+      "+ Abilities: Interrogate one person each night for suspicious activity.",
+      "+ A paranoid cop will always show suspicious results regardless of the roles.",
+      "",
+      "Cop results: Your target is innocent.",
+      "Investigator results: Your target could be a Cop, Executioner, or Werewolf.",
+      "Attack: None | Defense: None"
+    ]
+  },
+  {
+    "name": "Doctor",
+    "detailedDescription": [
+      "An experienced surgeon in trauma care who secretly heals people.",
+      "",
+      "- Win Condition: Eliminate every criminal and evildoer",
+      "",
+      "+ Abilities: Choose to heal one person at night, granting them powerful defense.",
+      "+ You can only choose to heal yourself once every game.",
+      "",
+      "Cop results: Your target is innocent.",
+      "Investigator results: Your target could be a Doctor or a Serial Killer.",
+      "Attack: None | Defense: None"
+    ]
+  },
+  {
+    "name": "Escort",
+    "detailedDescription": [
+      "A very beautiful woman skilled in distracting her targets.",
+      "",
+      "- Win Condition: Eliminate every criminal and evildoer",
+      "",
+      "+ Abilities: Choose one person each night to block them from using their role’s night ability. (roleblock)",
+      "+ You cannot be roleblocked.",
+      "",
+      "Cop results: Your target is innocent.",
+      "Investigator results: Your target could be a Escort, Transporter, or Consort.",
+      "Attack: None | Defense: None"
+    ]
+  },
+  {
+    "name": "Lookout",
+    "detailedDescription": [
+      "Some think he has got eagle’s eyes. An observer who is master at camping outside homes to gain information.",
+      "",
+      "- Win Condition: Eliminate every criminal and evildoer",
+      "",
+      "+ Abilities: Choose to watch one person at night to see who visits them.",
+      "+ You will exactly know who visited your target at night, showing their names.",
+      "",
+      "Cop results: Your target is innocent.",
+      "Investigator results: Your target could be a Lookout, Witch, or Juggernaut.",
+      "Attack: None | Defense: None"
+    ]
+  },
+  {
+    "name": "Mayor",
+    "detailedDescription": [
+      "The leader of the Town.",
+      "",
+      "- Win Condition: Eliminate every criminal and evildoer",
+      "",
+      "+ Abilities: You may reveal yourself as the mayor of the Town during the day.",
+      "+ Once you have revealed yourself your vote counts as 3 votes.",
+      "+ Once you reveal yourself you may not be healed by doctor during any night.",
+      "+ Once you reveal yourself you cannot whisper someone or be whispered to.",
+      "",
+      "Cop results: Your target is innocent.",
+      "Investigator results: Your target could be a Investigator, Consigliere, Mayor, or Tracker.",
+      "Attack: None | Defense: None"
+    ]
+  },
+  {
+    "name": "Reanimator",
+    "detailedDescription": [
+      "An impressionist who fulfills the wishes of people by doing their mimicry.",
+      "",
+      "- Win Condition: Eliminate every criminal and evildoer",
+      "",
+      "+ Abilities: You may choose to raise a dead Town member every night and once use their ability on a player.",
+      "+ Each dead town member can only be used once every game.",
+      "+ You cannot be roleblocked or controlled.",
+      "",
+      "Cop results: Your target is innocent.",
+      "Investigator results: Your target could be a Janitor, Retributionist, or Reanimator.",
+      "Attack: None | Defense: None"
+    ]
+  },
+  {
+    "name": "Neapolitan",
+    "detailedDescription": [
+      "Like a cop, but with less powerful investigations.",
+      "",
+      "- Win Condition: Eliminate every criminal and evildoer",
+      "",
+      "+ Abilities: Check if a target is or is not some form of a Vanilla.",
+      "+ Your check cannot be modified by framing.",
+      "",
+      "Cop results: Your target is innocent.",
+      "Investigator results: Your target could be a Vanilla, Vanilla Mafia, Neapolitan, or Cult Member.",
+      "Attack: None | Defense: None"
+    ]
+  },
+  {
+    "name": "Retributionist",
+    "detailedDescription": [
+      "A powerful mystic that can revive the dead.",
+      "",
+      "- Win Condition: Eliminate every criminal and evildoer",
+      "",
+      "+ Abilities: You may revive one dead townie per game. ",
+      "",
+      "Cop results: Your target is innocent.",
+      "Investigator results: Your target could be a Janitor, Retributionist, or Reanimator.",
+      "Attack: None | Defense: None"
+    ]
+  },
+  {
+    "name": "Super Saint",
+    "detailedDescription": [
+      "A vengeful lunatic who will explode on getting eliminated.",
+      "",
+      "- Win condition: Eliminate every criminal and evildoer",
+      "",
+      "+ Abilities: Once the super saint gets eliminated during the day, the person last voted to eliminate will die.",
+      "",
+      "Cop results: Your target is innocent.",
+      "Investigator results: Your target could be a Framer, Cult Leader, Super Saint, or Jester.",
+      "Attack: None | Defense: None"
+    ]
+  },
+  {
+    "name": "Tracker",
+    "detailedDescription": [
+      "Belongs to a very respected tribe, he follows his prey to any destination.",
+      "",
+      "- Win Condition: Eliminate every criminal and evildoer",
+      "",
+      "+ Abilities: Choose one person to track them at night, to see who they visit.",
+      "+ You will exactly know who your target visited at night, giving their exact name.",
+      "",
+      "Cop results: Your target is innocent.",
+      "Investigator results: Your target could be a Investigator, Consigliere, Mayor, or Tracker.",
+      "Attack: None | Defense: None"
+    ]
+  },
+  {
+    "name": "Transporter",
+    "detailedDescription": [
+      "A retired taxi driver who transports people without asking any questions.",
+      "",
+      "- Win Condition: Eliminate every criminal and evildoer",
+      "",
+      "+ Abilities: Choose two people to transport at night.",
+      "+ Transporting two people will swap all targets against them.",
+      "+ You may transport yourself.",
+      "+ Your targets will know if they were transported.",
+      "+ You cannot transport someone with themselves.",
+      "+ You cannot be roleblocked or controlled.",
+      "",
+      "Cop results: Your target is innocent.",
+      "Investigator results: Your target could be a Escort, Transporter, or Consort.",
+      "Attack: None | Defense: None"
+    ]
+  },
+  {
+    "name": "Veteran",
+    "detailedDescription": [
+      "A very scared and paranoid war hero who does not want to get visited by anyone.",
+      "",
+      "- Win Condition: Eliminate every criminal and evildoer",
+      "",
+      "+ Abilities: Decide if you want to go on alert during each night or not.",
+      "+ If you go on alert, you gain a basic defense, attacking any person who visits you at night. If you do not go on alert, you stay at home and do not attack.",
+      "+ you can only go on alert 3 times.",
+      "+ you cannot be roleblocked.",
+      "",
+      "Cop results: Your target is innocent.",
+      "Investigator results: Your target could be a Vigilante, Veteran, Goon, or Ambusher.",
+      "Attack: Powerful | Defense: None (Basic on alert)"
+    ]
+  },
+  {
+    "name": "Vigilante",
+    "detailedDescription": [
+      "A militant officer who takes laws in his own hands.",
+      "",
+      "- Win Condition: Eliminate every criminal and evildoer",
+      "",
+      "+ Abilities: take justice in your own hand and shoot someone at night.",
+      "+ You can only choose to shoot 3 times in a game.",
+      "+ If you shoot another town member, you will commit suicide over the guilt of killing your own member next night.",
+      "",
+      "Cop results: Your target is innocent.",
+      "Investigator results: Your target could be a Vigilante, Veteran, Goon, or Ambusher.",
+      "Attack: Basic | Defense: None"
+    ]
+  },
+  {
+    "name": "Investigator",
+    "detailedDescription": [
+      "A private eye who secretly gathers information.",
+      "",
+      "- Win Condition: Eliminate every criminal and evildoer",
+      "",
+      "+ Abilities: Investigate one person each night for a clue to their role.",
+      "",
+      "Cop results: Your target is innocent.",
+      "Investigator results: Your target could be a Investigator, Consigliere, Mayor, or Tracker.",
+      "Attack: None | Defense: None"
+    ]
+  },
+  {
+    "name": "Ambusher",
+    "detailedDescription": [
+      "A stealthy killer who waits outside of his target house for the perfect moment to strike.",
+      "",
+      "- Win Condition: kill anyone who will not submit to the Mafia",
+      "",
+      "+ Abilities: You may choose to lie in wait outside your target's house",
+      "+ You will attack one player who visits your target.",
+      "+ All players visiting your target will learn your name.",
+      "+ If there are no mafia roles left who are capable of killing then you will become the goon.",
+      "+ You can talk with other mafia members.",
+      "",
+      "Cop results: Your target is suspicious.",
+      "Investigator results: Your target could be a Vigilante, Veteran, Goon, or Ambusher.",
+      "Attack: Basic | Defense: None"
+    ]
+  },
+  {
+    "name": "Consigliere",
+    "detailedDescription": [
+      "A corrupted investigator who has been bribed to gather information for Mafia.",
+      "",
+      "- Win condition: kill anyone who will not submit to the Mafia",
+      "",
+      "+ Abilities: Check one person for their exact role each night.",
+      "+ If there are no mafia roles left who are capable of killing then you will become the goon.",
+      "+ You can talk with other mafia members.",
+      "",
+      "Cop results: Your target is suspicious.",
+      "Investigator results: Your target could be a Investigator, Consigliere, Mayor, or Tracker.",
+      "Attack: None | Defense: None"
+    ]
+  },
+  {
+    "name": "Consort",
+    "detailedDescription": [
+      "A beautiful bar dancer now working for organised crime.",
+      "",
+      "- Win condition: kill anyone who will not submit to the Mafia",
+      "",
+      "+ Abilities: Choose one person each night to block them from using their role’s night ability. (roleblock)",
+      "+ If there are no mafia roles left who are capable of killing then you will become the goon.",
+      "+ You can talk with other mafia members.",
+      "",
+      "Cop results: Your target is suspicious.",
+      "Investigator results: Your target could be a Escort, Transporter, or Consort.",
+      "Attack: None | Defense: None"
+    ]
+  },
+  {
+    "name": "Framer",
+    "detailedDescription": [
+      "A skilled counterfeiter who manipulates information.",
+      "",
+      "- Win condition: kill anyone who will not submit to the Mafia",
+      "",
+      "+ Abilities: Your target will appear suspicious to cops if they are innocent, and vice versa. (reversing their innocence)",
+      "+ You may choose one person at night to frame them as a suspicious townie.",
+      "+ If there are no mafia roles left who are capable of killing then you will become the goon.",
+      "+ You can talk with other mafia members.",
+      "",
+      "Cop results: Your target is suspicious.",
+      "Investigator results: Your target could be a Framer, Cult Leader, Super Saint, or Jester.",
+      "Attack: None | Defense: None"
+    ]
+  },
+  {
+    "name": "Godfather",
+    "detailedDescription": [
+      "The leader of organized crime.",
+      "",
+      "- Win condition: kill anyone who will not submit to the Mafia",
+      "",
+      "+ Abilities: You may order the Goon to attack your target.",
+      "+ If there is no Goon/the Goon is roleblocked, you will attack the target instead.",
+      "+ You have a Basic Defense, and you will appear as innocent to the Cop.",
+      "+ You can talk with other mafia members.",
+      "",
+      "Cop results: Your target is innocent.",
+      "Investigator results: Your target could be a Bodyguard, Godfather, Arsonist, or Crusader.",
+      "Attack: Basic | Defense: Basic"
+    ]
+  },
+  {
+    "name": "Goon",
+    "detailedDescription": [
+      "A member of organized crime, trying to work their way to the top.",
+      "",
+      "- Win condition: kill anyone who will not submit to the Mafia",
+      "",
+      "+ Abilities: You can choose to attack if the Godfather doesn't give orders.",
+      "+ If the Godfather dies, you will become the next Godfather.",
+      "+ You can talk with other mafia members.",
+      "",
+      "Cop results: Your target is suspicious.",
+      "Investigator results: Your target could be a Vigilante, Veteran, Goon, or Ambusher.",
+      "Attack: Basic | Defense: None"
+    ]
+  },
+  {
+    "name": "Janitor",
+    "detailedDescription": [
+      "A sanitisation expert working for organised crime.",
+      "",
+      "- Win condition: kill anyone who will not submit to the Mafia",
+      "",
+      "+ Abilities: Choose a target who will be potentially killed by mafia.",
+      "+ If your target dies, their role will not be revealed to anyone except you.",
+      "+ You can only perform 3 cleanings in a game.",
+      "+ You can talk with other mafia members.",
+      "",
+      "Cop results: Your target is suspicious.",
+      "Investigator results: Your target could be a Janitor, Retributionist, or Reanimator.",
+      "Attack: None | Defense: None"
+    ]
+  },
+  {
+    "name": "Vanilla Mafia",
+    "detailedDescription": [
+      "A regular mafia without any special powers.",
+      "",
+      "- Win condition: kill anyone who will not submit to the Mafia",
+      "",
+      "+ Abilities: If the goon dies, you will turn into goon and you will be given the final say over nightkill selection.",
+      "+ You can talk with other mafia members.",
+      "",
+      "Cop results: Your target is suspicious.",
+      "Investigator results: Your target could be a Vanilla, Vanilla Mafia, Neapolitan, or Cult Member.",
+      "Attack: None | Defense: None"
+    ]
+  },
+  {
+    "name": "Amnesiac",
+    "detailedDescription": [
+      "A trauma patient that does not remember who he was.",
+      "",
+      "- Win Condition: Remember who you were and complete that role's win condition",
+      "",
+      "+ Abilities: When you choose a role it will be revealed to all players in the game.",
+      "",
+      "Cop results: Your target is innocent.",
+      "Investigator results: Your target could be a Survivor, Amnesiac, or Guardian Angel.",
+      "Attack: None | Defense: None"
+    ]
+  },
+  {
+    "name": "Arsonist",
+    "detailedDescription": [
+      "He wants to see the world burn.",
+      "",
+      "- Win Condition: Live to see everyone burn",
+      "",
+      "+ Abilities: You may douse someone each night in gasoline or ignite doused targets.",
+      "+ Igniting doused people will deal an unstoppable attack to all doused targets.",
+      "",
+      "Cop results: Your target is suspicious.",
+      "Investigator results: Your target could be a Bodyguard, Godfather, Arsonist, or Crusader.",
+      "Attack: Unstoppable | Defense: Basic"
+    ]
+  },
+  {
+    "name": "Executioner",
+    "detailedDescription": [
+      "A psychopath who wants to execute his target by any means necessary.",
+      "",
+      "- Win condition: Trick and influence the town into eliminating your target.",
+      "",
+      "+ Abilities: At the beginning of each game you will be given a target, who you need to get executed by any means.",
+      "+ If your target gets eliminated at day, you win the game.",
+      "+ If your target dies at night, you will turn into a Jester.",
+      "",
+      "Cop results: Your target is innocent.",
+      "Investigator results: Your target could be a Cop, Executioner, or Werewolf.",
+      "Attack: None | Defense: Basic"
+    ]
+  },
+  {
+    "name": "Guardian Angel",
+    "detailedDescription": [
+      "An Angel whose only goal is the protection of their target.",
+      "",
+      "- Win condition: Keep your target alive by any means necessary.",
+      "",
+      "+ Abilities: Each game you will be assigned a target who you need to protect by any means necessary.",
+      "+ Twice a game you may heal and purge your target.",
+      "+ Protecting a player gives your target vote immunity for the next day",
+      "+ You can protect your target even if you die.",
+      "+ If your target dies you will become a Survivor with no vests.",
+      "",
+      "Cop results: Your target is innocent.",
+      "Investigator results: Your target could be a Survivor, Amnesiac, or Guardian Angel.",
+      "Attack: None | Defense: None"
+    ]
+  },
+  {
+    "name": "Jester",
+    "detailedDescription": [
+      "A crazed lunatic whose life goal is to be publicly executed.",
+      "",
+      "- Win Condition: Get yourself eliminated by any means necessary",
+      "",
+      "+ Abilities: If you are eliminated at day, you will attack one of your guilty voters the following night with an Unstoppable attack.",
+      "+ You can only haunt once, right after you get eliminated.",
+      "+ You cannot attack people who have not voted you at day.",
+      "+ If you die at night, you lose the game.",
+      "",
+      "Cop results: Your target is innocent.",
+      "Investigator results: Your target could be a Framer, Cult Leader, Super Saint, or Jester.",
+      "Attack: Unstoppable | Defense: None"
+    ]
+  },
+  {
+    "name": "Juggernaut",
+    "detailedDescription": [
+      "An unstoppable force that only gets stronger with each kill.",
+      "",
+      "- Win condition: Kill anyone who would oppose you",
+      "",
+      "+ Abilities: You may choose to attack a player on Full Moon nights.",
+      "+ With each kill your powers grow.",
+      "",
+      "Cop results: Your target is innocent.",
+      "Investigator results: Your target could be a Lookout, Witch, or Juggernaut.",
+      "Attack: Powerful (Unstoppable after third kill) | Defense: Basic"
+    ]
+  },
+  {
+    "name": "Serial Killer",
+    "detailedDescription": [
+      "An insane person who wants everyone to die.",
+      "",
+      "- Win condition: Kill anyone who would oppose you",
+      "",
+      "+ Abilities: You may choose to stab a person each night.",
+      "+ If you are roleblocked you will attack the roleblocker instead of your target.",
+      "+ You have a basic defense throughout the game.",
+      "",
+      "Cop results: Your target is suspicious.",
+      "Investigator results: Your target could be a Doctor or a Serial Killer.",
+      "Attack: Basic | Defense: Basic"
+    ]
+  },
+  {
+    "name": "Survivor",
+    "detailedDescription": [
+      "A neutral character who just wants to live and is too afraid to die.",
+      "",
+      "- Win condition: Live until the end of the game",
+      "",
+      "+ Abilities: Decide if you want to put on a bulletproof vest at night. Bullet proof vest gives you a basic defense.",
+      "+ You can only use the bulletproof vest 4 times.",
+      "",
+      "Cop results: Your target is innocent.",
+      "Investigator results: Your target could be a Survivor, Amnesiac, or Guardian Angel.",
+      "Attack: None | Defense: Basic"
+    ]
+  },
+  {
+    "name": "Werewolf",
+    "detailedDescription": [
+      "A normal citizen who transforms into a hungry Werewolf during the Full Moon.",
+      "",
+      "- Win condition: Kill anyone who would oppose you",
+      "",
+      "+ Abilities: You may rampage at player's house or on your own house during even nights.",
+      "+ During odd nights you cannot rampage",
+      "+ If you do not select a target you will stay home and Rampage at your home.",
+      "",
+      "Cop results: On odd nights -> Innocent | On even nights -> Suspicious.",
+      "Investigator results: Your target could be a Cop, Executioner, or Werewolf.",
+      "Attack: Powerful | Defense: Basic"
+    ]
+  },
+  {
+    "name": "Witch",
+    "detailedDescription": [
+      "A Voodoo master who can control other people's actions.",
+      "",
+      "- Win condition: Survive to see town lose the game",
+      "",
+      "+ Abilities: You may control someone's actions each night.",
+      "+ You cannot be roleblocked or controlled.",
+      "+ You will know the role of the player you will control.",
+      "",
+      "Cop results: Your target is suspicious.",
+      "Investigator results: Your target could be a Lookout, Witch, or Juggernaut.",
+      "Attack: None | Defense: Basic (None after being attacked once)"
+    ]
+  },
+  {
+    "name": "Cult Leader",
+    "detailedDescription": [
+      "You are a crafty manipulator who wants to convert everybody to your cult.",
+      "",
+      "- Win condition: Convert or kill all who oppose you.",
+      "",
+      "+ Abilities:  Convert someone each night. They turn into a Cult Member. You cannot convert the night after a successful conversion.",
+      "+ If you attempt to convert a mafia member, they resist your conversion attempts and you will be forced to shoot them.",
+      "+ You can talk with other cult members.",
+      "+ If you die, everyone else in your cult will commit suicide.",
+      "",
+      "Cop results: Your target is suspicious",
+      "Investigator results: Your target could be a Framer, Cult Leader, Super Saint, or Jester",
+      "Attack: Basic | Defense: Basic (None after being attacked once)"
+    ]
+  },
+  {
+    "name": "Cult Member",
+    "detailedDescription": [
+      "You have been converted by the Cult Leader and will now do anything to make it flourish.",
+      "",
+      "- Win condition: Convert or kill all who oppose you.",
+      "",
+      "- Once the Cult Leader dies, you commit suicide.",
+      "",
+      "Cop results: Your target is suspicious",
+      "Investigator results: Your target could be a Vanilla, Vanilla Mafia, Neapolitan, or Cult Member."
+    ]
+  },
+  {
+    "name": "Crusader",
+    "detailedDescription": [
+      "A divine protector skilled in the art of combat.",
+      "",
+      "- Win Condition: Eliminate every criminal and evildoer.",
+      "",
+      "+ Abilities: Protect someone else each night, granting them powerful defense.",
+      "+ You will attack one random person visiting your target.",
+      "+ You and your target will be notified of a successful protection.",
+      "",
+      "Cop results: Your target is innocent.",
+      "Investigator results: Your target could be a Bodyguard, Godfather, Arsonist, or Crusader."
+    ]
+  }
 ]

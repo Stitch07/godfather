@@ -8,7 +8,7 @@ export const SUPPORT_SERVER = process.env.SUPPORT_SERVER ?? 'https://discord.gg/
 
 export const PRODUCTION = process.env.NODE_ENV === 'production';
 
-export const PREFIX = PRODUCTION ? (process.env.PRODUCTION_PREFIX ?? '=') : (process.env.DEV_PREFIX ?? 'gd!');
+export const PREFIX = PRODUCTION ? process.env.PRODUCTION_PREFIX ?? '=' : process.env.DEV_PREFIX ?? 'gd!';
 
 export const PGSQL_ENABLED = process.env.PGSQL_ENABLED === 'true';
 export const PGSQL_DATABASE_NAME = 'godfather';

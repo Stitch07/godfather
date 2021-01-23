@@ -1,61 +1,60 @@
 import SingleTarget from '@mafia/mixins/SingleTarget';
 import Townie from '@mafia/mixins/Townie';
 import NightActionsManager, { Attack, NightActionPriority } from '../../managers/NightActionsManager';
-import Player from '../../structures/Player';
+import type Player from '../../structures/Player';
 
 class Doctor extends SingleTarget {
+  public name = 'Doctor';
+  public description = 'You may heal a player every night, and self-heal once.';
+  public action = 'heal';
+  public actionText = 'heal a player';
+  public actionGerund = 'healing';
+  public priority = NightActionPriority.DOCTOR;
+  public hasSelfHealed = false;
 
-	public name = 'Doctor';
-	public description = 'You may heal a player every night, and self-heal once.';
-	public action = 'heal';
-	public actionText = 'heal a player';
-	public actionGerund = 'healing';
-	public priority = NightActionPriority.DOCTOR;
-	public hasSelfHealed = false;
+  public runAction(actions: NightActionsManager, target: Player) {
+    if (target === this.player) this.hasSelfHealed = true;
+    const playerRecord = actions.record.get(target.user.id);
 
-	public runAction(actions: NightActionsManager, target: Player) {
-		if (target === this.player) this.hasSelfHealed = true;
-		const playerRecord = actions.record.get(target.user.id);
+    const nightKills = playerRecord.get('nightkill');
+    const isClConverting = actions.find((action) => action.actor.role.name === 'Cult Leader' && action.target === target);
 
-		const nightKills = playerRecord.get('nightkill');
-		const isClConverting = actions.find(action => action.actor.role.name === 'Cult Leader' && action.target === target);
+    if (isClConverting || (nightKills.result && nightKills.type && nightKills.type < Attack.Unstoppable)) {
+      nightKills.result = false;
+      nightKills.by = [];
+      playerRecord.set('nightkill', { result: false, by: [] });
 
-		if (isClConverting || (nightKills.result === true && nightKills.type && nightKills.type < Attack.Unstoppable)) {
-			nightKills.result = false;
-			nightKills.by = [];
-			playerRecord.set('nightkill', { result: false, by: [] });
+      const heals = playerRecord.get('heal');
+      heals.result = true;
+      heals.by.push(this.player);
+      playerRecord.set('heal', heals);
 
-			const heals = playerRecord.get('heal');
-			heals.result = true;
-			heals.by.push(this.player);
-			playerRecord.set('heal', heals);
+      actions.record.set(target.user.id, playerRecord);
+    }
+  }
 
-			actions.record.set(target.user.id, playerRecord);
-		}
-	}
+  public tearDown(actions: NightActionsManager, target: Player) {
+    const record = actions.record.get(target.user.id).get('heal');
+    const success = record.result && record.by.includes(this.player);
 
-	public tearDown(actions: NightActionsManager, target: Player) {
-		const record = actions.record.get(target.user.id).get('heal');
-		const success = record.result && record.by.includes(this.player);
+    if (success) {
+      return target.queueMessage('You were attacked but somebody nursed you back to health!');
+    }
+  }
 
-		if (success) {
-			return target.queueMessage('You were attacked but somebody nursed you back to health!');
-		}
-	}
+  public canTarget(player: Player) {
+    // TODO: customizable rule here
+    if (player === this.player && this.hasSelfHealed) return { check: false, reason: 'You can self-heal once per game.' };
+    // docs cannot heal confirmed mayors
+    if (player.role.name === 'Mayor' && Reflect.get(player.role, 'hasRevealed') === true)
+      return { check: false, reason: 'You cannot heal a confirmed Mayor.' };
+    if (!player.isAlive) return { check: false, reason: 'You cannot target dead players.' };
+    return { check: true, reason: '' };
+  }
 
-	public canTarget(player: Player) {
-		// TODO: customizable rule here
-		if (player === this.player && this.hasSelfHealed) return { check: false, reason: 'You can self-heal once per game.' };
-		// docs cannot heal confirmed mayors
-		if (player.role.name === 'Mayor' && Reflect.get(player.role, 'hasRevealed') === true) return { check: false, reason: 'You cannot heal a confirmed Mayor.' };
-		if (!player.isAlive) return { check: false, reason: 'You cannot target dead players.' };
-		return { check: true, reason: '' };
-	}
-
-	public get extraNightContext() {
-		return `You ${this.hasSelfHealed ? 'cannot' : 'can'} self-heal tonight.`;
-	}
-
+  public get extraNightContext() {
+    return `You ${this.hasSelfHealed ? 'cannot' : 'can'} self-heal tonight.`;
+  }
 }
 
 Doctor.aliases = ['Doc'];

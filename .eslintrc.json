@@ -1,22 +1,15 @@
 {
-    "extends": "@skyra/eslint-config",
-    "rules": {
-        "@typescript-eslint/no-throw-literal": "off",
-        "@typescript-eslint/naming-convention": [
-            "error",
-            {
-                "selector": "variable",
-                "format": [
-                    "camelCase",
-                    "UPPER_CASE",
-                    "PascalCase"
-                ]
-            }
-        ],
-        "@typescript-eslint/no-use-before-define": [
-            "off"
-        ],
-		"@typescript-eslint/no-namespace": "off",
-		"@typescript-eslint/no-var-requires": "off"
-    }
+  "extends": "@sapphire",
+  "rules": {
+    "@typescript-eslint/no-throw-literal": "off",
+    "@typescript-eslint/naming-convention": [
+      "error",
+      {
+        "selector": "variable",
+        "format": ["camelCase", "UPPER_CASE", "PascalCase"]
+      }
+    ],
+    "@typescript-eslint/no-namespace": "off",
+    "@typescript-eslint/no-var-requires": "off"
+  }
 }

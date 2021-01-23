@@ -2,29 +2,28 @@ version: '3.7'
 services:
   bot:
     image: godfather:alpha
-    restart: "always"
-    command: "start"
+    restart: 'always'
+    command: 'start'
     env_file: .env
     ports:
-        - "4000:8080"
+      - '4000:8080'
     depends_on:
-        - postgres
+      - postgres
     environment:
-        - NO_COLOR=true
+      - NO_COLOR=true
   postgres:
     image: postgres
-    restart: "always"
+    restart: 'always'
     env_file: .env
     ports:
-        - "$PGSQL_DATABASE_EXPOSED_PORT:5432"
+      - '$PGSQL_DATABASE_EXPOSED_PORT:5432'
     environment:
-        - POSTGRES_DB=godfather
-        - "POSTGRES_USER=$PGSQL_DATABASE_USER"
-        - "POSTGRES_PASSWORD=$PGSQL_DATABASE_PASSWORD"
+      - POSTGRES_DB=godfather
+      - 'POSTGRES_USER=$PGSQL_DATABASE_USER'
+      - 'POSTGRES_PASSWORD=$PGSQL_DATABASE_PASSWORD'
     volumes:
-        - postgres-data:/var/lib/postgresql/data
+      - postgres-data:/var/lib/postgresql/data
 
 volumes:
   postgres-data:
     external: true
-
