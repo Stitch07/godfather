@@ -6,12 +6,12 @@ import { Time } from '@sapphire/time-utilities';
 import type { Message } from 'discord.js';
 
 @ApplyOptions<CommandOptions>({
-  aliases: ['inno'],
-  preconditions: ['TrialVotingOnly', { name: 'Cooldown', context: { bucketType: BucketType.User, delay: Number(Time.Second) } }]
+	aliases: ['inno'],
+	preconditions: ['TrialVotingOnly', { name: 'Cooldown', context: { bucketType: BucketType.User, delay: Number(Time.Second) } }]
 })
 export default class extends GodfatherCommand {
-  public async run(message: Message) {
-    const game = this.context.client.games.find((game) => Boolean(game.players.get(message.author)))!;
-    await game.votes.trialVote(game.players.get(message.author)!, TrialVoteType.Innocent).then(() => message.react('✅'));
-  }
+	public async run(message: Message) {
+		const game = this.context.client.games.find((game) => Boolean(game.players.get(message.author)))!;
+		await game.votes.trialVote(game.players.get(message.author)!, TrialVoteType.Innocent).then(() => message.react('✅'));
+	}
 }

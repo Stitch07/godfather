@@ -3,7 +3,7 @@ import Escort from '@mafia/roles/town/Escort';
 
 // @ts-ignore tsc bug
 class Consort extends Escort {
-  public name = 'Consort';
+	public name = 'Consort';
 }
 
 Consort.categories = ['Mafia Support'];

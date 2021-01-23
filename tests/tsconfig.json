@@ -1,18 +1,18 @@
 {
-  "extends": "../tsconfig.base.json",
-  "compilerOptions": {
-    "target": "ES2019",
-    "outDir": "../dist",
-    "rootDir": "../",
-    "baseUrl": ".",
-    "composite": true,
-    "paths": {
-      "@root/*": ["../src/*"],
-      "@mafia/*": ["../src/lib/mafia/*"],
-      "@lib/*": ["../src/lib/*"],
-      "@util/*": ["../src/lib/util/*"],
-      "@mocks/*": ["./mocks/*"]
-    }
-  },
-  "include": [".", "../src"]
+	"extends": "../tsconfig.base.json",
+	"compilerOptions": {
+		"target": "ES2019",
+		"outDir": "../dist",
+		"rootDir": "../",
+		"baseUrl": ".",
+		"composite": true,
+		"paths": {
+			"@root/*": ["../src/*"],
+			"@mafia/*": ["../src/lib/mafia/*"],
+			"@lib/*": ["../src/lib/*"],
+			"@util/*": ["../src/lib/util/*"],
+			"@mocks/*": ["./mocks/*"]
+		}
+	},
+	"include": [".", "../src"]
 }

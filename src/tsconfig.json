@@ -1,16 +1,16 @@
 {
-  "extends": "../tsconfig.base.json",
-  "compilerOptions": {
-    "outDir": "../dist",
-    "rootDir": ".",
-    "baseUrl": ".",
-    "composite": true,
-    "paths": {
-      "@root/*": ["./*"],
-      "@mafia/*": ["lib/mafia/*"],
-      "@lib/*": ["lib/*"],
-      "@util/*": ["lib/util/*"]
-    }
-  },
-  "include": [".", "**/*.json"]
+	"extends": "../tsconfig.base.json",
+	"compilerOptions": {
+		"outDir": "../dist",
+		"rootDir": ".",
+		"baseUrl": ".",
+		"composite": true,
+		"paths": {
+			"@root/*": ["./*"],
+			"@mafia/*": ["lib/mafia/*"],
+			"@lib/*": ["lib/*"],
+			"@util/*": ["lib/util/*"]
+		}
+	},
+	"include": [".", "**/*.json"]
 }

@@ -27,17 +27,17 @@ To run Godfather locally, a few steps must be taken:
 8. Install all project dependencies using `yarn install`
 9. Run Godfather using `yarn dev`
 
-- For setting up TypeORM with PostgreSQL, refer to the end of this file.
+-   For setting up TypeORM with PostgreSQL, refer to the end of this file.
 
 ## Godfather Concept Guidelines
 
 There are a number of guidelines considered when reviewing Pull Requests to be merged. _This is by no means an exhaustive list, but here are some things to consider before/while submitting your ideas._
 
-- Godfather should never change sapphire's or discordjs's default behavior. Godfather should only add to Sapphire and discord.js, and be as consistent as possible with them.
-- Everything in Godfather should be generally useful for the majority of users. Don't let that stop you if you've got a good concept though, as your idea still might be a great addition.
-- Everything should follow [OOP paradigms] and generally rely on behaviour over state where possible. This generally helps methods be predictable, keeps the codebase simple and understandable, reduces code duplication through abstraction, and leads to efficiency and therefore scalability.
-- Everything should follow our ESLint rules as closely as possible, and should pass lint tests even if you must disable a rule for a single line.
-- Everything should follow [Discord Bot Best Practices]
+-   Godfather should never change sapphire's or discordjs's default behavior. Godfather should only add to Sapphire and discord.js, and be as consistent as possible with them.
+-   Everything in Godfather should be generally useful for the majority of users. Don't let that stop you if you've got a good concept though, as your idea still might be a great addition.
+-   Everything should follow [OOP paradigms] and generally rely on behaviour over state where possible. This generally helps methods be predictable, keeps the codebase simple and understandable, reduces code duplication through abstraction, and leads to efficiency and therefore scalability.
+-   Everything should follow our ESLint rules as closely as possible, and should pass lint tests even if you must disable a rule for a single line.
+-   Everything should follow [Discord Bot Best Practices]
 
 ## Setting up a database
 
@@ -54,7 +54,7 @@ Godfather uses PostgreSQL to store data such as server-settings, game results an
 1. Install [Docker].
 2. Make a `.env` file referencing `.env.example`.
 
-- If you're running Godfather on Docker for the first time, or have new TypeORM migrations, start the database individually with `docker-compose up -d postgres` and `yarn dev:typeorm migration:run`.
+-   If you're running Godfather on Docker for the first time, or have new TypeORM migrations, start the database individually with `docker-compose up -d postgres` and `yarn dev:typeorm migration:run`.
 
 3. Run `docker-compose up` to start the bot in development mode.
 4. The bot runs in watch-mode, and will compile and reboot on every TS file change.

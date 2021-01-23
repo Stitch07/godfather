@@ -1,48 +1,48 @@
 {
-  "projectName": "Godfather",
-  "projectOwner": "Soumil07",
-  "repoType": "github",
-  "repoHost": "https://github.com",
-  "files": ["README.md"],
-  "imageSize": 100,
-  "commit": false,
-  "commitConvention": "eslint",
-  "contributors": [
-    {
-      "login": "Soumil07",
-      "name": "Soumil07",
-      "avatar_url": "https://avatars0.githubusercontent.com/u/29275227?v=4",
-      "profile": "https://github.com/Soumil07",
-      "contributions": ["code", "mentoring", "projectManagement", "test"]
-    },
-    {
-      "login": "SamirMishra27",
-      "name": "SamirMishra27",
-      "avatar_url": "https://avatars2.githubusercontent.com/u/68955143?v=4",
-      "profile": "https://github.com/SamirMishra27",
-      "contributions": ["doc", "design", "business"]
-    },
-    {
-      "login": "MeDerpWasTaken",
-      "name": "MeDerpWasTaken",
-      "avatar_url": "https://avatars1.githubusercontent.com/u/62511835?v=4",
-      "profile": "https://github.com/MeDerpWasTaken",
-      "contributions": ["code"]
-    },
-    {
-      "login": "Radiating8",
-      "name": "Radiating",
-      "avatar_url": "https://avatars3.githubusercontent.com/u/28413785?v=4",
-      "profile": "https://github.com/Radiating8",
-      "contributions": ["code"]
-    },
-    {
-      "login": "AriusX7",
-      "name": "Arius",
-      "avatar_url": "https://avatars3.githubusercontent.com/u/48966598?v=4",
-      "profile": "https://github.com/AriusX7",
-      "contributions": ["code"]
-    }
-  ],
-  "contributorsPerLine": 7
+	"projectName": "Godfather",
+	"projectOwner": "Soumil07",
+	"repoType": "github",
+	"repoHost": "https://github.com",
+	"files": ["README.md"],
+	"imageSize": 100,
+	"commit": false,
+	"commitConvention": "eslint",
+	"contributors": [
+		{
+			"login": "Soumil07",
+			"name": "Soumil07",
+			"avatar_url": "https://avatars0.githubusercontent.com/u/29275227?v=4",
+			"profile": "https://github.com/Soumil07",
+			"contributions": ["code", "mentoring", "projectManagement", "test"]
+		},
+		{
+			"login": "SamirMishra27",
+			"name": "SamirMishra27",
+			"avatar_url": "https://avatars2.githubusercontent.com/u/68955143?v=4",
+			"profile": "https://github.com/SamirMishra27",
+			"contributions": ["doc", "design", "business"]
+		},
+		{
+			"login": "MeDerpWasTaken",
+			"name": "MeDerpWasTaken",
+			"avatar_url": "https://avatars1.githubusercontent.com/u/62511835?v=4",
+			"profile": "https://github.com/MeDerpWasTaken",
+			"contributions": ["code"]
+		},
+		{
+			"login": "Radiating8",
+			"name": "Radiating",
+			"avatar_url": "https://avatars3.githubusercontent.com/u/28413785?v=4",
+			"profile": "https://github.com/Radiating8",
+			"contributions": ["code"]
+		},
+		{
+			"login": "AriusX7",
+			"name": "Arius",
+			"avatar_url": "https://avatars3.githubusercontent.com/u/48966598?v=4",
+			"profile": "https://github.com/AriusX7",
+			"contributions": ["code"]
+		}
+	],
+	"contributorsPerLine": 7
 }

@@ -16,41 +16,41 @@ import type { Constructor } from '@sapphire/utilities';
 import { createMockChannel, createMockUser } from './';
 
 const allRoles = new Map<string, Constructor<Role>>([
-  ['Vanilla', Vanilla],
-  ['Vanilla Mafia', Vanilla_Mafia],
-  ['Doctor', Doctor],
-  ['Cop', Cop],
-  ['Goon', Goon],
-  ['Escort', Escort],
-  ['Godfather', Godfather],
-  ['Consigliere', Consigliere],
-  ['Cult Leader', CultLeader]
+	['Vanilla', Vanilla],
+	['Vanilla Mafia', Vanilla_Mafia],
+	['Doctor', Doctor],
+	['Cop', Cop],
+	['Goon', Goon],
+	['Escort', Escort],
+	['Godfather', Godfather],
+	['Consigliere', Consigliere],
+	['Cult Leader', CultLeader]
 ]);
 
 interface MockGameParams {
-  numPlayers: number;
-  setup: Setup;
+	numPlayers: number;
+	setup: Setup;
 }
 
 export const createMockGame = (params: MockGameParams) => {
-  // @ts-ignore type instantiation bs
-  const game = new Game(
-    createMockUser({ username: 'Player1', discriminator: '0001' }),
-    createMockChannel({ name: 'godfather-test' }),
-    DEFAULT_GAME_SETTINGS
-  );
-  for (let i = 2; i <= params.numPlayers; i++) {
-    // @ts-ignore type instantiation bs
-    const player = new Player(createMockUser({ username: `Player${i}`, discriminator: `000${i}` }), game);
-    game.players.push(player);
-  }
+	// @ts-ignore type instantiation bs
+	const game = new Game(
+		createMockUser({ username: 'Player1', discriminator: '0001' }),
+		createMockChannel({ name: 'godfather-test' }),
+		DEFAULT_GAME_SETTINGS
+	);
+	for (let i = 2; i <= params.numPlayers; i++) {
+		// @ts-ignore type instantiation bs
+		const player = new Player(createMockUser({ username: `Player${i}`, discriminator: `000${i}` }), game);
+		game.players.push(player);
+	}
 
-  game.setup = params.setup;
-  const { roles } = game.setup!;
+	game.setup = params.setup;
+	const { roles } = game.setup!;
 
-  for (const player of game.players) {
-    player.role = new (allRoles.get(roles.shift()!)!)(player);
-  }
+	for (const player of game.players) {
+		player.role = new (allRoles.get(roles.shift()!)!)(player);
+	}
 
-  return game;
+	return game;
 };
