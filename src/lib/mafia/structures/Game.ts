@@ -458,10 +458,11 @@ export default class Game {
 		if (this.settings.adaptiveSlowmode && this.channel.permissionsFor(this.client.user!)!.has('MANAGE_CHANNELS')) await this.channel.setRateLimitPerUser(0);
 
 		for (const [factionalChannel] of this.factionalChannels.values()) {
-			await factionalChannel.delete();
+			if (factionalChannel.deleted) continue;
 			for (const [, invite] of await factionalChannel.fetchInvites()) {
 				if (invite.deletable) await invite.delete();
 			}
+			if (factionalChannel.deletable) await factionalChannel.delete();
 		}
 
 		this.client.games.delete(this.channel.id);
