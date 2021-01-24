@@ -1,13 +1,12 @@
-require('module-alias/register');
+import 'module-alias/register';
 
 import Godfather from '@lib/Godfather';
 import { init as roleInit } from '@mafia/roles/index';
-import { PRODUCTION, TOKEN, SENTRY_DSN } from '@root/config';
-import { floatPromise, initClean } from './lib/util/utils';
-
-import * as Sentry from '@sentry/node';
+import { PRODUCTION, SENTRY_DSN, TOKEN } from '@root/config';
 import { RewriteFrames } from '@sentry/integrations';
+import * as Sentry from '@sentry/node';
 import { join } from 'path';
+import { floatPromise, initClean } from './lib/util/utils';
 
 const client = new Godfather();
 
@@ -29,7 +28,7 @@ async function init() {
 		});
 	}
 
-	roleInit();
+	void roleInit();
 	initClean();
 
 	await client.login(TOKEN);

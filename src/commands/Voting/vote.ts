@@ -4,15 +4,22 @@ import { ApplyOptions } from '@sapphire/decorators';
 import { Args, BucketType, CommandOptions } from '@sapphire/framework';
 import { Time } from '@sapphire/time-utilities';
 import { handleRequiredArg } from '@util/utils';
-import { Message } from 'discord.js';
+import type { Message } from 'discord.js';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['vtl', 'vt'],
 	description: 'Vote to eliminate a player',
-	preconditions: ['GuildOnly', 'GameOnly', 'PlayerOnly', 'AlivePlayerOnly', 'GameStartedOnly', 'DayOnly', { name: 'Cooldown', context: { bucketType: BucketType.Channel, delay: Number(Time.Second) } }]
+	preconditions: [
+		'GuildOnly',
+		'GameOnly',
+		'PlayerOnly',
+		'AlivePlayerOnly',
+		'GameStartedOnly',
+		'DayOnly',
+		{ name: 'Cooldown', context: { bucketType: BucketType.Channel, delay: Number(Time.Second) } }
+	]
 })
 export default class extends GodfatherCommand {
-
 	public async run(message: Message, args: Args) {
 		const target = await args.pick('player').catch(handleRequiredArg('player'));
 		const { game } = message.channel;
@@ -29,5 +36,4 @@ export default class extends GodfatherCommand {
 			await game!.hammer(target);
 		}
 	}
-
 }

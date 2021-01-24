@@ -1,4 +1,4 @@
-import BasicSetup from '@root/lib/mafia/structures/BasicSetup';
+import type BasicSetup from '@root/lib/mafia/structures/BasicSetup';
 import { mock } from 'jest-mock-extended';
 
 interface MockSetupParams {

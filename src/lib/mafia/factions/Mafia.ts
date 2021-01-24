@@ -1,12 +1,12 @@
 import Faction from '@mafia/structures/Faction';
-import Player from '@mafia/structures/Player';
-import Game from '@mafia/structures/Game';
+import type Game from '@mafia/structures/Game';
+import type Player from '@mafia/structures/Player';
 
 const OPPOSING_FACTIONS = ['Town', 'Arsonist', 'Werewolf', 'Serial Killer', 'Juggernaut'];
-const filterOpposingPowerRoles = (player: Player) => player.isAlive && OPPOSING_FACTIONS.includes(player.role!.faction.name) && (player.role!.canUseAction().check || player.role.name === 'Mayor');
+const filterOpposingPowerRoles = (player: Player) =>
+	player.isAlive && OPPOSING_FACTIONS.includes(player.role!.faction.name) && (player.role!.canUseAction().check || player.role.name === 'Mayor');
 
 export default class MafiaFaction extends Faction {
-
 	public name = 'Mafia';
 
 	public winCondition = 'Kill all townies and competing evil factions.';
@@ -18,13 +18,10 @@ export default class MafiaFaction extends Faction {
 		// The Mafia need at least one member alive, and all opposing factions dead
 		const { players } = game;
 
-		const aliveMafia = players.filter(player => player.isAlive && player.role!.faction.name === 'Mafia');
+		const aliveMafia = players.filter((player) => player.isAlive && player.role!.faction.name === 'Mafia');
 		const aliveOpposingPrs = players.filter(filterOpposingPowerRoles);
-		const aliveOpposing = players.filter(player => player.isAlive && OPPOSING_FACTIONS.includes(player.role!.faction.name));
+		const aliveOpposing = players.filter((player) => player.isAlive && OPPOSING_FACTIONS.includes(player.role!.faction.name));
 
-		return aliveMafia.length > 0
-			&& aliveMafia.length >= aliveOpposing.length
-			&& aliveOpposingPrs.length === 0;
+		return aliveMafia.length > 0 && aliveMafia.length >= aliveOpposing.length && aliveOpposingPrs.length === 0;
 	}
-
 }

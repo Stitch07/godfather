@@ -1,5 +1,5 @@
 import { mergeDefault } from '@sapphire/utilities';
-import { User } from 'discord.js';
+import type { User } from 'discord.js';
 import { mock } from 'jest-mock-extended';
 import { createID } from './createID';
 
@@ -28,4 +28,3 @@ export const createMockUser = (params: MockUserParams = DEFAULT_USER_INFO) => {
 	});
 	return mockUser;
 };
-

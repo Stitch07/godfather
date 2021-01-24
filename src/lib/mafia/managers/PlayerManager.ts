@@ -1,6 +1,6 @@
 import Game, { Phase } from '@mafia/structures/Game';
-import Player from '@mafia/structures/Player';
-import { User } from 'discord.js';
+import type Player from '@mafia/structures/Player';
+import type { User } from 'discord.js';
 
 export interface PlayerManagerShowOptions {
 	codeblock?: boolean;
@@ -8,7 +8,6 @@ export interface PlayerManagerShowOptions {
 }
 
 export default class PlayerManager extends Array<Player> {
-
 	public replacements: User[] = [];
 
 	/**
@@ -20,7 +19,7 @@ export default class PlayerManager extends Array<Player> {
 	}
 
 	public get(user: User): Player | undefined {
-		return this.find(player => player.user === user);
+		return this.find((player) => player.user === user);
 	}
 
 	public async remove(player: Player, prompt = true): Promise<boolean> {
@@ -32,9 +31,7 @@ export default class PlayerManager extends Array<Player> {
 		}
 
 		if (prompt) {
-			const promptMessage = this.replacements.length > 0
-				? 'You will be replaced out.'
-				: 'You will be modkilled.';
+			const promptMessage = this.replacements.length > 0 ? 'You will be replaced out.' : 'You will be modkilled.';
 			const leavePrompt = await this.game.channel.prompt(`Are you sure you want to leave? ${promptMessage}`, player.user);
 			if (!leavePrompt) return false;
 		}
@@ -56,12 +53,18 @@ export default class PlayerManager extends Array<Player> {
 		// modkill if nobody is replacing
 		const phaseStr = this.game.phase === Phase.Day ? 'D' : 'N';
 		await this.game.channel.send(`${player.user.tag} was modkilled. ${player.displayRoleAndWill(this.game.phase === Phase.Night)}`);
-		player.kill(`modkilled ${phaseStr}${this.game.cycle}`);
+		void player.kill(`modkilled ${phaseStr}${this.game.cycle}`);
 		return true;
 	}
 
 	public show(options: PlayerManagerShowOptions = { codeblock: false, showReplacements: true }): string {
-		const playerList = options.codeblock ? [] : [this.game.hasStarted ? `**Players: ${this.filter(player => player.isAlive).length}/${this.length} alive**` : `**Players: ${this.length}**`];
+		const playerList = options.codeblock
+			? []
+			: [
+					this.game.hasStarted
+						? `**Players: ${this.filter((player) => player.isAlive).length}/${this.length} alive**`
+						: `**Players: ${this.length}**`
+			  ];
 		for (const [n, player] of this.entries()) {
 			let playerName = '';
 			if (options.codeblock) {
@@ -76,11 +79,10 @@ export default class PlayerManager extends Array<Player> {
 				playerName = `${n + 1}. ~~${player.user.tag}~~ ${this.getPlayerFlags(player)}`;
 			}
 			playerList.push(playerName);
-
 		}
 
 		if (this.replacements.length > 0 && options.showReplacements) {
-			playerList.push(`\nReplacements: ${this.replacements.map(user => user.tag).join(', ')}`);
+			playerList.push(`\nReplacements: ${this.replacements.map((user) => user.tag).join(', ')}`);
 		}
 
 		return playerList.join('\n');
@@ -113,5 +115,4 @@ export default class PlayerManager extends Array<Player> {
 		if (this.game.nightActions.protectedPlayers.includes(player)) flags.push('protected by the Guardian Angel');
 		return flags.length ? `(${flags.join('; ')})` : '';
 	}
-
 }

@@ -10,11 +10,11 @@
  */
 
 import { NightActionPriority } from '@mafia/managers/NightActionsManager';
+import { init } from '@mafia/roles';
 import { Phase } from '@mafia/structures/Game';
 import { createMockGame, createMockSetup } from '../mocks/';
-import { init } from '@mafia/roles';
 
-beforeAll(async done => {
+beforeAll(async (done) => {
 	await init();
 	done();
 });
@@ -50,10 +50,7 @@ describe('cult mechanics', () => {
 		await game.startDay();
 
 		expect(game.players[0].isAlive).toBe(false);
-		expect(game.players[0].user.send).toHaveBeenNthCalledWith(2, [
-			'You were denounced by a Cult Leader.',
-			'You have died!'
-		].join('\n'));
+		expect(game.players[0].user.send).toHaveBeenNthCalledWith(2, ['You were denounced by a Cult Leader.', 'You have died!'].join('\n'));
 	});
 
 	test('night 2', async () => {
@@ -127,5 +124,4 @@ describe('cult mechanics', () => {
 
 		expect(cl.role.canUseAction().check).toBe(false);
 	});
-
 });

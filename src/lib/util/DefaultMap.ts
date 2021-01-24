@@ -1,6 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-extraneous-class
 export default class DefaultMap<K, V> extends Map<K, V> {
-
 	public constructor(public defaultValue: () => V) {
 		super();
 	}
@@ -8,5 +7,4 @@ export default class DefaultMap<K, V> extends Map<K, V> {
 	public get(key: K): V {
 		return super.get(key) ?? this.defaultValue();
 	}
-
 }

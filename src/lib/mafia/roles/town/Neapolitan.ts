@@ -1,12 +1,11 @@
-import NightActionsManager, { NightActionPriority } from '../../managers/NightActionsManager';
 import SingleTarget from '@mafia/mixins/SingleTarget';
-import Player from '@mafia/structures/Player';
+import type Player from '@mafia/structures/Player';
 import TownFaction from '../../factions/Town';
+import NightActionsManager, { NightActionPriority } from '../../managers/NightActionsManager';
 
 const VANILLA_ROLES = ['Cult Member', 'Vanilla', 'Vanilla Mafia'];
 
 export default class Neapolitan extends SingleTarget {
-
 	public name = 'Neapolitan';
 	public description = 'Like a cop, but with less powerful investigations.';
 	public faction = new TownFaction();
@@ -24,5 +23,4 @@ export default class Neapolitan extends SingleTarget {
 			await this.player.queueMessage('Your target is not a Vanilla');
 		}
 	}
-
 }

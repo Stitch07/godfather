@@ -1,12 +1,11 @@
 import NightActionsManager, { Attack, NightActionPriority } from '@mafia/managers/NightActionsManager';
-import Player from '@mafia/structures/Player';
 import SingleTarget from '@mafia/mixins/SingleTarget';
+import type Player from '@mafia/structures/Player';
 import { cast, pluralize } from '@util/utils';
-import Witch from '../roles/neutral/Witch';
-import CultLeader from '../roles/cult/Cult_Leader';
+import type CultLeader from '../roles/cult/Cult_Leader';
+import type Witch from '../roles/neutral/Witch';
 
 export default class Killer extends SingleTarget {
-
 	public action = 'shoot';
 	public actionText = 'shoot a player';
 	public actionGerund = 'shooting';
@@ -32,7 +31,7 @@ export default class Killer extends SingleTarget {
 
 	public tearDown(actions: NightActionsManager, target: Player) {
 		const record = actions.record.get(target.user.id).get('nightkill');
-		const success = record.result === true && record.by.includes(this.player);
+		const success = record.result && record.by.includes(this.player);
 		if (!success) {
 			return this.player.queueMessage('Your target was too strong to kill!');
 		}
@@ -48,5 +47,4 @@ export default class Killer extends SingleTarget {
 	public get attackStrength() {
 		return this.modifiers.attack ?? Attack.Basic;
 	}
-
 }

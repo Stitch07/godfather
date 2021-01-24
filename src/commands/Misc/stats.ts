@@ -12,7 +12,6 @@ import { cpus } from 'os';
 	preconditions: [new PermissionsPrecondition('EMBED_LINKS')]
 })
 export default class extends GodfatherCommand {
-
 	public async run(message: Message) {
 		return message.channel.send(await this.buildEmbed(message));
 	}
@@ -23,17 +22,29 @@ export default class extends GodfatherCommand {
 		return new MessageEmbed()
 			.setColor(Branding.PrimaryColor)
 			.setAuthor(this.context.client.user!.username, this.context.client.user!.displayAvatarURL({ format: 'png' }))
-			.setDescription(`To add ${this.context.client.user!.username} to your server, use the \`${Array.isArray(prefix) ? prefix[0] : prefix}invite\` command.`)
-			.addField('Connected To', [
-				`**Servers**: ${generalStatistics.guilds}`,
-				`**Users**: ${generalStatistics.members}`,
-				`**Channels**: ${generalStatistics.channels}`
-			].join('\n'), true)
-			.addField('Server Stats', [
-				`**CPU Load**: ${serverStatistics.cpuLoad.map(load => `${load}%`).join(' | ')}`,
-				`**RAM Used**: ${serverStatistics.ramUsed} (Total: ${serverStatistics.ramTotal})`,
-				`**Uptime**: ${format(this.context.client.uptime ?? 0)}`
-			].join('\n'), true);
+			.setDescription(
+				`To add ${this.context.client.user!.username} to your server, use the \`${
+					Array.isArray(prefix) ? prefix[0] : prefix
+				}invite\` command.`
+			)
+			.addField(
+				'Connected To',
+				[
+					`**Servers**: ${generalStatistics.guilds}`,
+					`**Users**: ${generalStatistics.members}`,
+					`**Channels**: ${generalStatistics.channels}`
+				].join('\n'),
+				true
+			)
+			.addField(
+				'Server Stats',
+				[
+					`**CPU Load**: ${serverStatistics.cpuLoad.map((load) => `${load}%`).join(' | ')}`,
+					`**RAM Used**: ${serverStatistics.ramUsed} (Total: ${serverStatistics.ramTotal})`,
+					`**Uptime**: ${format(this.context.client.uptime ?? 0)}`
+				].join('\n'),
+				true
+			);
 	}
 
 	private get generalStatistics() {
@@ -53,5 +64,4 @@ export default class extends GodfatherCommand {
 			ramUsed: `${Math.round(100 * (usage.heapUsed / 1048576)) / 100}MB`
 		};
 	}
-
 }

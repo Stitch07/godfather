@@ -1,14 +1,13 @@
 import GodfatherCommand from '@root/lib/GodfatherCommand';
 import { ApplyOptions } from '@sapphire/decorators';
-import { Args, CommandContext, CommandOptions } from '@sapphire/framework';
-import { Message } from 'discord.js';
+import type { Args, CommandContext, CommandOptions } from '@sapphire/framework';
+import type { Message } from 'discord.js';
 
 @ApplyOptions<CommandOptions>({
 	description: 'Shows you useful information about the bot.'
 })
 export default class extends GodfatherCommand {
-
-	public async run(message: Message, args: Args, context: CommandContext) {
+	public async run(message: Message, _: Args, context: CommandContext) {
 		const messageText = [
 			`Godfather v${this.context.client.version} is a Discord Bot that hosts games of Werewolf/Mafia, with 24/7 uptime and intuitive commands.`,
 			' ',
@@ -23,5 +22,4 @@ export default class extends GodfatherCommand {
 
 		return message.channel.send(messageText.join('\n'));
 	}
-
 }

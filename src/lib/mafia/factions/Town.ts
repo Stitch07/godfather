@@ -1,10 +1,9 @@
 import Faction from '@mafia/structures/Faction';
-import Game from '../structures/Game';
+import type Game from '../structures/Game';
 
 const OPPOSING_FACTIONS = ['Mafia', 'Serial Killer', 'Arsonist', 'Werewolf', 'Juggernaut', 'Cult'];
 
 export default class TownFaction extends Faction {
-
 	public name = 'Town';
 
 	public winCondition = 'Eliminate every evildoer.';
@@ -15,10 +14,9 @@ export default class TownFaction extends Faction {
 		// Neutral Killing are dead
 		const { players } = game;
 
-		const aliveTownies = players.filter(player => player.isAlive && player.role!.faction.name === this.name);
-		const aliveOpposing = players.filter(player => player.isAlive && OPPOSING_FACTIONS.includes(player.role!.faction.name));
+		const aliveTownies = players.filter((player) => player.isAlive && player.role!.faction.name === this.name);
+		const aliveOpposing = players.filter((player) => player.isAlive && OPPOSING_FACTIONS.includes(player.role!.faction.name));
 
 		return aliveTownies.length > 0 && aliveOpposing.length === 0;
 	}
-
 }

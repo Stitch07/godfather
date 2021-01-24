@@ -1,9 +1,8 @@
-import Killer from '@mafia/mixins/Killer';
-import { Defence } from '@mafia/managers/NightActionsManager';
 import SerialKillerFaction from '@mafia/factions/neutral/SerialKiller';
+import { Defence } from '@mafia/managers/NightActionsManager';
+import Killer from '@mafia/mixins/Killer';
 
 export default class Serial_Killer extends Killer {
-
 	public name = 'Serial Killer';
 	public description = 'You may stab someone every night.';
 	public faction = new SerialKillerFaction();
@@ -15,7 +14,6 @@ export default class Serial_Killer extends Killer {
 	public get defence() {
 		return Defence.Basic;
 	}
-
 }
 
 Serial_Killer.aliases = ['SK'];

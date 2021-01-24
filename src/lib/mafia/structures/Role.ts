@@ -1,10 +1,10 @@
-import Player from '@mafia/structures/Player';
-import { Awaited } from '@sapphire/framework';
-import { Message } from 'discord.js';
-import Faction from './Faction';
+import type Player from '@mafia/structures/Player';
+import type { Awaited } from '@sapphire/framework';
+import type { Message } from 'discord.js';
 import { Attack, Defence } from '../managers/NightActionsManager';
 import { allRoles } from '../roles';
 import type Executioner from '../roles/neutral/Executioner';
+import type Faction from './Faction';
 
 const INNOCENT_FACTIONS = ['Town', 'Survivor', 'Jester', 'Amnesiac', 'Guardian Angel', 'Juggernaut', 'Godfather', 'Executioner'];
 
@@ -14,7 +14,6 @@ export interface CanUseActionData {
 }
 
 abstract class Role {
-
 	public name = '';
 	public description = '';
 	public modifiers: RoleModifiers = {
@@ -24,8 +23,7 @@ abstract class Role {
 		attack: null
 	};
 
-	public constructor(public player: Player) {
-	}
+	public constructor(public player: Player) {}
 
 	public get display(): string {
 		if (this.player.cleaned && !this.player.isAlive) return 'Cleaned';
@@ -61,7 +59,7 @@ abstract class Role {
 	public async onDeath() {
 		if (this.faction.name !== 'Town' || this.player.deathReason.includes('eliminated')) return;
 
-		const executionersInGame = this.game.players.filter(player => player.isAlive && player.role.name === 'Executioner');
+		const executionersInGame = this.game.players.filter((player) => player.isAlive && player.role.name === 'Executioner');
 		for (const executioner of executionersInGame) {
 			if (this.player.user.id === (executioner.role as Executioner).target.user.id) {
 				await executioner.user.send('Your target has died! You have become a Jester.');
@@ -95,7 +93,6 @@ abstract class Role {
 	public static aliases: string[] = [];
 
 	public static unique = false;
-
 }
 
 interface Role {

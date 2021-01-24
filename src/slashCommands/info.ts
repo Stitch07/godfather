@@ -1,10 +1,9 @@
 import SlashCommand from '@lib/structures/SlashCommand';
-import RemainingCommand from '@root/commands/Mafia/remaining';
-import { PieceContext } from '@sapphire/framework';
-import { TextChannel } from 'discord.js';
+import type RemainingCommand from '@root/commands/Mafia/remaining';
+import type { PieceContext } from '@sapphire/framework';
+import type { TextChannel } from 'discord.js';
 
 export class PlayerlistSlashCommand extends SlashCommand {
-
 	public constructor(context: PieceContext) {
 		super(context, {
 			name: 'playerlist',
@@ -17,11 +16,9 @@ export class PlayerlistSlashCommand extends SlashCommand {
 		const channel = this.context.client.channels.cache.get(interaction.channel_id) as TextChannel;
 		await this.reply(interaction, channel.game!.players.show());
 	}
-
 }
 
 export class VotecountSlashCommand extends SlashCommand {
-
 	public constructor(context: PieceContext) {
 		super(context, {
 			name: 'votecount',
@@ -34,11 +31,9 @@ export class VotecountSlashCommand extends SlashCommand {
 		const channel = this.context.client.channels.cache.get(interaction.channel_id) as TextChannel;
 		await this.reply(interaction, channel.game!.votes.show({}));
 	}
-
 }
 
 export class RemainingSlashCommand extends SlashCommand {
-
 	public constructor(context: PieceContext) {
 		super(context, {
 			name: 'remaining',
@@ -52,5 +47,4 @@ export class RemainingSlashCommand extends SlashCommand {
 		const command = this.context.client.commands.get('remaining')! as RemainingCommand;
 		await this.reply(interaction, command.getOutput(channel.game!));
 	}
-
 }

@@ -1,16 +1,15 @@
-import Role from '@mafia/structures/Role';
+// @ts-expect-error (1371) Bypass not being able to type import default and named
 import NightActionsManager, { NightAction, NightActionPriority } from '@mafia/managers/NightActionsManager';
-import Player from '@mafia/structures/Player';
 import Game, { Phase } from '@mafia/structures/Game';
+import Player from '@mafia/structures/Player';
+import Role from '@mafia/structures/Role';
+import { PREFIX } from '@root/config';
+import { DEFAULT_ACTION_FLAGS } from '@root/lib/constants';
 import { Awaited, codeBlock } from '@sapphire/utilities';
 import { listItems, remove } from '@util/utils';
-import { Message } from 'discord.js';
-import { DEFAULT_ACTION_FLAGS } from '@root/lib/constants';
-import { PREFIX } from '@root/config';
-
+import type { Message } from 'discord.js';
 
 class SingleTarget extends Role {
-
 	public actionPhase = Phase.Night;
 
 	public constructor(player: Player) {
@@ -24,7 +23,9 @@ class SingleTarget extends Role {
 			`It is now night ${game.cycle}. Use ${PREFIX}${this.action} <number> to ${this.actionText}. Use ${PREFIX}noaction to stay home.`,
 			this.extraNightContext,
 			`${codeBlock('diff', game.players.show({ codeblock: true }))}`
-		].filter(text => text !== null).join('\n');
+		]
+			.filter((text) => text !== null)
+			.join('\n');
 
 		await this.player.user.send(actionText);
 	}
@@ -46,7 +47,7 @@ class SingleTarget extends Role {
 		if (this.game.phase === Phase.Day) return this.onDayCommand(message, command, ...args);
 		if (!this.possibleActions.includes(command)) return;
 
-		remove(this.game.nightActions, action => action.actor === this.player);
+		remove(this.game.nightActions, (action) => action.actor === this.player);
 
 		switch (command) {
 			case 'cancel':
@@ -63,15 +64,21 @@ class SingleTarget extends Role {
 				const target = this.getTarget(args, this.game);
 
 				({ check, reason } = this.canTarget(target));
-				if (!check) throw Array.isArray(target) ? `You cannot target ${listItems(target.map(tgt => tgt.user.username))} tonight: ${reason}` : `You cannot target ${target.user.username} tonight: ${reason}`;
+				if (!check)
+					throw Array.isArray(target)
+						? `You cannot target ${listItems(target.map((tgt) => tgt.user.username))} tonight: ${reason}`
+						: `You cannot target ${target.user.username} tonight: ${reason}`;
 
-				if (this.name === 'Godfather' && this.game.players.some(player => player.isAlive && player.role.name === 'Goon')) {
+				if (this.name === 'Godfather' && this.game.players.some((player) => player.isAlive && player.role.name === 'Goon')) {
 					// first we remove any older action the goon had
-					this.game.nightActions.splice(this.game.nightActions.findIndex(action => action.actor.role.name === 'Goon'), 1);
+					this.game.nightActions.splice(
+						this.game.nightActions.findIndex((action) => action.actor.role.name === 'Goon'),
+						1
+					);
 					// the Godfather also orders his Goon to kill
 					await this.game.nightActions.addAction({
 						action: this.action,
-						actor: this.game.players.find(pl => pl.role.name === 'Goon')!,
+						actor: this.game.players.find((pl) => pl.role.name === 'Goon')!,
 						target,
 						priority: this.priority,
 						flags: this.flags ?? DEFAULT_ACTION_FLAGS
@@ -128,7 +135,7 @@ class SingleTarget extends Role {
 	}
 
 	public actionConfirmation(target: Player | Player[]) {
-		return `You are ${this.actionGerund} ${Array.isArray(target) ? listItems(target.map(tgt => tgt.user.username)) : target} tonight.`;
+		return `You are ${this.actionGerund} ${Array.isArray(target) ? listItems(target.map((tgt) => tgt.user.username)) : target} tonight.`;
 	}
 
 	// eslint-disable-next-line @typescript-eslint/class-literal-property-style
@@ -148,7 +155,6 @@ class SingleTarget extends Role {
 	private get possibleActions() {
 		return [this.action, 'noaction', 'cancel'];
 	}
-
 }
 
 interface SingleTarget {

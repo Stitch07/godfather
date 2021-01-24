@@ -1,5 +1,5 @@
-import { GameSettings } from '@mafia/structures/Game';
-import { ArgType } from '@sapphire/framework';
+import type { GameSettings } from '@mafia/structures/Game';
+import type { ArgType } from '@sapphire/framework';
 import { Time } from '@sapphire/time-utilities';
 import { format } from './util/durationFormat';
 
@@ -33,15 +33,7 @@ export const DEFAULT_ACTION_FLAGS = {
 	canWitch: true
 };
 
-export const STALEMATE_PRIORITY_ORDER = [
-	'Escort',
-	'Goon',
-	'Transporter',
-	'Godfather',
-	'Serial Killer',
-	'Arsonist',
-	'Juggernaut'
-];
+export const STALEMATE_PRIORITY_ORDER = ['Escort', 'Goon', 'Transporter', 'Godfather', 'Serial Killer', 'Arsonist', 'Juggernaut'];
 
 export const GUILD_SETTINGS_METADATA: SettingsEntry<keyof ArgType>[] = [
 	{
@@ -61,7 +53,7 @@ export const GUILD_SETTINGS_METADATA: SettingsEntry<keyof ArgType>[] = [
 	{
 		name: 'overwritePermissions',
 		type: 'boolean',
-		display: (value: boolean) => value ? 'Enabled' : 'Disabled'
+		display: (value: boolean) => (value ? 'Enabled' : 'Disabled')
 	},
 	{
 		name: 'maxPlayers',
@@ -73,32 +65,32 @@ export const GUILD_SETTINGS_METADATA: SettingsEntry<keyof ArgType>[] = [
 	{
 		name: 'disableWhispers',
 		type: 'boolean',
-		display: (value: boolean) => value ? 'Enabled' : 'Disabled'
+		display: (value: boolean) => (value ? 'Enabled' : 'Disabled')
 	},
 	{
 		name: 'numberedNicknames',
 		type: 'boolean',
-		display: (value: boolean) => value ? 'Enabled' : 'Disabled'
+		display: (value: boolean) => (value ? 'Enabled' : 'Disabled')
 	},
 	{
 		name: 'muteAtNight',
 		type: 'boolean',
-		display: (value: boolean) => value ? 'Enabled' : 'Disabled'
+		display: (value: boolean) => (value ? 'Enabled' : 'Disabled')
 	},
 	{
 		name: 'adaptiveSlowmode',
 		type: 'boolean',
-		display: (value: boolean) => value ? 'Enabled' : 'Disabled'
+		display: (value: boolean) => (value ? 'Enabled' : 'Disabled')
 	},
 	{
 		name: 'disableWills',
 		type: 'boolean',
-		display: (value: boolean) => value ? 'Enabled' : 'Disabled'
+		display: (value: boolean) => (value ? 'Enabled' : 'Disabled')
 	},
 	{
 		name: 'enableTrials',
 		type: 'boolean',
-		display: (value: boolean) => value ? 'Enabled' : 'Disabled'
+		display: (value: boolean) => (value ? 'Enabled' : 'Disabled')
 	},
 	{
 		name: 'maxTrials',
@@ -110,21 +102,21 @@ export const GUILD_SETTINGS_METADATA: SettingsEntry<keyof ArgType>[] = [
 	{
 		name: 'enablePlurality',
 		type: 'boolean',
-		display: (value: boolean) => value ? 'Enabled' : 'Disabled'
+		display: (value: boolean) => (value ? 'Enabled' : 'Disabled')
 	}
 ];
 
 export const factionEmojis: Record<string, string> = {
-	'Town': '<:townie:735134943507644436>',
-	'Mafia': '<:goon:735136200041562183>',
-	'Cult':	'👥',
-	'Arsonist': '<:arso:735136511732744333>',
-	'Executioner': '<:exe:735136679408697375>',
-	'Jester': '🤡',
+	Town: '<:townie:735134943507644436>',
+	Mafia: '<:goon:735136200041562183>',
+	Cult: '👥',
+	Arsonist: '<:arso:735136511732744333>',
+	Executioner: '<:exe:735136679408697375>',
+	Jester: '🤡',
 	'Serial Killer': '🔪',
-	'Survivor': '🏳️',
-	'Werewolf': '🐺',
-	'Witch': '🧹',
+	Survivor: '🏳️',
+	Werewolf: '🐺',
+	Witch: '🧹',
 	'Guardian Angel': '😇',
-	'Juggernaut': '🥊'
+	Juggernaut: '🥊'
 };

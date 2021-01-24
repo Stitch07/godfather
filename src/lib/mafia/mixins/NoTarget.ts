@@ -1,14 +1,14 @@
 import { DEFAULT_ACTION_FLAGS } from '@lib/constants';
-import { Phase } from '@mafia/structures/Game';
+// @ts-expect-error (1371) Bypass not being able to type import default and named
 import NightActionsManager, { NightActionPriority } from '@mafia/managers/NightActionsManager';
+import { Phase } from '@mafia/structures/Game';
 import Role from '@mafia/structures/Role';
 import { PREFIX } from '@root/config';
-import { Awaited } from '@sapphire/framework';
+import type { Awaited } from '@sapphire/framework';
 import { remove } from '@util/utils';
-import { Message } from 'discord.js';
+import type { Message } from 'discord.js';
 
 class NoTarget extends Role {
-
 	public actionPhase = Phase.Night;
 
 	public async onNight() {
@@ -16,18 +16,20 @@ class NoTarget extends Role {
 		const actionText = [
 			`It is now night ${game.cycle}. Use ${PREFIX}${this.action} to ${this.actionText}. Use ${PREFIX}noaction to stay home.`,
 			this.extraNightContext
-		].filter(text => text !== null).join('\n');
+		]
+			.filter((text) => text !== null)
+			.join('\n');
 		await this.player.user.send(actionText);
 	}
 
 	public async onPmCommand(message: Message, command: string) {
 		// day commands use a completely different action flow
-		let { check, reason } = this.canUseAction();
+		const { check, reason } = this.canUseAction();
 		if (!check) throw `You cannot use your action. ${reason}`;
 
 		if (!this.possibleActions.includes(command)) return;
 
-		remove(this.game.nightActions, action => action.actor === this.player);
+		remove(this.game.nightActions, (action) => action.actor === this.player);
 
 		switch (command) {
 			case 'cancel':
@@ -79,7 +81,6 @@ class NoTarget extends Role {
 	public get extraNightContext(): string | null {
 		return null;
 	}
-
 }
 
 interface NoTarget {

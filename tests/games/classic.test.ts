@@ -1,9 +1,9 @@
-import { NightActionPriority } from '@root/lib/mafia/managers/NightActionsManager';
 import { Phase } from '@mafia/structures/Game';
-import { createMockGame, createMockSetup } from '../mocks';
+import { NightActionPriority } from '@root/lib/mafia/managers/NightActionsManager';
 import { init } from '@root/lib/mafia/roles';
+import { createMockGame, createMockSetup } from '../mocks';
 
-beforeAll(async done => {
+beforeAll(async (done) => {
 	await init();
 	done();
 });
@@ -67,14 +67,17 @@ describe('classic setup', () => {
 		expect(game.votes.vote(game.players[3], game.players[5])).toBe(true);
 		await game.hammer(game.players[5]);
 
-		expect(game.channel.send).toHaveBeenNthCalledWith(3, [
-			`Player6#0006 was hammered. They were a **Goon**. We could not find a will.`,
-			`**Final Vote Count**`,
-			'```',
-			'Player6 (4): Player1, Player2, Player3, Player4 (Hammered)',
-			'Not Voting (3): Player5, Player6, Player7',
-			'```'
-		].join('\n'));
+		expect(game.channel.send).toHaveBeenNthCalledWith(
+			3,
+			[
+				`Player6#0006 was hammered. They were a **Goon**. We could not find a will.`,
+				`**Final Vote Count**`,
+				'```',
+				'Player6 (4): Player1, Player2, Player3, Player4 (Hammered)',
+				'Not Voting (3): Player5, Player6, Player7',
+				'```'
+			].join('\n')
+		);
 
 		// Vanilla Maf is promoted to Goon
 		expect(game.players[6].user.send).toHaveBeenNthCalledWith(1, 'You have been promoted to a Goon!');
@@ -111,10 +114,7 @@ describe('classic setup', () => {
 		await game.startDay();
 		// Doc was attacked and successfully killed. Cop also checked them.
 		expect(game.players[0].user.send).toHaveBeenNthCalledWith(4, 'Your target is innocent.');
-		expect(game.players[1].user.send).toHaveBeenNthCalledWith(3, [
-			'You were shot by a Goon!',
-			'You have died!'
-		].join('\n'));
+		expect(game.players[1].user.send).toHaveBeenNthCalledWith(3, ['You were shot by a Goon!', 'You have died!'].join('\n'));
 		expect(game.channel.send).toHaveBeenNthCalledWith(6, 'Player2 died last night. They were a **Doctor**. We could not find a will.');
 	});
 });

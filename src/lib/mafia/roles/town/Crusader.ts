@@ -1,11 +1,10 @@
+import NightActionsManager, { Attack, NightActionPriority } from '@mafia/managers/NightActionsManager';
 import SingleTarget from '@mafia/mixins/SingleTarget';
 import Townie from '@mafia/mixins/Townie';
-import NightActionsManager, { Attack, NightActionPriority } from '@mafia/managers/NightActionsManager';
-import Player from '@mafia/structures/Player';
+import type Player from '@mafia/structures/Player';
 import { randomArray } from '@root/lib/util/utils';
 
 class Crusader extends SingleTarget {
-
 	public name = 'Crusader';
 	public description = 'You may protect someone every night, attacking one randomly selected visitor if your target is visited.';
 	public action = 'protect';
@@ -21,12 +20,12 @@ class Crusader extends SingleTarget {
 		}
 
 		// Select visitor to be killed.
-		const visitors = target.visitors.filter(player => player.user.id !== this.player.user.id);
-		let playerToKill = randomArray(visitors)!;
+		const visitors = target.visitors.filter((player) => player.user.id !== this.player.user.id);
+		const playerToKill = randomArray(visitors)!;
 
 		// Block all nightkills.
 		const nightKills = playerRecord.get('nightkill');
-		if (nightKills && nightKills.result === true && nightKills.type && nightKills.type < Attack.Unstoppable) {
+		if (nightKills && nightKills.result && nightKills.type && nightKills.type < Attack.Unstoppable) {
 			this.isTargetAttacked = true;
 			playerRecord.set('nightkill', { result: false, by: [] });
 		}
@@ -59,7 +58,6 @@ class Crusader extends SingleTarget {
 		if (player === this.player) return { check: false, reason: 'You cannot target yourself.' };
 		return super.canTarget(player);
 	}
-
 }
 
 Crusader.aliases = ['Crus'];

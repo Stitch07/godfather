@@ -1,35 +1,16 @@
 {
-	"extends": "@skyra/eslint-config",
-	"include": [
-		"**/*.ts",
-		"**/*.json"
-	],
+	"extends": "../tsconfig.base.json",
 	"compilerOptions": {
-		"target": "es2017",
-		"useDefineForClassFields": true,
-		"resolveJsonModule": true,
 		"outDir": "../dist",
 		"rootDir": ".",
 		"baseUrl": ".",
 		"composite": true,
-		"declaration": true,
 		"paths": {
-			"@root/*": [
-				"./*"
-			],
-			"@mafia/*": [
-				"lib/mafia/*"
-			],
-			"@lib/*": [
-				"lib/*",
-			],
-			"@util/*": [
-				"lib/util/*"
-			]
-		},
-		"lib": ["ES2015", "DOM"],
-		"types": [
-			"@sapphire/plugin-logger/dist/register"
-		]
-	}
+			"@root/*": ["./*"],
+			"@mafia/*": ["lib/mafia/*"],
+			"@lib/*": ["lib/*"],
+			"@util/*": ["lib/util/*"]
+		}
+	},
+	"include": [".", "**/*.json"]
 }

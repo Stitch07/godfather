@@ -1,12 +1,11 @@
 import GuardianAngelFaction from '@mafia/factions/neutral/GuardianAngel';
 import NightActionsManager, { Attack, NightActionPriority } from '@mafia/managers/NightActionsManager';
 import NoTarget from '@mafia/mixins/NoTarget';
-import Player from '@mafia/structures/Player';
+import type Player from '@mafia/structures/Player';
 import { pluralize, randomArray, remove } from '@util/utils';
 import { allRoles } from '..';
 
 class Guardian_Angel extends NoTarget {
-
 	public name = 'Guardian Angel';
 	public faction = new GuardianAngelFaction();
 	public action = 'protect';
@@ -22,11 +21,16 @@ class Guardian_Angel extends NoTarget {
 		if (typeof context.protects === 'number') this.protects = context.protects;
 		else this.protects = this.getInitialProtects();
 
-		this.description = `Your only goal is to keep your target alive. You may heal and purge your target ${pluralize(this.protects, 'time')}. This may be done after you die.`;
+		this.description = `Your only goal is to keep your target alive. You may heal and purge your target ${pluralize(
+			this.protects,
+			'time'
+		)}. This may be done after you die.`;
 	}
 
 	public async init() {
-		const possibleTargets = this.game.players.filter(player => player.role.name !== 'Jester' && player.role.name !== 'Executioner' && player.role.name !== 'Guardian Angel');
+		const possibleTargets = this.game.players.filter(
+			(player) => player.role.name !== 'Jester' && player.role.name !== 'Executioner' && player.role.name !== 'Guardian Angel'
+		);
 		if (possibleTargets.length === 0) {
 			await this.player.user.send('There are no valid targets in game. You have become a Survivor!');
 			const Survivor = allRoles.get('Survivor')!;
@@ -54,7 +58,7 @@ class Guardian_Angel extends NoTarget {
 	}
 
 	public async onNight() {
-		remove(this.game.nightActions.protectedPlayers, player => player === this.target);
+		remove(this.game.nightActions.protectedPlayers, (player) => player === this.target);
 
 		if (!this.target.isAlive && this.player.isAlive) {
 			await this.player.user.send('Your target has died! You have become a survivor.');
@@ -70,9 +74,9 @@ class Guardian_Angel extends NoTarget {
 		const playerRecord = actions.record.get(this.target.user.id);
 		if (playerRecord.has('nightkill')) {
 			const nightKills = playerRecord.get('nightkill');
-			const isClConverting = actions.find(action => action.actor.role.name === 'Cult Leader' && action.target === this.target);
+			const isClConverting = actions.find((action) => action.actor.role.name === 'Cult Leader' && action.target === this.target);
 
-			if (isClConverting || (nightKills.result === true && nightKills.type && nightKills.type < Attack.Unstoppable)) {
+			if (isClConverting || (nightKills.result && nightKills.type && nightKills.type < Attack.Unstoppable)) {
 				playerRecord.set('nightkill', { result: false, by: [] });
 
 				const heals = playerRecord.get('heal');
@@ -109,7 +113,6 @@ class Guardian_Angel extends NoTarget {
 		if (this.game.players.length <= 10) return 2;
 		return 3;
 	}
-
 }
 
 export interface GuardianAngelContext {

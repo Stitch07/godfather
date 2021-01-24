@@ -1,11 +1,10 @@
-import SingleTarget from '@mafia/mixins/SingleTarget';
-import MafiaRole from '@mafia/mixins/MafiaRole';
-import { randomArray } from '@root/lib/util/utils';
 import NightActionsManager, { Attack, NightActionPriority } from '@mafia/managers/NightActionsManager';
-import Player from '@mafia/structures/Player';
+import MafiaRole from '@mafia/mixins/MafiaRole';
+import SingleTarget from '@mafia/mixins/SingleTarget';
+import type Player from '@mafia/structures/Player';
+import { randomArray } from '@root/lib/util/utils';
 
 class Ambusher extends SingleTarget {
-
 	public name = 'Ambusher';
 	public description = 'You may set up at someones house each night and kill a visitor';
 	public action = 'ambush';
@@ -20,7 +19,7 @@ class Ambusher extends SingleTarget {
 	}
 
 	public runAction(actions: NightActionsManager, target: Player) {
-		const visitors = target.visitors.filter(player => player.role.faction.name !== 'Mafia');
+		const visitors = target.visitors.filter((player) => player.role.faction.name !== 'Mafia');
 		const killTarget = randomArray(visitors);
 
 		if (killTarget !== null) {
@@ -32,10 +31,11 @@ class Ambusher extends SingleTarget {
 	public tearDown(actions: NightActionsManager, target: Player) {
 		if (this.killTarget !== null) {
 			const record = actions.record.get(this.killTarget.user.id).get('nightkill');
-			const success = record.result && record.by.some(player => this.player.user.id === player.user.id);
+			const success = record.result && record.by.some((player) => this.player.user.id === player.user.id);
 
 			for (const visitor of target.visitors) {
-				if (visitor !== this.player && visitor.user.id !== this.killTarget.user.id) visitor.queueMessage(`You saw ${this.player.user.username} preparing an ambush for your target.`);
+				if (visitor !== this.player && visitor.user.id !== this.killTarget.user.id)
+					visitor.queueMessage(`You saw ${this.player.user.username} preparing an ambush for your target.`);
 			}
 			this.player.queueMessage('You attacked someone who visted your target.');
 			if (!success) {
@@ -45,7 +45,6 @@ class Ambusher extends SingleTarget {
 			this.killTarget = null;
 		}
 	}
-
 }
 
 Ambusher.categories = [...Ambusher.categories, 'Mafia Killing'];

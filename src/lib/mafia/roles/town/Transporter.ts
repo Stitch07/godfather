@@ -1,10 +1,9 @@
+import NightActionsManager, { NightActionPriority } from '@mafia/managers/NightActionsManager';
 import DoubleTarget from '@mafia/mixins/DoubleTarget';
 import Townie from '@mafia/mixins/Townie';
-import NightActionsManager, { NightActionPriority } from '@mafia/managers/NightActionsManager';
-import Player from '@mafia/structures/Player';
+import type Player from '@mafia/structures/Player';
 
 class Transporter extends DoubleTarget {
-
 	public name = 'Transporter';
 	public description = 'You may transport 2 players each night.';
 	public action = 'transport';
@@ -26,7 +25,6 @@ class Transporter extends DoubleTarget {
 			await target.queueMessage('You were transported to another location.');
 		}
 	}
-
 }
 
 Transporter.categories = [...Transporter.categories, 'Town Support'];

@@ -1,8 +1,7 @@
+import type Role from '@mafia/structures/Role';
 import { AliasPiece } from '@sapphire/framework';
-import Role from '@mafia/structures/Role';
 
 export default abstract class Modifier extends AliasPiece {
-
 	/**
 	 * Applies the selected modifier to a role
 	 * @param role The role to modify
@@ -17,5 +16,4 @@ export default abstract class Modifier extends AliasPiece {
 	public canPatch(role: Role): boolean {
 		return true;
 	}
-
 }

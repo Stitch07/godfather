@@ -1,17 +1,16 @@
-import GuildSettingRepository from '@lib/orm/repositories/GuildSettingRepository';
 import GodfatherCommand from '@lib/GodfatherCommand';
-import { Args, CommandOptions } from '@sapphire/framework';
-import { ApplyOptions } from '@sapphire/decorators';
-import { Message } from 'discord.js';
-import { getCustomRepository } from 'typeorm';
+import GuildSettingRepository from '@lib/orm/repositories/GuildSettingRepository';
 import { PGSQL_ENABLED } from '@root/config';
+import { ApplyOptions } from '@sapphire/decorators';
+import type { Args, CommandOptions } from '@sapphire/framework';
+import type { Message } from 'discord.js';
+import { getCustomRepository } from 'typeorm';
 
 @ApplyOptions<CommandOptions>({
 	description: 'View and change the server prefix.',
 	preconditions: ['GuildOnly', ['AdminOnly', 'OwnerOnly']]
 })
 export default class extends GodfatherCommand {
-
 	public async run(message: Message, args: Args) {
 		const newPrefix = await args.restResult('string');
 		const guildSettings = await getCustomRepository(GuildSettingRepository).ensure(this.context.client, message.guild!);
@@ -28,5 +27,4 @@ export default class extends GodfatherCommand {
 	public onLoad() {
 		if (!PGSQL_ENABLED) this.enabled = false;
 	}
-
 }

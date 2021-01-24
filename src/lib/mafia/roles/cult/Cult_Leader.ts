@@ -3,13 +3,12 @@ import { allRoles } from '..';
 import CultFaction from '../../factions/Cult';
 import NightActionsManager, { Attack, Defence, NightActionPriority } from '../../managers/NightActionsManager';
 import { Phase } from '../../structures/Game';
-import Player from '../../structures/Player';
+import type Player from '../../structures/Player';
 
 // the factions that the CL can convert
 const CAN_CONVERT = ['Town', 'Survivor', 'Amnesiac', 'Jester'];
 
 class CultLeader extends SingleTarget {
-
 	public faction = new CultFaction();
 	public name = 'Cult Leader';
 	public description = "You're the leader of a mysterious cult and want everyone to follow your beliefs.";
@@ -41,11 +40,7 @@ class CultLeader extends SingleTarget {
 	public runAction(actions: NightActionsManager, target: Player) {
 		const record = actions.record.get(target.user.id);
 		// players with basic defence, healed or GAed cannot be converted
-		if (
-			target.role.actualDefence >= Defence.Basic
-				|| record.get('heal').result
-				|| record.get('guard').result
-		) return;
+		if (target.role.actualDefence >= Defence.Basic || record.get('heal').result || record.get('guard').result) return;
 
 		if (!CAN_CONVERT.includes(target.role.faction.name)) {
 			// kill the target if CL cannot convert
@@ -68,7 +63,7 @@ class CultLeader extends SingleTarget {
 	}
 
 	public async onDeath() {
-		const followers = this.game.players.filter(player => player.isAlive && player.role.name === 'Cult Member');
+		const followers = this.game.players.filter((player) => player.isAlive && player.role.name === 'Cult Member');
 		const phaseStr = this.game.phase === Phase.Night ? 'night' : 'day';
 		for (const follower of followers) {
 			await follower.kill(`committed suicide; ${phaseStr[0].toUpperCase()}${this.game.cycle}`);
@@ -78,7 +73,6 @@ class CultLeader extends SingleTarget {
 	}
 
 	public static unique = true;
-
 }
 
 CultLeader.aliases = ['CL'];

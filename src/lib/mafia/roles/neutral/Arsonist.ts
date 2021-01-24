@@ -1,15 +1,14 @@
 import { PREFIX } from '@root/config';
-import { cast, listItems, remove } from '@util/utils';
 import { codeBlock } from '@sapphire/utilities';
+import { cast, listItems, remove } from '@util/utils';
+import type { Message } from 'discord.js';
 import ArsonistFaction from '../../factions/neutral/Arsonist';
+import NightActionsManager, { Attack, Defence, NightActionPriority } from '../../managers/NightActionsManager';
+import { Phase } from '../../structures/Game';
 import Player from '../../structures/Player';
 import Role from '../../structures/Role';
-import { Phase } from '../../structures/Game';
-import NightActionsManager, { Attack, Defence, NightActionPriority } from '../../managers/NightActionsManager';
-import { Message } from 'discord.js';
 
 class Arsonist extends Role {
-
 	public name = 'Arsonist';
 	public description = 'You may douse someone every night, and then ignite all your doused targets.';
 	public faction = new ArsonistFaction();
@@ -19,11 +18,11 @@ class Arsonist extends Role {
 	private dousedPlayers: Player[] = [];
 	private ignited = false;
 
-	public async onPmCommand(message: Message, command: string, ...args: string[]) {
+	public async onPmCommand(_: Message, command: string, ...args: string[]) {
 		if (!this.validActions.includes(command)) return;
 		if (command === 'ignite' && this.dousedPlayers.length === 0) throw "You haven't doused anyone to ignite yet!";
 
-		remove(this.game.nightActions, action => action.actor === this.player);
+		remove(this.game.nightActions, (action) => action.actor === this.player);
 
 		switch (command) {
 			case 'cancel':
@@ -37,10 +36,10 @@ class Arsonist extends Role {
 				});
 			}
 			case 'ignite': {
-				this.game.nightActions.addAction({
+				void this.game.nightActions.addAction({
 					action: 'ignite',
 					actor: this.player,
-					target: this.dousedPlayers.filter(player => player.isAlive),
+					target: this.dousedPlayers.filter((player) => player.isAlive),
 					priority: this.priority,
 					flags: {
 						canBlock: false,
@@ -81,9 +80,11 @@ class Arsonist extends Role {
 
 		const output = [
 			`It is now night ${this.game.cycle}. Use ${PREFIX}douse <player> to douse a player, and ${PREFIX}ignite to ignite all doused target.`,
-			this.dousedPlayers.length === 0 ? null : `You have doused ${listItems(this.dousedPlayers.map(player => player.toString()))}`,
+			this.dousedPlayers.length === 0 ? null : `You have doused ${listItems(this.dousedPlayers.map((player) => player.toString()))}`,
 			codeBlock('diff', this.game.players.show({ codeblock: true }))
-		].filter(line => line !== null).join('\n');
+		]
+			.filter((line) => line !== null)
+			.join('\n');
 
 		return this.player.user.send(output);
 	}
@@ -124,7 +125,6 @@ class Arsonist extends Role {
 	private get validActions() {
 		return [...this.action, 'noaction', 'cancel'];
 	}
-
 }
 
 Arsonist.categories = ['Evil', 'Neutral Killing'];

@@ -1,10 +1,9 @@
-import SingleTarget from '@mafia/mixins/SingleTarget';
 import NightActionsManager, { NightActionPriority } from '@mafia/managers/NightActionsManager';
-import Player from '@mafia/structures/Player';
+import SingleTarget from '@mafia/mixins/SingleTarget';
 import Townie from '@mafia/mixins/Townie';
+import type Player from '@mafia/structures/Player';
 
 class Cop extends SingleTarget {
-
 	public name = 'Cop';
 
 	public action = 'check';
@@ -32,7 +31,6 @@ class Cop extends SingleTarget {
 		// dethy cops can use this
 		return innocence;
 	}
-
 }
 
 Cop.categories = [...Cop.categories, 'Town Investigative'];

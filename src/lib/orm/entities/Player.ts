@@ -2,7 +2,6 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({ name: 'players' })
 export default class PlayerEntity {
-
 	@PrimaryGeneratedColumn()
 	public id!: number;
 
@@ -17,5 +16,4 @@ export default class PlayerEntity {
 
 	@Column('boolean', { nullable: false })
 	public result!: boolean;
-
 }

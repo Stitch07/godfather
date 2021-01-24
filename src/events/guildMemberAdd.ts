@@ -1,9 +1,8 @@
 import { ENABLE_PRIVATE_CHANNELS, PRIVATE_CHANNEL_SERVER } from '@root/config';
 import { Event, Events, PieceContext } from '@sapphire/framework';
-import { GuildMember } from 'discord.js';
+import type { GuildMember } from 'discord.js';
 
 export default class extends Event<Events.GuildMemberAdd> {
-
 	public constructor(context: PieceContext) {
 		super(context, { event: Events.GuildMemberAdd });
 	}
@@ -21,5 +20,4 @@ export default class extends Event<Events.GuildMemberAdd> {
 			});
 		}
 	}
-
 }

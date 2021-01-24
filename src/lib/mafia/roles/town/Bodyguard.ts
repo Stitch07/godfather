@@ -1,10 +1,9 @@
 import SingleTarget from '@mafia/mixins/SingleTarget';
 import Townie from '@mafia/mixins/Townie';
+import type Player from '@mafia/structures/Player';
 import NightActionsManager, { Attack, NightActionPriority } from '../../managers/NightActionsManager';
-import Player from '@mafia/structures/Player';
 
 class Bodyguard extends SingleTarget {
-
 	public name = 'Bodyguard';
 	public description = 'You may guard someone every night.';
 	public action = 'guard';
@@ -20,9 +19,9 @@ class Bodyguard extends SingleTarget {
 		if (!playerRecord.has('nightkill')) return;
 
 		const nightKills = playerRecord.get('nightkill');
-		const isClConverting = actions.find(action => action.actor.role.name === 'Cult Leader' && action.target === target);
+		const isClConverting = actions.find((action) => action.actor.role.name === 'Cult Leader' && action.target === target);
 
-		if (isClConverting || (nightKills.result === true && nightKills.type && nightKills.type < Attack.Unstoppable)) {
+		if (isClConverting || (nightKills.result && nightKills.type && nightKills.type < Attack.Unstoppable)) {
 			const attacker = nightKills.by.pop()!;
 			// BG only protects from one of the attackers
 			playerRecord.set('nightkill', { result: false, by: [] });
@@ -70,7 +69,6 @@ class Bodyguard extends SingleTarget {
 		if (target === this.player) return 'You are self-vesting tonight.';
 		return `You are ${this.actionGerund} ${target} tonight.`;
 	}
-
 }
 
 Bodyguard.aliases = ['BG'];

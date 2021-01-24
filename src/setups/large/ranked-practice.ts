@@ -1,5 +1,5 @@
-import { SetupOptions } from '@mafia/structures/Setup';
 import BasicSetup from '@mafia/structures/BasicSetup';
+import type { SetupOptions } from '@mafia/structures/Setup';
 import { ApplyOptions } from '@sapphire/decorators';
 
 @ApplyOptions<SetupOptions>({
@@ -17,6 +17,4 @@ import { ApplyOptions } from '@sapphire/decorators';
 		'Neutral Killing'
 	]
 })
-export default class extends BasicSetup {
-
-}
+export default class extends BasicSetup {}

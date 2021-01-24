@@ -1,10 +1,9 @@
 import NightActionsManager, { NightActionPriority } from '@mafia/managers/NightActionsManager';
-import SingleTarget from '@mafia/mixins/SingleTarget';
 import MafiaRole from '@mafia/mixins/MafiaRole';
-import Player from '@mafia/structures/Player';
+import SingleTarget from '@mafia/mixins/SingleTarget';
+import type Player from '@mafia/structures/Player';
 
 class Framer extends SingleTarget {
-
 	public name = 'Framer';
 
 	public description = 'You may frame a player every night, making them appear suspicious to others.';
@@ -18,7 +17,6 @@ class Framer extends SingleTarget {
 	public setUp(actions: NightActionsManager, target: Player) {
 		actions.framedPlayers.push(target);
 	}
-
 }
 
 Framer.categories = [...Framer.categories, 'Mafia Deception'];

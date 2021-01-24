@@ -1,10 +1,10 @@
 import GodfatherCommand from '@lib/GodfatherCommand';
-import Player from '@mafia/structures/Player';
 import { Phase } from '@mafia/structures/Game';
+import type Player from '@mafia/structures/Player';
 import { canManage, listItems } from '@root/lib/util/utils';
 import { ApplyOptions } from '@sapphire/decorators';
-import { Args, CommandContext, CommandOptions } from '@sapphire/framework';
-import { Message } from 'discord.js';
+import type { Args, CommandContext, CommandOptions } from '@sapphire/framework';
+import type { Message } from 'discord.js';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['s', 'startgame'],
@@ -12,7 +12,6 @@ import { Message } from 'discord.js';
 	preconditions: ['GuildOnly', 'GameOnly', 'HostOnly']
 })
 export default class extends GodfatherCommand {
-
 	public async run(message: Message, args: Args, context: CommandContext) {
 		const setupName = await args.rest('string').catch(() => '');
 		const { game } = message.channel;
@@ -22,16 +21,17 @@ export default class extends GodfatherCommand {
 		if (!game!.setup && setupName === '') {
 			// attempt to find a setup
 			// TODO: prompt for multiple setups here
-			const foundSetup = this.context.client.setups.find(setup => setup.totalPlayers === game?.players.length);
+			const foundSetup = this.context.client.setups.find((setup) => setup.totalPlayers === game?.players.length);
 			if (!foundSetup) throw `No setups found for ${game!.players.length} players.`;
 			game!.setup = foundSetup!;
 		} else if (setupName !== '') {
-			const foundSetup = this.context.client.setups.find(setup => setup.name === setupName.toLowerCase());
+			const foundSetup = this.context.client.setups.find((setup) => setup.name === setupName.toLowerCase());
 			if (!foundSetup) throw `Invalid setup-name: "${foundSetup}"`;
 			game!.setup = foundSetup;
 		}
 
-		if (game!.setup!.totalPlayers !== game!.players.length) throw `The setup **${game!.setup!.name}** requires ${game!.setup!.totalPlayers} players.`;
+		if (game!.setup!.totalPlayers !== game!.players.length)
+			throw `The setup **${game!.setup!.name}** requires ${game!.setup!.totalPlayers} players.`;
 
 		if (game!.settings.numberedNicknames && message.guild!.me?.hasPermission('MANAGE_NICKNAMES')) {
 			for (const plr of game!.players) {
@@ -39,7 +39,8 @@ export default class extends GodfatherCommand {
 				// eslint-disable-next-line @typescript-eslint/restrict-plus-operands
 				const pos = game!.players.indexOf(plr) + 1;
 				if (message.guild!.me && canManage(message.guild!.me, member)) {
-					await member.setNickname(`[${pos}] ${member!.displayName}`)
+					await member
+						.setNickname(`[${pos}] ${member!.displayName}`)
 						.then(() => game!.numberedNicknames.add(member))
 						.catch(() => null);
 				}
@@ -70,7 +71,11 @@ export default class extends GodfatherCommand {
 
 		await sent.edit('Sent all role PMs!');
 		if (noPms.length > 0) {
-			await message.channel.send(`I couldn't DM ${listItems(noPms.map(player => player.toString()))}. Make sure your DMs are enabled and then use ${context.prefix}rolepm to get your PM.`);
+			await message.channel.send(
+				`I couldn't DM ${listItems(noPms.map((player) => player.toString()))}. Make sure your DMs are enabled and then use ${
+					context.prefix
+				}rolepm to get your PM.`
+			);
 		}
 
 		if (game!.setup!.nightStart) {
@@ -79,5 +84,4 @@ export default class extends GodfatherCommand {
 		}
 		return game!.startDay();
 	}
-
 }

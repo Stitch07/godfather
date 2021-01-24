@@ -1,8 +1,7 @@
-import { Awaited, IPreconditionContainer, Piece, PieceContext, PreconditionContainerArray, PreconditionArrayResolvable } from '@sapphire/framework';
-import { PieceOptions } from '@sapphire/pieces';
+import { Awaited, IPreconditionContainer, Piece, PieceContext, PreconditionArrayResolvable, PreconditionContainerArray } from '@sapphire/framework';
+import type { PieceOptions } from '@sapphire/pieces';
 
 export default abstract class SlashCommand extends Piece {
-
 	public description: string;
 
 	public preconditions: IPreconditionContainer;
@@ -28,7 +27,6 @@ export default abstract class SlashCommand extends Piece {
 			}
 		});
 	}
-
 }
 
 export interface SlashCommandOptions extends PieceOptions {

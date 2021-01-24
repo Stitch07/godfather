@@ -1,11 +1,9 @@
+import NightActionsManager, { NightActionPriority } from '@mafia/managers/NightActionsManager';
 import SingleTarget from '@mafia/mixins/SingleTarget';
 import Townie from '@mafia/mixins/Townie';
-import NightActionsManager, { NightActionPriority } from '@mafia/managers/NightActionsManager';
-import Player from '@mafia/structures/Player';
-
+import type Player from '@mafia/structures/Player';
 
 class Retributionist extends SingleTarget {
-
 	public name = 'Retributionist';
 	public description = 'You may revive a dead Townie at night.';
 	public action = 'revive';
@@ -35,14 +33,16 @@ class Retributionist extends SingleTarget {
 		}
 
 		if (this.game.canOverwritePermissions) {
-			const overwrite = this.game.channel.permissionOverwrites.find(permission => permission.type === 'member' && permission.id === target.user.id);
+			const overwrite = this.game.channel.permissionOverwrites.find(
+				(permission) => permission.type === 'member' && permission.id === target.user.id
+			);
 			if (overwrite) await overwrite.update({ SEND_MESSAGES: true, ADD_REACTIONS: true });
 		}
 	}
 
 	public canUseAction() {
 		if (this.hasRevived) return { check: false, reason: 'You have already revived a player.' };
-		const validTargets = this.game.players.filter(target => this.canTarget(target).check);
+		const validTargets = this.game.players.filter((target) => this.canTarget(target).check);
 		if (validTargets.length === 0) return { check: false, reason: 'There are no valid targets.' };
 		return { check: true, reason: '' };
 	}
@@ -56,7 +56,6 @@ class Retributionist extends SingleTarget {
 	}
 
 	public static unique = true;
-
 }
 
 Retributionist.categories = [...Retributionist.categories, 'Town Support'];

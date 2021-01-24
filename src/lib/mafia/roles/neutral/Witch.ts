@@ -1,10 +1,9 @@
-import DoubleTarget from '@mafia/mixins/DoubleTarget';
-import NightActionsManager, { Defence, NightActionPriority } from '@mafia/managers/NightActionsManager';
-import Player from '@mafia/structures/Player';
 import WitchFaction from '@mafia/factions/neutral/Witch';
+import NightActionsManager, { Defence, NightActionPriority } from '@mafia/managers/NightActionsManager';
+import DoubleTarget from '@mafia/mixins/DoubleTarget';
+import type Player from '@mafia/structures/Player';
 
 class Witch extends DoubleTarget {
-
 	public name = 'Witch';
 	public description = 'You may witch one player onto another at night.';
 	public action = 'witch';
@@ -41,14 +40,13 @@ class Witch extends DoubleTarget {
 	}
 
 	public canTarget(target: Player[]) {
-		if (target.some(player => !player.isAlive)) return { check: false, reason: 'You cannot target dead players.' };
+		if (target.some((player) => !player.isAlive)) return { check: false, reason: 'You cannot target dead players.' };
 		return { check: true, reason: '' };
 	}
 
 	public actionConfirmation([player1, player2]: Player[]) {
 		return `You are controlling ${player1} onto ${player2} tonight.`;
 	}
-
 }
 
 Witch.categories = [...Witch.categories, 'Neutral Evil', 'Evil'];

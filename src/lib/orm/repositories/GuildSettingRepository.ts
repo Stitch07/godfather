@@ -1,10 +1,9 @@
-import { Client, Guild } from 'discord.js';
+import type { Client, Guild } from 'discord.js';
 import { EntityRepository, Repository } from 'typeorm';
 import GuildSettingsEntity from '../entities/GuildSettings';
 
 @EntityRepository(GuildSettingsEntity)
 export default class GuildSettingRepository extends Repository<GuildSettingsEntity> {
-
 	public async ensure(client: Client, guild: Guild) {
 		const cached = client.settingsCache.get(guild.id);
 		if (cached) return cached;
@@ -26,5 +25,4 @@ export default class GuildSettingRepository extends Repository<GuildSettingsEnti
 		await this.save(settings);
 		client.settingsCache.set(settings.id, settings);
 	}
-
 }

@@ -1,18 +1,17 @@
-import Setup, { SetupOptions } from './Setup';
-import Role from './Role';
-import { shuffle, randomArray } from '@util/utils';
-import yaml = require('js-yaml');
-import { allRoles, roleCategories } from '../roles';
-import { Constructor } from '@sapphire/utilities';
 import { err, ok, PieceContext } from '@sapphire/framework';
+import type { Constructor } from '@sapphire/utilities';
+import { randomArray, shuffle } from '@util/utils';
+import type { Client } from 'discord.js';
+import { DEFAULT_GAME_SETTINGS } from '../../constants';
+import { allRoles, roleCategories } from '../roles';
 import Executioner from '../roles/neutral/Executioner';
 import Mayor from '../roles/town/Mayor';
-import { DEFAULT_GAME_SETTINGS } from '../../constants';
-import Modifier from './Modifier';
-import { Client } from 'discord.js';
+import type Modifier from './Modifier';
+import type Role from './Role';
+import Setup, { SetupOptions } from './Setup';
+import yaml = require('js-yaml');
 
 export default class BasicSetup extends Setup {
-
 	public randomMafia!: Constructor<Role>[];
 	public randomNK!: Constructor<Role>[];
 	public randomTownies!: Constructor<Role>[];
@@ -50,19 +49,20 @@ export default class BasicSetup extends Setup {
 	public ok(roles: Constructor<Role>[]) {
 		// games can have between 3 and MAX_PLAYERS players
 		if (roles.length < 3) return err(`Setups need at least 3 roles. (currently ${roles.length})`);
-		if (roles.length > DEFAULT_GAME_SETTINGS.maxPlayers) return err(`Setups can have at most ${DEFAULT_GAME_SETTINGS.maxPlayers} players. (currently ${roles.length})`);
+		if (roles.length > DEFAULT_GAME_SETTINGS.maxPlayers)
+			return err(`Setups can have at most ${DEFAULT_GAME_SETTINGS.maxPlayers} players. (currently ${roles.length})`);
 		// check if there are at least 2 "main" factions, ie factions that do not win independently
-		const mafiaRoles = roles.filter(role => this.randomMafia.includes(role));
-		const townRoles = roles.filter(role => this.randomTownies.includes(role));
-		const nkRoles = roles.filter(role => this.randomNK.includes(role));
-		const cultRoles = roles.filter(role => this.randomCult.includes(role));
+		const mafiaRoles = roles.filter((role) => this.randomMafia.includes(role));
+		const townRoles = roles.filter((role) => this.randomTownies.includes(role));
+		const nkRoles = roles.filter((role) => this.randomNK.includes(role));
+		const cultRoles = roles.filter((role) => this.randomCult.includes(role));
 		// at least 2 of these should be greater than zero
-		const mainFactions = [mafiaRoles.length, nkRoles.length, townRoles.length, cultRoles].filter(count => count !== 0);
+		const mainFactions = [mafiaRoles.length, nkRoles.length, townRoles.length, cultRoles].filter((count) => count !== 0);
 		if (mainFactions.length === 1) return err(`There must be 2 distinct factions in the game. (Town/Mafia/Neutral Killing/Cult)`);
 
 		// check if exe has any valid targets
 		if (roles.includes(Executioner)) {
-			const validExeTargets = townRoles.filter(role => role !== Mayor);
+			const validExeTargets = townRoles.filter((role) => role !== Mayor);
 			if (validExeTargets.length === 0) return err('There are no valid exe targets in this game.');
 		}
 		return ok(true);
@@ -84,7 +84,6 @@ export default class BasicSetup extends Setup {
 				if (!client.modifiers.has(mod)) throw `Invalid modifier: ${mod}`;
 				modifiers.push({ modifier: client.modifiers.get(mod)!, context });
 			}
-
 		}
 
 		roleName = roleName.replace(/\+\w+/g, '').trim();
@@ -106,7 +105,7 @@ export default class BasicSetup extends Setup {
 		let setupData: SetupData;
 		const rawData = yaml.safeLoad(data);
 		if (typeof rawData === 'string' && rawData.includes(',')) {
-			setupData = { roles: rawData.split(',').map(role => role.trim()) };
+			setupData = { roles: rawData.split(',').map((role) => role.trim()) };
 		} else if (Array.isArray(rawData)) {
 			setupData = { roles: rawData as string[] };
 		} else if (typeof rawData === 'object' && Reflect.has(rawData, 'roles')) {
@@ -130,7 +129,7 @@ export default class BasicSetup extends Setup {
 
 	private static _resolve(client: Client, roleName: string, uniqueRoles: Constructor<Role>[]): Constructor<Role> {
 		if (allRoles.has(roleName)) return allRoles.get(roleName)!;
-		else if (roleCategories.has(roleName)) return randomArray(roleCategories.get(roleName)!.filter(role => !uniqueRoles.includes(role)))!;
+		else if (roleCategories.has(roleName)) return randomArray(roleCategories.get(roleName)!.filter((role) => !uniqueRoles.includes(role)))!;
 
 		// Role1 | Role2 (one of these 2)
 		if (/(\w+) ?\| ?(\w+)/.test(roleName)) {
@@ -143,20 +142,19 @@ export default class BasicSetup extends Setup {
 			let [, category, excludedRoles] = /([a-zA-Z0-9_ ,]+) ?- ?{?([a-zA-Z0-9_ ;]+)}?/.exec(roleName)!;
 			category = category.trimEnd();
 			if (!roleCategories.has(category)) throw 'The LHS of the MINUS operator has to be a role category.';
-			const excludedRoleCtors = excludedRoles.split(';').map(roleName => {
+			const excludedRoleCtors = excludedRoles.split(';').map((roleName) => {
 				roleName = roleName.trimLeft();
 				if (!allRoles.has(roleName)) throw `"${roleName}" is not a valid role name.`;
 				return allRoles.get(roleName)!;
 			});
 
-			const validRoles = roleCategories.get(category)!.filter(role => !excludedRoleCtors.includes(role));
+			const validRoles = roleCategories.get(category)!.filter((role) => !excludedRoleCtors.includes(role));
 			if (validRoles.length === 0) throw 'You cannot exclude all roles from a category.';
 			return randomArray(validRoles)!;
 		}
 
 		throw `Invalid role provided: \`${roleName}\`.`;
 	}
-
 }
 
 export interface SetupData {

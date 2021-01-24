@@ -27,7 +27,7 @@ To run Godfather locally, a few steps must be taken:
 8. Install all project dependencies using `yarn install`
 9. Run Godfather using `yarn dev`
 
-- For setting up TypeORM with PostgreSQL, refer to the end of this file.
+-   For setting up TypeORM with PostgreSQL, refer to the end of this file.
 
 ## Godfather Concept Guidelines
 
@@ -53,7 +53,9 @@ Godfather uses PostgreSQL to store data such as server-settings, game results an
 
 1. Install [Docker].
 2. Make a `.env` file referencing `.env.example`.
- - If you're running Godfather on Docker for the first time, or have new TypeORM migrations, start the database individually with `docker-compose up -d postgres` and `yarn dev:typeorm migration:run`.
+
+-   If you're running Godfather on Docker for the first time, or have new TypeORM migrations, start the database individually with `docker-compose up -d postgres` and `yarn dev:typeorm migration:run`.
+
 3. Run `docker-compose up` to start the bot in development mode.
 4. The bot runs in watch-mode, and will compile and reboot on every TS file change.
 

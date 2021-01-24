@@ -1,7 +1,6 @@
-import { Structures, User, Permissions } from 'discord.js';
+import { Permissions, Structures, User } from 'discord.js';
 
 export default class GodfatherChannel extends Structures.get('TextChannel') {
-
 	public get game() {
 		return this.client.games.get(this.id);
 	}
@@ -11,11 +10,10 @@ export default class GodfatherChannel extends Structures.get('TextChannel') {
 		await msg!.react('🇾');
 		await msg!.react('🇳');
 
-		const reactions = await msg.awaitReactions((reaction, user) => user.id === promptUser.id && ['🇾', '🇳'].includes(reaction.emoji.name),
-			{
-				max: 1,
-				time: 30 * 1000
-			});
+		const reactions = await msg.awaitReactions((reaction, user) => user.id === promptUser.id && ['🇾', '🇳'].includes(reaction.emoji.name), {
+			max: 1,
+			time: 30 * 1000
+		});
 
 		const emoji = reactions.first()?.emoji.toString() || '🇳';
 		return emoji === '🇾';
@@ -36,11 +34,9 @@ export default class GodfatherChannel extends Structures.get('TextChannel') {
 	public get readable() {
 		return !this.guild || this.permissionsFor(this.guild.me!)!.has(Permissions.FLAGS.VIEW_CHANNEL, false);
 	}
-
 }
 
 export class GodfatherDMChannel extends Structures.get('DMChannel') {
-
 	public readonly attachable = true;
 
 	public readonly embedable = true;
@@ -48,5 +44,4 @@ export class GodfatherDMChannel extends Structures.get('DMChannel') {
 	public readonly postable = true;
 
 	public readonly readable = true;
-
 }

@@ -3,14 +3,14 @@
  * This command has been adapted from Skyra (https://github.com/skyra-project/skyra/blob/main/src/commands/System/Admin/update.ts)
  * Copyright 2019-2020 Antonio Román
  */
-import { Args, CommandOptions } from '@sapphire/framework';
-import { ApplyOptions } from '@sapphire/decorators';
 import GodfatherCommand from '@lib/GodfatherCommand';
-import { Message } from 'discord.js';
-import { exec, sleep } from '@util/utils';
+import { ApplyOptions } from '@sapphire/decorators';
+import type { Args, CommandOptions } from '@sapphire/framework';
 import { codeBlock, cutText } from '@sapphire/utilities';
-import { resolve } from 'path';
+import { exec, sleep } from '@util/utils';
+import type { Message } from 'discord.js';
 import { rm } from 'fs/promises';
+import { resolve } from 'path';
 
 @ApplyOptions<CommandOptions>({
 	preconditions: ['OwnerOnly'],
@@ -19,7 +19,6 @@ import { rm } from 'fs/promises';
 	}
 })
 export default class extends GodfatherCommand {
-
 	public async run(message: Message, args: Args) {
 		const branchName = await args.rest('string').catch(() => 'master');
 		// Fetch repository and pull if possible
@@ -68,9 +67,7 @@ export default class extends GodfatherCommand {
 		}
 
 		// For all other cases, return the original output
-		return message.channel.send(
-			codeBlock('prolog', [cutText(stdout, 1800) || '✅', cutText(stderr, 100) || '✅'].join('\n-=-=-=-\n'))
-		);
+		return message.channel.send(codeBlock('prolog', [cutText(stdout, 1800) || '✅', cutText(stderr, 100) || '✅'].join('\n-=-=-=-\n')));
 	}
 
 	private async stash(message: Message) {
@@ -115,5 +112,4 @@ export default class extends GodfatherCommand {
 			return { stdout: '', stderr: error?.message || error || '', code: error.code ?? 1 };
 		}
 	}
-
 }

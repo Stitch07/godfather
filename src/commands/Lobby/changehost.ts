@@ -1,17 +1,14 @@
 import GodfatherCommand from '@lib/GodfatherCommand';
 import { ApplyOptions } from '@sapphire/decorators';
-import { CommandOptions } from '@sapphire/framework';
-import { Message } from 'discord.js';
+import type { CommandOptions } from '@sapphire/framework';
+import type { Message } from 'discord.js';
 
 @ApplyOptions<CommandOptions>({
 	description: 'Vote to change the host',
-	detailedDescription: [
-		'The host can use this command to instantly make the next player the host.'
-	].join('\n'),
+	detailedDescription: ['The host can use this command to instantly make the next player the host.'].join('\n'),
 	preconditions: ['GuildOnly', 'GameOnly', 'PlayerOnly', 'AlivePlayerOnly']
 })
 export default class extends GodfatherCommand {
-
 	public async run(message: Message) {
 		const { game } = message.channel;
 
@@ -40,5 +37,4 @@ export default class extends GodfatherCommand {
 			await message.channel.send(`The host is now ${game!.host}.`);
 		}
 	}
-
 }

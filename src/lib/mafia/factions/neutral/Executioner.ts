@@ -1,10 +1,9 @@
+import type Executioner from '@mafia/roles/neutral/Executioner';
 import Faction from '@mafia/structures/Faction';
-import Player from '@mafia/structures/Player';
-import Executioner from '@mafia/roles/neutral/Executioner';
+import type Player from '@mafia/structures/Player';
 import { cast } from '@util/utils';
 
 export default class ExecutionerFaction extends Faction {
-
 	public name = 'Executioner';
 	public winCondition = 'Eliminate your target at all costs.';
 	public independent = true;
@@ -20,5 +19,4 @@ export default class ExecutionerFaction extends Faction {
 		const eliminationSuccessful = target.isAlive ? target.flags.isRevived : target.deathReason.includes('eliminated');
 		return isDead && eliminationSuccessful;
 	}
-
 }

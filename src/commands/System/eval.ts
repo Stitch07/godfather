@@ -1,13 +1,12 @@
 import GodfatherCommand from '@lib/GodfatherCommand';
-import { clean, handleRequiredArg } from '@util/utils';
 import { ApplyOptions } from '@sapphire/decorators';
-import { Args, CommandOptions } from '@sapphire/framework';
+import type { Args, CommandOptions } from '@sapphire/framework';
 import { Type } from '@sapphire/type';
 import { codeBlock, isThenable } from '@sapphire/utilities';
-import { Message } from 'discord.js';
-import { inspect } from 'util';
-
 import * as Sentry from '@sentry/node';
+import { clean, handleRequiredArg } from '@util/utils';
+import type { Message } from 'discord.js';
+import { inspect } from 'util';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['ev'],
@@ -19,7 +18,6 @@ import * as Sentry from '@sentry/node';
 	}
 })
 export default class extends GodfatherCommand {
-
 	public async run(message: Message, args: Args) {
 		const code = await args.rest('string').catch(handleRequiredArg('code'));
 
@@ -28,9 +26,7 @@ export default class extends GodfatherCommand {
 			depth: Number(args.getOption('depth')) ?? 0,
 			showHidden: args.getFlags('hidden', 'showHidden')
 		});
-		const output = clean(success
-			? codeBlock('js', result)
-			: `**ERROR**: ${codeBlock('bash', result)}`);
+		const output = clean(success ? codeBlock('js', result) : `**ERROR**: ${codeBlock('bash', result)}`);
 		if (args.getFlags('silent', 's')) return null;
 
 		const typeFooter = `**Type**: ${codeBlock('typescript', type)}`;
@@ -48,7 +44,7 @@ export default class extends GodfatherCommand {
 		return message.channel.send(`${output}\n${typeFooter}`);
 	}
 
-	private async eval(message: Message, code: string, flags: { async: boolean; depth: number; showHidden: boolean }) {
+	private async eval(_: Message, code: string, flags: { async: boolean; depth: number; showHidden: boolean }) {
 		if (flags.async) code = `(async () => {\n${code}\n})();`;
 		let success = true;
 		let result = null;
@@ -76,5 +72,4 @@ export default class extends GodfatherCommand {
 
 		return { result, success, type };
 	}
-
 }

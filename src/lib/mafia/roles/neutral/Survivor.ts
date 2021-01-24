@@ -1,11 +1,10 @@
 import SurivorFaction from '@mafia/factions/neutral/Survivor';
 import { Defence, NightActionPriority } from '@mafia/managers/NightActionsManager';
 import NoTarget from '@mafia/mixins/NoTarget';
-import Player from '@mafia/structures/Player';
+import type Player from '@mafia/structures/Player';
 import { pluralize } from '@util/utils';
 
 export default class Survivor extends NoTarget {
-
 	public name = 'Survivor';
 	public faction = new SurivorFaction();
 	public action = 'vest';
@@ -25,7 +24,7 @@ export default class Survivor extends NoTarget {
 	}
 
 	public canUseAction() {
-		if (this.vests === 0) return { check: false, reason: 'You don\'t have any vests left' };
+		if (this.vests === 0) return { check: false, reason: "You don't have any vests left" };
 		return super.canUseAction();
 	}
 
@@ -56,7 +55,6 @@ export default class Survivor extends NoTarget {
 		if (this.game.players.length <= 10) return 2;
 		return 4;
 	}
-
 }
 
 export interface SurvivorContext {

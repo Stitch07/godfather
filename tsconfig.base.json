@@ -1,0 +1,10 @@
+{
+	"extends": "@sapphire/ts-config",
+	"compilerOptions": {
+		"lib": ["ESNext", "DOM"],
+		"target": "es2017",
+		// TODO: You'll probably want to re-enable these once they do not cause compile issues
+		"noUnusedParameters": false,
+		"noImplicitReturns": false
+	}
+}

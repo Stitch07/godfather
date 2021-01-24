@@ -1,13 +1,12 @@
-import Player from '@mafia/structures/Player';
-import DefaultMap from '@util/DefaultMap';
+import type SingleTarget from '@mafia/mixins/SingleTarget';
 import Game, { Phase } from '@mafia/structures/Game';
-import SingleTarget from '@mafia/mixins/SingleTarget';
-import { fauxAlive, listItems } from '@root/lib/util/utils';
+import type Player from '@mafia/structures/Player';
 import { DEFAULT_ACTION_FLAGS } from '@root/lib/constants';
+import { fauxAlive, listItems } from '@root/lib/util/utils';
 import { mergeDefault } from '@sapphire/utilities';
+import DefaultMap from '@util/DefaultMap';
 
 export default class NightActionsManager extends Array<NightAction> {
-
 	public record = new NightRecord();
 	public framedPlayers: Player[] = [];
 	public protectedPlayers: Player[] = [];
@@ -16,7 +15,9 @@ export default class NightActionsManager extends Array<NightAction> {
 	}
 
 	public async addAction(action: NightAction) {
-		const possibleActions = this.game.players.filter(player => fauxAlive(player) && player.role.canUseAction().check && Reflect.get(player.role, 'actionPhase') === Phase.Night);
+		const possibleActions = this.game.players.filter(
+			(player) => fauxAlive(player) && player.role.canUseAction().check && Reflect.get(player.role, 'actionPhase') === Phase.Night
+		);
 		if (action.actor.role.name === 'Reanimator' && action.target) {
 			const { priority } = (action.target as Player[])[0].role as SingleTarget;
 			action.priority = priority;
@@ -28,16 +29,24 @@ export default class NightActionsManager extends Array<NightAction> {
 
 		if (action.actor.role.faction.informed && this.game.factionalChannels.has(action.actor.role.faction.name)) {
 			const [factionalChannel] = this.game.factionalChannels.get(action.actor.role.faction.name)!;
-			const target = action.target ? Array.isArray(action.target) ? action.target : [action.target] : null;
-			await factionalChannel.send(`**${action.actor.user.tag}** is ${(action.actor.role as SingleTarget).actionGerund} ${target ? listItems(target.map(pl => pl.user.tag)) : ''}`);
+			const target = action.target ? (Array.isArray(action.target) ? action.target : [action.target]) : null;
+			await factionalChannel.send(
+				`**${action.actor.user.tag}** is ${(action.actor.role as SingleTarget).actionGerund} ${
+					target ? listItems(target.map((pl) => pl.user.tag)) : ''
+				}`
+			);
 		}
 		if (this.length >= possibleActions.length && this.game.phase === Phase.Night) await this.game.startDay();
 	}
 
 	public async resolve(): Promise<Player[]> {
-		const possibleActions = this.game.players.filter(player => fauxAlive(player) && player.role.canUseAction().check && Reflect.get(player.role, 'actionPhase') === Phase.Night);
+		const possibleActions = this.game.players.filter(
+			(player) => fauxAlive(player) && player.role.canUseAction().check && Reflect.get(player.role, 'actionPhase') === Phase.Night
+		);
 		// add any default actions the player has
-		const noActionsSent = possibleActions.filter(player => Reflect.has(player.role, 'action') && !this.find(action => action.actor === player));
+		const noActionsSent = possibleActions.filter(
+			(player) => Reflect.has(player.role, 'action') && !this.find((action) => action.actor === player)
+		);
 		for (const player of noActionsSent) {
 			const { defaultAction } = player.role as SingleTarget;
 			if (defaultAction) this.push(defaultAction);
@@ -55,7 +64,7 @@ export default class NightActionsManager extends Array<NightAction> {
 			if (action === undefined) continue;
 			await (actor.role! as SingleTarget).runAction(this, target);
 			if (flags.canVisit) {
-				const targets = Array.isArray(target) ? actor.role.name === 'Witch' ? [target[0]] : target : [target];
+				const targets = Array.isArray(target) ? (actor.role.name === 'Witch' ? [target[0]] : target) : [target];
 				for (const target of targets) {
 					if (target?.user.id !== actor.user.id) await target?.visit(actor);
 				}
@@ -69,7 +78,7 @@ export default class NightActionsManager extends Array<NightAction> {
 		const deadPlayers = [];
 		for (const [playerID, record] of this.record.entries()) {
 			if (record.has('nightkill') && record.get('nightkill').result) {
-				const deadPlayer = this.game.players.find(player => player.user.id === playerID);
+				const deadPlayer = this.game.players.find((player) => player.user.id === playerID);
 				if (deadPlayer) {
 					await deadPlayer.kill(`killed N${this.game.cycle}`);
 					deadPlayer.queueMessage('You have died!');
@@ -90,11 +99,9 @@ export default class NightActionsManager extends Array<NightAction> {
 		this.record = new NightRecord();
 		this.length = 0; // dumb way of clearing an array but it's necessary
 	}
-
 }
 
 export class NightRecord extends DefaultMap<string, DefaultMap<string, NightRecordEntry>> {
-
 	public constructor() {
 		super(() => new DefaultMap(() => ({ result: false, by: [] })));
 	}
@@ -109,7 +116,6 @@ export class NightRecord extends DefaultMap<string, DefaultMap<string, NightReco
 		record.set(recordEntry, entry);
 		this.set(targetID, record);
 	}
-
 }
 
 export interface NightAction {
@@ -155,7 +161,7 @@ export enum NightActionPriority {
 	// modify night actions directly
 	ESCORT = 1,
 	TRANSPORTER = 1,
-	KILLER = 2,  // godfather/goon/vigilante
+	KILLER = 2, // godfather/goon/vigilante
 	SERIAL_KILLER = 2,
 	// healers always act after shooters
 	DOCTOR = 3,

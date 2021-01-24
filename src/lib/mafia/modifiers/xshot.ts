@@ -1,13 +1,12 @@
 import Modifier from '@mafia/structures/Modifier';
-import Role from '@mafia/structures/Role';
+import type Role from '@mafia/structures/Role';
+import type { PieceContext } from '@sapphire/framework';
 import { cast } from '@util/utils';
-import { PieceContext } from '@sapphire/framework';
-import Killer from '../mixins/Killer';
+import type Killer from '../mixins/Killer';
 
 const VALID_ROLES = ['Vigilante', 'Goon', 'Godfather', 'Serial Killer'];
 
 export default class XShotModifier extends Modifier {
-
 	public constructor(context: PieceContext) {
 		super(context, {
 			name: 'shot'
@@ -21,5 +20,4 @@ export default class XShotModifier extends Modifier {
 	public canPatch(role: Role) {
 		return VALID_ROLES.includes(role.name);
 	}
-
 }

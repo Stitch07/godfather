@@ -1,10 +1,9 @@
+import NightActionsManager, { NightActionPriority } from '@mafia/managers/NightActionsManager';
 import SingleTarget from '@mafia/mixins/SingleTarget';
 import Townie from '@mafia/mixins/Townie';
-import NightActionsManager, { NightActionPriority } from '@mafia/managers/NightActionsManager';
-import Player from '@mafia/structures/Player';
+import type Player from '@mafia/structures/Player';
 
 class Investigator extends SingleTarget {
-
 	public name = 'Investigator';
 	public description = 'You may investigate someone every night, returning a list of roles including your targets.';
 	public action = 'investigate';
@@ -79,7 +78,6 @@ class Investigator extends SingleTarget {
 				return 'You could not find enough information about your target.';
 		}
 	}
-
 }
 
 Investigator.aliases = ['Invest'];

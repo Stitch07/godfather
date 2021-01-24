@@ -7,7 +7,6 @@ import { DiscordAPIError, HTTPError } from 'discord.js';
 const IGNORED_CODES = [10001];
 
 export default class extends Event<Events.CommandError> {
-
 	public constructor(context: PieceContext) {
 		super(context, { event: Events.CommandError });
 	}
@@ -30,5 +29,4 @@ export default class extends Event<Events.CommandError> {
 			this.context.client.logger.error(error);
 		}
 	}
-
 }

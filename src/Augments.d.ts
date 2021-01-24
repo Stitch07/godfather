@@ -1,11 +1,11 @@
 import Game, { GameSettings } from '@mafia/structures/Game';
-import Player from '@mafia/structures/Player';
-import SetupStore from '@mafia/structures/SetupStore';
-import { Piece } from '@sapphire/framework';
-import { Collection, Guild, User } from 'discord.js';
-import ModifierStore from './lib/mafia/structures/ModifierStore';
-import GuildSettingsEntity from './lib/orm/entities/GuildSettings';
-import SlashCommandStore from './lib/structures/SlashCommandStore';
+import type Player from '@mafia/structures/Player';
+import type SetupStore from '@mafia/structures/SetupStore';
+import type { Piece } from '@sapphire/framework';
+import type { User } from 'discord.js';
+import type ModifierStore from './lib/mafia/structures/ModifierStore';
+import type GuildSettingsEntity from './lib/orm/entities/GuildSettings';
+import type SlashCommandStore from './lib/structures/SlashCommandStore';
 
 interface ChannelExtendables {
 	readonly attachable: boolean;
@@ -15,7 +15,6 @@ interface ChannelExtendables {
 	prompt(promptMessage: string, promptUser: User): Promise<boolean>;
 	readonly game: Game | undefined;
 }
-
 
 declare module 'discord.js' {
 	interface Client {
@@ -31,11 +30,11 @@ declare module 'discord.js' {
 		fetchGuildPrefix(guild: Guild): Promise<string>;
 	}
 
-	interface TextChannel extends ChannelExtendables { }
+	interface TextChannel extends ChannelExtendables {}
 
-	interface DMChannel extends ChannelExtendables { }
+	interface DMChannel extends ChannelExtendables {}
 
-	interface NewsChannel extends ChannelExtendables { }
+	interface NewsChannel extends ChannelExtendables {}
 
 	interface Message {
 		prompt(promptMessage: string): Promise<boolean>;
@@ -55,4 +54,3 @@ declare module '@sapphire/framework' {
 		piece: Piece;
 	}
 }
-

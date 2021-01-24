@@ -1,25 +1,24 @@
-import PlayerManager from '@mafia/managers/PlayerManager';
-import Godfather from '@lib/Godfather';
-import Faction from '@mafia/structures/Faction';
-import Player from '@mafia/structures/Player';
-import VoteManager, { TrialVote, TrialVoteType, WeightedArrayProxy } from '@mafia/managers/VoteManager';
+import type Godfather from '@lib/Godfather';
 import NightActionsManager from '@mafia/managers/NightActionsManager';
-import Setup from './Setup';
-
-import { Collection, GuildMember, TextChannel, User } from 'discord.js';
+import PlayerManager from '@mafia/managers/PlayerManager';
+import VoteManager, { TrialVote, TrialVoteType, WeightedArrayProxy } from '@mafia/managers/VoteManager';
+import type Faction from '@mafia/structures/Faction';
+import Player from '@mafia/structures/Player';
+import { ENABLE_PRIVATE_CHANNELS, PGSQL_ENABLED, PRIVATE_CHANNEL_SERVER } from '@root/config';
+import { Time } from '@sapphire/time-utilities';
 import { codeBlock } from '@sapphire/utilities';
-// import GameEntity from '../orm/entities/Game';
-// import { getRepository } from 'typeorm';
-import SingleTarget from '../mixins/SingleTarget';
 // import { PGSQL_ENABLED } from '@root/config';
 import { format } from '@util/durationFormat';
-import { Time } from '@sapphire/time-utilities';
-import { canManage, fauxAlive, listItems, randomArray } from '../../util/utils';
-import { ENABLE_PRIVATE_CHANNELS, PGSQL_ENABLED, PRIVATE_CHANNEL_SERVER } from '@root/config';
+import { Collection, GuildMember, TextChannel, User } from 'discord.js';
 import { getConnection, getRepository } from 'typeorm';
+import { STALEMATE_PRIORITY_ORDER } from '../../constants';
 import GameEntity from '../../orm/entities/Game';
 import PlayerEntity from '../../orm/entities/Player';
-import { STALEMATE_PRIORITY_ORDER } from '../../constants';
+import { canManage, fauxAlive, listItems, randomArray } from '../../util/utils';
+// import GameEntity from '../orm/entities/Game';
+// import { getRepository } from 'typeorm';
+import type SingleTarget from '../mixins/SingleTarget';
+import type Setup from './Setup';
 
 const MAX_DELAY = 15 * Time.Minute;
 const TRIAL_DURATION = 30 * Time.Second;
@@ -35,7 +34,6 @@ export const enum Phase {
 }
 
 export default class Game {
-
 	public client: Godfather;
 	public phase: Phase;
 	public players: PlayerManager;
@@ -106,7 +104,7 @@ export default class Game {
 		}
 
 		if (this.canOverwritePermissions) {
-			for (const muted of this.players.filter(player => player.isAlive)) {
+			for (const muted of this.players.filter((player) => player.isAlive)) {
 				await this.releaseMute(muted);
 			}
 		}
@@ -115,7 +113,7 @@ export default class Game {
 		this.nightActions.reset();
 		this.phase = Phase.Day;
 		this.cycle++;
-		const alivePlayers = this.players.filter(player => player.isAlive);
+		const alivePlayers = this.players.filter((player) => player.isAlive);
 		// populate voting cache
 		this.votes.reset();
 		this.phaseEndAt = new Date(Date.now() + this.settings.dayDuration);
@@ -129,12 +127,15 @@ export default class Game {
 			}
 		}
 
-		if (this.settings.adaptiveSlowmode && this.channel.permissionsFor(this.client.user!)?.has('MANAGE_CHANNELS')) await this.updateAdaptiveSlowmode();
+		if (this.settings.adaptiveSlowmode && this.channel.permissionsFor(this.client.user!)?.has('MANAGE_CHANNELS'))
+			await this.updateAdaptiveSlowmode();
 
-		await this.channel.send([
-			`Day **${this.cycle}** will last ${format(this.settings.dayDuration)}`,
-			`With ${alivePlayers.length} alive, it takes ${this.majorityVotes} to eliminate.`
-		].join('\n'));
+		await this.channel.send(
+			[
+				`Day **${this.cycle}** will last ${format(this.settings.dayDuration)}`,
+				`With ${alivePlayers.length} alive, it takes ${this.majorityVotes} to eliminate.`
+			].join('\n')
+		);
 	}
 
 	public async startNight() {
@@ -154,7 +155,8 @@ export default class Game {
 			}
 		}
 
-		if (this.settings.adaptiveSlowmode && this.channel.permissionsFor(this.client.user!)!.has('MANAGE_CHANNELS')) await this.updateAdaptiveSlowmode();
+		if (this.settings.adaptiveSlowmode && this.channel.permissionsFor(this.client.user!)!.has('MANAGE_CHANNELS'))
+			await this.updateAdaptiveSlowmode();
 
 		this.phase = Phase.Standby;
 		this.votes.reset();
@@ -165,7 +167,9 @@ export default class Game {
 
 		await this.channel.send(`Night **${this.cycle}** will last ${format(this.settings.nightDuration)}. Send in your actions quickly!`);
 		if (this.isFullMoon) await this.channel.send('Beware, tonight is a full moon 🌕');
-		for (const player of this.players.filter(player => fauxAlive(player) && player.role!.canUseAction().check && (player.role! as SingleTarget).actionPhase === Phase.Night)) {
+		for (const player of this.players.filter(
+			(player) => fauxAlive(player) && player.role!.canUseAction().check && (player.role! as SingleTarget).actionPhase === Phase.Night
+		)) {
 			await player.role!.onNight();
 		}
 
@@ -190,41 +194,38 @@ export default class Game {
 	public async startTrialVoting() {
 		// unmute everyone who isn't dead
 		if (this.canOverwritePermissions) {
-			for (const player of this.players.filter(player => player.isAlive && player.user.id !== this.votes.playerOnTrial?.user.id)) {
+			for (const player of this.players.filter((player) => player.isAlive && player.user.id !== this.votes.playerOnTrial?.user.id)) {
 				await this.releaseMute(player);
 			}
 		}
 
-		await this.channel.send(`The town may now vote on the Fate of ${this.votes.playerOnTrial!.user.tag}! Use the commands \`innocent\`, \`guilty\`, and \`abstain\` in Direct Messages to vote. (you have 30 seconds; ${this.settings.maxTrials - this.totalTrials} trials left today)`);
+		await this.channel.send(
+			`The town may now vote on the Fate of ${
+				this.votes.playerOnTrial!.user.tag
+			}! Use the commands \`innocent\`, \`guilty\`, and \`abstain\` in Direct Messages to vote. (you have 30 seconds; ${
+				this.settings.maxTrials - this.totalTrials
+			} trials left today)`
+		);
 		this.phaseEndAt = new Date(Date.now() + TRIAL_VOTING_DURATION);
 		this.phase = Phase.TrialVoting;
 	}
 
 	public async endTrial() {
 		const { trialVotes: votes } = this.votes;
-		let [
-			innocentVotes,
-			guiltyVotes,
-			abstainingVotes
-		] = [
-			(votes.filter(vote => vote.type === TrialVoteType.Innocent) as WeightedArrayProxy<TrialVote>).count(),
-			(votes.filter(vote => vote.type === TrialVoteType.Guilty) as WeightedArrayProxy<TrialVote>).count(),
-			(votes.filter(vote => vote.type === TrialVoteType.Abstain) as WeightedArrayProxy<TrialVote>).count()
+		let [innocentVotes, guiltyVotes, abstainingVotes] = [
+			(votes.filter((vote) => vote.type === TrialVoteType.Innocent) as WeightedArrayProxy<TrialVote>).count(),
+			(votes.filter((vote) => vote.type === TrialVoteType.Guilty) as WeightedArrayProxy<TrialVote>).count(),
+			(votes.filter((vote) => vote.type === TrialVoteType.Abstain) as WeightedArrayProxy<TrialVote>).count()
 		];
 
 		// alive players who did not vote count as abstain
-		for (const player of this.players.filter(player => player.isAlive)) {
-			if (player !== this.votes.playerOnTrial && !this.votes.trialVotes.some(vote => vote.by === player)) {
+		for (const player of this.players.filter((player) => player.isAlive)) {
+			if (player !== this.votes.playerOnTrial && !this.votes.trialVotes.some((vote) => vote.by === player)) {
 				abstainingVotes += player.role.voteWeight;
 			}
 		}
 
-		await this.channel.send([
-			'**Votes**:\n',
-			`Innocent: ${innocentVotes}`,
-			`Guilty: ${guiltyVotes}`,
-			`Abstain: ${abstainingVotes}`
-		].join('\n'));
+		await this.channel.send(['**Votes**:\n', `Innocent: ${innocentVotes}`, `Guilty: ${guiltyVotes}`, `Abstain: ${abstainingVotes}`].join('\n'));
 
 		const result = Math.max(innocentVotes, guiltyVotes);
 
@@ -255,11 +256,13 @@ export default class Game {
 		if (this.settings.enableTrials && !force && player.role.name !== 'Super Saint') {
 			this.votes.playerOnTrial = player;
 			// any time remaining in this day carries over
-			this.dayTimeLeft = Date.now() > this.phaseEndAt!.getTime() ? 0 : (this.phaseEndAt!.getTime() - Date.now());
+			this.dayTimeLeft = Date.now() > this.phaseEndAt!.getTime() ? 0 : this.phaseEndAt!.getTime() - Date.now();
 			return this.startTrial();
 		}
 
-		await this.channel.send(`${player.user.tag} was hammered. ${player.displayRoleAndWill()}\n${this.votes.show({ header: 'Final Vote Count', codeblock: true })}`);
+		await this.channel.send(
+			`${player.user.tag} was hammered. ${player.displayRoleAndWill()}\n${this.votes.show({ header: 'Final Vote Count', codeblock: true })}`
+		);
 		await player.kill(`eliminated D${this.cycle}`);
 		this.idlePhases = 0;
 
@@ -278,7 +281,6 @@ export default class Game {
 		if (this.phase === Phase.Standby) return;
 
 		if (this.phaseEndAt && Date.now() > this.phaseEndAt.getTime()) {
-
 			switch (this.phase) {
 				case Phase.Day: {
 					if (this.settings.enablePlurality) {
@@ -287,9 +289,14 @@ export default class Game {
 							largestVoteCount = Math.max(largestVoteCount, this.votes.on(player).count());
 						}
 
-						const candidates = this.players.filter(player => this.votes.on(player).count() === largestVoteCount);
-						let eliminatedPlayer = randomArray(candidates)!;
-						await this.channel.send(`${eliminatedPlayer.user.tag} was lynched. ${eliminatedPlayer.displayRoleAndWill()}\n${this.votes.show({ header: 'Final Vote Count', codeblock: true })}`);
+						const candidates = this.players.filter((player) => this.votes.on(player).count() === largestVoteCount);
+						const eliminatedPlayer = randomArray(candidates)!;
+						await this.channel.send(
+							`${eliminatedPlayer.user.tag} was lynched. ${eliminatedPlayer.displayRoleAndWill()}\n${this.votes.show({
+								header: 'Final Vote Count',
+								codeblock: true
+							})}`
+						);
 						await eliminatedPlayer.kill(`eliminated D${this.cycle}`);
 						this.idlePhases = 0;
 					} else {
@@ -312,7 +319,7 @@ export default class Game {
 				}
 
 				case Phase.Pregame:
-					// noop
+				// noop
 			}
 		}
 	}
@@ -330,19 +337,19 @@ export default class Game {
 	}
 
 	public get majorityVotes(): number {
-		const alivePlayers = this.players.filter(player => player.isAlive);
+		const alivePlayers = this.players.filter((player) => player.isAlive);
 		return Math.floor(alivePlayers.length / 2) + 1;
 	}
 
 	public checkEndgame(): EndgameCheckData {
 		let winningFaction: Faction | undefined = undefined;
-		let independentWins: Player[] = [];
+		const independentWins: Player[] = [];
 
-		const alivePlayers = this.players.filter(player => player.isAlive);
+		const alivePlayers = this.players.filter((player) => player.isAlive);
 
 		// 1v1 may need to be specially dealt with by the stalemate detector
-		if (alivePlayers.length === 2 && alivePlayers.filter(player => STALEMATE_PRIORITY_ORDER.includes(player.role.name)).length === 2) {
-			const [priorityOne, priorityTwo] = alivePlayers.map(player => STALEMATE_PRIORITY_ORDER.indexOf(player.role.name));
+		if (alivePlayers.length === 2 && alivePlayers.filter((player) => STALEMATE_PRIORITY_ORDER.includes(player.role.name)).length === 2) {
+			const [priorityOne, priorityTwo] = alivePlayers.map((player) => STALEMATE_PRIORITY_ORDER.indexOf(player.role.name));
 			if (priorityOne > priorityTwo) winningFaction = alivePlayers[0].role.faction;
 			else if (priorityTwo > priorityOne) winningFaction = alivePlayers[1].role.faction;
 		}
@@ -356,7 +363,7 @@ export default class Game {
 		}
 
 		// if there are no major factions left end game immediately
-		const majorFactions = this.players.filter(player => player.isAlive && !player.role.faction.independent);
+		const majorFactions = this.players.filter((player) => player.isAlive && !player.role.faction.independent);
 		if (majorFactions.length === 0) {
 			return {
 				ended: true,
@@ -382,27 +389,29 @@ export default class Game {
 	}
 
 	public async end(data: EndgameCheckData) {
-		await this.channel.send([
-			data.winningFaction === undefined ? 'The game is over. Nobody wins!' : `The game is over. ${data.winningFaction.name} wins! 🎉`,
-			data.independentWins.length === 0 ? null : `Independent wins: ${listItems(data.independentWins.map(player => `${player.user.username} (${player.role.faction.name})`))}`
-		].filter(text => text !== null).join('\n'));
+		await this.channel.send(
+			[
+				data.winningFaction === undefined ? 'The game is over. Nobody wins!' : `The game is over. ${data.winningFaction.name} wins! 🎉`,
+				data.independentWins.length === 0
+					? null
+					: `Independent wins: ${listItems(data.independentWins.map((player) => `${player.user.username} (${player.role.faction.name})`))}`
+			]
+				.filter((text) => text !== null)
+				.join('\n')
+		);
 
 		const playerMapping = (player: Player, i: number) => {
-			const roleText = player.previousRoles.length === 0
-				? player.role.name
-				: [...player.previousRoles, player.role].map(role => role.name).join(' -> ');
+			const roleText =
+				player.previousRoles.length === 0 ? player.role.name : [...player.previousRoles, player.role].map((role) => role.name).join(' -> ');
 			return `${i + 1}. ${player} (${roleText})`;
 		};
-		await this.channel.send([
-			'**Final Rolelist**:',
-			codeBlock('', this.players.map(playerMapping).join('\n'))
-		].join('\n'));
+		await this.channel.send(['**Final Rolelist**:', codeBlock('', this.players.map(playerMapping).join('\n'))].join('\n'));
 
 		if (PGSQL_ENABLED) {
 			const entity = new GameEntity();
 			entity.setupName = this.setup!.name;
 			entity.winningFaction = data.winningFaction?.name;
-			entity.independentWins = data.independentWins.map(player => player.role.name);
+			entity.independentWins = data.independentWins.map((player) => player.role.name);
 			entity.guildID = this.channel.guild.id;
 			await getRepository(GameEntity).save(entity);
 
@@ -410,12 +419,14 @@ export default class Game {
 				.createQueryBuilder()
 				.insert()
 				.into(PlayerEntity)
-				.values(this.players.map(player => ({
-					userID: player.user.id,
-					faction: player.role.faction.name,
-					roleName: player.role.name,
-					result: data.winningFaction?.name === player.role.faction.name || data.independentWins.includes(player)
-				})))
+				.values(
+					this.players.map((player) => ({
+						userID: player.user.id,
+						faction: player.role.faction.name,
+						roleName: player.role.name,
+						result: data.winningFaction?.name === player.role.faction.name || data.independentWins.includes(player)
+					}))
+				)
 				.execute();
 		}
 
@@ -426,7 +437,7 @@ export default class Game {
 		// free all permission overwrites
 		if (this.canOverwritePermissions && this.hasStarted) {
 			for (const userID of this.permissionOverwrites) {
-				const overwrite = this.channel.permissionOverwrites.find(permission => permission.type === 'member' && permission.id === userID);
+				const overwrite = this.channel.permissionOverwrites.find((permission) => permission.type === 'member' && permission.id === userID);
 				if (overwrite) await overwrite.delete();
 			}
 		}
@@ -449,13 +460,15 @@ export default class Game {
 				// only reset a nickname if it's in the correct form
 				if (member.nickname && /\[\d+\] (.+)/.test(member.nickname)) {
 					const [, previousNickname] = /\[\d+\] (.+)/.exec(member.nickname)!;
-					if (this.channel.guild!.me && canManage(this.channel.guild!.me, member)) await member.setNickname(previousNickname).catch(() => null);
+					if (this.channel.guild!.me && canManage(this.channel.guild!.me, member))
+						await member.setNickname(previousNickname).catch(() => null);
 				}
 			}
 		}
 
 		// reset adaptive slowmode
-		if (this.settings.adaptiveSlowmode && this.channel.permissionsFor(this.client.user!)!.has('MANAGE_CHANNELS')) await this.channel.setRateLimitPerUser(0);
+		if (this.settings.adaptiveSlowmode && this.channel.permissionsFor(this.client.user!)!.has('MANAGE_CHANNELS'))
+			await this.channel.setRateLimitPerUser(0);
 
 		for (const [factionalChannel] of this.factionalChannels.values()) {
 			if (factionalChannel.deleted) continue;
@@ -479,7 +492,7 @@ export default class Game {
 	}
 
 	public async updateAdaptiveSlowmode() {
-		const alivePlayers = this.players.filter(player => player.isAlive).length;
+		const alivePlayers = this.players.filter((player) => player.isAlive).length;
 		if (alivePlayers >= 12) await this.channel.setRateLimitPerUser(5);
 		else if (alivePlayers >= 6) await this.channel.setRateLimitPerUser(3);
 		else await this.channel.setRateLimitPerUser(0);
@@ -497,10 +510,12 @@ export default class Game {
 		// calls to splice() with invalid indexes have unexpected behavior
 		const index = this.permissionOverwrites.indexOf(player.user.id);
 		if (index === -1) return;
-		await this.channel.updateOverwrite(player.user, {
-			SEND_MESSAGES: null,
-			ADD_REACTIONS: null
-		}).catch(() => null);
+		await this.channel
+			.updateOverwrite(player.user, {
+				SEND_MESSAGES: null,
+				ADD_REACTIONS: null
+			})
+			.catch(() => null);
 		this.permissionOverwrites.splice(index, 1);
 	}
 
@@ -508,7 +523,7 @@ export default class Game {
 		return {
 			cycle: this.cycle,
 			phase: this.phase,
-			players: this.players.map(player => player.toJSON()),
+			players: this.players.map((player) => player.toJSON()),
 			votes: this.votes,
 			setup: {
 				name: this.setup?.name,
@@ -516,10 +531,9 @@ export default class Game {
 			},
 			permissionOverwrites: this.permissionOverwrites,
 			createdAt: this.createdAt,
-			nightActions: this.nightActions.map(action => action)
+			nightActions: this.nightActions.map((action) => action)
 		};
 	}
-
 }
 
 export interface GameSettings {

@@ -1,35 +1,18 @@
 {
-	"extends": "@skyra/eslint-config",
+	"extends": "../tsconfig.base.json",
 	"compilerOptions": {
 		"target": "ES2019",
-		"useDefineForClassFields": true,
-		"resolveJsonModule": true,
 		"outDir": "../dist",
 		"rootDir": "../",
 		"baseUrl": ".",
 		"composite": true,
-		"declaration": true,
 		"paths": {
-			"@root/*": [
-				"../src/*"
-			],
-			"@mafia/*": [
-				"../src/lib/mafia/*"
-			],
-			"@lib/*": [
-				"../src/lib/*",
-			],
-			"@util/*": [
-				"../src/lib/util/*"
-			],
-			"@mocks/*": [
-				"./mocks/*"
-			]
+			"@root/*": ["../src/*"],
+			"@mafia/*": ["../src/lib/mafia/*"],
+			"@lib/*": ["../src/lib/*"],
+			"@util/*": ["../src/lib/util/*"],
+			"@mocks/*": ["./mocks/*"]
 		}
 	},
-	"include": [
-		".",
-		"../src/*",
-		"../src/**/*"
-	]
+	"include": [".", "../src"]
 }

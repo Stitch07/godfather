@@ -1,10 +1,9 @@
 import JuggernautFaction from '@mafia/factions/neutral/Juggernaut';
 import NightActionsManager, { Attack, Defence, NightActionPriority } from '@mafia/managers/NightActionsManager';
 import Killer from '@mafia/mixins/Killer';
-import Player from '@mafia/structures/Player';
+import type Player from '@mafia/structures/Player';
 
 class Juggernaut extends Killer {
-
 	public name = 'Juggernaut';
 	public faction = new JuggernautFaction();
 	public action = 'assault';
@@ -41,7 +40,7 @@ class Juggernaut extends Killer {
 
 	public runAction(actions: NightActionsManager, target: Player) {
 		if (this.level >= 2) {
-			const visitors = target.visitors.filter(player => player.user.id !== this.player.user.id);
+			const visitors = target.visitors.filter((player) => player.user.id !== this.player.user.id);
 			for (const visitor of visitors) {
 				if (visitor.role.actualDefence > this.attackStrength) continue;
 				actions.record.setAction(visitor.user.id, 'nightkill', { result: true, by: [this.player], type: this.attackStrength });
@@ -68,7 +67,6 @@ class Juggernaut extends Killer {
 	}
 
 	public static unique = true;
-
 }
 
 Juggernaut.aliases = ['Jugg'];

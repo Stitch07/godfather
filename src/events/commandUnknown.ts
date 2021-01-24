@@ -1,19 +1,18 @@
-import SingleTarget from '@mafia/mixins/SingleTarget';
-import { fauxAlive } from '@util/utils';
+import type SingleTarget from '@mafia/mixins/SingleTarget';
 import { Event, Events, PieceContext } from '@sapphire/framework';
-import { Message } from 'discord.js';
+import { fauxAlive } from '@util/utils';
+import type { Message } from 'discord.js';
 
 export default class extends Event<Events.UnknownCommand> {
-
 	public constructor(context: PieceContext) {
 		super(context, { event: Events.UnknownCommand });
 	}
 
-	public async run(message: Message, command: string, prefix: string) {
+	public async run(message: Message, _: string, prefix: string) {
 		// actions are accepted in DMs only
 		if (message.guild) return;
 
-		const game = this.context.client.games.find(game => Boolean(game.players.get(message.author)));
+		const game = this.context.client.games.find((game) => Boolean(game.players.get(message.author)));
 		if (!game || !game.hasStarted) return;
 
 		const player = game.players.get(message.author)!;
@@ -29,5 +28,4 @@ export default class extends Event<Events.UnknownCommand> {
 			this.context.client.logger.error(error);
 		}
 	}
-
 }

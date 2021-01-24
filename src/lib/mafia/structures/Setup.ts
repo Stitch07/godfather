@@ -1,8 +1,8 @@
-import { Piece, ok, Result, SapphireClient } from '@sapphire/framework';
-import { PieceContext, PieceOptions } from '@sapphire/pieces';
-import { mergeDefault, Constructor } from '@sapphire/utilities';
-import { RoleResolverData } from './BasicSetup';
-import Role from './Role';
+import { ok, Piece, Result, SapphireClient } from '@sapphire/framework';
+import type { PieceContext, PieceOptions } from '@sapphire/pieces';
+import { Constructor, mergeDefault } from '@sapphire/utilities';
+import type { RoleResolverData } from './BasicSetup';
+import type Role from './Role';
 
 export interface SetupOptions extends PieceOptions {
 	// the names of the roles/categories used
@@ -18,7 +18,6 @@ export const DEFAULT_SETUP_OPTIONS = {
 };
 
 export default abstract class Setup extends Piece {
-
 	public roles: string[];
 	public nightStart: boolean;
 	public description: string | null = null;
@@ -42,5 +41,4 @@ export default abstract class Setup extends Piece {
 	public get totalPlayers() {
 		return this.generate(this.context.client).length;
 	}
-
 }

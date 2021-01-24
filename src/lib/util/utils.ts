@@ -1,10 +1,10 @@
-import { exec as childProcessExec } from 'child_process';
-import { promisify } from 'util';
-import Player from '@mafia/structures/Player';
-import { isThenable, regExpEsc } from '@sapphire/utilities';
-import { Client, GuildMember } from 'discord.js';
-import { Events, UserError } from '@sapphire/framework';
+import type Player from '@mafia/structures/Player';
 import { TOKEN } from '@root/config';
+import { Events, UserError } from '@sapphire/framework';
+import { isThenable, regExpEsc } from '@sapphire/utilities';
+import { exec as childProcessExec } from 'child_process';
+import type { Client, GuildMember } from 'discord.js';
+import { promisify } from 'util';
 
 let sensitiveTokens: RegExp | null = null;
 
@@ -21,7 +21,7 @@ export const shuffle = <T>(array: readonly T[]): T[] => {
 	const clone = array.slice();
 	const shuffled = [];
 
-	for (const { } of array) {
+	for (const {} of array) {
 		const [value] = clone.splice(Math.floor(Math.random() * clone.length), 1);
 		shuffled.push(value);
 	}
@@ -45,7 +45,7 @@ export const sleep = promisify(setTimeout);
 export const exec = promisify(childProcessExec);
 
 export function floatPromise(client: Client, promise: Promise<unknown>) {
-	if (isThenable(promise)) promise.catch(error => client.emit(Events.Error, error));
+	if (isThenable(promise)) promise.catch((error) => client.emit(Events.Error, error));
 }
 
 export const clean = (text: string) => text.replace(sensitiveTokens!, '「ｒｅｄａｃｔｅｄ」');
@@ -54,13 +54,13 @@ export const clean = (text: string) => text.replace(sensitiveTokens!, '「ｒｅ
  * Just an easier way of writing (value as T)
  * @param from The value to cast as
  */
-export const cast = <T>(from: unknown) => (from as T);
+export const cast = <T>(from: unknown) => from as T;
 
 /**
  * Python's enumerate()
  * @param array The array to iterate over
  */
-export function *enumerate<T>(array: readonly T[]): Generator<[number, T]> {
+export function* enumerate<T>(array: readonly T[]): Generator<[number, T]> {
 	for (let i = 0; i < array.length; i++) {
 		yield [i, array[i]];
 	}

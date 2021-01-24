@@ -1,9 +1,8 @@
-import { sleep } from '@util/utils';
 import Townie from '@mafia/mixins/Townie';
 import Role from '@mafia/structures/Role';
+import { sleep } from '@util/utils';
 
 class SuperSaint extends Role {
-
 	public name = 'Super Saint';
 
 	public description = 'If eliminated, you kill the last person voting you.';
@@ -15,7 +14,7 @@ class SuperSaint extends Role {
 			const votesOnSaint = game.votes.on(this.player);
 			const { by: lastVoter } = votesOnSaint!.slice().pop()!;
 
-			lastVoter.kill('blown up by Super Saint');
+			void lastVoter.kill('blown up by Super Saint');
 			await game.channel.send('💣 **BOOOOOOOOOOOOOOM!!!**');
 			await sleep(2 * 1000);
 
@@ -24,7 +23,6 @@ class SuperSaint extends Role {
 
 		return super.onDeath();
 	}
-
 }
 
 export default Townie(SuperSaint);

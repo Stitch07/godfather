@@ -3,7 +3,6 @@ import { Argument, ArgumentContext, ArgumentResult } from '@sapphire/framework';
 import { Duration } from '@sapphire/time-utilities';
 
 export default class extends Argument<number> {
-
 	public run(argument: string, context: ArgumentContext): ArgumentResult<number> {
 		const { offset } = new Duration(argument);
 
@@ -16,5 +15,4 @@ export default class extends Argument<number> {
 
 		return this.ok(offset);
 	}
-
 }

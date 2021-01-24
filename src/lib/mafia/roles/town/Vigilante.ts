@@ -1,11 +1,10 @@
-import Killer from '@mafia/mixins/Killer';
 import NightActionsManager, { NightActionPriority } from '@mafia/managers/NightActionsManager';
+import Killer from '@mafia/mixins/Killer';
 import Townie from '@mafia/mixins/Townie';
-import Player from '@mafia/structures/Player';
-import { Message } from 'discord.js';
+import type Player from '@mafia/structures/Player';
+import type { Message } from 'discord.js';
 
 class Vigilante extends Killer {
-
 	public name = 'Vigilante';
 	public description = 'You may shoot someone every night.';
 	private guilt = false;
@@ -17,7 +16,7 @@ class Vigilante extends Killer {
 
 	public async onNight() {
 		if (this.guilt) {
-			this.game.nightActions.addAction({
+			void this.game.nightActions.addAction({
 				action: this.action,
 				actor: this.player,
 				target: this.player,
@@ -50,7 +49,6 @@ class Vigilante extends Killer {
 		if (this.game.players.length <= 10) return 2;
 		return 4;
 	}
-
 }
 
 Vigilante.categories = [...Vigilante.categories, 'Town Killing'];

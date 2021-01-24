@@ -1,20 +1,18 @@
 import '@lib/extenders';
+import '@sapphire/plugin-logger/register';
 
-import { LogLevel, SapphireClient } from '@sapphire/framework';
-import { Collection, Guild, Message } from 'discord.js';
-import Game from '@mafia/structures/Game';
+import type Game from '@mafia/structures/Game';
 import SetupStore from '@mafia/structures/SetupStore';
 import { PGSQL_ENABLED, PREFIX, PRODUCTION } from '@root/config';
-import GuildSettingRepository from './orm/repositories/GuildSettingRepository';
-import GuildSettingsEntity from './orm/entities/GuildSettings';
+import { LogLevel, SapphireClient } from '@sapphire/framework';
+import { Collection, Guild, Message } from 'discord.js';
 import { getCustomRepository } from 'typeorm';
+import ModifierStore from './mafia/structures/ModifierStore';
+import type GuildSettingsEntity from './orm/entities/GuildSettings';
+import GuildSettingRepository from './orm/repositories/GuildSettingRepository';
 import SlashCommandStore from './structures/SlashCommandStore';
 
-import '@sapphire/plugin-logger/register';
-import ModifierStore from './mafia/structures/ModifierStore';
-
 export default class Godfather extends SapphireClient {
-
 	public games: Collection<string, Game> = new Collection();
 	public setups: SetupStore;
 	public slashCommands: SlashCommandStore;
@@ -68,5 +66,4 @@ export default class Godfather extends SapphireClient {
 	public get invite() {
 		return `https://discord.com/oauth2/authorize?client_id=${this.user!.id}&scope=bot%20applications.commands&permissions=402653200`;
 	}
-
 }

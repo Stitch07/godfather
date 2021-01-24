@@ -1,7 +1,7 @@
 import { factionEmojis } from '@lib/constants';
 import GodfatherCommand from '@lib/GodfatherCommand';
-import Role from '@mafia/structures/Role';
 import { allRoles } from '@mafia/roles';
+import type Role from '@mafia/structures/Role';
 import { ApplyOptions } from '@sapphire/decorators';
 import { Args, BucketType, CommandContext, CommandOptions } from '@sapphire/framework';
 import { Time } from '@sapphire/time-utilities';
@@ -17,7 +17,6 @@ import * as roledocs from '../../assets/roledocs.json';
 	preconditions: [{ name: 'Cooldown', context: { bucketType: BucketType.Channel, delay: Time.Second * 3 } }]
 })
 export default class extends GodfatherCommand {
-
 	public roles!: Collection<string, Role>;
 
 	public async run(message: Message, args: Args, context: CommandContext) {
@@ -26,12 +25,21 @@ export default class extends GodfatherCommand {
 
 		if (!roleName) {
 			// maps roles from faction -> role
-			const factionalRoles = new Map([...uniqueRoles.reduce((coll, role) => {
-				const facRoles = coll.get(role.faction.name);
-				facRoles.push(role.name);
-				coll.set(role.faction.name, facRoles);
-				return coll;
-			}, new DefaultMap<string, string[]>(() => [])).entries()].sort((a, b) => b[1].length - a[1].length));
+			const factionalRoles = new Map(
+				[
+					...uniqueRoles
+						.reduce(
+							(coll, role) => {
+								const facRoles = coll.get(role.faction.name);
+								facRoles.push(role.name);
+								coll.set(role.faction.name, facRoles);
+								return coll;
+							},
+							new DefaultMap<string, string[]>(() => [])
+						)
+						.entries()
+				].sort((a, b) => b[1].length - a[1].length)
+			);
 
 			const description = [];
 			for (const [faction, roles] of factionalRoles.entries()) {
@@ -51,13 +59,16 @@ export default class extends GodfatherCommand {
 			return message.channel.send(embed);
 		}
 
-		const role = uniqueRoles.find(r => r.name.toLowerCase() === roleName.toLowerCase());
+		const role = uniqueRoles.find((r) => r.name.toLowerCase() === roleName.toLowerCase());
 		if (!role) throw `I found no role named "${roleName}"`;
-		const docEntry = roledocs.find(entry => entry.name.toLowerCase() === role.name.toLowerCase());
+		const docEntry = roledocs.find((entry) => entry.name.toLowerCase() === role.name.toLowerCase());
 		if (!docEntry) throw `No documentation for ${role.name} available`;
 
 		const embed = new MessageEmbed()
-			.setAuthor(`${role.name} ${role.faction.name === role.name ? '' : `(${role.faction.name})`}`, this.context.client.user!.displayAvatarURL())
+			.setAuthor(
+				`${role.name} ${role.faction.name === role.name ? '' : `(${role.faction.name})`}`,
+				this.context.client.user!.displayAvatarURL()
+			)
 			.setColor(Branding.PrimaryColor)
 			.setDescription(codeBlock('diff', docEntry.detailedDescription.join('\n')))
 			// @ts-ignore s t a t i c
@@ -72,5 +83,4 @@ export default class extends GodfatherCommand {
 			return coll.set(role.name, role);
 		}, new Collection<string, Role>());
 	}
-
 }

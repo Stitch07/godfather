@@ -1,11 +1,10 @@
-import Role from './Role';
-import Game from './Game';
-import { User } from 'discord.js';
 import { ENABLE_PRIVATE_CHANNELS } from '@root/config';
+import type { User } from 'discord.js';
 import { cast } from '../../util/utils';
+import type Game from './Game';
+import type Role from './Role';
 
 export default class Player {
-
 	public isAlive = true;
 	// whether this player was cleaned by a janitor
 	public cleaned = false;
@@ -21,8 +20,7 @@ export default class Player {
 
 	private _role!: Role;
 	private messageQueue: string[] = [];
-	public constructor(public user: User, public game: Game) {
-	}
+	public constructor(public user: User, public game: Game) {}
 
 	public async sendPM(sendTeamInfo = true) {
 		const rolePM = [
@@ -32,10 +30,14 @@ export default class Player {
 		await this.user.send(rolePM);
 
 		if (this.role.faction.informed && sendTeamInfo) {
-			const team = this.game.players.filter(player => player.role.faction.name === this.role.faction.name);
+			const team = this.game.players.filter((player) => player.role.faction.name === this.role.faction.name);
 			if (team.length > 1) {
 				const factionalChannel = ENABLE_PRIVATE_CHANNELS ? await this.role.faction.generateInvite(this.game) : null;
-				await this.user.send(`Your team consists of: ${team.map(player => `${player.user.tag} (${player.role.name})`).join(', ')}\n${factionalChannel ? `Factional channel: ${factionalChannel}` : ''}`);
+				await this.user.send(
+					`Your team consists of: ${team.map((player) => `${player.user.tag} (${player.role.name})`).join(', ')}\n${
+						factionalChannel ? `Factional channel: ${factionalChannel}` : ''
+					}`
+				);
 			}
 		}
 	}
@@ -72,15 +74,13 @@ export default class Player {
 	}
 
 	public displayRoleAndWill(night = false): string {
-		const roleText = this.cleaned && night
-			? 'We could not determine their role.'
-			: `They were a **${this.role!.display}**.`;
+		const roleText = this.cleaned && night ? 'We could not determine their role.' : `They were a **${this.role!.display}**.`;
 
 		const willText = this.game.settings.disableWills
 			? ''
 			: this.will && !(this.cleaned && night)
-				? ` They left a will:\n\`\`\`${this.will}\`\`\`\n`
-				: ' We could not find a will.';
+			? ` They left a will:\n\`\`\`${this.will}\`\`\`\n`
+			: ' We could not find a will.';
 
 		return `${roleText}${willText}`;
 	}
@@ -90,18 +90,18 @@ export default class Player {
 			user: this.user.toJSON(),
 			role: this.role
 				? {
-					name: this.role.name,
-					modifiers: this.role.modifiers
-				}
+						name: this.role.name,
+						modifiers: this.role.modifiers
+				  }
 				: null,
-			previousRoles: this.previousRoles.map(role => ({ name: role.name, modifiers: role.modifiers })),
+			previousRoles: this.previousRoles.map((role) => ({ name: role.name, modifiers: role.modifiers })),
 			isAlive: this.isAlive,
 			cleaned: this.cleaned,
 			flags: this.flags,
 			deathReason: this.deathReason,
 			will: this.will,
 			messageQueue: this.messageQueue,
-			visitors: this.visitors.map(visitor => visitor.toJSON())
+			visitors: this.visitors.map((visitor) => visitor.toJSON())
 		};
 	}
 
@@ -120,5 +120,4 @@ export default class Player {
 		if (this._role) this.previousRoles.push(this._role);
 		this._role = role;
 	}
-
 }

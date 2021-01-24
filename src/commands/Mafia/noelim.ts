@@ -1,17 +1,24 @@
-import { BucketType, CommandOptions } from '@sapphire/framework';
-import { ApplyOptions } from '@sapphire/decorators';
 import GodfatherCommand from '@lib/GodfatherCommand';
-import { Message } from 'discord.js';
 import { Phase } from '@mafia/structures/Game';
+import { ApplyOptions } from '@sapphire/decorators';
+import { BucketType, CommandOptions } from '@sapphire/framework';
 import { Time } from '@sapphire/time-utilities';
+import type { Message } from 'discord.js';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['noeliminate', 'vtnl', 'nl'],
 	description: 'Vote to not eliminate.',
-	preconditions: ['GuildOnly', 'GameOnly', 'PlayerOnly', 'AlivePlayerOnly', 'GameStartedOnly', 'DayOnly', { name: 'Cooldown', context: { bucketType: BucketType.Channel, delay: Number(Time.Second) } }]
+	preconditions: [
+		'GuildOnly',
+		'GameOnly',
+		'PlayerOnly',
+		'AlivePlayerOnly',
+		'GameStartedOnly',
+		'DayOnly',
+		{ name: 'Cooldown', context: { bucketType: BucketType.Channel, delay: Number(Time.Second) } }
+	]
 })
 export default class extends GodfatherCommand {
-
 	public async run(message: Message) {
 		const { game } = message.channel;
 		const voter = game!.players.get(message.author)!;
@@ -26,5 +33,4 @@ export default class extends GodfatherCommand {
 			await game!.startNight();
 		}
 	}
-
 }

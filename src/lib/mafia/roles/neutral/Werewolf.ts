@@ -1,12 +1,11 @@
-import Killer from '@mafia/mixins/Killer';
-import NightActionsManager, { Attack, Defence } from '@mafia/managers/NightActionsManager';
 import WerewolfFaction from '@mafia/factions/neutral/Werewolf';
-import Player from '@mafia/structures/Player';
+import NightActionsManager, { Attack, Defence } from '@mafia/managers/NightActionsManager';
+import Killer from '@mafia/mixins/Killer';
+import type Player from '@mafia/structures/Player';
 
 export default class Werewolf extends Killer {
-
 	public name = 'Werewolf';
-	public description = 'You may rampage at someone\'s house every night.';
+	public description = "You may rampage at someone's house every night.";
 	public faction = new WerewolfFaction();
 	public action = 'maul';
 	public actionGerund = 'mauling';
@@ -21,7 +20,7 @@ export default class Werewolf extends Killer {
 
 	public tearDown(actions: NightActionsManager, target: Player) {
 		// kill all visitors
-		const visitors = target.visitors.filter(player => player.user.id !== this.player.user.id);
+		const visitors = target.visitors.filter((player) => player.user.id !== this.player.user.id);
 		for (const visitor of visitors) {
 			if (visitor.role.actualDefence > this.attackStrength) continue;
 			actions.record.setAction(visitor.user.id, 'nightkill', { result: true, by: [this.player], type: this.attackStrength });
@@ -71,7 +70,6 @@ export default class Werewolf extends Killer {
 	private canRampage() {
 		return this.game.isFullMoon;
 	}
-
 }
 
 Werewolf.categories = [...Werewolf.categories, 'Neutral Killing', 'Evil'];

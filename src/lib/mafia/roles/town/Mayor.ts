@@ -1,10 +1,9 @@
 import SingleTarget from '@mafia/mixins/SingleTarget';
-import { Phase } from '@mafia/structures/Game';
 import Townie from '@mafia/mixins/Townie';
-import { Message } from 'discord.js';
+import { Phase } from '@mafia/structures/Game';
+import type { Message } from 'discord.js';
 
 class Mayor extends SingleTarget {
-
 	public name = 'Mayor';
 	public action = 'reveal';
 	public actionText = 'to reveal yourself as the mayor';
@@ -30,7 +29,6 @@ class Mayor extends SingleTarget {
 	}
 
 	public static unique = true;
-
 }
 
 Mayor.categories = [...Mayor.categories, 'Town Support'];

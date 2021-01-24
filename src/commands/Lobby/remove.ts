@@ -1,9 +1,9 @@
-import { Args, CommandOptions } from '@sapphire/framework';
-import { ApplyOptions } from '@sapphire/decorators';
 import GodfatherCommand from '@lib/GodfatherCommand';
-import { Message, MessageReaction, User } from 'discord.js';
+import { ApplyOptions } from '@sapphire/decorators';
+import type { Args, CommandOptions } from '@sapphire/framework';
 import { Time } from '@sapphire/time-utilities';
 import { handleRequiredArg } from '@util/utils';
+import type { Message, MessageReaction, User } from 'discord.js';
 
 @ApplyOptions<CommandOptions>({
 	description: 'Removes a player from the game.',
@@ -14,23 +14,25 @@ import { handleRequiredArg } from '@util/utils';
 	preconditions: ['GuildOnly', 'GameOnly', 'HostOnly']
 })
 export default class extends GodfatherCommand {
-
 	public async run(message: Message, args: Args) {
 		const player = await args.pick('player').catch(handleRequiredArg('player'));
 		const { game } = message.channel;
 		if (game?.host.user.id === player.user.id) return message.channel.send('You cannot remove yourself.');
 		if (!game!.hasStarted) {
 			// directly remove the player if the game hasn't started
-			game!.players.remove(player);
+			void game!.players.remove(player);
 			return message.channel.send(`✅ Succesfully removed ${player}.`);
 		}
 		// if the game has started, we give the player 45 seconds to prove they aren't AFK
 		const confirmationMessage = await message.channel.send(`${player.user}, you still around?`);
 		await confirmationMessage.react('✅');
-		const reactions = await confirmationMessage.awaitReactions((reaction: MessageReaction, user: User) => reaction.emoji.name === '✅' && user.id === player.user.id, {
-			max: 1,
-			time: Time.Second * 45
-		});
+		const reactions = await confirmationMessage.awaitReactions(
+			(reaction: MessageReaction, user: User) => reaction.emoji.name === '✅' && user.id === player.user.id,
+			{
+				max: 1,
+				time: Time.Second * 45
+			}
+		);
 
 		if (reactions.size > 0) {
 			await message.react('❌');
@@ -43,5 +45,4 @@ export default class extends GodfatherCommand {
 			return game!.end(winCheck);
 		}
 	}
-
 }

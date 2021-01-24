@@ -1,7 +1,7 @@
 import GodfatherCommand from '@lib/GodfatherCommand';
 import { ApplyOptions } from '@sapphire/decorators';
-import { CommandOptions } from '@sapphire/framework';
-import { Message } from 'discord.js';
+import type { CommandOptions } from '@sapphire/framework';
+import type { Message } from 'discord.js';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['del', 'deletegame'],
@@ -9,7 +9,6 @@ import { Message } from 'discord.js';
 	preconditions: ['GuildOnly', 'GameOnly', ['AdminOnly', 'HostOnly']]
 })
 export default class extends GodfatherCommand {
-
 	public async run(message: Message) {
 		const { game } = message.channel;
 		if (game!.hasStarted) {
@@ -20,5 +19,4 @@ export default class extends GodfatherCommand {
 		await game!.delete();
 		return message.react('✅');
 	}
-
 }

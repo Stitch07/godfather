@@ -1,6 +1,6 @@
 import { mergeDefault } from '@sapphire/utilities';
+import type { TextChannel } from 'discord.js';
 import { mock } from 'jest-mock-extended';
-import { TextChannel } from 'discord.js';
 
 const DEFAULT_CHANNEL_INFO = {
 	name: 'Tester'
@@ -16,4 +16,3 @@ export const createMockChannel = (params: MockChannelParams = DEFAULT_CHANNEL_IN
 	mockChannel.name = params.name;
 	return mockChannel;
 };
-
