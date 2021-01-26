@@ -18,7 +18,9 @@ export default class extends Event<Events.UnknownCommand> {
 		const player = game.players.get(message.author)!;
 		if (!fauxAlive(player) || !Reflect.has(player.role, 'action')) return;
 
-		if ((player.role! as SingleTarget).actionPhase !== game.phase) return;
+		// checks for a bitwise AND so that action phases can be aggregated using bitwise AND
+		// for example, an actionPhase set to Day | Night will work in both of those phases
+		if (((player.role! as SingleTarget).actionPhase & game.phase) !== game.phase) return;
 		const prefixLess = message.content.slice(prefix.length);
 		const [commandText, ...parameters] = prefixLess.split(' ');
 		try {

@@ -25,12 +25,12 @@ const TRIAL_DURATION = 30 * Time.Second;
 const TRIAL_VOTING_DURATION = 30 * Time.Second;
 
 export const enum Phase {
-	Pregame = 1,
-	Standby,
-	Day,
-	Trial,
-	TrialVoting,
-	Night
+	Pregame = 2,
+	Standby = 4,
+	Day = 8,
+	Trial = 16,
+	TrialVoting = 32,
+	Night = 64
 }
 
 export default class Game {
@@ -122,7 +122,7 @@ export default class Game {
 		for (const player of this.players) {
 			// clear visitors
 			player.visitors = [];
-			if (player.isAlive && player.role.canUseAction().check && (player.role as SingleTarget).actionPhase === Phase.Day) {
+			if (player.isAlive && player.role.canUseAction().check && ((player.role as SingleTarget).actionPhase & Phase.Day) === Phase.Day) {
 				await player.role.onDay();
 			}
 		}
@@ -234,7 +234,7 @@ export default class Game {
 			if (this.totalTrials === this.settings.maxTrials) {
 				this.phase = Phase.Standby;
 				this.idlePhases++;
-				await this.channel.send('Maximum trials reached. Nobody was lynched!');
+				await this.channel.send('Maximum trials reached. Nobody was eliminated!');
 				await this.startNight();
 			}
 			if (this.dayTimeLeft !== 0) await this.channel.send(`${this.votes.playerOnTrial!.user.tag} was acquitted.`);
@@ -292,7 +292,7 @@ export default class Game {
 						const candidates = this.players.filter((player) => this.votes.on(player).count() === largestVoteCount);
 						const eliminatedPlayer = randomArray(candidates)!;
 						await this.channel.send(
-							`${eliminatedPlayer.user.tag} was lynched. ${eliminatedPlayer.displayRoleAndWill()}\n${this.votes.show({
+							`${eliminatedPlayer.user.tag} was eliminated. ${eliminatedPlayer.displayRoleAndWill()}\n${this.votes.show({
 								header: 'Final Vote Count',
 								codeblock: true
 							})}`

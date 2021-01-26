@@ -7,7 +7,7 @@ class Mayor extends SingleTarget {
 	public name = 'Mayor';
 	public action = 'reveal';
 	public actionText = 'to reveal yourself as the mayor';
-	public actionPhase = Phase.Day;
+	public actionPhase = Phase.Day | Phase.Trial | Phase.TrialVoting;
 	public description = 'You may reveal yourself as the Mayor of the Town.';
 	public hasRevealed = false;
 

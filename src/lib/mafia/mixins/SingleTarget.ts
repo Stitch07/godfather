@@ -44,7 +44,8 @@ class SingleTarget extends Role {
 		let { check, reason } = this.canUseAction();
 		if (!check) throw `You cannot use your action. ${reason}`;
 
-		if (this.game.phase === Phase.Day) return this.onDayCommand(message, command, ...args);
+		if (this.game.phase === Phase.Day || this.game.phase === Phase.Trial || this.game.phase === Phase.TrialVoting)
+			return this.onDayCommand(message, command, ...args);
 		if (!this.possibleActions.includes(command)) return;
 
 		remove(this.game.nightActions, (action) => action.actor === this.player);

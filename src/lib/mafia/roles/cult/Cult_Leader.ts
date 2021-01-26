@@ -44,7 +44,7 @@ class CultLeader extends SingleTarget {
 
 		if (!CAN_CONVERT.includes(target.role.faction.name)) {
 			// kill the target if CL cannot convert
-			actions.record.setAction(target.user.id, 'nightkill', { result: true, by: [this.player], type: Attack.Unstoppable });
+			actions.record.setAction(target.user.id, 'nightkill', { result: true, by: [this.player], type: Attack.Basic });
 			target.queueMessage('You were denounced by a Cult Leader.');
 			return;
 		}

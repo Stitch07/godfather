@@ -62,4 +62,4 @@ export interface SurvivorContext {
 }
 
 Survivor.aliases = ['Surv'];
-Survivor.categories = [...Survivor.categories, 'Neutral Benign', 'Good'];
+Survivor.categories = [...Survivor.categories, 'Neutral Benign'];
