@@ -2,6 +2,15 @@
 
 All notable changes to Godfather will be documented in this file.
 
+## v1.2.1
+
+### Bug Fixes:
+
+-   Mayors can now reveal on stand and during trial-voting.
+-   Removed the role categories **Good** and **Evil** because of frequent errors.
+-   Cult chats are now created at the start of the game instead of after a successful conversion.
+-   Removed a couple of usages of the "lynch".
+
 ## v1.2.0
 
 ### Features:
@@ -13,8 +22,8 @@ All notable changes to Godfather will be documented in this file.
 -   **Role Modifiers**: Role modifiers let you apply changes to a role. To use modifiers on a role in a setup, use `Rolename +Mod1 +Mod2`. For example: `Serial Killer +innocent +strongman`. Available role modifiers include:
     1.  Innocent: The target will show up as innocent to cops.
     2.  Suspicious: The target will show up as suspicious to cops.
-    3.  <N>Vote: The role will have <N> votes. (+3Vote)
-    4.  <N>Shot: (killing roles only) The role will have <N> bullets.
+    3.  NVote: The role will have N votes. (+3Vote)
+    4.  NShot: (killing roles only) The role will have N bullets.
     5.  Strongman: (killing roles only) The role will have a powerful attack.
 -   **Wills**: Allow players to set their will using `=will <message>`. Wills can be disabled by the setting `disableWills`.
 -   **Plurality Votes**: When enabled (using the setting `enablePlurality`), the player with the most votes is auto-hammered at EoD, in case a lynch cannot be achieved.
