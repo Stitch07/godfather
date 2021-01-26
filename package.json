@@ -20,8 +20,8 @@
 		"typeorm": "node -r module-alias/register ./node_modules/typeorm/cli.js",
 		"predev:typeorm": "yarn build",
 		"dev:typeorm": "yarn typeorm",
-    "start": "node -r source-map-support/register dist/",
-    "format": "prettier --write \"{src,tests}/**/*.{js,ts,mjs}\" \"{babel,jest}.config.js\" \"{CHANGELOG,CONTRIBUTING,README}.md\" *.yml"
+		"start": "node -r source-map-support/register dist/",
+		"format": "prettier --write \"{src,tests}/**/*.{js,ts,mjs}\" \"{babel,jest}.config.js\" \"{CHANGELOG,CONTRIBUTING,README}.md\" *.yml"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.12.10",
@@ -30,7 +30,7 @@
 		"@sapphire/prettier-config": "^1.0.6",
 		"@sapphire/ts-config": "^2.0.0",
 		"@types/jest": "^26.0.20",
-		"@types/js-yaml": "^3.12.6",
+		"@types/js-yaml": "^4.0.0",
 		"@types/module-alias": "^2.0.0",
 		"@types/node-fetch": "^2.5.8",
 		"@types/ws": "^7.4.0",
@@ -65,7 +65,7 @@
 		"bufferutil": "^4.0.3",
 		"discord.js": "^12.5.1",
 		"fs-nextra": "^0.5.1",
-		"js-yaml": "^3.14.1",
+		"js-yaml": "^4.0.0",
 		"module-alias": "^2.2.2",
 		"node-fetch": "^2.6.1",
 		"pg": "^8.5.1",

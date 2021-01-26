@@ -1,15 +1,15 @@
+import { DEFAULT_GAME_SETTINGS } from '@lib/constants';
+import { allRoles, roleCategories } from '@mafia/roles';
+import Executioner from '@mafia/roles/neutral/Executioner';
+import Mayor from '@mafia/roles/town/Mayor';
+import type Modifier from '@mafia/structures/Modifier';
+import type Role from '@mafia/structures/Role';
+import Setup, { SetupOptions } from '@mafia/structures/Setup';
 import { err, ok, PieceContext } from '@sapphire/framework';
 import type { Constructor } from '@sapphire/utilities';
 import { randomArray, shuffle } from '@util/utils';
 import type { Client } from 'discord.js';
-import { DEFAULT_GAME_SETTINGS } from '../../constants';
-import { allRoles, roleCategories } from '../roles';
-import Executioner from '../roles/neutral/Executioner';
-import Mayor from '../roles/town/Mayor';
-import type Modifier from './Modifier';
-import type Role from './Role';
-import Setup, { SetupOptions } from './Setup';
-import yaml = require('js-yaml');
+import yaml from 'js-yaml';
 
 export default class BasicSetup extends Setup {
 	public randomMafia!: Constructor<Role>[];
@@ -103,7 +103,7 @@ export default class BasicSetup extends Setup {
 	public static create(client: Client, data: string): BasicSetup {
 		// eslint-disable-next-line @typescript-eslint/init-declarations
 		let setupData: SetupData;
-		const rawData = yaml.safeLoad(data);
+		const rawData = yaml.load(data)!;
 		if (typeof rawData === 'string' && rawData.includes(',')) {
 			setupData = { roles: rawData.split(',').map((role) => role.trim()) };
 		} else if (Array.isArray(rawData)) {
