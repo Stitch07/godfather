@@ -9,7 +9,7 @@ import { codeBlock } from '@sapphire/utilities';
 import DefaultMap from '@util/DefaultMap';
 import { Branding } from '@util/utils';
 import { Collection, Message, MessageEmbed } from 'discord.js';
-import * as roledocs from '../../assets/roledocs.json';
+import roledocs from '../../assets/roledocs.json';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['role', 'roles'],
