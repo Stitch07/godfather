@@ -7,7 +7,6 @@ import { Args, BucketType, CommandContext, CommandOptions } from '@sapphire/fram
 import { Time } from '@sapphire/time-utilities';
 import { codeBlock } from '@sapphire/utilities';
 import DefaultMap from '@util/DefaultMap';
-import { Branding } from '@util/utils';
 import { Collection, Message, MessageEmbed } from 'discord.js';
 import roledocs from '../../assets/roledocs.json';
 
@@ -52,7 +51,7 @@ export default class extends GodfatherCommand {
 
 			const embed = new MessageEmbed()
 				.setAuthor('Roles', this.context.client.user!.displayAvatarURL())
-				.setColor(Branding.PrimaryColor)
+				.setColor('#000000')
 				.setFooter(`For more information on a specific role, use ${context.prefix}roleinfo <role>.`)
 				.setDescription(description.join('\n'));
 
@@ -69,7 +68,7 @@ export default class extends GodfatherCommand {
 				`${role.name} ${role.faction.name === role.name ? '' : `(${role.faction.name})`}`,
 				this.context.client.user!.displayAvatarURL()
 			)
-			.setColor(Branding.PrimaryColor)
+			.setColor('#000000')
 			.setDescription(codeBlock('diff', docEntry.detailedDescription.join('\n')))
 			// @ts-ignore s t a t i c
 			.setFooter(`Categories: ${role.constructor.categories.sort().join(', ')}`);

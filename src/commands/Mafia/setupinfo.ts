@@ -2,7 +2,6 @@ import GodfatherCommand from '@lib/GodfatherCommand';
 import { ApplyOptions } from '@sapphire/decorators';
 import { Args, BucketType, CommandOptions } from '@sapphire/framework';
 import { codeBlock } from '@sapphire/utilities';
-import { enumerate } from '@util/utils';
 import type { Message } from 'discord.js';
 
 @ApplyOptions<CommandOptions>({
@@ -22,7 +21,7 @@ export default class extends GodfatherCommand {
 			];
 			if (setup.roles.length) {
 				output.push('Roles:');
-				for (const [i, role] of enumerate(setup.roles)) {
+				for (const [i, role] of setup.roles.entries()) {
 					// eslint-disable-next-line @typescript-eslint/restrict-plus-operands
 					output.push(`${i + 1}. ${role}`);
 				}

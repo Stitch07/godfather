@@ -1,6 +1,6 @@
 import { PREFIX } from '@root/config';
 import { codeBlock } from '@sapphire/utilities';
-import { cast, listItems, remove } from '@util/utils';
+import { cast, listItems, removeArrayItem } from '@util/utils';
 import type { Message } from 'discord.js';
 import ArsonistFaction from '../../factions/neutral/Arsonist';
 import NightActionsManager, { Attack, Defence, NightActionPriority } from '../../managers/NightActionsManager';
@@ -22,7 +22,7 @@ class Arsonist extends Role {
 		if (!this.validActions.includes(command)) return;
 		if (command === 'ignite' && this.dousedPlayers.length === 0) throw "You haven't doused anyone to ignite yet!";
 
-		remove(this.game.nightActions, (action) => action.actor === this.player);
+		removeArrayItem(this.game.nightActions, (action) => action.actor === this.player);
 
 		switch (command) {
 			case 'cancel':

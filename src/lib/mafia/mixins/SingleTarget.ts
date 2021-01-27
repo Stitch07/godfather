@@ -6,7 +6,7 @@ import Role from '@mafia/structures/Role';
 import { PREFIX } from '@root/config';
 import { DEFAULT_ACTION_FLAGS } from '@root/lib/constants';
 import { Awaited, codeBlock } from '@sapphire/utilities';
-import { listItems, remove } from '@util/utils';
+import { listItems, removeArrayItem } from '@util/utils';
 import type { Message } from 'discord.js';
 
 class SingleTarget extends Role {
@@ -48,7 +48,7 @@ class SingleTarget extends Role {
 			return this.onDayCommand(message, command, ...args);
 		if (!this.possibleActions.includes(command)) return;
 
-		remove(this.game.nightActions, (action) => action.actor === this.player);
+		removeArrayItem(this.game.nightActions, (action) => action.actor === this.player);
 
 		switch (command) {
 			case 'cancel':

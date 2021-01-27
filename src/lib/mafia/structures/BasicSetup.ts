@@ -7,7 +7,7 @@ import type Role from '@mafia/structures/Role';
 import Setup, { SetupOptions } from '@mafia/structures/Setup';
 import { err, ok, PieceContext } from '@sapphire/framework';
 import type { Constructor } from '@sapphire/utilities';
-import { randomArray, shuffle } from '@util/utils';
+import { randomArrayItem, shuffle } from '@util/utils';
 import type { Client } from 'discord.js';
 import yaml from 'js-yaml';
 
@@ -129,12 +129,12 @@ export default class BasicSetup extends Setup {
 
 	private static _resolve(client: Client, roleName: string, uniqueRoles: Constructor<Role>[]): Constructor<Role> {
 		if (allRoles.has(roleName)) return allRoles.get(roleName)!;
-		else if (roleCategories.has(roleName)) return randomArray(roleCategories.get(roleName)!.filter((role) => !uniqueRoles.includes(role)))!;
+		else if (roleCategories.has(roleName)) return randomArrayItem(roleCategories.get(roleName)!.filter((role) => !uniqueRoles.includes(role)))!;
 
 		// Role1 | Role2 (one of these 2)
 		if (/(\w+) ?\| ?(\w+)/.test(roleName)) {
 			const possibleRoles = /(\w+) ?\| ?(\w+)/.exec(roleName)!.slice(1, 3);
-			return this.resolve(client, randomArray(possibleRoles)!, uniqueRoles).role;
+			return this.resolve(client, randomArrayItem(possibleRoles)!, uniqueRoles).role;
 		}
 
 		// Category MINUS Role(s)
@@ -150,7 +150,7 @@ export default class BasicSetup extends Setup {
 
 			const validRoles = roleCategories.get(category)!.filter((role) => !excludedRoleCtors.includes(role));
 			if (validRoles.length === 0) throw 'You cannot exclude all roles from a category.';
-			return randomArray(validRoles)!;
+			return randomArrayItem(validRoles)!;
 		}
 
 		throw `Invalid role provided: \`${roleName}\`.`;

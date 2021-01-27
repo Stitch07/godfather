@@ -2,7 +2,6 @@ import GodfatherCommand from '@lib/GodfatherCommand';
 import { SUPPORT_SERVER } from '@root/config';
 import { ApplyOptions } from '@sapphire/decorators';
 import type { Args, CommandOptions, CommandStore } from '@sapphire/framework';
-import { Branding } from '@util/utils';
 import { Message, MessageEmbed } from 'discord.js';
 
 @ApplyOptions<CommandOptions>({
@@ -30,7 +29,7 @@ export default class extends GodfatherCommand {
 		const prefix = await this.context.client.fetchPrefix(message);
 
 		const embed = new MessageEmbed()
-			.setColor(Branding.PrimaryColor)
+			.setColor('#000000')
 			.setAuthor(this.context.client.user!.username, this.context.client.user!.displayAvatarURL())
 			.setDescription(
 				[
@@ -49,7 +48,7 @@ export default class extends GodfatherCommand {
 
 	public buildCommandHelp(command: GodfatherCommand) {
 		return new MessageEmbed()
-			.setColor(Branding.PrimaryColor)
+			.setColor('#000000')
 			.setAuthor(this.context.client.user!.username, this.context.client.user!.displayAvatarURL())
 			.addField([command.name, ...command.aliases].join('|'), command.description === '' ? 'No description available.' : command.description)
 			.addField('Detailed Description', command.detailedDescription === '' ? 'No detailed description available' : command.detailedDescription);

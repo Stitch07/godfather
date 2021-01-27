@@ -13,10 +13,6 @@ export const initClean = () => {
 	sensitiveTokens = new RegExp(TOKENS.map(regExpEsc).join('|'), 'gi');
 };
 
-export namespace Branding {
-	export const PrimaryColor = '#000000';
-}
-
 export const shuffle = <T>(array: readonly T[]): T[] => {
 	const clone = array.slice();
 	const shuffled = [];
@@ -29,7 +25,7 @@ export const shuffle = <T>(array: readonly T[]): T[] => {
 	return shuffled;
 };
 
-export const randomArray = <T>(array: readonly T[]): T | null => {
+export const randomArrayItem = <T>(array: readonly T[]): T | null => {
 	if (array.length === 0) return null;
 	return array[Math.floor(Math.random() * array.length)];
 };
@@ -57,21 +53,11 @@ export const clean = (text: string) => text.replace(sensitiveTokens!, '「ｒｅ
 export const cast = <T>(from: unknown) => from as T;
 
 /**
- * Python's enumerate()
- * @param array The array to iterate over
- */
-export function* enumerate<T>(array: readonly T[]): Generator<[number, T]> {
-	for (let i = 0; i < array.length; i++) {
-		yield [i, array[i]];
-	}
-}
-
-/**
- * Removes an element from an array
+ * Removes an item from an array
  * @param array The array to modify
  * @param element A callback returning the element to remove
  */
-export const remove = <T>(array: T[], element: (value: T, index?: number, obj?: T[]) => unknown) => {
+export const removeArrayItem = <T>(array: T[], element: (value: T, index?: number, obj?: T[]) => unknown) => {
 	const index = array.findIndex(element);
 	if (index !== -1) array.splice(index, 1);
 };

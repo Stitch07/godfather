@@ -3,7 +3,6 @@ import { ApplyOptions } from '@sapphire/decorators';
 import { CommandOptions, PermissionsPrecondition } from '@sapphire/framework';
 import { roundNumber } from '@sapphire/utilities';
 import { format } from '@util/durationFormat';
-import { Branding } from '@util/utils';
 import { Message, MessageEmbed } from 'discord.js';
 import { cpus } from 'os';
 
@@ -20,7 +19,7 @@ export default class extends GodfatherCommand {
 		const prefix = await this.context.client.fetchPrefix(message);
 		const { generalStatistics, serverStatistics } = this;
 		return new MessageEmbed()
-			.setColor(Branding.PrimaryColor)
+			.setColor('#000000')
 			.setAuthor(this.context.client.user!.username, this.context.client.user!.displayAvatarURL({ format: 'png' }))
 			.setDescription(
 				`To add ${this.context.client.user!.username} to your server, use the \`${

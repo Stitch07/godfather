@@ -2,7 +2,7 @@ import GuardianAngelFaction from '@mafia/factions/neutral/GuardianAngel';
 import NightActionsManager, { Attack, NightActionPriority } from '@mafia/managers/NightActionsManager';
 import NoTarget from '@mafia/mixins/NoTarget';
 import type Player from '@mafia/structures/Player';
-import { pluralize, randomArray, remove } from '@util/utils';
+import { pluralize, randomArrayItem, removeArrayItem } from '@util/utils';
 import { allRoles } from '..';
 
 class Guardian_Angel extends NoTarget {
@@ -38,7 +38,7 @@ class Guardian_Angel extends NoTarget {
 			return this.player.sendPM();
 		}
 
-		this.target = randomArray(possibleTargets)!;
+		this.target = randomArrayItem(possibleTargets)!;
 		return this.player.user.send(`Your target is ${this.target.user.username}.`);
 	}
 
@@ -58,7 +58,7 @@ class Guardian_Angel extends NoTarget {
 	}
 
 	public async onNight() {
-		remove(this.game.nightActions.protectedPlayers, (player) => player === this.target);
+		removeArrayItem(this.game.nightActions.protectedPlayers, (player) => player === this.target);
 
 		if (!this.target.isAlive && this.player.isAlive) {
 			await this.player.user.send('Your target has died! You have become a survivor.');

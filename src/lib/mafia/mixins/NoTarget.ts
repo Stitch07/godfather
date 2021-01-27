@@ -5,7 +5,7 @@ import { Phase } from '@mafia/structures/Game';
 import Role from '@mafia/structures/Role';
 import { PREFIX } from '@root/config';
 import type { Awaited } from '@sapphire/framework';
-import { remove } from '@util/utils';
+import { removeArrayItem } from '@util/utils';
 import type { Message } from 'discord.js';
 
 class NoTarget extends Role {
@@ -29,7 +29,7 @@ class NoTarget extends Role {
 
 		if (!this.possibleActions.includes(command)) return;
 
-		remove(this.game.nightActions, (action) => action.actor === this.player);
+		removeArrayItem(this.game.nightActions, (action) => action.actor === this.player);
 
 		switch (command) {
 			case 'cancel':

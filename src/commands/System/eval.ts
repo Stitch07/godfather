@@ -44,7 +44,7 @@ export default class extends GodfatherCommand {
 		return message.channel.send(`${output}\n${typeFooter}`);
 	}
 
-	private async eval(_: Message, code: string, flags: { async: boolean; depth: number; showHidden: boolean }) {
+	private async eval(message: Message, code: string, flags: { async: boolean; depth: number; showHidden: boolean }) {
 		if (flags.async) code = `(async () => {\n${code}\n})();`;
 		let success = true;
 		let result = null;

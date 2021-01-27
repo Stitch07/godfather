@@ -2,7 +2,7 @@ import ExecutionerFaction from '@mafia/factions/neutral/Executioner';
 import { allRoles } from '@mafia/roles';
 import type Player from '@mafia/structures/Player';
 import Role from '@mafia/structures/Role';
-import { randomArray } from '@util/utils';
+import { randomArrayItem } from '@util/utils';
 
 class Executioner extends Role {
 	public name = 'Executioner';
@@ -19,7 +19,7 @@ class Executioner extends Role {
 			return this.player.sendPM();
 		}
 
-		this.target = randomArray(targets)!;
+		this.target = randomArrayItem(targets)!;
 		return this.player.user.send(`Your target is ${this.target.user.tag}.`);
 	}
 }

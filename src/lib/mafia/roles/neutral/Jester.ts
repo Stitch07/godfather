@@ -2,7 +2,7 @@ import JesterFaction from '@mafia/factions/neutral/Jester';
 import NightActionsManager, { Attack, NightActionPriority } from '@mafia/managers/NightActionsManager';
 import SingleTarget from '@mafia/mixins/SingleTarget';
 import type Player from '@mafia/structures/Player';
-import { randomArray } from '@util/utils';
+import { randomArrayItem } from '@util/utils';
 import { TrialVoteType } from '../../managers/VoteManager';
 
 class Jester extends SingleTarget {
@@ -55,7 +55,7 @@ class Jester extends SingleTarget {
 	}
 
 	public get defaultAction() {
-		const randomHaunt = randomArray(this.playersVoting);
+		const randomHaunt = randomArrayItem(this.playersVoting);
 		if (randomHaunt) {
 			return {
 				actor: this.player,

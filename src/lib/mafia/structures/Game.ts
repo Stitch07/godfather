@@ -14,7 +14,7 @@ import { getConnection, getRepository } from 'typeorm';
 import { STALEMATE_PRIORITY_ORDER } from '../../constants';
 import GameEntity from '../../orm/entities/Game';
 import PlayerEntity from '../../orm/entities/Player';
-import { canManage, fauxAlive, listItems, randomArray } from '../../util/utils';
+import { canManage, fauxAlive, listItems, randomArrayItem } from '../../util/utils';
 // import GameEntity from '../orm/entities/Game';
 // import { getRepository } from 'typeorm';
 import type SingleTarget from '../mixins/SingleTarget';
@@ -290,7 +290,7 @@ export default class Game {
 						}
 
 						const candidates = this.players.filter((player) => this.votes.on(player).count() === largestVoteCount);
-						const eliminatedPlayer = randomArray(candidates)!;
+						const eliminatedPlayer = randomArrayItem(candidates)!;
 						await this.channel.send(
 							`${eliminatedPlayer.user.tag} was eliminated. ${eliminatedPlayer.displayRoleAndWill()}\n${this.votes.show({
 								header: 'Final Vote Count',

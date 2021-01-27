@@ -2,7 +2,7 @@ import NightActionsManager, { Attack, NightActionPriority } from '@mafia/manager
 import SingleTarget from '@mafia/mixins/SingleTarget';
 import Townie from '@mafia/mixins/Townie';
 import type Player from '@mafia/structures/Player';
-import { randomArray } from '@root/lib/util/utils';
+import { randomArrayItem } from '@root/lib/util/utils';
 
 class Crusader extends SingleTarget {
 	public name = 'Crusader';
@@ -21,7 +21,7 @@ class Crusader extends SingleTarget {
 
 		// Select visitor to be killed.
 		const visitors = target.visitors.filter((player) => player.user.id !== this.player.user.id);
-		const playerToKill = randomArray(visitors)!;
+		const playerToKill = randomArrayItem(visitors)!;
 
 		// Block all nightkills.
 		const nightKills = playerRecord.get('nightkill');

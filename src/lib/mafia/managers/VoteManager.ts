@@ -1,6 +1,6 @@
 import type Game from '@mafia/structures/Game';
 import type Player from '@mafia/structures/Player';
-import { remove } from '@root/lib/util/utils';
+import { removeArrayItem } from '@root/lib/util/utils';
 
 export interface WeightedData {
 	weight: number;
@@ -45,7 +45,7 @@ export default class VoteManager extends Map<string, VoteProxy> {
 	public trialVote(voter: Player, type: TrialVoteType) {
 		if (voter.user.id === this.playerOnTrial!.user.id) throw "You're on trial, you can't vote!";
 		if (!voter.isAlive) throw 'Dead players cannot vote in trials.';
-		remove(this.trialVotes, (vote) => vote.by.user.id === voter.user.id);
+		removeArrayItem(this.trialVotes, (vote) => vote.by.user.id === voter.user.id);
 
 		this.trialVotes.push({
 			by: voter,
