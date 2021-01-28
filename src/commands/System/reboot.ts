@@ -11,6 +11,7 @@ export default class extends GodfatherCommand {
 		// when used with pm2/Docker/another process manager, it will restart the bot as soon as
 		// it shuts down
 		for (const g of this.context.client.games) {
+			await g[1].delete();
 			await g[1].channel.send('The game has been deleted due to a bot shutdown, sorry!');
 		}
 		await message.channel.send('Rebooting...');
