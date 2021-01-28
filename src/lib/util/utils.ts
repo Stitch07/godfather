@@ -6,6 +6,9 @@ import { exec as childProcessExec } from 'child_process';
 import type { Client, GuildMember } from 'discord.js';
 import { promisify } from 'util';
 
+import nodeFetch, { RequestInit } from 'node-fetch';
+import { QueryError } from '../errors/QueryError';
+
 let sensitiveTokens: RegExp | null = null;
 
 export const initClean = () => {
@@ -89,4 +92,10 @@ export const canManage = (me: GuildMember, target: GuildMember) => {
 export const handleRequiredArg = (name: string) => (error: UserError) => {
 	if (error.identifier === 'MissingArguments') throw `Missing required argument: ${name}`;
 	throw error.message;
+};
+
+export const fetch = async (url: URL | string, options?: RequestInit) => {
+	const response = await nodeFetch(url, options);
+	if (!response.ok) throw new QueryError(url, response.status, response.statusText);
+	return response;
 };

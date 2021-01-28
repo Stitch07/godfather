@@ -1,10 +1,11 @@
 import '@lib/extenders';
-import '@sapphire/plugin-logger/register';
 
 import type Game from '@mafia/structures/Game';
 import SetupStore from '@mafia/structures/SetupStore';
-import { PGSQL_ENABLED, PREFIX, PRODUCTION } from '@root/config';
+import { BFD_API_TOKEN, PGSQL_ENABLED, PREFIX, PRODUCTION, TOPGG_API_TOKEN } from '@root/config';
 import { LogLevel, SapphireClient } from '@sapphire/framework';
+import '@sapphire/plugin-logger/register';
+import { fetch } from '@util/utils';
 import { Collection, Guild, Message } from 'discord.js';
 import { getCustomRepository } from 'typeorm';
 import ModifierStore from './mafia/structures/ModifierStore';
@@ -65,5 +66,37 @@ export default class Godfather extends SapphireClient {
 
 	public get invite() {
 		return `https://discord.com/oauth2/authorize?client_id=${this.user!.id}&scope=bot%20applications.commands&permissions=402653200`;
+	}
+
+	public async uploadBotStats() {
+		if (TOPGG_API_TOKEN) {
+			await fetch(`https://top.gg/api/bots/${this.id}/stats`, {
+				headers: {
+					Authorization: TOPGG_API_TOKEN,
+					'Content-Type': 'application/json'
+				},
+				method: 'POST',
+				body: JSON.stringify({
+					server_count: this.guilds.cache.size
+				})
+			})
+				.then(() => this.logger.debug('Posted statistics to top.gg.'))
+				.catch((error) => this.logger.error('Error posting top.gg statistics', error));
+		}
+
+		if (BFD_API_TOKEN) {
+			await fetch(`https://botsfordiscord.com/api/bot/${this.id}`, {
+				headers: {
+					Authorization: BFD_API_TOKEN,
+					'Content-Type': 'application/json'
+				},
+				method: 'POST',
+				body: JSON.stringify({
+					server_count: this.guilds.cache.size
+				})
+			})
+				.then(() => this.logger.debug('Posted statistics to BFD.'))
+				.catch((error) => this.logger.error('Error posting BFD statistics', error));
+		}
 	}
 }

@@ -435,7 +435,8 @@ export default class Game {
 
 	public async delete() {
 		// free all permission overwrites
-		if (this.canOverwritePermissions && this.hasStarted) {
+		// deleted channels can't have modifiable overwrites
+		if (this.canOverwritePermissions && this.hasStarted && !this.channel.deleted) {
 			for (const userID of this.permissionOverwrites) {
 				const overwrite = this.channel.permissionOverwrites.find((permission) => permission.type === 'member' && permission.id === userID);
 				if (overwrite) await overwrite.delete();
@@ -467,7 +468,7 @@ export default class Game {
 		}
 
 		// reset adaptive slowmode
-		if (this.settings.adaptiveSlowmode && this.channel.permissionsFor(this.client.user!)!.has('MANAGE_CHANNELS'))
+		if (this.settings.adaptiveSlowmode && this.channel.permissionsFor(this.client.user!)!.has('MANAGE_CHANNELS') && !this.channel.deleted)
 			await this.channel.setRateLimitPerUser(0);
 
 		for (const [factionalChannel] of this.factionalChannels.values()) {

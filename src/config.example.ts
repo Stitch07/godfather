@@ -23,3 +23,6 @@ export const { PRIVATE_CHANNEL_CATEGORY } = process.env;
 export const ENABLE_PRIVATE_CHANNELS = process.env.ENABLE_PRIVATE_CHANNELS ? Boolean(process.env.ENABLE_PRIVATE_CHANNELS) : false;
 
 export const SENTRY_DSN = process.env.SENTRY_DSN ?? '';
+
+export const BFD_API_TOKEN = process.env.BFD_API_TOKEN ?? '';
+export const TOPGG_API_TOKEN = process.env.TOPGG_API_TOKEN ?? '';

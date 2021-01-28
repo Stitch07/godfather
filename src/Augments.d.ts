@@ -28,6 +28,7 @@ declare module 'discord.js' {
 		slashCommands: SlashCommandStore;
 		eventLoop: NodeJS.Timeout;
 		fetchGuildPrefix(guild: Guild): Promise<string>;
+		uploadBotStats(): Promise<void>;
 	}
 
 	interface TextChannel extends ChannelExtendables {}

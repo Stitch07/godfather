@@ -60,6 +60,7 @@ export default class extends Event<Events.Ready> {
 		}
 
 		this.logReady();
+		await this.context.client.uploadBotStats();
 
 		// @ts-ignore d.js needs to be updated first
 		this.context.client.ws.on('INTERACTION_CREATE', async (interaction) => {
