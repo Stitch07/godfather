@@ -3,7 +3,6 @@ import { ApplyOptions } from '@sapphire/decorators';
 import type { Args, CommandOptions } from '@sapphire/framework';
 import { Type } from '@sapphire/type';
 import { codeBlock, isThenable } from '@sapphire/utilities';
-import * as Sentry from '@sentry/node';
 import { clean, handleRequiredArg } from '@util/utils';
 import type { Message } from 'discord.js';
 import { inspect } from 'util';
@@ -54,7 +53,6 @@ export default class extends GodfatherCommand {
 		} catch (error) {
 			if (error && error.stack) {
 				this.context.client.logger.error(error);
-				Sentry.captureException(error);
 			}
 			result = error;
 			success = false;

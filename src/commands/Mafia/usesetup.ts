@@ -8,6 +8,7 @@ import type { Message } from 'discord.js';
 	description: 'Uses a custom setup.',
 	detailedDescription: [
 		'The simplest form is a list of roles separated by commas, for example usesetup Vigilante, Goon, Vanilla x5',
+		'To start the game at night, pass the `-nightStart` flag.',
 		'',
 		'To add your own name and start games at night, you may need to use [YAML](https://yaml.org/). The format for that is:',
 		'```yaml',
@@ -16,7 +17,10 @@ import type { Message } from 'discord.js';
 		'name: your_setup_name',
 		'```'
 	].join('\n'),
-	preconditions: ['GuildOnly', 'GameOnly', 'HostOnly']
+	preconditions: ['GuildOnly', 'GameOnly', 'HostOnly'],
+	strategyOptions: {
+		flags: ['nightStart', 'n']
+	}
 })
 export default class extends GodfatherCommand {
 	public async run(message: Message, args: Args) {
@@ -34,6 +38,8 @@ export default class extends GodfatherCommand {
 			if (!check.success) throw `Invalid setup: ${check.error}`;
 			game.setup = setup;
 		}
+
+		if (args.getFlags('nightStart', 'n')) game.setup!.nightStart = true;
 
 		return message.channel.send(`Using the setup: \`${game.setup!.name}\``);
 	}
