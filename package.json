@@ -21,11 +21,9 @@
 		"predev:typeorm": "yarn build",
 		"dev:typeorm": "yarn typeorm",
 		"start": "node -r source-map-support/register dist/",
-		"format": "prettier --write \"{src,tests}/**/*.{js,ts,mjs}\" \"{babel,jest}.config.js\" \"{CHANGELOG,CONTRIBUTING,README}.md\" *.yml"
+		"format": "prettier --write \"{src,tests}/**/*.{js,ts,mjs}\" \"jest.config.js\" \"{CHANGELOG,CONTRIBUTING,README}.md\" *.yml"
 	},
 	"devDependencies": {
-		"@babel/core": "^7.12.10",
-		"@babel/preset-env": "^7.12.11",
 		"@sapphire/eslint-config": "^2.1.0",
 		"@sapphire/prettier-config": "^1.0.6",
 		"@sapphire/ts-config": "^2.0.0",

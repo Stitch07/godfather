@@ -11,7 +11,6 @@
 /.eslintrc.json @Soumil07
 /Dockerfile @Soumil07
 /Dockerfile.prod @Soumil07
-/babel.config.js @Soumil07
 /docker-compose.prod.yml @Soumil07
 /docker-compose.yml @Soumil07
 /tsconfig.eslint.json @Soumil07
