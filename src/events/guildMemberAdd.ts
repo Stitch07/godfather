@@ -11,7 +11,7 @@ export default class extends Event<Events.GuildMemberAdd> {
 		if (!ENABLE_PRIVATE_CHANNELS || member.guild.id !== PRIVATE_CHANNEL_SERVER) return;
 		for (const game of this.context.client.games.values()) {
 			const player = game.players.get(member.user);
-			if (!player || !game.factionalChannels.has(player.role.faction.name)) return;
+			if (!player || !game.factionalChannels.has(player.role.faction.name)) continue;
 			const [factionalChannel] = game.factionalChannels.get(player.role.faction.name)!;
 			await factionalChannel.updateOverwrite(member, {
 				SEND_MESSAGES: true,
