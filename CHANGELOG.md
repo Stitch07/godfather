@@ -2,6 +2,23 @@
 
 All notable changes to Godfather will be documented in this file.
 
+## v1.2.2
+
+### Bug Fixes:
+
+-   Fixed a bug that prevented mafia chats from working.
+-   Fixed inconsistencies in docs for Super Saint, Veteran, Vigilante, Guardian Angel, Ambusher and Crusader.
+-   Games are now deleted during bot reboots, and players are notified of said deletion.
+
+### Features:
+
+-   Will improvements:
+    1.  Aliased `will` to `show-will` instead of `set-will`.
+    2.  Added the `--append/-a` flag to set-will: using this flag will append new text to the end of your will.
+    3. Fixed a bug that showed invalid error messages in `show-will`.
+-   Added the `--nightStart/-n` flag to *usesetup* to avoid having to use YAML for setups starting at night.
+-   Added the alias `use-setup` to `usesetup`.
+
 ## v1.2.1
 
 ### Bug Fixes:
@@ -9,7 +26,7 @@ All notable changes to Godfather will be documented in this file.
 -   Mayors can now reveal on stand and during trial-voting.
 -   Removed the role categories **Good** and **Evil** because of frequent errors.
 -   Cult chats are now created at the start of the game instead of after a successful conversion.
--   Removed a couple of usages of the "lynch".
+-   Removed a couple of usages of the word "lynch".
 
 ## v1.2.0
 

@@ -5,6 +5,7 @@ import type { Args, CommandOptions } from '@sapphire/framework';
 import type { Message } from 'discord.js';
 
 @ApplyOptions<CommandOptions>({
+	aliases: ['usesetup'],
 	description: 'Uses a custom setup.',
 	detailedDescription: [
 		'The simplest form is a list of roles separated by commas, for example usesetup Vigilante, Goon, Vanilla x5',
