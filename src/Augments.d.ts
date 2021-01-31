@@ -27,6 +27,7 @@ declare module 'discord.js' {
 		settingsCache: Map<string, GuildSettingsEntity>;
 		slashCommands: SlashCommandStore;
 		eventLoop: NodeJS.Timeout;
+		maintenance: boolean;
 		fetchGuildPrefix(guild: Guild): Promise<string>;
 		uploadBotStats(): Promise<void>;
 	}
