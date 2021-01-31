@@ -29,6 +29,9 @@ export default class extends GodfatherCommand {
 				throw `You are already playing another game in ${otherGame.channel.name} (${otherGame.channel.guild.name})`;
 		}
 
+		if (message.author.id !== this.context.client.ownerID && this.context.client.maintenance)
+			throw 'The bot is currently under maintenance. New games cannot be created.';
+
 		const game = new Game(message.author, cast<TextChannel>(message.channel), await this.getSettings(message.guild!));
 		game.createdAt = new Date();
 		this.context.client.games.set(message.channel.id, game);
