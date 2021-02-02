@@ -3,9 +3,9 @@
 	"version": "1.2.2",
 	"description": "A Discord bot that hosts games of Mafia.",
 	"main": "dist/index.js",
-	"repository": "https://github.com/Soumil07/tvm-bot.git",
-	"author": "Soumil07",
-	"license": "GPL-3.0",
+	"repository": "https://github.com/Stitch07/godfather.git",
+	"author": "Stitch07",
+	"license": "MIT",
 	"private": false,
 	"scripts": {
 		"build": "tsc -p src",
