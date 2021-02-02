@@ -1,12 +1,17 @@
 import GodfatherCommand from '@lib/GodfatherCommand';
+import { handleRequiredArg } from '@root/lib/util/utils';
 import { ApplyOptions } from '@sapphire/decorators';
 import type { Args, CommandOptions } from '@sapphire/framework';
 import type { Message } from 'discord.js';
 
 @ApplyOptions<CommandOptions>({
-	aliases: ['setwill'],
-	description: 'Sets given message as your will.',
-	preconditions: ['DMOnly']
+	generateDashLessAliases: true,
+	description: 'Sets a given message as your will.',
+	detailedDescription: 'Use the --append/-a flag to append a message to the end of your current will.',
+	preconditions: ['DMOnly'],
+	strategyOptions: {
+		flags: ['a', 'append']
+	}
 })
 export default class extends GodfatherCommand {
 	public async run(message: Message, args: Args) {
@@ -19,9 +24,10 @@ export default class extends GodfatherCommand {
 		const player = game.players.get(message.author)!;
 		if (!player.isAlive) throw 'You cannot set a will as a dead player.';
 
-		const will = await args.rest('string', { maximum: 400 }).catch(() => {
-			throw 'Missing required argument: will';
-		});
+		let will = await args.rest('string', { maximum: 400 }).catch(handleRequiredArg('will'));
+		if (args.getFlags('a', 'append')) {
+			will = player.will === '' ? will : `${player.will}\n${will}`;
+		}
 
 		if (will.split('\n').length > 8) throw 'Wills cannot be more than 8 lines.';
 		player.will = will;

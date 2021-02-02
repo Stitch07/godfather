@@ -6,7 +6,8 @@ import { Time } from '@sapphire/time-utilities';
 import type { Message } from 'discord.js';
 
 @ApplyOptions<CommandOptions>({
-	aliases: ['noeliminate', 'vtnl', 'nl'],
+	aliases: ['no-eliminate', 'vtnl', 'nl'],
+	generateDashLessAliases: true,
 	description: 'Vote to not eliminate.',
 	preconditions: [
 		'GuildOnly',

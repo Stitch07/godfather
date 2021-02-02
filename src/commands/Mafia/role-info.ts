@@ -12,6 +12,7 @@ import roledocs from '../../assets/roledocs.json';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['role', 'roles'],
+	generateDashLessAliases: true,
 	description: 'Shows a list of all roles, and gives you information on a particular role.',
 	preconditions: [
 		new PermissionsPrecondition('EMBED_LINKS'),
@@ -55,7 +56,7 @@ export default class extends GodfatherCommand {
 			const embed = new MessageEmbed()
 				.setAuthor('Roles', this.context.client.user!.displayAvatarURL())
 				.setColor('#000000')
-				.setFooter(`For more information on a specific role, use ${context.prefix}roleinfo <role>.`)
+				.setFooter(`For more information on a specific role, use ${context.prefix}role-info <role>.`)
 				.setDescription(description.join('\n'));
 
 			return message.channel.send(embed);

@@ -8,6 +8,7 @@ import type { Message } from 'discord.js';
 import { getConnection } from 'typeorm';
 
 @ApplyOptions<CommandOptions>({
+	generateDashLessAliases: true,
 	preconditions: [{ name: 'Cooldown', context: { bucketType: BucketType.Channel, delay: Time.Second * 5 } }],
 	strategyOptions: {
 		options: ['faction', 'role']

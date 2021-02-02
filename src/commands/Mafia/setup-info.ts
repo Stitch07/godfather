@@ -6,6 +6,7 @@ import type { Message } from 'discord.js';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['setups', 'setup'],
+	generateDashLessAliases: true,
 	preconditions: [{ name: 'Cooldown', context: { bucketType: BucketType.Channel, delay: 5000 } }]
 })
 export default class extends GodfatherCommand {

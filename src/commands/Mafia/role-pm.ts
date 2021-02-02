@@ -6,6 +6,7 @@ import type { Message } from 'discord.js';
 
 @ApplyOptions<CommandOptions>({
 	description: 'Get your role PM.',
+	generateDashLessAliases: true,
 	preconditions: [
 		'GuildOnly',
 		'GameOnly',
