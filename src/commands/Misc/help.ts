@@ -55,6 +55,6 @@ export default class extends GodfatherCommand {
 	}
 
 	public onLoad() {
-		this._commands = this.context.client.commands.filter((command) => (command as GodfatherCommand).category !== 'System');
+		this._commands = this.context.client.stores.get('commands').filter((command) => (command as GodfatherCommand).category !== 'System');
 	}
 }

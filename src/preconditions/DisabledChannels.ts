@@ -10,7 +10,7 @@ export default class extends Precondition {
 		const { disabledChannels } = await message.guild.readSettings();
 		const adminCheck = await cast<Precondition>(this.store.get('AdminOnly')!).run(message, command, context);
 
-		if (disabledChannels.includes(message.channel.id) && isErr(adminCheck)) return this.error(this.name, '');
+		if (disabledChannels.includes(message.channel.id) && isErr(adminCheck)) return this.error({ message: '' });
 		return this.ok();
 	}
 }

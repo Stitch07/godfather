@@ -22,6 +22,7 @@ export default abstract class Setup extends Piece {
 	public nightStart: boolean;
 	public description: string | null = null;
 	public constructor(context: PieceContext, options: SetupOptions = {}) {
+		// @ts-ignore aaaa
 		super(context, { ...options, name: (options.name ?? context.name).toLowerCase() });
 		options = mergeDefault(DEFAULT_SETUP_OPTIONS, options);
 		this.roles = options.roles!;

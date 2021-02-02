@@ -12,8 +12,11 @@ export default class extends GodfatherCommand {
 	public async run(message: Message, args: Args) {
 		const setupName = await args.restResult('string');
 		if (setupName.success || message.channel.game?.setup) {
-			if (setupName.success && !this.context.client.setups.has(setupName.value)) throw `I couldn't find a setup named "${setupName.value}"`;
-			const setup = setupName.success ? this.context.client.setups.get(setupName.value.toLowerCase())! : message.channel.game!.setup!;
+			if (setupName.success && !this.context.client.stores.get('setups').has(setupName.value))
+				throw `I couldn't find a setup named "${setupName.value}"`;
+			const setup = setupName.success
+				? this.context.client.stores.get('setups').get(setupName.value.toLowerCase())!
+				: message.channel.game!.setup!;
 			const output = [
 				`= ${setup.name} - ${setup.totalPlayers} players`,
 				`* Description: ${setup.description ?? 'No description available'}`,
@@ -30,7 +33,8 @@ export default class extends GodfatherCommand {
 		}
 
 		const prefix = await this.context.client.fetchPrefix(message);
-		const setups = this.context.client.setups
+		const setups = this.context.client.stores
+			.get('setups')
 			.sort((a, b) => a.totalPlayers - b.totalPlayers)
 			.map((setup) => `${setup.name} ${setup.roles.length ? `(${setup.totalPlayers} players)` : ''}`);
 		return message.channel.send(

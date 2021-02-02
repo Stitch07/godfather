@@ -31,8 +31,8 @@ export default class extends GodfatherCommand {
 			throw 'Missing required argument: setup data/name';
 		});
 
-		if (this.context.client.setups.has(setupData)) {
-			game.setup = this.context.client.setups.get(setupData);
+		if (this.context.client.stores.get('setups').has(setupData)) {
+			game.setup = this.context.client.stores.get('setups').get(setupData);
 		} else {
 			const setup = BasicSetup.create(this.context.client, this.clean(setupData));
 			const check = setup.ok(setup.generate(this.context.client).map((data) => data.role));

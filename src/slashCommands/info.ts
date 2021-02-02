@@ -44,7 +44,7 @@ export class RemainingSlashCommand extends SlashCommand {
 
 	public async run(interaction: any) {
 		const channel = this.context.client.channels.cache.get(interaction.channel_id) as TextChannel;
-		const command = this.context.client.commands.get('remaining')! as RemainingCommand;
+		const command = this.context.client.stores.get('commands').get('remaining')! as RemainingCommand;
 		await this.reply(interaction, command.getOutput(channel.game!));
 	}
 }

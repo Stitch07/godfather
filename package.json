@@ -51,7 +51,7 @@
 	},
 	"dependencies": {
 		"@sapphire/decorators": "^2.0.3",
-		"@sapphire/framework": "1.0.0-alpha.3",
+		"@sapphire/framework": "1.0.0-alpha.5",
 		"@sapphire/pieces": "^1.2.0",
 		"@sapphire/plugin-logger": "1.0.6",
 		"@sapphire/ratelimits": "^1.1.4",

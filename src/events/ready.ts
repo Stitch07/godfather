@@ -49,7 +49,7 @@ export default class extends Event<Events.Ready> {
 			}
 		}, 10 * 1000); // 10 seconds
 
-		for (const command of this.context.client.slashCommands.values()) {
+		for (const command of this.context.client.stores.get('slashCommands').values()) {
 			// @ts-ignore more private calls until d.js supports interactions
 			await this.context.client.api.applications(CLIENT_ID).commands.post({
 				data: {
@@ -64,7 +64,7 @@ export default class extends Event<Events.Ready> {
 
 		// @ts-ignore d.js needs to be updated first
 		this.context.client.ws.on('INTERACTION_CREATE', async (interaction) => {
-			const command = this.context.client.slashCommands.get(interaction.data.name);
+			const command = this.context.client.stores.get('slashCommands').get(interaction.data.name);
 			if (!command) return null;
 
 			const fauxMessage = {

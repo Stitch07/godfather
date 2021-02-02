@@ -15,8 +15,6 @@ import SlashCommandStore from './structures/SlashCommandStore';
 
 export default class Godfather extends SapphireClient {
 	public games: Collection<string, Game> = new Collection();
-	public setups: SetupStore;
-	public slashCommands: SlashCommandStore;
 	public ownerID: string | undefined = undefined;
 	public settingsCache = new Map<string, GuildSettingsEntity>();
 	public eventLoop!: NodeJS.Timeout;
@@ -39,15 +37,11 @@ export default class Godfather extends SapphireClient {
 			}
 		});
 
-		this.setups = new SetupStore();
-		this.registerStore(this.setups);
+		this.stores.register(new SetupStore());
+		this.stores.register(new SlashCommandStore());
+		this.stores.register(new ModifierStore());
 
-		this.slashCommands = new SlashCommandStore();
-		this.registerStore(this.slashCommands);
-
-		this.modifiers = new ModifierStore();
-		this.registerStore(this.modifiers);
-		this.modifiers.registerPath(`${process.cwd()}/dist/lib/mafia/modifiers`);
+		this.stores.get('modifiers').registerPath(`${process.cwd()}/dist/lib/mafia/modifiers`);
 
 		this.fetchPrefix = async (message: Message) => {
 			if (!message.guild) return [PREFIX, ''];

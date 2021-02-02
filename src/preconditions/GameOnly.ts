@@ -5,6 +5,6 @@ export default class extends Precondition {
 	public async run(message: Message) {
 		return message.guild && (message.channel as TextChannel).game
 			? this.ok()
-			: this.error(this.name, `A game of Mafia is not running in this channel.`);
+			: this.error({ message: `A game of Mafia is not running in this channel.` });
 	}
 }

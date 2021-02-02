@@ -22,10 +22,7 @@ declare module 'discord.js' {
 		readonly invite: string;
 		ownerID: string | undefined;
 		games: Collection<string, Game>;
-		modifiers: ModifierStore;
-		setups: SetupStore;
 		settingsCache: Map<string, GuildSettingsEntity>;
-		slashCommands: SlashCommandStore;
 		eventLoop: NodeJS.Timeout;
 		maintenance: boolean;
 		fetchGuildPrefix(guild: Guild): Promise<string>;
@@ -54,5 +51,11 @@ declare module '@sapphire/framework' {
 		gameSetting: keyof GameSettings;
 		duration: number;
 		piece: Piece;
+	}
+
+	interface StoreRegistryEntries {
+		modifiers: ModifierStore;
+		setups: SetupStore;
+		slashCommands: SlashCommandStore;
 	}
 }

@@ -15,8 +15,8 @@ All notable changes to Godfather will be documented in this file.
 -   Will improvements:
     1.  Aliased `will` to `show-will` instead of `set-will`.
     2.  Added the `--append/-a` flag to set-will: using this flag will append new text to the end of your will.
-    3. Fixed a bug that showed invalid error messages in `show-will`.
--   Added the `--nightStart/-n` flag to *usesetup* to avoid having to use YAML for setups starting at night.
+    3.  Fixed a bug that showed invalid error messages in `show-will`.
+-   Added the `--nightStart/-n` flag to _usesetup_ to avoid having to use YAML for setups starting at night.
 -   Added the alias `use-setup` to `usesetup`.
 
 ## v1.2.1

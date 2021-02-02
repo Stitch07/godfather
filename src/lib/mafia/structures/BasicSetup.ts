@@ -18,6 +18,7 @@ export default class BasicSetup extends Setup {
 	public randomCult!: Constructor<Role>[];
 
 	public constructor(context: PieceContext, options: SetupOptions) {
+		// @ts-ignore aa aa
 		super(context, options);
 
 		this.randomTownies = roleCategories.get('Random Town')!;
@@ -81,8 +82,8 @@ export default class BasicSetup extends Setup {
 					[, count, mod] = /(\d)(shot|vote)/.exec(mod)!;
 					context = { count: Number(count) };
 				}
-				if (!client.modifiers.has(mod)) throw `Invalid modifier: ${mod}`;
-				modifiers.push({ modifier: client.modifiers.get(mod)!, context });
+				if (!client.stores.get('modifiers').has(mod)) throw `Invalid modifier: ${mod}`;
+				modifiers.push({ modifier: client.stores.get('modifiers').get(mod)!, context });
 			}
 		}
 
@@ -121,7 +122,7 @@ export default class BasicSetup extends Setup {
 		}
 
 		// @ts-ignore this is a hack, but is required
-		const setup = new BasicSetup({ path: '', store: client.setups, name: setupData.name ?? 'Custom' });
+		const setup = new BasicSetup({ path: '', store: client.stores.get('setups'), name: setupData.name ?? 'Custom' });
 		setup.roles = setupData.roles;
 		setup.nightStart = setupData.nightStart ?? false;
 		return setup;

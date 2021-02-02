@@ -3,7 +3,7 @@ import GodfatherCommand from '@lib/GodfatherCommand';
 import { allRoles } from '@mafia/roles';
 import type Role from '@mafia/structures/Role';
 import { ApplyOptions } from '@sapphire/decorators';
-import { Args, BucketType, CommandContext, CommandOptions } from '@sapphire/framework';
+import { Args, BucketType, CommandContext, CommandOptions, PermissionsPrecondition } from '@sapphire/framework';
 import { Time } from '@sapphire/time-utilities';
 import { codeBlock } from '@sapphire/utilities';
 import DefaultMap from '@util/DefaultMap';
@@ -13,7 +13,10 @@ import roledocs from '../../assets/roledocs.json';
 @ApplyOptions<CommandOptions>({
 	aliases: ['role', 'roles'],
 	description: 'Shows a list of all roles, and gives you information on a particular role.',
-	preconditions: [{ name: 'Cooldown', context: { bucketType: BucketType.Channel, delay: Time.Second * 3 } }]
+	preconditions: [
+		new PermissionsPrecondition('EMBED_LINKS'),
+		{ name: 'Cooldown', context: { bucketType: BucketType.Channel, delay: Time.Second * 3 } }
+	]
 })
 export default class extends GodfatherCommand {
 	public roles!: Collection<string, Role>;
