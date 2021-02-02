@@ -40,7 +40,7 @@ export default class extends GodfatherCommand {
 				[
 					`**CPU Load**: ${serverStatistics.cpuLoad.map((load) => `${load}%`).join(' | ')}`,
 					`**RAM Used**: ${serverStatistics.ramUsed} (Total: ${serverStatistics.ramTotal})`,
-					`**Uptime**: ${format(this.context.client.uptime ?? 0)}`
+					`**Uptime**: ${format(this.context.client.uptime ?? 0, 2)}`
 				].join('\n'),
 				true
 			);
