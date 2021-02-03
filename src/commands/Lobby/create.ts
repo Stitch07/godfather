@@ -38,6 +38,8 @@ export default class extends GodfatherCommand {
 
 		const game = new Game(message.author, cast<TextChannel>(message.channel), await this.getSettings(message.guild!));
 		game.createdAt = new Date();
+		game.t = t;
+
 		this.context.client.games.set(message.channel.id, game);
 		const output = t('commands/mafia:createGameCreated', {
 			// eslint-disable-next-line @typescript-eslint/no-base-to-string

@@ -11,9 +11,9 @@ import type { Message } from 'discord.js';
 export default class extends GodfatherCommand {
 	public async run(message: Message) {
 		const { game } = message.channel;
-		if (game!.players.length === DEFAULT_GAME_SETTINGS.maxPlayers) throw 'This lobby is already at maximum size.';
+		if (game!.players.length === DEFAULT_GAME_SETTINGS.maxPlayers) throw await message.resolveKey('commands/mafia:openMaxSize');
 		game!.settings.maxPlayers = DEFAULT_GAME_SETTINGS.maxPlayers;
 
-		return message.channel.send(`✅ Set maximum players to ${game!.settings.maxPlayers}`);
+		return message.channel.sendTranslated('commands/mafia:openSuccess', [{ maxPlayers: game!.settings.maxPlayers }]);
 	}
 }

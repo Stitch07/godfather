@@ -14,12 +14,12 @@ export default class extends GodfatherCommand {
 
 		if (game!.players.replacements.includes(message.author)) {
 			game!.players.replacements.splice(game!.players.replacements.indexOf(message.author));
-			return message.channel.send('You are no longer a replacement.');
+			return message.channel.sendTranslated('commands/mafia:leaveReplacement');
 		}
 
 		const player = game!.players.get(message.author);
-		if (!player) throw "You aren't playing!";
-		if (!player.isAlive) throw 'Dead players cannot leave the game.';
+		if (!player) throw await message.resolveKey('commands/mafia:leaveNotPlaying');
+		if (!player.isAlive) throw await message.resolveKey('commands/mafia:leavePlayerDead');
 
 		if (await game!.players.remove(player)) {
 			await message.react('✅');

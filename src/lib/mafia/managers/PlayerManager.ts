@@ -23,7 +23,7 @@ export default class PlayerManager extends Array<Player> {
 	}
 
 	public async remove(player: Player, prompt = true): Promise<boolean> {
-		if (player === this.game.host) throw 'The host cannot leave the game.';
+		if (player === this.game.host) throw this.game.t('game/players:removeHost');
 		if (!this.game.hasStarted) {
 			this.splice(this.indexOf(player), 1);
 			if (this.voteKicks.has(player.user.id)) this.voteKicks.delete(player.user.id);
@@ -31,8 +31,13 @@ export default class PlayerManager extends Array<Player> {
 		}
 
 		if (prompt) {
-			const promptMessage = this.replacements.length > 0 ? 'You will be replaced out.' : 'You will be modkilled.';
-			const leavePrompt = await this.game.channel.prompt(`Are you sure you want to leave? ${promptMessage}`, player.user);
+			const promptMessage = this.game.t(
+				this.replacements.length > 0 ? 'game/players:removeConfirmationReplace' : 'game/players:removeConfirmationModkill'
+			);
+			const leavePrompt = await this.game.channel.prompt(
+				this.game.t('game/players:removeConfirmationPrompt', { prompt: promptMessage }),
+				player.user
+			);
 			if (!leavePrompt) return false;
 		}
 
@@ -45,15 +50,21 @@ export default class PlayerManager extends Array<Player> {
 
 		if (this.replacements.length > 0) {
 			const replacement = this.replacements.shift()!;
-			await this.game.channel.send(`${replacement!.tag} has replaced ${player.user.tag}.`);
+			await this.game.channel.send(
+				this.game.t('game/players:removeSuccessfulReplacement', { replacement: replacement.tag, player: player.user.tag })
+			);
 			await this.replace(player, replacement);
 			return true;
 		}
 
 		// modkill if nobody is replacing
 		const phaseStr = this.game.phase === Phase.Day ? 'D' : 'N';
-		await this.game.channel.send(`${player.user.tag} was modkilled. ${player.displayRoleAndWill(this.game.phase === Phase.Night)}`);
-		void player.kill(`modkilled ${phaseStr}${this.game.cycle}`);
+		await this.game.channel.send(
+			`${this.game.t('game/players:removeSuccessfulModkill', { player: player.user.tag })} ${player.displayRoleAndWill(
+				this.game.phase === Phase.Night
+			)}`
+		);
+		void player.kill(this.game.t('game/players:removeModkillReason', { phase: `${phaseStr}${this.game.cycle}` }));
 		return true;
 	}
 

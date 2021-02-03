@@ -15,6 +15,7 @@ import '@sapphire/plugin-i18next/register';
 
 import type { FormatFunction } from 'i18next';
 import { getHandler } from '@root/languages';
+import { codeBlock } from '@sapphire/utilities';
 
 export default class Godfather extends SapphireClient {
 	public games: Collection<string, Game> = new Collection();
@@ -37,7 +38,7 @@ export default class Godfather extends SapphireClient {
 			},
 			loadDefaultErrorEvents: false,
 			i18n: {
-				defaultMissingKey: 'default',
+				defaultMissingKey: 'globals:default',
 				defaultNS: 'globals',
 				i18next: (_: string[], languages: string[]) => ({
 					supportedLngs: languages,
@@ -53,12 +54,16 @@ export default class Godfather extends SapphireClient {
 					interpolation: {
 						escapeValue: false,
 						defaultVariables: {
-							VERSION: this.version
+							VERSION: this.version,
+							GREENTICK: '✅'
 						},
 						format: (...[value, format, language, options]: Parameters<FormatFunction>) => {
 							switch (format) {
 								case 'listAnd': {
 									return getHandler(language!).listAnd.format(value as string[]);
+								}
+								case 'codeBlock': {
+									return codeBlock('', value);
 								}
 								default: {
 									return value as string;

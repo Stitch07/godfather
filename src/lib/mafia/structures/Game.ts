@@ -5,18 +5,17 @@ import VoteManager, { TrialVote, TrialVoteType, WeightedArrayProxy } from '@mafi
 import type Faction from '@mafia/structures/Faction';
 import Player from '@mafia/structures/Player';
 import { ENABLE_PRIVATE_CHANNELS, PGSQL_ENABLED, PRIVATE_CHANNEL_SERVER } from '@root/config';
+import { getHandler } from '@root/languages';
 import { Time } from '@sapphire/time-utilities';
 import { codeBlock } from '@sapphire/utilities';
-// import { PGSQL_ENABLED } from '@root/config';
 import { format } from '@util/durationFormat';
 import { Collection, GuildMember, TextChannel, User } from 'discord.js';
+import type { TFunction } from 'i18next';
 import { getConnection, getRepository } from 'typeorm';
 import { STALEMATE_PRIORITY_ORDER } from '../../constants';
 import GameEntity from '../../orm/entities/Game';
 import PlayerEntity from '../../orm/entities/Player';
 import { canManage, fauxAlive, listItems, randomArrayItem } from '../../util/utils';
-// import GameEntity from '../orm/entities/Game';
-// import { getRepository } from 'typeorm';
 import type SingleTarget from '../mixins/SingleTarget';
 import type Setup from './Setup';
 
@@ -63,6 +62,8 @@ export default class Game {
 	public numberedNicknames = new Set<GuildMember>();
 
 	public factionalChannels = new Collection<string, [TextChannel, string]>();
+
+	public t!: TFunction;
 
 	private dayTimeLeft = 0;
 
@@ -486,10 +487,12 @@ export default class Game {
 		return this.settings.overwritePermissions && this.channel.permissionsFor(this.client.user!)?.has(['MANAGE_CHANNELS', 'MANAGE_ROLES']);
 	}
 
-	public remaining(showIn = false) {
+	public remaining() {
+		const handler = getHandler(this.t.lng);
 		const remaining = this.phaseEndAt!.getTime() - Date.now();
+
 		if (remaining <= 0) return 'any time soon...';
-		return showIn ? `in ${format(remaining)}` : format(remaining);
+		return handler.duration.format(remaining);
 	}
 
 	public async updateAdaptiveSlowmode() {
