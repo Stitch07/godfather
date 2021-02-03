@@ -19,16 +19,14 @@ export default class extends GodfatherCommand {
 			})) ?? new GuildSettingsEntity();
 
 		if (args.finished) {
-			return message.channel.send(`My prefix in this server is set to: ${guildSettings.prefix}`);
+			return message.channel.sendTranslated('commands/misc:prefixCurrent', [{ prefix: guildSettings.prefix }]);
 		}
 		const newPrefix = await args.pick('string', { maximum: 10 });
-
-		if (newPrefix.length > 10) throw 'Prefixes can be 10 characters at most.';
 		guildSettings.prefix = newPrefix;
 
 		await guilds.save(guildSettings);
 		this.context.client.prefixCache.set(message.guild!.id, newPrefix);
-		return message.channel.send(`Successfully updated this server's prefix to: \`${newPrefix}\``);
+		return message.channel.sendTranslated('commands/misc:prefixUpdated', [{ prefix: newPrefix }]);
 	}
 
 	public onLoad() {

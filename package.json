@@ -65,6 +65,7 @@
 		"bufferutil": "^4.0.3",
 		"discord.js": "^12.5.1",
 		"fs-nextra": "^0.5.1",
+		"i18next": "^19.8.7",
 		"js-yaml": "^4.0.0",
 		"module-alias": "^2.2.2",
 		"node-fetch": "^2.6.1",
