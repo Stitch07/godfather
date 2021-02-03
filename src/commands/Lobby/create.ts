@@ -3,6 +3,7 @@ import GodfatherCommand from '@lib/GodfatherCommand';
 import Game, { GameSettings } from '@mafia/structures/Game';
 import Player from '@mafia/structures/Player';
 import { PGSQL_ENABLED } from '@root/config';
+import { DbSet } from '@root/lib/database/DbSet';
 import { ApplyOptions } from '@sapphire/decorators';
 import type { Args, CommandContext, CommandOptions } from '@sapphire/framework';
 import { Time } from '@sapphire/time-utilities';
@@ -71,7 +72,8 @@ export default class extends GodfatherCommand {
 
 	private async getSettings(guild: Guild): Promise<GameSettings> {
 		if (!PGSQL_ENABLED) return DEFAULT_GAME_SETTINGS;
-		const settings = await guild.readSettings();
+		const { guilds } = await DbSet.connect();
+		const settings = await guilds.ensure(guild);
 		return Object.assign({}, settings);
 	}
 }

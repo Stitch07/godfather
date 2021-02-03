@@ -4,7 +4,6 @@ import type SetupStore from '@mafia/structures/SetupStore';
 import type { Piece } from '@sapphire/framework';
 import type { User } from 'discord.js';
 import type ModifierStore from './lib/mafia/structures/ModifierStore';
-import type GuildSettingsEntity from './lib/orm/entities/GuildSettings';
 import type SlashCommandStore from './lib/structures/SlashCommandStore';
 
 interface ChannelExtendables {
@@ -22,7 +21,10 @@ declare module 'discord.js' {
 		readonly invite: string;
 		ownerID: string | undefined;
 		games: Collection<string, Game>;
-		settingsCache: Map<string, GuildSettingsEntity>;
+		modifiers: ModifierStore;
+		setups: SetupStore;
+		prefixCache: Map<string, string>;
+		slashCommands: SlashCommandStore;
 		eventLoop: NodeJS.Timeout;
 		maintenance: boolean;
 		fetchGuildPrefix(guild: Guild): Promise<string>;
@@ -37,11 +39,6 @@ declare module 'discord.js' {
 
 	interface Message {
 		prompt(promptMessage: string): Promise<boolean>;
-	}
-
-	interface Guild {
-		readSettings(): Promise<GuildSettingsEntity>;
-		updateSettings(newSettings: GuildSettingsEntity): Promise<void>;
 	}
 }
 

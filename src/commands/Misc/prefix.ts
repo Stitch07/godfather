@@ -1,10 +1,10 @@
+import { DbSet } from '@lib/database/DbSet';
 import GodfatherCommand from '@lib/GodfatherCommand';
-import GuildSettingRepository from '@lib/orm/repositories/GuildSettingRepository';
+import GuildSettingsEntity from '@lib/orm/entities/GuildSettings';
 import { PGSQL_ENABLED } from '@root/config';
 import { ApplyOptions } from '@sapphire/decorators';
 import type { Args, CommandOptions } from '@sapphire/framework';
 import type { Message } from 'discord.js';
-import { getCustomRepository } from 'typeorm';
 
 @ApplyOptions<CommandOptions>({
 	description: 'View and change the server prefix.',
@@ -12,16 +12,23 @@ import { getCustomRepository } from 'typeorm';
 })
 export default class extends GodfatherCommand {
 	public async run(message: Message, args: Args) {
-		const newPrefix = await args.restResult('string');
-		const guildSettings = await getCustomRepository(GuildSettingRepository).ensure(this.context.client, message.guild!);
+		const { guilds } = await DbSet.connect();
+		const guildSettings =
+			(await guilds.findOne(message.guild!.id, {
+				select: ['id', 'prefix']
+			})) ?? new GuildSettingsEntity();
 
-		if (!newPrefix.success) {
+		if (args.finished) {
 			return message.channel.send(`My prefix in this server is set to: ${guildSettings.prefix}`);
 		}
-		if (newPrefix.value.length > 10) throw 'Prefixes can be 10 characters at most.';
-		guildSettings.prefix = newPrefix.value;
-		await getCustomRepository(GuildSettingRepository).updateSettings(this.context.client, guildSettings);
-		return message.channel.send(`Successfully updated this server's prefix to: \`${newPrefix.value}\``);
+		const newPrefix = await args.pick('string', { maximum: 10 });
+
+		if (newPrefix.length > 10) throw 'Prefixes can be 10 characters at most.';
+		guildSettings.prefix = newPrefix;
+
+		await guilds.save(guildSettings);
+		this.context.client.prefixCache.set(message.guild!.id, newPrefix);
+		return message.channel.send(`Successfully updated this server's prefix to: \`${newPrefix}\``);
 	}
 
 	public onLoad() {

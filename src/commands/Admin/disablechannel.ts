@@ -1,5 +1,6 @@
 import GodfatherCommand from '@lib/GodfatherCommand';
-import type GuildSettingsEntity from '@root/lib/orm/entities/GuildSettings';
+import { DbSet } from '@lib/database/DbSet';
+import GuildSettingsEntity from '@lib/orm/entities/GuildSettings';
 import { ApplyOptions } from '@sapphire/decorators';
 import type { Args, CommandContext, CommandOptions } from '@sapphire/framework';
 import type { Message, TextChannel } from 'discord.js';
@@ -11,7 +12,11 @@ const mapChannelIDs = (channelID: string) => `<#${channelID}>`;
 })
 export default class extends GodfatherCommand {
 	public async run(message: Message, args: Args, context: CommandContext) {
-		const settings = await message.guild!.readSettings();
+		const { guilds } = await DbSet.connect();
+		const settings =
+			(await guilds.findOne(message.guild!.id, {
+				select: ['id', 'disabledChannels']
+			})) ?? new GuildSettingsEntity();
 		const channels = await args.repeatResult('textChannel');
 
 		if (!channels.success) {
@@ -19,7 +24,7 @@ export default class extends GodfatherCommand {
 			const filtered = settings.disabledChannels.filter((channelID) => message.guild!.channels.cache.has(channelID));
 			if (filtered.length !== settings.disabledChannels.length) {
 				settings.disabledChannels = filtered;
-				await message.guild!.updateSettings(settings);
+				await guilds.save(settings);
 			}
 
 			if (filtered.length === 0)
@@ -29,7 +34,7 @@ export default class extends GodfatherCommand {
 		}
 
 		const { settings: newSettings, added, removed } = this.updateChannels(settings, channels.value);
-		await message.guild!.updateSettings(newSettings);
+		await guilds.save(newSettings);
 
 		return message.channel.send(
 			[

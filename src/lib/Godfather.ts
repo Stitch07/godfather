@@ -7,16 +7,14 @@ import { LogLevel, SapphireClient } from '@sapphire/framework';
 import '@sapphire/plugin-logger/register';
 import { fetch } from '@util/utils';
 import { Collection, Guild, Message } from 'discord.js';
-import { getCustomRepository } from 'typeorm';
+import { DbSet } from './database/DbSet';
 import ModifierStore from './mafia/structures/ModifierStore';
-import type GuildSettingsEntity from './orm/entities/GuildSettings';
-import GuildSettingRepository from './orm/repositories/GuildSettingRepository';
 import SlashCommandStore from './structures/SlashCommandStore';
 
 export default class Godfather extends SapphireClient {
 	public games: Collection<string, Game> = new Collection();
 	public ownerID: string | undefined = undefined;
-	public settingsCache = new Map<string, GuildSettingsEntity>();
+	public prefixCache = new Map<string, string>();
 	public eventLoop!: NodeJS.Timeout;
 	public maintenance = false;
 
@@ -52,8 +50,16 @@ export default class Godfather extends SapphireClient {
 
 	public async fetchGuildPrefix(guild: Guild) {
 		if (!PGSQL_ENABLED) return PREFIX;
-		const guildSettings: GuildSettingsEntity = await getCustomRepository(GuildSettingRepository).ensure(this, guild);
-		return guildSettings.prefix;
+		if (this.prefixCache.has(guild.id)) return this.prefixCache.get(guild.id)!;
+
+		const { guilds } = await DbSet.connect();
+		const settings = await guilds.findOne(guild.id, {
+			select: ['id', 'prefix']
+		});
+		const prefix = settings?.prefix ?? PREFIX;
+		this.prefixCache.set(guild.id, prefix);
+
+		return prefix;
 	}
 
 	public get version() {

@@ -1,14 +1,13 @@
 import { DEFAULT_GAME_SETTINGS, GUILD_SETTINGS_METADATA } from '@lib/constants';
+import { DbSet } from '@lib/database/DbSet';
 import GodfatherCommand from '@lib/GodfatherCommand';
 import type GuildSettingsEntity from '@lib/orm/entities/GuildSettings';
-import GuildSettingRepository from '@lib/orm/repositories/GuildSettingRepository';
 import type { GameSettings } from '@mafia/structures/Game';
 import { ApplyOptions } from '@sapphire/decorators';
 import { Args, CommandOptions, PreconditionContainerArray } from '@sapphire/framework';
 import { Time } from '@sapphire/time-utilities';
 import { codeBlock } from '@sapphire/utilities';
 import type { Message } from 'discord.js';
-import { getCustomRepository } from 'typeorm';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['conf', 'config', 'settings', 'set'],
@@ -31,10 +30,12 @@ export default class extends GodfatherCommand {
 			if (!result.success) throw result.error.message;
 		}
 
+		const { guilds } = await DbSet.connect();
+
 		if (!schemaKey.success) {
 			// list all keys
 			const output = [];
-			const guildSettings = inGame ? message.channel.game!.settings : await message.guild!.readSettings();
+			const guildSettings = inGame ? message.channel.game!.settings : await guilds.ensure(message.guild!);
 			// only read game settings, not all Entity properties
 			for (const key of Object.keys(DEFAULT_GAME_SETTINGS)) {
 				const settingMetadata = GUILD_SETTINGS_METADATA.find((setting) => setting.name === key)!;
@@ -47,12 +48,15 @@ export default class extends GodfatherCommand {
 		const newSetting = await args.restResult(settingMetadata.type, { minimum: settingMetadata.minimum, maximum: settingMetadata.maximum });
 		if (!newSetting.success) throw newSetting.error.message;
 
-		const guildSettings: GameSettings | GuildSettingsEntity = inGame ? message.channel.game!.settings : await message.guild!.readSettings();
+		const guildSettings: GameSettings | GuildSettingsEntity = inGame ? message.channel.game!.settings : await guilds.ensure(message.guild!);
 		if (Reflect.get(guildSettings, schemaKey.value) === newSetting.value)
 			throw `The value of **${schemaKey.value}** is already \`${settingMetadata.display(newSetting.value)}\``;
 
 		Reflect.set(guildSettings, schemaKey.value, newSetting.value);
-		if (!inGame) await getCustomRepository(GuildSettingRepository).updateSettings(this.context.client, guildSettings as GuildSettingsEntity);
+		if (!inGame) {
+			const { guilds } = await DbSet.connect();
+			await guilds.save(guildSettings);
+		}
 
 		return message.channel.send(
 			`Successfully updated ${inGame ? 'game settings' : 'server defaults'} for **${schemaKey.value}** to: \`${settingMetadata.display(
