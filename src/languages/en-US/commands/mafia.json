@@ -1,0 +1,14 @@
+{
+	"gameExists": "A game of Mafia is already running in this channel.",
+	"otherChannel": "You are already playing another game in {{channel}} ({{guild}}).",
+	"changehostGameStarted": "You cannot change the host after the game has started.",
+	"changehostMinimum3": "You need at least 3 players to change the host.",
+	"changehostAlreadyVoted": "You have already voted to change the host.",
+	"changehostHostChanged": "The host is now **{{host}}**.",
+	"closeAlreadyMaxed": "This lobby is already at maximum size.",
+	"closeMinimum3": "You need at least 3 players to close a lobby.",
+	"closeSuccess": "{{greenTick}} Set maximum players to **{{count}}**.",
+	"createMaintenanceMode": "The bot is currently under maintenance. New games cannot be created.",
+	"createGameCreated": "Started a game of Mafia in {{channel}} hosted by **{{host}}**. Use {{prefix}}join to join it.",
+	"createPlayersAdded": "Added {{players, listAnd}}."
+}

@@ -11,6 +11,9 @@ export default class GuildSettingsEntity implements GameSettings {
 	@Column('varchar', { length: 10, default: PREFIX })
 	public prefix = PREFIX;
 
+	@Column('varchar', { default: 'en-US' })
+	public language = 'en-US';
+
 	@Column('integer', { default: DEFAULT_GAME_SETTINGS.dayDuration })
 	public dayDuration = DEFAULT_GAME_SETTINGS.dayDuration;
 

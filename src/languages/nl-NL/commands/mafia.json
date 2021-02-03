@@ -1,0 +1,6 @@
+{
+	"gameExists": "Er wordt al een Maffiapotje gespeeld in dit kanaal.",
+	"otherChannel": "Je bent al een ander potje aan het spelen in {{channel}} ({{guild}}).",
+	"createMaintenanceMode": "De bot wordt nu onderhouden. Er kunnen geen nieuwe potjes aangemaakt worden.",
+	"createGameCreated": "Maffiapotje gestart in {{channel}} door **{{host}}**. Gebruik {{prefix}}join om mee te doen."
+}

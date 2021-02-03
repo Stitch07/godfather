@@ -56,3 +56,17 @@ declare module '@sapphire/framework' {
 		slashCommands: SlashCommandStore;
 	}
 }
+
+declare module 'i18next' {
+	export interface TFunction {
+		lng: string;
+		ns?: string;
+
+		(
+			...args:
+				| [key: string, options?: TOptionsBase | string]
+				| [key: string, defaultValue: string, options?: TOptionsBase | string]
+				| [key: string, options?: TOptions<any>]
+		): string;
+	}
+}
