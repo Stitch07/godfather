@@ -1,7 +1,7 @@
 {
 	"gameExists": "Er wordt al een partij Maffia gespeeld in dit kanaal.",
-	"otherChannel": "Je bent al een ander potje aan het spelen in {{channel}} ({{guild}}).",
-	"changehostGameStarted": "Je kunt de host niet veranderen na de start van de partij.",
+	"otherChannel": "Je bent al een andere partij aan het spelen in {{channel}} ({{guild}}).",
+	"changehostGameStarted": "Je kunt niet van spelleider wisselen nadat de partij is begonnen.",
 	"changehostMinimum3": "Je hebt tenminste 3 spelers nodig om van host te veranderen.",
 	"changehostAlreadyVoted": "Je hebt al gestemd om de host te veranderen.",
 	"changehostHostChanged": "**{{host}}** is de nieuwe host.",
