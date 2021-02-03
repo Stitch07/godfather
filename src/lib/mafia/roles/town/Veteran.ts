@@ -12,7 +12,7 @@ class Veteran extends NoTarget {
 	public priority = NightActionPriority.VETERAN;
 	public flags = {
 		canBlock: false,
-		canTransport: false,
+		canTransport: true,
 		canVisit: false,
 		canWitch: false
 	};
