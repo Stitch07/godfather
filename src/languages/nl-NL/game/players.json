@@ -1,13 +1,13 @@
 {
-	"roleCleaned": "We could not determine their role.",
-	"displayRole": "They were a **{{role}}**.",
-	"displayWill": "They left a will: {{will, codeBlock}}",
-	"noWill": "We could not find a will.",
-	"removeHost": "The host cannot leave the game.",
-	"removeConfirmationReplace": "You will be replaced out.",
-	"removeConfirmationModkill": "You will be modkilled.",
-	"removeConfirmationPrompt": "Are you sure you want to leave? {{prompt}}",
-	"removeSuccessfulReplacement": "{{replacement}} has replaced {{player}}.",
-	"removeSuccessfulModkill": "{{player}} was modkilled.",
-	"removeModkillReason": "modkilled {{phase}}"
+	"roleCleaned": "We konden zijn of haar rol niet vaststellen.",
+	"displayRole": "Hij of zij was een **{{role}}**.",
+	"displayWill": "Hij of zij liet een uiterste wil achter: {{will, codeBlock}}",
+	"noWill": "We konden geen uiterste wil vinden.",
+	"removeHost": "De spelleider kan het spel niet verlaten.",
+	"removeConfirmationReplace": "Je zult vervangen worden.",
+	"removeConfirmationModkill": "Je zult per direct doodgaan.",
+	"removeConfirmationPrompt": "Weet je zeker dat je weg wilt gaan? {{prompt}}",
+	"removeSuccessfulReplacement": "{{replacement}} heeft {{player}} vervangen.",
+	"removeSuccessfulModkill": "{{player}} verliet het dorp.",
+	"removeModkillReason": "verliet het dorp {{phase}}"
 }
