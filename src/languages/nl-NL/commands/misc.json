@@ -1,24 +1,24 @@
 {
-	"helpInvalidCommand": "Invalid command provided.",
+	"helpInvalidCommand": "Ongeldige opdracht opgegeven.",
 	"helpDescription": [
-		"A Discord Bot that automatically hosts games of Mafia. My prefix here is `{{prefix}}`",
+		"Een bot die automatisch spellen Maffia host. Mijn prefix hier is: `{{prefix}}`",
 		"[Support Server]({{supportServer}})"
 	],
-	"helpFooter": "For information about a specific command, run {{prefix}}help <command>.",
+	"helpFooter": "Gebruik `{{prefix}}help <command>` voor informatie over een specifieke opdracht.",
 	"infoText": [
-		"Godfather v{{VERSION}} is a Discord Bot that hosts games of Werewolf/Mafia, with 24/7 uptime and intuitive commands.",
+		"Godfather v{{VERSION}} is een bot die spellen Weerwolven/Maffia host, met 24/7 uptime en een intuïtieve speelwijze.",
 		"",
-		"**Godfather features:**",
-		"• Automatically hosted games of Mafia, with over 30 roles and different factions.",
-		"• Addable custom setups",
-		"• Player and game statistics",
-		"and much more!",
+		"**Functies:**",
+		"• Automatisch gehoste spellen Maffia, met meer dan 30 rollen en talrijke facties.",
+		"• Zelf toevoegbare rollenverdelingen",
+		"• Speler- en spelstatistieken",
+		"en veel meer!",
 		"",
-		"To add Godfather to your Discord server, use the `{{prefix}}invite` command."
+		"Gebruik de opdracht `{{prefix}}invite` om Godfather aan je server toe te voegen."
 	],
 	"inviteText": "[Invite {{bot}} to your server]({{invite}}) | [Join Support Server]({{supportServer}})",
-	"pingInitial": "Pinging...",
-	"pingResponse": "Pong! That took {{ping}}ms. Latency: {{latency}}ms",
-	"prefixCurrent": "My prefix in this server is set to: {{prefix}}",
-	"prefixUpdated": "Successfully updated this server's prefix to: `{{prefix}}`"
+	"pingInitial": "Aan het pingen...",
+	"pingResponse": "Pong! Dat duurde {{ping}}ms. Incubatietijd: {{latency}}ms",
+	"prefixCurrent": "Mijn prefix in deze server is: `{{prefix}}`",
+	"prefixUpdated": "De prefix van deze server is nu: `{{prefix}}`"
 }
