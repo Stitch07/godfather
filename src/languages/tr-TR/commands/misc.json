@@ -7,13 +7,13 @@
 	"helpFooter": "Belirli bir komut hakkında bilgi için, {{prefix}}help <komut> yazın.",
 	"infoText": [
 		"Godfather v{{VERSION}}, Kolay ve güncel 7/24 Kurtadam/Mafya oyunları düzenleyen bir Discord Botudur.",
-		"",
+		" ",
 		"**Godfather özellikleri:**",
 		"• 30'dan fazla rol ve grupla birlikte otomatik düzenlenen mafya oyunları.",
 		"• Eklenebilir özel rol listeleri",
 		"• Oyuncu ve oyun istatistikleri",
 		"ve daha fazlası!",
-		"",
+		" ",
 		"Godfather'ı Discord Sunucunuza eklemek için, `{{prefix}}invite`` komutunu kullanın."
 	],
 	"inviteText": "[{{bot}}'ı sunucunuza davet edin]({{invite}}) | [Destek Sunucusuna Katılın]({{supportServer}})",
