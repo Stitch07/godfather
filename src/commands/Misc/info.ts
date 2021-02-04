@@ -8,18 +8,7 @@ import type { Message } from 'discord.js';
 })
 export default class extends GodfatherCommand {
 	public async run(message: Message, _: Args, context: CommandContext) {
-		const messageText = [
-			`Godfather v${this.context.client.version} is a Discord Bot that hosts games of Werewolf/Mafia, with 24/7 uptime and intuitive commands.`,
-			' ',
-			'**Godfather features:**',
-			'• Automatically hosted games of Mafia, with over 30 roles and different factions.',
-			'• Addable custom setups',
-			'• Player and game statistics',
-			'and much more!',
-			' ',
-			`To add Godfather to your Discord server, use the \`${context.prefix}invite\` command.`
-		];
-
+		const messageText = ((await message.resolveKey('commands/misc:infoText', { prefix: context.prefix })) as unknown) as string[];
 		return message.channel.send(messageText.join('\n'));
 	}
 }

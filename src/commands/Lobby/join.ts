@@ -14,27 +14,27 @@ export default class extends GodfatherCommand {
 	public async run(message: Message) {
 		const { game } = message.channel;
 		if (game!.players.find((player) => player.user.id === message.author.id)) {
-			throw await message.resolveKey('commands/mafia:joinAlreadyJoined');
+			throw await message.resolveKey('commands/lobby:joinAlreadyJoined');
 		}
 		// prevent players from joining 2 games simultaneously
 		for (const otherGame of this.context.client.games.values()) {
 			if (otherGame.players.get(message.author))
 				// eslint-disable-next-line @typescript-eslint/no-base-to-string
-				throw await message.resolveKey('commands/mafia:otherChannel', [{ channel: message.channel.toString(), guild: message.guild!.name }]);
+				throw await message.resolveKey('commands/lobby:otherChannel', [{ channel: message.channel.toString(), guild: message.guild!.name }]);
 		}
 		// do not allow replacing in while the bot is processing the game
-		if (game!.phase === Phase.Standby) throw await message.resolveKey('commands/mafia:joinBetweenPhases');
+		if (game!.phase === Phase.Standby) throw await message.resolveKey('commands/lobby:joinBetweenPhases');
 		if (game!.hasStarted && game!.phase) {
-			if (game!.players.replacements.includes(message.author)) throw await message.resolveKey('commands/mafia:joinAlreadyReplacement');
+			if (game!.players.replacements.includes(message.author)) throw await message.resolveKey('commands/lobby:joinAlreadyReplacement');
 			game!.players.replacements.push(message.author);
 			return message.channel.sendTranslated('joinSuccessfulReplacement');
 		}
 
 		if (game!.players.length >= game!.settings.maxPlayers)
-			throw await message.resolveKey('commands/mafia:joinMaxPlayers', [{ maxPlayers: game!.settings.maxPlayers }]);
+			throw await message.resolveKey('commands/lobby:joinMaxPlayers', [{ maxPlayers: game!.settings.maxPlayers }]);
 
 		game!.players.push(new Player(message.author, game!));
 		game!.createdAt = new Date();
-		return message.channel.sendTranslated('commands/mafia:joinSuccess', [{ playerCount: game!.players.length }]);
+		return message.channel.sendTranslated('commands/lobby:joinSuccess', [{ playerCount: game!.players.length }]);
 	}
 }

@@ -12,9 +12,10 @@ export default class extends GodfatherCommand {
 	private _commands!: CommandStore;
 
 	public async run(message: Message, args: Args) {
+		const t = await message.fetchT();
 		const command = await args.pickResult('string');
 		if (command.success) {
-			if (!this._commands.has(command.value)) throw 'Invalid command provided.';
+			if (!this._commands.has(command.value)) throw t('commands/misc:helpInvalidCommand');
 			return message.channel.send(this.buildCommandHelp(this._commands.get(command.value) as GodfatherCommand));
 		}
 
@@ -31,13 +32,8 @@ export default class extends GodfatherCommand {
 		const embed = new MessageEmbed()
 			.setColor('#000000')
 			.setAuthor(this.context.client.user!.username, this.context.client.user!.displayAvatarURL())
-			.setDescription(
-				[
-					`A Discord Bot that automatically hosts games of Mafia. My prefix here is \`${Array.isArray(prefix) ? prefix[0] : prefix}\``,
-					`[Support Server](${SUPPORT_SERVER})`
-				].join('\n')
-			)
-			.setFooter(`For information about a specific command, run ${prefix}help <command>.`);
+			.setDescription(((t('commands/misc:helpDescription', { prefix, supportServer: SUPPORT_SERVER }) as unknown) as string[]).join('\n'))
+			.setFooter(t('commands/misc:helpFooter', { prefix }));
 
 		for (const [category, commands] of Object.entries(allCommands)) {
 			embed.addField(category, commands.map((cmd) => cmd.name).join(', '));

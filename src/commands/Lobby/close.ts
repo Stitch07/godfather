@@ -12,12 +12,12 @@ export default class extends GodfatherCommand {
 	public async run(message: Message) {
 		const { game } = message.channel;
 
-		if (game!.players.length === DEFAULT_GAME_SETTINGS.maxPlayers) throw await message.resolveKey('commands/mafia:closeAlreadyMaxed');
-		if (game!.players.length < 3) throw await message.resolveKey('commands/mafia:closeMinimum3');
+		if (game!.players.length === DEFAULT_GAME_SETTINGS.maxPlayers) throw await message.resolveKey('commands/lobby:closeAlreadyMaxed');
+		if (game!.players.length < 3) throw await message.resolveKey('commands/lobby:closeMinimum3');
 
 		// setting the current number to max is equivalent to "closing" a lobby ;)
 		game!.settings.maxPlayers = game!.players.length;
 
-		return message.channel.sendTranslated('commands/mafia:closeSuccess', [{ max: game!.settings.maxPlayers }]);
+		return message.channel.sendTranslated('commands/lobby:closeSuccess', [{ max: game!.settings.maxPlayers }]);
 	}
 }

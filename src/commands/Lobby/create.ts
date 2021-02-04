@@ -23,25 +23,25 @@ export default class extends GodfatherCommand {
 	public async run(message: Message, _: Args, context: CommandContext) {
 		const t = await message.fetchT();
 		if (this.context.client.games.has(message.channel.id)) {
-			throw t('commands/mafia:gameExists');
+			throw t('commands/lobby:gameExists');
 		}
 		// prevent players from joining 2 games simultaneously
 		for (const otherGame of this.context.client.games.values()) {
 			if (otherGame.players.get(message.author))
-				throw t('commands/mafia:otherChannel', {
+				throw t('commands/lobby:otherChannel', {
 					channel: otherGame.channel.toString(),
 					guild: otherGame.channel.guild.name
 				});
 		}
 
-		if (message.author.id !== this.context.client.ownerID && this.context.client.maintenance) throw t('commands/mafia:createMaintenanceMode');
+		if (message.author.id !== this.context.client.ownerID && this.context.client.maintenance) throw t('commands/lobby:createMaintenanceMode');
 
 		const game = new Game(message.author, cast<TextChannel>(message.channel), await this.getSettings(message.guild!));
 		game.createdAt = new Date();
 		game.t = t;
 
 		this.context.client.games.set(message.channel.id, game);
-		const output = t('commands/mafia:createGameCreated', {
+		const output = t('commands/lobby:createGameCreated', {
 			// eslint-disable-next-line @typescript-eslint/no-base-to-string
 			channel: message.channel.toString(),
 			host: message.author.tag,
@@ -62,7 +62,7 @@ export default class extends GodfatherCommand {
 
 		// eslint-disable-next-line @typescript-eslint/no-base-to-string
 		const debouncedFn = debounce(
-			() => reactMessage.edit(`${output}\n${t('commands/mafia:createPlayersAdded', { players: playersAdded.map((player) => player.tag) })}`),
+			() => reactMessage.edit(`${output}\n${t('commands/lobby:createPlayersAdded', { players: playersAdded.map((player) => player.tag) })}`),
 			{
 				maxWait: Time.Second * 2,
 				wait: Time.Second

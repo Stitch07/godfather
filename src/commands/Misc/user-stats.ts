@@ -39,9 +39,10 @@ export default class extends GodfatherCommand {
 			const totalGames = wins + losses;
 			const winRate = totalGames === 0 ? 'N/A' : `${Math.round((wins * 100) / totalGames)}%`;
 
-			return message.channel.send([`Games: ${totalGames}`, `Wins: ${wins}`, `Winrate: ${winRate}`].join('\n'));
+			// eslint-disable-next-line object-shorthand
+			return message.channel.sendTranslated('commands/misc:userStats', [{ totalGames: totalGames, wins: wins, winRate: winRate }]);
 		}
-		return message.channel.send('Storing information on a database is currently disabled for this bot');
+		return message.channel.sendTranslated('commands/misc:userstatsNoDatabase');
 	}
 }
 
