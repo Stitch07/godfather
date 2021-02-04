@@ -6,25 +6,25 @@
 	],
 	"helpFooter": "Para informações sobre um comando específico, digite {{prefix}}help <comando>.",
 	"infoText": [
-		"Godfather v{{VERSION}} is a Discord Bot that hosts games of Werewolf/Mafia, with 24/7 uptime and intuitive commands.",
+		"Godfather v{{VERSION}} é um bot do Discord que cria partidas no estilo Máfia/Werewolf, sempre online e com comandos intuitivos.",
 		"",
-		"**Godfather features:**",
-		"• Automatically hosted games of Mafia, with over 30 roles and different factions.",
-		"• Addable custom setups",
-		"• Player and game statistics",
-		"and much more!",
+		"**Recursos do Godfather.**",
+		"• Cria automaticamente jogos de Máfia, com mais de 30 roles e diferentes facções.",
+		"• Configurações personalizadas adicionáveis",
+		"• Estatísticas do jogo e dos jogadores",
+		"e muito mais!",
 		"",
-		"To add Godfather to your Discord server, use the `{{prefix}}invite` command."
+		"Para adicionar o Godfather no seu servidor do Discord, use o comando `{{prefix}}invite`."
 	],
-	"inviteText": "[Invite {{bot}} to your server]({{invite}}) | [Join Support Server]({{supportServer}})",
-	"pingInitial": "Pinging...",
-	"pingResponse": "Pong! That took {{ping}}ms. Latency: {{latency}}ms",
-	"prefixCurrent": "My prefix in this server is set to: {{prefix}}",
-	"prefixUpdated": "Successfully updated this server's prefix to: `{{prefix}}`",
+	"inviteText": "[Convide o {{bot}} para o seu servidor]({{invite}}) | [Entre no servidor de suporte]({{supportServer}})",
+	"pingInitial": "Pingando...",
+	"pingResponse": "Pong! Demorou {{ping}}ms. Latência: {{latency}}ms",
+	"prefixCurrent": "Meu prefixo neste servidor é: {{prefix}}",
+	"prefixUpdated": "Prefixo do servidor atualizado para: `{{prefix}}` com sucesso",
 	"userStats": [
-		"Games: {{totalGames}}",
-		"Wins: {{wins}}",
-		"Winrate: {{winRate}}"
+		"Jogos: {{totalGames}}",
+		"Vitórias: {{wins}}",
+		"Média de vitórias: {{winRate}}"
 	],
-	"userstatsNoDatabase": "Storing information on a database is currently disabled for this bot"
+	"userstatsNoDatabase": "Armazenar as informações em um banco de dados está indisponível no momento para este bot"
 }
