@@ -12,7 +12,7 @@ export default class extends GodfatherCommand {
 	public async run(message: Message) {
 		const { game } = message.channel;
 		if (game!.hasStarted) {
-			const confirmation = await message.prompt('commands/lobby:deleteConfirmation');
+			const confirmation = await message.prompt(game!.t('commands/lobby:deleteConfirmation'));
 			if (!confirmation) return message.react('❌');
 		}
 
