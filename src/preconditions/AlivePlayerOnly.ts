@@ -7,8 +7,6 @@ export default class extends Precondition {
 		const player = game?.players.get(message.author);
 
 		if (player && player.isAlive) return this.ok();
-		return this.error({
-			message: 'This command can only be used by alive players.'
-		});
+		return this.error({});
 	}
 }

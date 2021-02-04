@@ -13,32 +13,31 @@ import type { Message } from 'discord.js';
 export default class extends GodfatherCommand {
 	public async run(message: Message, args: Args) {
 		const game = this.context.client.games.find((game) => Boolean(game.players.get(message.author)));
-		if (!game) throw "You aren't in any active games!";
+		if (!game) throw await message.resolveKey('preconditions:NoActiveGames');
 
-		if (game.settings.disableWhispers) throw 'Whispering is disabled in this game.';
-		if (!game.hasStarted) throw "The game hasn't started yet!";
-		if (game.phase !== Phase.Day) throw 'You can only whisper during the day.';
+		if (game.settings.disableWhispers) throw await message.resolveKey('commands/mafia:whisperDisabled');
+		if (!game.hasStarted) throw await message.resolveKey('preconditions:GameStartedOnly');
+		if (game.phase !== Phase.Day) throw await message.resolveKey('preconditions:whisperDayOnly');
 
-		const player = game.players.get(message.author);
+		const player = game.players.get(message.author)!;
 		// @ts-ignore Mayor
-		if (player.role.name === 'Mayor' && player.role.hasRevealed) throw 'As a revealed Mayor, you cannot whisper.';
-		if (!player?.isAlive) throw 'You cannot whisper as a dead player.';
+		if (player.role.name === 'Mayor' && player.role.hasRevealed) throw await message.resolveKey('commands/mafia:whisperAsRevealedMayor');
+		if (!player.isAlive) throw await message.resolveKey('commands/mafia:whisperAsDeadPlayer');
 
 		const target = await args.pick('player', { game }).catch(handleRequiredArg('player'));
 		// @ts-ignore Mayor
-		if (target.role.name === 'Mayor' && target.role.hasRevealed) throw 'You cannot whisper to a revealed Mayor.';
-		if (!target.isAlive) throw 'You cannot whisper to dead players';
-		const whisperContent = await args.rest('string').catch(() => {
-			throw 'What are you trying to whisper?';
-		});
+		if (target.role.name === 'Mayor' && target.role.hasRevealed) throw await message.resolveKey('commands/mafia:whisperToRevealedMayor');
+		if (!target.isAlive) throw await message.resolveKey('commands/mafia:whisperToDeadPlayer');
+		const whisperContent = await args.rest('string').catch(handleRequiredArg('message'));
 
+		const t = await message.fetchT();
 		try {
-			await target.user.send(`Whisper from **${message.author.tag}**: "${whisperContent}"`);
+			await target.user.send(t('commands/mafia:whisperText', { sender: message.author.tag, message: whisperContent }));
 			await message.react('✅');
 		} catch {
-			return message.channel.send(`Whisper failed: ${target} doesn't have DMs open.`);
+			return message.channel.send(t('commands/mafia:whisperFail', { target }));
 		} finally {
-			await game.channel.send(`**${message.author.tag}** is whispering to **${target.user.tag}**.`);
+			await game.channel.send(t('commands/mafia:whisperAlert', { sender: message.author.tag, target }));
 		}
 	}
 }

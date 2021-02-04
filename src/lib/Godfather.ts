@@ -65,6 +65,9 @@ export default class Godfather extends SapphireClient {
 								case 'codeBlock': {
 									return codeBlock('', value);
 								}
+								case 'durationFormat': {
+									return getHandler(language!).duration.format(Number(value));
+								}
 								default: {
 									return value as string;
 								}

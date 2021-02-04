@@ -5,6 +5,6 @@ export default class extends Precondition {
 	public async run(message: Message) {
 		const { game } = message.channel as TextChannel;
 		if (game && message.author.id === game.host.user.id) return this.ok();
-		return this.error({ message: 'This command can only be used by hosts.' });
+		return this.error({});
 	}
 }
