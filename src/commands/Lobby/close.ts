@@ -18,6 +18,6 @@ export default class extends GodfatherCommand {
 		// setting the current number to max is equivalent to "closing" a lobby ;)
 		game!.settings.maxPlayers = game!.players.length;
 
-		return message.channel.sendTranslated('commands/lobby:closeSuccess', [{ max: game!.settings.maxPlayers }]);
+		return message.channel.sendTranslated('commands/lobby:closeSuccess', [{ maxPlayers: game!.settings.maxPlayers }]);
 	}
 }

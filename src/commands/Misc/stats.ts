@@ -18,13 +18,16 @@ export default class extends GodfatherCommand {
 	private async buildEmbed(message: Message) {
 		const prefix = await this.context.client.fetchPrefix(message);
 		const { generalStatistics, serverStatistics } = this;
+		const t = await message.fetchT();
 		return new MessageEmbed()
 			.setColor('#000000')
 			.setAuthor(this.context.client.user!.username, this.context.client.user!.displayAvatarURL({ format: 'png' }))
 			.setDescription(
-				`To add ${this.context.client.user!.username} to your server, use the \`${
-					Array.isArray(prefix) ? prefix[0] : prefix
-				}invite\` command.`
+				(t('commands/misc:statsDescription', {
+					botname: this.context.client.user!.username,
+					// eslint-disable-next-line object-shorthand
+					prefix: Array.isArray(prefix) ? prefix[0] : prefix
+				}) as unknown) as string[]
 			)
 			.addField(
 				'Connected To',
