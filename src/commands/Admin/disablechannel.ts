@@ -27,19 +27,19 @@ export default class extends GodfatherCommand {
 				await guilds.save(settings);
 			}
 
-			if (filtered.length === 0)
-				return message.channel.send(`There are no disabled channels. Disable a channel using ${context.prefix}disablechannel #channel.`);
+			if (filtered.length === 0) return message.channel.sendTranslated('commands/admin:disableChannelNone', [{ prefix: context.prefix }]);
 
-			return message.channel.send(`**Disabled Channels**: ${filtered.map(mapChannelIDs).join(', ')}`);
+			return message.channel.sendTranslated('commands/admin:disableChannelView', [{ channels: filtered.map(mapChannelIDs) }]);
 		}
 
 		const { settings: newSettings, added, removed } = this.updateChannels(settings, channels.value);
 		await guilds.save(newSettings);
 
+		const t = await message.fetchT();
 		return message.channel.send(
 			[
-				added.length === 0 ? null : `Disabled Channel(s): ${added.map(mapChannelIDs).join(', ')}`,
-				removed.length === 0 ? null : `Enabled Channel(s): ${removed.map(mapChannelIDs).join(', ')}`
+				added.length === 0 ? null : t('commands/admin:disableChannelAdded', { channels: added.map(mapChannelIDs) }),
+				removed.length === 0 ? null : t('commands/admin:disableChannelRemoved', { channels: removed.map(mapChannelIDs) })
 			]
 				.filter((line) => line !== null)
 				.join('\n')
