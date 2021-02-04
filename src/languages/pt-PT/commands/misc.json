@@ -7,13 +7,13 @@
 	"helpFooter": "Para informações sobre um comando específico, digite {{prefix}}help <comando>.",
 	"infoText": [
 		"Godfather v{{VERSION}} é um bot do Discord que cria partidas no estilo Máfia/Werewolf, sempre online e com comandos intuitivos.",
-		" ",
+		"",
 		"**Recursos do Godfather.**",
 		"• Cria automaticamente jogos de Máfia, com mais de 30 roles e diferentes facções.",
 		"• Configurações personalizadas adicionáveis",
 		"• Estatísticas do jogo e dos jogadores",
 		"e muito mais!",
-		"" ,
+		"",
 		"Para adicionar o Godfather no seu servidor do Discord, use o comando `{{prefix}}invite`."
 	],
 	"inviteText": "[Convide o {{bot}} para o seu servidor]({{invite}}) | [Entre no servidor de suporte]({{supportServer}})",
