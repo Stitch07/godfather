@@ -1,7 +1,7 @@
 {
 	"AdminOnly": "Bu komut sadece sunucu moderatörleri tarafından kullanılabilir.",
 	"AlivePlayerOnly": "Bu komut sadece hayattaki oyuncular tarafından kullanılabilir.",
-	"Cooldown": "Bu komudu az önce kullandın, {{remaining, durationFormat}} sonra yeniden deneyin.",
+	"Cooldown": "Bu komutu az önce kullandın, {{remaining, durationFormat}} sonra yeniden deneyin.",
 	"DayOnly": "Bu komut geceleri ya da mahkeme sürecinde kullanılamaz.",
 	"DMOnly": "Bu komut sadece Direkt Mesajlarda kullanılabilir.",
 	"GameOnly": "Burada şu an oynanan bir oyun yok. {{prefix}}create yazarak bir oyun oluştur!",
