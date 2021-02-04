@@ -7,13 +7,13 @@
 	"helpFooter": "For information about a specific command, run {{prefix}}help <command>.",
 	"infoText": [
 		"Godfather v{{VERSION}} is a Discord Bot that hosts games of Werewolf/Mafia, with 24/7 uptime and intuitive commands.",
-		" ",
+		"",
 		"**Godfather की विशेस्ताएं:**",
 		"• Automatically hosted games of Mafia, with over 30 roles and different factions.",
 		"• Addable custom setups",
 		"प्लेयर और खेल के आँकड़े",
 		"और भी बहुँत कुछ!",
-		" ",
+		"",
 		"Godfather को अपने Discord सर्वर में बुलाने के लिए कमांड `{{prefix}}invite` का प्रयोग करें|"
 	],
 	"inviteText": "[{{bot}} को अपने सर्वर में बुलाएं]({{invite}}) | [सहायता सर्वर में शामिल होइए]({{supportServer}})",
