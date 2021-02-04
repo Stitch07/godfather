@@ -20,5 +20,11 @@
 	"pingInitial": "Haciendo un ping...",
 	"pingResponse": "Pong! Eso tomo {{ping}}ms. Latencia: {{latency}}ms",
 	"prefixCurrent": "Mi prefijo en este servidor es {{prefix}}",
-	"prefixUpdated": "El prefijo de este servidor cambió a: `{{prefix}}`"
+	"prefixUpdated": "El prefijo de este servidor cambió a: `{{prefix}}`",
+	"userStats": [
+		"Games: {{totalGames}}",
+		"Wins: {{wins}}",
+		"Winrate: {{winRate}}"
+	],
+	"userstatsNoDatabase": "Storing information on a database is currently disabled for this bot"
 }
