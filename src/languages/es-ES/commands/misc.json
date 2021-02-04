@@ -26,5 +26,6 @@
 		"Victorias: {{wins}}",
 		"Porcentaje de victorias: {{winRate}}"
 	],
-	"userstatsNoDatabase": "El almacenar de la información en el base de datos esta desactivado en el bot en este momento"
+	"userstatsNoDatabase": "El almacenar de la información en el base de datos esta desactivado en el bot en este momento",
+	"statsDescription": "To add {{botname}} to your server, use the `{{prefix}}invite` command."
 }
