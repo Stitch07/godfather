@@ -12,16 +12,16 @@ import type { Message } from 'discord.js';
 export default class extends GodfatherCommand {
 	public async run(message: Message, args: Args) {
 		const game = this.context.client.games.find((game) => Boolean(game.players.get(message.author)));
-		if (!game) throw "You aren't in any active games!";
+		if (!game) throw await message.resolveKey('preconditions:NoActiveGames');
 
-		if (game.settings.disableWills) throw 'Wills are disabled in this game.';
-		if (!game.hasStarted) throw "The game hasn't started yet!";
+		if (game.settings.disableWills) throw await message.resolveKey('commands/mafia:showWillDisabled');
+		if (!game.hasStarted) throw await message.resolveKey('preconditions:GameStartedOnly');
 
 		const player = await args
 			.pick('player', { game })
-			.then((p) => {
+			.then(async (p) => {
 				if (p.isAlive && p.user.id !== message.author.id) {
-					throw "You can only check your own or a dead player's will.";
+					throw await message.resolveKey('commands/mafia:showWillInvalidTarget');
 				}
 				return p;
 			})
