@@ -1,24 +1,24 @@
 {
-	"helpInvalidCommand": "Invalid command provided.",
+	"helpInvalidCommand": "Este comando esta invalido.",
 	"helpDescription": [
-		"A Discord Bot that automatically hosts games of Mafia. My prefix here is `{{prefix}}`",
-		"[Support Server]({{supportServer}})"
+		"Un bot de Discord que automáticamente hace juegos de mafia. Mi prefijo es `{{prefix}}`",
+		"[Servidor de Ayuda]({{supportServer}})"
 	],
-	"helpFooter": "For information about a specific command, run {{prefix}}help <command>.",
+	"helpFooter": "Para información sobre un comando, as {{prefix}}ayuda <command>.",
 	"infoText": [
-		"Godfather v{{VERSION}} is a Discord Bot that hosts games of Werewolf/Mafia, with 24/7 uptime and intuitive commands.",
+		"Godfather v{{VERSION}} es un bot de Discord que hace juegos de Hombrelobo/Mafia que corre 24-7 y comandos intuitivos.",
 		"",
-		"**Godfather features:**",
-		"• Automatically hosted games of Mafia, with over 30 roles and different factions.",
-		"• Addable custom setups",
-		"• Player and game statistics",
-		"and much more!",
+		"**Habilidades de Godfather:**",
+		"• Automáticamente hace juegos de Mafia, con más de 30 roles y facciones diferentes.",
+		"• Configuraciones personificadas añadibles",
+		"• Estadísticas de juego y jugadores",
+		"y mucho más!",
 		"",
-		"To add Godfather to your Discord server, use the `{{prefix}}invite` command."
+		"Para añadir Godfather a tu servidor de Discord, usa el comando de `{{prefix}}invitar`."
 	],
-	"inviteText": "[Invite {{bot}} to your server]({{invite}}) | [Join Support Server]({{supportServer}})",
-	"pingInitial": "Pinging...",
-	"pingResponse": "Pong! That took {{ping}}ms. Latency: {{latency}}ms",
-	"prefixCurrent": "My prefix in this server is set to: {{prefix}}",
-	"prefixUpdated": "Successfully updated this server's prefix to: `{{prefix}}`"
+	"inviteText": "[Invitar {{bot}} a tu servidor]({{invite}}) | [Únete al Servidor de Ayuda]({{supportServer}})",
+	"pingInitial": "Haciendo un ping...",
+	"pingResponse": "Pong! Eso tomo {{ping}}ms. Latencia: {{latency}}ms",
+	"prefixCurrent": "Mi prefijo en este servidor es {{prefix}}",
+	"prefixUpdated": "El prefijo de este servidor cambió a: `{{prefix}}`"
 }
