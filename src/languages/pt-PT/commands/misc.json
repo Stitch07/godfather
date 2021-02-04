@@ -1,10 +1,10 @@
 {
-	"helpInvalidCommand": "Invalid command provided.",
+	"helpInvalidCommand": "Comando inválido.",
 	"helpDescription": [
-		"A Discord Bot that automatically hosts games of Mafia. My prefix here is `{{prefix}}`",
-		"[Support Server]({{supportServer}})"
+		"Um bot do discord que hospeda automaticamente partidas de Máfia. Meu prefixo aqui é {{prefix}}",
+		"[Servidor de suporte]({{supportServer}}) (em inglês)"
 	],
-	"helpFooter": "For information about a specific command, run {{prefix}}help <command>.",
+	"helpFooter": "Para informações sobre um comando específico, digite {{prefix}}help <comando>.",
 	"infoText": [
 		"Godfather v{{VERSION}} is a Discord Bot that hosts games of Werewolf/Mafia, with 24/7 uptime and intuitive commands.",
 		"",
