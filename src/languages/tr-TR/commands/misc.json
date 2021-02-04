@@ -22,9 +22,9 @@
 	"prefixCurrent": "Bu sunucunun prefix'i: {{prefix}}",
 	"prefixUpdated": "Başarıyla sunucunun prefix'i `{{prefix}}` olarak değiştirildi.",
 	"userStats": [
-		"Games: {{totalGames}}",
-		"Wins: {{wins}}",
-		"Winrate: {{winRate}}"
+		"Toplam Oyunlar: {{totalGames}}",
+		"Galibiyetler: {{wins}}",
+		"Kazanma yüzdesi: {{winRate}}"
 	],
-	"userstatsNoDatabase": "Storing information on a database is currently disabled for this bot"
+	"userstatsNoDatabase": "Veri tabanında bilgi depolamak bu bot için şu anlık devre dışıdır"
 }
