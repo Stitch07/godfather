@@ -5,9 +5,9 @@
 	"noWill": "Bir vasiyet bulamadık.",
 	"removeHost": "Yönetici oyundan çıkamaz.",
 	"removeConfirmationReplace": "Yerine başkası geçecek.",
-	"removeConfirmationModkill": "Otomatik olarak öldürüleceksin.",
+	"removeConfirmationModkill": "Modkilleneceksin.",
 	"removeConfirmationPrompt": "Ayrılmak istediğinden emin misin? {{prompt}}",
 	"removeSuccessfulReplacement": "{{player}}'ın/in yerine {{replacement}} geçti.",
-	"removeSuccessfulModkill": "{{player}} otomatik olarak öldürüldü.",
+	"removeSuccessfulModkill": "{{player}} modkillendi.",
 	"removeModkillReason": "modkilled {{phase}}"
 }
