@@ -20,5 +20,11 @@
 	"pingInitial": "Ping test ediliyor...",
 	"pingResponse": "Pong! Bu {{ping}}ms sürdü. Gecikme: {{latency}}",
 	"prefixCurrent": "Bu sunucunun prefix'i: {{prefix}}",
-	"prefixUpdated": "Başarıyla sunucunun prefix'i `{{prefix}}` olarak değiştirildi."
+	"prefixUpdated": "Başarıyla sunucunun prefix'i `{{prefix}}` olarak değiştirildi.",
+	"userStats": [
+		"Games: {{totalGames}}",
+		"Wins: {{wins}}",
+		"Winrate: {{winRate}}"
+	],
+	"userstatsNoDatabase": "Storing information on a database is currently disabled for this bot"
 }
