@@ -1,14 +1,14 @@
 {
-	"AdminOnly": "This command can only be used by server admins.",
-	"AlivePlayerOnly": "This command can only be used by alive players.",
-	"Cooldown": "You have just used this command. Try again in {{remaining, durationFormat}}.",
-	"DayOnly": "This command cannot be used at night or during trials.",
-	"DMOnly": "This command can only be used in Direct Messages.",
-	"GameOnly": "There is no game currently going on in here. Use {{prefix}}create to start one!",
-	"GameStartedOnly": "The game hasn't started yet.",
-	"GuildOnly": "You cannot run this command in DMs.",
-	"HostOnly": "This command can only be used by hosts.",
-	"PlayerOnly": "This command can only be used by players.",
-	"TrialVotingOnly": "This command can only be used during trials.",
-	"NoActiveGames": "You aren't in any active games."
+	"AdminOnly": "Deze opdracht kan alleen worden gebruikt door serverbeheerders.",
+	"AlivePlayerOnly": "Deze opdracht kan alleen worden gebruikt door levenden.",
+	"Cooldown": "Je hebt zonet al deze opdracht gebruikt. Probeer het opnieuw na {{remaining, durationFormat}}.",
+	"DayOnly": "Deze opdracht kan 's nachts of bij berechtingen niet gebruikt worden.",
+	"DMOnly": "Deze opdracht kan alleen worden gebruikt in een pb.",
+	"GameOnly": "Er speelt zich hier momenteel geen spel af. Gebruik `{{prefix}}create` om er een te starten!",
+	"GameStartedOnly": "Het spel is nog niet gestart.",
+	"GuildOnly": "Je kunt deze opdracht niet gebruiken in een pb.",
+	"HostOnly": "Deze opdracht kan alleen worden gebruikt door spelleiders.",
+	"PlayerOnly": "Deze opdracht kan alleen worden gebruikt door spelers.",
+	"TrialVotingOnly": "Deze opdracht kan alleen worden gebruikt bij een berechting.",
+	"NoActiveGames": "Je zit nu niet in een spel."
 }
