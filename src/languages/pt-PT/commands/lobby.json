@@ -21,7 +21,7 @@
 	"leaveReplacement": "Você não está mais na reserva.",
 	"leaveNotPlaying": "Você não está jogando!",
 	"leavePlayerDead": "Jogadores mortos não podem deixar a partida.",
-	"openMaxSize": "O sala está com capacidade máxima.",
+	"openMaxSize": "A sala está com capacidade máxima.",
 	"openSuccess": "{{GREENTICK}} Número máximo de jogadores para {{maxPlayers}}.",
 	"removeSelf": "Você não pode se remover.",
 	"removeDirect": "{{GREENTICK}} {{player}} removido com sucesso.",
