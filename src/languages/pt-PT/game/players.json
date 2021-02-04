@@ -1,13 +1,13 @@
 {
-	"roleCleaned": "We could not determine their role.",
-	"displayRole": "They were a **{{role}}**.",
-	"displayWill": "They left a will: {{will, codeBlock}}",
-	"noWill": "We could not find a will.",
-	"removeHost": "The host cannot leave the game.",
-	"removeConfirmationReplace": "You will be replaced out.",
-	"removeConfirmationModkill": "You will be modkilled.",
-	"removeConfirmationPrompt": "Are you sure you want to leave? {{prompt}}",
-	"removeSuccessfulReplacement": "{{replacement}} has replaced {{player}}.",
-	"removeSuccessfulModkill": "{{player}} was modkilled.",
+	"roleCleaned": "Sua role não pode ser determinada.",
+	"displayRole": "Ele era um(a) **{{role}}**.",
+	"displayWill": "Ele(a) deixou um último desejo: {{will, codeBlock}}",
+	"noWill": "Não foi encontrado um último desejo.",
+	"removeHost": "O host não pode deixar a partida.",
+	"removeConfirmationReplace": "Você será substituído.",
+	"removeConfirmationModkill": "Você será modkilled (morte arbitrária).",
+	"removeConfirmationPrompt": "Você tem certeza que deseja sair? {{prompt}}",
+	"removeSuccessfulReplacement": "{{replacement}} substituiu {{player}}.",
+	"removeSuccessfulModkill": "{{player}} foi modkilled (morte arbitrária).",
 	"removeModkillReason": "modkilled {{phase}}"
 }
