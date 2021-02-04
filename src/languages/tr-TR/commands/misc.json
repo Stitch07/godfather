@@ -1,24 +1,24 @@
 {
-	"helpInvalidCommand": "Invalid command provided.",
+	"helpInvalidCommand": "Geçersiz komut.",
 	"helpDescription": [
-		"A Discord Bot that automatically hosts games of Mafia. My prefix here is `{{prefix}}`",
-		"[Support Server]({{supportServer}})"
+		"Otomatik olarak Mafya oyunları düzenleyen bir bot. Buradaki prefix'im `{{prefix}}`",
+		"[Destek Sunucusu]({{supportServer}})"
 	],
-	"helpFooter": "For information about a specific command, run {{prefix}}help <command>.",
+	"helpFooter": "Belirli bir komut hakkında bilgi için, {{prefix}}help <komut> yazın.",
 	"infoText": [
-		"Godfather v{{VERSION}} is a Discord Bot that hosts games of Werewolf/Mafia, with 24/7 uptime and intuitive commands.",
+		"Godfather v{{VERSION}}, Kolay ve güncel 7/24 Kurtadam/Mafya oyunları düzenleyen bir Discord Botudur.",
 		"",
-		"**Godfather features:**",
-		"• Automatically hosted games of Mafia, with over 30 roles and different factions.",
-		"• Addable custom setups",
-		"• Player and game statistics",
-		"and much more!",
+		"**Godfather özellikleri:**",
+		"• 30'dan fazla rol ve grupla birlikte otomatik düzenlenen mafya oyunları.",
+		"• Eklenebilir özel rol listeleri",
+		"• Oyuncu ve oyun istatistikleri",
+		"ve daha fazlası!",
 		"",
-		"To add Godfather to your Discord server, use the `{{prefix}}invite` command."
+		"Godfather'ı Discord Sunucunuza eklemek için, `{{prefix}}invite`` komutunu kullanın."
 	],
-	"inviteText": "[Invite {{bot}} to your server]({{invite}}) | [Join Support Server]({{supportServer}})",
-	"pingInitial": "Pinging...",
-	"pingResponse": "Pong! That took {{ping}}ms. Latency: {{latency}}ms",
-	"prefixCurrent": "My prefix in this server is set to: {{prefix}}",
-	"prefixUpdated": "Successfully updated this server's prefix to: `{{prefix}}`"
+	"inviteText": "[{{bot}}'ı sunucunuza davet edin]({{invite}}) | [Destek Sunucusuna Katılın]({{supportServer}})",
+	"pingInitial": "Ping test ediliyor...",
+	"pingResponse": "Pong! Bu {{ping}}ms sürdü. Gecikme: {{latency}}",
+	"prefixCurrent": "Bu sunucunun prefix'i: {{prefix}}",
+	"prefixUpdated": "Başarıyla sunucunun prefix'i `{{prefix}}` olarak değiştirildi."
 }
