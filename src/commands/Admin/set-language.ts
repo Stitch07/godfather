@@ -5,6 +5,7 @@ import type { Args, CommandContext, CommandOptions } from '@sapphire/framework';
 import type { Message } from 'discord.js';
 
 @ApplyOptions<CommandOptions>({
+	aliases: ['language', 'lang', 'set-lang', 'setlang'],
 	preconditions: ['GuildOnly', ['AdminOnly', 'OwnerOnly']]
 })
 export default class extends GodfatherCommand {
