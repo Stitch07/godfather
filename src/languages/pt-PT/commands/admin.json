@@ -5,7 +5,7 @@
 	"disableChannelRemoved": "Canais ativados: {{channels, listAnd}}",
 	"setLanguageView": [
 		"O idioma desse servidor esta configurada como **{{currentLanguage}}**.",
-		"Use `set-language <language>` para mudar a linguagem.",
+		"Use `set-language <linguagem>` para mudar a linguagem.",
 		"Linguagens suportadas no Godfather:\n{{validLanguages, listAnd}}"
 	],
 	"setLanguageInvalidLocale": [
