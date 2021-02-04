@@ -11,7 +11,7 @@
 	"createMaintenanceMode": "The bot is currently under maintenance. New games cannot be created.",
 	"createGameCreated": "Started a game of Mafia in {{channel}} hosted by **{{host}}**. Use {{prefix}}join to join it.",
 	"createPlayersAdded": "Added {{players, listAnd}}.",
-	"deleteConfirmation": "Are you sure you want to delete this game?",
+	"deleteConfirmation": "Bist du sicher, dass du das Spiel löschen willst?",
 	"joinAlreadyJoined": "You have already joined.",
 	"joinReplacingBetweenPhases": "You cannot replace in between phases.",
 	"joinAlreadyReplacement": "You are already a replacement.",
