@@ -24,7 +24,7 @@
 	"userStats": [
 		"Totaal aantal spellen: {{totalGames}}",
 		"Overwinningen: {{wins}}",
-		"Winrate: {{winRate}}"
+		"Winpercentage: {{winRate}}"
 	],
-	"userstatsNoDatabase": "Storing information on a database is currently disabled for this bot"
+	"userstatsNoDatabase": "Het opslaan van informatie in een database is momenteel uitgeschakeld voor deze bot"
 }
