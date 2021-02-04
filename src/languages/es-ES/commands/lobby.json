@@ -9,7 +9,7 @@
 	"closeMinimum3": "Necesitas por lo mínimo tres jugadores para cerrar el lobby.",
 	"closeSuccess": "{{GREENTICK}} El máximo número de jugadores ahorra es **{{count}}**.",
 	"createMaintenanceMode": "El bot está en mantenimiento. Nuevos juegos no se pueden crear en este momento.",
-	"createGameCreated": "Creamos un juego en {{channel}}, el huésped es **{{host}}**. Usa {{prefix}}unir para unirte.",
+	"createGameCreated": "Creamos un juego en {{channel}}, el huésped es **{{host}}**. Usa {{prefix}}join para unirte.",
 	"createPlayersAdded": "Añadimos {{players, listAnd}}.",
 	"deleteConfirmation": "Estas seguro que quieres borrar este juego?",
 	"joinAlreadyJoined": "Ya te uniste a este juego.",
