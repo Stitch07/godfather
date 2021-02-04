@@ -26,6 +26,5 @@
 		"Wins: {{wins}}",
 		"Winrate: {{winRate}}"
 	],
-	"userstatsNoDatabase": "Storing information on a database is currently disabled for this bot",
-	"statsDescription":  "To add {{botname}} to your server, use the `{{prefix}}invite` command."
+	"userstatsNoDatabase": "Storing information on a database is currently disabled for this bot"
 }
