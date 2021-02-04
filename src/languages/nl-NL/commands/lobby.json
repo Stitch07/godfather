@@ -16,7 +16,7 @@
 	"joinReplacingBetweenPhases": "Je kunt niet iemand vervangen tussen twee fasen in.",
 	"joinAlreadyReplacement": "Je bent al een vervanger.",
 	"joinSuccessfulReplacement": "Je bent nu een vervanger.",
-	"joinMaxPlayers": "De spelerslimiet is nu bereikt. ({{maxPlayers}})",
+	"joinMaxPlayers": "De spelerslimiet is al bereikt. ({{maxPlayers}})",
 	"joinSuccess": "{{GREENTICK}} Je doet nu mee. ({{playerCount}} spelers)",
 	"leaveReplacement": "Je bent nu geen vervanger meer.",
 	"leaveNotPlaying": "Je bent nu niet aan het spelen!",
