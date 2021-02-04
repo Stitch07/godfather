@@ -1,14 +1,14 @@
 {
-	"AdminOnly": "This command can only be used by server admins.",
-	"AlivePlayerOnly": "This command can only be used by alive players.",
-	"Cooldown": "You have just used this command. Try again in {{remaining, durationFormat}}.",
-	"DayOnly": "This command cannot be used at night or during trials.",
-	"DMOnly": "This command can only be used in Direct Messages.",
-	"GameOnly": "There is no game currently going on in here. Use {{prefix}}create to start one!",
-	"GameStartedOnly": "The game hasn't started yet.",
-	"GuildOnly": "You cannot run this command in DMs.",
-	"HostOnly": "This command can only be used by hosts.",
-	"PlayerOnly": "This command can only be used by players.",
-	"TrialVotingOnly": "This command can only be used during trials.",
-	"NoActiveGames": "You aren't in any active games."
+	"AdminOnly": "Esse comando só pode ser usados por admins.",
+	"AlivePlayerOnly": "Esse comando só pode ser usados por jogadores vivos.",
+	"Cooldown": "Você está digitando rapido demais, espere {{remaining, durationFormat}} segundos.",
+	"DayOnly": "Esse comando não pode ser usado a noite ou durante julgamentos.",
+	"DMOnly": "Esse comando só pode ser usado no Pv.",
+	"GameOnly": "Não há nenhuma partida ativa aqui, digite {{prefix}}create para criar uma!",
+	"GameStartedOnly": "Essa partida ainda não iniciou.",
+	"GuildOnly": "Você não pode usar esse comando no PV.",
+	"HostOnly": "Esse comando só pode ser usados por hosts.",
+	"PlayerOnly": "Esse comando só pode ser usado por jogadores.",
+	"TrialVotingOnly": "Esse comando só pode ser usado durante julgamentos.",
+	"NoActiveGames": "Você não esta em nenhuma partida ativa."
 }
