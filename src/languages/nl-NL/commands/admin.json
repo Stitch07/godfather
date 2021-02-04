@@ -1,16 +1,16 @@
 {
-	"disableChannelNone": "There are no disabled channels. Disable a channel using {{prefix}}disablechannel #channel.",
-	"disableChannelView": "**Disabled Channels**: {{channels, listAnd}}",
-	"disableChannelAdded": "Disabled Channel(s): {{channels, listAnd}}",
-	"disableChannelRemoved": "Enabled Channel(s): {{channels, listAnd}}",
+	"disableChannelNone": "Er zijn geen uitgeschakelde kanalen. Schakel een kanaal uit met `{{prefix}}disablechannel #kanaal`.",
+	"disableChannelView": "**Uitgeschakelde kanalen**: {{channels, listAnd}}",
+	"disableChannelAdded": "Nu uitgeschakeld: {{channels, listAnd}}",
+	"disableChannelRemoved": "Nu ingeschakeld: {{channels, listAnd}}",
 	"setLanguageView": [
-		"The language in this server is set to **{{currentLanguage}}**.",
-		"Use `set-language <language>` to update it.",
-		"Languages supported in Godfather: {{validLanguages, listAnd}}"
+		"De taal in deze server is nu **{{currentLanguage}}**.",
+		"Gebruik `set-language <language>` om het te updaten.",
+		"Ondersteunde talen in Godfather: {{validLanguages, listAnd}}"
 	],
 	"setLanguageInvalidLocale": [
-		"\"{{locale}}\" is not a valid locale.",
-		"Languages supported in Godfather: {{validLanguages, listAnd}}"
+		"\"{{locale}}\" is een ongeldige taalregio.",
+		"Ondersteunde talen in Godfather: {{validLanguages, listAnd}}"
 	],
-	"setLanguageAlreadySet": "The language in this server is already set to **{{locale}}**."
+	"setLanguageAlreadySet": "De taal in deze server is al **{{locale}}**."
 }
