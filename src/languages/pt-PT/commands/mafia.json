@@ -1,5 +1,5 @@
 {
-	"showWillDisabled": "Wills are disabled in this game.",
+	"showWillDisabled": "Testamentos estão desativados nessa partida.",
 	"showWillInvalidTarget": "You can only check your own or a dead player's will",
 	"startAlreadyStarted": "The game has already started!",
 	"startNoSetups": "No setups found for {{playerCount}} players.",
