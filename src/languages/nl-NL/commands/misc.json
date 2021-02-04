@@ -26,5 +26,6 @@
 		"Overwinningen: {{wins}}",
 		"Winpercentage: {{winRate}}"
 	],
-	"userstatsNoDatabase": "Het opslaan van informatie in een database is momenteel uitgeschakeld voor deze bot"
+	"userstatsNoDatabase": "Het opslaan van informatie in een database is momenteel uitgeschakeld voor deze bot",
+	"statsDescription": "To add {{botname}} to your server, use the `{{prefix}}invite` command."
 }
