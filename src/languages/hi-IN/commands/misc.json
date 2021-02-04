@@ -1,29 +1,29 @@
 {
-	"helpInvalidCommand": "Invalid command provided.",
+	"helpInvalidCommand": "कमांड अमान्य है|",
 	"helpDescription": [
 		"A Discord Bot that automatically hosts games of Mafia. My prefix here is `{{prefix}}`",
-		"[Support Server]({{supportServer}})"
+		"[सहायता का सर्वर]({{supportServer}})"
 	],
 	"helpFooter": "For information about a specific command, run {{prefix}}help <command>.",
 	"infoText": [
 		"Godfather v{{VERSION}} is a Discord Bot that hosts games of Werewolf/Mafia, with 24/7 uptime and intuitive commands.",
 		"",
-		"**Godfather features:**",
+		"**Godfather की विशेस्ताएं:**",
 		"• Automatically hosted games of Mafia, with over 30 roles and different factions.",
 		"• Addable custom setups",
-		"• Player and game statistics",
-		"and much more!",
+		"प्लेयर और खेल के आँकड़े",
+		"और भी बहुँत कुछ!",
 		"",
-		"To add Godfather to your Discord server, use the `{{prefix}}invite` command."
+		"Godfather को अपने Discord सर्वर में बुलाने के लिए कमांड `{{prefix}}invite` का प्रयोग करें|"
 	],
-	"inviteText": "[Invite {{bot}} to your server]({{invite}}) | [Join Support Server]({{supportServer}})",
+	"inviteText": "[{{bot}} को अपने सर्वर में बुलाएं]({{invite}}) | [सहायता सर्वर में शामिल होइए]({{supportServer}})",
 	"pingInitial": "Pinging...",
 	"pingResponse": "Pong! That took {{ping}}ms. Latency: {{latency}}ms",
-	"prefixCurrent": "My prefix in this server is set to: {{prefix}}",
-	"prefixUpdated": "Successfully updated this server's prefix to: `{{prefix}}`",
+	"prefixCurrent": "मेरा प्रीफिक्स इस सर्वर में {{prefix}} है!",
+	"prefixUpdated": "मेरा नया प्रीफिक्स अब `{{prefix}}` है!",
 	"userStats": [
-		"Games: {{totalGames}}",
-		"Wins: {{wins}}",
+		"कुल खेल: {{totalGames}}",
+		"कुल खेलों में जीत: {{wins}}",
 		"Winrate: {{winRate}}"
 	],
 	"userstatsNoDatabase": "Storing information on a database is currently disabled for this bot"
