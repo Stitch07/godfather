@@ -1,8 +1,8 @@
 {
 	"roleCleaned": "We konden zijn of haar rol niet vaststellen.",
 	"displayRole": "Hij of zij was een **{{role}}**.",
-	"displayWill": "Hij of zij liet een uiterste wil achter: {{will, codeBlock}}",
-	"noWill": "We konden geen uiterste wil vinden.",
+	"displayWill": "Hij of zij liet een testament achter: {{will, codeBlock}}",
+	"noWill": "We konden geen testament vinden.",
 	"removeHost": "De spelleider kan het spel niet verlaten.",
 	"removeConfirmationReplace": "Je zult vervangen worden.",
 	"removeConfirmationModkill": "Je zult per direct doodgaan.",
