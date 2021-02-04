@@ -2,15 +2,15 @@
 	"disableChannelNone": "Devre dışı kanal bulunmamaktadır. Bir kanalı devre dışı bırakmak için {{prefix}}disablechannel #kanal komudunu kullan.",
 	"disableChannelView": "**Devre Dışı Kanallar**: {{channels, listAnd}}",
 	"disableChannelAdded": "Kanal(lar) Devre Dışı: {{channels, listAnd}}",
-	"disableChannelRemoved": "Enabled Channel(s): {{channels, listAnd}}",
+	"disableChannelRemoved": "Kanal(lar) Etkin: {{channels, listAnd}}",
 	"setLanguageView": [
-		"The language in this server is set to **{{currentLanguage}}**.",
-		"Use `set-language <language>` to update it.",
-		"Languages supported in Godfather: {{validLanguages, listAnd}}"
+		"Bu sunucudaki dil **{{currentLanguage}}**'dir.",
+		"`set-language <dil>` yazarak dili değiştirin.",
+		"Godfather'ın desteklediği diller: {{validLanguages, listAnd}}"
 	],
 	"setLanguageInvalidLocale": [
-		"\"{{locale}}\" is not a valid locale.",
-		"Languages supported in Godfather: {{validLanguages, listAnd}}"
+		"\"{{locale}}\" geçerli bir dil kodu değil.",
+		"Godfather'ın desteklediği diller: {{validLanguages, listAnd}}"
 	],
-	"setLanguageAlreadySet": "The language in this server is already set to **{{locale}}**."
+	"setLanguageAlreadySet": "Bu sunucudaki dil zaten **{{locale}}**'ye ayarlanmış."
 }
