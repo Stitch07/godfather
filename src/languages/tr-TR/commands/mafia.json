@@ -1,0 +1,31 @@
+{
+	"showWillDisabled": "Bu oyunda vasiyetler devre dışıdır.",
+	"showWillInvalidTarget": "Sadece kendinin ya da ölü bir oyuncunun vasiyetine bakabilirsin",
+	"startAlreadyStarted": "Oyun zaten başladı!",
+	"startNoSetups": "{{playerCount}} oyuncu için bir liste bulunamadı.",
+	"startSetupNotFound": "\"{{name}}\" isimli bir liste bulamadım.",
+	"startWrongPlayerCount": "**{{setup}}** listesi için {{playerCount}} oyuncu gereklidir.",
+	"startSetupChosen": "**{{setup}}** listesi seçildi. Roller dağıtılıyor...",
+	"startSentRolePms": "Tüm roller DM olarak gönderildi!",
+	"startDmFail": "{{players, listAnd}} adlı oyuncuya/oyunculara DM atamadım. DM'lerinin açık olduğundan emin olduktan sonra rolünü almak için {{prefix}}role-pm yaz.",
+	"statusNotStarted": "{{channel}}'daki/deki oyun daha başlamadı! `{{prefix}}start` yazarak oyunu başlatın.",
+	"statusBotProcessing": "Bot şu anda oyunu düzenliyor. Sıkı durun!",
+	"statusTitles": {
+		"host": "Yönetici",
+		"phase": "Aşama",
+		"timeRemaining": "Kalan Süre",
+		"players": "Oyuncular"
+	},
+	"usesetupNoChange": "Oyun başladıktan sonra listeyi değiştiremezsin.",
+	"usesetupError": "Geçersiz bir liste verildi: {{error}}",
+	"usesetupSuccess": "Kullanılacak liste: `{{setup}}`",
+	"whisperDisabled": "Bu oyunda fısıldamak devre dışı.",
+	"whisperDayOnly": "Sadece gündüzleri fısıldayabilirsin.",
+	"whisperAsRevealedMayor": "Bilinen bir Mayor olarak, fısıldayamazsın.",
+	"whisperAsDeadPlayer": "Ölü bir oyuncu olarak fısıldayamazsın.",
+	"whisperToRevealedMayor": "Bilinen bir Mayor'a fısıldayamazsın.",
+	"whisperToDeadPlayer": "Ölü oyunculara fısıldayamazsın",
+	"whisperText": "**{{sender}}**'dan/den fısıltı: \"{message}\"",
+	"whisperFail": "Fısıltı başarısız: {{target}}'ın/in DM'leri açık değil.",
+	"whisperAlert": "**{{sender}}** **{{target}}**'e/a fısıldıyor."
+}
