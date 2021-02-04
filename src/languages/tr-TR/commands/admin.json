@@ -1,7 +1,7 @@
 {
-	"disableChannelNone": "There are no disabled channels. Disable a channel using {{prefix}}disablechannel #channel.",
-	"disableChannelView": "**Disabled Channels**: {{channels, listAnd}}",
-	"disableChannelAdded": "Disabled Channel(s): {{channels, listAnd}}",
+	"disableChannelNone": "Devre dışı kanal bulunmamaktadır. Bir kanalı devre dışı bırakmak için {{prefix}}disablechannel #kanal komudunu kullan.",
+	"disableChannelView": "**Devre Dışı Kanallar**: {{channels, listAnd}}",
+	"disableChannelAdded": "Kanal(lar) Devre Dışı: {{channels, listAnd}}",
 	"disableChannelRemoved": "Enabled Channel(s): {{channels, listAnd}}",
 	"setLanguageView": [
 		"The language in this server is set to **{{currentLanguage}}**.",
