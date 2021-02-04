@@ -20,5 +20,11 @@
 	"pingInitial": "Pinging...",
 	"pingResponse": "Pong! That took {{ping}}ms. Latency: {{latency}}ms",
 	"prefixCurrent": "My prefix in this server is set to: {{prefix}}",
-	"prefixUpdated": "Successfully updated this server's prefix to: `{{prefix}}`"
+	"prefixUpdated": "Successfully updated this server's prefix to: `{{prefix}}`",
+	"userStats": [ 
+		"Games: {{totalGames}}",
+		"Wins: {{wins}}",
+		"Winrate: {{winRate}}"
+	],
+	"userstatsNoDatabase": "Storing information on a database is currently disabled for this bot"
 }
