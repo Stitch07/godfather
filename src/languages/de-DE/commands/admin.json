@@ -9,8 +9,8 @@
 		"Languages supported in Godfather: {{validLanguages, listAnd}}"
 	],
 	"setLanguageInvalidLocale": [
-		"\"{{locale}}\" is not a valid locale.",
-		"Languages supported in Godfather: {{validLanguages, listAnd}}"
+		"\"{{locale}}\" ist kein gültiges Locale.",
+		"Unterstützte Sprachen in Godfather: {{validLanguages, listAnd}}"
 	],
 	"setLanguageAlreadySet": "The language in this server is already set to **{{locale}}**."
 }
