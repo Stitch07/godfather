@@ -21,9 +21,9 @@
 	"leaveReplacement": "Je bent nu geen vervanger meer.",
 	"leaveNotPlaying": "Je bent nu niet aan het spelen!",
 	"leavePlayerDead": "Doden kunnen het spel niet verlaten.",
-	"openMaxSize": "Deze lobby heeft nu de maximumgrootte bereikt.",
+	"openMaxSize": "Deze lobby is nu vol.",
 	"openSuccess": "{{GREENTICK}} Spelersmaximum nu ingesteld op {{maxPlayers}}.",
-	"removeSelf": "Je kunt jezelf niet verwijderen.",
+	"removeSelf": "Je kunt jezelf er niet uitzetten.",
 	"removeDirect": "{{GREENTICK}} {{player}} is nu verwijderd.",
 	"removeReminder": "{{player}}, ben je er nog?"
 }
