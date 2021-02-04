@@ -17,14 +17,14 @@ export default class extends GodfatherCommand {
 	public async run(message: Message, args: Args) {
 		const player = await args.pick('player').catch(handleRequiredArg('player'));
 		const { game } = message.channel;
-		if (game?.host.user.id === player.user.id) return message.channel.sendTranslated('commands/mafia:removeSelf');
+		if (game?.host.user.id === player.user.id) return message.channel.sendTranslated('commands/lobby:removeSelf');
 		if (!game!.hasStarted) {
 			// directly remove the player if the game hasn't started
 			void game!.players.remove(player);
-			return message.channel.sendTranslated('commands/mafia:removeDirect', [{ player }]);
+			return message.channel.sendTranslated('commands/lobby:removeDirect', [{ player }]);
 		}
 		// if the game has started, we give the player 45 seconds to prove they aren't AFK
-		const confirmationMessage = (await message.channel.sendTranslated('commands/mafia:removeReminder', [{ player: player.user }])) as Message;
+		const confirmationMessage = (await message.channel.sendTranslated('commands/lobby:removeReminder', [{ player: player.user }])) as Message;
 		await confirmationMessage.react('✅');
 		const reactions = await confirmationMessage.awaitReactions(
 			(reaction: MessageReaction, user: User) => reaction.emoji.name === '✅' && user.id === player.user.id,

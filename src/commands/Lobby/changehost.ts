@@ -13,14 +13,14 @@ export default class extends GodfatherCommand {
 		const { game } = message.channel;
 		const t = await message.fetchT();
 
-		if (game!.hasStarted) throw t('commands/mafia:changehostStarted');
-		if (game!.players.length < 3) throw t('commands/mafia:changehostMinimum3');
+		if (game!.hasStarted) throw t('commands/lobby:changehostStarted');
+		if (game!.players.length < 3) throw t('commands/lobby:changehostMinimum3');
 
 		let toChange = false;
 		if (message.author.id === game!.host.user.id) {
 			toChange = true;
 		} else {
-			if (game!.players.voteKicks.has(message.author.id)) throw t('commands/mafia:changehostAlreadyVoted');
+			if (game!.players.voteKicks.has(message.author.id)) throw t('commands/lobby:changehostAlreadyVoted');
 			game!.players.voteKicks.add(message.author.id);
 			await message.react('✅');
 
@@ -35,7 +35,7 @@ export default class extends GodfatherCommand {
 			game!.players.push(oldHost);
 			game!.players.voteKicks.clear();
 
-			await message.channel.send(t('commands/mafia:changehostHostChanged', { host: game!.host.toString() }));
+			await message.channel.send(t('commands/lobby:changehostHostChanged', { host: game!.host.toString() }));
 		}
 	}
 }
