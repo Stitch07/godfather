@@ -22,9 +22,9 @@
 	"prefixCurrent": "Mi prefijo en este servidor es {{prefix}}",
 	"prefixUpdated": "El prefijo de este servidor cambió a: `{{prefix}}`",
 	"userStats": [
-		"Games: {{totalGames}}",
-		"Wins: {{wins}}",
-		"Winrate: {{winRate}}"
+		"Juegos: {{totalGames}}",
+		"Victorias: {{wins}}",
+		"Porcentaje de victorias: {{winRate}}"
 	],
-	"userstatsNoDatabase": "Storing information on a database is currently disabled for this bot"
+	"userstatsNoDatabase": "El almacenar de la información en el base de datos esta desactivado en el bot en este momento"
 }
