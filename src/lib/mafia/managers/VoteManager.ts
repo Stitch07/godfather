@@ -57,10 +57,10 @@ export default class VoteManager extends Map<string, VoteProxy> {
 	}
 
 	public vote(voter: Player, target: Player): boolean {
-		if (!target.isAlive) throw "You can't vote a dead player.";
+		if (!target.isAlive) throw this.game.t('commands/voting:voteDeadPlayer');
 		const votes = this.on(target);
-		if (voter === target) throw 'Self-voting is not allowed.';
-		else if (votes.find((vote) => vote.by === voter)) throw `You have already voted for ${target}`;
+		if (voter === target) throw this.game.t('commands/voting:voteSelf');
+		else if (votes.find((vote) => vote.by === voter)) throw this.game.t('commands/voting:voteAlreadyVoted', { target });
 		// clear all other votes
 		for (const votes of this.values()) {
 			for (const vote of votes) if (vote.by === voter) votes.splice(votes.indexOf(vote), 1);
@@ -75,7 +75,7 @@ export default class VoteManager extends Map<string, VoteProxy> {
 
 	public noEliminate(voter: Player): boolean {
 		const votes = this.get(NoEliminate) ?? new VoteProxy();
-		if (votes.find((vote) => vote.by === voter)) throw 'You have already voted not to eliminate.';
+		if (votes.find((vote) => vote.by === voter)) throw this.game.t('commands/voting:noelimAlreadyVoted');
 		// clear all other votes
 		for (const votes of this.values()) {
 			for (const vote of votes) if (vote.by === voter) votes.splice(votes.indexOf(vote), 1);

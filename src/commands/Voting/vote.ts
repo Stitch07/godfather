@@ -24,12 +24,12 @@ export default class extends GodfatherCommand {
 		const target = await args.pick('player').catch(handleRequiredArg('player'));
 		const { game } = message.channel;
 
-		if (game?.nightActions.protectedPlayers.includes(target)) return game.channel.send('You cannot vote targets protected by a Guardian Angel');
+		if (game?.nightActions.protectedPlayers.includes(target)) return game.channel.sendTranslated('commands/voting:voteProtected');
 
 		const voter = game!.players.get(message.author)!;
 		const hammered = game!.votes.vote(voter, target);
 
-		await message.channel.send(`Voted ${target.user.tag}.`);
+		await message.channel.sendTranslated('commands/voting:voteSuccess', [{ target: target.user.tag }]);
 
 		if (hammered && target.isAlive) {
 			game!.phase = Phase.Standby;

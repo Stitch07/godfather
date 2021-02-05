@@ -25,12 +25,13 @@ export default class extends GodfatherCommand {
 		const voter = game!.players.get(message.author)!;
 		const noElim = game!.votes.noEliminate(voter);
 
-		await message.channel.send('You have voted not to eliminate.');
+		const t = await message.fetchT();
+		await message.channel.send(t('commands/voting:noelimSuccess'));
 
 		if (noElim) {
 			game!.phase = Phase.Standby;
 			game!.idlePhases++;
-			await message.channel.send('Nobody was eliminated!');
+			await message.channel.send(t('commands/voting:noelimResult'));
 			await game!.startNight();
 		}
 	}
