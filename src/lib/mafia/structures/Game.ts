@@ -1,3 +1,4 @@
+/* eslint-disable object-shorthand */
 import type Godfather from '@lib/Godfather';
 import NightActionsManager from '@mafia/managers/NightActionsManager';
 import PlayerManager from '@mafia/managers/PlayerManager';
@@ -131,12 +132,14 @@ export default class Game {
 		if (this.settings.adaptiveSlowmode && this.channel.permissionsFor(this.client.user!)?.has('MANAGE_CHANNELS'))
 			await this.updateAdaptiveSlowmode();
 
-		await this.channel.send(
-			[
-				`Day **${this.cycle}** will last ${format(this.settings.dayDuration)}`,
-				`With ${alivePlayers.length} alive, it takes ${this.majorityVotes} to eliminate.`
-			].join('\n')
-		);
+		await this.channel.sendTranslated('game/phases:dayStart', [
+			{
+				cycle: this.cycle,
+				dayDuration: format(this.settings.dayDuration),
+				alivePlayers: alivePlayers.length,
+				majorityVotes: this.majorityVotes
+			}
+		]);
 	}
 
 	public async startNight() {
@@ -166,8 +169,13 @@ export default class Game {
 		this.totalTrials = 0;
 		this.nightActions.protectedPlayers = [];
 
-		await this.channel.send(`Night **${this.cycle}** will last ${format(this.settings.nightDuration)}. Send in your actions quickly!`);
-		if (this.isFullMoon) await this.channel.send('Beware, tonight is a full moon 🌕');
+		await this.channel.sendTranslated('game/phases:nightStart', [
+			{
+				cycle: this.cycle,
+				nightDuration: format(this.settings.nightDuration)
+			}
+		]);
+		if (this.isFullMoon) await this.channel.sendTranslated('game/phases:fullMoon');
 		for (const player of this.players.filter(
 			(player) => fauxAlive(player) && player.role!.canUseAction().check && (player.role! as SingleTarget).actionPhase === Phase.Night
 		)) {
@@ -186,7 +194,11 @@ export default class Game {
 			}
 		}
 
-		await this.channel.send(`${this.votes.playerOnTrial!.user.toString()}, you have 30 seconds to convince the Town not to lynch you.`);
+		await this.channel.sendTranslated('game/trials:trialStart', [
+			{
+				playerName: this.votes.playerOnTrial!.user.toString()
+			}
+		]);
 		this.phaseEndAt = new Date(Date.now() + TRIAL_DURATION);
 		this.phase = Phase.Trial;
 		this.totalTrials++;
@@ -200,13 +212,12 @@ export default class Game {
 			}
 		}
 
-		await this.channel.send(
-			`The town may now vote on the Fate of ${
-				this.votes.playerOnTrial!.user.tag
-			}! Use the commands \`innocent\`, \`guilty\`, and \`abstain\` in Direct Messages to vote. (you have 30 seconds; ${
-				this.settings.maxTrials - this.totalTrials
-			} trials left today)`
-		);
+		await this.channel.sendTranslated('game/trials:trialVoteStart', [
+			{
+				playerName: this.votes.playerOnTrial!.user.tag,
+				dailyTrialsLeft: this.settings.maxTrials - this.totalTrials
+			}
+		]);
 		this.phaseEndAt = new Date(Date.now() + TRIAL_VOTING_DURATION);
 		this.phase = Phase.TrialVoting;
 	}
@@ -226,7 +237,13 @@ export default class Game {
 			}
 		}
 
-		await this.channel.send(['**Votes**:\n', `Innocent: ${innocentVotes}`, `Guilty: ${guiltyVotes}`, `Abstain: ${abstainingVotes}`].join('\n'));
+		await this.channel.sendTranslated('game/trials:trialVotes', [
+			{
+				innocentVotes: innocentVotes,
+				guiltyVotes: guiltyVotes,
+				abstainingVotes: abstainingVotes
+			}
+		]);
 
 		const result = Math.max(innocentVotes, guiltyVotes);
 
@@ -235,10 +252,11 @@ export default class Game {
 			if (this.totalTrials === this.settings.maxTrials) {
 				this.phase = Phase.Standby;
 				this.idlePhases++;
-				await this.channel.send('Maximum trials reached. Nobody was eliminated!');
+				await this.channel.sendTranslated('game/trials:maxTrialsReached');
 				await this.startNight();
 			}
-			if (this.dayTimeLeft !== 0) await this.channel.send(`${this.votes.playerOnTrial!.user.tag} was acquitted.`);
+			if (this.dayTimeLeft !== 0)
+				await this.channel.sendTranslated('game/trials:maxTrialsReached', [{ playerName: this.votes.playerOnTrial!.user.tag }]);
 			// add carried over day-time
 			this.phaseEndAt = new Date(Date.now() + this.dayTimeLeft);
 			this.votes.reset();
