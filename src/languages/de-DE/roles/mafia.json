@@ -1,0 +1,7 @@
+{
+	"ambusherAlert": "You saw {{ambusher}} preparing an ambush for your target.",
+	"ambusherSuccess": "You attacked someone who visted your target.",
+	"ambusherAttack": "You were attacked by an ambusher!",
+	"consigResult": "Your target is a **{{role}}**.",
+	"janitorResult": "You secretly know that your target was a **{{role}}**."
+}
