@@ -4,7 +4,7 @@
 		"Een bot die automatisch spellen Maffia host. Mijn prefix hier is: `{{prefix}}`",
 		"[Supportserver (Engels)]({{supportServer}})"
 	],
-	"helpFooter": "Gebruik `{{prefix}}help <command>` voor informatie over een specifieke opdracht.",
+	"helpFooter": "Gebruik `{{prefix}}help <opdracht>` voor informatie over een specifieke opdracht.",
 	"infoText": [
 		"Godfather v{{VERSION}} is een bot die spellen Weerwolven/Maffia host, met 24/7 uptime en een intuïtieve speelwijze.",
 		"",
