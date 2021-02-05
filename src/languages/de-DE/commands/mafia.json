@@ -11,13 +11,13 @@
 	"statusNotStarted": "The game in {{channel}} hasn't started yet! Use `{{prefix}}start` to start it.",
 	"statusBotProcessing": "The bot is processing the game right now. Hang tight!",
 	"statusTitles": {
-		"host": "Host",
+		"host": "Spielleiter",
 		"phase": "Phase",
-		"timeRemaining": "Time Remaining",
-		"players": "Players"
+		"timeRemaining": "Restliche Zeit",
+		"players": "Spieler*innen"
 	},
-	"usesetupNoChange": "You can't change the setup after the game has started.",
-	"usesetupError": "An invalid setup was provided: {{error}}",
+	"usesetupNoChange": "Du kannst die Rolleneinrichtung nicht ändern nachdem das Spiel begonnen hat.",
+	"usesetupError": "Eine ungültige Rolleneinrichtung wurde angegeben: {{error}}",
 	"usesetupSuccess": "Using the setup: `{{setup}}`",
 	"whisperDisabled": "Whispering is disabled in this game.",
 	"whisperDayOnly": "You can only whisper during the day.",
