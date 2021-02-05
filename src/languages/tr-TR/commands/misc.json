@@ -27,5 +27,5 @@
 		"Kazanma yüzdesi: {{winRate}}"
 	],
 	"userstatsNoDatabase": "Veri tabanında bilgi depolamak bu bot için şu anlık devre dışıdır",
-	"statsDescription": "To add {{botname}} to your server, use the `{{prefix}}invite` command."
+	"statsDescription": "{{botname}}'ı sunucuna eklemek için, `{{prefix}}invite` komutunu kullan."
 }
