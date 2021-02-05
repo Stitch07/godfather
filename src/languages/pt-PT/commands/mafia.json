@@ -38,7 +38,7 @@
 	"whisperAsDeadPlayer": "Você não pode sussurrar morto.",
 	"whisperToRevealedMayor": "Você não pode sussurrar para um mayor revelado.",
 	"whisperToDeadPlayer": "Você não pode sussurrar para um jogador morto",
-	"whisperText": "**{{sender}}** sussurrou: \"{{message}\" para você",
+	"whisperText": "Whisper from **{{sender}}**: \"{{message}}\"",
 	"whisperFail": "O Sussurro falhou, o PV de {{target}} esta fechado.",
 	"whisperAlert": "**{{sender}}** esta sussurrando para **{{target}}**."
 }
