@@ -38,7 +38,7 @@
 	"whisperAsDeadPlayer": "No puedes susurrar como un jugador eliminado.",
 	"whisperToRevealedMayor": "No puedes susurrar a un Mayor revelado.",
 	"whisperToDeadPlayer": "No puedes susurrar a jugadores eliminados",
-	"whisperText": "Susurro de **{{sender}}**: \"{{message}\"",
+	"whisperText": "Whisper from **{{sender}}**: \"{{message}}\"",
 	"whisperFail": "Susurro fallado: {{target}} no tiene los Mensajes Directos abiertos.",
 	"whisperAlert": "**{{sender}}** esta susurrando a **{{target}}**."
 }
