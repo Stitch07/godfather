@@ -9,7 +9,7 @@
 	"closeMinimum3": "Je hebt minstens 3 spelers nodig om een lobby te sluiten.",
 	"closeSuccess": "{{GREENTICK}} Spelersmaximum nu ingesteld op {{count}}**.",
 	"createMaintenanceMode": "De bot wordt nu onderhouden. Er kunnen geen nieuwe spellen aangemaakt worden.",
-	"createGameCreated": "Spel Maffia gestart in {{channel}} door **{{host}}**. Gebruik {{prefix}}join om mee te doen.",
+	"createGameCreated": "Een spel Maffia gestart in {{channel}} door **{{host}}**. Gebruik `{{prefix}}join` om mee te doen.",
 	"createPlayersAdded": "{{players, listAnd}} zijn nu toegevoegd.",
 	"deleteConfirmation": "Weet je zeker dat je dit spel wilt verwijderen?",
 	"joinAlreadyJoined": "Je zit al in dit spel.",
