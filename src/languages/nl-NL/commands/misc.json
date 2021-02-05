@@ -2,7 +2,7 @@
 	"helpInvalidCommand": "Ongeldige opdracht opgegeven.",
 	"helpDescription": [
 		"Een bot die automatisch spellen Maffia host. Mijn prefix hier is: `{{prefix}}`",
-		"[Support Server]({{supportServer}})"
+		"[Supportserver (Engels)]({{supportServer}})"
 	],
 	"helpFooter": "Gebruik `{{prefix}}help <command>` voor informatie over een specifieke opdracht.",
 	"infoText": [
@@ -14,18 +14,18 @@
 		"• Speler- en spelstatistieken",
 		"en veel meer!",
 		"",
-		"Gebruik de opdracht `{{prefix}}invite` om Godfather aan je server toe te voegen."
+		"Gebruik `{{prefix}}invite` om Godfather aan je server toe te voegen."
 	],
-	"inviteText": "[Invite {{bot}} to your server]({{invite}}) | [Join Support Server]({{supportServer}})",
+	"inviteText": "[Voeg {{bot}} aan je server toe]({{invite}}) | [Supportserver (Engels)]({{supportServer}})",
 	"pingInitial": "Aan het pingen...",
 	"pingResponse": "Pong! Dat duurde {{ping}}ms. Incubatietijd: {{latency}}ms",
 	"prefixCurrent": "Mijn prefix in deze server is: `{{prefix}}`",
-	"prefixUpdated": "De prefix van deze server is nu: `{{prefix}}`",
+	"prefixUpdated": "De prefix in deze server is nu: `{{prefix}}`",
 	"userStats": [
 		"Totaal aantal spellen: {{totalGames}}",
 		"Overwinningen: {{wins}}",
-		"Winpercentage: {{winRate}}"
+		"Winstpercentage: {{winRate}}"
 	],
-	"userstatsNoDatabase": "Het opslaan van informatie in een database is momenteel uitgeschakeld voor deze bot",
-	"statsDescription": "To add {{botname}} to your server, use the `{{prefix}}invite` command."
+	"userstatsNoDatabase": "Het opslaan van informatie in een database is momenteel uitgeschakeld voor deze bot.",
+	"statsDescription": "Gebruik `{{prefix}}invite` om {{botname}} aan je server toe te voegen."
 }
