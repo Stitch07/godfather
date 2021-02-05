@@ -27,5 +27,5 @@
 		"Média de vitórias: {{winRate}}"
 	],
 	"userstatsNoDatabase": "Armazenar as informações em um banco de dados está indisponível no momento para este bot",
-	"statsDescription": "To add {{botname}} to your server, use the `{{prefix}}invite` command."
+	"statsDescription": "Para adicionar {{botname}} ao seu servidor, use o comando `{{prefix}}invite`."
 }
