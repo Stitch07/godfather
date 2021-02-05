@@ -6,7 +6,7 @@
 	"setLanguageView": [
 		"The language in this server is set to **{{currentLanguage}}**.",
 		"Use `set-language <language>` to update it.",
-		"Languages supported in Godfather: {{validLanguages, listAnd}}"
+		"Unterstütze Sprachen in Godfather: {{validLanguages, listAnd}}"
 	],
 	"setLanguageInvalidLocale": [
 		"\"{{locale}}\" ist kein gültiges Locale.",
