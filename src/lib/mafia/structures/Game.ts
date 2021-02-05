@@ -256,7 +256,7 @@ export default class Game {
 				await this.startNight();
 			}
 			if (this.dayTimeLeft !== 0)
-				await this.channel.sendTranslated('game/trials:maxTrialsReached', [{ playerName: this.votes.playerOnTrial!.user.tag }]);
+				await this.channel.sendTranslated('game/trials:playerAcquitted', [{ playerName: this.votes.playerOnTrial!.user.tag }]);
 			// add carried over day-time
 			this.phaseEndAt = new Date(Date.now() + this.dayTimeLeft);
 			this.votes.reset();
