@@ -1,14 +1,14 @@
 {
-	"AdminOnly": "Esse comando só pode ser usados por admins.",
-	"AlivePlayerOnly": "Esse comando só pode ser usados por jogadores vivos.",
-	"Cooldown": "Você está digitando rapido demais, espere {{remaining, durationFormat}} segundos.",
-	"DayOnly": "Esse comando não pode ser usado a noite ou durante julgamentos.",
-	"DMOnly": "Esse comando só pode ser usado no Pv.",
+	"AdminOnly": "Este comando só pode ser usado por administradores do servidor. ",
+	"AlivePlayerOnly": "Esse comando só pode ser usado por jogadores vivos.",
+	"Cooldown": "Você acabou de usar este comando. Tente de novo em {{remaining, durationFormat}} segundos.",
+	"DayOnly": "Esse comando não pode ser usado de noite ou durante julgamentos.",
+	"DMOnly": "Esse comando só pode ser utilizado nas mensagens privadas.",
 	"GameOnly": "Não há nenhuma partida ativa aqui, digite {{prefix}}create para criar uma!",
 	"GameStartedOnly": "Essa partida ainda não iniciou.",
-	"GuildOnly": "Você não pode usar esse comando no PV.",
-	"HostOnly": "Esse comando só pode ser usados por hosts.",
+	"GuildOnly": "Você não pode usar esse comando nas mensagens privadas.",
+	"HostOnly": "Esse comando só pode ser usado por hosts.",
 	"PlayerOnly": "Esse comando só pode ser usado por jogadores.",
 	"TrialVotingOnly": "Esse comando só pode ser usado durante julgamentos.",
-	"NoActiveGames": "Você não esta em nenhuma partida ativa."
+	"NoActiveGames": "Você não está em nenhuma partida ativa."
 }
