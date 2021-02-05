@@ -16,6 +16,7 @@ import '@sapphire/plugin-i18next/register';
 import type { FormatFunction } from 'i18next';
 import { getHandler } from '@root/languages';
 import { codeBlock } from '@sapphire/utilities';
+import { UserOrMemberMentionRegex } from '@sapphire/discord-utilities';
 
 export default class Godfather extends SapphireClient {
 	public games: Collection<string, Game> = new Collection();
@@ -67,6 +68,12 @@ export default class Godfather extends SapphireClient {
 								}
 								case 'durationFormat': {
 									return getHandler(language!).duration.format(Number(value));
+								}
+								case 'prefix': {
+									if (UserOrMemberMentionRegex.test(value)) {
+										return `@${this.user!.username} `;
+									}
+									return value;
 								}
 								default: {
 									return value as string;

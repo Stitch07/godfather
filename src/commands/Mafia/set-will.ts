@@ -16,22 +16,22 @@ import type { Message } from 'discord.js';
 export default class extends GodfatherCommand {
 	public async run(message: Message, args: Args) {
 		const game = this.context.client.games.find((game) => Boolean(game.players.get(message.author)));
-		if (!game) throw "You aren't in any active games!";
+		if (!game) throw await message.resolveKey('preconditions:NoActiveGames');
 
-		if (game.settings.disableWills) throw 'Wills are disabled in this game.';
-		if (!game.hasStarted) throw "The game hasn't started yet!";
+		if (game.settings.disableWills) throw await message.resolveKey('commands/mafia:showWillDisabled');
+		if (!game.hasStarted) throw await message.resolveKey('preconditions:GameStartedOnly');
 
 		const player = game.players.get(message.author)!;
-		if (!player.isAlive) throw 'You cannot set a will as a dead player.';
+		if (!player.isAlive) throw await message.resolveKey('commands/mafia:setwillDead');
 
 		let will = await args.rest('string', { maximum: 400 }).catch(handleRequiredArg('will'));
 		if (args.getFlags('a', 'append')) {
 			will = player.will === '' ? will : `${player.will}\n${will}`;
 		}
 
-		if (will.split('\n').length > 8) throw 'Wills cannot be more than 8 lines.';
+		if (will.split('\n').length > 8) throw await message.resolveKey('commands/mafia:setwillMaximumLines', { max: 8 });
 		player.will = will;
 
-		await message.channel.send('Your will has been set.');
+		return message.channel.sendTranslated('commands/mafia:setwillSuccess');
 	}
 }
