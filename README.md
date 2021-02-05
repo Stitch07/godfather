@@ -3,6 +3,8 @@
 [![Discord](https://discordapp.com/api/guilds/723535249073504306/embed.png)](https://discord.gg/gFhvChy)
 ![CI](https://github.com/Soumil07/godfather/workflows/Continuous%20Integration/badge.svg)
 
+![BFD](https://botsfordiscord.com/api/bot/579703064173346827/widget)
+
 ## Godfather is a Discord bot that hosts games of Werewolf/Mafia
 
 ## Features
