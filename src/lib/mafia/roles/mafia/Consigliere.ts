@@ -14,7 +14,7 @@ class Consigliere extends SingleTarget {
 	public priority = NightActionPriority.CONSIG;
 
 	public tearDown(actions: NightActionsManager, target: Player) {
-		this.player.queueMessage(`Your target's role is: ${target.role.display}`);
+		this.player.queueMessage(this.game.t('roles/mafia:consigResult', { role: target.role.display }));
 	}
 }
 

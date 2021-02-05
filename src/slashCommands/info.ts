@@ -2,6 +2,7 @@ import SlashCommand from '@lib/structures/SlashCommand';
 import type RemainingCommand from '@root/commands/Mafia/remaining';
 import type { PieceContext } from '@sapphire/framework';
 import type { TextChannel } from 'discord.js';
+import i18next from 'i18next';
 
 export class PlayerlistSlashCommand extends SlashCommand {
 	public constructor(context: PieceContext) {
@@ -45,6 +46,6 @@ export class RemainingSlashCommand extends SlashCommand {
 	public async run(interaction: any) {
 		const channel = this.context.client.channels.cache.get(interaction.channel_id) as TextChannel;
 		const command = this.context.client.stores.get('commands').get('remaining')! as RemainingCommand;
-		await this.reply(interaction, command.getOutput(channel.game!));
+		await this.reply(interaction, command.getOutput(channel.game!, i18next.t));
 	}
 }

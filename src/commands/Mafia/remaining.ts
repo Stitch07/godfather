@@ -4,6 +4,7 @@ import { ApplyOptions } from '@sapphire/decorators';
 import { BucketType, CommandOptions } from '@sapphire/framework';
 import { Time } from '@sapphire/time-utilities';
 import type { Message } from 'discord.js';
+import type { TFunction } from 'i18next';
 
 @ApplyOptions<CommandOptions>({
 	description: 'Shows when the current day/night ends.',
@@ -12,27 +13,27 @@ import type { Message } from 'discord.js';
 export default class RemainingCommand extends GodfatherCommand {
 	public async run(message: Message) {
 		const { game } = message.channel;
-		return message.channel.send(this.getOutput(game!));
+		return message.channel.send(this.getOutput(game!, await message.fetchT()));
 	}
 
-	public getOutput(game: Game) {
-		return `${this.getFullPhase(game)} ends in ${game.remaining()}`;
+	public getOutput(game: Game, t: TFunction) {
+		return t('commands/mafia:remainingOutput', { phase: this.getFullPhase(game, t), remaining: game.remaining() });
 	}
 
-	private getFullPhase(game: Game) {
+	private getFullPhase(game: Game, t: TFunction) {
 		switch (game.phase) {
 			case Phase.Day:
-				return `Day ${game.cycle}`;
+				return t('commands/mafia:remainingDay', { cycle: game.cycle });
 			case Phase.Night:
-				return `Night ${game.cycle}`;
+				return t('commands/mafia:remainingNight', { cycle: game.cycle });
 			case Phase.Trial:
-				return `The current trial`;
+				return t('commands/mafia:remainingCurrentTrial');
 			case Phase.TrialVoting:
-				return `The current trial-vote`;
+				return t('commands/mafia:remainingCurrentTrialVote');
 			case Phase.Pregame:
-				throw "The game hasn't started yet!";
+				throw t('commands/mafia:remainingPregame');
 			default:
-				throw 'The bot is currently processing the game.';
+				throw t('commands/mafia:statusBotProcessing');
 		}
 	}
 }

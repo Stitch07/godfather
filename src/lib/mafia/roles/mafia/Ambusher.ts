@@ -14,7 +14,7 @@ class Ambusher extends SingleTarget {
 	private killTarget: Player | null = null;
 
 	public canTarget(target: Player) {
-		if (target.role.faction.name === 'Mafia') return { check: false, reason: 'You cannot target yourself or your teammates' };
+		if (target.role.faction.name === 'Mafia') return { check: false, reason: this.game.t('roles/global:targetTeammates') };
 		return super.canTarget(target);
 	}
 
@@ -35,13 +35,13 @@ class Ambusher extends SingleTarget {
 
 			for (const visitor of target.visitors) {
 				if (visitor !== this.player && visitor.user.id !== this.killTarget.user.id)
-					visitor.queueMessage(`You saw ${this.player.user.username} preparing an ambush for your target.`);
+					visitor.queueMessage(this.game.t('roles/mafia:ambusherAlert', { ambusher: this.player.user.tag }));
 			}
-			this.player.queueMessage('You attacked someone who visted your target.');
+			this.player.queueMessage(this.game.t('roles/mafia:ambusherSuccess'));
 			if (!success) {
-				return this.player.queueMessage('Your target was too strong to kill!');
+				return this.player.queueMessage(this.game.t('roles/global:targetTooStrong'));
 			}
-			this.killTarget.queueMessage('You were attacked by an ambusher!');
+			this.killTarget.queueMessage(this.game.t('roles/mafia:ambusherAttack'));
 			this.killTarget = null;
 		}
 	}

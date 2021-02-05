@@ -26,6 +26,6 @@ export default class extends GodfatherCommand {
 		if (unvoted) {
 			return message.react('✅');
 		}
-		return message.channel.send('No votes to remove!');
+		return message.channel.sendTranslated('commands/voting:unvoteFail');
 	}
 }

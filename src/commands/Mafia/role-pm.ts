@@ -23,7 +23,7 @@ export default class extends GodfatherCommand {
 			await player.sendPM();
 			await message.react('✅');
 		} catch {
-			throw "I couldn't DM you! Enable your DMs and run this command again.";
+			throw await message.resolveKey('commands/mafia:rolepmFail');
 		}
 	}
 }
