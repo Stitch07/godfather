@@ -279,10 +279,14 @@ export default class Game {
 			return this.startTrial();
 		}
 
-		await this.channel.send(
-			`${player.user.tag} was hammered. ${player.displayRoleAndWill()}\n${this.votes.show({ header: 'Final Vote Count', codeblock: true })}`
-		);
-		await player.kill(`eliminated D${this.cycle}`);
+		await this.channel.sendTranslated('game/trials:playerHammered', [
+			{
+				playerName: player.user.tag,
+				RoleAndWill: player.displayRoleAndWill(),
+				votes: this.votes.show({ header: this.t('game/trials:votesShowHeader'), codeblock: true })
+			}
+		]);
+		await player.kill(this.t('game/trials:playerHammeredKill', [{ cycle: this.cycle }]));
 		this.idlePhases = 0;
 
 		await this.startNight();
