@@ -1,7 +1,7 @@
 {
-	"ambusherAlert": "You saw {{ambusher}} preparing an ambush for your target.",
-	"ambusherSuccess": "You attacked someone who visted your target.",
-	"ambusherAttack": "You were attacked by an ambusher!",
-	"consigResult": "Your target is a **{{role}}**.",
-	"janitorResult": "You secretly know that your target was a **{{role}}**."
+	"ambusherAlert": "Je zag {{ambusher}} zich in hinderlaag leggen voor je doelwit.",
+	"ambusherSuccess": "Je viel een bezoeker van je doelwit aan.",
+	"ambusherAttack": "Je werd aangevallen door een Ambusher!",
+	"consigResult": "Je doelwit is een **{{role}}**.",
+	"janitorResult": "In het geheim weet je dat je doelwit een **{{role}}** was."
 }
