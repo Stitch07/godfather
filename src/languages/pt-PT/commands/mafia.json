@@ -1,7 +1,7 @@
 {
 	"showWillDisabled": "Testamentos estão desativados nessa partida.",
-	"showWillInvalidTarget": "Você somente pode visualizar seu proprio testamento ou o de alguem morto",
-	"startAlreadyStarted": "A partida ja iniciou!",
+	"showWillInvalidTarget": "Você só pode ver o seu próprio testamento ou o de alguém morto",
+	"startAlreadyStarted": "A partida já iniciou!",
 	"startNoSetups": "Nenhum setup encontrado para {{playerCount}} jogadores.",
 	"startSetupNotFound": "Não há nenhum setup chamado \"{{name}}\"",
 	"startWrongPlayerCount": "O setup **{{setup}}** precisa de {{playerCount}} jogadores.",
@@ -12,11 +12,11 @@
 	"statusBotProcessing": "O bot esta processando a partida agora, aguarde um momento!",
 	"statusTitles": {
 		"host": "Host",
-		"phase": "Periodo",
+		"phase": "Período",
 		"timeRemaining": "Tempo Restante",
 		"players": "Jogadores"
 	},
-	"usesetupNoChange": "Você não pode alterar o setup depois que uma partida ja iniciou.",
+	"usesetupNoChange": "Você não pode alterar o setup depois que uma partida já iniciou.",
 	"usesetupError": "Uma configuração inválida foi fornecida: {{error}}",
 	"usesetupSuccess": "Usando o setup: `{{setup}}`",
 	"whisperDisabled": "Sussurros estão desativados nessa partida.",
