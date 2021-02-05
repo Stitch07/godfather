@@ -1,11 +1,11 @@
 {
-	"noelimAlreadyVoted": "You have already voted not to eliminate.",
-	"noelimSuccess": "You have voted not to eliminate.",
-	"noelimResult": "Nobody was eliminated!",
-	"unvoteFail": "No votes to remove!",
-	"voteDeadPlayer": "You can't vote a dead player.",
-	"voteSelf": "Self-voting is not allowed.",
-	"voteAlreadyVoted": "You have already voted for {{target}}",
-	"voteProtected": "You cannot vote targets protected by a Guardian Angel",
-	"voteSuccess": "Voted {{target}}."
+	"noelimAlreadyVoted": "Je hebt er al voor gestemd om niet te elimineren.",
+	"noelimSuccess": "Je hebt ervoor gestemd om niet te elimineren.",
+	"noelimResult": "Niemand werd geëlimineerd!",
+	"unvoteFail": "Je hebt nog niet eens gestemd!",
+	"voteDeadPlayer": "Je kunt niet stemmen op een dode.",
+	"voteSelf": "Je kunt niet op jezelf stemmen.",
+	"voteAlreadyVoted": "Je hebt al gestemd op {{target}}.",
+	"voteProtected": "Je kunt niet op iemand stemmen die vannacht beschermd werd door een Guardian Angel.",
+	"voteSuccess": "Gestemd op {{target}}."
 }
