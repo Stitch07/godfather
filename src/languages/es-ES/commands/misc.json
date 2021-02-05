@@ -27,5 +27,5 @@
 		"Porcentaje de victorias: {{winRate}}"
 	],
 	"userstatsNoDatabase": "El almacenar de la información en el base de datos esta desactivado en el bot en este momento",
-	"statsDescription": "To add {{botname}} to your server, use the `{{prefix}}invite` command."
+	"statsDescription": "Para añadir {{botname}} a tu servidor de Discord, usa el comando, `{{prefix}}invite`."
 }
