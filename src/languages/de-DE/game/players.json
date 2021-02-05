@@ -2,12 +2,12 @@
 	"roleCleaned": "We could not determine their role.",
 	"displayRole": "They were a **{{role}}**.",
 	"displayWill": "They left a will: {{will, codeBlock}}",
-	"noWill": "We could not find a will.",
-	"removeHost": "The host cannot leave the game.",
-	"removeConfirmationReplace": "You will be replaced out.",
+	"noWill": "Wir konnten kein Testament finden.",
+	"removeHost": "Der Spielleiter kann das Spiel nicht verlassen.",
+	"removeConfirmationReplace": "Du wirst ausgetauscht werden.",
 	"removeConfirmationModkill": "You will be modkilled.",
-	"removeConfirmationPrompt": "Are you sure you want to leave? {{prompt}}",
-	"removeSuccessfulReplacement": "{{replacement}} has replaced {{player}}.",
+	"removeConfirmationPrompt": "Bis du sicher, dass du das Spiel verlassen willst? {{prompt}}",
+	"removeSuccessfulReplacement": "{{replacement}} hat {{player}} ausgetauscht.",
 	"removeSuccessfulModkill": "{{player}} was modkilled.",
 	"removeModkillReason": "modkilled {{phase}}"
 }
