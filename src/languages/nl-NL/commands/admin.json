@@ -5,7 +5,7 @@
 	"disableChannelRemoved": "Nu ingeschakeld: {{channels, listAnd}}",
 	"setLanguageView": [
 		"De taal in deze server is nu **{{currentLanguage}}**.",
-		"Gebruik `set-language <language>` om het te updaten.",
+		"Gebruik `set-language <language>` om de taal te updaten.",
 		"Ondersteunde talen in Godfather: {{validLanguages, listAnd}}"
 	],
 	"setLanguageInvalidLocale": [
