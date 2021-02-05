@@ -1,0 +1,7 @@
+{
+	"cultLeaderConsecutiveNights": "You cannot convert on 2 consecutive nights.",
+	"cultLeaderDenounce": "You were denounced by a Cult Leader.",
+	"successfulConversion": "You were converted by a Cult!",
+	"conversionMessage": "You successfully converted {{target}}!",
+	"cultMemberSuicide": "You committed suicide after losing your Cult Leader!"
+}
