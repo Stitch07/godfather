@@ -38,7 +38,7 @@
 	"whisperAsDeadPlayer": "You cannot whisper as a dead player.",
 	"whisperToRevealedMayor": "You cannot whisper to a revealed Mayor.",
 	"whisperToDeadPlayer": "You cannot whisper to dead players",
-	"whisperText": "Whisper from **{{sender}}**: \"{{message}\"",
+	"whisperText": "Whisper from **{{sender}}**: \"{{message}}\"",
 	"whisperFail": "Whisper failed: {{target}} doesn't have DMs open.",
 	"whisperAlert": "**{{sender}}** is whispering to **{{target}}**."
 }
