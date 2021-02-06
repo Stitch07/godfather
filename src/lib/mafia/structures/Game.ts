@@ -279,14 +279,14 @@ export default class Game {
 			return this.startTrial();
 		}
 
-		await this.channel.sendTranslated('game/trials:playerHammered', [
+		await this.channel.sendTranslated('game/trials:playerEliminated', [
 			{
 				playerName: player.user.tag,
 				RoleAndWill: player.displayRoleAndWill(),
 				votes: this.votes.show({ header: this.t('game/trials:votesShowHeader'), codeblock: true })
 			}
 		]);
-		await player.kill(this.t('game/trials:playerHammeredKill', [{ cycle: this.cycle }]));
+		await player.kill(this.t('game/trials:playerEliminatedKill', [{ cycle: this.cycle }]));
 		this.idlePhases = 0;
 
 		await this.startNight();
@@ -314,13 +314,14 @@ export default class Game {
 
 						const candidates = this.players.filter((player) => this.votes.on(player).count() === largestVoteCount);
 						const eliminatedPlayer = randomArrayItem(candidates)!;
-						await this.channel.send(
-							`${eliminatedPlayer.user.tag} was eliminated. ${eliminatedPlayer.displayRoleAndWill()}\n${this.votes.show({
-								header: 'Final Vote Count',
-								codeblock: true
-							})}`
-						);
-						await eliminatedPlayer.kill(`eliminated D${this.cycle}`);
+						await this.channel.sendTranslated('game/trials:playerEliminated', [
+							{
+								playerName: eliminatedPlayer.user.tag,
+								RoleAndWill: eliminatedPlayer.displayRoleAndWill(),
+								votes: this.votes.show({ header: this.t('game/trials:votesShowHeader'), codeblock: true })
+							}
+						]);
+						await eliminatedPlayer.kill(this.t('game/trials:playerEliminatedKill', [{ cycle: this.cycle }]));
 						this.idlePhases = 0;
 					} else {
 						await this.channel.send('Nobody was eliminated!');
