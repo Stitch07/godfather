@@ -8,8 +8,8 @@
 		"Absteve-se: {{abstainingVotes}}"
 	],
 	"maxTrialsReached": "Julgamentos máximos alcançados. Ninguém foi eliminado!",
-	"playerAcquitted": "{{playerName}} was acquitted.",
-	"playerHammered": "{{playerName}} was hammered. {{RoleAndWill}}\n{votes}",
-	"votesShowHeader": "Final Vote Count",
-	"playerHammeredKill": "eliminated D{cycle}"
+	"playerAcquitted": "{{playerName}} foi inocentado.",
+	"playerHammered": "{{playerName}} foi linchado. {{RoleAndWill}} {votes}",
+	"votesShowHeader": "Contagem final de votos",
+	"playerHammeredKill": "eliminado D{cycle}"
 }
