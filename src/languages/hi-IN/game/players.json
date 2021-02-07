@@ -1,13 +1,13 @@
 {
 	"roleCleaned": "We could not determine their role.",
-	"displayRole": "They were a **{{role}}**.",
+	"displayRole": "वह एक **{{role}}** थे|",
 	"displayWill": "They left a will: {{will, codeBlock}}",
 	"noWill": "We could not find a will.",
 	"removeHost": "The host cannot leave the game.",
-	"removeConfirmationReplace": "You will be replaced out.",
+	"removeConfirmationReplace": "आपकी जगह दूसरा खिलाड़ी ले लेगा |",
 	"removeConfirmationModkill": "You will be modkilled.",
 	"removeConfirmationPrompt": "Are you sure you want to leave? {{prompt}}",
-	"removeSuccessfulReplacement": "{{replacement}} has replaced {{player}}.",
+	"removeSuccessfulReplacement": "{{player}} की जगह {{replacement}} ने लेली है |",
 	"removeSuccessfulModkill": "{{player}} was modkilled.",
 	"removeModkillReason": "modkilled {{phase}}"
 }
