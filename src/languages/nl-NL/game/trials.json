@@ -1,15 +1,15 @@
 {
-	"trialStart": "{{playerName}}, you have 30 seconds to convince the Town not to lynch you.",
-	"trialVoteStart": "The town may now vote on the Fate of {{playerName}}! Use the commands `innocent`, `guilty`, and `abstain` in Direct Messages to vote. (you have 30 seconds; {{dailyTrialsLeft}} trials left today)",
+	"trialStart": "{{playerName}}, je hebt 30 seconden om het dorp ervan te overtuigen je niet te elimineren.",
+	"trialVoteStart": "Het dorp mag nu beslissen over het lot van {{playerName}}! Gebruik per dm de opdrachten `innocent`, `guilty` en `abstain` (respectievelijk 'onschuldig', 'schuldig' en 'blanco') om te stemmen. (je hebt 30 seconden; er zijn vandaag nog {{dailyTrialsLeft}} berechtingen over)",
 	"trialVotes": [
-		"**Votes**:",
-		"Innocent: {{innocentVotes}}",
-		"Guilty: {{guiltyVotes}}",
-		"Abstain: {{abstainingVotes}}"
+		"**Stemmen**:",
+		"Onschuldig: {{innocentVotes}}",
+		"Schuldig: {{guiltyVotes}}",
+		"Blanco: {{abstainingVotes}}"
 	],
-	"maxTrialsReached": "Maximum trials reached. Nobody was eliminated!",
-	"playerAcquitted": "{{playerName}} was acquitted.",
-	"playerEliminated": "{{playerName}} was eliminated. {{RoleAndWill}}\n{votes}",
-	"votesShowHeader": "Final Vote Count",
-	"playerEliminatedKill": "eliminated D{cycle}"
+	"maxTrialsReached": "Maximumaantal berechtingen bereikt. Niemand werd geëlimineerd!",
+	"playerAcquitted": "{{playerName}} werd vrijgesproken.",
+	"playerEliminated": "{{playerName}} werd geëlimineerd. {{RoleAndWill}}\n{votes}",
+	"votesShowHeader": "Uiteindelijke stemtelling",
+	"playerEliminatedKill": "geëlimineerd D{cycle}"
 }
