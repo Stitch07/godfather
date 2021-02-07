@@ -1,31 +1,31 @@
 {
-	"helpInvalidCommand": "कमांड अमान्य है|",
+	"helpInvalidCommand": "अमान्य आदेश प्रदान किया गया है |",
 	"helpDescription": [
-		"A Discord Bot that automatically hosts games of Mafia. My prefix here is `{{prefix}}`",
-		"[सहायता का सर्वर]({{supportServer}})"
+		"एक डिस्कोर्ड बॉट जो माफिया के गेम को स्वंय होस्ट करता है। यहाँ मेरा prefix है {{prefix}}",
+		"समर्थन सर्वर({{supportServer}})"
 	],
-	"helpFooter": "For information about a specific command, run {{prefix}}help <command>.",
+	"helpFooter": "किसी विशेष कमांड के बारे में जानकारी के लिए, {{prefix}} help <आदेश> चलाएँ।",
 	"infoText": [
-		"Godfather v{{VERSION}} is a Discord Bot that hosts games of Werewolf/Mafia, with 24/7 uptime and intuitive commands.",
+		"Godfather v{{VERSION}} एक डिस्कॉर्ड बोट है जो माफिया / वेयरवोल्फ के खेलों की मेज़बानी करता है| 24/7 अपटाइम और सहज कमांड्स के साथ |",
 		"",
-		"**Godfather की विशेस्ताएं:**",
-		"• Automatically hosted games of Mafia, with over 30 roles and different factions.",
-		"• Addable custom setups",
-		"प्लेयर और खेल के आँकड़े",
-		"और भी बहुँत कुछ!",
+		"**Godfather की विशेषताएं:**",
+		"30 से अधिक भूमिकाओं और विभिन्न गुटों के साथ माफिया के स्वचालित रूप से खेलों की मेजबानी की।",
+		"मनपसंद सेटअपस ऐड करसकते है |",
+		"खिलाड़ी और खेल के आँकड़े",
+		"और भी बहुत कुछ!",
 		"",
 		"Godfather को अपने Discord सर्वर में बुलाने के लिए कमांड `{{prefix}}invite` का प्रयोग करें|"
 	],
 	"inviteText": "[{{bot}} को अपने सर्वर में बुलाएं]({{invite}}) | [सहायता सर्वर में शामिल होइए]({{supportServer}})",
-	"pingInitial": "Pinging...",
-	"pingResponse": "Pong! That took {{ping}}ms. Latency: {{latency}}ms",
+	"pingInitial": "पिन्गिंग...",
+	"pingResponse": "पौंग! इसने {{ping}} एमएस लिया. Latency: {{latency}}ms",
 	"prefixCurrent": "मेरा प्रीफिक्स इस सर्वर में {{prefix}} है!",
 	"prefixUpdated": "मेरा नया प्रीफिक्स अब `{{prefix}}` है!",
 	"userStats": [
 		"कुल खेल: {{totalGames}}",
 		"कुल खेलों में जीत: {{wins}}",
-		"Winrate: {{winRate}}"
+		"विजय प्रतिशत {{winRate}}"
 	],
-	"userstatsNoDatabase": "Storing information on a database is currently disabled for this bot",
-	"statsDescription": "To add {{botname}} to your server, use the `{{prefix}}invite` command."
+	"userstatsNoDatabase": "इस बॉट के लिए डेटाबेस पर जानकारी संग्रहीत करना वर्तमान में अक्षम है",
+	"statsDescription": "{{botname}} को अपने Discord सर्वर में बुलाने के लिए कमांड `{{prefix}}invite` का प्रयोग करें|"
 }
