@@ -415,10 +415,14 @@ export default class Game {
 	public async end(data: EndgameCheckData) {
 		await this.channel.send(
 			[
-				data.winningFaction === undefined ? 'The game is over. Nobody wins!' : `The game is over. ${data.winningFaction.name} wins! 🎉`,
+				data.winningFaction === undefined
+					? this.t('game/endgame:noWinner')
+					: this.t('game/endgame:factionWin', [{ winningFaction: data.winningFaction.name }]),
 				data.independentWins.length === 0
 					? null
-					: `Independent wins: ${listItems(data.independentWins.map((player) => `${player.user.username} (${player.role.faction.name})`))}`
+					: this.t('game/endgame:independentWins', [
+							{ wins: listItems(data.independentWins.map((player) => `${player.user.username} (${player.role.faction.name})`)) }
+					  ])
 			]
 				.filter((text) => text !== null)
 				.join('\n')
@@ -429,7 +433,11 @@ export default class Game {
 				player.previousRoles.length === 0 ? player.role.name : [...player.previousRoles, player.role].map((role) => role.name).join(' -> ');
 			return `${i + 1}. ${player} (${roleText})`;
 		};
-		await this.channel.send(['**Final Rolelist**:', codeBlock('', this.players.map(playerMapping).join('\n'))].join('\n'));
+		await this.channel.sendTranslated('game/endgame:finalRolelist', [
+			{
+				roles: codeBlock('', this.players.map(playerMapping).join('\n'))
+			}
+		]);
 
 		if (PGSQL_ENABLED) {
 			const entity = new GameEntity();
