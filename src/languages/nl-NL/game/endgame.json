@@ -1,6 +1,6 @@
 {
-	"noWinner": "The game is over. Nobody wins!",
-	"factionWin": "The game is over. {{winningFaction}} wins! 🎉",
-	"independentWins": "Independent wins: {{wins}}",
-	"finalRolelist": "['**Final Rolelist**:', {{roles}}]"
+	"noWinner": "Het spel is tot een einde gekomen. Niemand wint!",
+	"factionWin": "Het spel is tot een einde gekomen. {{winningFaction}} wint! 🎉",
+	"independentWins": "Solo-overwinningen: {{wins}}",
+	"finalRolelist": "['**Uiteindelijke rollenlijst**:', {{roles}}]"
 }
