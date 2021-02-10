@@ -26,7 +26,7 @@ export default class extends GodfatherCommand {
 		if (inGame) {
 			if (message.author !== message.channel.game!.host.user) throw await message.resolveKey('preconditions:HostOnly');
 		} else {
-			const result = await new PreconditionContainerArray([['OwnerOnly', 'AdminOnly']]).run(message, this);
+			const result = await new PreconditionContainerArray([['OwnerOnly', 'AdminOnly']]).run(message, this, { command: this });
 			if (!result.success) throw await message.resolveKey(`preconditions:${result.error.identifier}`);
 		}
 

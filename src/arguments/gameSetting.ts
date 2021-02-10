@@ -6,8 +6,7 @@ export default class extends Argument<keyof GameSettings> {
 	public run(parameter: string): ArgumentResult<keyof GameSettings> {
 		if (!Reflect.has(DEFAULT_GAME_SETTINGS, parameter))
 			return this.error({
-				identifier: 'ArgumentGameSettingInvalidKey',
-				message: `"${parameter}" is not a valid game setting.`,
+				identifier: 'gameSetting',
 				parameter
 			});
 		return this.ok(parameter as keyof GameSettings);

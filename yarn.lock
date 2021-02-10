@@ -554,10 +554,10 @@
   resolved "https://registry.yarnpkg.com/@sapphire/eslint-config/-/eslint-config-2.1.1.tgz#c18217d00b4a0a8b62da24ebb9875d856d474510"
   integrity sha512-OoM2KYco1+HF+z/WjaAPhPhvEPGA8ddrn8ATLWvOvs4JiACRYbUGIMQrxRgb5afvEKIacLlGUKi/emZa8G9s+Q==
 
-"@sapphire/framework@1.0.0-alpha.5":
-  version "1.0.0-alpha.5"
-  resolved "https://registry.yarnpkg.com/@sapphire/framework/-/framework-1.0.0-alpha.5.tgz#294a633d3a53c89c56429ac9ec64a56ff87f8fa7"
-  integrity sha512-HIA7p1KVSc+0AlXPp3+66vbi9DWsWVc+vcaYD/V5EXtR4RBEHTJG169Jalj6Xi+C3JrRbzxZRg9GT8rvyQwcZA==
+"@sapphire/framework@1.0.0-alpha.8":
+  version "1.0.0-alpha.8"
+  resolved "https://registry.yarnpkg.com/@sapphire/framework/-/framework-1.0.0-alpha.8.tgz#de5151d4668081080ca6ff02a5dc75321c9a58b9"
+  integrity sha512-e1zE3/LRbTOPecHrwd8LuiDoh0epiKcCv3nPu43JoZTsIHZnE8fSfUn58V5+QsU7IIvTdfdCKEE6zbhwJAmxTQ==
   dependencies:
     "@sapphire/discord-utilities" "^2.0.1"
     "@sapphire/discord.js-utilities" "^1.4.0"

@@ -17,7 +17,7 @@ import { getConnection } from 'typeorm';
 export default class extends GodfatherCommand {
 	public async run(message: Message, args: Args) {
 		if (PGSQL_ENABLED) {
-			const user = await args.pick('user').catch(() => message.author);
+			const user = args.finished ? message.author : await args.pick('user');
 			const [faction, role] = [args.getOption('faction'), args.getOption('role')];
 
 			const whereClauses = ['player.user_id = :id', faction ? 'player.faction = :faction' : null, role ? 'player.role_name = :role' : null]
