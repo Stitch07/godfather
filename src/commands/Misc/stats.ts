@@ -1,8 +1,8 @@
 import GodfatherCommand from '@lib/GodfatherCommand';
+import { getHandler } from '@root/languages';
 import { ApplyOptions } from '@sapphire/decorators';
 import { CommandOptions, PermissionsPrecondition } from '@sapphire/framework';
 import { roundNumber } from '@sapphire/utilities';
-import { format } from '@util/durationFormat';
 import { Message, MessageEmbed } from 'discord.js';
 import { cpus } from 'os';
 
@@ -43,7 +43,7 @@ export default class extends GodfatherCommand {
 				[
 					`**CPU Load**: ${serverStatistics.cpuLoad.map((load) => `${load}%`).join(' | ')}`,
 					`**RAM Used**: ${serverStatistics.ramUsed} (Total: ${serverStatistics.ramTotal})`,
-					`**Uptime**: ${format(this.context.client.uptime ?? 0, 2)}`
+					`**Uptime**: ${getHandler(t.lng).duration.format(this.context.client.uptime ?? 0, 2)}`
 				].join('\n'),
 				true
 			);

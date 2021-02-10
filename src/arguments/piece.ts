@@ -7,8 +7,7 @@ export default class extends Argument<Piece> {
 		}
 
 		return this.error({
-			identifier: 'ArgumentPieceInvalidPiece',
-			message: 'Invalid piece',
+			identifier: 'piece',
 			parameter
 		});
 	}

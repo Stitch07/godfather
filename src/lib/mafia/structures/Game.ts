@@ -256,7 +256,7 @@ export default class Game {
 				await this.startNight();
 			}
 			if (this.dayTimeLeft !== 0)
-				await this.channel.sendTranslated('game/trials:maxTrialsReached', [{ playerName: this.votes.playerOnTrial!.user.tag }]);
+				await this.channel.sendTranslated('game/trials:playerAcquitted', [{ playerName: this.votes.playerOnTrial!.user.tag }]);
 			// add carried over day-time
 			this.phaseEndAt = new Date(Date.now() + this.dayTimeLeft);
 			this.votes.reset();
@@ -279,10 +279,14 @@ export default class Game {
 			return this.startTrial();
 		}
 
-		await this.channel.send(
-			`${player.user.tag} was hammered. ${player.displayRoleAndWill()}\n${this.votes.show({ header: 'Final Vote Count', codeblock: true })}`
-		);
-		await player.kill(`eliminated D${this.cycle}`);
+		await this.channel.sendTranslated('game/trials:playerEliminated', [
+			{
+				playerName: player.user.tag,
+				RoleAndWill: player.displayRoleAndWill(),
+				votes: this.votes.show({ header: this.t('game/trials:votesShowHeader'), codeblock: true })
+			}
+		]);
+		await player.kill(this.t('game/trials:playerEliminatedKill', [{ cycle: this.cycle }]));
 		this.idlePhases = 0;
 
 		await this.startNight();
@@ -310,13 +314,14 @@ export default class Game {
 
 						const candidates = this.players.filter((player) => this.votes.on(player).count() === largestVoteCount);
 						const eliminatedPlayer = randomArrayItem(candidates)!;
-						await this.channel.send(
-							`${eliminatedPlayer.user.tag} was eliminated. ${eliminatedPlayer.displayRoleAndWill()}\n${this.votes.show({
-								header: 'Final Vote Count',
-								codeblock: true
-							})}`
-						);
-						await eliminatedPlayer.kill(`eliminated D${this.cycle}`);
+						await this.channel.sendTranslated('game/trials:playerEliminated', [
+							{
+								playerName: eliminatedPlayer.user.tag,
+								RoleAndWill: eliminatedPlayer.displayRoleAndWill(),
+								votes: this.votes.show({ header: this.t('game/trials:votesShowHeader'), codeblock: true })
+							}
+						]);
+						await eliminatedPlayer.kill(this.t('game/trials:playerEliminatedKill', [{ cycle: this.cycle }]));
 						this.idlePhases = 0;
 					} else {
 						await this.channel.send('Nobody was eliminated!');
@@ -410,10 +415,14 @@ export default class Game {
 	public async end(data: EndgameCheckData) {
 		await this.channel.send(
 			[
-				data.winningFaction === undefined ? 'The game is over. Nobody wins!' : `The game is over. ${data.winningFaction.name} wins! 🎉`,
+				data.winningFaction === undefined
+					? this.t('game/endgame:noWinner')
+					: this.t('game/endgame:factionWin', [{ winningFaction: data.winningFaction.name }]),
 				data.independentWins.length === 0
 					? null
-					: `Independent wins: ${listItems(data.independentWins.map((player) => `${player.user.username} (${player.role.faction.name})`))}`
+					: this.t('game/endgame:independentWins', [
+							{ wins: listItems(data.independentWins.map((player) => `${player.user.username} (${player.role.faction.name})`)) }
+					  ])
 			]
 				.filter((text) => text !== null)
 				.join('\n')
@@ -424,7 +433,11 @@ export default class Game {
 				player.previousRoles.length === 0 ? player.role.name : [...player.previousRoles, player.role].map((role) => role.name).join(' -> ');
 			return `${i + 1}. ${player} (${roleText})`;
 		};
-		await this.channel.send(['**Final Rolelist**:', codeBlock('', this.players.map(playerMapping).join('\n'))].join('\n'));
+		await this.channel.sendTranslated('game/endgame:finalRolelist', [
+			{
+				roles: codeBlock('', this.players.map(playerMapping).join('\n'))
+			}
+		]);
 
 		if (PGSQL_ENABLED) {
 			const entity = new GameEntity();
