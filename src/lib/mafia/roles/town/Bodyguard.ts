@@ -5,12 +5,17 @@ import NightActionsManager, { Attack, NightActionPriority } from '../../managers
 
 class Bodyguard extends SingleTarget {
 	public name = 'Bodyguard';
-	public description = 'You may guard someone every night.';
 	public action = 'guard';
 	public actionText = 'guard a player';
 	public actionGerund = 'guarding';
 	public priority = NightActionPriority.BODYGUARD;
 	public hasGuarded = false;
+
+	public constructor(player: Player) {
+		super(player);
+
+		this.description = this.game.t('roles/town:bodyguardDescription');
+	}
 
 	public runAction(actions: NightActionsManager, target: Player) {
 		if (target.user.id === this.player.user.id) this.hasGuarded = true;
@@ -37,10 +42,10 @@ class Bodyguard extends SingleTarget {
 			if (target.user.id !== this.player.user.id) {
 				// kill the BG
 				actions.record.setAction(this.player.user.id, 'nightkill', { result: true, by: [] });
-				this.player.queueMessage('You were killed while defending your target!');
+				this.player.queueMessage(this.game.t('roles/town:bodyguardDiedDefending'));
 				// kill the attacker
 				actions.record.setAction(attacker.user.id, 'nightkill', { result: true, by: [this.player] });
-				attacker.queueMessage('You were killed by a Bodyguard!');
+				attacker.queueMessage(this.game.t('roles/town:bodyguardAttackerKilled'));
 			}
 		}
 	}
@@ -50,24 +55,24 @@ class Bodyguard extends SingleTarget {
 		const success = target.user.id !== this.player.user.id && record.result && record.by.includes(this.player);
 
 		if (success) {
-			return target.queueMessage('You were attacked but somebody fought off your attacker!');
+			return target.queueMessage(this.game.t('bodyguardSave'));
 		}
 	}
 
 	public canTarget(player: Player) {
 		// TODO: customizable rule here
-		if (player === this.player && this.hasGuarded) return { check: false, reason: 'You can vest only once per game.' };
-		if (!player.isAlive) return { check: false, reason: 'You cannot target dead players.' };
+		if (player === this.player && this.hasGuarded) return { check: false, reason: this.game.t('roles/town:bodyguardVestOnce') };
+		if (!player.isAlive) return { check: false, reason: this.game.t('roles/global:targetDeadPlayers') };
 		return { check: true, reason: '' };
 	}
 
 	public get extraNightContext() {
-		return `You ${this.hasGuarded ? 'cannot' : 'can'} vest tonight.`;
+		return this.hasGuarded ? this.game.t('roles/town:bodyguardCannotVest') : this.game.t('roles/town:bodyguardCanVest');
 	}
 
 	public actionConfirmation(target: Player) {
-		if (target === this.player) return 'You are self-vesting tonight.';
-		return `You are ${this.actionGerund} ${target} tonight.`;
+		if (target === this.player) return this.game.t('roles/town:bodyguardVesting');
+		return this.game.t('roles/town:bodyguardConfirmation', { target });
 	}
 }
 

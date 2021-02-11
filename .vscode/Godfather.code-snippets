@@ -72,5 +72,15 @@
 			"}",
 			""
 		]
+	},
+	"GodfatherRoleConstructor": {
+		"scope": "typescript",
+		"prefix": "roleCtor",
+		"body": [
+			"public constructor(player: Player) {",
+			"\tsuper(player);",
+			"\tthis.description = this.game.t('${TM_FILENAME_BASE/(.*)/${1:/downcase}/g}Description')",
+			"}"
+		]
 	}
 }

@@ -6,12 +6,17 @@ import { randomArrayItem } from '@root/lib/util/utils';
 
 class Crusader extends SingleTarget {
 	public name = 'Crusader';
-	public description = 'You may protect someone every night, attacking one randomly selected visitor if your target is visited.';
 	public action = 'protect';
 	public actionText = 'protect a player';
 	public actionGerund = 'protecting';
 	public priority = NightActionPriority.CRUSADER;
 	private isTargetAttacked = false;
+
+	public constructor(player: Player) {
+		super(player);
+
+		this.description = this.game.t('roles/town:crusaderDescription');
+	}
 
 	public runAction(actions: NightActionsManager, target: Player) {
 		const playerRecord = actions.record.get(target.user.id);
@@ -40,7 +45,7 @@ class Crusader extends SingleTarget {
 		// crus only protects against CL, but doesn't attack them
 		if (playerToKill.role.name === 'Cult Leader') return;
 		actions.record.setAction(playerToKill.user.id, 'nightkill', { result: true, by: [this.player], type: Attack.Basic });
-		playerToKill.queueMessage('You were attacked by a Crusader!');
+		playerToKill.queueMessage(this.game.t('roles/town:crusaderAttackedBy'));
 	}
 
 	public tearDown(actions: NightActionsManager, target: Player) {
@@ -49,13 +54,13 @@ class Crusader extends SingleTarget {
 
 		if (success && this.isTargetAttacked) {
 			this.isTargetAttacked = false;
-			return target.queueMessage('You were attacked but somebody fought off your attacker!');
+			return target.queueMessage('roles/town:crusaderFoughtOff');
 		}
 	}
 
 	public canTarget(player: Player) {
 		// TODO: customizable rule here
-		if (player === this.player) return { check: false, reason: 'You cannot target yourself.' };
+		if (player === this.player) return { check: false, reason: this.game.t('roles/global:targetSelf') };
 		return super.canTarget(player);
 	}
 }
