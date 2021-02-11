@@ -1,4 +1,6 @@
 {
 	"targetTeammates": "Je kunt je noch op jezelf, noch op je teamgenoten richten.",
-	"targetTooStrong": "Je doelwit was te sterk om te doden!"
+	"targetTooStrong": "Je doelwit was te sterk om te doden!",
+	"targetDeadPlayers": "You cannot target dead players.",
+	"targetSelf": "You cannot target yourself."
 }
