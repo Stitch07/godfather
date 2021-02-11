@@ -1,7 +1,9 @@
 {
+	"cultLeaderDescription": "Você é o líder de um culto misterioso, e deseja que todos sigam suas crenças.",
 	"cultLeaderConsecutiveNights": "Você não pode converter em 2 noites consecutivas.",
 	"cultLeaderDenounce": "Você foi excomungado por um Cult Leader.",
 	"successfulConversion": "Você foi convertido por um Cult!",
 	"conversionMessage": "{{target}} convertido com sucesso!",
+	"cultMemberDescription": "Você não tem ação noturna.",
 	"cultMemberSuicide": "Você se suicidou após perder seu Cult Leader!"
 }
