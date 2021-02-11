@@ -1,4 +1,6 @@
 {
 	"targetTeammates": "Você não pode se escolher ou escolher um de seus companheiros.",
-	"targetTooStrong": "Seu alvo era muito forte para ser morto!"
+	"targetTooStrong": "Seu alvo era muito forte para ser morto!",
+	"targetDeadPlayers": "You cannot target dead players.",
+	"targetSelf": "You cannot target yourself."
 }
