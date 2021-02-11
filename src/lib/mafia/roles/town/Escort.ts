@@ -5,11 +5,15 @@ import type Player from '@mafia/structures/Player';
 
 class Escort extends SingleTarget {
 	public name = 'Escort';
-	public description = 'You may roleblock somebody each night.';
 	public action = 'block';
 	public actionText = 'block a player';
 	public actionGerund = 'blocking';
 	public priority = NightActionPriority.ESCORT;
+
+	public constructor(player: Player) {
+		super(player);
+		this.description = this.game.t('roles/town:escortDescription');
+	}
 
 	public setUp(actions: NightActionsManager, target: Player) {
 		for (const action of actions.filter((act) => act.actor === target)) {
@@ -27,7 +31,7 @@ class Escort extends SingleTarget {
 	public tearDown(actions: NightActionsManager, target: Player) {
 		const record = actions.record.get(target.user.id).get('roleblock');
 		const success = record.result && record.by.includes(this.player);
-		if (success) return target.queueMessage('Somebody occupied your night. You were roleblocked!');
+		if (success) return target.queueMessage(this.game.t('roles/town:escortSuccess'));
 	}
 }
 

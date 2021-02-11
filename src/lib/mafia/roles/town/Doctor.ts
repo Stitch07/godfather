@@ -1,16 +1,20 @@
 import SingleTarget from '@mafia/mixins/SingleTarget';
 import Townie from '@mafia/mixins/Townie';
-import NightActionsManager, { Attack, NightActionPriority } from '../../managers/NightActionsManager';
-import type Player from '../../structures/Player';
+import NightActionsManager, { Attack, NightActionPriority } from '@mafia/managers/NightActionsManager';
+import type Player from '@mafia/structures/Player';
 
 class Doctor extends SingleTarget {
 	public name = 'Doctor';
-	public description = 'You may heal a player every night, and self-heal once.';
 	public action = 'heal';
 	public actionText = 'heal a player';
 	public actionGerund = 'healing';
 	public priority = NightActionPriority.DOCTOR;
 	public hasSelfHealed = false;
+
+	public constructor(player: Player) {
+		super(player);
+		this.description = this.game.t('roles/town:doctorDescription');
+	}
 
 	public runAction(actions: NightActionsManager, target: Player) {
 		if (target === this.player) this.hasSelfHealed = true;
@@ -38,22 +42,22 @@ class Doctor extends SingleTarget {
 		const success = record.result && record.by.includes(this.player);
 
 		if (success) {
-			return target.queueMessage('You were attacked but somebody nursed you back to health!');
+			return target.queueMessage(this.game.t('rols/town:doctorHealed'));
 		}
 	}
 
 	public canTarget(player: Player) {
 		// TODO: customizable rule here
-		if (player === this.player && this.hasSelfHealed) return { check: false, reason: 'You can self-heal once per game.' };
+		if (player === this.player && this.hasSelfHealed) return { check: false, reason: this.game.t('roles/town:doctorSelfHealOnce') };
 		// docs cannot heal confirmed mayors
 		if (player.role.name === 'Mayor' && Reflect.get(player.role, 'hasRevealed') === true)
-			return { check: false, reason: 'You cannot heal a confirmed Mayor.' };
-		if (!player.isAlive) return { check: false, reason: 'You cannot target dead players.' };
+			return { check: false, reason: this.game.t('roles/town:doctorHealMayor') };
+		if (!player.isAlive) return { check: false, reason: this.game.t('roles/global:targetDeadPlayers') };
 		return { check: true, reason: '' };
 	}
 
 	public get extraNightContext() {
-		return `You ${this.hasSelfHealed ? 'cannot' : 'can'} self-heal tonight.`;
+		return this.hasSelfHealed ? this.game.t('roles/town:doctorCannotSelfHeal') : this.game.t('roles/town:doctorCanSelfHeal');
 	}
 }
 
