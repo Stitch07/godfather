@@ -1,7 +1,9 @@
 {
+	"cultLeaderDescription": "You're the leader of a mysterious cult and want everyone to follow your beliefs.",
 	"cultLeaderConsecutiveNights": "Je kunt niet twee opeenvolgende nachten bekeren.",
 	"cultLeaderDenounce": "You were denounced by a Cult Leader.",
 	"successfulConversion": "Je werd bekeerd tot de sekte!",
 	"conversionMessage": "Succesvol {{target}} bekeerd!",
+	"cultMemberDescription": "You have no night action.",
 	"cultMemberSuicide": "Je hebt zelfmoord gepleegd na de dood van je Cult Leader!"
 }
