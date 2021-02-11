@@ -2,5 +2,14 @@
 	"targetTeammates": "You cannot target yourself or your teammates.",
 	"targetTooStrong": "Your target was too strong to kill!",
 	"targetDeadPlayers": "You cannot target dead players.",
-	"targetSelf": "You cannot target yourself."
+	"targetSelf": "You cannot target yourself.",
+	"noTargets": "There are no valid targets.",
+	"nightActionPromptSingleTarget": "It is now night {{cycle}}. Use {{prefix}}{{action}} <number> to {{actionText}}. Use {{prefix}}noaction to stay home.",
+	"dayActionPromptSingleTarget": "It is now day {{cycle}}. Use the {{prefix}}{{action}} command to {{actionText}} immediately.",
+	"nightActionPromptNoTarget": "It is now night {{cycle}}. Use {{prefix}}{{action}} to {{actionText}}. Use {{prefix}}noaction to stay home.",
+	"actionBlocked": "You cannot use your action: {{reason}}",
+	"actionCancelled": "You have cancelled your action.",
+	"noAction": "You decided to stay home tonight.",
+	"actionBlockedTarget": "You cannot target {{target, andList}} tonight: {{reason}}",
+	"targetInvalid": "Invalid target. Choose a number between 1 and {{maxPlayers}}."
 }
