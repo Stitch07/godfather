@@ -3,5 +3,7 @@
 	"ambusherSuccess": "Je viel een bezoeker van je doelwit aan.",
 	"ambusherAttack": "Je werd aangevallen door een Ambusher!",
 	"consigResult": "Je doelwit is een **{{role}}**.",
-	"janitorResult": "In het geheim weet je dat je doelwit een **{{role}}** was."
+	"janitorResult": "In het geheim weet je dat je doelwit een **{{role}}** was.",
+	"promoteToGoon": "You have been promoted to a Goon!",
+	"promoteToGodfather": "You have been promoted to the Godfather!"
 }
