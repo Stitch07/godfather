@@ -1,4 +1,6 @@
 {
 	"targetTeammates": "You cannot target yourself or your teammates.",
-	"targetTooStrong": "Your target was too strong to kill!"
+	"targetTooStrong": "Your target was too strong to kill!",
+	"targetDeadPlayers": "You cannot target dead players.",
+	"targetSelf": "You cannot target yourself."
 }
