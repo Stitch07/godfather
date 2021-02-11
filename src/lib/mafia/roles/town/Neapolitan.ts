@@ -7,20 +7,22 @@ const VANILLA_ROLES = ['Cult Member', 'Vanilla', 'Vanilla Mafia'];
 
 export default class Neapolitan extends SingleTarget {
 	public name = 'Neapolitan';
-	public description = 'Like a cop, but with less powerful investigations.';
 	public faction = new TownFaction();
-
 	public action = 'check';
 	public actionGerund = 'checking';
 	public actionText = 'check a player';
-
 	public priority = NightActionPriority.NEOPOLITAN;
 
-	public async tearDown(actions: NightActionsManager, target: Player) {
+	public constructor(player: Player) {
+		super(player);
+		this.description = this.game.t('roles/town:neapolitanDescription');
+	}
+
+	public tearDown(actions: NightActionsManager, target: Player) {
 		if (VANILLA_ROLES.includes(target.role.name)) {
-			await this.player.queueMessage('Your target is a Vanilla');
+			this.player.queueMessage(this.game.t('roles/town:neapolitanResultVanilla'));
 		} else {
-			await this.player.queueMessage('Your target is not a Vanilla');
+			this.player.queueMessage(this.game.t('roles/town:neapolitanResultNotVanilla'));
 		}
 	}
 }

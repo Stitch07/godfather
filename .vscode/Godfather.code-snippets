@@ -79,7 +79,7 @@
 		"body": [
 			"public constructor(player: Player) {",
 			"\tsuper(player);",
-			"\tthis.description = this.game.t('${TM_FILENAME_BASE/(.*)/${1:/downcase}/g}Description')",
+			"\tthis.description = this.game.t('roles/town:${TM_FILENAME_BASE/(.*)/${1:/downcase}/g}Description');",
 			"}"
 		]
 	}

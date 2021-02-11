@@ -29,53 +29,53 @@ class Investigator extends SingleTarget {
 			case 'Insane Cop':
 			case 'Paranoid Cop':
 			case 'Naive Cop':
-				return 'Your target could be a Cop, Executioner, or Werewolf.';
+				return this.game.t('roles/town:investResultA');
 			case 'Goon':
 			case 'Vigilante':
 			case 'Veteran':
 			case 'Ambusher':
-				return 'Your target could be a Vigilante, Veteran, Goon, or Ambusher.';
+				return this.game.t('roles/town:investResultB');
 			case 'Investigator':
 			case 'Consigliere':
 			case 'Mayor':
 			case 'Tracker':
-				return 'Your target could be a Investigator, Consigliere, Mayor, or Tracker.';
+				return this.game.t('roles/town:investResultC');
 			case 'Escort':
 			case 'Transporter':
 			case 'Consort':
-				return 'Your target could be a Escort, Transporter, or Consort';
+				return this.game.t('roles/town:investResultD');
 			case 'Lookout':
 			case 'Witch':
 			case 'Juggernaut':
-				return 'Your target could be a Lookout, Witch, or Juggernaut.';
+				return this.game.t('roles/town:investResultE');
 			case 'Framer':
 			case 'Jester':
 			case 'Cult Leader':
 			case 'Super Saint':
-				return 'Your target could be a Framer, Cult Leader, Super Saint, or Jester.';
+				return this.game.t('roles/town:investResultF');
 			case 'Bodyguard':
 			case 'Godfather':
 			case 'Arsonist':
 			case 'Crusader':
-				return 'Your target could be a Bodyguard, Godfather, Arsonist, or Crusader.';
+				return this.game.t('roles/town:investResultG');
 			case 'Janitor':
 			case 'Retributionist':
 			case 'Reanimator':
-				return 'Your target could be a Janitor, Retributionist, or Reanimator';
+				return this.game.t('roles/town:investResultH');
 			case 'Guardian Angel':
 			case 'Amnesiac':
 			case 'Survivor':
-				return 'Your target could be a Survivor, Amnesiac, or Guardian Angel';
+				return this.game.t('roles/town:investResultI');
 			case 'Serial Killer':
 			case 'Doctor':
-				return 'Your target could be a Doctor or a Serial Killer';
+				return this.game.t('roles/town:investResultJ');
 			case 'Vanilla':
 			case 'Vanilla Mafia':
 			case 'Neapolitan':
 			case 'Cult Member':
-				return 'Your target could be a Vanilla, Vanilla Mafia, Neapolitan, or Cult Member.';
+				return this.game.t('roles/town:investResultK');
 			default:
-				return 'You could not find enough information about your target.';
+				return this.game.t('roles/town:investResultDefault');
 		}
 	}
 }

@@ -5,11 +5,15 @@ import type Player from '@mafia/structures/Player';
 
 class Transporter extends DoubleTarget {
 	public name = 'Transporter';
-	public description = 'You may transport 2 players each night.';
 	public action = 'transport';
 	public actionText = 'transport 2 players ';
 	public actionGerund = 'transporting';
 	public priority = NightActionPriority.TRANSPORTER;
+
+	public constructor(player: Player) {
+		super(player);
+		this.description = this.game.t('roles/town:transporterDescription');
+	}
 
 	public setUp(actions: NightActionsManager, targets: Player[]) {
 		const [targetOne, targetTwo] = targets;
@@ -22,7 +26,7 @@ class Transporter extends DoubleTarget {
 
 	public async tearDown(actions: NightActionsManager, targets: Player[]) {
 		for (const target of targets) {
-			await target.queueMessage('You were transported to another location.');
+			await target.queueMessage(this.game.t('roles/town:transporterMessage'));
 		}
 	}
 }
