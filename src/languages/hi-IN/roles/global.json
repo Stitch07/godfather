@@ -1,4 +1,6 @@
 {
 	"targetTeammates": "आप अपने आप को और अपने टीम के साथियों को निशाना नहीं बना सकते है|",
-	"targetTooStrong": "आपका निशाना बहुत ही ताकतवर था! उसे आप नहीं मार पाए|"
+	"targetTooStrong": "आपका निशाना बहुत ही ताकतवर था! उसे आप नहीं मार पाए|",
+	"targetDeadPlayers": "You cannot target dead players.",
+	"targetSelf": "You cannot target yourself."
 }
