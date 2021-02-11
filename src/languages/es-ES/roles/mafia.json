@@ -3,5 +3,7 @@
 	"ambusherSuccess": "You attacked someone who visted your target.",
 	"ambusherAttack": "You were attacked by an ambusher!",
 	"consigResult": "Your target is a **{{role}}**.",
-	"janitorResult": "You secretly know that your target was a **{{role}}**."
+	"janitorResult": "You secretly know that your target was a **{{role}}**.",
+	"promoteToGoon": "You have been promoted to a Goon!",
+	"promoteToGodfather": "You have been promoted to the Godfather!"
 }
