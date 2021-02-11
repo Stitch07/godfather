@@ -15,7 +15,7 @@ import '@sapphire/plugin-i18next/register';
 
 import type { FormatFunction } from 'i18next';
 import { getHandler } from '@root/languages';
-import { codeBlock } from '@sapphire/utilities';
+import { codeBlock, inlineCodeBlock } from '@sapphire/utilities';
 import { UserOrMemberMentionRegex } from '@sapphire/discord-utilities';
 
 export default class Godfather extends SapphireClient {
@@ -65,6 +65,9 @@ export default class Godfather extends SapphireClient {
 								}
 								case 'codeBlock': {
 									return codeBlock('', value);
+								}
+								case 'inlineCodeBlock': {
+									return inlineCodeBlock(value);
 								}
 								case 'durationFormat': {
 									return getHandler(language!).duration.format(Number(value));

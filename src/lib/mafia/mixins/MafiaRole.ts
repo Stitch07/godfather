@@ -20,14 +20,14 @@ export default function MafiaRole<TBaseRole extends typeof Role>(BaseRole: TBase
 
 					const Goon = allRoles.get('Goon')!;
 					otherMafia.role = new Goon(otherMafia);
-					await otherMafia.user.send('You have been promoted to a Goon!');
+					await otherMafia.user.send(this.game.t('roles/mafia:promoteToGoon'));
 					await otherMafia.sendPM(false);
 					return;
 				}
 
 				const Godfather = allRoles.get('Godfather')!;
 				goon.role = new Godfather(goon);
-				await goon.user.send('You have been promoted to the Godfather!');
+				await goon.user.send(this.game.t('roles/mafia:promoteToGodfather'));
 				await goon.sendPM(false);
 			} else if (this.player.role!.name === 'Goon') {
 				const otherMafia = this.game.players.find(
@@ -37,7 +37,7 @@ export default function MafiaRole<TBaseRole extends typeof Role>(BaseRole: TBase
 
 				const Goon = allRoles.get('Goon')!;
 				otherMafia.role = new Goon(otherMafia);
-				await otherMafia.user.send('You have been promoted to a Goon!');
+				await otherMafia.user.send(this.game.t('roles/mafia:promoteToGodfather'));
 				await otherMafia.sendPM(false);
 			}
 
