@@ -5,7 +5,8 @@ import type { Message } from 'discord.js';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['out'],
-	description: 'Removes you from an ongoing game.',
+	description: 'commands/help:leaveDescription',
+	detailedDescription: 'commands/help:leaveDetailed',
 	preconditions: ['GuildOnly', 'GameOnly']
 })
 export default class extends GodfatherCommand {

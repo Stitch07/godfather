@@ -8,7 +8,8 @@ import type { Message } from 'discord.js';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['vtl', 'vt'],
-	description: 'Vote to eliminate a player',
+	description: 'commands/help:voteDescription',
+	detailedDescription: 'commands/help:voteDetailed',
 	preconditions: [
 		'GuildOnly',
 		'GameOnly',

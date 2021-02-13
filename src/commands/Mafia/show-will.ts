@@ -6,7 +6,8 @@ import type { Message } from 'discord.js';
 @ApplyOptions<CommandOptions>({
 	aliases: ['will', 'will-show'],
 	generateDashLessAliases: true,
-	description: 'Shows your will.',
+	description: 'commands/help:showwillDescription',
+	detailedDescription: 'commands/help:showwillDetailed',
 	preconditions: ['DMOnly']
 })
 export default class extends GodfatherCommand {

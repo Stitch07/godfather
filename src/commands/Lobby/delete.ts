@@ -4,8 +4,9 @@ import type { CommandOptions } from '@sapphire/framework';
 import type { Message } from 'discord.js';
 
 @ApplyOptions<CommandOptions>({
-	aliases: ['del', 'deletegame'],
-	description: 'Deletes an ongoing game.',
+	aliases: ['del', 'delete-game'],
+	generateDashLessAliases: true,
+	description: 'commands/help:deleteDescription',
 	preconditions: ['GuildOnly', 'GameOnly', ['AdminOnly', 'HostOnly']]
 })
 export default class extends GodfatherCommand {

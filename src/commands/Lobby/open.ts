@@ -5,7 +5,8 @@ import type { CommandOptions } from '@sapphire/framework';
 import type { Message } from 'discord.js';
 
 @ApplyOptions<CommandOptions>({
-	description: 'Opens a game lobby, allowing people to join again.',
+	description: 'commands/help:openDescription',
+	detailedDescription: 'commands/help:openDetailed',
 	preconditions: ['GuildOnly', 'GameOnly', 'HostOnly']
 })
 export default class extends GodfatherCommand {

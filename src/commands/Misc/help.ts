@@ -7,7 +7,8 @@ import { Message, MessageEmbed } from 'discord.js';
 import type { TFunction } from 'i18next';
 
 @ApplyOptions<CommandOptions>({
-	description: 'Shows you this command!',
+	description: 'commands/help:helpDescription',
+	detailedDescription: 'commands/help:helpDetailed',
 	preconditions: []
 })
 export default class extends GodfatherCommand {

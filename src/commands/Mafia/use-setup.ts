@@ -8,7 +8,7 @@ import type { Message } from 'discord.js';
 @ApplyOptions<CommandOptions>({
 	aliases: ['usesetup'],
 	description: 'commands/help:usesetupDescription',
-	detailedDescription: 'commands/help:usesetupExtended',
+	detailedDescription: 'commands/help:usesetupDetailed',
 	preconditions: ['GuildOnly', 'GameOnly', 'HostOnly'],
 	strategyOptions: {
 		flags: ['nightStart', 'n']

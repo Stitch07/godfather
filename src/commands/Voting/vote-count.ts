@@ -6,7 +6,7 @@ import type { Message, TextChannel } from 'discord.js';
 @ApplyOptions<CommandOptions>({
 	aliases: ['vc'],
 	generateDashLessAliases: true,
-	description: 'Shows the current vote count.',
+	description: 'commands/help:votecountDescription',
 	preconditions: [
 		'GuildOnly',
 		'GameOnly',

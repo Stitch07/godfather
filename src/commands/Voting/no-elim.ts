@@ -8,7 +8,7 @@ import type { Message } from 'discord.js';
 @ApplyOptions<CommandOptions>({
 	aliases: ['no-eliminate', 'vtnl', 'nl'],
 	generateDashLessAliases: true,
-	description: 'Vote to not eliminate.',
+	description: 'commands/help:noelimDescription',
 	preconditions: [
 		'GuildOnly',
 		'GameOnly',

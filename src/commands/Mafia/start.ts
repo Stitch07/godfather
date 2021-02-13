@@ -8,7 +8,8 @@ import type { Message } from 'discord.js';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['s', 'startgame'],
-	description: 'Starts a game of Mafia in this server.',
+	description: 'commands/help:startDescription',
+	detailedDescription: 'commands/help:startDetailed',
 	preconditions: ['GuildOnly', 'GameOnly', 'HostOnly']
 })
 export default class extends GodfatherCommand {

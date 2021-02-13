@@ -7,7 +7,7 @@ import { Message, MessageEmbed } from 'discord.js';
 import { cpus } from 'os';
 
 @ApplyOptions<CommandOptions>({
-	description: 'View bot statistics',
+	description: 'commands/help:statsDescription',
 	preconditions: [new PermissionsPrecondition('EMBED_LINKS')]
 })
 export default class extends GodfatherCommand {

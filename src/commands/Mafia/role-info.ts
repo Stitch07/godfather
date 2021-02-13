@@ -15,7 +15,8 @@ import i18next from 'i18next';
 @ApplyOptions<CommandOptions>({
 	aliases: ['role', 'roles'],
 	generateDashLessAliases: true,
-	description: 'Shows a list of all roles, and gives you information on a particular role.',
+	description: 'commands/help:roleinfoDescription',
+	detailedDescription: 'commands/help:roleinfoDetailed',
 	preconditions: [
 		new PermissionsPrecondition('EMBED_LINKS'),
 		{ name: 'Cooldown', context: { bucketType: BucketType.Channel, delay: Time.Second * 3 } }

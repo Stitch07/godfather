@@ -4,7 +4,7 @@ import type { Args, CommandContext, CommandOptions } from '@sapphire/framework';
 import type { Message } from 'discord.js';
 
 @ApplyOptions<CommandOptions>({
-	description: 'Shows you useful information about the bot.'
+	description: 'commands/help:infoDescription'
 })
 export default class extends GodfatherCommand {
 	public async run(message: Message, _: Args, context: CommandContext) {

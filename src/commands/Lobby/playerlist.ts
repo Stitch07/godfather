@@ -6,7 +6,7 @@ import type { Message } from 'discord.js';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['players', 'pl'],
-	description: 'Shows the playerlist of an ongoing game.',
+	description: 'commands/help:playerlistDescription',
 	preconditions: ['GuildOnly', 'GameOnly', { name: 'Cooldown', context: { bucketType: BucketType.Channel, delay: Time.Second * 5 } }]
 })
 export default class extends GodfatherCommand {

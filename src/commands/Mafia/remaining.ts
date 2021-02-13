@@ -7,7 +7,7 @@ import type { Message } from 'discord.js';
 import type { TFunction } from 'i18next';
 
 @ApplyOptions<CommandOptions>({
-	description: 'Shows when the current day/night ends.',
+	description: 'commands/help:remainingDescription',
 	preconditions: ['GameOnly', { name: 'Cooldown', context: { bucketType: BucketType.Channel, delay: Time.Second * 5 } }]
 })
 export default class RemainingCommand extends GodfatherCommand {

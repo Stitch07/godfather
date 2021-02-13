@@ -6,11 +6,9 @@ import { handleRequiredArg } from '@util/utils';
 import type { Message, MessageReaction, User } from 'discord.js';
 
 @ApplyOptions<CommandOptions>({
-	description: 'Removes a player from the game.',
+	description: 'commands/help:removeDescription',
+	detailedDescription: 'commands/help:removeDetailed',
 	aliases: ['kick'],
-	detailedDescription: [
-		'To prevent hosts from abusing this command after the game has started, players are given a 45 second window to confirm they are active.'
-	].join('\n'),
 	preconditions: ['GuildOnly', 'GameOnly', 'HostOnly']
 })
 export default class extends GodfatherCommand {

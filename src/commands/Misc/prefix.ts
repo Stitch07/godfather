@@ -7,7 +7,8 @@ import type { Args, CommandOptions } from '@sapphire/framework';
 import type { Message } from 'discord.js';
 
 @ApplyOptions<CommandOptions>({
-	description: 'View and change the server prefix.',
+	description: 'commands/help:prefixDescription',
+	detailedDescription: 'commands/help:prefixDetailed',
 	preconditions: ['GuildOnly', ['AdminOnly', 'OwnerOnly']]
 })
 export default class extends GodfatherCommand {
