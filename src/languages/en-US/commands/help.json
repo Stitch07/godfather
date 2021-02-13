@@ -1,0 +1,28 @@
+{
+	"changehostDescription": "Vote to change the host.",
+	"changehostDetailed": {
+		"extendedHelp": [
+			"With a majority vote, the next player in the player-list will become the host.",
+			"Hosts can use this command to automatically change the host (without a vote)."
+		]
+	},
+	"createDescription": "Creates a lobby in the current channel.",
+	"createDetailed": {
+		"extendedHelp": [
+			"After creating a game, players can join using `{{prefix}}join`, or by clicking the {{GREENTICK}} emoji.",
+			"When you have enough players, start playing using `{{prefix}}start`."
+		]
+	},
+	"usesetupDescription": "Use a custom setup.",
+	"usesetupExtended": {
+		"usages": [
+			"usesetup <Roles>"
+		],
+		"extendedHelp": "Do the default setups bore you? Use this command to create your own setup! Provide a list of roles (separated by commas) to use a custom setup.\nNote: To start your game at night 1, use the --nightStart or -n flag.",
+		"examples": [
+			"usesetup Cop, Goon, Doc",
+			"usesetup Godfather, Consig, RT x5 --nightStart"
+		],
+		"reminder": "Support for YAML setups is now deprecated, and will be removed in future updates."
+	}
+}

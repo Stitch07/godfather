@@ -55,6 +55,10 @@ declare module '@sapphire/framework' {
 		setups: SetupStore;
 		slashCommands: SlashCommandStore;
 	}
+
+	interface Command {
+		category: string;
+	}
 }
 
 declare module 'i18next' {

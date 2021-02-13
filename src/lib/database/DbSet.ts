@@ -48,6 +48,9 @@ export class DbSet {
 	public static async getSettings(guild: Guild) {
 		const { guilds } = await DbSet.connect();
 		const guildSettings = await guilds.findOne({ id: guild.id });
-		return guildSettings ?? new GuildSettingsEntity();
+		if (guildSettings) return guildSettings;
+		const newSettings = new GuildSettingsEntity();
+		newSettings.id = guild.id;
+		return newSettings;
 	}
 }

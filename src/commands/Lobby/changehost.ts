@@ -4,8 +4,8 @@ import type { CommandOptions } from '@sapphire/framework';
 import type { Message } from 'discord.js';
 
 @ApplyOptions<CommandOptions>({
-	description: 'Vote to change the host',
-	detailedDescription: ['The host can use this command to instantly make the next player the host.'].join('\n'),
+	description: 'commands/help:changehostDescription',
+	detailedDescription: 'commands/help:changehostDetailed',
 	preconditions: ['GuildOnly', 'GameOnly', 'PlayerOnly', 'AlivePlayerOnly']
 })
 export default class extends GodfatherCommand {

@@ -1,13 +1,12 @@
 import { DEFAULT_GAME_SETTINGS } from '@lib/constants';
 import type { GameSettings } from '@mafia/structures/Game';
 import { PREFIX } from '@root/config';
-import type { Guild } from 'discord.js';
 import { Column, Entity, PrimaryColumn } from 'typeorm';
 
 @Entity({ name: 'guild_settings' })
 export default class GuildSettingsEntity implements GameSettings {
 	@PrimaryColumn('varchar', { length: 19 })
-	public id: string;
+	public id!: string;
 
 	@Column('varchar', { length: 10, default: PREFIX })
 	public prefix = PREFIX;
@@ -53,8 +52,4 @@ export default class GuildSettingsEntity implements GameSettings {
 
 	@Column('integer', { default: DEFAULT_GAME_SETTINGS.maxTrials })
 	public maxTrials = DEFAULT_GAME_SETTINGS.maxTrials;
-
-	public constructor(guild: Guild) {
-		this.id = guild.id;
-	}
 }
