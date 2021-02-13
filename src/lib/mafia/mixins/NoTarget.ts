@@ -14,7 +14,12 @@ class NoTarget extends Role {
 	public async onNight() {
 		const { game } = this.player;
 		const actionText = [
-			`It is now night ${game.cycle}. Use ${PREFIX}${this.action} to ${this.actionText}. Use ${PREFIX}noaction to stay home.`,
+			game.t('roles/global:nightActionPromptNoTarget', {
+				prefix: PREFIX,
+				cycle: game.cycle,
+				action: this.action,
+				actionText: this.actionText
+			}),
 			this.extraNightContext
 		]
 			.filter((text) => text !== null)
@@ -25,7 +30,7 @@ class NoTarget extends Role {
 	public async onPmCommand(message: Message, command: string) {
 		// day commands use a completely different action flow
 		const { check, reason } = this.canUseAction();
-		if (!check) throw `You cannot use your action. ${reason}`;
+		if (!check) throw this.game.t('roles/global:actionBlocked', { reason });
 
 		if (!this.possibleActions.includes(command)) return;
 
@@ -33,14 +38,14 @@ class NoTarget extends Role {
 
 		switch (command) {
 			case 'cancel':
-				return this.player.user.send('You have cancelled your action.');
+				return this.player.user.send(this.game.t('roles/global:actionCancelled'));
 			case 'noaction': {
 				await this.game.nightActions.addAction({
 					action: undefined,
 					actor: this.player,
 					priority: this.priority
 				});
-				return this.player.user.send('You decided to stay home tonight.');
+				return this.player.user.send(this.game.t('roles/global:noAction'));
 			}
 			default:
 				await this.player.game.nightActions.addAction({

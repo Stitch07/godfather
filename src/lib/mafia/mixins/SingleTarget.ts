@@ -20,7 +20,12 @@ class SingleTarget extends Role {
 		const { game } = this.player;
 
 		const actionText = [
-			`It is now night ${game.cycle}. Use ${PREFIX}${this.action} <number> to ${this.actionText}. Use ${PREFIX}noaction to stay home.`,
+			game.t('roles/global:nightActionPromptSingleTarget', {
+				prefix: PREFIX,
+				cycle: game.cycle,
+				action: this.action,
+				actionText: this.actionText
+			}),
 			this.extraNightContext,
 			`${codeBlock('diff', game.players.show({ codeblock: true }))}`
 		]
@@ -33,7 +38,12 @@ class SingleTarget extends Role {
 	public async onDay() {
 		const { game } = this;
 
-		let actionText = `It is now day ${game.cycle}. Use the ${PREFIX}${this.action} command to ${this.actionText} immediately.`;
+		let actionText = this.game.t('roles/global:dayActionPromptSingleTarget', {
+			prefix: PREFIX,
+			cycle: game.cycle,
+			action: this.action,
+			actionText: this.actionText
+		});
 		actionText += `${codeBlock('diff', game.players.show({ codeblock: true }))}`;
 
 		await this.player.user.send(actionText);
@@ -42,7 +52,7 @@ class SingleTarget extends Role {
 	public async onPmCommand(message: Message, command: string, ...args: string[]) {
 		// day commands use a completely different action flow
 		let { check, reason } = this.canUseAction();
-		if (!check) throw `You cannot use your action. ${reason}`;
+		if (!check) throw this.game.t('roles/global:actionBlocked', { reason });
 
 		if (this.game.phase === Phase.Day || this.game.phase === Phase.Trial || this.game.phase === Phase.TrialVoting)
 			return this.onDayCommand(message, command, ...args);
@@ -52,9 +62,9 @@ class SingleTarget extends Role {
 
 		switch (command) {
 			case 'cancel':
-				return this.player.user.send('You have cancelled your action.');
+				return this.player.user.send(this.game.t('roles/global:actionCancelled'));
 			case 'noaction': {
-				await this.player.user.send('You decided to stay home tonight.');
+				await this.player.user.send(this.game.t('roles/global:noAction'));
 				return this.game.nightActions.addAction({
 					action: undefined,
 					actor: this.player,
@@ -65,10 +75,11 @@ class SingleTarget extends Role {
 				const target = this.getTarget(args, this.game);
 
 				({ check, reason } = this.canTarget(target));
-				if (!check)
-					throw Array.isArray(target)
-						? `You cannot target ${listItems(target.map((tgt) => tgt.user.username))} tonight: ${reason}`
-						: `You cannot target ${target.user.username} tonight: ${reason}`;
+				if (!check) {
+					throw this.game.t('roles/global:actionBlockedTarget', {
+						target: Array.isArray(target) ? target : [target]
+					});
+				}
 
 				if (this.name === 'Godfather' && this.game.players.some((player) => player.isAlive && player.role.name === 'Goon')) {
 					// first we remove any older action the goon had
@@ -101,7 +112,7 @@ class SingleTarget extends Role {
 
 	public getTarget(args: string[], game: Game): Player[] | Player {
 		const target = Player.resolve(this.player.game, args.join(' '));
-		if (!target) throw `Invalid target. Choose a number between 1 and ${game.players.length}`;
+		if (!target) throw this.game.t('roles/global:targetInvalid', { maxPlayers: this.game.players.length });
 		return target;
 	}
 
@@ -127,8 +138,8 @@ class SingleTarget extends Role {
 
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	public canTarget(target: Player | Player[]) {
-		if (!(target as Player).isAlive) return { check: false, reason: 'You cannot target dead players.' };
-		return { check: target !== this.player, reason: `As a ${this.display}, you cannot self-target.` };
+		if (!(target as Player).isAlive) return { check: false, reason: this.game.t('roles/global:targetDeadPlayers') };
+		return { check: target !== this.player, reason: this.game.t('roles/global:targetSelf') };
 	}
 
 	public canUseAction() {

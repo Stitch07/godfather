@@ -11,7 +11,6 @@ const CAN_CONVERT = ['Town', 'Survivor', 'Amnesiac', 'Jester'];
 class CultLeader extends SingleTarget {
 	public faction = new CultFaction();
 	public name = 'Cult Leader';
-	public description = "You're the leader of a mysterious cult and want everyone to follow your beliefs.";
 	public action = 'convert';
 	public actionText = 'convert a player';
 	public actionGerund = 'converting';
@@ -23,6 +22,11 @@ class CultLeader extends SingleTarget {
 	// the last cycle with a successful conversion. setting it to -1 lets the CL convert someone on N1
 	private lastConverted = -1;
 	private successfulConversion = false;
+
+	public constructor(player: Player) {
+		super(player);
+		this.description = this.game.t('roles/town:cultLeaderDescription');
+	}
 
 	public get defence() {
 		return this.attacked ? Defence.None : Defence.Basic;
