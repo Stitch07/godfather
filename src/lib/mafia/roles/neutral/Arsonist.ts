@@ -1,6 +1,6 @@
 import { PREFIX } from '@root/config';
 import { codeBlock } from '@sapphire/utilities';
-import { cast, listItems, removeArrayItem } from '@util/utils';
+import { cast, removeArrayItem } from '@util/utils';
 import type { Message } from 'discord.js';
 import ArsonistFaction from '../../factions/neutral/Arsonist';
 import NightActionsManager, { Attack, Defence, NightActionPriority } from '../../managers/NightActionsManager';
@@ -10,13 +10,17 @@ import Role from '../../structures/Role';
 
 class Arsonist extends Role {
 	public name = 'Arsonist';
-	public description = 'You may douse someone every night, and then ignite all your doused targets.';
 	public faction = new ArsonistFaction();
 	public actionPhase = Phase.Night;
 	public priority = NightActionPriority.ARSONIST;
 	public action = ['douse', 'ignite'];
 	private dousedPlayers: Player[] = [];
 	private ignited = false;
+
+	public constructor(player: Player) {
+		super(player);
+		this.description = this.game.t('roles/neutral:arsonistDescription');
+	}
 
 	public async onPmCommand(_: Message, command: string, ...args: string[]) {
 		if (!this.validActions.includes(command)) return;
@@ -26,9 +30,9 @@ class Arsonist extends Role {
 
 		switch (command) {
 			case 'cancel':
-				return this.player.user.send('You have cancelled your action.');
+				return this.player.user.send(this.game.t('roles/global:actionCancelled'));
 			case 'noaction': {
-				await this.player.user.send('You decided to stay home tonight.');
+				await this.player.user.send(this.game.t('roles/global:noAction'));
 				return this.game.nightActions.addAction({
 					action: undefined,
 					actor: this.player,
@@ -50,17 +54,17 @@ class Arsonist extends Role {
 				});
 
 				this.ignited = true;
-				return this.player.user.send('You are igniting your doused targets tonight.');
+				return this.player.user.send(this.game.t('roles/neutral:arsonistIgniting'));
 			}
 
 			case 'douse': {
 				const target = Player.resolve(this.player.game, args.join(' '));
-				if (!target) throw `Invalid target. Choose a number between 1 and ${this.game.players.length}`;
+				if (!target) throw this.game.t('roles/global:invalidTarget', { maxPlayers: this.game.players.length });
 
-				if (target === this.player) throw 'You cannot self-target as an Arsonist.';
-				if (this.dousedPlayers.includes(target)) throw `You have already doused ${target}.`;
+				if (target === this.player) throw this.game.t('roles/global:targetSelf');
+				if (this.dousedPlayers.includes(target)) throw this.game.t('roles/neutral:arsonistAlreadyDoused', { target });
 
-				await this.player.user.send(`You are dousing ${target} tonight.`);
+				await this.player.user.send(this.game.t('roles/neutral:arsonistActionConfirmation', { target }));
 				return this.game.nightActions.addAction({
 					action: 'ignite',
 					actor: this.player,
@@ -79,8 +83,10 @@ class Arsonist extends Role {
 		}
 
 		const output = [
-			`It is now night ${this.game.cycle}. Use ${PREFIX}douse <player> to douse a player, and ${PREFIX}ignite to ignite all doused target.`,
-			this.dousedPlayers.length === 0 ? null : `You have doused ${listItems(this.dousedPlayers.map((player) => player.toString()))}`,
+			this.game.t('roles/neutral:arsonistPrompt', { cycle: this.game.cycle, prefix: PREFIX }),
+			this.dousedPlayers.length === 0
+				? null
+				: this.game.t('roles/neutral:arsonistContext', { players: this.dousedPlayers.map((player) => player.toString()) }),
 			codeBlock('diff', this.game.players.show({ codeblock: true }))
 		]
 			.filter((line) => line !== null)
@@ -109,7 +115,7 @@ class Arsonist extends Role {
 			const record = actions.record.get(target.user.id).get('nightkill');
 			const success = record.result && record.by.includes(this.player);
 			if (success) {
-				await target.queueMessage('You were ignited by an Arsonist!');
+				await target.queueMessage(this.game.t('roles/neutral:arsonistIgnitedBy'));
 			}
 		}
 	}

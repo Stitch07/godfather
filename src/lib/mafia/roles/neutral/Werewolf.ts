@@ -5,12 +5,16 @@ import type Player from '@mafia/structures/Player';
 
 export default class Werewolf extends Killer {
 	public name = 'Werewolf';
-	public description = "You may rampage at someone's house every night.";
 	public faction = new WerewolfFaction();
 	public action = 'maul';
 	public actionGerund = 'mauling';
 	public actionText = 'maul a player';
 	public actionParticiple = 'mauled';
+
+	public constructor(player: Player) {
+		super(player);
+		this.description = this.game.t('roles/neutral:werewolfDescription');
+	}
 
 	public runAction(actions: NightActionsManager, target: Player) {
 		// WW rampages at home, killing all visitors
@@ -24,13 +28,13 @@ export default class Werewolf extends Killer {
 		for (const visitor of visitors) {
 			if (visitor.role.actualDefence > this.attackStrength) continue;
 			actions.record.setAction(visitor.user.id, 'nightkill', { result: true, by: [this.player], type: this.attackStrength });
-			visitor.queueMessage('You were mauled by a Werewolf!');
+			visitor.queueMessage(this.game.t('roles/neutral:werewolfMaul'));
 		}
 		return super.tearDown(actions, target);
 	}
 
 	public canUseAction() {
-		if (!this.canRampage()) return { check: false, reason: 'You can only rampage on full moons.' };
+		if (!this.canRampage()) return { check: false, reason: this.game.t('roles/neutral:werewolfFullMoons') };
 		return super.canUseAction();
 	}
 

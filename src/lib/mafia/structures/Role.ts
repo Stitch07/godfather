@@ -62,7 +62,7 @@ abstract class Role {
 		const executionersInGame = this.game.players.filter((player) => player.isAlive && player.role.name === 'Executioner');
 		for (const executioner of executionersInGame) {
 			if (this.player.user.id === (executioner.role as Executioner).target.user.id) {
-				await executioner.user.send('Your target has died! You have become a Jester.');
+				await executioner.user.send(this.game.t('roles/neutral:executionerTargetNKed'));
 				const Jester = allRoles.get('Jester')!;
 				executioner.role = new Jester(executioner);
 				await executioner.sendPM();

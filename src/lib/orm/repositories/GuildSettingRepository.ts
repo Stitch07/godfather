@@ -6,6 +6,6 @@ import GuildSettingsEntity from '@lib/orm/entities/GuildSettings';
 export default class GuildSettingRepository extends Repository<GuildSettingsEntity> {
 	public async ensure(guild: Guild) {
 		const guildSettings = await this.findOne({ id: guild.id });
-		return guildSettings ?? new GuildSettingsEntity();
+		return guildSettings ?? new GuildSettingsEntity(guild);
 	}
 }

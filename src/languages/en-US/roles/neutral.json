@@ -10,7 +10,7 @@
 	"arsonistAlreadyDoused": "You have already doused {{target}}.",
 	"arsonistActionConfirmation": "You are dousing {{target}} tonight.",
 	"arsonistPrompt": "It is now night {{cycle}}. Use {{prefix}}douse <player> to douse a player, and {{prefix}}ignite to ignite all doused target.",
-	"arsonistContext": "You have doused {{players, listAnd}}.",
+	"arsonistContext": "You have doused {{players, andList}}.",
 	"arsonistIgnitedBy": "You were ignited by an Arsonist!",
 	"executionerDescription": "You must get your target eliminated by all means necessary.",
 	"executionerNoTargets": "There are no valid targets in game. You have become a Jester!",
