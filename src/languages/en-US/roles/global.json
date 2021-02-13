@@ -13,6 +13,5 @@
 	"actionBlockedTarget": "You cannot target {{target, listAnd}} tonight: {{reason}}",
 	"targetInvalid": "Invalid target. Choose a number between 1 and {{maxPlayers}}.",
 	"bullets": "bullets",
-	"outOfBullets": "You are out of {shootingMechanism}.",
-	"killerMessage": "You were {{actionParticiple}} by a {{role}}!"
+	"outOfBullets": "You are out of {shootingMechanism}."
 }
