@@ -16,6 +16,8 @@ class Crusader extends SingleTarget {
 		super(player);
 
 		this.description = this.game.t('roles/town:crusaderDescription');
+		this.actionText = this.game.t('roles/actions:crusaderText');
+		this.actionGerund = this.game.t('roles/actions:crusaderGerund');
 	}
 
 	public runAction(actions: NightActionsManager, target: Player) {

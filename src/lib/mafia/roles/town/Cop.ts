@@ -16,6 +16,8 @@ class Cop extends SingleTarget {
 		super(player);
 
 		this.description = this.game.t('roles/town:copDescription');
+		this.actionText = this.game.t('roles/actions:copText');
+		this.actionGerund = this.game.t('roles/actions:copGerund');
 	}
 
 	// ensures that Dethy cops don't get PMed their real role

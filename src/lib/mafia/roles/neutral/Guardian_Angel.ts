@@ -9,8 +9,6 @@ class Guardian_Angel extends NoTarget {
 	public name = 'Guardian Angel';
 	public faction = new GuardianAngelFaction();
 	public action = 'protect';
-	public actionGerund = 'protecting your target';
-	public actionText = 'protect your target';
 	public priority = NightActionPriority.GUARDIAN_ANGEL;
 
 	public target!: Player;
@@ -22,6 +20,8 @@ class Guardian_Angel extends NoTarget {
 		else this.protects = this.getInitialProtects();
 
 		this.description = this.game.t('roles/neutral:guardianAngelDescription', { count: this.protects });
+		this.actionText = this.game.t('roles/actions:guardianAngelText');
+		this.actionGerund = this.game.t('roles/actions:guardianAngelGerund');
 	}
 
 	public async init() {

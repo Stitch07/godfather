@@ -1,10 +1,15 @@
 import NightActionsManager, { Defence } from '@mafia/managers/NightActionsManager';
 import Killer from '@mafia/mixins/Killer';
 import MafiaRole from '@mafia/mixins/MafiaRole';
+import type Player from '../../structures/Player';
 
 class Godfather extends Killer {
 	public name = 'Godfather';
-	public description = 'You can order the mafioso to shoot someone every night.';
+
+	public constructor(player: Player) {
+		super(player);
+		this.description = this.game.t('roles/neutral:godfatherDescription');
+	}
 
 	public setUp(actions: NightActionsManager) {
 		const goonKills = actions.filter((action) => action.actor.role.name === 'Goon');

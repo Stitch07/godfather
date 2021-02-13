@@ -10,13 +10,13 @@ export default class Amnesiac extends SingleTarget {
 	public name = 'Amnesiac';
 	public faction = new AmnesiacFaction();
 	public action = 'remember';
-	public actionGerund = 'remembering as';
-	public actionText = 'remember your role';
 	public priority = NightActionPriority.AMNESIAC;
 
 	public constructor(player: Player) {
 		super(player);
 		this.description = this.game.t('roles/neutral:amnesiacDescription');
+		this.actionText = this.game.t('roles/actions:amnesiacText');
+		this.actionGerund = this.game.t('roles/actions:amnesiacGerund');
 	}
 
 	public setUp(actions: NightActionsManager) {

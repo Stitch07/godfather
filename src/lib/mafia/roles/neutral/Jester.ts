@@ -9,8 +9,6 @@ class Jester extends SingleTarget {
 	public name = 'Jester';
 	public faction = new JesterFaction();
 	public action = 'haunt';
-	public actionGerund = 'haunting';
-	public actionText = 'haunt a player';
 	public priority = NightActionPriority.JESTER_HAUNT;
 	public flags = {
 		canBlock: false,
@@ -23,6 +21,12 @@ class Jester extends SingleTarget {
 	public wasEliminated = false;
 	// players hammering the Jester
 	public playersVoting: Player[] = [];
+
+	public constructor(player: Player) {
+		super(player);
+		this.actionText = this.game.t('roles/actions:jesterText');
+		this.actionGerund = this.game.t('roles/actions:jesterGerund');
+	}
 
 	public runAction(actions: NightActionsManager, target: Player) {
 		actions.record.setAction(target.user.id, 'nightkill', { by: [this.player], result: true, type: Attack.Unstoppable });

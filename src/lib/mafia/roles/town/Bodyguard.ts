@@ -6,8 +6,6 @@ import NightActionsManager, { Attack, NightActionPriority } from '../../managers
 class Bodyguard extends SingleTarget {
 	public name = 'Bodyguard';
 	public action = 'guard';
-	public actionText = 'guard a player';
-	public actionGerund = 'guarding';
 	public priority = NightActionPriority.BODYGUARD;
 	public hasGuarded = false;
 
@@ -15,6 +13,8 @@ class Bodyguard extends SingleTarget {
 		super(player);
 
 		this.description = this.game.t('roles/town:bodyguardDescription');
+		this.actionText = this.game.t('roles/actions:bodyguardText');
+		this.actionGerund = this.game.t('roles/actions:bodyguardGerund');
 	}
 
 	public runAction(actions: NightActionsManager, target: Player) {

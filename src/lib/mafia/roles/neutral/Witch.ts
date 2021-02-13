@@ -6,8 +6,6 @@ import type Player from '@mafia/structures/Player';
 class Witch extends DoubleTarget {
 	public name = 'Witch';
 	public action = 'witch';
-	public actionText = 'witch one player onto another';
-	public actionGerund = 'controlling';
 	public priority = NightActionPriority.Witch;
 
 	public faction = new WitchFaction();
@@ -19,6 +17,8 @@ class Witch extends DoubleTarget {
 	public constructor(player: Player) {
 		super(player);
 		this.description = this.game.t('roles/neutral:witchDescription');
+		this.actionText = this.game.t('roles/actions:witchText');
+		this.actionGerund = this.game.t('roles/actions:witchGerund');
 	}
 
 	public get defence() {

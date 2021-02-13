@@ -7,13 +7,13 @@ export default class Werewolf extends Killer {
 	public name = 'Werewolf';
 	public faction = new WerewolfFaction();
 	public action = 'maul';
-	public actionGerund = 'mauling';
-	public actionText = 'maul a player';
-	public actionParticiple = 'mauled';
 
 	public constructor(player: Player) {
 		super(player);
 		this.description = this.game.t('roles/neutral:werewolfDescription');
+		this.actionText = this.game.t('roles/actions:werewolfText');
+		this.actionGerund = this.game.t('roles/actions:werewolfGerund');
+		this.actionParticiple = this.game.t('roles/actions:werewolfParticiple');
 	}
 
 	public runAction(actions: NightActionsManager, target: Player) {

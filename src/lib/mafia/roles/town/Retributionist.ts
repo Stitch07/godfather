@@ -6,8 +6,6 @@ import type Player from '@mafia/structures/Player';
 class Retributionist extends SingleTarget {
 	public name = 'Retributionist';
 	public action = 'revive';
-	public actionText = 'revive a player';
-	public actionGerund = 'reviving';
 	public priority = NightActionPriority.RETRIBUTIONIST;
 	public flags = {
 		canTransport: false,
@@ -21,6 +19,8 @@ class Retributionist extends SingleTarget {
 	public constructor(player: Player) {
 		super(player);
 		this.description = this.game.t('roles/town:retributionistDescription');
+		this.actionText = this.game.t('roles/actions:retributionistText');
+		this.actionGerund = this.game.t('roles/actions:retributionistGerund');
 	}
 
 	public async tearDown(actions: NightActionsManager, target: Player) {

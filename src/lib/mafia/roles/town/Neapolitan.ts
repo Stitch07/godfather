@@ -9,13 +9,13 @@ export default class Neapolitan extends SingleTarget {
 	public name = 'Neapolitan';
 	public faction = new TownFaction();
 	public action = 'check';
-	public actionGerund = 'checking';
-	public actionText = 'check a player';
 	public priority = NightActionPriority.NEOPOLITAN;
 
 	public constructor(player: Player) {
 		super(player);
 		this.description = this.game.t('roles/town:neapolitanDescription');
+		this.actionText = this.game.t('roles/actions:neapolitanText');
+		this.actionGerund = this.game.t('roles/actions:neapolitanGerund');
 	}
 
 	public tearDown(actions: NightActionsManager, target: Player) {

@@ -6,8 +6,6 @@ import type Player from '@mafia/structures/Player';
 class Veteran extends NoTarget {
 	public name = 'Veteran';
 	public action = 'alert';
-	public actionGerund = 'going on alert';
-	public actionText = 'go on alert';
 	public priority = NightActionPriority.VETERAN;
 	public flags = {
 		canBlock: false,
@@ -23,6 +21,8 @@ class Veteran extends NoTarget {
 		super(player);
 		this.alerts = player === null ? 0 : this.getInitialAlerts();
 		this.description = this.game.t('roles/town:veteranDescription', { count: this.alerts });
+		this.actionText = this.game.t('roles/actions:veteranText');
+		this.actionGerund = this.game.t('roles/actions:veteranGerund');
 	}
 
 	public get defence() {
