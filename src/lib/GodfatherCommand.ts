@@ -7,11 +7,6 @@ export default abstract class GodfatherCommand extends Command {
 		super(context, options);
 	}
 
-	// public async preParse(message: Message, params: string, context: CommandContext) {
-	// 	const args = await super.preParse(message, params, context);
-	// 	const t = await message.fetchT();
-	// }
-
 	public get category() {
 		return this.path.split(sep).reverse()[1] ?? 'General';
 	}

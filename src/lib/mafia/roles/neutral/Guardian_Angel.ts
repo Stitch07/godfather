@@ -2,7 +2,7 @@ import GuardianAngelFaction from '@mafia/factions/neutral/GuardianAngel';
 import NightActionsManager, { Attack, NightActionPriority } from '@mafia/managers/NightActionsManager';
 import NoTarget from '@mafia/mixins/NoTarget';
 import type Player from '@mafia/structures/Player';
-import { pluralize, randomArrayItem, removeArrayItem } from '@util/utils';
+import { randomArrayItem, removeArrayItem } from '@util/utils';
 import { allRoles } from '..';
 
 class Guardian_Angel extends NoTarget {
@@ -21,10 +21,7 @@ class Guardian_Angel extends NoTarget {
 		if (typeof context.protects === 'number') this.protects = context.protects;
 		else this.protects = this.getInitialProtects();
 
-		this.description = `Your only goal is to keep your target alive. You may heal and purge your target ${pluralize(
-			this.protects,
-			'time'
-		)}. This may be done after you die.`;
+		this.description = this.game.t('roles/neutral:guardianAngelDescription', { count: this.protects });
 	}
 
 	public async init() {
@@ -32,25 +29,25 @@ class Guardian_Angel extends NoTarget {
 			(player) => player.role.name !== 'Jester' && player.role.name !== 'Executioner' && player.role.name !== 'Guardian Angel'
 		);
 		if (possibleTargets.length === 0) {
-			await this.player.user.send('There are no valid targets in game. You have become a Survivor!');
+			await this.player.user.send(this.game.t('roles/neutral:guardianAngelNoTargets'));
 			const Survivor = allRoles.get('Survivor')!;
 			this.player.role = new Survivor(this.player, { vests: 0 });
 			return this.player.sendPM();
 		}
 
 		this.target = randomArrayItem(possibleTargets)!;
-		return this.player.user.send(`Your target is ${this.target.user.username}.`);
+		return this.player.user.send(this.game.t('roles/neutral:executionerMessage', { target: this.target.user.tag }));
 	}
 
 	public canUseAction() {
-		if (this.protects === 0) return { check: false, reason: 'You have no protects left' };
+		if (this.protects === 0) return { check: false, reason: this.game.t('roles/neutral:guardianAngelNoProtects') };
 		if (!this.player.isAlive) return { check: true, reason: '' };
 		return super.canUseAction();
 	}
 
 	public async onDay() {
 		if (!this.target.isAlive && this.player.isAlive) {
-			await this.player.user.send('Your target has died! You have become a survivor.');
+			await this.player.user.send(this.game.t('roles/neutral:guardianAngelTargetDead'));
 			const Survivor = allRoles.get('Survivor')!;
 			this.player.role = new Survivor(this.player, { vests: 0 });
 			return this.player.sendPM();
@@ -61,7 +58,7 @@ class Guardian_Angel extends NoTarget {
 		removeArrayItem(this.game.nightActions.protectedPlayers, (player) => player === this.target);
 
 		if (!this.target.isAlive && this.player.isAlive) {
-			await this.player.user.send('Your target has died! You have become a survivor.');
+			await this.player.user.send(this.game.t('roles/neutral:guardianAngelTargetDead'));
 			const Survivor = allRoles.get('Survivor')!;
 			this.player.role = new Survivor(this.player, { vests: 0 });
 			return this.player.sendPM();
@@ -85,7 +82,7 @@ class Guardian_Angel extends NoTarget {
 				playerRecord.set('heal', heals);
 
 				actions.record.set(this.target.user.id, playerRecord);
-				this.player.queueMessage('Your target was attacked.');
+				this.player.queueMessage(this.game.t('roles/neutral:guardianAngelTargetAttacked'));
 			}
 		}
 
@@ -98,13 +95,13 @@ class Guardian_Angel extends NoTarget {
 		const success = record.result && record.by.includes(this.player);
 
 		if (success) {
-			this.target.queueMessage('You were attacked but your Guardian Angel saved you!');
+			this.target.queueMessage(this.game.t('roles/neutral:guardianAngelSave'));
 		}
-		return this.game.channel.send(`A Guardian Angel has protected ${this.target.user.username}!`);
+		return this.game.channel.send(this.game.t('roles/neutral:guardianAngelAnnouncement', { target: this.target.user.tag }));
 	}
 
 	public get extraNightContext() {
-		if (this.protects > 0) return `You have ${pluralize(this.protects, 'protect')} left.`;
+		if (this.protects > 0) return this.game.t('roles/neutral:guardianAngelContext', { count: this.protects });
 		return null;
 	}
 

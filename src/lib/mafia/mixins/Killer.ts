@@ -10,12 +10,18 @@ export default class Killer extends SingleTarget {
 	public actionText = 'shoot a player';
 	public actionGerund = 'shooting';
 	public actionParticiple = 'shot';
-	public shootingMechanism = 'bullet';
 	public priority = NightActionPriority.KILLER;
 	public bullets = Infinity;
+	public shootingMechanism: string;
+
+	public constructor(player: Player) {
+		super(player);
+		this.shootingMechanism = this.game.t('roles/global:bullets');
+	}
 
 	public canUseAction() {
-		if (this.bullets === 0) return { check: false, reason: `You have 0 ${this.shootingMechanism}s left.` };
+		if (this.bullets === 0)
+			return { check: false, reason: this.game.t('roles/global:outOfBullets', { shootingMechanism: this.shootingMechanism }) };
 		return super.canUseAction();
 	}
 
@@ -33,7 +39,7 @@ export default class Killer extends SingleTarget {
 		const record = actions.record.get(target.user.id).get('nightkill');
 		const success = record.result && record.by.includes(this.player);
 		if (!success) {
-			return this.player.queueMessage('Your target was too strong to kill!');
+			return this.player.queueMessage(this.game.t('roles/global:targetTooStrong'));
 		}
 		return target.queueMessage(`You were ${this.actionParticiple} by a ${this.name}!`);
 	}

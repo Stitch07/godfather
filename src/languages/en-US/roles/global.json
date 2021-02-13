@@ -11,5 +11,7 @@
 	"actionCancelled": "You have cancelled your action.",
 	"noAction": "You decided to stay home tonight.",
 	"actionBlockedTarget": "You cannot target {{target, andList}} tonight: {{reason}}",
-	"targetInvalid": "Invalid target. Choose a number between 1 and {{maxPlayers}}."
+	"targetInvalid": "Invalid target. Choose a number between 1 and {{maxPlayers}}.",
+	"bullets": "bullets",
+	"outOfBullets": "You are out of {shootingMechanism}."
 }
