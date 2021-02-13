@@ -11,11 +11,8 @@ import type { Message } from 'discord.js';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['conf', 'config', 'settings', 'set'],
-	description: 'Manages game and server settings.',
-	detailedDescription: [
-		'The settings command lets you manage game settings such as dayDuration, nightDuration and overwritePermissions',
-		'If used in a channel without an ongoing game, the settings command will modify server-wide defaults.'
-	].join('\n'),
+	description: 'commands/help:settingDescription',
+	detailedDescription: 'commands/help:settingDetailed',
 	preconditions: ['GuildOnly', { name: 'Cooldown', context: { delay: Time.Second * 5 } }]
 })
 export default class extends GodfatherCommand {

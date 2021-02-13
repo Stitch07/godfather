@@ -8,6 +8,9 @@ import type { Message, TextChannel } from 'discord.js';
 const mapChannelIDs = (channelID: string) => `<#${channelID}>`;
 
 @ApplyOptions<CommandOptions>({
+	generateDashLessAliases: true,
+	description: 'commands/help:disable-channelDescription',
+	detailedDescription: 'commands/help:disable-channelDetailed',
 	preconditions: ['GuildOnly', ['AdminOnly', 'HostOnly']]
 })
 export default class extends GodfatherCommand {

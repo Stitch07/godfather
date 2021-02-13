@@ -171,5 +171,42 @@
 			"@Stitch --role=\"Serial Killer\"",
 			"@Stitch --faction=Mafia"
 		]
+	},
+	"disable-channelDescription": "Lets you disable the bot in certain channels.",
+	"disable-channelDetailed": {
+		"usages": [
+			"",
+			"Channel1, Channel2"
+		],
+		"extendedHelp": "If a channel is already disabled, using this command again will enable it.",
+		"examples": [
+			"",
+			"#general, #off-topic", "#serious"
+		]
+	},
+	"set-languageDescription": "Changes the server's language.",
+	"set-languageDetailed": {
+		"usages": [
+			"",
+			"Language"
+		],
+		"extendedHelp": "Use this command without arguments to view a list of supported languages.",
+		"examples": [
+			"",
+			"nl-NL"
+		]
+	},
+	"settingDescription": "View or modify game-settings.",
+	"settingDetailed": {
+		"usages": [
+			"",
+			"Key Value"
+		],
+		"extendedHelp": "Settings modify game behavior. If this command is used in a channel without an active game, it will modify server-wide defaults instead.",
+		"examples": [
+			"",
+			"dayDuration 15 minutes",
+			"enableTrials true"
+		]
 	}
 }
