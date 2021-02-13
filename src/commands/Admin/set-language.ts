@@ -5,6 +5,8 @@ import type { Args, CommandContext, CommandOptions } from '@sapphire/framework';
 import type { Message } from 'discord.js';
 
 @ApplyOptions<CommandOptions>({
+	description: 'commands/help:set-languageDescription',
+	detailedDescription: 'commands/help:set-languageDetailed',
 	aliases: ['language', 'lang', 'set-lang', 'setlang'],
 	preconditions: ['GuildOnly', ['AdminOnly', 'OwnerOnly']]
 })
