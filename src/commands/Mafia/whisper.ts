@@ -8,6 +8,8 @@ import type { Message } from 'discord.js';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['w'],
+	description: 'commands/help:whisperDescription',
+	detailedDescription: 'commands/help:whisperDetailed',
 	preconditions: ['DMOnly', { name: 'Cooldown', context: { delay: Time.Second * 10 } }]
 })
 export default class extends GodfatherCommand {

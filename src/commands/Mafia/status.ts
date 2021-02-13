@@ -6,7 +6,8 @@ import { codeBlock } from '@sapphire/utilities';
 import { Message, MessageEmbed } from 'discord.js';
 
 @ApplyOptions<CommandOptions>({
-	description: 'Shows you useful information about the game.',
+	description: 'commands/help:statusDescription',
+	detailedDescription: 'commands/help:statusDetailed',
 	preconditions: ['GameOnly', { name: 'Cooldown', context: { bucketType: BucketType.Channel, delay: 5000 } }]
 })
 export default class extends GodfatherCommand {

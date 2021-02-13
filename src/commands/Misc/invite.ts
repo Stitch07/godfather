@@ -6,7 +6,7 @@ import { Message, MessageEmbed } from 'discord.js';
 import type { TFunction } from 'i18next';
 
 @ApplyOptions<CommandOptions>({
-	description: 'Get an invite link to the bot and support server.'
+	description: 'commands/help:inviteDescription'
 })
 export default class extends GodfatherCommand {
 	public async run(message: Message) {

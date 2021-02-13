@@ -4,7 +4,7 @@ import type { CommandOptions } from '@sapphire/framework';
 import type { Message } from 'discord.js';
 
 @ApplyOptions<CommandOptions>({
-	description: 'Runs a connection test to Discord.'
+	description: 'commands/help:pingDescription'
 })
 export default class extends GodfatherCommand {
 	public async run(message: Message) {

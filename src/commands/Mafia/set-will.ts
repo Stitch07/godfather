@@ -6,8 +6,8 @@ import type { Message } from 'discord.js';
 
 @ApplyOptions<CommandOptions>({
 	generateDashLessAliases: true,
-	description: 'Sets a given message as your will.',
-	detailedDescription: 'Use the --append/-a flag to append a message to the end of your current will.',
+	description: 'commands/help:setwillDescription',
+	detailedDescription: 'commands/help:setwillDetailed',
 	preconditions: ['DMOnly'],
 	strategyOptions: {
 		flags: ['a', 'append']

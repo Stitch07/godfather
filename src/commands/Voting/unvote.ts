@@ -5,7 +5,8 @@ import { Time } from '@sapphire/time-utilities';
 import type { Message, TextChannel } from 'discord.js';
 
 @ApplyOptions<CommandOptions>({
-	description: 'Remove your vote.',
+	description: 'commands/help:unvoteDescription',
+	detailedDescription: 'commands/help:unvoteDetailed',
 	preconditions: [
 		'GuildOnly',
 		'GameOnly',

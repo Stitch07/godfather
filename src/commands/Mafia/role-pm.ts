@@ -5,7 +5,8 @@ import { Time } from '@sapphire/time-utilities';
 import type { Message } from 'discord.js';
 
 @ApplyOptions<CommandOptions>({
-	description: 'Get your role PM.',
+	description: 'commands/help:rolepmDescription',
+	detailedDescription: 'commands/help:rolepmDetailed',
 	generateDashLessAliases: true,
 	preconditions: [
 		'GuildOnly',

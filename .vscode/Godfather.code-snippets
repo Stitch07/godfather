@@ -82,5 +82,13 @@
 			"\tthis.description = this.game.t('roles/neutral:${TM_FILENAME_BASE/(.*)/${1:/downcase}/g}Description');",
 			"}"
 		]
+	},
+	"GodfatherHelp": {
+		"scope": "typescript",
+		"prefix": "help",
+		"body": [
+			"description: 'commands/help:${TM_FILENAME_BASE/(.*)/${1:/downcase}/g}Description',",
+			"detailedDescription: 'commands/help:${TM_FILENAME_BASE/(.*)/${1:/downcase}/g}Detailed',"
+		]
 	}
 }
