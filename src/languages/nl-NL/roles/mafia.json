@@ -1,9 +1,17 @@
 {
+	"ambusherDescription": "You may set up at someones house each night and kill a visitor.",
 	"ambusherAlert": "Je zag {{ambusher}} zich in hinderlaag leggen voor je doelwit.",
 	"ambusherSuccess": "Je viel een bezoeker van je doelwit aan.",
 	"ambusherAttack": "Je werd aangevallen door een Ambusher!",
+	"consigliereDescription": "A corrupted investigator who has been bribed to gather information for Mafia.",
 	"consigResult": "Je doelwit is een **{{role}}**.",
 	"janitorResult": "In het geheim weet je dat je doelwit een **{{role}}** was.",
+	"goonDescription": "You may shoot someone every night.",
+	"goonMessageHome": "The Godfather has ordered you to stay home tonight.",
+	"goonMessageShoot": "The Godfather has ordered you to shoot ${{target}} tonight.",
+	"goonDethy": "You cannot kill N0 in Dethy.",
 	"promoteToGoon": "You have been promoted to a Goon!",
-	"promoteToGodfather": "You have been promoted to the Godfather!"
+	"promoteToGodfather": "You have been promoted to the Godfather!",
+	"godfatherDescription": "You can order the mafioso to shoot someone every night.",
+	"janitorDescription": "You may clean a player at night."
 }
