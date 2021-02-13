@@ -7,18 +7,8 @@ import type { Message } from 'discord.js';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['usesetup'],
-	description: 'Uses a custom setup.',
-	detailedDescription: [
-		'The simplest form is a list of roles separated by commas, for example usesetup Vigilante, Goon, Vanilla x5',
-		'To start the game at night, pass the `-nightStart` flag.',
-		'',
-		'To add your own name and start games at night, you may need to use [YAML](https://yaml.org/). The format for that is:',
-		'```yaml',
-		'roles: [Vigilante, Goon, Vanilla x5]',
-		'nightStart: true',
-		'name: your_setup_name',
-		'```'
-	].join('\n'),
+	description: 'commands/help:usesetupDescription',
+	detailedDescription: 'commands/help:usesetupExtended',
 	preconditions: ['GuildOnly', 'GameOnly', 'HostOnly'],
 	strategyOptions: {
 		flags: ['nightStart', 'n']

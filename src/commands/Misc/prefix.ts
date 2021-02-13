@@ -17,6 +17,7 @@ export default class extends GodfatherCommand {
 			(await guilds.findOne(message.guild!.id, {
 				select: ['id', 'prefix']
 			})) ?? new GuildSettingsEntity();
+		guildSettings.id = message.guild!.id;
 
 		if (args.finished) {
 			return message.channel.sendTranslated('commands/misc:prefixCurrent', [{ prefix: guildSettings.prefix }]);

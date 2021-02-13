@@ -12,11 +12,10 @@ import { cast } from '@util/utils';
 import type { Guild, Message, MessageReaction, TextChannel, User } from 'discord.js';
 
 @ApplyOptions<CommandOptions>({
-	aliases: ['c', 'creategame'],
-	description: 'Creates a game of mafia in the current channel.',
-	detailedDescription: ['To join an existing game, use the `join` command.', 'Hosts may delete running games using the `delete` command.'].join(
-		'\n'
-	),
+	generateDashLessAliases: true,
+	aliases: ['c', 'create-game'],
+	description: 'commands/help:createDescription',
+	detailedDescription: 'commands/help:createDetailed',
 	preconditions: ['GuildOnly']
 })
 export default class extends GodfatherCommand {
@@ -51,7 +50,7 @@ export default class extends GodfatherCommand {
 		const reactMessage = await message.channel.send(output);
 		// wait one minute for reactions to a message as a means of quickly joining it
 		await reactMessage.react('✅');
-		const playersAdded: User[] = [];
+		let playersAdded: User[] = [];
 
 		const collector = reactMessage.createReactionCollector(
 			(reaction: MessageReaction, user: User) => !user.bot && reaction.emoji.name === '✅' && !game.players.get(user),
@@ -62,7 +61,10 @@ export default class extends GodfatherCommand {
 
 		// eslint-disable-next-line @typescript-eslint/no-base-to-string
 		const debouncedFn = debounce(
-			() => reactMessage.edit(`${output}\n${t('commands/lobby:createPlayersAdded', { players: playersAdded.map((player) => player.tag) })}`),
+			async () => {
+				await message.channel.send(t('commands/lobby:createPlayersAdded', { players: playersAdded.map((player) => player.tag) }));
+				playersAdded = [];
+			},
 			{
 				maxWait: Time.Second * 2,
 				wait: Time.Second

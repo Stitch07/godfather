@@ -33,6 +33,7 @@ export default class extends GodfatherCommand {
 		}
 
 		const { settings: newSettings, added, removed } = this.updateChannels(settings, channels.value);
+		newSettings.id = message.guild!.id;
 		await guilds.save(newSettings);
 
 		const t = await message.fetchT();
