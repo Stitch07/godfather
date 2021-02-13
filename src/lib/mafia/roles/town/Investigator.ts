@@ -7,9 +7,14 @@ class Investigator extends SingleTarget {
 	public name = 'Investigator';
 	public description = 'You may investigate someone every night, returning a list of roles including your targets.';
 	public action = 'investigate';
-	public actionGerund = 'investigating';
-	public actionText = 'investigate a player';
 	public priority = NightActionPriority.INVEST;
+
+	public constructor(player: Player) {
+		super(player);
+		this.description = this.game.t('roles/neutral:investigatorDescription');
+		this.actionText = this.game.t('roles/actions:investigatorText');
+		this.actionGerund = this.game.t('roles/actions:investigatorGerund');
+	}
 
 	public tearDown(actions: NightActionsManager, target: Player) {
 		let results = this.getResult(target.role.name);

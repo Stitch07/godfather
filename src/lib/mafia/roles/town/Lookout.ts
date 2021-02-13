@@ -6,13 +6,13 @@ import type Player from '@mafia/structures/Player';
 class Lookout extends SingleTarget {
 	public name = 'Lookout';
 	public action = 'watch';
-	public actionText = 'watch a player';
-	public actionGerund = 'watching';
 	public priority = NightActionPriority.LOOKOUT;
 
 	public constructor(player: Player) {
 		super(player);
 		this.description = this.game.t('roles/town:lookoutDescription');
+		this.actionText = this.game.t('roles/actions:lookoutText');
+		this.actionGerund = this.game.t('roles/actions:lookoutGerund');
 	}
 
 	public tearDown(actions: NightActionsManager, target: Player) {

@@ -85,10 +85,10 @@
 	},
 	"GodfatherHelp": {
 		"scope": "typescript",
-		"prefix": "help",
+		"prefix": "action",
 		"body": [
-			"description: 'commands/help:${TM_FILENAME_BASE/(.*)/${1:/downcase}/g}Description',",
-			"detailedDescription: 'commands/help:${TM_FILENAME_BASE/(.*)/${1:/downcase}/g}Detailed',"
+			"this.actionText = this.game.t('roles/actions:${TM_FILENAME_BASE/(.*)/${1:/downcase}/g}Text');",
+			"this.actionGerund = this.game.t('roles/actions:${TM_FILENAME_BASE/(.*)/${1:/downcase}/g}Gerund');"
 		]
 	}
 }

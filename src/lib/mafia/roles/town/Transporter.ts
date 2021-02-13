@@ -6,13 +6,13 @@ import type Player from '@mafia/structures/Player';
 class Transporter extends DoubleTarget {
 	public name = 'Transporter';
 	public action = 'transport';
-	public actionText = 'transport 2 players ';
-	public actionGerund = 'transporting';
 	public priority = NightActionPriority.TRANSPORTER;
 
 	public constructor(player: Player) {
 		super(player);
 		this.description = this.game.t('roles/town:transporterDescription');
+		this.actionText = this.game.t('roles/actions:transporterText');
+		this.actionGerund = this.game.t('roles/actions:transporterGerund');
 	}
 
 	public setUp(actions: NightActionsManager, targets: Player[]) {

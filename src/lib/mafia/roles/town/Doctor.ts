@@ -14,6 +14,8 @@ class Doctor extends SingleTarget {
 	public constructor(player: Player) {
 		super(player);
 		this.description = this.game.t('roles/town:doctorDescription');
+		this.actionText = this.game.t('roles/actions:doctorText');
+		this.actionGerund = this.game.t('roles/actions:doctorGerund');
 	}
 
 	public runAction(actions: NightActionsManager, target: Player) {

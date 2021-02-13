@@ -7,9 +7,6 @@ class Juggernaut extends Killer {
 	public name = 'Juggernaut';
 	public faction = new JuggernautFaction();
 	public action = 'assault';
-	public actionGerund = 'assaulting';
-	public actionText = 'assault a player';
-	public actionParticiple = 'assaulted';
 	public priority = NightActionPriority.KILLER;
 
 	// level 1 lets them attack every night, level 2 lets them rampage, ands level 3 gives them a unstoppable attack
@@ -18,6 +15,9 @@ class Juggernaut extends Killer {
 	public constructor(player: Player, { level }: { level?: number } = { level: 0 }) {
 		super(player);
 		this.level = level ?? 0;
+		this.actionText = this.game.t('roles/actions:juggernautText');
+		this.actionGerund = this.game.t('roles/actions:juggernautGerund');
+		this.actionParticiple = this.game.t('roles/actions:juggernautParticiple');
 	}
 
 	public get defence() {

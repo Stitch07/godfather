@@ -13,6 +13,8 @@ class Escort extends SingleTarget {
 	public constructor(player: Player) {
 		super(player);
 		this.description = this.game.t('roles/town:escortDescription');
+		this.actionText = this.game.t('roles/actions:escortText');
+		this.actionGerund = this.game.t('roles/actions:escortGerund');
 	}
 
 	public setUp(actions: NightActionsManager, target: Player) {

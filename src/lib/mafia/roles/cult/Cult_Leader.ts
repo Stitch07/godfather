@@ -12,8 +12,6 @@ class CultLeader extends SingleTarget {
 	public faction = new CultFaction();
 	public name = 'Cult Leader';
 	public action = 'convert';
-	public actionText = 'convert a player';
-	public actionGerund = 'converting';
 	public priority = NightActionPriority.CultLeader;
 
 	// whether the CL was already attacked once
@@ -26,6 +24,8 @@ class CultLeader extends SingleTarget {
 	public constructor(player: Player) {
 		super(player);
 		this.description = this.game.t('roles/town:cultLeaderDescription');
+		this.actionText = this.game.t('roles/actions:cultLeaderText');
+		this.actionGerund = this.game.t('roles/actions:cultLeaderGerund');
 	}
 
 	public get defence() {

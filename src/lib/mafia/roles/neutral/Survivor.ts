@@ -7,8 +7,6 @@ export default class Survivor extends NoTarget {
 	public name = 'Survivor';
 	public faction = new SurivorFaction();
 	public action = 'vest';
-	public actionGerund = 'vesting';
-	public actionText = 'protect yourself at night';
 	public priority = NightActionPriority.SURVIVOR;
 
 	private vested = false;
@@ -20,6 +18,8 @@ export default class Survivor extends NoTarget {
 		else this.vests = this.getInitialVests();
 
 		this.description = this.game.t('roles/neutral:survivorDescription', { count: this.vests });
+		this.actionText = this.game.t('roles/actions:survivorText');
+		this.actionGerund = this.game.t('roles/actions:survivorGerund');
 	}
 
 	public canUseAction() {

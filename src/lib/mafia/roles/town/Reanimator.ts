@@ -10,13 +10,13 @@ const INVALID_ROLES = ['Transporter', 'Reanimator', 'Veteran'];
 class Reanimator extends DoubleTarget {
 	public name = 'Reanimator';
 	public action = 'reanimate';
-	public actionText = 'reanimate a player';
-	public actionGerund = 'reanimating';
 	public priority = NightActionPriority.Reanimator;
 
 	public constructor(player: Player) {
 		super(player);
 		this.description = this.game.t('roles/town:reanimatorDescription');
+		this.actionText = this.game.t('roles/actions:reanimatorText');
+		this.actionGerund = this.game.t('roles/actions:reanimatorGerund');
 	}
 
 	public async setUp(actions: NightActionsManager, [actor, target]: Player[]) {

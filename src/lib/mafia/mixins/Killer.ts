@@ -7,16 +7,17 @@ import type Witch from '../roles/neutral/Witch';
 
 export default class Killer extends SingleTarget {
 	public action = 'shoot';
-	public actionText = 'shoot a player';
-	public actionGerund = 'shooting';
-	public actionParticiple = 'shot';
 	public priority = NightActionPriority.KILLER;
 	public bullets = Infinity;
 	public shootingMechanism: string;
+	public actionParticiple: string;
 
 	public constructor(player: Player) {
 		super(player);
 		this.shootingMechanism = this.game.t('roles/global:bullets');
+		this.actionText = this.game.t('roles/actions:killerText');
+		this.actionGerund = this.game.t('roles/actions:killerGerund');
+		this.actionParticiple = this.game.t('roles/actions:killerParticiple');
 	}
 
 	public canUseAction() {
@@ -41,7 +42,7 @@ export default class Killer extends SingleTarget {
 		if (!success) {
 			return this.player.queueMessage(this.game.t('roles/global:targetTooStrong'));
 		}
-		return target.queueMessage(`You were ${this.actionParticiple} by a ${this.name}!`);
+		return target.queueMessage(this.game.t('roles/global:killerMessage', { actionParticiple: this.actionParticiple, role: this.name }));
 	}
 
 	public get extraNightContext() {

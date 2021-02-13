@@ -5,11 +5,15 @@ import type Player from '@mafia/structures/Player';
 
 class Janitor extends SingleTarget {
 	public name = 'Janitor';
-	public description = 'You may clean a player at night.';
 	public action = 'clean';
-	public actionText = 'clean a player';
-	public actionGerund = 'cleaning';
 	public priority = NightActionPriority.JANITOR;
+
+	public constructor(player: Player) {
+		super(player);
+		this.description = this.game.t('roles/neutral:janitorDescription');
+		this.actionText = this.game.t('roles/actions:janitorText');
+		this.actionGerund = this.game.t('roles/actions:janitorGerund');
+	}
 
 	public runAction(actions: NightActionsManager, target: Player) {
 		const record = actions.record.get(target.user.id).get('nightkill');

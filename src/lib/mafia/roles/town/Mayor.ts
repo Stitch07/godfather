@@ -7,13 +7,14 @@ import type Player from '@mafia/structures/Player';
 class Mayor extends SingleTarget {
 	public name = 'Mayor';
 	public action = 'reveal';
-	public actionText = 'to reveal yourself as the mayor';
 	public actionPhase = Phase.Day | Phase.Trial | Phase.TrialVoting;
 	public hasRevealed = false;
 
 	public constructor(player: Player) {
 		super(player);
 		this.description = this.game.t('roles/town:mayorDescription');
+		this.actionText = this.game.t('roles/actions:mayorText');
+		this.actionGerund = this.game.t('roles/actions:mayorGerund');
 	}
 
 	public async onDayCommand(message: Message, command: string) {
