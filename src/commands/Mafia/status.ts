@@ -15,8 +15,10 @@ export default class extends GodfatherCommand {
 		const { game } = message.channel;
 
 		if (!game!.hasStarted) {
-			// eslint-disable-next-line @typescript-eslint/no-base-to-string
-			return message.channel.sendTranslated('commands/mafia:statusNotStarted', [{ channel: message.channel, prefix: context.prefix }]);
+			return message.channel.sendTranslated('commands/mafia:statusNotStarted', [
+				// eslint-disable-next-line @typescript-eslint/no-base-to-string
+				{ channel: message.channel.toString(), prefix: context.prefix }
+			]);
 		} else if (game!.phase === Phase.Standby) {
 			return message.channel.sendTranslated('commands/mafia:statusBotProcessing');
 		}
