@@ -3,7 +3,7 @@
 	"displayRole": "Ele(a) era um(a) **{{role}}**.",
 	"displayWill": "Ele(a) deixou um testamento: {{will, codeBlock}}",
 	"noWill": "Não foi encontrado um testamento.",
-	"removeHost": "O host não pode sair da partida.",
+	"removeHost": "The host cannot leave the game. Use the `delete` command to delete the game, or the `change-host` command to change the host.",
 	"removeConfirmationReplace": "Você será substituído.",
 	"removeConfirmationModkill": "Você será modkilled (auto eliminado).",
 	"removeConfirmationPrompt": "Você tem certeza que deseja sair? {{prompt}}",
