@@ -5,5 +5,7 @@
 	"successfulConversion": "Você foi convertido por um Cult!",
 	"conversionMessage": "{{target}} convertido com sucesso!",
 	"cultMemberDescription": "Você não tem ação noturna.",
-	"cultMemberSuicide": "Você se suicidou após perder seu Cult Leader!"
+	"cultMemberSuicide": "Você se suicidou após perder seu Cult Leader!",
+	"cultMemberSuicideAnnouncement": "{{follower}} died.",
+	"cultMemberSuicideReason": "committed suicide"
 }
