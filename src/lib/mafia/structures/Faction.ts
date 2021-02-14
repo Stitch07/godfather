@@ -23,7 +23,7 @@ class Faction {
 		const factionMembers = game.players.filter((player) => player.role.faction.name === this.name);
 
 		const factionalChannel = await guild.channels.create(`${game.channel.guild.id}-${this.name}`, {
-			topic: `Discussion channel for ${this.name}`,
+			topic: game.t('game/factions:channelTopic'),
 			permissionOverwrites: [
 				// deny all permissions for the everyone role
 				{

@@ -4,7 +4,6 @@ import type SetupStore from '@mafia/structures/SetupStore';
 import type { Piece } from '@sapphire/framework';
 import type { User } from 'discord.js';
 import type ModifierStore from './lib/mafia/structures/ModifierStore';
-import type SlashCommandStore from './lib/structures/SlashCommandStore';
 
 interface ChannelExtendables {
 	readonly attachable: boolean;
@@ -24,7 +23,6 @@ declare module 'discord.js' {
 		modifiers: ModifierStore;
 		setups: SetupStore;
 		prefixCache: Map<string, string>;
-		slashCommands: SlashCommandStore;
 		eventLoop: NodeJS.Timeout;
 		maintenance: boolean;
 		fetchGuildPrefix(guild: Guild): Promise<string>;
@@ -53,7 +51,6 @@ declare module '@sapphire/framework' {
 	interface StoreRegistryEntries {
 		modifiers: ModifierStore;
 		setups: SetupStore;
-		slashCommands: SlashCommandStore;
 	}
 
 	interface Command {

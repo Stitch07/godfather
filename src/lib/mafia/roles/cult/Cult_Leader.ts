@@ -70,8 +70,10 @@ class CultLeader extends SingleTarget {
 		const followers = this.game.players.filter((player) => player.isAlive && player.role.name === 'Cult Member');
 		const phaseStr = this.game.phase === Phase.Night ? 'N' : 'D';
 		for (const follower of followers) {
-			await follower.kill(`committed suicide; ${phaseStr}${this.game.cycle}`);
-			await this.game.channel.send(`${follower} died. ${follower.displayRoleAndWill(true)}`);
+			await follower.kill(`${this.game.t('roles/cult:cultMemberDeathReason')}; ${phaseStr}${this.game.cycle}`);
+			await this.game.channel.send(
+				`${this.game.t('roles/cult:cultMemberSuicideAnnouncement', { follower })} ${follower.displayRoleAndWill(true)}`
+			);
 			follower.queueMessage(this.game.t('roles/cult:cultMemberSuicide'));
 		}
 	}

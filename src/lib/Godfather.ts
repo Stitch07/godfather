@@ -7,7 +7,6 @@ import { fetch } from '@util/utils';
 import { Collection, Guild, Message } from 'discord.js';
 import { DbSet } from './database/DbSet';
 import ModifierStore from './mafia/structures/ModifierStore';
-import SlashCommandStore from './structures/SlashCommandStore';
 
 import '@sapphire/plugin-logger/register';
 import '@sapphire/plugin-i18next/register-discordjs';
@@ -92,7 +91,6 @@ export default class Godfather extends SapphireClient {
 		});
 
 		this.stores.register(new SetupStore());
-		this.stores.register(new SlashCommandStore());
 		this.stores.register(new ModifierStore());
 
 		this.stores.get('modifiers').registerPath(`${process.cwd()}/dist/lib/mafia/modifiers`);

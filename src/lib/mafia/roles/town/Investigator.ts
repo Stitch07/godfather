@@ -5,13 +5,12 @@ import type Player from '@mafia/structures/Player';
 
 class Investigator extends SingleTarget {
 	public name = 'Investigator';
-	public description = 'You may investigate someone every night, returning a list of roles including your targets.';
 	public action = 'investigate';
 	public priority = NightActionPriority.INVEST;
 
 	public constructor(player: Player) {
 		super(player);
-		this.description = this.game.t('roles/neutral:investigatorDescription');
+		this.description = this.game.t('roles/town:investigatorDescription');
 		this.actionText = this.game.t('roles/actions:investigatorText');
 		this.actionGerund = this.game.t('roles/actions:investigatorGerund');
 	}

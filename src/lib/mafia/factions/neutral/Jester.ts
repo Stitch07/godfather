@@ -3,7 +3,7 @@ import type Player from '@mafia/structures/Player';
 
 export default class JesterFaction extends Faction {
 	public name = 'Jester';
-	public winCondition = 'Get eliminated by all means necessary.';
+	public winCondition = 'game/factions:jesterWinCondition';
 	public independent = true;
 
 	public hasWonIndependent(player: Player) {

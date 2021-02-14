@@ -5,7 +5,7 @@ import { cast } from '@util/utils';
 
 export default class ExecutionerFaction extends Faction {
 	public name = 'Executioner';
-	public winCondition = 'Eliminate your target at all costs.';
+	public winCondition = 'game/factions:executionerWinCondition';
 	public independent = true;
 
 	public hasWonIndependent(player: Player) {
