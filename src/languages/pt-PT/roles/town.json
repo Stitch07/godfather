@@ -21,6 +21,7 @@
 	"doctorCannotSelfHeal": "You cannot self-heal tonight.",
 	"escortDescription": "You may roleblock somebody each night.",
 	"escortSuccess": "Somebody occupied your night. You were roleblocked!",
+	"investigatorDescription": "You may investigate someone every night, returning a list of roles including your targets.",
 	"investResultA": "Your target could be a Cop, Executioner, or Werewolf.",
 	"investResultB": "Your target could be a Vigilante, Veteran, Goon, or Ambusher.",
 	"investResultC": "Your target could be a Investigator, Consigliere, Mayor, or Tracker.",
