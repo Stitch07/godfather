@@ -27,5 +27,17 @@
 		"Kazanma yüzdesi: {{winRate}}"
 	],
 	"userstatsNoDatabase": "Veri tabanında bilgi depolamak bu bot için şu anlık devre dışıdır",
-	"statsDescription": "{{botname}}'ı sunucuna eklemek için, `{{prefix}}invite` komutunu kullan."
+	"statsDescription": "{{botname}}'ı sunucuna eklemek için, `{{prefix}}invite` komutunu kullan.",
+	"statsTitles": {
+		"connectedTo": "Connected to",
+		"serverStats": "Server Stats"
+	},
+	"statsFields": {
+		"servers": "**Servers**",
+		"users": "**Users**",
+		"channels": "**Channels**",
+		"cpuLoad": "**CPU Load**",
+		"ramUsed": "**RAM Used**",
+		"uptime": "**Uptime**"
+	}
 }
