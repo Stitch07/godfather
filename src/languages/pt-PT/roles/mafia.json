@@ -13,5 +13,6 @@
 	"promoteToGoon": "You have been promoted to a Goon!",
 	"promoteToGodfather": "You have been promoted to the Godfather!",
 	"godfatherDescription": "You can order the mafioso to shoot someone every night.",
-	"janitorDescription": "You may clean a player at night."
+	"janitorDescription": "You may clean a player at night.",
+	"vanillaMafiaDescription": "You have no night actions. Your vote is your only power."
 }
