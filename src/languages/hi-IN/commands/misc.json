@@ -27,5 +27,17 @@
 		"विजय प्रतिशत {{winRate}}"
 	],
 	"userstatsNoDatabase": "इस बॉट के लिए डेटाबेस पर जानकारी संग्रहीत करना वर्तमान में अक्षम है",
-	"statsDescription": "{{botname}} को अपने Discord सर्वर में बुलाने के लिए कमांड `{{prefix}}invite` का प्रयोग करें|"
+	"statsDescription": "{{botname}} को अपने Discord सर्वर में बुलाने के लिए कमांड `{{prefix}}invite` का प्रयोग करें|",
+	"statsTitles": {
+		"connectedTo": "Connected to",
+		"serverStats": "Server Stats"
+	},
+	"statsFields": {
+		"servers": "**Servers**",
+		"users": "**Users**",
+		"channels": "**Channels**",
+		"cpuLoad": "**CPU Load**",
+		"ramUsed": "**RAM Used**",
+		"uptime": "**Uptime**"
+	}
 }
