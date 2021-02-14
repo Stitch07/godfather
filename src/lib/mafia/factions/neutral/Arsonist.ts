@@ -5,7 +5,7 @@ const OPPOSING_FACTIONS = ['Town', 'Serial Killer', 'Werewolf', 'Mafia', 'Jugger
 
 export default class ArsonistFaction extends Faction {
 	public name = 'Arsonist';
-	public winCondition = 'Kill everyone who would oppose you.';
+	public winCondition = 'game/factions:nkWinCondition';
 
 	public hasWon(game: Game) {
 		const { players } = game;

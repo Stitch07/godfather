@@ -56,7 +56,7 @@ class NoTarget extends Role {
 				});
 		}
 
-		return this.player.user.send(`You are ${this.actionGerund} tonight.`);
+		return this.player.user.send(this.game.t('roles/global:noTargetConfirmation', { gerund: this.actionGerund }));
 	}
 
 	private get possibleActions() {

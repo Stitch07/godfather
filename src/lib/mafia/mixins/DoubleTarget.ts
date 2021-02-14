@@ -5,7 +5,7 @@ import SingleTarget from './SingleTarget';
 export default class DoubleTarget extends SingleTarget {
 	public getTarget(args: string[], game: Game): Player[] {
 		args = args.slice(0, 2);
-		if (args.length < 2) throw 'You have to specify 2 targets.';
+		if (args.length < 2) throw game.t('roles/global:twoTargets');
 
 		const targets = args.map((arg) => Player.resolve(game, arg)).filter((target) => target !== null) as Player[];
 		if (targets.length !== 2) throw this.game.t('roles/global:invalidTarget', { maxPlayers: this.game.players.length });
@@ -13,7 +13,7 @@ export default class DoubleTarget extends SingleTarget {
 	}
 
 	public canTarget(target: Player[]) {
-		if (target[0] === target[1]) return { check: false, reason: `Pick 2 distinct targets.` };
+		if (target[0] === target[1]) return { check: false, reason: this.game.t('roles/global:twoDistinct') };
 		if (target.some((player) => !player.isAlive)) return { check: false, reason: this.game.t('roles/global:targetDeadPlayers') };
 		return { check: true, reason: '' };
 	}

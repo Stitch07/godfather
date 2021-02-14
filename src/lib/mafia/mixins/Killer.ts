@@ -1,7 +1,7 @@
 import NightActionsManager, { Attack, NightActionPriority } from '@mafia/managers/NightActionsManager';
 import SingleTarget from '@mafia/mixins/SingleTarget';
 import type Player from '@mafia/structures/Player';
-import { cast, pluralize } from '@util/utils';
+import { cast } from '@util/utils';
 import type CultLeader from '../roles/cult/Cult_Leader';
 import type Witch from '../roles/neutral/Witch';
 
@@ -14,7 +14,7 @@ export default class Killer extends SingleTarget {
 
 	public constructor(player: Player) {
 		super(player);
-		this.shootingMechanism = this.game.t('roles/global:bullets');
+		this.shootingMechanism = this.game.t('roles/global:bullet');
 		this.actionText = this.game.t('roles/actions:killerText');
 		this.actionGerund = this.game.t('roles/actions:killerGerund');
 		this.actionParticiple = this.game.t('roles/actions:killerParticiple');
@@ -47,7 +47,11 @@ export default class Killer extends SingleTarget {
 
 	public get extraNightContext() {
 		// Infinity bullets = no limit
-		if (this.bullets > 0 && this.bullets !== Infinity) return `You have ${pluralize(this.bullets, 'shot')} remaining.`;
+		if (this.bullets > 0 && this.bullets !== Infinity)
+			return this.game.t('roles/global:killerContext', {
+				bullets: this.bullets === 1 ? this.game.t('roles/global:bullet') : this.game.t('roles/global:bulletPlural'),
+				amount: this.bullets
+			});
 		return null;
 	}
 

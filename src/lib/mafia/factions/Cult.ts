@@ -5,7 +5,7 @@ const SUPPORTING_FACTIONS = ['Witch', 'Survivor', 'Cult'];
 
 export default class CultFaction extends Faction {
 	public name = 'Cult';
-	public winCondition = 'Convert everyone to your side.';
+	public winCondition = 'game/factions:cultWinCondition';
 	public informed = true;
 
 	public hasWon(game: Game) {

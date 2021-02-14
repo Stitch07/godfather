@@ -9,7 +9,7 @@ const filterOpposingPowerRoles = (player: Player) =>
 export default class MafiaFaction extends Faction {
 	public name = 'Mafia';
 
-	public winCondition = 'Kill all townies and competing evil factions.';
+	public winCondition = 'game/factions:mafiaWinCondition';
 
 	public informed = true;
 
