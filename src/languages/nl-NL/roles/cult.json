@@ -5,5 +5,7 @@
 	"successfulConversion": "Je werd bekeerd tot de sekte!",
 	"conversionMessage": "Succesvol {{target}} bekeerd!",
 	"cultMemberDescription": "You have no night action.",
-	"cultMemberSuicide": "Je hebt zelfmoord gepleegd na de dood van je Cult Leader!"
+	"cultMemberSuicide": "Je hebt zelfmoord gepleegd na de dood van je Cult Leader!",
+	"cultMemberSuicideAnnouncement": "{{follower}} died.",
+	"cultMemberSuicideReason": "committed suicide"
 }
