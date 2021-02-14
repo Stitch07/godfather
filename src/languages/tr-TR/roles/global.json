@@ -12,7 +12,12 @@
 	"noAction": "You decided to stay home tonight.",
 	"actionBlockedTarget": "You cannot target {{target, listAnd}} tonight: {{reason}}",
 	"targetInvalid": "Invalid target. Choose a number between 1 and {{maxPlayers}}.",
-	"bullets": "bullets",
+	"bullet": "bullet",
+	"bulletPlural": "bullets",
 	"outOfBullets": "You are out of {shootingMechanism}.",
-	"killerMessage": "You were {{actionParticiple}} by a {{role}}!"
+	"killerMessage": "You were {{actionParticiple}} by a {{role}}!",
+	"twoTargets": "You have to specify 2 targets.",
+	"twoDistinct": "Please pick 2 distinct targets.",
+	"killerContext": "You have {{amount}} {{bullets}} remaining.",
+	"noTargetConfirmation": "You are {{gerund}} tonight."
 }
