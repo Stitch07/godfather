@@ -1,71 +1,71 @@
 {
-	"changehostDescription": "Vote to change the host.",
+	"changehostDescription": "Vote para mudar o host.",
 	"changehostDetailed": {
 		"extendedHelp": [
-			"With a majority vote, the next player in the player-list will become the host.",
-			"Hosts can use this command to automatically change the host (without a vote)."
+			"Com o voto da maioria, o próximo jogador na lista de jogadores será o host.",
+			"Hosts podem usar esse comando para mudar o host automaticamente (sem votação)."
 		]
 	},
-	"closeDescription": "Closes a game lobby, preventing more players from joining it.",
+	"closeDescription": "Fecha o lobby, impedindo que mais jogadores entrem.",
 	"closeDetailed": {
-		"reminder": "The close command is now deprecated, and will be removed in future updates."
+		"reminder": "O comando close será descontinuado e removido nas próximas atualizações."
 	},
-	"createDescription": "Creates a lobby in the current channel.",
+	"createDescription": "Cria uma sala no canal atual.",
 	"createDetailed": {
 		"extendedHelp": [
-			"After creating a game, players can join using `{{prefix}}join`, or by clicking the {{GREENTICK}} emoji.",
-			"When you have enough players, start playing using `{{prefix}}start`."
+			"Após criar uma partida, jogadores podem entrar usando `{{prefix}}join`, ou clicando no emoji {{GREENTICK}}.",
+			"Quando você tem jogadores suficientes, comece uma partida usando `{{prefix}}start`."
 		]
 	},
-	"deleteDescription": "Deletes an ongoing game.",
-	"joinDescription": "Adds you to the playerlist of an ongoing game.",
+	"deleteDescription": "Deleta uma partida em andamento.",
+	"joinDescription": "Adiciona você à lista de jogadores de uma partida em andamento.",
 	"joinDetailed": {
-		"extendedHelp": "If the player-list is full or the game has already started, you will be added as a replacement instead."
+		"extendedHelp": "Se a lista de jogadores está cheia ou se a partida já começou, você será colocado na reserva."
 	},
-	"leaveDescription": "Removes you from an ongoing game.",
+	"leaveDescription": "Remove você de uma partida em andamento.",
 	"leaveDetailed": {
-		"extendedHelp": "If the game has already started, you will be replaced or mod-killed."
+		"extendedHelp": "Se a partida já começou, você será substituído ou mod-killed."
 	},
-	"openDescription": "Opens a game lobby, allowing people to join again.",
+	"openDescription": "Abre uma sala, permitindo que pessoas entrem novamente.",
 	"openDetailed": {
-		"reminder": "The open command is now deprecated, and will be removed in future updates."
+		"reminder": "O comando close será descontinuado e removido nas próximas atualizações."
 	},
-	"playerlistDescription": "Shows the playerlist of an ongoing game.",
-	"removeDescription": "Removes a player from the game.",
+	"playerlistDescription": "Mostra a lista de jogadores de uma partida em andamento.",
+	"removeDescription": "Remove um jogador da partida.",
 	"removeDetailed": {
 		"usages": [
 			"@Player"
 		],
-		"reminder": "If the game has already started, you can only remove players who are AFK (and don't respond to a 45 second prompt)."
+		"reminder": "Se a partida já começou, você só poderá remover jogadores que estão AFK (não respondem em um tempo de 45 segundos)."
 	},
-	"remainingDescription": "Shows when the current day/night ends.",
-	"roleinfoDescription": "Displays a list of all roles in Godfather, and shows information on a specific role.",
+	"remainingDescription": "Mostra quando a(o) dia/noite atual termina.",
+	"roleinfoDescription": "Mostra uma lista com todas as roles do Godfather, e mostra informações sobre uma role específica.",
 	"roleinfoDetailed": {
 		"usages": [
 			"",
 			"Role"
 		]
 	},
-	"rolepmDescription": "Sends you your role PM.",
+	"rolepmDescription": "Manda a sua role no PV.",
 	"rolepmDetailed": {
-		"reminder": "Make sure your DMs are enabled before running this command."
+		"reminder": "Certifique-se de que sua DM está aberta antes de executar esse comando."
 	},
-	"setwillDescription": "Set your will.",
+	"setwillDescription": "Ajusta o seu testamento.",
 	"setwillDetailed": {
 		"usages": [
-			"WillText",
+			"Testamento",
 			"--append AdditionalText"
 		],
 		"extendedHelp": [
-			"To add text to the end of your will, use the --append flag.",
-			"Wills can be only 8 lines long."
+			"Para adicionar texto no final do seu testamento, use o --append flag.",
+			"Testamentos só podem ter 8 linhas."
 		],
 		"examples": [
 			"Bodyguard, N1: 5",
-			"--append N2: 6"
+			"-append N2: 6"
 		]
 	},
-	"setupinfoDescription": "Displays a list of all setups in Godfather, and shows information on a specific setup.",
+	"setupinfoDescription": "Mostra uma lista de todos os setups do Godfather, e mostra informações sobre um setup específico.",
 	"setupinfoDetailed": {
 		"usages": [
 			"",
