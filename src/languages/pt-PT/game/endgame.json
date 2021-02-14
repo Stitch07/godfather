@@ -2,5 +2,8 @@
 	"noWinner": "O jogo acabou. Ninguém ganhou!",
 	"factionWin": "O jogo acabou. A(o) {{winningFaction}} ganhou! 🎉",
 	"independentWins": "Vitoria autônomas: {{wins}}",
-	"finalRolelist": "['**Lista de roles final**:',{{roles}}]"
+	"finalRolelist": [
+		"**Final Rolelist**:",
+		"{{roles}}"
+	]
 }
