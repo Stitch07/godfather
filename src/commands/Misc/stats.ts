@@ -17,8 +17,13 @@ export default class extends GodfatherCommand {
 
 	private async buildEmbed(message: Message) {
 		const prefix = await this.context.client.fetchPrefix(message);
-		const { generalStatistics, serverStatistics } = this;
+		const { serverStatistics } = this;
 		const t = await message.fetchT();
+		const generalStatistics = this.generalStatistics(t.lng);
+
+		const titles = (t('commands/misc:statsTitles') as unknown) as StatsTitles;
+		const fields = (t('commands/misc:statsFields') as unknown) as StatsFields;
+
 		return new MessageEmbed()
 			.setColor('#000000')
 			.setAuthor(this.context.client.user!.username, this.context.client.user!.displayAvatarURL({ format: 'png' }))
@@ -30,31 +35,31 @@ export default class extends GodfatherCommand {
 				}) as unknown) as string[]
 			)
 			.addField(
-				'Connected To',
+				titles.connectedTo,
 				[
-					`**Servers**: ${generalStatistics.guilds}`,
-					`**Users**: ${generalStatistics.members}`,
-					`**Channels**: ${generalStatistics.channels}`
+					`${fields.servers}: ${generalStatistics.guilds}`,
+					`${fields.users}: ${generalStatistics.members}`,
+					`${fields.channels}: ${generalStatistics.channels}`
 				].join('\n'),
 				true
 			)
 			.addField(
-				'Server Stats',
+				titles.serverStats,
 				[
-					`**CPU Load**: ${serverStatistics.cpuLoad.map((load) => `${load}%`).join(' | ')}`,
-					`**RAM Used**: ${serverStatistics.ramUsed} (Total: ${serverStatistics.ramTotal})`,
-					`**Uptime**: ${getHandler(t.lng).duration.format(this.context.client.uptime ?? 0, 2)}`
+					`${fields.cpuLoad}: ${serverStatistics.cpuLoad.map((load) => `${load}%`).join(' | ')}`,
+					`${fields.ramUsed}: ${serverStatistics.ramUsed} (Total: ${serverStatistics.ramTotal})`,
+					`${fields.uptime}: ${getHandler(t.lng).duration.format(this.context.client.uptime ?? 0, 2)}`
 				].join('\n'),
 				true
 			);
 	}
 
-	private get generalStatistics() {
+	private generalStatistics(locale: string) {
 		return {
-			guilds: this.context.client.guilds.cache.size.toLocaleString('en-US'),
+			guilds: this.context.client.guilds.cache.size.toLocaleString(locale),
 			// eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-			members: this.context.client.guilds.cache.reduce((a, b) => b.memberCount + a, 0).toLocaleString('en-US'),
-			channels: this.context.client.channels.cache.size.toLocaleString('en-US')
+			members: this.context.client.guilds.cache.reduce((a, b) => b.memberCount + a, 0).toLocaleString(locale),
+			channels: this.context.client.channels.cache.size.toLocaleString(locale)
 		};
 	}
 
@@ -66,4 +71,18 @@ export default class extends GodfatherCommand {
 			ramUsed: `${Math.round(100 * (usage.heapUsed / 1048576)) / 100}MB`
 		};
 	}
+}
+
+export interface StatsTitles {
+	connectedTo: string;
+	serverStats: string;
+}
+
+export interface StatsFields {
+	servers: string;
+	users: string;
+	channels: string;
+	cpuLoad: string;
+	ramUsed: string;
+	uptime: string;
 }
