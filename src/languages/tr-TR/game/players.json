@@ -3,7 +3,7 @@
 	"displayRole": "Onun rolü **{{role}}**'dı/di.",
 	"displayWill": "Bir vasiyet bıraktı: {{will, codeBlock}}",
 	"noWill": "Bir vasiyet bulamadık.",
-	"removeHost": "Yönetici oyundan çıkamaz.",
+	"removeHost": "The host cannot leave the game. Use the `delete` command to delete the game, or the `change-host` command to change the host.",
 	"removeConfirmationReplace": "Yerine başkası geçecek.",
 	"removeConfirmationModkill": "Modkilleneceksin.",
 	"removeConfirmationPrompt": "Ayrılmak istediğinden emin misin? {{prompt}}",
