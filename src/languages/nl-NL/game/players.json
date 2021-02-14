@@ -3,7 +3,7 @@
 	"displayRole": "Hij of zij was een **{{role}}**.",
 	"displayWill": "Hij of zij liet een testament achter: {{will, codeBlock}}",
 	"noWill": "We konden geen testament vinden.",
-	"removeHost": "De spelleider kan het spel niet verlaten.",
+	"removeHost": "The host cannot leave the game. Use the `delete` command to delete the game, or the `change-host` command to change the host.",
 	"removeConfirmationReplace": "Je zult vervangen worden.",
 	"removeConfirmationModkill": "Je zult per direct doodgaan.",
 	"removeConfirmationPrompt": "Weet je zeker dat je weg wilt gaan? {{prompt}}",
