@@ -27,5 +27,17 @@
 		"Porcentaje de victorias: {{winRate}}"
 	],
 	"userstatsNoDatabase": "El almacenar de la información en el base de datos esta desactivado en el bot en este momento",
-	"statsDescription": "Para añadir {{botname}} a tu servidor de Discord, usa el comando, `{{prefix}}invite`."
+	"statsDescription": "Para añadir {{botname}} a tu servidor de Discord, usa el comando, `{{prefix}}invite`.",
+	"statsTitles": {
+		"connectedTo": "Connected to",
+		"serverStats": "Server Stats"
+	},
+	"statsFields": {
+		"servers": "**Servers**",
+		"users": "**Users**",
+		"channels": "**Channels**",
+		"cpuLoad": "**CPU Load**",
+		"ramUsed": "**RAM Used**",
+		"uptime": "**Uptime**"
+	}
 }
