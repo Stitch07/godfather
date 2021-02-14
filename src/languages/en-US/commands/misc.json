@@ -27,5 +27,17 @@
 		"Winrate: {{winRate}}"
 	],
 	"userstatsNoDatabase": "Storing information on a database is currently disabled for this bot",
-	"statsDescription":  "To add {{botname}} to your server, use the `{{prefix}}invite` command."
+	"statsDescription":  "To add {{botname}} to your server, use the `{{prefix}}invite` command.",
+	"statsTitles": {
+		"connectedTo": "Connected to",
+		"serverStats": "Server Stats"
+	},
+	"statsFields": {
+		"servers": "**Servers**",
+		"users": "**Users**",
+		"channels": "**Channels**",
+		"cpuLoad": "**CPU Load**",
+		"ramUsed": "**RAM Used**",
+		"uptime": "**Uptime**"
+	}
 }

@@ -3,7 +3,7 @@
 	"displayRole": "They were a **{{role}}**.",
 	"displayWill": "They left a will: {{will, codeBlock}}",
 	"noWill": "We could not find a will.",
-	"removeHost": "The host cannot leave the game.",
+	"removeHost": "The host cannot leave the game. Use the `delete` command to delete the game, or the `change-host` command to change the host.",
 	"removeConfirmationReplace": "You will be replaced out.",
 	"removeConfirmationModkill": "You will be modkilled.",
 	"removeConfirmationPrompt": "Are you sure you want to leave? {{prompt}}",
