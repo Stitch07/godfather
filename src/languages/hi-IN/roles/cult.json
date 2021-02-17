@@ -1,0 +1,11 @@
+{
+	"cultLeaderDescription": "You're the leader of a mysterious cult and want everyone to follow your beliefs.",
+	"cultLeaderConsecutiveNights": "You cannot convert on 2 consecutive nights.",
+	"cultLeaderDenounce": "You were denounced by a Cult Leader.",
+	"successfulConversion": "You were converted by a Cult!",
+	"conversionMessage": "You successfully converted {{target}}!",
+	"cultMemberDescription": "You have no night action.",
+	"cultMemberSuicide": "You committed suicide after losing your Cult Leader!",
+	"cultMemberSuicideAnnouncement": "{{follower}} died.",
+	"cultMemberSuicideReason": "committed suicide"
+}

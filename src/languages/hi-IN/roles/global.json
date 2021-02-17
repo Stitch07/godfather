@@ -1,0 +1,23 @@
+{
+	"targetTeammates": "आप अपने आप को और अपने टीम के साथियों को निशाना नहीं बना सकते है|",
+	"targetTooStrong": "आपका निशाना बहुत ही ताकतवर था! उसे आप नहीं मार पाए|",
+	"targetDeadPlayers": "You cannot target dead players.",
+	"targetSelf": "You cannot target yourself.",
+	"noTargets": "There are no valid targets.",
+	"nightActionPromptSingleTarget": "It is now night {{cycle}}. Use {{prefix}}{{action}} <number> to {{actionText}}. Use {{prefix}}noaction to stay home.",
+	"dayActionPromptSingleTarget": "It is now day {{cycle}}. Use the {{prefix}}{{action}} command to {{actionText}} immediately.",
+	"nightActionPromptNoTarget": "It is now night {{cycle}}. Use {{prefix}}{{action}} to {{actionText}}. Use {{prefix}}noaction to stay home.",
+	"actionBlocked": "You cannot use your action: {{reason}}",
+	"actionCancelled": "You have cancelled your action.",
+	"noAction": "You decided to stay home tonight.",
+	"actionBlockedTarget": "You cannot target {{target, listAnd}} tonight: {{reason}}",
+	"targetInvalid": "Invalid target. Choose a number between 1 and {{maxPlayers}}.",
+	"bullet": "bullet",
+	"bulletPlural": "bullets",
+	"outOfBullets": "You are out of {shootingMechanism}.",
+	"killerMessage": "You were {{actionParticiple}} by a {{role}}!",
+	"twoTargets": "You have to specify 2 targets.",
+	"twoDistinct": "Please pick 2 distinct targets.",
+	"killerContext": "You have {{amount}} {{bullets}} remaining.",
+	"noTargetConfirmation": "You are {{gerund}} tonight."
+}

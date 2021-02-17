@@ -6,6 +6,8 @@ import { Time } from '@sapphire/time-utilities';
 import type { Message } from 'discord.js';
 
 @ApplyOptions<CommandOptions>({
+	description: 'commands/help:innocentDescription',
+	detailedDescription: 'commands/help:innocentDetailed',
 	aliases: ['inno'],
 	preconditions: ['TrialVotingOnly', { name: 'Cooldown', context: { bucketType: BucketType.User, delay: Number(Time.Second) } }]
 })

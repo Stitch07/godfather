@@ -1,15 +1,21 @@
 import '@lib/extenders';
-
 import type Game from '@mafia/structures/Game';
 import SetupStore from '@mafia/structures/SetupStore';
 import { BFD_API_TOKEN, PGSQL_ENABLED, PREFIX, PRODUCTION, TOPGG_API_TOKEN } from '@root/config';
 import { LogLevel, SapphireClient } from '@sapphire/framework';
-import '@sapphire/plugin-logger/register';
 import { fetch } from '@util/utils';
 import { Collection, Guild, Message } from 'discord.js';
 import { DbSet } from './database/DbSet';
 import ModifierStore from './mafia/structures/ModifierStore';
-import SlashCommandStore from './structures/SlashCommandStore';
+
+import '@sapphire/plugin-logger/register';
+import '@sapphire/plugin-i18next/register-discordjs';
+import '@sapphire/plugin-i18next/register';
+
+import type { FormatFunction } from 'i18next';
+import { getHandler } from '@root/languages';
+import { codeBlock, inlineCodeBlock } from '@sapphire/utilities';
+import { UserOrMemberMentionRegex } from '@sapphire/discord-utilities';
 
 export default class Godfather extends SapphireClient {
 	public games: Collection<string, Game> = new Collection();
@@ -31,13 +37,60 @@ export default class Godfather extends SapphireClient {
 				}
 			},
 			loadDefaultErrorEvents: false,
+			i18n: {
+				defaultMissingKey: 'globals:default',
+				defaultNS: 'globals',
+				i18next: (_: string[], languages: string[]) => ({
+					supportedLngs: languages,
+					preload: languages,
+					returnObjects: true,
+					returnEmptyString: false,
+					returnNull: false,
+					load: 'all',
+					fallbackLng: 'en-US',
+					defaultNS: 'globals',
+					overloadTranslationOptionHandler: (args) => ({ defaultValue: args[1] ?? 'globals:default' }),
+					initImmediate: false,
+					interpolation: {
+						escapeValue: false,
+						defaultVariables: {
+							VERSION: this.version,
+							GREENTICK: '✅'
+						},
+						format: (...[value, format, language, options]: Parameters<FormatFunction>) => {
+							switch (format) {
+								case 'listAnd': {
+									return getHandler(language!).listAnd.format(value as string[]);
+								}
+								case 'codeBlock': {
+									return codeBlock('', value);
+								}
+								case 'inlineCodeBlock': {
+									return inlineCodeBlock(value);
+								}
+								case 'durationFormat': {
+									return getHandler(language!).duration.format(Number(value));
+								}
+								case 'prefix': {
+									if (UserOrMemberMentionRegex.test(value)) {
+										return `@${this.user!.username} `;
+									}
+									return value;
+								}
+								default: {
+									return value as string;
+								}
+							}
+						}
+					}
+				})
+			},
 			ws: {
 				intents: ['GUILD_MEMBERS', 'GUILD_MESSAGES', 'GUILDS', 'DIRECT_MESSAGES', 'GUILD_MESSAGE_REACTIONS']
 			}
 		});
 
 		this.stores.register(new SetupStore());
-		this.stores.register(new SlashCommandStore());
 		this.stores.register(new ModifierStore());
 
 		this.stores.get('modifiers').registerPath(`${process.cwd()}/dist/lib/mafia/modifiers`);
@@ -45,6 +98,15 @@ export default class Godfather extends SapphireClient {
 		this.fetchPrefix = async (message: Message) => {
 			if (!message.guild) return [PREFIX, ''];
 			return this.fetchGuildPrefix(message.guild);
+		};
+
+		this.fetchLanguage = async (context) => {
+			if (!context.guild) return 'en-US';
+			const { guilds } = await DbSet.connect();
+			const settings = await guilds.findOne(context.guild.id, {
+				select: ['language']
+			});
+			return settings?.language ?? 'en-US';
 		};
 	}
 
@@ -101,5 +163,10 @@ export default class Godfather extends SapphireClient {
 				.then(() => this.logger.debug('Posted statistics to BFD.'))
 				.catch((error) => this.logger.error('Error posting BFD statistics', error));
 		}
+	}
+
+	public async login(token: string) {
+		await this.i18n.init();
+		return super.login(token);
 	}
 }

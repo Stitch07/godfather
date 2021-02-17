@@ -1,10 +1,9 @@
 import { Precondition } from '@sapphire/framework';
-import type { Message, TextChannel } from 'discord.js';
+import type { Message } from 'discord.js';
 
 export default class extends Precondition {
 	public async run(message: Message) {
-		return message.guild && (message.channel as TextChannel).game
-			? this.ok()
-			: this.error({ message: `A game of Mafia is not running in this channel.` });
+		const prefix = await this.context.client.fetchPrefix(message);
+		return message.guild && message.channel.game ? this.ok() : this.error({ context: { prefix } });
 	}
 }

@@ -11,11 +11,8 @@ import type { Message } from 'discord.js';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['conf', 'config', 'settings', 'set'],
-	description: 'Manages game and server settings.',
-	detailedDescription: [
-		'The settings command lets you manage game settings such as dayDuration, nightDuration and overwritePermissions',
-		'If used in a channel without an ongoing game, the settings command will modify server-wide defaults.'
-	].join('\n'),
+	description: 'commands/help:settingDescription',
+	detailedDescription: 'commands/help:settingDetailed',
 	preconditions: ['GuildOnly', { name: 'Cooldown', context: { delay: Time.Second * 5 } }]
 })
 export default class extends GodfatherCommand {
@@ -24,10 +21,10 @@ export default class extends GodfatherCommand {
 		const inGame = message.channel.game !== undefined;
 
 		if (inGame) {
-			if (message.author !== message.channel.game!.host.user) throw 'This command is host-only.';
+			if (message.author !== message.channel.game!.host.user) throw await message.resolveKey('preconditions:HostOnly');
 		} else {
-			const result = await new PreconditionContainerArray([['OwnerOnly', 'AdminOnly']]).run(message, this);
-			if (!result.success) throw result.error.message;
+			const result = await new PreconditionContainerArray([['OwnerOnly', 'AdminOnly']]).run(message, this, { command: this });
+			if (!result.success) throw await message.resolveKey(`preconditions:${result.error.identifier}`);
 		}
 
 		const { guilds } = await DbSet.connect();

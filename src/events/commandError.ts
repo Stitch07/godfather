@@ -1,5 +1,5 @@
 import { SENTRY_DSN } from '@root/config';
-import { CommandErrorPayload, Event, Events, PieceContext, UserError } from '@sapphire/framework';
+import { ArgumentError, CommandErrorPayload, Event, Events, PieceContext } from '@sapphire/framework';
 import * as Sentry from '@sentry/node';
 import { DiscordAPIError, HTTPError } from 'discord.js';
 
@@ -13,7 +13,11 @@ export default class extends Event<Events.CommandError> {
 
 	public run(error: unknown, { message, piece: command }: CommandErrorPayload) {
 		if (typeof error === 'string') return message.channel.send(error);
-		if (error instanceof UserError && error.message !== '') return message.channel.send(error.message);
+		if (error instanceof ArgumentError) {
+			return message.channel.sendTranslated(`arguments:${error.identifier}`, [
+				{ parameter: error.parameter, ...(error.context as Record<string, unknown>) }
+			]);
+		}
 		if (SENTRY_DSN) {
 			if ((error instanceof DiscordAPIError || error instanceof HTTPError) && IGNORED_CODES.includes(error.code)) return;
 			Sentry.captureException(error, {

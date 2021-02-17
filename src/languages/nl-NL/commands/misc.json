@@ -1,0 +1,43 @@
+{
+	"helpInvalidCommand": "Ongeldige opdracht opgegeven.",
+	"helpDescription": [
+		"Een bot die automatisch spellen Maffia host. Mijn prefix hier is: `{{prefix}}`",
+		"[Supportserver (Engels)]({{supportServer}})"
+	],
+	"helpFooter": "Gebruik `{{prefix}}help <opdracht>` voor informatie over een specifieke opdracht.",
+	"infoText": [
+		"Godfather v{{VERSION}} is een bot die spellen Weerwolven/Maffia host, met 24/7 uptime en een intuïtieve speelwijze.",
+		"",
+		"**Functies:**",
+		"• Automatisch gehoste spellen Maffia, met meer dan 30 rollen en talrijke teams.",
+		"• Zelf toevoegbare rollenverdelingen",
+		"• Speler- en spelstatistieken",
+		"en veel meer!",
+		"",
+		"Gebruik `{{prefix}}invite` om Godfather aan je server toe te voegen."
+	],
+	"inviteText": "[Voeg {{bot}} aan je server toe]({{invite}}) | [Supportserver (Engels)]({{supportServer}})",
+	"pingInitial": "Aan het pingen...",
+	"pingResponse": "Pong! Dat duurde {{ping}}ms. Incubatietijd: {{latency}}ms",
+	"prefixCurrent": "Mijn prefix in deze server is: `{{prefix}}`",
+	"prefixUpdated": "De prefix in deze server is nu: `{{prefix}}`",
+	"userStats": [
+		"Totaal aantal spellen: {{totalGames}}",
+		"Overwinningen: {{wins}}",
+		"Winstpercentage: {{winRate}}"
+	],
+	"userstatsNoDatabase": "Het opslaan van informatie in een database is momenteel uitgeschakeld voor deze bot.",
+	"statsDescription": "Gebruik `{{prefix}}invite` om {{botname}} aan je server toe te voegen.",
+	"statsTitles": {
+		"connectedTo": "Connected to",
+		"serverStats": "Server Stats"
+	},
+	"statsFields": {
+		"servers": "**Servers**",
+		"users": "**Users**",
+		"channels": "**Channels**",
+		"cpuLoad": "**CPU Load**",
+		"ramUsed": "**RAM Used**",
+		"uptime": "**Uptime**"
+	}
+}

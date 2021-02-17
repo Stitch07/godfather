@@ -5,7 +5,8 @@ import { Time } from '@sapphire/time-utilities';
 import type { Message } from 'discord.js';
 
 @ApplyOptions<CommandOptions>({
-	description: 'Get your role PM.',
+	description: 'commands/help:rolepmDescription',
+	detailedDescription: 'commands/help:rolepmDetailed',
 	generateDashLessAliases: true,
 	preconditions: [
 		'GuildOnly',
@@ -23,7 +24,7 @@ export default class extends GodfatherCommand {
 			await player.sendPM();
 			await message.react('✅');
 		} catch {
-			throw "I couldn't DM you! Enable your DMs and run this command again.";
+			throw await message.resolveKey('commands/mafia:rolepmFail');
 		}
 	}
 }

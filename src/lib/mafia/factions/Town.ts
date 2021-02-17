@@ -6,7 +6,7 @@ const OPPOSING_FACTIONS = ['Mafia', 'Serial Killer', 'Arsonist', 'Werewolf', 'Ju
 export default class TownFaction extends Faction {
 	public name = 'Town';
 
-	public winCondition = 'Eliminate every evildoer.';
+	public winCondition = 'game/factions:townWinCondition';
 
 	public hasWon(game: Game): boolean {
 		// source: https://town-of-salem.fandom.com/wiki/Victory

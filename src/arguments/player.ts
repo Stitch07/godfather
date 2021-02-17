@@ -13,7 +13,7 @@ export default class extends Argument<Player> {
 		const user = (await ((this.store as unknown) as ArgumentStore).get('user')!.run(parameter, context)) as Result<User, UserError>;
 		if (!user.success)
 			return this.error({
-				identifier: 'ArgumentPlayerUnknownUser',
+				identifier: 'playerUnknownUser',
 				message: 'Invalid player mentioned.',
 				parameter
 			});
@@ -21,9 +21,10 @@ export default class extends Argument<Player> {
 
 		if (player) return this.ok(player);
 		return this.error({
-			identifier: 'ArgumentPlayerInvalidPlayer',
+			identifier: 'playerInvalid',
 			message: 'That user is not playing.',
-			parameter
+			parameter,
+			context: { ...context, user: user.value.tag }
 		});
 	}
 }

@@ -5,14 +5,15 @@ import type Player from '@mafia/structures/Player';
 
 class Framer extends SingleTarget {
 	public name = 'Framer';
-
-	public description = 'You may frame a player every night, making them appear suspicious to others.';
-
 	public action = 'frame';
-	public actionGerund = 'framing';
-	public actionText = 'frame a player';
-
 	public priority = NightActionPriority.FRAMER;
+
+	public constructor(player: Player) {
+		super(player);
+		this.description = this.game.t('roles/neutral:framerDescription');
+		this.actionText = this.game.t('roles/actions:framerText');
+		this.actionGerund = this.game.t('roles/actions:framerGerund');
+	}
 
 	public setUp(actions: NightActionsManager, target: Player) {
 		actions.framedPlayers.push(target);

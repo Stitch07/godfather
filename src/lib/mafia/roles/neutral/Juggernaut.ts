@@ -7,9 +7,6 @@ class Juggernaut extends Killer {
 	public name = 'Juggernaut';
 	public faction = new JuggernautFaction();
 	public action = 'assault';
-	public actionGerund = 'assaulting';
-	public actionText = 'assault a player';
-	public actionParticiple = 'assaulted';
 	public priority = NightActionPriority.KILLER;
 
 	// level 1 lets them attack every night, level 2 lets them rampage, ands level 3 gives them a unstoppable attack
@@ -18,6 +15,9 @@ class Juggernaut extends Killer {
 	public constructor(player: Player, { level }: { level?: number } = { level: 0 }) {
 		super(player);
 		this.level = level ?? 0;
+		this.actionText = this.game.t('roles/actions:juggernautText');
+		this.actionGerund = this.game.t('roles/actions:juggernautGerund');
+		this.actionParticiple = this.game.t('roles/actions:juggernautParticiple');
 	}
 
 	public get defence() {
@@ -30,12 +30,12 @@ class Juggernaut extends Killer {
 	}
 
 	public canUseAction() {
-		if (!this.canAttack()) return { check: false, reason: 'You currently can only attack on full moons.' };
+		if (!this.canAttack()) return { check: false, reason: this.game.t('roles/neutral:juggernautFullMoonOnly') };
 		return super.canUseAction();
 	}
 
 	public get extraNightContext() {
-		return `You are currently level ${this.level}`;
+		return this.game.t('roles/neutral:juggernautContext', { level: this.level });
 	}
 
 	public runAction(actions: NightActionsManager, target: Player) {
@@ -44,8 +44,8 @@ class Juggernaut extends Killer {
 			for (const visitor of visitors) {
 				if (visitor.role.actualDefence > this.attackStrength) continue;
 				actions.record.setAction(visitor.user.id, 'nightkill', { result: true, by: [this.player], type: this.attackStrength });
-				this.player.queueMessage('You assaulted someone who visted your target!');
-				visitor.queueMessage('You were assaulted by a Juggernaut!');
+				this.player.queueMessage(this.game.t('roles/neutral:juggernautAttackVisitors'));
+				visitor.queueMessage(this.game.t('roles/neutral:juggernautAssault'));
 			}
 		}
 		return super.runAction(actions, target);
@@ -55,10 +55,10 @@ class Juggernaut extends Killer {
 		const record = actions.record.get(target.user.id).get('nightkill');
 		const success = record.result && record.by.includes(this.player);
 		if (!success) {
-			return this.player.queueMessage('Your target was too strong to kill!');
+			return this.player.queueMessage(this.game.t('roles/global:targetTooStrong'));
 		}
 		if (this.level < 3) this.level++;
-		return target.queueMessage('You were assaulted by a Juggernaut!');
+		return target.queueMessage(this.game.t('roles/neutral:juggernautAssault'));
 	}
 
 	private canAttack() {

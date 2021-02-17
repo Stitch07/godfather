@@ -5,15 +5,19 @@ import type { Message } from 'discord.js';
 
 class Goon extends Killer {
 	public name = 'Goon';
-	public description = 'You may shoot someone every night.';
+
+	public constructor(player: Player) {
+		super(player);
+		this.description = this.game.t('roles/neutral:goonDescription');
+	}
 
 	public async onPmCommand(message: Message, command: string, ...args: string[]) {
 		const gfAction = this.game.nightActions.find((action) => action.actor.role.name === 'Godfather');
 		if (gfAction) {
 			return message.channel.send(
 				gfAction.action === undefined
-					? 'The Godfather has ordered you to stay home tonight'
-					: `The Godfather has ordered you to shoot ${(gfAction.target! as Player).user.username} tonight.`
+					? this.game.t('roles/neutral:goonMessageHome')
+					: this.game.t('roles/mafia:goonMessageShoot', { target: gfAction.target! as Player })
 			);
 		}
 		return super.onPmCommand(message, command, ...args);
@@ -21,7 +25,7 @@ class Goon extends Killer {
 
 	public canUseAction() {
 		if (this.game.setup!.name === 'dethy' && this.game.cycle === 0) {
-			return { check: false, reason: 'You cannot kill N0 in Dethy.' };
+			return { check: false, reason: this.game.t('roles/mafia:goonDethy') };
 		}
 		return super.canUseAction();
 	}

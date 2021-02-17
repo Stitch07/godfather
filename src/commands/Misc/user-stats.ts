@@ -9,6 +9,8 @@ import { getConnection } from 'typeorm';
 
 @ApplyOptions<CommandOptions>({
 	generateDashLessAliases: true,
+	description: 'commands/help:userstatsDescription',
+	detailedDescription: 'commands/help:userstatsDetailed',
 	preconditions: [{ name: 'Cooldown', context: { bucketType: BucketType.Channel, delay: Time.Second * 5 } }],
 	strategyOptions: {
 		options: ['faction', 'role']
@@ -17,7 +19,7 @@ import { getConnection } from 'typeorm';
 export default class extends GodfatherCommand {
 	public async run(message: Message, args: Args) {
 		if (PGSQL_ENABLED) {
-			const user = await args.pick('user').catch(() => message.author);
+			const user = args.finished ? message.author : await args.pick('user');
 			const [faction, role] = [args.getOption('faction'), args.getOption('role')];
 
 			const whereClauses = ['player.user_id = :id', faction ? 'player.faction = :faction' : null, role ? 'player.role_name = :role' : null]
@@ -39,9 +41,10 @@ export default class extends GodfatherCommand {
 			const totalGames = wins + losses;
 			const winRate = totalGames === 0 ? 'N/A' : `${Math.round((wins * 100) / totalGames)}%`;
 
-			return message.channel.send([`Games: ${totalGames}`, `Wins: ${wins}`, `Winrate: ${winRate}`].join('\n'));
+			// eslint-disable-next-line object-shorthand
+			return message.channel.sendTranslated('commands/misc:userStats', [{ totalGames: totalGames, wins: wins, winRate: winRate }]);
 		}
-		return message.channel.send('Storing information on a database is currently disabled for this bot');
+		return message.channel.sendTranslated('commands/misc:userstatsNoDatabase');
 	}
 }
 

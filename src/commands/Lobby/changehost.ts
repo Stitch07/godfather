@@ -4,22 +4,23 @@ import type { CommandOptions } from '@sapphire/framework';
 import type { Message } from 'discord.js';
 
 @ApplyOptions<CommandOptions>({
-	description: 'Vote to change the host',
-	detailedDescription: ['The host can use this command to instantly make the next player the host.'].join('\n'),
+	description: 'commands/help:changehostDescription',
+	detailedDescription: 'commands/help:changehostDetailed',
 	preconditions: ['GuildOnly', 'GameOnly', 'PlayerOnly', 'AlivePlayerOnly']
 })
 export default class extends GodfatherCommand {
 	public async run(message: Message) {
 		const { game } = message.channel;
+		const t = await message.fetchT();
 
-		if (game!.hasStarted) throw 'You cannot change the host after the game has started.';
-		if (game!.players.length < 3) throw 'You need at least 3 players to change the host.';
+		if (game!.hasStarted) throw t('commands/lobby:changehostStarted');
+		if (game!.players.length < 3) throw t('commands/lobby:changehostMinimum3');
 
 		let toChange = false;
 		if (message.author.id === game!.host.user.id) {
 			toChange = true;
 		} else {
-			if (game!.players.voteKicks.has(message.author.id)) throw 'You have already voted to change the host.';
+			if (game!.players.voteKicks.has(message.author.id)) throw t('commands/lobby:changehostAlreadyVoted');
 			game!.players.voteKicks.add(message.author.id);
 			await message.react('✅');
 
@@ -34,7 +35,7 @@ export default class extends GodfatherCommand {
 			game!.players.push(oldHost);
 			game!.players.voteKicks.clear();
 
-			await message.channel.send(`The host is now ${game!.host}.`);
+			await message.channel.send(t('commands/lobby:changehostHostChanged', { host: game!.host.toString() }));
 		}
 	}
 }

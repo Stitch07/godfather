@@ -5,16 +5,19 @@ import type Player from '@mafia/structures/Player';
 
 class Consigliere extends SingleTarget {
 	public name = 'Consigliere';
-	public description = 'A corrupted investigator who has been bribed to gather information for Mafia.';
 
 	public action = 'check';
-	public actionGerund = 'investigating';
-	public actionText = 'investigate a player';
-
 	public priority = NightActionPriority.CONSIG;
 
+	public constructor(player: Player) {
+		super(player);
+		this.description = this.game.t('roles/neutral:consigliereDescription');
+		this.actionText = this.game.t('roles/actions:consigliereText');
+		this.actionGerund = this.game.t('roles/actions:consigliereGerund');
+	}
+
 	public tearDown(actions: NightActionsManager, target: Player) {
-		this.player.queueMessage(`Your target's role is: ${target.role.display}`);
+		this.player.queueMessage(this.game.t('roles/mafia:consigResult', { role: target.role.display }));
 	}
 }
 

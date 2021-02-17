@@ -1,0 +1,11 @@
+{
+	"noelimAlreadyVoted": "Zaten elememek için oy verdin.",
+	"noelimSuccess": "Elememek için oy verdin.",
+	"noelimResult": "Kimse elenmedi!",
+	"unvoteFail": "Kaldırılacak bir oy yok!",
+	"voteDeadPlayer": "Ölü bir oyuncuyu oylayamazsın.",
+	"voteSelf": "Kendini oylayamazsın.",
+	"voteAlreadyVoted": "Zaten {{target}}'e/a oy verdin.",
+	"voteProtected": "Guardian Angel tarafından korunan birini oylayamazsın.",
+	"voteSuccess": "{{target}} oylandı."
+}

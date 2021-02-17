@@ -1,43 +1,44 @@
 import GodfatherCommand from '@lib/GodfatherCommand';
 import { SUPPORT_SERVER } from '@root/config';
+import { LanguageHelp, LanguageHelpDisplayOptions } from '@root/lib/i18n/structures/LanguageHelp';
 import { ApplyOptions } from '@sapphire/decorators';
-import type { Args, CommandOptions, CommandStore } from '@sapphire/framework';
+import type { Args, Command, CommandContext, CommandOptions } from '@sapphire/framework';
 import { Message, MessageEmbed } from 'discord.js';
+import type { TFunction } from 'i18next';
 
 @ApplyOptions<CommandOptions>({
-	description: 'Shows you this command!',
+	description: 'commands/help:helpDescription',
+	detailedDescription: 'commands/help:helpDetailed',
 	preconditions: []
 })
 export default class extends GodfatherCommand {
-	private _commands!: CommandStore;
-
-	public async run(message: Message, args: Args) {
+	public async run(message: Message, args: Args, context: CommandContext) {
+		const t = await message.fetchT();
 		const command = await args.pickResult('string');
+		const commands = this.context.stores.get('commands');
+
 		if (command.success) {
-			if (!this._commands.has(command.value)) throw 'Invalid command provided.';
-			return message.channel.send(this.buildCommandHelp(this._commands.get(command.value) as GodfatherCommand));
+			if (!commands.has(command.value) || commands.get(command.value)!.category === 'System') throw t('commands/misc:helpInvalidCommand');
+			return message.channel.send(
+				this.buildCommandHelp(t, commands.get(command.value) as GodfatherCommand, (await this.context.client.fetchPrefix(message)) as string)
+			);
 		}
 
 		// build a category -> command[] object
-		const allCommands = this._commands.reduce((acc, cmd) => {
-			const gCmd = cmd as GodfatherCommand;
-			if (Reflect.has(acc, gCmd.category)) acc[gCmd.category].push(gCmd);
-			else acc[gCmd.category] = [gCmd];
+		const allCommands = commands.reduce((acc, cmd) => {
+			if (cmd.category === 'System') return acc;
+			if (Reflect.has(acc, cmd.category)) acc[cmd.category].push(cmd);
+			else acc[cmd.category] = [cmd];
 			return acc;
-		}, {} as Record<string, GodfatherCommand[]>);
+		}, {} as Record<string, Command[]>);
 
 		const prefix = await this.context.client.fetchPrefix(message);
 
 		const embed = new MessageEmbed()
 			.setColor('#000000')
 			.setAuthor(this.context.client.user!.username, this.context.client.user!.displayAvatarURL())
-			.setDescription(
-				[
-					`A Discord Bot that automatically hosts games of Mafia. My prefix here is \`${Array.isArray(prefix) ? prefix[0] : prefix}\``,
-					`[Support Server](${SUPPORT_SERVER})`
-				].join('\n')
-			)
-			.setFooter(`For information about a specific command, run ${prefix}help <command>.`);
+			.setDescription(((t('commands/misc:helpDescription', { prefix, supportServer: SUPPORT_SERVER }) as unknown) as string[]).join('\n'))
+			.setFooter(t('commands/misc:helpFooter', { prefix }));
 
 		for (const [category, commands] of Object.entries(allCommands)) {
 			embed.addField(category, commands.map((cmd) => cmd.name).join(', '));
@@ -46,15 +47,32 @@ export default class extends GodfatherCommand {
 		return message.channel.send(embed);
 	}
 
-	public buildCommandHelp(command: GodfatherCommand) {
+	public buildCommandHelp(t: TFunction, command: GodfatherCommand, prefix: string) {
+		const builderData = (t('globals:helpTitles') as unknown) as {
+			aliases: string;
+			extendedHelp: string;
+			examples: string;
+			usages: string;
+			reminder: string;
+		};
+
+		const languageBuilder = new LanguageHelp()
+			.setAliases(builderData.aliases)
+			.setExamples(builderData.examples)
+			.setExtendedHelp(builderData.extendedHelp)
+			.setUsages(builderData.usages)
+			.setReminder(builderData.reminder);
+		const helpData = (t(command.detailedDescription, { prefix }) as unknown) as LanguageHelpDisplayOptions;
+		const extendedHelp = languageBuilder.display(command.name, this.formatAliases(command.aliases, t), helpData, prefix);
+
 		return new MessageEmbed()
 			.setColor('#000000')
 			.setAuthor(this.context.client.user!.username, this.context.client.user!.displayAvatarURL())
-			.addField([command.name, ...command.aliases].join('|'), command.description === '' ? 'No description available.' : command.description)
-			.addField('Detailed Description', command.detailedDescription === '' ? 'No detailed description available' : command.detailedDescription);
+			.setTitle(t(command.description))
+			.setDescription(extendedHelp);
 	}
 
-	public onLoad() {
-		this._commands = this.context.client.stores.get('commands').filter((command) => (command as GodfatherCommand).category !== 'System');
+	private formatAliases(aliases: readonly string[], t: TFunction) {
+		return aliases.length === 0 ? null : t('globals:listAnd', { value: aliases });
 	}
 }

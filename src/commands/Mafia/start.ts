@@ -1,14 +1,15 @@
 import GodfatherCommand from '@lib/GodfatherCommand';
 import { Phase } from '@mafia/structures/Game';
 import type Player from '@mafia/structures/Player';
-import { canManage, listItems } from '@root/lib/util/utils';
+import { canManage } from '@root/lib/util/utils';
 import { ApplyOptions } from '@sapphire/decorators';
 import type { Args, CommandContext, CommandOptions } from '@sapphire/framework';
 import type { Message } from 'discord.js';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['s', 'startgame'],
-	description: 'Starts a game of Mafia in this server.',
+	description: 'commands/help:startDescription',
+	detailedDescription: 'commands/help:startDetailed',
 	preconditions: ['GuildOnly', 'GameOnly', 'HostOnly']
 })
 export default class extends GodfatherCommand {
@@ -16,22 +17,22 @@ export default class extends GodfatherCommand {
 		const setupName = await args.rest('string').catch(() => '');
 		const { game } = message.channel;
 
-		if (game!.hasStarted) throw 'The game has already started!';
+		if (game!.hasStarted) throw await message.resolveKey('commands/mafia:startAlreadyStarted');
 
 		if (!game!.setup && setupName === '') {
 			// attempt to find a setup
 			// TODO: prompt for multiple setups here
 			const foundSetup = this.context.client.stores.get('setups').find((setup) => setup.totalPlayers === game?.players.length);
-			if (!foundSetup) throw `No setups found for ${game!.players.length} players.`;
+			if (!foundSetup) throw await message.resolveKey('commands/mafia:startNoSetups', { playerCount: game!.players.length });
 			game!.setup = foundSetup!;
 		} else if (setupName !== '') {
 			const foundSetup = this.context.client.stores.get('setups').find((setup) => setup.name === setupName.toLowerCase());
-			if (!foundSetup) throw `Invalid setup-name: "${foundSetup}"`;
+			if (!foundSetup) throw await message.resolveKey('commands/mafia:startSetupNotFound', { name: setupName });
 			game!.setup = foundSetup;
 		}
 
 		if (game!.setup!.totalPlayers !== game!.players.length)
-			throw `The setup **${game!.setup!.name}** requires ${game!.setup!.totalPlayers} players.`;
+			throw await message.resolveKey('commands/mafia:startWrongPlayercount', { setup: game!.setup!.name, playerCount: game!.players!.length });
 
 		if (game!.settings.numberedNicknames && message.guild!.me?.hasPermission('MANAGE_NICKNAMES')) {
 			for (const plr of game!.players) {
@@ -47,7 +48,8 @@ export default class extends GodfatherCommand {
 			}
 		}
 
-		const sent = await message.channel.send(`Chose the setup **${game!.setup!.name}**. Randomizing roles...`);
+		const t = await message.fetchT();
+		const sent = await message.channel.send(t('commands/mafia:startSetupChosen', { setup: game!.setup!.name }));
 		game!.phase = Phase.Standby;
 		const generatedRoles = game!.setup!.generate(this.context.client);
 		for (const player of game!.players) {
@@ -69,12 +71,10 @@ export default class extends GodfatherCommand {
 			await player.role.init();
 		}
 
-		await sent.edit('Sent all role PMs!');
+		await sent.edit(t('commands/mafia:startSentRolePms'));
 		if (noPms.length > 0) {
 			await message.channel.send(
-				`I couldn't DM ${listItems(noPms.map((player) => player.toString()))}. Make sure your DMs are enabled and then use ${
-					context.prefix
-				}rolepm to get your PM.`
+				t('commands/mafia:startDmFail', { players: noPms.map((player) => player.toString()), prefix: context.prefix })
 			);
 		}
 

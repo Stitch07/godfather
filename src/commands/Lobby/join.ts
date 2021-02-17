@@ -3,37 +3,36 @@ import { Phase } from '@mafia/structures/Game';
 import Player from '@mafia/structures/Player';
 import { ApplyOptions } from '@sapphire/decorators';
 import type { CommandOptions } from '@sapphire/framework';
-import { pluralize } from '@util/utils';
 import type { Message } from 'discord.js';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['in', 'j'],
-	description: 'Adds you to the playerlist of an ongoing game.',
+	description: 'commands/help:joinDescription',
+	detailedDescription: 'commands/help:joinDetailed',
 	preconditions: ['GuildOnly', 'GameOnly']
 })
 export default class extends GodfatherCommand {
-	public run(message: Message) {
+	public async run(message: Message) {
 		const { game } = message.channel;
 		if (game!.players.find((player) => player.user.id === message.author.id)) {
-			throw 'You have already joined.';
+			throw await message.resolveKey('commands/lobby:joinAlreadyJoined');
 		}
 		// prevent players from joining 2 games simultaneously
 		for (const otherGame of this.context.client.games.values()) {
 			if (otherGame.players.get(message.author))
-				throw `You are already playing another game in ${otherGame.channel.name} (${otherGame.channel.guild.name})`;
+				// eslint-disable-next-line @typescript-eslint/no-base-to-string
+				throw await message.resolveKey('commands/lobby:otherChannel', [{ channel: message.channel.toString(), guild: message.guild!.name }]);
 		}
 		// do not allow replacing in while the bot is processing the game
-		if (game!.phase === Phase.Standby) throw 'You cannot replace in between phases.';
-		if (game!.hasStarted && game!.phase) {
-			if (game!.players.replacements.includes(message.author)) throw 'You are already a replacement.';
+		if (game!.phase === Phase.Standby) throw await message.resolveKey('commands/lobby:joinBetweenPhases');
+		if (game!.hasStarted || game!.players.length === game!.settings.maxPlayers) {
+			if (game!.players.replacements.includes(message.author)) throw await message.resolveKey('commands/lobby:joinAlreadyReplacement');
 			game!.players.replacements.push(message.author);
-			return message.channel.send('You have decided to become a replacement.');
+			return message.channel.sendTranslated('joinSuccessfulReplacement');
 		}
-
-		if (game!.players.length >= game!.settings.maxPlayers) throw `Maximum player limit has been reached. (${game!.settings.maxPlayers})`;
 
 		game!.players.push(new Player(message.author, game!));
 		game!.createdAt = new Date();
-		return message.channel.send(`✅ Successfully joined. (${pluralize(game!.players.length, 'player')})`);
+		return message.channel.sendTranslated('commands/lobby:joinSuccess', [{ playerCount: game!.players.length }]);
 	}
 }

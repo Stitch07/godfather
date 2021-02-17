@@ -1,9 +1,13 @@
-import { PGSQL_ENABLED } from '@root/config';
 import { DbSet } from '@lib/database/DbSet';
 import { cast } from '@lib/util/utils';
-import { Command, isErr, Precondition, PreconditionContext } from '@sapphire/framework';
+import { PGSQL_ENABLED } from '@root/config';
+import { ApplyOptions } from '@sapphire/decorators';
+import { Command, isErr, Precondition, PreconditionContext, PreconditionOptions } from '@sapphire/framework';
 import type { Message } from 'discord.js';
 
+@ApplyOptions<PreconditionOptions>({
+	position: 20
+})
 export default class extends Precondition {
 	public async run(message: Message, command: Command, context: PreconditionContext) {
 		if (!message.guild || !PGSQL_ENABLED) return this.ok();

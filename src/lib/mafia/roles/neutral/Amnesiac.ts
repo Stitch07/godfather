@@ -8,12 +8,16 @@ import type Juggernaut from './Juggernaut';
 
 export default class Amnesiac extends SingleTarget {
 	public name = 'Amnesiac';
-	public description = 'You may remember who you were by selecting a dead player.';
 	public faction = new AmnesiacFaction();
 	public action = 'remember';
-	public actionGerund = 'remembering as';
-	public actionText = 'remember your role';
 	public priority = NightActionPriority.AMNESIAC;
+
+	public constructor(player: Player) {
+		super(player);
+		this.description = this.game.t('roles/neutral:amnesiacDescription');
+		this.actionText = this.game.t('roles/actions:amnesiacText');
+		this.actionGerund = this.game.t('roles/actions:amnesiacGerund');
+	}
 
 	public setUp(actions: NightActionsManager) {
 		// if 2 amnesiacs remember a unique role at the same time, the first person to send actions actually remembers
@@ -38,24 +42,24 @@ export default class Amnesiac extends SingleTarget {
 		} else {
 			this.player.role = new newRole(this.player);
 		}
-		await this.player.user.send(`You have remembered that you were a ${this.player.role.name}!`);
+		await this.player.user.send(this.game.t('roles/neutral:amnesiacMessage', { role: this.player.role.name }));
 		await this.player.sendPM();
-		await this.game.channel.send(`An Amnesiac has remembered that they were a **${this.player.role.name}**!`);
+		await this.game.channel.send(this.game.t('roles/neutral:amnesiacAnnouncement', { role: this.player.role.name }));
 		await this.player.role.init();
 	}
 
 	public canUseAction() {
 		const validTargets = this.game.players.filter((player) => this.canTarget(player).check);
-		if (validTargets.length === 0) return { check: false, reason: 'There are no valid targets.' };
+		if (validTargets.length === 0) return { check: false, reason: this.game.t('roles/global:noTargets') };
 		return { check: true, reason: '' };
 	}
 
 	public canTarget(target: Player) {
-		if (target.isAlive) return { check: false, reason: 'You can only remember dead roles.' };
-		if (target.cleaned) return { check: false, reason: 'You cannot remember cleaned roles.' };
+		if (target.isAlive) return { check: false, reason: this.game.t('roles/neutral:amnesiacDeadOnly') };
+		if (target.cleaned) return { check: false, reason: this.game.t('roles/neutral:amnesiacNoCleaned') };
 		// @ts-ignore tsc cannot detect static properties
 		if (target.role.constructor.unique && target.role.faction.name === 'Town')
-			return { check: false, reason: 'You cannot remember as unique Town roles.' };
+			return { check: false, reason: this.game.t('roles/neutral:amnesiacNoUniqueTown') };
 		return { check: true, reason: '' };
 	}
 }

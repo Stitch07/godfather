@@ -7,7 +7,8 @@ import type { Args, CommandOptions } from '@sapphire/framework';
 import type { Message } from 'discord.js';
 
 @ApplyOptions<CommandOptions>({
-	description: 'View and change the server prefix.',
+	description: 'commands/help:prefixDescription',
+	detailedDescription: 'commands/help:prefixDetailed',
 	preconditions: ['GuildOnly', ['AdminOnly', 'OwnerOnly']]
 })
 export default class extends GodfatherCommand {
@@ -17,18 +18,17 @@ export default class extends GodfatherCommand {
 			(await guilds.findOne(message.guild!.id, {
 				select: ['id', 'prefix']
 			})) ?? new GuildSettingsEntity();
+		guildSettings.id = message.guild!.id;
 
 		if (args.finished) {
-			return message.channel.send(`My prefix in this server is set to: ${guildSettings.prefix}`);
+			return message.channel.sendTranslated('commands/misc:prefixCurrent', [{ prefix: guildSettings.prefix }]);
 		}
 		const newPrefix = await args.pick('string', { maximum: 10 });
-
-		if (newPrefix.length > 10) throw 'Prefixes can be 10 characters at most.';
 		guildSettings.prefix = newPrefix;
 
 		await guilds.save(guildSettings);
 		this.context.client.prefixCache.set(message.guild!.id, newPrefix);
-		return message.channel.send(`Successfully updated this server's prefix to: \`${newPrefix}\``);
+		return message.channel.sendTranslated('commands/misc:prefixUpdated', [{ prefix: newPrefix }]);
 	}
 
 	public onLoad() {

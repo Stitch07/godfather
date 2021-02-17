@@ -5,7 +5,8 @@ import { Time } from '@sapphire/time-utilities';
 import type { Message, TextChannel } from 'discord.js';
 
 @ApplyOptions<CommandOptions>({
-	description: 'Remove your vote.',
+	description: 'commands/help:unvoteDescription',
+	detailedDescription: 'commands/help:unvoteDetailed',
 	preconditions: [
 		'GuildOnly',
 		'GameOnly',
@@ -26,6 +27,6 @@ export default class extends GodfatherCommand {
 		if (unvoted) {
 			return message.react('✅');
 		}
-		return message.channel.send('No votes to remove!');
+		return message.channel.sendTranslated('commands/voting:unvoteFail');
 	}
 }

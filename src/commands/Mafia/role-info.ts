@@ -10,10 +10,13 @@ import DefaultMap from '@util/DefaultMap';
 import { Collection, Message, MessageEmbed } from 'discord.js';
 import roledocs from '../../assets/roledocs.json';
 
+import i18next from 'i18next';
+
 @ApplyOptions<CommandOptions>({
 	aliases: ['role', 'roles'],
 	generateDashLessAliases: true,
-	description: 'Shows a list of all roles, and gives you information on a particular role.',
+	description: 'commands/help:roleinfoDescription',
+	detailedDescription: 'commands/help:roleinfoDetailed',
 	preconditions: [
 		new PermissionsPrecondition('EMBED_LINKS'),
 		{ name: 'Cooldown', context: { bucketType: BucketType.Channel, delay: Time.Second * 3 } }
@@ -56,16 +59,16 @@ export default class extends GodfatherCommand {
 			const embed = new MessageEmbed()
 				.setAuthor('Roles', this.context.client.user!.displayAvatarURL())
 				.setColor('#000000')
-				.setFooter(`For more information on a specific role, use ${context.prefix}role-info <role>.`)
+				.setFooter(await message.resolveKey('commands/mafia:roleinfoFooter', { prefix: context.prefix }))
 				.setDescription(description.join('\n'));
 
 			return message.channel.send(embed);
 		}
 
 		const role = uniqueRoles.find((r) => r.name.toLowerCase() === roleName.toLowerCase());
-		if (!role) throw `I found no role named "${roleName}"`;
+		if (!role) throw await message.resolveKey('commands/mafia:roleinfoRoleNotFound', { role: roleName });
 		const docEntry = roledocs.find((entry) => entry.name.toLowerCase() === role.name.toLowerCase());
-		if (!docEntry) throw `No documentation for ${role.name} available`;
+		if (!docEntry) throw await message.resolveKey('commands/mafia:roleinfoNoDocumentation', { role: role.name });
 
 		const embed = new MessageEmbed()
 			.setAuthor(
@@ -82,7 +85,8 @@ export default class extends GodfatherCommand {
 	public onLoad() {
 		this.roles = allRoles.reduce((coll, roleCls) => {
 			// this is an embarassing hack
-			const role = new roleCls(null, { vests: 1, protects: 1, alerts: 1 });
+			// TODO(Stitch): refactor roles so I can remove hacks like these
+			const role = new roleCls({ game: { t: i18next.t, players: [] } }, { vests: 1, protects: 1, alerts: 1 });
 			return coll.set(role.name, role);
 		}, new Collection<string, Role>());
 	}

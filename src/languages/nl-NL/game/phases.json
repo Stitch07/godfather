@@ -1,0 +1,8 @@
+{
+	"dayStart": [
+		"Dag **{{cycle}}** zal {{dayDuration}} duren.",
+		"Er zijn {{majorityVotes}} stemmen nodig om te elimineren met {{alivePlayers}} levenden."
+	],
+	"nightStart": "Nacht **{{cycle}}** zal {{nightDuration}} duren. Stuur je acties snel in!",
+	"fullMoon": "Pas op, vannacht is het volle maan 🌕"
+}

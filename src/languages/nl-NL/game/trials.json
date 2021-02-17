@@ -1,0 +1,15 @@
+{
+	"trialStart": "{{playerName}}, je hebt 30 seconden om het dorp ervan te overtuigen je niet te elimineren.",
+	"trialVoteStart": "Het dorp mag nu beslissen over het lot van {{playerName}}! Gebruik per dm de opdrachten `innocent`, `guilty` en `abstain` (respectievelijk 'onschuldig', 'schuldig' en 'blanco') om te stemmen. (je hebt 30 seconden; er zijn vandaag nog {{dailyTrialsLeft}} berechtingen over)",
+	"trialVotes": [
+		"**Stemmen**:",
+		"Onschuldig: {{innocentVotes}}",
+		"Schuldig: {{guiltyVotes}}",
+		"Blanco: {{abstainingVotes}}"
+	],
+	"maxTrialsReached": "Maximumaantal berechtingen bereikt. Niemand werd geëlimineerd!",
+	"playerAcquitted": "{{playerName}} werd vrijgesproken.",
+	"playerEliminated": "{{playerName}} werd geëlimineerd. {{RoleAndWill}}\n{votes}",
+	"votesShowHeader": "Uiteindelijke stemtelling",
+	"playerEliminatedKill": "geëlimineerd D{cycle}"
+}

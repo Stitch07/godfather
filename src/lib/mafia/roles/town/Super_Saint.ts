@@ -1,11 +1,15 @@
 import Townie from '@mafia/mixins/Townie';
 import Role from '@mafia/structures/Role';
 import { sleep } from '@util/utils';
+import type Player from '@mafia/structures/Player';
 
 class SuperSaint extends Role {
 	public name = 'Super Saint';
 
-	public description = 'If eliminated, you kill the last person voting you.';
+	public constructor(player: Player) {
+		super(player);
+		this.description = this.game.t('roles/town:superSaintDescription');
+	}
 
 	public async onDeath() {
 		if (this.player.deathReason.startsWith('eliminated')) {
@@ -14,11 +18,11 @@ class SuperSaint extends Role {
 			const votesOnSaint = game.votes.on(this.player);
 			const { by: lastVoter } = votesOnSaint!.slice().pop()!;
 
-			void lastVoter.kill('blown up by Super Saint');
-			await game.channel.send('💣 **BOOOOOOOOOOOOOOM!!!**');
+			await lastVoter.kill(this.game.t('roles/town:superSaintDeathReason'));
+			await game.channel.send(this.game.t('roles/town:superSaintBoom'));
 			await sleep(2 * 1000);
 
-			await game.channel.send(`${lastVoter} hammered the Super Saint and was blown up! ${lastVoter.displayRoleAndWill()}`);
+			await game.channel.send(`${this.game.t('roles/town:superSaintAnnouncement', { player: lastVoter })} ${lastVoter.displayRoleAndWill()}`);
 		}
 
 		return super.onDeath();

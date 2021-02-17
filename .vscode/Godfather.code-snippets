@@ -72,5 +72,23 @@
 			"}",
 			""
 		]
+	},
+	"GodfatherRoleConstructor": {
+		"scope": "typescript",
+		"prefix": "roleCtor",
+		"body": [
+			"public constructor(player: Player) {",
+			"\tsuper(player);",
+			"\tthis.description = this.game.t('roles/neutral:${TM_FILENAME_BASE/(.*)/${1:/downcase}/g}Description');",
+			"}"
+		]
+	},
+	"GodfatherHelp": {
+		"scope": "typescript",
+		"prefix": "action",
+		"body": [
+			"this.actionText = this.game.t('roles/actions:${TM_FILENAME_BASE/(.*)/${1:/downcase}/g}Text');",
+			"this.actionGerund = this.game.t('roles/actions:${TM_FILENAME_BASE/(.*)/${1:/downcase}/g}Gerund');"
+		]
 	}
 }

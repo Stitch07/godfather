@@ -1,0 +1,16 @@
+{
+	"disableChannelNone": "Er zijn geen uitgeschakelde kanalen. Schakel een kanaal uit met `{{prefix}}disablechannel #kanaal`.",
+	"disableChannelView": "**Uitgeschakelde kanalen**: {{channels, listAnd}}",
+	"disableChannelAdded": "Nu uitgeschakeld: {{channels, listAnd}}",
+	"disableChannelRemoved": "Nu ingeschakeld: {{channels, listAnd}}",
+	"setLanguageView": [
+		"De taal in deze server is nu **{{currentLanguage}}**.",
+		"Gebruik `set-language <taal>` om de taal te updaten.",
+		"Ondersteunde talen in Godfather: {{validLanguages, listAnd}}"
+	],
+	"setLanguageInvalidLocale": [
+		"\"{{locale}}\" is een ongeldige taalregio.",
+		"Ondersteunde talen in Godfather: {{validLanguages, listAnd}}"
+	],
+	"setLanguageAlreadySet": "De taal in deze server is al **{{locale}}**."
+}

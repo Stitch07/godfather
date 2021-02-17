@@ -1,14 +1,13 @@
 import type SingleTarget from '@mafia/mixins/SingleTarget';
-import { Event, Events, PieceContext } from '@sapphire/framework';
+import { Event, Events, PieceContext, UnknownCommandPayload } from '@sapphire/framework';
 import { fauxAlive } from '@util/utils';
-import type { Message } from 'discord.js';
 
 export default class extends Event<Events.UnknownCommand> {
 	public constructor(context: PieceContext) {
 		super(context, { event: Events.UnknownCommand });
 	}
 
-	public async run(message: Message, _: string, prefix: string) {
+	public async run({ message, commandPrefix }: UnknownCommandPayload) {
 		// actions are accepted in DMs only
 		if (message.guild) return;
 
@@ -21,7 +20,7 @@ export default class extends Event<Events.UnknownCommand> {
 		// checks for a bitwise AND so that action phases can be aggregated using bitwise AND
 		// for example, an actionPhase set to Day | Night will work in both of those phases
 		if (((player.role! as SingleTarget).actionPhase & game.phase) !== game.phase) return;
-		const prefixLess = message.content.slice(prefix.length);
+		const prefixLess = message.content.slice(commandPrefix.length);
 		const [commandText, ...parameters] = prefixLess.split(' ');
 		try {
 			await player.role!.onPmCommand(message, commandText.toLowerCase(), ...parameters);

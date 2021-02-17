@@ -1,0 +1,13 @@
+{
+	"roleCleaned": "Sua role não pôde ser determinada.",
+	"displayRole": "Ele(a) era um(a) **{{role}}**.",
+	"displayWill": "Ele(a) deixou um testamento: {{will, codeBlock}}",
+	"noWill": "Não foi encontrado um testamento.",
+	"removeHost": "The host cannot leave the game. Use the `delete` command to delete the game, or the `change-host` command to change the host.",
+	"removeConfirmationReplace": "Você será substituído.",
+	"removeConfirmationModkill": "Você será modkilled (auto eliminado).",
+	"removeConfirmationPrompt": "Você tem certeza que deseja sair? {{prompt}}",
+	"removeSuccessfulReplacement": "{{replacement}} substituiu {{player}}.",
+	"removeSuccessfulModkill": "{{player}} foi modkilled (auto eliminado).",
+	"removeModkillReason": "modkilled (auto eliminado) {{phase}}"
+}

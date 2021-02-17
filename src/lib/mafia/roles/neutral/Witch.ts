@@ -5,10 +5,7 @@ import type Player from '@mafia/structures/Player';
 
 class Witch extends DoubleTarget {
 	public name = 'Witch';
-	public description = 'You may witch one player onto another at night.';
 	public action = 'witch';
-	public actionText = 'witch one player onto another';
-	public actionGerund = 'controlling';
 	public priority = NightActionPriority.Witch;
 
 	public faction = new WitchFaction();
@@ -16,6 +13,13 @@ class Witch extends DoubleTarget {
 	// whether the witch has been attacked already
 	public attacked = false;
 	private witched = false;
+
+	public constructor(player: Player) {
+		super(player);
+		this.description = this.game.t('roles/neutral:witchDescription');
+		this.actionText = this.game.t('roles/actions:witchText');
+		this.actionGerund = this.game.t('roles/actions:witchGerund');
+	}
 
 	public get defence() {
 		return this.attacked ? Defence.None : Defence.Basic;
@@ -34,18 +38,18 @@ class Witch extends DoubleTarget {
 
 	public tearDown(actions: NightActionsManager, [target]: Player[]) {
 		if (this.witched) {
-			target.queueMessage('You felt a mystical presence dominating you. You were controlled by a witch!');
-			this.player.queueMessage(`You secretly know that your target is a ${target.role.name}.`);
+			target.queueMessage(this.game.t('roles/neutral:witchAlert'));
+			this.player.queueMessage(this.game.t('roles/neutral:witchMessage', { role: target.role.name }));
 		}
 	}
 
 	public canTarget(target: Player[]) {
-		if (target.some((player) => !player.isAlive)) return { check: false, reason: 'You cannot target dead players.' };
+		if (target.some((player) => !player.isAlive)) return { check: false, reason: this.game.t('roles/global:targetDeadPlayers') };
 		return { check: true, reason: '' };
 	}
 
 	public actionConfirmation([player1, player2]: Player[]) {
-		return `You are controlling ${player1} onto ${player2} tonight.`;
+		return this.game.t('roles/neutral:witchActionConfirmation', { player1, player2 });
 	}
 }
 

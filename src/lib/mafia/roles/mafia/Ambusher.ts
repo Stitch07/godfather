@@ -6,15 +6,19 @@ import { randomArrayItem } from '@root/lib/util/utils';
 
 class Ambusher extends SingleTarget {
 	public name = 'Ambusher';
-	public description = 'You may set up at someones house each night and kill a visitor';
 	public action = 'ambush';
-	public actionText = 'set up a ambush';
-	public actionGerund = 'ambushing';
 	public priority = NightActionPriority.AMBUSHER;
 	private killTarget: Player | null = null;
 
+	public constructor(player: Player) {
+		super(player);
+		this.description = this.game.t('roles/neutral:ambusherDescription');
+		this.actionText = this.game.t('roles/actions:ambusherText');
+		this.actionGerund = this.game.t('roles/actions:ambusherGerund');
+	}
+
 	public canTarget(target: Player) {
-		if (target.role.faction.name === 'Mafia') return { check: false, reason: 'You cannot target yourself or your teammates' };
+		if (target.role.faction.name === 'Mafia') return { check: false, reason: this.game.t('roles/global:targetTeammates') };
 		return super.canTarget(target);
 	}
 
@@ -35,13 +39,13 @@ class Ambusher extends SingleTarget {
 
 			for (const visitor of target.visitors) {
 				if (visitor !== this.player && visitor.user.id !== this.killTarget.user.id)
-					visitor.queueMessage(`You saw ${this.player.user.username} preparing an ambush for your target.`);
+					visitor.queueMessage(this.game.t('roles/mafia:ambusherAlert', { ambusher: this.player.user.tag }));
 			}
-			this.player.queueMessage('You attacked someone who visted your target.');
+			this.player.queueMessage(this.game.t('roles/mafia:ambusherSuccess'));
 			if (!success) {
-				return this.player.queueMessage('Your target was too strong to kill!');
+				return this.player.queueMessage(this.game.t('roles/global:targetTooStrong'));
 			}
-			this.killTarget.queueMessage('You were attacked by an ambusher!');
+			this.killTarget.queueMessage(this.game.t('roles/mafia:ambusherAttack'));
 			this.killTarget = null;
 		}
 	}

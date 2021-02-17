@@ -75,15 +75,15 @@ export default class Player {
 	}
 
 	public displayRoleAndWill(night = false): string {
-		const roleText = this.cleaned && night ? 'We could not determine their role.' : `They were a **${this.role!.display}**.`;
+		const roleText = this.game.t(this.cleaned && night ? 'game/players:roleCleaned' : 'game/players:displayRole', { role: this.role.display });
 
 		const willText = this.game.settings.disableWills
 			? ''
 			: this.will && !(this.cleaned && night)
-			? ` They left a will:\n\`\`\`${this.will}\`\`\`\n`
-			: ' We could not find a will.';
+			? this.game.t('game/players:displayWill')
+			: this.game.t('game/players:noWill');
 
-		return `${roleText}${willText}`;
+		return `${roleText} ${willText}`;
 	}
 
 	public toJSON(): Record<string, unknown> {

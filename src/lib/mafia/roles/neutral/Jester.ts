@@ -9,8 +9,6 @@ class Jester extends SingleTarget {
 	public name = 'Jester';
 	public faction = new JesterFaction();
 	public action = 'haunt';
-	public actionGerund = 'haunting';
-	public actionText = 'haunt a player';
 	public priority = NightActionPriority.JESTER_HAUNT;
 	public flags = {
 		canBlock: false,
@@ -24,12 +22,18 @@ class Jester extends SingleTarget {
 	// players hammering the Jester
 	public playersVoting: Player[] = [];
 
+	public constructor(player: Player) {
+		super(player);
+		this.actionText = this.game.t('roles/actions:jesterText');
+		this.actionGerund = this.game.t('roles/actions:jesterGerund');
+	}
+
 	public runAction(actions: NightActionsManager, target: Player) {
 		actions.record.setAction(target.user.id, 'nightkill', { by: [this.player], result: true, type: Attack.Unstoppable });
 	}
 
 	public tearDown(actions: NightActionsManager, target: Player) {
-		return target.queueMessage('You were haunted by a Jester!');
+		return target.queueMessage(this.game.t('roles/neutral:jesterHaunt'));
 	}
 
 	// @ts-ignore weird bug
@@ -41,13 +45,13 @@ class Jester extends SingleTarget {
 				? this.game.votes.trialVotes.filter((vote) => vote.type !== TrialVoteType.Innocent).map((vote) => vote.by)
 				: this.game.votes.on(this.player).map((vote) => vote.by);
 
-			return this.game.channel.send('**The Jester will get revenge from his grave!**');
+			return this.game.channel.send(this.game.t('roles/neutral:jesterAlert'));
 		}
 	}
 
 	public canTarget(target: Player) {
 		if (this.playersVoting.some((player) => player.user.id === target.user.id)) return { check: true, reason: '' };
-		return { check: false, reason: 'You can only haunt players who voted you.' };
+		return { check: false, reason: this.game.t('roles/neutral:jesterVotersOnly') };
 	}
 
 	public canUseAction() {

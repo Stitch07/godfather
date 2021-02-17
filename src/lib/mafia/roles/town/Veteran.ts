@@ -2,13 +2,10 @@ import { Attack, Defence, NightActionPriority } from '@mafia/managers/NightActio
 import NoTarget from '@mafia/mixins/NoTarget';
 import Townie from '@mafia/mixins/Townie';
 import type Player from '@mafia/structures/Player';
-import { pluralize } from '@root/lib/util/utils';
 
 class Veteran extends NoTarget {
 	public name = 'Veteran';
 	public action = 'alert';
-	public actionGerund = 'going on alert';
-	public actionText = 'go on alert';
 	public priority = NightActionPriority.VETERAN;
 	public flags = {
 		canBlock: false,
@@ -23,7 +20,9 @@ class Veteran extends NoTarget {
 	public constructor(player: Player) {
 		super(player);
 		this.alerts = player === null ? 0 : this.getInitialAlerts();
-		this.description = `You may go on alert ${pluralize(this.alerts, 'time')} in a game, killing all visitors.`;
+		this.description = this.game.t('roles/town:veteranDescription', { count: this.alerts });
+		this.actionText = this.game.t('roles/actions:veteranText');
+		this.actionGerund = this.game.t('roles/actions:veteranGerund');
 	}
 
 	public get defence() {
@@ -32,7 +31,7 @@ class Veteran extends NoTarget {
 	}
 
 	public canUseAction() {
-		if (this.alerts === 0) return { check: false, reason: 'You have no alerts left.' };
+		if (this.alerts === 0) return { check: false, reason: this.game.t('roles/town:veteranNoAlerts') };
 		return super.canUseAction();
 	}
 
@@ -47,8 +46,8 @@ class Veteran extends NoTarget {
 	public onVisit(visitor: Player) {
 		if (this.onAlert && visitor.role.actualDefence < Defence.Invincible) {
 			this.game.nightActions.record.setAction(visitor.user.id, 'nightkill', { by: [this.player], result: true, type: Attack.Powerful });
-			visitor.queueMessage('You were killed by the veteran you visited!');
-			return this.player.queueMessage('You shot someone who visited you.');
+			visitor.queueMessage(this.game.t('roles/town:veteranAlert'));
+			return this.player.queueMessage(this.game.t('roles/town:veteranMessage'));
 		}
 	}
 
@@ -57,7 +56,7 @@ class Veteran extends NoTarget {
 	}
 
 	public get extraNightContext() {
-		if (this.alerts > 0) return `You have ${this.alerts} alerts remaining.`;
+		if (this.alerts > 0) return this.game.t('roles/town:veteranAlertCount', { count: this.alerts });
 		return null;
 	}
 

@@ -11,10 +11,7 @@ const CAN_CONVERT = ['Town', 'Survivor', 'Amnesiac', 'Jester'];
 class CultLeader extends SingleTarget {
 	public faction = new CultFaction();
 	public name = 'Cult Leader';
-	public description = "You're the leader of a mysterious cult and want everyone to follow your beliefs.";
 	public action = 'convert';
-	public actionText = 'convert a player';
-	public actionGerund = 'converting';
 	public priority = NightActionPriority.CultLeader;
 
 	// whether the CL was already attacked once
@@ -24,12 +21,19 @@ class CultLeader extends SingleTarget {
 	private lastConverted = -1;
 	private successfulConversion = false;
 
+	public constructor(player: Player) {
+		super(player);
+		this.description = this.game.t('roles/town:cultLeaderDescription');
+		this.actionText = this.game.t('roles/actions:cultLeaderText');
+		this.actionGerund = this.game.t('roles/actions:cultLeaderGerund');
+	}
+
 	public get defence() {
 		return this.attacked ? Defence.None : Defence.Basic;
 	}
 
 	public canUseAction() {
-		if (this.game.cycle - this.lastConverted < 2) return { check: false, reason: 'You cannot convert on 2 consecutive nights.' };
+		if (this.game.cycle - this.lastConverted < 2) return { check: false, reason: this.game.t('roles/cult:cultLeaderConsecutiveNights') };
 		return super.canUseAction();
 	}
 
@@ -45,7 +49,7 @@ class CultLeader extends SingleTarget {
 		if (!CAN_CONVERT.includes(target.role.faction.name)) {
 			// kill the target if CL cannot convert
 			actions.record.setAction(target.user.id, 'nightkill', { result: true, by: [this.player], type: Attack.Basic });
-			target.queueMessage('You were denounced by a Cult Leader.');
+			target.queueMessage(this.game.t('roles/cult:cultLeaderDenounce'));
 			return;
 		}
 		// convert the player
@@ -57,18 +61,20 @@ class CultLeader extends SingleTarget {
 		if (!this.successfulConversion) return;
 		const CultMember = allRoles.get('Cult Member')!;
 		target.role = new CultMember(target);
-		await target.user.send('You were converted by a Cult!');
-		this.player.queueMessage(`You successfully converted ${target.user.username}!`);
+		await target.user.send(this.game.t('roles/cult:successfulConversion'));
+		this.player.queueMessage(this.game.t('roles/cult:conversionMessage', { target: target.user.username }));
 		await target.sendPM();
 	}
 
 	public async onDeath() {
 		const followers = this.game.players.filter((player) => player.isAlive && player.role.name === 'Cult Member');
-		const phaseStr = this.game.phase === Phase.Night ? 'night' : 'day';
+		const phaseStr = this.game.phase === Phase.Night ? 'N' : 'D';
 		for (const follower of followers) {
-			await follower.kill(`committed suicide; ${phaseStr[0].toUpperCase()}${this.game.cycle}`);
-			await this.game.channel.send(`${follower} died. ${follower.displayRoleAndWill(true)}`);
-			follower.queueMessage('You committed suicide after losing your Cult Leader!');
+			await follower.kill(`${this.game.t('roles/cult:cultMemberDeathReason')}; ${phaseStr}${this.game.cycle}`);
+			await this.game.channel.send(
+				`${this.game.t('roles/cult:cultMemberSuicideAnnouncement', { follower })} ${follower.displayRoleAndWill(true)}`
+			);
+			follower.queueMessage(this.game.t('roles/cult:cultMemberSuicide'));
 		}
 	}
 

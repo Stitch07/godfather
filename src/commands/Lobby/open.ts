@@ -5,15 +5,16 @@ import type { CommandOptions } from '@sapphire/framework';
 import type { Message } from 'discord.js';
 
 @ApplyOptions<CommandOptions>({
-	description: 'Opens a game lobby, allowing people to join again.',
+	description: 'commands/help:openDescription',
+	detailedDescription: 'commands/help:openDetailed',
 	preconditions: ['GuildOnly', 'GameOnly', 'HostOnly']
 })
 export default class extends GodfatherCommand {
 	public async run(message: Message) {
 		const { game } = message.channel;
-		if (game!.players.length === DEFAULT_GAME_SETTINGS.maxPlayers) throw 'This lobby is already at maximum size.';
+		if (game!.players.length === DEFAULT_GAME_SETTINGS.maxPlayers) throw await message.resolveKey('commands/lobby:openMaxSize');
 		game!.settings.maxPlayers = DEFAULT_GAME_SETTINGS.maxPlayers;
 
-		return message.channel.send(`✅ Set maximum players to ${game!.settings.maxPlayers}`);
+		return message.channel.sendTranslated('commands/lobby:openSuccess', [{ maxPlayers: game!.settings.maxPlayers }]);
 	}
 }
