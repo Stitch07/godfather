@@ -1,0 +1,14 @@
+{
+	"AdminOnly": "Bu komut sadece sunucu moderatörleri tarafından kullanılabilir.",
+	"AlivePlayerOnly": "Bu komut sadece hayattaki oyuncular tarafından kullanılabilir.",
+	"preconditionCooldown": "You have just used this command. Try again in {{remaining, durationFormat}}.",
+	"DayOnly": "Bu komut geceleri ya da mahkeme sürecinde kullanılamaz.",
+	"preconditionDmOnly": "This command can only be used in Direct Messages.",
+	"GameOnly": "Burada şu an oynanan bir oyun yok. {{prefix}}create yazarak bir oyun oluştur!",
+	"GameStartedOnly": "Oyun henüz başlamadı.",
+	"preconditionGuildOnly": "You cannot run this command in DMs.",
+	"HostOnly": "Bu komutu sadece yöneticiler kullanabilir.",
+	"PlayerOnly": "Bu komudu sadece oyuncular kullanabilir.",
+	"TrialVotingOnly": "Bu komut sadece mahkemelerde kullanılabilir.",
+	"NoActiveGames": "Şu an bir aktif oyunda değilsin."
+}

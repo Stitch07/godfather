@@ -1,0 +1,15 @@
+{
+	"trialStart": "{{playerName}}, você tem 30 segundos para convencer a Town a não te linchar.",
+	"trialVoteStart": "A cidade agora pode votar no destino de {{playerName}}! Use os comandos `innocent`, `guilty`, e `abstain` nas mensagens privadas para votar. (você tem 30 segundos; {{dailyTrialsLeft}} restantes hoje)",
+	"trialVotes": [
+		"**Votos**:",
+		"Inocente: {{innocentVotes}}",
+		"Culpado: {{guiltyVotes}}",
+		"Absteve-se: {{abstainingVotes}}"
+	],
+	"maxTrialsReached": "Julgamentos máximos alcançados. Ninguém foi eliminado!",
+	"playerAcquitted": "{{playerName}} foi inocentado.",
+	"playerEliminated": "{{playerName}} foi linchado. {{RoleAndWill}}\n{votes}",
+	"votesShowHeader": "Contagem final de votos",
+	"playerEliminatedKill": "linchado D{cycle}"
+}

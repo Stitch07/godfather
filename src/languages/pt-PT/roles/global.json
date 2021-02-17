@@ -1,0 +1,23 @@
+{
+	"targetTeammates": "Você não pode se escolher ou escolher um de seus companheiros.",
+	"targetTooStrong": "Seu alvo era muito forte para ser morto!",
+	"targetDeadPlayers": "Você não pode selecionar jogadores mortos.",
+	"targetSelf": "Você não pode selecionar você mesmo.",
+	"noTargets": "Não existem alvos válidos.",
+	"nightActionPromptSingleTarget": "Agora é a noite {{cycle}}. Use {{prefix}}{{action}} <number> para {{actionText}}. Use {{prefix}} noaction para ficar em casa.",
+	"dayActionPromptSingleTarget": "Agora é o dia {{cycle}}. Use o comando {{prefix}}{{action}} para {{actionText}} imediatamente.",
+	"nightActionPromptNoTarget": "It is now night {{cycle}}. Use {{prefix}}{{action}} to {{actionText}}. Use {{prefix}}noaction to stay home.",
+	"actionBlocked": "You cannot use your action: {{reason}}",
+	"actionCancelled": "You have cancelled your action.",
+	"noAction": "You decided to stay home tonight.",
+	"actionBlockedTarget": "You cannot target {{target, listAnd}} tonight: {{reason}}",
+	"targetInvalid": "Invalid target. Choose a number between 1 and {{maxPlayers}}.",
+	"bullet": "bullet",
+	"bulletPlural": "bullets",
+	"outOfBullets": "You are out of {shootingMechanism}.",
+	"killerMessage": "You were {{actionParticiple}} by a {{role}}!",
+	"twoTargets": "You have to specify 2 targets.",
+	"twoDistinct": "Please pick 2 distinct targets.",
+	"killerContext": "You have {{amount}} {{bullets}} remaining.",
+	"noTargetConfirmation": "You are {{gerund}} tonight."
+}

@@ -1,0 +1,16 @@
+{
+	"disableChannelNone": "There are no disabled channels. Disable a channel using {{prefix}}disablechannel #channel.",
+	"disableChannelView": "**Disabled Channels**: {{channels, listAnd}}",
+	"disableChannelAdded": "Disabled Channel(s): {{channels, listAnd}}",
+	"disableChannelRemoved": "Enabled Channel(s): {{channels, listAnd}}",
+	"setLanguageView": [
+		"The language in this server is set to **{{currentLanguage}}**.",
+		"Use `set-language <language>` to update it.",
+		"Unterstütze Sprachen in Godfather: {{validLanguages, listAnd}}"
+	],
+	"setLanguageInvalidLocale": [
+		"\"{{locale}}\" ist kein gültiges Locale.",
+		"Unterstützte Sprachen in Godfather: {{validLanguages, listAnd}}"
+	],
+	"setLanguageAlreadySet": "The language in this server is already set to **{{locale}}**."
+}

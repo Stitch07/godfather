@@ -1,0 +1,11 @@
+{
+	"noelimAlreadyVoted": "Você já votou para não eliminar ninguém.",
+	"noelimSuccess": "Você votou para não eliminar ninguém.",
+	"noelimResult": "Ninguém foi eliminado!",
+	"unvoteFail": "Não há nenhum voto para remover!",
+	"voteDeadPlayer": "Você não pode votar em um jogador morto.",
+	"voteSelf": "Votar em si mesmo não é permitido.",
+	"voteAlreadyVoted": "Você já votou em {{target}}",
+	"voteProtected": "Você não pode votar em alvos protegidos pelo Guardian Angel",
+	"voteSuccess": "Votado em {{target}}."
+}

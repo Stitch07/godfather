@@ -1,0 +1,43 @@
+{
+	"helpInvalidCommand": "Geçersiz komut.",
+	"helpDescription": [
+		"Otomatik olarak Mafya oyunları düzenleyen bir bot. Buradaki prefix'im `{{prefix}}`",
+		"[Destek Sunucusu]({{supportServer}})"
+	],
+	"helpFooter": "Belirli bir komut hakkında bilgi için, {{prefix}}help <komut> yazın.",
+	"infoText": [
+		"Godfather v{{VERSION}}, Kolay ve güncel 7/24 Kurtadam/Mafya oyunları düzenleyen bir Discord Botudur.",
+		"",
+		"**Godfather özellikleri:**",
+		"• 30'dan fazla rol ve grupla birlikte otomatik düzenlenen mafya oyunları.",
+		"• Eklenebilir özel rol listeleri",
+		"• Oyuncu ve oyun istatistikleri",
+		"ve daha fazlası!",
+		"",
+		"Godfather'ı Discord Sunucunuza eklemek için, `{{prefix}}invite`` komutunu kullanın."
+	],
+	"inviteText": "[{{bot}}'ı sunucunuza davet edin]({{invite}}) | [Destek Sunucusuna Katılın]({{supportServer}})",
+	"pingInitial": "Ping test ediliyor...",
+	"pingResponse": "Pong! Bu {{ping}}ms sürdü. Gecikme: {{latency}}",
+	"prefixCurrent": "Bu sunucunun prefix'i: {{prefix}}",
+	"prefixUpdated": "Başarıyla sunucunun prefix'i `{{prefix}}` olarak değiştirildi.",
+	"userStats": [
+		"Toplam Oyunlar: {{totalGames}}",
+		"Galibiyetler: {{wins}}",
+		"Kazanma yüzdesi: {{winRate}}"
+	],
+	"userstatsNoDatabase": "Veri tabanında bilgi depolamak bu bot için şu anlık devre dışıdır",
+	"statsDescription": "{{botname}}'ı sunucuna eklemek için, `{{prefix}}invite` komutunu kullan.",
+	"statsTitles": {
+		"connectedTo": "Connected to",
+		"serverStats": "Server Stats"
+	},
+	"statsFields": {
+		"servers": "**Servers**",
+		"users": "**Users**",
+		"channels": "**Channels**",
+		"cpuLoad": "**CPU Load**",
+		"ramUsed": "**RAM Used**",
+		"uptime": "**Uptime**"
+	}
+}

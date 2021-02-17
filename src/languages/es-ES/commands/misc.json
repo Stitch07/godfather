@@ -1,0 +1,43 @@
+{
+	"helpInvalidCommand": "Este comando esta invalido.",
+	"helpDescription": [
+		"Un bot de Discord que automáticamente hace juegos de mafia. Mi prefijo es `{{prefix}}`",
+		"[Servidor de Ayuda]({{supportServer}})"
+	],
+	"helpFooter": "Para información sobre un comando, as {{prefix}}help <command>.",
+	"infoText": [
+		"Godfather v{{VERSION}} es un bot de Discord que hace juegos de Hombrelobo/Mafia que corre 24-7 y comandos intuitivos.",
+		"",
+		"**Habilidades de Godfather:**",
+		"• Automáticamente hace juegos de Mafia, con más de 30 roles y facciones diferentes.",
+		"• Configuraciones personificadas añadibles",
+		"• Estadísticas de juego y jugadores",
+		"y mucho más!",
+		"",
+		"Para añadir Godfather a tu servidor de Discord, usa el comando de `{{prefix}}invite`."
+	],
+	"inviteText": "[Invitar {{bot}} a tu servidor]({{invite}}) | [Únete al Servidor de Ayuda]({{supportServer}})",
+	"pingInitial": "Haciendo un ping...",
+	"pingResponse": "Pong! Eso tomo {{ping}}ms. Latencia: {{latency}}ms",
+	"prefixCurrent": "Mi prefijo en este servidor es {{prefix}}",
+	"prefixUpdated": "El prefijo de este servidor cambió a: `{{prefix}}`",
+	"userStats": [
+		"Juegos: {{totalGames}}",
+		"Victorias: {{wins}}",
+		"Porcentaje de victorias: {{winRate}}"
+	],
+	"userstatsNoDatabase": "El almacenar de la información en el base de datos esta desactivado en el bot en este momento",
+	"statsDescription": "Para añadir {{botname}} a tu servidor de Discord, usa el comando, `{{prefix}}invite`.",
+	"statsTitles": {
+		"connectedTo": "Connected to",
+		"serverStats": "Server Stats"
+	},
+	"statsFields": {
+		"servers": "**Servers**",
+		"users": "**Users**",
+		"channels": "**Channels**",
+		"cpuLoad": "**CPU Load**",
+		"ramUsed": "**RAM Used**",
+		"uptime": "**Uptime**"
+	}
+}

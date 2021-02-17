@@ -1,0 +1,11 @@
+{
+	"noelimAlreadyVoted": "Je hebt er al voor gestemd om niet te elimineren.",
+	"noelimSuccess": "Je hebt ervoor gestemd om niet te elimineren.",
+	"noelimResult": "Niemand werd geëlimineerd!",
+	"unvoteFail": "Je hebt nog niet eens gestemd!",
+	"voteDeadPlayer": "Je kunt niet stemmen op een dode.",
+	"voteSelf": "Je kunt niet op jezelf stemmen.",
+	"voteAlreadyVoted": "Je hebt al gestemd op {{target}}.",
+	"voteProtected": "Je kunt niet op iemand stemmen die vannacht beschermd werd door een Guardian Angel.",
+	"voteSuccess": "Gestemd op {{target}}."
+}

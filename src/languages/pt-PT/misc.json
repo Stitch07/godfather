@@ -1,0 +1,4 @@
+{
+	"prefixReminderGuilds": "Meu prefixo neste servidor é {{prefix, inlineCodeBlock}}.",
+	"prefixReminderDms": "Você não precisa usar um prefixo nas mensagens privadas!"
+}

@@ -1,0 +1,11 @@
+{
+	"default": "Der Schlüssel {{key}} ist noch nicht übersetzt.",
+	"listAnd": "{{value, listAnd}}",
+	"helpTitles": {
+		"aliases": "🖇️ | **Aliases**",
+		"usages": "📝 | **Command Usage**",
+		"extendedHelp": "🔍 | **Extended Help**",
+		"examples": "🔗 | **Examples**",
+		"reminder": "⏰ | **Reminder**"
+	}
+}
