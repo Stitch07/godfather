@@ -3,6 +3,9 @@
 	"disableChannelView": "**Uitgeschakelde kanalen**: {{channels, listAnd}}",
 	"disableChannelAdded": "Nu uitgeschakeld: {{channels, listAnd}}",
 	"disableChannelRemoved": "Nu ingeschakeld: {{channels, listAnd}}",
+	"setServerSettings": "**Server Settings**",
+	"setGameSettings": "**Game Settings**",
+	"setDuplicate": "The value of **{{key}}** is already `{{value}}`",
 	"setLanguageView": [
 		"De taal in deze server is nu **{{currentLanguage}}**.",
 		"Gebruik `set-language <taal>` om de taal te updaten.",
