@@ -9,5 +9,6 @@
 	"removeConfirmationPrompt": "Ayrılmak istediğinden emin misin? {{prompt}}",
 	"removeSuccessfulReplacement": "{{player}}'ın/in yerine {{replacement}} geçti.",
 	"removeSuccessfulModkill": "{{player}} modkillendi.",
-	"removeModkillReason": "modkilled {{phase}}"
+	"removeModkillReason": "modkilled {{phase}}",
+	"rolePm": "Hello {{user}}, you are a **{{role}}**. {{description}}\nWin Condition: {{winCondition}}"
 }
