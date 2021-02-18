@@ -23,11 +23,14 @@ export default class Player {
 	public constructor(public user: User, public game: Game) {}
 
 	public async sendPM(sendTeamInfo = true) {
-		const rolePM = [
-			`Hello ${this.user.tag}, you are a **${this.role.display}**. ${this.role.description}`,
-			`Win Condition: ${this.role!.faction.winCondition}`
-		].join('\n');
-		await this.user.send(rolePM);
+		await this.user.send(
+			this.game.t('game/players:rolePm', {
+				user: this.user.tag,
+				role: this.role.display,
+				description: this.role.description,
+				winCondition: this.game.t(this.role.faction.winCondition)
+			})
+		);
 
 		if (this.role.faction.informed && sendTeamInfo) {
 			const team = this.game.players.filter((player) => player.role.faction.name === this.role.faction.name);
