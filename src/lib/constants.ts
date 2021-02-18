@@ -1,15 +1,21 @@
 import type { GameSettings } from '@mafia/structures/Game';
+import { getHandler } from '@root/languages';
 import type { ArgType } from '@sapphire/framework';
 import { Time } from '@sapphire/time-utilities';
-import { format } from './util/durationFormat';
+import type { TFunction } from 'i18next';
 
 export interface SettingsEntry<K extends keyof ArgType> {
 	name: string;
 	type: K;
 	minimum?: unknown;
 	maximum?: unknown;
-	display: (value: any) => string;
+	display: (value: any, t: TFunction) => string;
 }
+
+export const displayLng = (t: TFunction, value: number) => {
+	const handler = getHandler(t.lng);
+	return handler.duration.format(value);
+};
 
 export const DEFAULT_GAME_SETTINGS: GameSettings = {
 	dayDuration: Time.Minute * 5,
@@ -41,14 +47,14 @@ export const GUILD_SETTINGS_METADATA: SettingsEntry<keyof ArgType>[] = [
 		type: 'duration',
 		minimum: 30 * Time.Second,
 		maximum: 30 * Time.Minute,
-		display: (value: number) => format(value)
+		display: (value: number, t: TFunction) => displayLng(t, value)
 	},
 	{
 		name: 'nightDuration',
 		type: 'duration',
 		minimum: 30 * Time.Second,
 		maximum: 30 * Time.Minute,
-		display: (value: number) => format(value)
+		display: (value: number, t: TFunction) => displayLng(t, value)
 	},
 	{
 		name: 'overwritePermissions',

@@ -19,6 +19,7 @@ export default class extends GodfatherCommand {
 	public async run(message: Message, args: Args) {
 		const schemaKey = await args.pickResult('gameSetting');
 		const inGame = message.channel.game !== undefined;
+		const t = await message.fetchT();
 
 		if (inGame) {
 			if (message.author !== message.channel.game!.host.user) throw await message.resolveKey('preconditions:HostOnly');
@@ -36,9 +37,11 @@ export default class extends GodfatherCommand {
 			// only read game settings, not all Entity properties
 			for (const key of Object.keys(DEFAULT_GAME_SETTINGS)) {
 				const settingMetadata = GUILD_SETTINGS_METADATA.find((setting) => setting.name === key)!;
-				output.push(`${key} - ${settingMetadata.display(Reflect.get(guildSettings, key))}`);
+				output.push(`${key} - ${settingMetadata.display(Reflect.get(guildSettings, key), t)}`);
 			}
-			return message.channel.send(`${inGame ? '**Game Settings**' : '**Server Settings**'}: ${codeBlock('', output.join('\n'))}`);
+			return message.channel.send(
+				`${inGame ? t('commands/admin:setGameSettings') : t('commands/admin:setServerSettings')}: ${codeBlock('', output.join('\n'))}`
+			);
 		}
 
 		const settingMetadata = GUILD_SETTINGS_METADATA.find((setting) => setting.name === schemaKey.value)!;
@@ -47,7 +50,10 @@ export default class extends GodfatherCommand {
 
 		const guildSettings: GameSettings | GuildSettingsEntity = inGame ? message.channel.game!.settings : await guilds.ensure(message.guild!);
 		if (Reflect.get(guildSettings, schemaKey.value) === newSetting.value)
-			throw `The value of **${schemaKey.value}** is already \`${settingMetadata.display(newSetting.value)}\``;
+			throw t('commands/admin:setDuplicates', {
+				key: settingMetadata.name,
+				value: settingMetadata.display(newSetting.value, t)
+			});
 
 		Reflect.set(guildSettings, schemaKey.value, newSetting.value);
 		if (!inGame) {
@@ -57,7 +63,8 @@ export default class extends GodfatherCommand {
 
 		return message.channel.send(
 			`Successfully updated ${inGame ? 'game settings' : 'server defaults'} for **${schemaKey.value}** to: \`${settingMetadata.display(
-				newSetting.value
+				newSetting.value,
+				t
 			)}\``
 		);
 	}

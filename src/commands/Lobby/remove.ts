@@ -22,7 +22,7 @@ export default class extends GodfatherCommand {
 			return message.channel.sendTranslated('commands/lobby:removeDirect', [{ player }]);
 		}
 		// if the game has started, we give the player 45 seconds to prove they aren't AFK
-		const confirmationMessage = await message.channel.sendTranslated('commands/lobby:removeReminder', [{ player: player.user }]);
+		const confirmationMessage = await message.channel.sendTranslated('commands/lobby:removeReminder', [{ player: player.user.toString() }]);
 		await confirmationMessage.react('✅');
 		const reactions = await confirmationMessage.awaitReactions(
 			(reaction: MessageReaction, user: User) => reaction.emoji.name === '✅' && user.id === player.user.id,
