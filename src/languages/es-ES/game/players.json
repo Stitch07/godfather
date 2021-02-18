@@ -9,5 +9,6 @@
 	"removeConfirmationPrompt": "Estas seguro que te quieres salir de este juego? {{prompt}}",
 	"removeSuccessfulReplacement": "{{replacement}} a reemplazado a {{player}}.",
 	"removeSuccessfulModkill": "{{player}} ha sido auto eliminado.",
-	"removeModkillReason": "auto Eliminado {{phase}}"
+	"removeModkillReason": "auto Eliminado {{phase}}",
+	"rolePm": "Hello {{user}}, you are a **{{role}}**. {{description}}\nWin Condition: {{winCondition}}"
 }
