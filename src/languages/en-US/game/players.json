@@ -9,5 +9,6 @@
 	"removeConfirmationPrompt": "Are you sure you want to leave? {{prompt}}",
 	"removeSuccessfulReplacement": "{{replacement}} has replaced {{player}}.",
 	"removeSuccessfulModkill": "{{player}} was modkilled.",
-	"removeModkillReason": "modkilled {{phase}}"
+	"removeModkillReason": "modkilled {{phase}}",
+	"rolePm": "Hello {{user}}, you are a **{{role}}**. {{description}}\nWin Condition: {{winCondition}}"
 }
