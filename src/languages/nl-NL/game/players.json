@@ -9,5 +9,6 @@
 	"removeConfirmationPrompt": "Weet je zeker dat je weg wilt gaan? {{prompt}}",
 	"removeSuccessfulReplacement": "{{replacement}} heeft {{player}} vervangen.",
 	"removeSuccessfulModkill": "{{player}} verliet het dorp.",
-	"removeModkillReason": "verliet het dorp {{phase}}"
+	"removeModkillReason": "verliet het dorp {{phase}}",
+	"rolePm": "Hello {{user}}, you are a **{{role}}**. {{description}}\nWin Condition: {{winCondition}}"
 }
