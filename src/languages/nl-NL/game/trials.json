@@ -9,7 +9,7 @@
 	],
 	"maxTrialsReached": "Maximumaantal berechtingen bereikt. Niemand werd geëlimineerd!",
 	"playerAcquitted": "{{playerName}} werd vrijgesproken.",
-	"playerEliminated": "{{playerName}} werd geëlimineerd. {{RoleAndWill}}\n{votes}",
+	"playerEliminated": "{{playerName}} was eliminated. {{RoleAndWill}}\n{{votes}}",
 	"votesShowHeader": "Uiteindelijke stemtelling",
-	"playerEliminatedKill": "geëlimineerd D{cycle}"
+	"playerEliminatedKill": "eliminated D{{cycle}}"
 }
