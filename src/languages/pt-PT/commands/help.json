@@ -203,7 +203,7 @@
 	"settingDetailed": {
 		"usages": [
 			"",
-			"Key Value"
+			"Valor da Chave"
 		],
 		"extendedHelp": "Configurações alteram o fluxo da partida. Se este comando for utilizado em um canal sem uma partida ativa, irá modificar o padrão de todo o servidor.",
 		"examples": [
