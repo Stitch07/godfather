@@ -10,5 +10,5 @@
 	"removeSuccessfulReplacement": "{{replacement}} substituiu {{player}}.",
 	"removeSuccessfulModkill": "{{player}} foi modkilled (auto eliminado).",
 	"removeModkillReason": "modkilled (auto eliminado) {{phase}}",
-	"rolePm": "Hello {{user}}, you are a **{{role}}**. {{description}}\nWin Condition: {{winCondition}}"
+	"rolePm": "Olá {{user}}, você é um **{{role}}**. {{description}}\nCondição de Vitória: {{winCondition}}"
 }
