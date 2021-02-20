@@ -8,7 +8,7 @@ class Goon extends Killer {
 
 	public constructor(player: Player) {
 		super(player);
-		this.description = this.game.t('roles/neutral:goonDescription');
+		this.description = this.game.t('roles/mafia:goonDescription');
 	}
 
 	public async onPmCommand(message: Message, command: string, ...args: string[]) {
@@ -16,7 +16,7 @@ class Goon extends Killer {
 		if (gfAction) {
 			return message.channel.send(
 				gfAction.action === undefined
-					? this.game.t('roles/neutral:goonMessageHome')
+					? this.game.t('roles/mafia:goonMessageHome')
 					: this.game.t('roles/mafia:goonMessageShoot', { target: gfAction.target! as Player })
 			);
 		}
