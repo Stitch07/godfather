@@ -1,95 +1,95 @@
 {
-	"changehostDescription": "Vote to change the host.",
+	"changehostDescription": "Stemmen om te wisselen van spelleider.",
 	"changehostDetailed": {
 		"extendedHelp": [
-			"With a majority vote, the next player in the player-list will become the host.",
-			"Hosts can use this command to automatically change the host (without a vote)."
+			"Met een meerderheid van stemmen zal de volgende speler in de spelerslijst de spelleider worden.",
+			"Spelleiders kunnen dit gebruiken om (zonder te stemmen) te wisselen van spelleider."
 		]
 	},
-	"closeDescription": "Closes a game lobby, preventing more players from joining it.",
+	"closeDescription": "Sluit de lobby om te voorkomen dat meer mensen meedoen.",
 	"closeDetailed": {
-		"reminder": "The close command is now deprecated, and will be removed in future updates."
+		"reminder": "De `close`-opdracht is verouderd en zal worden verwijderd in toekomstige updates."
 	},
-	"createDescription": "Creates a lobby in the current channel.",
+	"createDescription": "Maakt een lobby in de huidige channel aan.",
 	"createDetailed": {
 		"extendedHelp": [
-			"After creating a game, players can join using `{{prefix}}join`, or by clicking the {{GREENTICK}} emoji.",
-			"When you have enough players, start playing using `{{prefix}}start`."
+			"Nadat het spel is aangemaakt, kunnen mensen meedoen met ` {{prefix}}join`, of door op de {{GREENTICK}}-emoji te klikken.",
+			"Met genoeg spelers kun je het spel starten met `{{prefix}}start`."
 		]
 	},
-	"deleteDescription": "Deletes an ongoing game.",
-	"joinDescription": "Adds you to the playerlist of an ongoing game.",
+	"deleteDescription": "Verwijdert het huidige spel.",
+	"joinDescription": "Voegt je toe aan de spelerslijst van het huidige spel.",
 	"joinDetailed": {
-		"extendedHelp": "If the player-list is full or the game has already started, you will be added as a replacement instead."
+		"extendedHelp": "Als de lobby al vol is of het spel al is gestart zul je in plaats daarvan worden toegevoegd als vervanger."
 	},
-	"leaveDescription": "Removes you from an ongoing game.",
+	"leaveDescription": "Verwijdert je van het huidige spel.",
 	"leaveDetailed": {
-		"extendedHelp": "If the game has already started, you will be replaced or mod-killed."
+		"extendedHelp": "Als het spel al is gestart zul je worden vervangen of per direct doodgaan."
 	},
-	"openDescription": "Opens a game lobby, allowing people to join again.",
+	"openDescription": "Opent de lobby, zodat mensen weer mee kunnen doen.",
 	"openDetailed": {
-		"reminder": "The open command is now deprecated, and will be removed in future updates."
+		"reminder": "De `open`-opdracht is verouderd en zal worden verwijderd in toekomstige updates."
 	},
-	"playerlistDescription": "Shows the playerlist of an ongoing game.",
-	"removeDescription": "Removes a player from the game.",
+	"playerlistDescription": "Laat de spelerslijst van het huidige spel zien.",
+	"removeDescription": "Verwijdert een speler van het spel.",
 	"removeDetailed": {
 		"usages": [
-			"@Player"
+			"@Spelers"
 		],
-		"reminder": "If the game has already started, you can only remove players who are AFK (and don't respond to a 45 second prompt)."
+		"reminder": "Als het spel al is gestart kun je alleen afwezige spelers verwijderen (die niet antwoorden na 45 seconden)."
 	},
-	"remainingDescription": "Shows when the current day/night ends.",
-	"roleinfoDescription": "Displays a list of all roles in Godfather, and shows information on a specific role.",
+	"remainingDescription": "Laat zien wanneer de huidige fase eindigt.",
+	"roleinfoDescription": "Laat een lijst van alle rollen zien en geeft informatie over een specifieke rol.",
 	"roleinfoDetailed": {
 		"usages": [
 			"",
-			"Role"
+			"Rol"
 		]
 	},
-	"rolepmDescription": "Sends you your role PM.",
+	"rolepmDescription": "Verstuurt je een dm met je rol.",
 	"rolepmDetailed": {
-		"reminder": "Make sure your DMs are enabled before running this command."
+		"reminder": "Zorg ervoor dat je dm's zijn ingeschakeld voordat je deze opdracht gebruikt."
 	},
-	"setwillDescription": "Set your will.",
+	"setwillDescription": "Stelt je testament op.",
 	"setwillDetailed": {
 		"usages": [
-			"WillText",
-			"--append AdditionalText"
+			"Tekst",
+			"--append AanvullendeTekst"
 		],
 		"extendedHelp": [
-			"To add text to the end of your will, use the --append flag.",
-			"Wills can be only 8 lines long."
+			"Gebruik `--append` om tekst aan het einde van je testament toe te voegen.",
+			"Testamenten kunnen slechts hoogstens 8 regels lang zijn."
 		],
 		"examples": [
 			"Bodyguard, N1: 5",
 			"--append N2: 6"
 		]
 	},
-	"setupinfoDescription": "Displays a list of all setups in Godfather, and shows information on a specific setup.",
+	"setupinfoDescription": "Laat een lijst van alle standaardrollenverdelingen zien en geeft informatie over een specifieke standaardrollenverdeling.",
 	"setupinfoDetailed": {
 		"usages": [
 			"",
-			"Setup"
+			"Rollenverdeling"
 		],
 		"examples": [
 			"ss3"
 		]
 	},
-	"showwillDescription": "Shows your current will.",
+	"showwillDescription": "Laat je huidige testament zien.",
 	"showwillDetailed": {
-		"extendedHelp": "To set your will, use the `set-will` command.",
-		"reminder": "You can only run this command in Direct Messages."
+		"extendedHelp": "Gebruik `set-will` om je testament op te stellen.",
+		"reminder": "Je kunt deze opdracht alleen gebruiken in een dm."
 	},
-	"startDescription": "Starts the game.",
+	"startDescription": "Start het spel.",
 	"startDetailed": {
-		"extendedHelp": "If a setup isn't provided, Godfather will find a setup with the correct amount of players.",
-		"reminder": "To view a list of all setups, use the `setup-info` command."
+		"extendedHelp": "Er zal automatisch een standaardrollenverdeling gebruikt worden als die niet al werd opgegeven.",
+		"reminder": "Gebruik `setup-info` voor een lijst van alle standaardrollenverdelingen."
 	},
-	"statusDescription": "Shows useful info about the ongoing game.",
-	"usesetupDescription": "Use a custom setup.",
+	"statusDescription": "Geeft informatie over het huidige spel.",
+	"usesetupDescription": "Stelt een zelf toegevoegde rollenverdeling vast.",
 	"usesetupDetailed": {
 		"usages": [
-			"Roles"
+			"Rollen"
 		],
 		"extendedHelp": "Do the default setups bore you? Use this command to create your own setup! Provide a list of roles (separated by commas) to use a custom setup.\nNote: To start your game at night 1, use the --nightStart or -n flag.",
 		"examples": [
@@ -130,7 +130,7 @@
 	"voteDetailed": {
 		"reminder": "If the setting `enableTrials` is enabled, a majority vote will put the player on trial, and not kill him instantly."
 	},
-	"helpDescription": "Displays a list of all commands in Godfather, and shows information on specific commands.",
+	"helpDescription": "Laat een lijst van alle opdrachten zien en geeft informatie over een specifieke opdracht.",
 	"helpDetailed": {
 		"usages": [
 			"",
