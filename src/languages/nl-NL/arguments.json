@@ -1,9 +1,9 @@
 {
 	"boolean": "{{parameter}} is not a valid boolean.",
-	"user": "{{parameter}} is not a valid user mention.",
-	"gameSetting": "{{parameter}} is not a valid setting.",
-	"playerUnknownUser": "{{parameter}} is not a valid user mention.",
-	"playerInvalid": "{{user}} is not playing the game.",
+	"user": "{{parameter}} is een ongeldige gebruiker.",
+	"gameSetting": "{{parameter}} is een ongeldige optie.",
+	"playerUnknownUser": "{{parameter}} is een ongeldige gebruiker.",
+	"playerInvalid": "{{user}} zit niet in het spel.",
 	"piece": "An invalid piece was provided.",
-	"stringTooLong": "The provided string must be smaller than {{maximum}} characters."
+	"stringTooLong": "De string mag hoostens {{maximum}} karakters bevatten."
 }
