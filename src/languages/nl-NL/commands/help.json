@@ -86,85 +86,85 @@
 		"reminder": "Gebruik `setup-info` voor een lijst van alle standaardrollenverdelingen."
 	},
 	"statusDescription": "Geeft informatie over het huidige spel.",
-	"usesetupDescription": "Stelt een zelf toegevoegde rollenverdeling vast.",
+	"usesetupDescription": "Stelt een eigen rollenverdeling vast.",
 	"usesetupDetailed": {
 		"usages": [
 			"Rollen"
 		],
-		"extendedHelp": "Do the default setups bore you? Use this command to create your own setup! Provide a list of roles (separated by commas) to use a custom setup.\nNote: To start your game at night 1, use the --nightStart or -n flag.",
+		"extendedHelp": "Vervelen de standaardrollenverdelingen je? Gebruik dan deze opdracht om er zelf eentje te maken! Gebruik een rollenlijst gescheiden door komma's om een eigen rollenverdeling te gebruiken.\nTip: gebruik `--nightStart` of `-n` om je spel bij nacht 1 te laten starten.",
 		"examples": [
 			"Cop, Goon, Doc",
 			"Godfather, Consig, RT x5 --nightStart"
 		],
-		"reminder": "Support for YAML setups is now deprecated, and will be removed in future updates."
+		"reminder": "YAML-rollenverdelingen zijn verouderd en zullen niet meer worden geaccepteerd in toekomstige updates."
 	},
-	"whisperDescription": "Secretly send a message to another player.",
+	"whisperDescription": "Bericht een andere speler in het geheim.",
 	"whisperDetailed": {
 		"usages": [
-			"Number Text"
+			"Getal Tekst"
 		],
 		"extendedHelp": [
-			"All players will know that you are whispering, but not the content of your whisper.",
-			"You cannot whisper to a revealed mayor."
+			"Iedereen zal weten dat je aan het fluisteren bent, maar niet achter de daadwerkelijke inhoud van het bericht te weten komen.",
+			"Je kunt een onthulde Mayor niet fluisteren."
 		],
 		"examples": [
-			"3 Player4 is the Lookout"
+			"3 Speler4 is de Lookout"
 		]
 	},
-	"abstainDescription": "Abstain from voting in a trial.",
+	"abstainDescription": "Stemt blanco in een berechtiging.",
 	"abstainDetailed": {
-		"reminder": "This command can only be used during trials."
+		"reminder": "Deze opdracht kan alleen worden gebruikt bij een berechting."
 	},
-	"guiltyDescription": "Vote guilty in a trial.",
+	"guiltyDescription": "Stemt 'schuldig' in een berechtiging.",
 	"guiltyDetailed": {
-		"reminder": "This command can only be used during trials."
+		"reminder": "Deze opdracht kan alleen worden gebruikt bij een berechting."
 	},
-	"innocentDescription": "Vote innocent in a trial.",
+	"innocentDescription": "Stemt 'onschuldig' in een berechtiging.",
 	"innocentDetailed": {
-		"reminder": "This command can only be used during trials."
+		"reminder": "Deze opdracht kan alleen worden gebruikt bij een berechting."
 	},
-	"noelimDescription": "Vote to not eliminate and end day early.",
-	"unvoteDescription": "Remove your vote.",
-	"voteDescription": "Vote to eliminate a player.",
-	"votecountDescription": "Shows the current vote-count.",
+	"noelimDescription": "Stemt om niet te elimineren en de dag eerder te laten eindigen.",
+	"unvoteDescription": "Trekt je stem terug.",
+	"voteDescription": "Stemt op een speler om te elimineren.",
+	"votecountDescription": "Laat de huidige stemtelling zien.",
 	"voteDetailed": {
-		"reminder": "If the setting `enableTrials` is enabled, a majority vote will put the player on trial, and not kill him instantly."
+		"reminder": "Als `enableTrials` is ingeschakeld zal een meerderheid van stemmen de desbetreffende speler voorbrengen (en een berechtiging starten) in plaats van diegene meteen te doden."
 	},
 	"helpDescription": "Laat een lijst van alle opdrachten zien en geeft informatie over een specifieke opdracht.",
 	"helpDetailed": {
 		"usages": [
 			"",
-			"Command"
+			"Opdracht"
 		],
 		"examples": [
 			"",
 			"create-game"
 		]
 	},
-	"infoDescription": "Gives you useful information about Godfather.",
-	"inviteDescription": "Gives you the invite link to add Godfather to your server.",
-	"pingDescription": "Runs a connection test to Discord.",
-	"prefixDescription": "View and change the prefix in this server.",
+	"infoDescription": "Geeft informatie over Godfather.",
+	"inviteDescription": "Laat de uitnodigingslink zien om Godfather toe te voegen aan je server.",
+	"pingDescription": "Controleert de verbinding met Discord.",
+	"prefixDescription": "Laat de serverprefix zien en verandert die.",
 	"prefixDetailed": {
-		"extendedHelp": "Prefixes can be up to 10 characters long.",
+		"extendedHelp": "Prefixen kunnen hoogstens 10 karakters lang zijn.",
 		"usages": [
 			"",
-			"NewPrefix"
+			"NieuwePrefix"
 		],
 		"examples": [
 			"",
 			"g!"
 		],
-		"reminders": "This command can only be used by users with Manage Server permissions."
+		"reminders": "Je kunt deze opdracht alleen gebruiken als je over de machtiging 'Server beheren' beschikt."
 	},
-	"statsDescription": "Shows bot statistics.",
-	"userstatsDescription": "Shows game statistics of a user.",
+	"statsDescription": "Laat de botstatistieken zien.",
+	"userstatsDescription": "Laat de spelstatistieken van een gebruiker zien.",
 	"userstatsDetailed": {
 		"usages": [
 			"",
-			"@User",
-			"@User --role=Role",
-			"@User --faction=Faction"
+			"@Gebruiker",
+			"@Gebruiker --role==Rol",
+			"@User --faction=Team"
 		],
 		"extendedHelp": "Use the --faction flag to filter statistics for a particular faction, and the --role flag to filter statistics for a particular role.",
 		"examples": [
