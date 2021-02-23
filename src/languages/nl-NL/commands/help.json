@@ -166,7 +166,7 @@
 			"@Gebruiker --role==Rol",
 			"@User --faction=Team"
 		],
-		"extendedHelp": "Use the --faction flag to filter statistics for a particular faction, and the --role flag to filter statistics for a particular role.",
+		"extendedHelp": "Gebruik `--faction` om te filteren op specifieke teamstatistieken, en `--role` voor rolstatistieken.",
 		"examples": [
 			"",
 			"@Stitch",
@@ -174,32 +174,32 @@
 			"@Stitch --faction=Mafia"
 		]
 	},
-	"disable-channelDescription": "Lets you disable the bot in certain channels.",
+	"disable-channelDescription": "Schakelt de bot uit in specifieke kanalen.",
 	"disable-channelDetailed": {
 		"usages": [
 			"",
-			"Channel1, Channel2"
+			"Kanaal1, Kanaal2"
 		],
-		"extendedHelp": "If a channel is already disabled, using this command again will enable it.",
+		"extendedHelp": "Als een kanaal al is uitgeschakeld, zal deze opdracht het weer inschakelen.",
 		"examples": [
 			"",
-			"#general, #off-topic",
-			"#serious"
+			"#algemeen, #offtopic",
+			"#serieus"
 		]
 	},
-	"set-languageDescription": "Changes the server's language.",
+	"set-languageDescription": "Stelt de servertaal in.",
 	"set-languageDetailed": {
 		"usages": [
 			"",
-			"Language"
+			"Taal"
 		],
-		"extendedHelp": "Use this command without arguments to view a list of supported languages.",
+		"extendedHelp": "Zonder argumenten zal deze opdracht een lijst van ondersteunde talen laten zien.",
 		"examples": [
 			"",
 			"nl-NL"
 		]
 	},
-	"settingDescription": "View or modify game-settings.",
+	"settingDescription": "Laat de huidige spelinstellingen zien, of wijzigt deze.",
 	"settingDetailed": {
 		"usages": [
 			"",
