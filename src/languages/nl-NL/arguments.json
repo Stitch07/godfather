@@ -1,9 +1,9 @@
 {
-	"boolean": "{{parameter}} is not a valid boolean.",
+	"boolean": "{{parameter}} is niet `true` of `false`.",
 	"user": "{{parameter}} is een ongeldige gebruiker.",
 	"gameSetting": "{{parameter}} is een ongeldige optie.",
 	"playerUnknownUser": "{{parameter}} is een ongeldige gebruiker.",
 	"playerInvalid": "{{user}} zit niet in het spel.",
-	"piece": "An invalid piece was provided.",
+	"piece": "Er werd een ongeldige opdracht opgegeven.",
 	"stringTooLong": "De string mag hoostens {{maximum}} karakters bevatten."
 }
