@@ -203,9 +203,9 @@
 	"settingDetailed": {
 		"usages": [
 			"",
-			"Key Value"
+			"Sleutelwaarde"
 		],
-		"extendedHelp": "Settings modify game behavior. If this command is used in a channel without an active game, it will modify server-wide defaults instead.",
+		"extendedHelp": "De instellingen zullen voor alle spellen in de server worden gewijzigd bij gebruik in een kanaal zonder actief spel.",
 		"examples": [
 			"",
 			"dayDuration 15 minutes",
