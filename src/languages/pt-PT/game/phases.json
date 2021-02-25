@@ -1,7 +1,7 @@
 {
 	"dayStart": [
 		"Dia **{{cycle}}** irá durar {{dayDuration}}",
-		"Com {{alivePlayers}} vivos, é necessário {{majorityVotes}} para eliminar alguém."
+		"Com {{alivePlayers}} vivos, são necessários {{majorityVotes}} para eliminar alguém."
 	],
 	"nightStart": "Noite **{{cycle}}** irá durar {{nightDuration}}. Envie suas ações rápido!",
 	"fullMoon": "Cuidado, hoje é noite de lua cheia 🌕"
