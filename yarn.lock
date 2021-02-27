@@ -583,12 +583,12 @@
     i18next-fs-backend "^1.0.8"
     tslib "^2.1.0"
 
-"@sapphire/plugin-logger@1.0.6":
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/@sapphire/plugin-logger/-/plugin-logger-1.0.6.tgz#bb3dd824378738fbe861675d84f071af28cfe03f"
-  integrity sha512-/nviLlgGvwZ4XMHeHJ0s0il6bNgV2m6MhDNUiIr2o47fx5JaxKI0PSYN8qoIT3BdYYDM5b1vRn944TrkVKlpGQ==
+"@sapphire/plugin-logger@1.0.8":
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/@sapphire/plugin-logger/-/plugin-logger-1.0.8.tgz#3d24ebd124293109994884a325f2d5ce9dcf047b"
+  integrity sha512-e9pBGmXgZADhjcHevabyO/n0bdSdojG+qyhMrMLr2/rdBMBlUK+pecaE0fGFe40V2veJJ9/GyPukECDYQfhpRQ==
   dependencies:
-    "@sapphire/time-utilities" "^1.2.7"
+    "@sapphire/time-utilities" "^1.2.9"
     colorette "^1.2.1"
     tslib "^2.1.0"
 
@@ -601,13 +601,6 @@
   version "1.1.5"
   resolved "https://registry.yarnpkg.com/@sapphire/ratelimits/-/ratelimits-1.1.5.tgz#04bbc9488d890d30e9b6541cab04f26663f97d0f"
   integrity sha512-7HzQrW3naxZTq1LN0oGzGX/xVDFWMWnfmPA1Z1erEO1DPd3hEo+CD6V/bEd3vWh7/XBAX5L+KMvlenvMQNy3wg==
-
-"@sapphire/time-utilities@^1.2.7":
-  version "1.2.7"
-  resolved "https://registry.yarnpkg.com/@sapphire/time-utilities/-/time-utilities-1.2.7.tgz#381cf8e36719fe1b02445c79102498adaaa47b5f"
-  integrity sha512-iNozGuQ5w0BIO+AXGjKmVNtUq9f9bbffrIv0htyVioxIgpiow6aKQpKK6AsnTVh0nVArTxB0RCVxuBG7dwe07A==
-  dependencies:
-    "@sapphire/utilities" "^1.4.3"
 
 "@sapphire/time-utilities@^1.2.9":
   version "1.2.9"
@@ -625,11 +618,6 @@
   version "1.1.5"
   resolved "https://registry.yarnpkg.com/@sapphire/type/-/type-1.1.5.tgz#3c7e5b37b36e82df6ca53437d03d6d43fc9f2681"
   integrity sha512-1IZvaatSo3MmqmsWueYnMCHvGEk1K/3TS5GwVu4dc2Eb2Hgj1ao/7Sv4Ag8KdJV0FgrcL8l4IFvyXslkWbj6Kg==
-
-"@sapphire/utilities@^1.4.3":
-  version "1.4.3"
-  resolved "https://registry.yarnpkg.com/@sapphire/utilities/-/utilities-1.4.3.tgz#cf5540ee79fdb63c9af64754c9db6d533f58c812"
-  integrity sha512-OS4Tvimwqa2iKusNeP3rPd3RnoRazbKHh1ANEzwbE6zawSTPstcehmIYJ1G02eDae/45H1nrOg37O67eAY8uOw==
 
 "@sapphire/utilities@^1.4.4":
   version "1.4.4"
