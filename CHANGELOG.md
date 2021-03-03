@@ -2,6 +2,21 @@
 
 All notable changes to Godfather will be documented in this file.
 
+## v1.3.0
+
+### Bug Fixes:
+
+-   Fixed a bug that broke server-settings in certain guilds.
+-   Fixed a bug that prevented transporters from transporting players that targetted Veterans.
+-   The `mafsix` setup cannot have double Goons anymore.
+
+### Features:
+
+-   **Internationalization support**: As of v1.3.0, Godfather officially supports multiple languages including Portuguese, Dutch, Hindi, Turkish, and German. If you would like to help translate Godfather into your own language, join the Discord server.
+-   Added the `set-language` command for modifying language settings.
+-   Made the **help** command a lot more useful, adding more documentation, examples and much more!
+-   During reboots, Godfather now tells you the bot has rebooted and will delete your game.
+
 ## v1.2.2
 
 ### Bug Fixes:

@@ -4,6 +4,6 @@ import { ApplyOptions } from '@sapphire/decorators';
 
 @ApplyOptions<SetupOptions>({
 	name: 'mafsix',
-	roles: ['Random Town x4', 'Goon', 'Random Mafia']
+	roles: ['Random Town x4', 'Goon', 'Random Mafia - {Goon}']
 })
 export default class extends BasicSetup {}
