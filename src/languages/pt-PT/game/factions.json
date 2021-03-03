@@ -1,13 +1,13 @@
 {
-	"channelTopic": "Discussion channel for {{faction}}.",
-	"amnesiacWinCondition": "Remember a role and satisfy its win condition.",
-	"cultWinCondition": "Convert everyone to your side.",
-	"executionerWinCondition": "Eliminate your target at all costs.",
-	"guardianAngelWinCondition": "Keep your target alive.",
-	"jesterWinCondition": "Get eliminated by all means necessary.",
-	"nkWinCondition": "Kill everyone who would oppose you.",
-	"mafiaWinCondition": "Kill all townies and competing evil factions.",
-	"survivorWinCondition": "Live to see the end of the game.",
-	"townWinCondition": "Eliminate every evildoer.",
-	"witchWinCondition": "Survive to see the Town lose the game."
+	"channelTopic": "Canal de discussão para {{faction}}.",
+	"amnesiacWinCondition": "Se lembre de uma role e complete a condição de vitória.",
+	"cultWinCondition": "Converta todos para o seu lado.",
+	"executionerWinCondition": "Elimine seu alvo a todo custo.",
+	"guardianAngelWinCondition": "Mantenha seu alvo vivo.",
+	"jesterWinCondition": "Faça de tudo para ser eliminado.",
+	"nkWinCondition": "Mate todos que se oponham a você.",
+	"mafiaWinCondition": "Mate todos os townies e facções criminosas concorrentes.",
+	"survivorWinCondition": "Sobreviva para ver o final da partida.",
+	"townWinCondition": "Elimine todos os malfeitores.",
+	"witchWinCondition": "Sobreviva para ver a Town perder o jogo."
 }

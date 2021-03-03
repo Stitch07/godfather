@@ -1,13 +1,13 @@
 {
-	"channelTopic": "Discussion channel for {{faction}}.",
-	"amnesiacWinCondition": "Remember a role and satisfy its win condition.",
-	"cultWinCondition": "Convert everyone to your side.",
-	"executionerWinCondition": "Eliminate your target at all costs.",
-	"guardianAngelWinCondition": "Keep your target alive.",
-	"jesterWinCondition": "Get eliminated by all means necessary.",
-	"nkWinCondition": "Kill everyone who would oppose you.",
-	"mafiaWinCondition": "Kill all townies and competing evil factions.",
-	"survivorWinCondition": "Live to see the end of the game.",
-	"townWinCondition": "Eliminate every evildoer.",
-	"witchWinCondition": "Survive to see the Town lose the game."
+	"channelTopic": "Discussiechannel voor {{faction}}.",
+	"amnesiacWinCondition": "Herinner een rol en voldoe aan diens winconditie.",
+	"cultWinCondition": "Bekeer iedereen tot jouw sekte.",
+	"executionerWinCondition": "Elimineer je doelwit.",
+	"guardianAngelWinCondition": "Bescherm je doelwit.",
+	"jesterWinCondition": "Word geëlimineerd.",
+	"nkWinCondition": "Ruim iedereen tegen jou uit de weg.",
+	"mafiaWinCondition": "Ruim alle dorpelingen en andere slechteriken uit de weg.",
+	"survivorWinCondition": "Overleef het hele spel.",
+	"townWinCondition": "Ruim alle slechteriken uit de weg.",
+	"witchWinCondition": "Overleef het hele spel om het dorp zien te verliezen."
 }

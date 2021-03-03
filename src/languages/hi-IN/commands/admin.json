@@ -3,6 +3,9 @@
 	"disableChannelView": "**Disabled Channels**: {{channels, listAnd}}",
 	"disableChannelAdded": "Disabled Channel(s): {{channels, listAnd}}",
 	"disableChannelRemoved": "Enabled Channel(s): {{channels, listAnd}}",
+	"setServerSettings": "**Server Settings**",
+	"setGameSettings": "**Game Settings**",
+	"setDuplicate": "The value of **{{key}}** is already `{{value}}`",
 	"setLanguageView": [
 		"The language in this server is set to **{{currentLanguage}}**.",
 		"Use `set-language <language>` to update it.",

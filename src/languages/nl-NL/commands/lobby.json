@@ -10,7 +10,7 @@
 	"closeSuccess": "{{GREENTICK}} Spelersmaximum nu ingesteld op {{count}}**.",
 	"createMaintenanceMode": "De bot wordt nu onderhouden. Er kunnen geen nieuwe spellen aangemaakt worden.",
 	"createGameCreated": "Een spel Maffia gestart in {{channel}} door **{{host}}**. Gebruik `{{prefix}}join` om mee te doen.",
-	"createPlayersAdded": "Added {{players, listAnd}} via reaction.",
+	"createPlayersAdded": "{{players, listAnd}} werden per reactie toegevoegd.",
 	"deleteConfirmation": "Weet je zeker dat je dit spel wilt verwijderen?",
 	"joinAlreadyJoined": "Je zit al in dit spel.",
 	"joinReplacingBetweenPhases": "Je kunt iemand niet vervangen tussen twee fasen in.",
