@@ -32,7 +32,7 @@ export default class extends GodfatherCommand {
 		}
 
 		if (game!.setup!.totalPlayers !== game!.players.length)
-			throw await message.resolveKey('commands/mafia:startWrongPlayercount', { setup: game!.setup!.name, playerCount: game!.players!.length });
+			throw await message.resolveKey('commands/mafia:startWrongPlayerCount', { setup: game!.setup!.name, playerCount: game!.players!.length });
 
 		if (game!.settings.numberedNicknames && message.guild!.me?.hasPermission('MANAGE_NICKNAMES')) {
 			for (const plr of game!.players) {

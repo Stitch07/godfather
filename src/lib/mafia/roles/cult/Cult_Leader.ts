@@ -23,7 +23,7 @@ class CultLeader extends SingleTarget {
 
 	public constructor(player: Player) {
 		super(player);
-		this.description = this.game.t('roles/town:cultLeaderDescription');
+		this.description = this.game.t('roles/cult:cultLeaderDescription');
 		this.actionText = this.game.t('roles/actions:cultLeaderText');
 		this.actionGerund = this.game.t('roles/actions:cultLeaderGerund');
 	}

@@ -28,7 +28,7 @@ export default class extends GodfatherCommand {
 		if (game!.hasStarted || game!.players.length === game!.settings.maxPlayers) {
 			if (game!.players.replacements.includes(message.author)) throw await message.resolveKey('commands/lobby:joinAlreadyReplacement');
 			game!.players.replacements.push(message.author);
-			return message.channel.sendTranslated('joinSuccessfulReplacement');
+			return message.channel.sendTranslated('commands/lobby:joinSuccessfulReplacement');
 		}
 
 		game!.players.push(new Player(message.author, game!));
