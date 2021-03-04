@@ -417,7 +417,7 @@ export default class Game {
 			[
 				data.winningFaction === undefined
 					? this.t('game/endgame:noWinner')
-					: this.t('game/endgame:factionWin', [{ winningFaction: data.winningFaction.name }]),
+					: this.t('game/endgame:factionWin', { winningFaction: data.winningFaction.name }),
 				data.independentWins.length === 0
 					? null
 					: this.t('game/endgame:independentWins', [
