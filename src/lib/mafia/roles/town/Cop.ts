@@ -32,7 +32,7 @@ class Cop extends SingleTarget {
 			innocence = !innocence;
 			actions.framedPlayers.splice(actions.framedPlayers.indexOf(target), 1);
 		}
-		return this.player.queueMessage(this.game.t(innocence ? 'roles/town:copResultInnocent' : 'copResultSuspicious'));
+		return this.player.queueMessage(this.game.t(innocence ? 'roles/town:copResultInnocent' : 'roles/town:copResultSuspicious'));
 	}
 
 	public innocenceModifier(innocence: boolean) {
