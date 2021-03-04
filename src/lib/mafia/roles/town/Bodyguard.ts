@@ -55,7 +55,7 @@ class Bodyguard extends SingleTarget {
 		const success = target.user.id !== this.player.user.id && record.result && record.by.includes(this.player);
 
 		if (success) {
-			return target.queueMessage(this.game.t('bodyguardSave'));
+			return target.queueMessage(this.game.t('roles/town:bodyguardSave'));
 		}
 	}
 
