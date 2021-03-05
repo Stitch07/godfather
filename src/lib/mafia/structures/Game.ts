@@ -272,7 +272,7 @@ export default class Game {
 		this.phase = Phase.Standby;
 		if (!player.isAlive) return;
 		// super saint forces a hammer
-		if (this.settings.enableTrials && !force && player.role.name !== 'Super Saint') {
+		if (this.settings.trials && !force && player.role.name !== 'Super Saint') {
 			this.votes.playerOnTrial = player;
 			// any time remaining in this day carries over
 			this.dayTimeLeft = Date.now() > this.phaseEndAt!.getTime() ? 0 : this.phaseEndAt!.getTime() - Date.now();
@@ -306,7 +306,7 @@ export default class Game {
 		if (this.phaseEndAt && Date.now() > this.phaseEndAt.getTime()) {
 			switch (this.phase) {
 				case Phase.Day: {
-					if (this.settings.enablePlurality) {
+					if (this.settings.pluralityVotes) {
 						let largestVoteCount = 0;
 						for (const player of this.players) {
 							largestVoteCount = Math.max(largestVoteCount, this.votes.on(player).count());
@@ -576,13 +576,13 @@ export interface GameSettings {
 	nightDuration: number;
 	overwritePermissions: boolean;
 	maxPlayers: number;
-	disableWhispers: boolean;
+	whispers: boolean;
 	numberedNicknames: boolean;
 	muteAtNight: boolean;
 	adaptiveSlowmode: boolean;
-	disableWills: boolean;
-	enableTrials: boolean;
-	enablePlurality: boolean;
+	wills: boolean;
+	trials: boolean;
+	pluralityVotes: boolean;
 	maxTrials: number;
 }
 

@@ -8,7 +8,7 @@ export class AddTrials1610459959481 implements MigrationInterface {
 			new TableColumn({
 				name: 'enable_trials',
 				type: 'boolean',
-				default: DEFAULT_GAME_SETTINGS.enableTrials,
+				default: false,
 				isNullable: false
 			})
 		);

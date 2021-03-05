@@ -27,7 +27,7 @@ export default class GuildSettingsEntity implements GameSettings {
 	public overwritePermissions = true;
 
 	@Column('boolean', { default: false })
-	public disableWhispers = false;
+	public whispers = false;
 
 	@Column('varchar', { length: 19, array: true, default: () => 'ARRAY[]::VARCHAR[]' })
 	public disabledChannels: string[] = [];
@@ -42,13 +42,13 @@ export default class GuildSettingsEntity implements GameSettings {
 	public adaptiveSlowmode = false;
 
 	@Column('boolean', { default: false })
-	public disableWills = false;
+	public wills = false;
 
 	@Column('boolean', { default: false })
-	public enableTrials = false;
+	public trials = false;
 
 	@Column('boolean', { default: false })
-	public enablePlurality = true;
+	public pluralityVotes = false;
 
 	@Column('integer', { default: DEFAULT_GAME_SETTINGS.maxTrials })
 	public maxTrials = DEFAULT_GAME_SETTINGS.maxTrials;

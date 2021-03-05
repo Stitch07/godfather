@@ -1,4 +1,3 @@
-import { DEFAULT_GAME_SETTINGS } from '@lib/constants';
 import { MigrationInterface, QueryRunner, TableColumn } from 'typeorm';
 
 export class AddDisableWhispers1606227819985 implements MigrationInterface {
@@ -8,7 +7,7 @@ export class AddDisableWhispers1606227819985 implements MigrationInterface {
 			new TableColumn({
 				name: 'disable_whispers',
 				type: 'boolean',
-				default: DEFAULT_GAME_SETTINGS.disableWhispers,
+				default: true,
 				isNullable: false
 			})
 		);
