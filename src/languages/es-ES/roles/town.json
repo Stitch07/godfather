@@ -14,6 +14,7 @@
 	"crusaderDescription": "You may protect someone every night, attacking one randomly selected visitor if your target is visited.",
 	"crusaderAttackedBy": "You were attacked by a Crusader!",
 	"crusaderFoughtOff": "You were attacked but somebody fought off your attacker!",
+	"doctorDescription": "You may heal someone every night, and self-heal once.",
 	"doctorHealed": "You were attacked but somebody nursed you back to health!",
 	"doctorSelfHealOnce": "You can self-heal once per game.",
 	"doctorHealMayor": "You cannot heal a confirmed Mayor.",

@@ -14,6 +14,7 @@
 	"crusaderDescription": "Você pode proteger alguém toda noite, atacando um visitante aleatório caso seu alvo receba visitas.",
 	"crusaderAttackedBy": "Você foi atacado por um Crusader!",
 	"crusaderFoughtOff": "Você foi atacado mas alguém lutou contra o assassino!",
+	"doctorDescription": "You may heal someone every night, and self-heal once.",
 	"doctorHealed": "Você foi atacado mas alguém te curou!",
 	"doctorSelfHealOnce": "Você pode se curar uma vez por partida.",
 	"doctorHealMayor": "Você não pode curar um Mayor confirmado.",

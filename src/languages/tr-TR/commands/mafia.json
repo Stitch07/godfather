@@ -10,7 +10,7 @@
 	"roleinfoNoDocumentation": "{{role}} için döküman yok",
 	"rolepmFail": "Sana DM atamadım! DM'lerini aç ve bu komutu tekrar çalıştır.",
 	"setwillDead": "Ölü bir oyuncu olarak vasiyet ayarlayamazsın.",
-	"setwillMaxmimumLines": "Vasiyetlerde {{max}}'den fazla satır bulunamaz.",
+	"setwillMaximumLines": "Wills cannot have more than {{max}} lines.",
 	"setwillSuccess": "Vasiyetiniz kaydedildi.",
 	"showWillDisabled": "Bu oyunda vasiyetler devre dışıdır.",
 	"showWillInvalidTarget": "Sadece kendinin ya da ölü bir oyuncunun vasiyetine bakabilirsin",

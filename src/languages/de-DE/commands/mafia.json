@@ -10,7 +10,7 @@
 	"roleinfoNoDocumentation": "No documentation for {{role}} available",
 	"rolepmFail": "I couldn't DM you! Enable your DMs and run this command again.",
 	"setwillDead": "You cannot set a will as a dead player.",
-	"setwillMaxmimumLines": "Wills cannot have more than {{max}} lines.",
+	"setwillMaximumLines": "Wills cannot have more than {{max}} lines.",
 	"setwillSuccess": "Your will has been set.",
 	"showWillDisabled": "Wills are disabled in this game.",
 	"showWillInvalidTarget": "You can only check your own or a dead player's will",

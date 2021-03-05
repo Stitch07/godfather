@@ -34,6 +34,7 @@
 	"juggernautAssault": "Você foi espancado por um Juggernaut!",
 	"juggernautFullMoonOnly": "Você atualmente só pode atacar em luas cheias.",
 	"serialKillerDescription": "Você pode esfaquear alguém toda noite.",
+	"serialKillerParticiple": "stabbed",
 	"survivorDescription": "Você pode se proteger {{count}} vezes em uma partida.",
 	"survivorDescriptionPlural": "Você pode se proteger {{count}} vezes em uma partida.",
 	"survivorNoVests": "Você não tem nenhum colete sobrando.",

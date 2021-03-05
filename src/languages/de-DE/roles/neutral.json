@@ -34,6 +34,7 @@
 	"juggernautAssault": "You were assaulted by a Juggernaut!",
 	"juggernautFullMoonOnly": "You currently can only attack on full moons.",
 	"serialKillerDescription": "You may stab someone every night.",
+	"serialKillerParticiple": "stabbed",
 	"survivorDescription": "You may vest {{count}} time in a game.",
 	"survivorDescriptionPlural": "You may vest {{count}} times in a game.",
 	"survivorNoVests": "You don't have any vests left.",
