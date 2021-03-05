@@ -1,4 +1,3 @@
-import { DEFAULT_GAME_SETTINGS } from '@lib/constants';
 import { MigrationInterface, QueryRunner, TableColumn } from 'typeorm';
 
 export class AddPluralityVoting1611297439144 implements MigrationInterface {
@@ -8,7 +7,7 @@ export class AddPluralityVoting1611297439144 implements MigrationInterface {
 			new TableColumn({
 				name: 'enable_plurality',
 				type: 'boolean',
-				default: DEFAULT_GAME_SETTINGS.enablePlurality,
+				default: false,
 				isNullable: false
 			})
 		);

@@ -80,11 +80,11 @@ export default class Player {
 	public displayRoleAndWill(night = false): string {
 		const roleText = this.game.t(this.cleaned && night ? 'game/players:roleCleaned' : 'game/players:displayRole', { role: this.role.display });
 
-		const willText = this.game.settings.disableWills
-			? ''
-			: this.will && !(this.cleaned && night)
-			? this.game.t('game/players:displayWill')
-			: this.game.t('game/players:noWill');
+		const willText = this.game.settings.wills
+			? this.will && !(this.cleaned && night)
+				? this.game.t('game/players:displayWill')
+				: this.game.t('game/players:noWill')
+			: '';
 
 		return `${roleText} ${willText}`;
 	}

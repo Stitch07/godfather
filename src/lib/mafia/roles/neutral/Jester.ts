@@ -41,7 +41,7 @@ class Jester extends SingleTarget {
 		if (this.player.deathReason.includes('eliminated')) {
 			this.wasEliminated = true;
 			// in trials, jester can haunt people who don't vote innocent
-			this.playersVoting = this.game.settings.enableTrials
+			this.playersVoting = this.game.settings.trials
 				? this.game.votes.trialVotes.filter((vote) => vote.type !== TrialVoteType.Innocent).map((vote) => vote.by)
 				: this.game.votes.on(this.player).map((vote) => vote.by);
 

@@ -18,7 +18,7 @@ export default class extends GodfatherCommand {
 		const game = this.context.client.games.find((game) => Boolean(game.players.get(message.author)));
 		if (!game) throw await message.resolveKey('preconditions:NoActiveGames');
 
-		if (game.settings.disableWills) throw await message.resolveKey('commands/mafia:showWillDisabled');
+		if (!game.settings.wills) throw await message.resolveKey('commands/mafia:showWillDisabled');
 		if (!game.hasStarted) throw await message.resolveKey('preconditions:GameStartedOnly');
 
 		const player = game.players.get(message.author)!;

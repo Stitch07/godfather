@@ -22,13 +22,13 @@ export const DEFAULT_GAME_SETTINGS: GameSettings = {
 	nightDuration: Time.Minute * 2,
 	overwritePermissions: true,
 	maxPlayers: 18,
-	disableWhispers: false,
+	whispers: false,
 	numberedNicknames: false,
 	muteAtNight: false,
 	adaptiveSlowmode: false,
-	disableWills: false,
-	enableTrials: false,
-	enablePlurality: false, // This could be refactored into an enum. For now, don't enable both trials and plurality at once.
+	wills: false,
+	trials: false,
+	pluralityVotes: false, // This could be refactored into an enum. For now, don't enable both trials and plurality at once.
 	maxTrials: 2
 };
 
@@ -69,7 +69,7 @@ export const GUILD_SETTINGS_METADATA: SettingsEntry<keyof ArgType>[] = [
 		display: (value: number) => value.toString()
 	},
 	{
-		name: 'disableWhispers',
+		name: 'whispers',
 		type: 'boolean',
 		display: (value: boolean) => (value ? 'Enabled' : 'Disabled')
 	},
@@ -89,12 +89,12 @@ export const GUILD_SETTINGS_METADATA: SettingsEntry<keyof ArgType>[] = [
 		display: (value: boolean) => (value ? 'Enabled' : 'Disabled')
 	},
 	{
-		name: 'disableWills',
+		name: 'wills',
 		type: 'boolean',
 		display: (value: boolean) => (value ? 'Enabled' : 'Disabled')
 	},
 	{
-		name: 'enableTrials',
+		name: 'trials',
 		type: 'boolean',
 		display: (value: boolean) => (value ? 'Enabled' : 'Disabled')
 	},
@@ -106,7 +106,7 @@ export const GUILD_SETTINGS_METADATA: SettingsEntry<keyof ArgType>[] = [
 		display: (value: number) => value.toString()
 	},
 	{
-		name: 'enablePlurality',
+		name: 'pluralityVotes',
 		type: 'boolean',
 		display: (value: boolean) => (value ? 'Enabled' : 'Disabled')
 	}
