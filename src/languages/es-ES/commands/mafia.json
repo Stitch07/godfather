@@ -10,7 +10,7 @@
 	"roleinfoNoDocumentation": "No información para {{role}} está disponible",
 	"rolepmFail": "¡No pude mandarte un Mensaje Directo! Activa tus Mensajes Directos y usa este comando otra vez.",
 	"setwillDead": "No puedes hacer un testamento como un jugador eliminado.",
-	"setwillMaxmimumLines": "Wills cannot have more than {{max}} lines.",
+	"setwillMaximumLines": "Wills cannot have more than {{max}} lines.",
 	"setwillSuccess": "Your will has been set.",
 	"showWillDisabled": "Testamentos están desactivados en este juego.",
 	"showWillInvalidTarget": "Solo puedes checar el testamento tuyo o de una persona eliminado",
