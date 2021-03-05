@@ -1,5 +1,6 @@
 import Game, { Phase } from '@mafia/structures/Game';
 import type Player from '@mafia/structures/Player';
+import { canManage } from '@root/lib/util/utils';
 import type { User } from 'discord.js';
 
 export interface PlayerManagerShowOptions {
@@ -114,6 +115,16 @@ export default class PlayerManager extends Array<Player> {
 
 		if (this.game.phase === Phase.Night && Reflect.get(player.role, 'actionPhase') === Phase.Night) await player.role.onNight();
 		else if (this.game.phase === Phase.Day && Reflect.get(player.role, 'actionPhase') === Phase.Day) await player.role.onDay();
+
+		if (this.game.settings.numberedNicknames && this.game.channel.guild.me!.hasPermission('MANAGE_NICKNAMES')) {
+			const member = await this.game.channel.guild!.members.fetch(player.user.id)!;
+			if (this.game.channel.guild.me && canManage(this.game.channel.guild!.me, member)) {
+				await member
+					.setNickname(`[${this.game.players.indexOf(player) + 1}] ${member!.displayName}`)
+					.then(() => this.game.numberedNicknames.add(member))
+					.catch(() => null);
+			}
+		}
 	}
 
 	private getPlayerFlags(player: Player) {

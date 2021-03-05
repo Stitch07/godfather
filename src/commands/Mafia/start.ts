@@ -37,11 +37,9 @@ export default class extends GodfatherCommand {
 		if (game!.settings.numberedNicknames && message.guild!.me?.hasPermission('MANAGE_NICKNAMES')) {
 			for (const plr of game!.players) {
 				const member = await message.guild!.members.fetch(plr.user.id)!;
-				// eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-				const pos = game!.players.indexOf(plr) + 1;
 				if (message.guild!.me && canManage(message.guild!.me, member)) {
 					await member
-						.setNickname(`[${pos}] ${member!.displayName}`)
+						.setNickname(`[${game!.players.indexOf(plr) + 1}] ${member!.displayName}`)
 						.then(() => game!.numberedNicknames.add(member))
 						.catch(() => null);
 				}
