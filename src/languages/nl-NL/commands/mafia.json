@@ -10,7 +10,7 @@
 	"roleinfoNoDocumentation": "Ik kon geen informatie vinden over {{role}}.",
 	"rolepmFail": "Ik kon je geen dm sturen! Schakel dm's in en probeer het opnieuw.",
 	"setwillDead": "Als dode kun je geen testament opstellen.",
-	"setwillMaxmimumLines": "Testamenten kunnen niet langer zijn dan {{max}} regels.",
+	"setwillMaximumLines": "Wills cannot have more than {{max}} lines.",
 	"setwillSuccess": "Je testament is nu opgeslagen.",
 	"showWillDisabled": "Testamenten zijn uitgeschakeld voor dit spel.",
 	"showWillInvalidTarget": "Je kunt alleen je eigen testament bekijken of die van een dode.",
