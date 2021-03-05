@@ -286,7 +286,7 @@ export default class Game {
 				votes: this.votes.show({ header: this.t('game/trials:votesShowHeader'), codeblock: true })
 			}
 		]);
-		await player.kill(this.t('game/trials:playerEliminatedKill', [{ cycle: this.cycle }]));
+		await player.kill(this.t('game/trials:playerEliminatedKill', { cycle: this.cycle }));
 		this.idlePhases = 0;
 
 		await this.startNight();

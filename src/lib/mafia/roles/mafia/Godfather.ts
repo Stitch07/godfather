@@ -8,7 +8,7 @@ class Godfather extends Killer {
 
 	public constructor(player: Player) {
 		super(player);
-		this.description = this.game.t('roles/neutral:godfatherDescription');
+		this.description = this.game.t('roles/mafia:godfatherDescription');
 	}
 
 	public setUp(actions: NightActionsManager) {

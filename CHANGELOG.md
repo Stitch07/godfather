@@ -2,6 +2,12 @@
 
 All notable changes to Godfather will be documented in this file.
 
+## v1.3.1
+
+### Bug Fixes:
+
+-   Fixed various language string errors.
+
 ## v1.3.0
 
 ### Bug Fixes:
