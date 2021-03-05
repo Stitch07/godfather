@@ -10,7 +10,7 @@
 	"roleinfoNoDocumentation": "Não há documentação para a role {{role}} disponível",
 	"rolepmFail": "Não consegui lhe enviar uma mensagem privada! Habilite suas mensagens e tente rodar este comando novamente.",
 	"setwillDead": "Você não pode definir um testamento estando morto.",
-	"setwillMaxmimumLines": "Testamentos não podem ter mais de {{max}} linhas.",
+	"setwillMaximumLines": "Wills cannot have more than {{max}} lines.",
 	"setwillSuccess": "Seu testamento foi definido.",
 	"showWillDisabled": "Testamentos estão desativados nesta partida.",
 	"showWillInvalidTarget": "Você só pode checar o seu próprio testamento ou de um jogador morto",
