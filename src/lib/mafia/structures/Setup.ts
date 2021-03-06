@@ -17,7 +17,12 @@ export const DEFAULT_SETUP_OPTIONS = {
 	roles: [] as string[]
 };
 
-export default abstract class Setup extends Piece {
+export interface ISetup {
+	roles: string[];
+	nightStart: boolean;
+}
+
+export default abstract class Setup extends Piece implements ISetup {
 	public roles: string[];
 	public nightStart: boolean;
 	public description: string | null = null;

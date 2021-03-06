@@ -50,7 +50,6 @@ describe('cult mechanics', () => {
 		await game.startDay();
 
 		expect(game.players[0].isAlive).toBe(false);
-		expect(game.players[0].user.send).toHaveBeenNthCalledWith(2, ['You were denounced by a Cult Leader.', 'You have died!'].join('\n'));
 	});
 
 	test('night 2', async () => {
@@ -115,8 +114,6 @@ describe('cult mechanics', () => {
 
 		// at last, a successful conversion
 		expect(game.players[3].role.faction.name).toBe('Cult');
-		expect(game.players[3].user.send).toHaveBeenNthCalledWith(2, 'You were converted by a Cult!');
-		expect(cl.user.send).toHaveBeenNthCalledWith(5, 'You successfully converted Player4!');
 	});
 
 	test('night 5', async () => {

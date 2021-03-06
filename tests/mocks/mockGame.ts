@@ -39,6 +39,9 @@ export const createMockGame = (params: MockGameParams) => {
 		createMockChannel({ name: 'godfather-test' }),
 		DEFAULT_GAME_SETTINGS
 	);
+	// create a fake t() implementation
+	// @ts-ignore mocking is hard
+	game.t = (key) => key;
 	for (let i = 2; i <= params.numPlayers; i++) {
 		// @ts-ignore type instantiation bs
 		const player = new Player(createMockUser({ username: `Player${i}`, discriminator: `000${i}` }), game);
