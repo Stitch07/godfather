@@ -37,7 +37,7 @@
 		"users": "**Users**",
 		"channels": "**Channels**",
 		"cpuLoad": "**CPU Load**",
-		"ramUsed": "**RAM Used**",
+		"ramUsed": "**RAM Usado**",
 		"uptime": "**Uptime**"
 	}
 }
