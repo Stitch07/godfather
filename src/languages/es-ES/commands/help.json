@@ -2,55 +2,55 @@
 	"changehostDescription": "Vota para cambiar el anfitrión.",
 	"changehostDetailed": {
 		"extendedHelp": [
-			"With a majority vote, the next player in the player-list will become the host.",
-			"Hosts can use this command to automatically change the host (without a vote)."
+			"Con el voto mayoritario, el siguiente jugador de la lista se convertirá en el anfitrión.",
+			"Los anfitriones pueden utilizar este comando para cambiar automáticamente el anfitrión (Sin votar)."
 		]
 	},
-	"closeDescription": "Closes a game lobby, preventing more players from joining it.",
+	"closeDescription": "Cierra la sala de una partida, impiediendo que se unan más jugadores.",
 	"closeDetailed": {
-		"reminder": "The close command is now deprecated, and will be removed in future updates."
+		"reminder": "El comando de cerrar es obsoleto, y sera borrado en futuras actualizaciones."
 	},
-	"createDescription": "Creates a lobby in the current channel.",
+	"createDescription": "Crea una sala en el canal actual.",
 	"createDetailed": {
 		"extendedHelp": [
-			"After creating a game, players can join using `{{prefix}}join`, or by clicking the {{GREENTICK}} emoji.",
-			"When you have enough players, start playing using `{{prefix}}start`."
+			"Después de crear una partida, los jugadores pueden unirse usando `{{prefix}}join`, o haciendo click en el {{GREENTICK}} emoji.",
+			"Cuando haya suficientes jugadores, empieza a jugar usando `{{prefix}}start`."
 		]
 	},
 	"deleteDescription": "Elimina una partida en curso.",
-	"joinDescription": "Adds you to the playerlist of an ongoing game.",
+	"joinDescription": "Te añade a la lista de jugadores de una partida en curso.",
 	"joinDetailed": {
-		"extendedHelp": "If the player-list is full or the game has already started, you will be added as a replacement instead."
+		"extendedHelp": "Si la lista de jugadores está llena o la partida ya ha empezado, te unirás como un sustituto."
 	},
-	"leaveDescription": "Removes you from an ongoing game.",
+	"leaveDescription": "Te elimina de una partida en curso.",
 	"leaveDetailed": {
-		"extendedHelp": "If the game has already started, you will be replaced or mod-killed."
+		"extendedHelp": "Si la partida ya ha empezado, serás reemplazado o asesinado por un mod."
 	},
-	"openDescription": "Opens a game lobby, allowing people to join again.",
+	"openDescription": "Abre la sala de una partida, permitiendo a jugadores que se vuelvan a unir.",
 	"openDetailed": {
-		"reminder": "The open command is now deprecated, and will be removed in future updates."
+		"reminder": "El comando de abrir es obsoleto, y será borrado en futuras actualizaciones."
 	},
-	"playerlistDescription": "Shows the playerlist of an ongoing game.",
-	"removeDescription": "Removes a player from the game.",
+	"playerlistDescription": "Muestra la lista de jugadores de una partida en curso.",
+	"removeDescription": "Elimina a un jugador de la partida.",
 	"removeDetailed": {
 		"usages": [
 			"@Player"
 		],
-		"reminder": "If the game has already started, you can only remove players who are AFK (and don't respond to a 45 second prompt)."
+		"reminder": "Si la partida ya ha empezado, solo puedes eliminar jugadores que estén AFK (Y no respondan a un aviso de 45 segundos)."
 	},
-	"remainingDescription": "Shows when the current day/night ends.",
+	"remainingDescription": "Muestra cuando el día/noche acaba.",
 	"roleinfoDescription": "Displays a list of all roles in Godfather, and shows information on a specific role.",
 	"roleinfoDetailed": {
 		"usages": [
 			"",
-			"Role"
+			"Rol"
 		]
 	},
-	"rolepmDescription": "Sends you your role PM.",
+	"rolepmDescription": "Te envía tu mensaje privado con tu rol.",
 	"rolepmDetailed": {
 		"reminder": "Make sure your DMs are enabled before running this command."
 	},
-	"setwillDescription": "Set your will.",
+	"setwillDescription": "Haz tu testamento.",
 	"setwillDetailed": {
 		"usages": [
 			"WillText",
@@ -58,7 +58,7 @@
 		],
 		"extendedHelp": [
 			"To add text to the end of your will, use the --append flag.",
-			"Wills can be only 8 lines long."
+			"Los testamentos solo pueden ser de 8 líneas."
 		],
 		"examples": [
 			"Bodyguard, N1: 5",
@@ -69,34 +69,34 @@
 	"setupinfoDetailed": {
 		"usages": [
 			"",
-			"Setup"
+			"Configuración"
 		],
 		"examples": [
 			"ss3"
 		]
 	},
-	"showwillDescription": "Shows your current will.",
+	"showwillDescription": "Muestra tu actual testamento.",
 	"showwillDetailed": {
-		"extendedHelp": "To set your will, use the `set-will` command.",
+		"extendedHelp": "Para hacer tu testamento, usa el comando `set-will`.",
 		"reminder": "You can only run this command in Direct Messages."
 	},
-	"startDescription": "Starts the game.",
+	"startDescription": "Empieza la partida.",
 	"startDetailed": {
 		"extendedHelp": "If a setup isn't provided, Godfather will find a setup with the correct amount of players.",
 		"reminder": "To view a list of all setups, use the `setup-info` command."
 	},
-	"statusDescription": "Shows useful info about the ongoing game.",
-	"usesetupDescription": "Use a custom setup.",
+	"statusDescription": "Muestra información útil sobre la partida en curso.",
+	"usesetupDescription": "Usa una configuración personalizada.",
 	"usesetupDetailed": {
 		"usages": [
 			"Roles"
 		],
 		"extendedHelp": "Do the default setups bore you? Use this command to create your own setup! Provide a list of roles (separated by commas) to use a custom setup.\nNote: To start your game at night 1, use the --nightStart or -n flag.",
 		"examples": [
-			"Cop, Goon, Doc",
+			"Policía, matón, doctor",
 			"Godfather, Consig, RT x5 --nightStart"
 		],
-		"reminder": "Support for YAML setups is now deprecated, and will be removed in future updates."
+		"reminder": "El apoyo a configuraciones YAML es obsoleto, y será eliminado en futuras actualizaciones."
 	},
 	"whisperDescription": "Secretly send a message to another player.",
 	"whisperDetailed": {
@@ -105,17 +105,17 @@
 		],
 		"extendedHelp": [
 			"All players will know that you are whispering, but not the content of your whisper.",
-			"You cannot whisper to a revealed mayor."
+			"No puedes susurrar a un alcalde revelado."
 		],
 		"examples": [
 			"3 Player4 is the Lookout"
 		]
 	},
-	"abstainDescription": "Abstain from voting in a trial.",
+	"abstainDescription": "Abstente de votar en un juicio.",
 	"abstainDetailed": {
 		"reminder": "This command can only be used during trials."
 	},
-	"guiltyDescription": "Vote guilty in a trial.",
+	"guiltyDescription": "Vota culpable en un juicio.",
 	"guiltyDetailed": {
 		"reminder": "This command can only be used during trials."
 	},
@@ -134,11 +134,11 @@
 	"helpDetailed": {
 		"usages": [
 			"",
-			"Command"
+			"Comando"
 		],
 		"examples": [
 			"",
-			"create-game"
+			"crear-partida"
 		]
 	},
 	"infoDescription": "Gives you useful information about Godfather.",
@@ -157,7 +157,7 @@
 		],
 		"reminders": "This command can only be used by users with Manage Server permissions."
 	},
-	"statsDescription": "Shows bot statistics.",
+	"statsDescription": "Muestra estadísticas del bot.",
 	"userstatsDescription": "Shows game statistics of a user.",
 	"userstatsDetailed": {
 		"usages": [
