@@ -3,9 +3,9 @@
 	"disableChannelView": "**Canales Desactivados**: {{channels, listAnd}}",
 	"disableChannelAdded": "Canal(es) Desactivado(s): {{channels, listAnd}}",
 	"disableChannelRemoved": "Canal(es) Activado(s): {{channels, listAnd}}",
-	"setServerSettings": "**Server Settings**",
-	"setGameSettings": "**Game Settings**",
-	"setDuplicate": "The value of **{{key}}** is already `{{value}}`",
+	"setServerSettings": "**Configuración del Servidor**",
+	"setGameSettings": "**Configuración del juego**",
+	"setDuplicate": "El valor de **{{key}}** ya es `{{value}}`",
 	"setLanguageView": [
 		"El idioma del servidor es **{{currentLanguage}}**.",
 		"Usa `set-language <language>` para cambiar el idioma.",
