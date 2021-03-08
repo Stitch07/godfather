@@ -1,5 +1,5 @@
 {
-	"changehostDescription": "Vote to change the host.",
+	"changehostDescription": "Vota para cambiar el anfitrión.",
 	"changehostDetailed": {
 		"extendedHelp": [
 			"With a majority vote, the next player in the player-list will become the host.",
@@ -17,7 +17,7 @@
 			"When you have enough players, start playing using `{{prefix}}start`."
 		]
 	},
-	"deleteDescription": "Deletes an ongoing game.",
+	"deleteDescription": "Elimina una partida en curso.",
 	"joinDescription": "Adds you to the playerlist of an ongoing game.",
 	"joinDetailed": {
 		"extendedHelp": "If the player-list is full or the game has already started, you will be added as a replacement instead."
