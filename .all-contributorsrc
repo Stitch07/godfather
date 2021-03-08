@@ -1,6 +1,6 @@
 {
   "projectName": "godfather",
-  "projectOwner": "Soumil07",
+  "projectOwner": "Stitch07",
   "repoType": "github",
   "repoHost": "https://github.com",
   "files": [
@@ -67,6 +67,15 @@
       "profile": "https://favware.tech",
       "contributions": [
         "tool"
+      ]
+    },
+    {
+      "login": "juliamonaco",
+      "name": "Julia Monaco",
+      "avatar_url": "https://avatars.githubusercontent.com/u/50450544?v=4",
+      "profile": "https://github.com/juliamonaco",
+      "contributions": [
+        "translation"
       ]
     }
   ],
