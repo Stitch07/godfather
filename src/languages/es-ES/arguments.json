@@ -3,7 +3,7 @@
 	"user": "{{parameter}} is not a valid user mention.",
 	"gameSetting": "{{parameter}} is not a valid setting.",
 	"playerUnknownUser": "{{parameter}} is not a valid user mention.",
-	"playerInvalid": "{{user}} is not playing the game.",
+	"playerInvalid": "{{user}} no está jugando en la partida.",
 	"piece": "An invalid piece was provided.",
 	"stringTooLong": "The provided string must be smaller than {{maximum}} characters."
 }
