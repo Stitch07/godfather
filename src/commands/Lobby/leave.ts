@@ -1,4 +1,5 @@
 import GodfatherCommand from '@lib/GodfatherCommand';
+import { canManage } from '@root/lib/util/utils';
 import { ApplyOptions } from '@sapphire/decorators';
 import type { CommandOptions } from '@sapphire/framework';
 import type { Message } from 'discord.js';
@@ -25,6 +26,14 @@ export default class extends GodfatherCommand {
 		if (await game!.players.remove(player)) {
 			await message.react('✅');
 			if (!game!.hasStarted) return;
+
+			if (game!.numberedNicknames) {
+				if (message.member!.nickname && /\[\d+\] (.+)/.test(message.member!.nickname)) {
+					const [, previousNickname] = /\[\d+\] (.+)/.exec(message.member!.nickname)!;
+					if (message.guild!.me && canManage(message.guild!.me, message.member!))
+						await message.member!.setNickname(previousNickname).catch(() => null);
+				}
+			}
 			const winCheck = game!.checkEndgame();
 			if (winCheck.ended) {
 				return game!.end(winCheck);
