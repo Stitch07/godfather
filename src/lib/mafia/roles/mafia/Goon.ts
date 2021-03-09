@@ -24,7 +24,7 @@ class Goon extends Killer {
 	}
 
 	public canUseAction() {
-		if (this.game.setup!.name === 'dethy' && this.game.cycle === 0) {
+		if (this.game.setup!.name === 'dethy' && this.game.cycle === 1) {
 			return { check: false, reason: this.game.t('roles/mafia:goonDethy') };
 		}
 		return super.canUseAction();
