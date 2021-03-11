@@ -1,8 +1,8 @@
 {
 	"bodyguardDescription": "You may guard someone every night.",
 	"bodyguardDiedDefending": "You were killed while defending your target!",
-	"bodyguardAttackerKilled": "You were killed by a Bodyguard!",
-	"bodyguardSave": "You were attacked but somebody fought off your attacker!",
+	"bodyguardAttackerKilled": "¡Has sido asesinado por un Guardaespaldas!",
+	"bodyguardSave": "¡Has sido atacado pero alguien peleo contra el agresor!",
 	"bodyguardVestOnce": "You can vest only once per game.",
 	"bodyguardCanVest": "You can vest tonight.",
 	"bodyguardCannotVest": "You cannot vest tonight.",
