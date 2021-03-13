@@ -133,7 +133,7 @@ class Arsonist extends Role {
 	}
 }
 
-Arsonist.categories = ['Evil', 'Neutral Killing'];
+Arsonist.categories = ['Random Neutral', 'Evil', 'Neutral Killing'];
 Arsonist.aliases = ['Arso'];
 
 export default Arsonist;

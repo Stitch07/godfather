@@ -70,6 +70,6 @@ class Juggernaut extends Killer {
 }
 
 Juggernaut.aliases = ['Jugg'];
-Juggernaut.categories = [...Juggernaut.categories, 'Neutral Killing', 'Evil'];
+Juggernaut.categories = [...Juggernaut.categories, 'Random Neutral', 'Neutral Killing', 'Evil'];
 
 export default Juggernaut;

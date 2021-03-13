@@ -53,6 +53,6 @@ class Witch extends DoubleTarget {
 	}
 }
 
-Witch.categories = [...Witch.categories, 'Neutral Evil', 'Evil'];
+Witch.categories = [...Witch.categories, 'Random Neutral', 'Neutral Evil', 'Evil'];
 
 export default Witch;

@@ -29,6 +29,6 @@ class Executioner extends Role {
 }
 
 Executioner.aliases = ['Exe'];
-Executioner.categories = [...Executioner.categories, 'Neutral Evil', 'Evil'];
+Executioner.categories = [...Executioner.categories, 'Random Neutral', 'Neutral Evil', 'Evil'];
 
 export default Executioner;

@@ -117,6 +117,6 @@ export interface GuardianAngelContext {
 }
 
 Guardian_Angel.aliases = ['GA'];
-Guardian_Angel.categories = [...Guardian_Angel.categories, 'Neutral Benign'];
+Guardian_Angel.categories = [...Guardian_Angel.categories, 'Random Neutral', 'Neutral Benign'];
 
 export default Guardian_Angel;

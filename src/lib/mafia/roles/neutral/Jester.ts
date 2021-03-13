@@ -72,6 +72,6 @@ class Jester extends SingleTarget {
 	}
 }
 
-Jester.categories = [...Jester.categories, 'Neutral Evil', 'Evil'];
+Jester.categories = [...Jester.categories, 'Random Neutral', 'Neutral Evil', 'Evil'];
 
 export default Jester;
