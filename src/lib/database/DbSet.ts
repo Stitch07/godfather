@@ -35,7 +35,7 @@ export class DbSet {
 		this.players = this.connection.getRepository(PlayerEntity);
 	}
 
-	private static instance: DbSet | null = null;
+	public static instance: DbSet | null = null;
 	private static connectPromise: Promise<DbSet> | null;
 
 	public static async connect() {
