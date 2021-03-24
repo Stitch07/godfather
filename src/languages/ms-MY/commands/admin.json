@@ -1,0 +1,19 @@
+{
+	"disableChannelNone": "There are no disabled channels. Disable a channel using {{prefix}}disablechannel #channel.",
+	"disableChannelView": "**Disabled Channels**: {{channels, listAnd}}",
+	"disableChannelAdded": "Disabled Channel(s): {{channels, listAnd}}",
+	"disableChannelRemoved": "Enabled Channel(s): {{channels, listAnd}}",
+	"setServerSettings": "**Server Settings**",
+	"setGameSettings": "**Game Settings**",
+	"setDuplicate": "The value of **{{key}}** is already `{{value}}`",
+	"setLanguageView": [
+		"The language in this server is set to **{{currentLanguage}}**.",
+		"Use `set-language <language>` to update it.",
+		"Languages supported in Godfather: {{validLanguages, listAnd}}"
+	],
+	"setLanguageInvalidLocale": [
+		"\"{{locale}}\" is not a valid locale.",
+		"Languages supported in Godfather: {{validLanguages, listAnd}}"
+	],
+	"setLanguageAlreadySet": "The language in this server is already set to **{{locale}}**."
+}
