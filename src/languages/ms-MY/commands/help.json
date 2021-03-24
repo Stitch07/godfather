@@ -1,71 +1,71 @@
 {
-	"changehostDescription": "Vote to change the host.",
+	"changehostDescription": "Mengundi untuk menukar hos.",
 	"changehostDetailed": {
 		"extendedHelp": [
-			"With a majority vote, the next player in the player-list will become the host.",
-			"Hosts can use this command to automatically change the host (without a vote)."
+			"Dengan pengundian majoriti, pemain yang seterusnya di senarai pemain akan menjadi hos.",
+			"Hos boleh menggunakan arahan ini untuk menukar hos secara automatik (tanpa mengundi)."
 		]
 	},
-	"closeDescription": "Closes a game lobby, preventing more players from joining it.",
+	"closeDescription": "Menutup sebuah lobi permainan, jadi penyertaan pemain baru akan dielakkan.",
 	"closeDetailed": {
-		"reminder": "The close command is now deprecated, and will be removed in future updates."
+		"reminder": "Arahan close tidak digunakan lagi, dan akan dipadamkan dalam kemas kini yang akan datang."
 	},
-	"createDescription": "Creates a lobby in the current channel.",
+	"createDescription": "Mencipta sebuah lobi di saluran semasa.",
 	"createDetailed": {
 		"extendedHelp": [
-			"After creating a game, players can join using `{{prefix}}join`, or by clicking the {{GREENTICK}} emoji.",
-			"When you have enough players, start playing using `{{prefix}}start`."
+			"Setelah mencipta sebuah permainan, pemain boleh menyertainya menggunakan `{{prefix}}join`, atau mengklik emoji {{GREENTICK}}.",
+			"Setelah anda mempunyai pemain yang mencukupi, memulakan permainan anda menggunakan `{{prefix}}start`."
 		]
 	},
-	"deleteDescription": "Deletes an ongoing game.",
-	"joinDescription": "Adds you to the playerlist of an ongoing game.",
+	"deleteDescription": "Memadamkan permainan yang sedang dijalankan.",
+	"joinDescription": "Menambah anda sebagai pemain di permainan yang sedang dijalankan.",
 	"joinDetailed": {
-		"extendedHelp": "If the player-list is full or the game has already started, you will be added as a replacement instead."
+		"extendedHelp": "Sekiranya senarai pemain sudah penuh ataupun permainan telah bermula, anda akan ditambah sebagai pengganti."
 	},
-	"leaveDescription": "Removes you from an ongoing game.",
+	"leaveDescription": "Mengeluarkan anda dari permainan yang sedang dijalankan.",
 	"leaveDetailed": {
-		"extendedHelp": "If the game has already started, you will be replaced or mod-killed."
+		"extendedHelp": "Sekiranya permainan telah bermula, anda akan diganti ataupun mod-killed."
 	},
-	"openDescription": "Opens a game lobby, allowing people to join again.",
+	"openDescription": "Membuka sebuah lobi permainan, jadi penyertaan pemain baru akan dibenarkan semula.",
 	"openDetailed": {
-		"reminder": "The open command is now deprecated, and will be removed in future updates."
+		"reminder": "Arahan open tidak digunakan lagi, dan akan dipadamkan dalam kemas kini yang akan datang."
 	},
-	"playerlistDescription": "Shows the playerlist of an ongoing game.",
-	"removeDescription": "Removes a player from the game.",
+	"playerlistDescription": "Memaparkan senarai pemain untuk permainan yang sedang dijalankan.",
+	"removeDescription": "Mengeluarkan seorang pemain dari permainan.",
 	"removeDetailed": {
 		"usages": [
-			"@Player"
+			"@Pemain"
 		],
-		"reminder": "If the game has already started, you can only remove players who are AFK (and don't respond to a 45 second prompt)."
+		"reminder": "Sekiranya permainan telah bermula, anda hanya boleh mengeluarkan pemain yang AFK (dan tidak respon selama 45 saat)."
 	},
 	"remainingDescription": "Shows when the current day/night ends.",
-	"roleinfoDescription": "Displays a list of all roles in Godfather, and shows information on a specific role.",
+	"roleinfoDescription": "Memaparkan senarai peranan di Godfather, dan memberi maklumat tentang peranan spesifik.",
 	"roleinfoDetailed": {
 		"usages": [
 			"",
-			"Role"
+			"Peranan"
 		]
 	},
-	"rolepmDescription": "Sends you your role PM.",
+	"rolepmDescription": "Menghantar PM tentang peranan anda.",
 	"rolepmDetailed": {
-		"reminder": "Make sure your DMs are enabled before running this command."
+		"reminder": "Pastikan DM anda diaktifkan sebelum menjalankan arahan ini."
 	},
-	"setwillDescription": "Set your will.",
+	"setwillDescription": "Menetapkan wasiat anda.",
 	"setwillDetailed": {
 		"usages": [
-			"WillText",
-			"--append AdditionalText"
+			"TeksWasiat",
+			"--append TeksTambahan"
 		],
 		"extendedHelp": [
-			"To add text to the end of your will, use the --append flag.",
-			"Wills can be only 8 lines long."
+			"Untuk menambah teks pada hujung wasiat anda, gunakan bendera --append.",
+			"Panjang wasiat tidak boleh melebihi 8 baris."
 		],
 		"examples": [
 			"Bodyguard, N1: 5",
 			"--append N2: 6"
 		]
 	},
-	"setupinfoDescription": "Displays a list of all setups in Godfather, and shows information on a specific setup.",
+	"setupinfoDescription": "Memaparkan senarai setup di Godfather, dan memberi maklumat tentang setup spesifik.",
 	"setupinfoDetailed": {
 		"usages": [
 			"",
@@ -75,56 +75,56 @@
 			"ss3"
 		]
 	},
-	"showwillDescription": "Shows your current will.",
+	"showwillDescription": "Memaparkan wasiat semasa anda.",
 	"showwillDetailed": {
-		"extendedHelp": "To set your will, use the `set-will` command.",
-		"reminder": "You can only run this command in Direct Messages."
+		"extendedHelp": "Untuk menetapkan wasiat anda, gunakan arahan `set-will`.",
+		"reminder": "Anda hanya boleh menjalankan arahan ini di Mesej Langsung (DM)."
 	},
-	"startDescription": "Starts the game.",
+	"startDescription": "Memulakan permainan.",
 	"startDetailed": {
-		"extendedHelp": "If a setup isn't provided, Godfather will find a setup with the correct amount of players.",
-		"reminder": "To view a list of all setups, use the `setup-info` command."
+		"extendedHelp": "Sekiranya tiada setup yang ditetapkan, Godfather akan mencari setup yang sesuai berdasarkan bilangan pemain.",
+		"reminder": "Untuk mendapatkan senarai setup, gunakan arahan `setup-info`."
 	},
-	"statusDescription": "Shows useful info about the ongoing game.",
-	"usesetupDescription": "Use a custom setup.",
+	"statusDescription": "Memaparkan maklumat berguna tentang permainan yang sedang dijalankan.",
+	"usesetupDescription": "Menggunakan setup kustom.",
 	"usesetupDetailed": {
 		"usages": [
-			"Roles"
+			"Peranan"
 		],
-		"extendedHelp": "Do the default setups bore you? Use this command to create your own setup! Provide a list of roles (separated by commas) to use a custom setup.\nNote: To start your game at night 1, use the --nightStart or -n flag.",
+		"extendedHelp": "Adakah setup default agak membosankan? Gunakan arahan ini tunjuk mencipta setup sendiri! Nyatakan senarai peranan (diasingkan dengan tanda koma) untuk menggunakan setup kustom.\nNota: Untuk memulakan permainan anda pada malam 1, gunakan bendera --nightStart atau -n.",
 		"examples": [
 			"Cop, Goon, Doc",
 			"Godfather, Consig, RT x5 --nightStart"
 		],
-		"reminder": "Support for YAML setups is now deprecated, and will be removed in future updates."
+		"reminder": "Setup YAML tidak disokong lagi, dan akan dipadamkan dalam kemas kini yang akan datang."
 	},
-	"whisperDescription": "Secretly send a message to another player.",
+	"whisperDescription": "Menghantar mesej kepada pemain lain secara rahsia.",
 	"whisperDetailed": {
 		"usages": [
-			"Number Text"
+			"Teks Nombor"
 		],
 		"extendedHelp": [
-			"All players will know that you are whispering, but not the content of your whisper.",
-			"You cannot whisper to a revealed mayor."
+			"Semua pemain akan diberitahu bahawa anda sedang berbisik, tetapi kandungan bisikan anda masih dirahsiakan.",
+			"Anda tidak boleh berbisik kepada seorang mayor terungkap."
 		],
 		"examples": [
-			"3 Player4 is the Lookout"
+			"3 Player4 ialah Lookout"
 		]
 	},
-	"abstainDescription": "Abstain from voting in a trial.",
+	"abstainDescription": "Elakkan mengundi semasa perbicaraan dijalankan.",
 	"abstainDetailed": {
-		"reminder": "This command can only be used during trials."
+		"reminder": "Arahan ini hanya boleh digunakan semasa perbicaraan dijalankan."
 	},
 	"guiltyDescription": "Vote guilty in a trial.",
 	"guiltyDetailed": {
-		"reminder": "This command can only be used during trials."
+		"reminder": "Arahan ini hanya boleh digunakan semasa perbicaraan dijalankan."
 	},
 	"innocentDescription": "Vote innocent in a trial.",
 	"innocentDetailed": {
-		"reminder": "This command can only be used during trials."
+		"reminder": "Arahan ini hanya boleh digunakan semasa perbicaraan dijalankan."
 	},
 	"noelimDescription": "Vote to not eliminate and end day early.",
-	"unvoteDescription": "Remove your vote.",
+	"unvoteDescription": "Memadamkan undian anda.",
 	"voteDescription": "Vote to eliminate a player.",
 	"votecountDescription": "Shows the current vote-count.",
 	"voteDetailed": {
@@ -134,7 +134,7 @@
 	"helpDetailed": {
 		"usages": [
 			"",
-			"Command"
+			"Arahan"
 		],
 		"examples": [
 			"",
@@ -166,7 +166,7 @@
 			"@User --role=Role",
 			"@User --faction=Faction"
 		],
-		"extendedHelp": "Use the --faction flag to filter statistics for a particular faction, and the --role flag to filter statistics for a particular role.",
+		"extendedHelp": "Gunakan bendera --faction untuk menapis statistik bagi pecahan tertentu, dan bendera --role untuk menapis statistik bagi peranan tertentu.",
 		"examples": [
 			"",
 			"@Stitch",
@@ -174,24 +174,24 @@
 			"@Stitch --faction=Mafia"
 		]
 	},
-	"disable-channelDescription": "Lets you disable the bot in certain channels.",
+	"disable-channelDescription": "Membolehkan anda untuk mematikan bot dalam saluran tertentu.",
 	"disable-channelDetailed": {
 		"usages": [
 			"",
-			"Channel1, Channel2"
+			"Saluran1, Saluran2"
 		],
-		"extendedHelp": "If a channel is already disabled, using this command again will enable it.",
+		"extendedHelp": "Sekiranya sesebuah saluran sudah dimatikan, penggunaan arahan ini akan mengaktifkannya semula.",
 		"examples": [
 			"",
-			"#general, #off-topic",
-			"#serious"
+			"#umum, #luar-topik",
+			"#serius"
 		]
 	},
-	"set-languageDescription": "Changes the server's language.",
+	"set-languageDescription": "Menukar bahasa pelayan.",
 	"set-languageDetailed": {
 		"usages": [
 			"",
-			"Language"
+			"Bahasa"
 		],
 		"extendedHelp": "Use this command without arguments to view a list of supported languages.",
 		"examples": [
@@ -199,11 +199,11 @@
 			"nl-NL"
 		]
 	},
-	"settingDescription": "View or modify game-settings.",
+	"settingDescription": "Melihat atau mengubah tetapan permainan.",
 	"settingDetailed": {
 		"usages": [
 			"",
-			"Key Value"
+			"Nilai Kunci"
 		],
 		"extendedHelp": "Settings modify game behavior. If this command is used in a channel without an active game, it will modify server-wide defaults instead.",
 		"examples": [
