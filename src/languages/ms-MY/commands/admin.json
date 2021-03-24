@@ -1,19 +1,19 @@
 {
-	"disableChannelNone": "There are no disabled channels. Disable a channel using {{prefix}}disablechannel #channel.",
-	"disableChannelView": "**Disabled Channels**: {{channels, listAnd}}",
-	"disableChannelAdded": "Disabled Channel(s): {{channels, listAnd}}",
-	"disableChannelRemoved": "Enabled Channel(s): {{channels, listAnd}}",
-	"setServerSettings": "**Server Settings**",
-	"setGameSettings": "**Game Settings**",
-	"setDuplicate": "The value of **{{key}}** is already `{{value}}`",
+	"disableChannelNone": "Tiada saluran yang telah dimatikan. Mematikan saluran menggunakan {{prefix}}disablechannel #saluran.",
+	"disableChannelView": "**Saluran yang Dimatikan**: {{channels, listAnd}}",
+	"disableChannelAdded": "Saluran yang Dimatikan: {{channels, listAnd}}",
+	"disableChannelRemoved": "Saluran yang Diaktifkan: {{channels, listAnd}}",
+	"setServerSettings": "**Tetapan Pelayan**",
+	"setGameSettings": "**Tetapan Permainan**",
+	"setDuplicate": "Nilai **{{key}}** sudah ditetapkan sebagai `{{value}}`",
 	"setLanguageView": [
-		"The language in this server is set to **{{currentLanguage}}**.",
-		"Use `set-language <language>` to update it.",
-		"Languages supported in Godfather: {{validLanguages, listAnd}}"
+		"Bahasa pelayan ini telah ditetapkan kepada **{{currentLanguage}}**.",
+		"Gunakan `set-language <language>` untuk mengemaskininya.",
+		"Bahasa yang disokong di Godfather: {{validLanguages, listAnd}}"
 	],
 	"setLanguageInvalidLocale": [
-		"\"{{locale}}\" is not a valid locale.",
-		"Languages supported in Godfather: {{validLanguages, listAnd}}"
+		"\"{{locale}}\" bukan bahasa yang sah.",
+		"Bahasa yang disokong di Godfather: {{validLanguages, listAnd}}"
 	],
-	"setLanguageAlreadySet": "The language in this server is already set to **{{locale}}**."
+	"setLanguageAlreadySet": "Bahasa pelayan ini sudah ditetapkan kepada **{{locale}}**."
 }
