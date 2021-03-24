@@ -1,0 +1,43 @@
+{
+	"helpInvalidCommand": "Invalid command provided.",
+	"helpDescription": [
+		"A Discord Bot that automatically hosts games of Mafia. My prefix here is `{{prefix}}`",
+		"[Support Server]({{supportServer}})"
+	],
+	"helpFooter": "For information about a specific command, run {{prefix}}help <command>.",
+	"infoText": [
+		"Godfather v{{VERSION}} is a Discord Bot that hosts games of Werewolf/Mafia, with 24/7 uptime and intuitive commands.",
+		"",
+		"**Godfather features:**",
+		"• Automatically hosted games of Mafia, with over 30 roles and different factions.",
+		"• Addable custom setups",
+		"• Player and game statistics",
+		"and much more!",
+		"",
+		"To add Godfather to your Discord server, use the `{{prefix}}invite` command."
+	],
+	"inviteText": "[Invite {{bot}} to your server]({{invite}}) | [Join Support Server]({{supportServer}})",
+	"pingInitial": "Pinging...",
+	"pingResponse": "Pong! That took {{ping}}ms. Latency: {{latency}}ms",
+	"prefixCurrent": "My prefix in this server is set to: {{prefix}}",
+	"prefixUpdated": "Successfully updated this server's prefix to: `{{prefix}}`",
+	"userStats": [
+		"Games: {{totalGames}}",
+		"Wins: {{wins}}",
+		"Winrate: {{winRate}}"
+	],
+	"userstatsNoDatabase": "Storing information on a database is currently disabled for this bot",
+	"statsDescription": "To add {{botname}} to your server, use the `{{prefix}}invite` command.",
+	"statsTitles": {
+		"connectedTo": "Connected to",
+		"serverStats": "Server Stats"
+	},
+	"statsFields": {
+		"servers": "**Servers**",
+		"users": "**Users**",
+		"channels": "**Channels**",
+		"cpuLoad": "**CPU Load**",
+		"ramUsed": "**RAM Used**",
+		"uptime": "**Uptime**"
+	}
+}
