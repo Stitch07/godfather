@@ -125,7 +125,7 @@
 	},
 	"noelimDescription": "Vote to not eliminate and end day early.",
 	"unvoteDescription": "Memadamkan undian anda.",
-	"voteDescription": "Vote to eliminate a player.",
+	"voteDescription": "Mengundi untuk mengeluarkan seorang pemain.",
 	"votecountDescription": "Shows the current vote-count.",
 	"voteDetailed": {
 		"reminder": "If the setting `enableTrials` is enabled, a majority vote will put the player on trial, and not kill him instantly."
