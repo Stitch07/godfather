@@ -9,7 +9,7 @@
 	],
 	"maxTrialsReached": "Maximum trials reached. Nobody was eliminated!",
 	"playerAcquitted": "{{playerName}} was acquitted.",
-	"playerEliminated": "{{playerName}} was eliminated. {{RoleAndWill}}\n{{votes}}",
+	"playerEliminated": "{{playerName}} telah dikeluarkan. {{RoleAndWill}}\n{{votes}}",
 	"votesShowHeader": "Final Vote Count",
 	"playerEliminatedKill": "dikeluarkan D{{cycle}}"
 }
