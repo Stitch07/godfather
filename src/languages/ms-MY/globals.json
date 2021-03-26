@@ -1,11 +1,11 @@
 {
-	"default": "The key {{key}} has not been translated yet.",
+	"default": "Kunci {{key}} belum diterjemahkan lagi.",
 	"listAnd": "{{value, listAnd}}",
 	"helpTitles": {
-		"aliases": "🖇️ | **Aliases**",
-		"usages": "📝 | **Command Usage**",
-		"extendedHelp": "🔍 | **Extended Help**",
-		"examples": "🔗 | **Examples**",
-		"reminder": "⏰ | **Reminder**"
+		"aliases": "🖇️ | **Alias**",
+		"usages": "📝 | **Penggunaan Arahan**",
+		"extendedHelp": "🔍 | **Bantuan Lanjut**",
+		"examples": "🔗 | **Contoh**",
+		"reminder": "⏰ | **Peringatan**"
 	}
 }
