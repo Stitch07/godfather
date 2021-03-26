@@ -1,14 +1,14 @@
 {
-	"helpInvalidCommand": "Invalid command provided.",
+	"helpInvalidCommand": "Arahan yang diberikan tidak sah.",
 	"helpDescription": [
-		"A Discord Bot that automatically hosts games of Mafia. My prefix here is `{{prefix}}`",
-		"[Support Server]({{supportServer}})"
+		"Bot Discord yang menghoskan permainan Mafia secara automatik. Sini, prefiks saya ialah `{{prefix}}`",
+		"[Pelayan Sokongan]({{supportServer}})"
 	],
-	"helpFooter": "For information about a specific command, run {{prefix}}help <command>.",
+	"helpFooter": "Untuk maklumat lanjut tentang arahan spesifik, gunakan {{prefix}}help <arahan>.",
 	"infoText": [
 		"Godfather v{{VERSION}} is a Discord Bot that hosts games of Werewolf/Mafia, with 24/7 uptime and intuitive commands.",
 		"",
-		"**Godfather features:**",
+		"**Ciri Godfather:**",
 		"• Automatically hosted games of Mafia, with over 30 roles and different factions.",
 		"• Addable custom setups",
 		"• Player and game statistics",
@@ -17,27 +17,27 @@
 		"To add Godfather to your Discord server, use the `{{prefix}}invite` command."
 	],
 	"inviteText": "[Invite {{bot}} to your server]({{invite}}) | [Join Support Server]({{supportServer}})",
-	"pingInitial": "Pinging...",
-	"pingResponse": "Pong! That took {{ping}}ms. Latency: {{latency}}ms",
-	"prefixCurrent": "My prefix in this server is set to: {{prefix}}",
-	"prefixUpdated": "Successfully updated this server's prefix to: `{{prefix}}`",
+	"pingInitial": "Ping sedang berjalan...",
+	"pingResponse": "Pong! Itu mengambil masa {{ping}}ms. Latensi: {{latency}}ms",
+	"prefixCurrent": "Prefiks saya di pelayan ini ditetapkan kepada: {{prefix}}",
+	"prefixUpdated": "Berjaya mengemaskinikan prefiks pelayan ini kepada: `{{prefix}}`",
 	"userStats": [
-		"Games: {{totalGames}}",
-		"Wins: {{wins}}",
-		"Winrate: {{winRate}}"
+		"Permainan: {{totalGames}}",
+		"Kemenangan: {{wins}}",
+		"Prestasi Kemenangan: {{winRate}}"
 	],
 	"userstatsNoDatabase": "Storing information on a database is currently disabled for this bot",
-	"statsDescription": "To add {{botname}} to your server, use the `{{prefix}}invite` command.",
+	"statsDescription": "Untuk menambah {{botname}} ke pelayan anda, gunakan arahan `{{prefix}}invite`.",
 	"statsTitles": {
-		"connectedTo": "Connected to",
-		"serverStats": "Server Stats"
+		"connectedTo": "Bersambung ke",
+		"serverStats": "Statistik Pelayan"
 	},
 	"statsFields": {
-		"servers": "**Servers**",
-		"users": "**Users**",
-		"channels": "**Channels**",
+		"servers": "**Pelayan**",
+		"users": "**Pengguna**",
+		"channels": "**Saluran**",
 		"cpuLoad": "**CPU Load**",
-		"ramUsed": "**RAM Used**",
+		"ramUsed": "**RAM yang Digunakan**",
 		"uptime": "**Uptime**"
 	}
 }
