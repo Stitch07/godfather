@@ -2,7 +2,7 @@
 	"changehostDescription": "Mengundi untuk menukar hos.",
 	"changehostDetailed": {
 		"extendedHelp": [
-			"Dengan pengundian majoriti, pemain yang seterusnya di senarai pemain akan menjadi hos.",
+			"Dengan undi majoriti, pemain yang seterusnya di senarai pemain akan menjadi hos.",
 			"Hos boleh menggunakan arahan ini untuk menukar hos secara automatik (tanpa mengundi)."
 		]
 	},
@@ -24,7 +24,7 @@
 	},
 	"leaveDescription": "Mengeluarkan anda dari permainan yang sedang dijalankan.",
 	"leaveDetailed": {
-		"extendedHelp": "Sekiranya permainan telah bermula, anda akan diganti ataupun mod-killed."
+		"extendedHelp": "Sekiranya permainan telah bermula, anda akan diganti atau dibunuh secara automatik (mod-killed)."
 	},
 	"openDescription": "Membuka sebuah lobi permainan, jadi penyertaan pemain baru akan dibenarkan semula.",
 	"openDetailed": {
@@ -38,8 +38,8 @@
 		],
 		"reminder": "Sekiranya permainan telah bermula, anda hanya boleh mengeluarkan pemain yang AFK (dan tidak respon selama 45 saat)."
 	},
-	"remainingDescription": "Shows when the current day/night ends.",
-	"roleinfoDescription": "Memaparkan senarai peranan di Godfather, dan memberi maklumat tentang peranan spesifik.",
+	"remainingDescription": "Memaparkan masa tamat untuk fasa pagi/malam semasa.",
+	"roleinfoDescription": "Memaparkan senarai peranan di Godfather, dan memberikan maklumat tentang peranan spesifik.",
 	"roleinfoDetailed": {
 		"usages": [
 			"",
@@ -65,7 +65,7 @@
 			"--append N2: 6"
 		]
 	},
-	"setupinfoDescription": "Memaparkan senarai setup di Godfather, dan memberi maklumat tentang setup spesifik.",
+	"setupinfoDescription": "Memaparkan senarai setup di Godfather, dan memberikan maklumat tentang setup spesifik.",
 	"setupinfoDetailed": {
 		"usages": [
 			"",
@@ -124,13 +124,13 @@
 		"reminder": "Arahan ini hanya boleh digunakan semasa perbicaraan dijalankan."
 	},
 	"noelimDescription": "Vote to not eliminate and end day early.",
-	"unvoteDescription": "Memadamkan undian anda.",
+	"unvoteDescription": "Memadamkan undi anda.",
 	"voteDescription": "Mengundi untuk mengeluarkan seorang pemain.",
-	"votecountDescription": "Shows the current vote-count.",
+	"votecountDescription": "Memaparkan kiraan undi semasa.",
 	"voteDetailed": {
-		"reminder": "If the setting `enableTrials` is enabled, a majority vote will put the player on trial, and not kill him instantly."
+		"reminder": "Sekiranya tetapan `enableTrials` diaktifkan, pemain yang memperoleh undi majoriti akan dibicarakan, tanpa dibunuh secara langsung."
 	},
-	"helpDescription": "Displays a list of all commands in Godfather, and shows information on specific commands.",
+	"helpDescription": "Memaparkan senarai arahan di Godfather, dan memberikan maklumat tentang arahan spesifik.",
 	"helpDetailed": {
 		"usages": [
 			"",
@@ -141,30 +141,30 @@
 			"create-game"
 		]
 	},
-	"infoDescription": "Gives you useful information about Godfather.",
-	"inviteDescription": "Gives you the invite link to add Godfather to your server.",
-	"pingDescription": "Runs a connection test to Discord.",
-	"prefixDescription": "View and change the prefix in this server.",
+	"infoDescription": "Memberi anda maklumat yang berguna tentang Godfather.",
+	"inviteDescription": "Memberi anda pautan jemputan untuk menambah Godfather ke pelayan anda.",
+	"pingDescription": "Memeriksa sambungan dengan Discord.",
+	"prefixDescription": "Melihat dan menukar prefiks di pelayan ini.",
 	"prefixDetailed": {
-		"extendedHelp": "Prefixes can be up to 10 characters long.",
+		"extendedHelp": "Panjang prefiks tidak boleh melebihi 10 aksara.",
 		"usages": [
 			"",
-			"NewPrefix"
+			"PrefiksBaharu"
 		],
 		"examples": [
 			"",
 			"g!"
 		],
-		"reminders": "This command can only be used by users with Manage Server permissions."
+		"reminders": "Arahan ini hanya boleh digunakan oleh pengguna yang mempunyai kebenaran Mengurus Pelayan (Manage Server)."
 	},
-	"statsDescription": "Shows bot statistics.",
-	"userstatsDescription": "Shows game statistics of a user.",
+	"statsDescription": "Memaparkan statistik bot.",
+	"userstatsDescription": "Memaparkan statistik permainan seorang pengguna.",
 	"userstatsDetailed": {
 		"usages": [
 			"",
-			"@User",
-			"@User --role=Role",
-			"@User --faction=Faction"
+			"@Pengguna",
+			"@Pengguna --role=Peranan",
+			"@Pengguna --faction=Pecahan"
 		],
 		"extendedHelp": "Gunakan bendera --faction untuk menapis statistik bagi pecahan tertentu, dan bendera --role untuk menapis statistik bagi peranan tertentu.",
 		"examples": [
@@ -193,7 +193,7 @@
 			"",
 			"Bahasa"
 		],
-		"extendedHelp": "Use this command without arguments to view a list of supported languages.",
+		"extendedHelp": "Gunakan arahan ini tanpa sebarang argumen untuk melihat senarai bahasa yang disokong.",
 		"examples": [
 			"",
 			"nl-NL"
@@ -205,7 +205,7 @@
 			"",
 			"Nilai Kunci"
 		],
-		"extendedHelp": "Settings modify game behavior. If this command is used in a channel without an active game, it will modify server-wide defaults instead.",
+		"extendedHelp": "Tetapan mengubah sikap permainan. Sekiranya arahan ini digunakan dalam sesebuah saluran yang tidak mempunyai permainan aktif, ia akan mengubah tetapan default seluruh pelayan.",
 		"examples": [
 			"",
 			"dayDuration 15 minutes",
