@@ -5,10 +5,10 @@
 	"noWill": "We could not find a will.",
 	"removeHost": "The host cannot leave the game. Use the `delete` command to delete the game, or the `change-host` command to change the host.",
 	"removeConfirmationReplace": "You will be replaced out.",
-	"removeConfirmationModkill": "You will be modkilled.",
+	"removeConfirmationModkill": "Anda akan dibunuh secara automatik (mod-killed).",
 	"removeConfirmationPrompt": "Are you sure you want to leave? {{prompt}}",
 	"removeSuccessfulReplacement": "{{replacement}} has replaced {{player}}.",
-	"removeSuccessfulModkill": "{{player}} was modkilled.",
+	"removeSuccessfulModkill": "{{player}} dibunuh secara automatik (mod-killed).",
 	"removeModkillReason": "modkilled {{phase}}",
-	"rolePm": "Hello {{user}}, you are a **{{role}}**. {{description}}\nWin Condition: {{winCondition}}"
+	"rolePm": "Hai {{user}}, anda seorang **{{role}}**.\n{{description}}\nSyarat Menang: {{winCondition}}"
 }
