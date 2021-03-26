@@ -4,6 +4,6 @@
 	"gameSetting": "{{parameter}} bukan tetapan yang sah.",
 	"playerUnknownUser": "{{parameter}} bukan sebutan pengguna yang sah.",
 	"playerInvalid": "{{user}} tidak menyertai permainan ini.",
-	"piece": "Arahan yang diperolehi tidak sah.",
-	"stringTooLong": "Talian yang diperolehi mestilah lebih kurang daripada {{maximum}} aksara."
+	"piece": "Arahan yang diberikan tidak sah.",
+	"stringTooLong": "Talian yang diberikan tidak boleh melebihi {{maximum}} aksara."
 }
