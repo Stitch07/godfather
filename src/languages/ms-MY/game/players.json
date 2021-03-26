@@ -6,9 +6,9 @@
 	"removeHost": "The host cannot leave the game. Use the `delete` command to delete the game, or the `change-host` command to change the host.",
 	"removeConfirmationReplace": "You will be replaced out.",
 	"removeConfirmationModkill": "Anda akan dibunuh secara automatik (mod-killed).",
-	"removeConfirmationPrompt": "Are you sure you want to leave? {{prompt}}",
-	"removeSuccessfulReplacement": "{{replacement}} has replaced {{player}}.",
+	"removeConfirmationPrompt": "Adakah anda pasti akan meninggal permainan ini? {{prompt}}",
+	"removeSuccessfulReplacement": "{{replacement}} telah menggantikan {{player}}.",
 	"removeSuccessfulModkill": "{{player}} dibunuh secara automatik (mod-killed).",
-	"removeModkillReason": "modkilled {{phase}}",
+	"removeModkillReason": "dibunuh secara automatik (mod-killed) {{phase}}",
 	"rolePm": "Hai {{user}}, anda seorang **{{role}}**.\n{{description}}\nSyarat Menang: {{winCondition}}"
 }
