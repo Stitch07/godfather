@@ -20,13 +20,15 @@ import { inspect } from 'util';
 export default class extends GodfatherCommand {
 	public async run(message: Message, args: Args) {
 		const code = await args.rest('string').catch(handleRequiredArg('code'));
-        const executeSql = await args.getFlags('sql');
+		const executeSql = await args.getFlags('sql');
 
-		const { result, success, type } = executeSql ? await this.sql(code) : await this.eval(message, code, {
-			async: args.getFlags('async'),
-			depth: Number(args.getOption('depth')) ?? 0,
-			showHidden: args.getFlags('hidden', 'showHidden')
-		});
+		const { result, success, type } = executeSql
+			? await this.sql(code)
+			: await this.eval(message, code, {
+					async: args.getFlags('async'),
+					depth: Number(args.getOption('depth')) ?? 0,
+					showHidden: args.getFlags('hidden', 'showHidden')
+			  });
 		const output = clean(success ? codeBlock('js', result) : `**ERROR**: ${codeBlock('bash', result)}`);
 		if (args.getFlags('silent', 's')) return null;
 
@@ -63,7 +65,7 @@ export default class extends GodfatherCommand {
 		const type = new Type(result).toString();
 		if (isThenable(result)) result = await result;
 
-	if (typeof result !== 'string') {
+		if (typeof result !== 'string') {
 			result = inspect(result, {
 				depth: flags.depth,
 				showHidden: flags.showHidden
@@ -73,20 +75,20 @@ export default class extends GodfatherCommand {
 		return { result, success, type };
 	}
 
-    private async sql(code: string)  {
+	private async sql(code: string) {
 		let success = true;
 		let result = null;
-        try {
-            result = inspect(await DbSet.instance?.connection.query(code), { depth: 2  });
-            success = true;
-        } catch(error) {
+		try {
+			result = inspect(await DbSet.instance?.connection.query(code), { depth: 2 });
+			success = true;
+		} catch (error) {
 			if (error && error.stack) {
 				this.context.client.logger.error(error);
 			}
-            result = error;
-            success = false;
-        }
+			result = error;
+			success = false;
+		}
 
-        return { result, success, type: null };
-    }
+		return { result, success, type: null };
+	}
 }
