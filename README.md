@@ -43,6 +43,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://favware.tech"><img src="https://avatars.githubusercontent.com/u/4019718?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Jeroen Claassens</b></sub></a><br /><a href="#tool-Favna" title="Tools">🔧</a></td>
     <td align="center"><a href="https://github.com/juliamonaco"><img src="https://avatars.githubusercontent.com/u/50450544?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Julia Monaco</b></sub></a><br /><a href="#translation-juliamonaco" title="Translation">🌍</a></td>
   </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/Herakies"><img src="https://avatars.githubusercontent.com/u/74150478?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Herakies</b></sub></a><br /><a href="#translation-Herakies" title="Translation">🌍</a></td>
+  </tr>
 </table>
 
 <!-- markdownlint-restore -->
