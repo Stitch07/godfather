@@ -1,9 +1,9 @@
 {
-	"noWinner": "The game is over. Nobody wins!",
+	"noWinner": "Permainan telah tamat. Tiada sesiapa yang menang!",
 	"factionWin": "Permainan telah tamat. {{winningFaction}} menang! 🎉",
 	"independentWins": "Independent wins: {{wins}}",
 	"finalRolelist": [
-		"**Final Rolelist**:",
+		"**Senarai Peranan Terakhir**:",
 		"{{roles}}"
 	]
 }
