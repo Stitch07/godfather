@@ -4,8 +4,8 @@
 	"cultLeaderDenounce": "You were denounced by a Cult Leader.",
 	"successfulConversion": "You were converted by a Cult!",
 	"conversionMessage": "You successfully converted {{target}}!",
-	"cultMemberDescription": "You have no night action.",
+	"cultMemberDescription": "Anda tidak mempunyai tindakan malam.",
 	"cultMemberSuicide": "You committed suicide after losing your Cult Leader!",
-	"cultMemberSuicideAnnouncement": "{{follower}} died.",
+	"cultMemberSuicideAnnouncement": "{{follower}} telah mati.",
 	"cultMemberSuicideReason": "committed suicide"
 }
