@@ -1,11 +1,11 @@
 {
 	"noelimAlreadyVoted": "Anda sudah mengundi untuk tidak mengeluarkan sesiapa.",
 	"noelimSuccess": "Anda telah mengundi untuk tidak mengeluarkan sesiapa.",
-	"noelimResult": "Nobody was eliminated!",
+	"noelimResult": "Tiada sesiapa yang dikeluarkan!",
 	"unvoteFail": "Tiada undi untuk dipadamkan!",
 	"voteDeadPlayer": "Anda tidak boleh mengundi sebagai pemain yang telah mati.",
 	"voteSelf": "Anda dilarang mengundi diri anda.",
-	"voteAlreadyVoted": "You have already voted for {{target}}",
-	"voteProtected": "You cannot vote targets protected by a Guardian Angel",
-	"voteSuccess": "Voted {{target}}."
+	"voteAlreadyVoted": "Anda sudah mengundi {{target}}",
+	"voteProtected": "Anda tidak boleh mengundi sasaran yang dilindungi oleh Guardian Angel",
+	"voteSuccess": "Anda telah mengundi {{target}}."
 }
