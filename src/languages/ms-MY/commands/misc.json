@@ -9,14 +9,14 @@
 		"Godfather v{{VERSION}} is a Discord Bot that hosts games of Werewolf/Mafia, with 24/7 uptime and intuitive commands.",
 		"",
 		"**Ciri Godfather:**",
-		"• Automatically hosted games of Mafia, with over 30 roles and different factions.",
-		"• Addable custom setups",
-		"• Player and game statistics",
-		"and much more!",
+		"• Menghoskan permainan Mafia secara automatik, mempunyai lebih daripada 30 peranan dan pecahan berbeza.",
+		"• Setup kustom yang dapat ditambahkan",
+		"• Statistik pemain dan permainan",
+		"dan lebih banyak lagi!",
 		"",
-		"To add Godfather to your Discord server, use the `{{prefix}}invite` command."
+		"Untuk menambah Godfather ke pelayan Discord anda, gunakan arahan `{{prefix}}invite`."
 	],
-	"inviteText": "[Invite {{bot}} to your server]({{invite}}) | [Join Support Server]({{supportServer}})",
+	"inviteText": "[Menjemput {{bot}} ke pelayan anda]({{invite}}) | [Menyertai Pelayan Sokongan]({{supportServer}})",
 	"pingInitial": "Ping sedang berjalan...",
 	"pingResponse": "Pong! Itu mengambil masa {{ping}}ms. Latensi: {{latency}}ms",
 	"prefixCurrent": "Prefiks saya di pelayan ini ditetapkan kepada: {{prefix}}",
@@ -38,6 +38,6 @@
 		"channels": "**Saluran**",
 		"cpuLoad": "**CPU Load**",
 		"ramUsed": "**RAM yang Digunakan**",
-		"uptime": "**Uptime**"
+		"uptime": "**Tempoh Aktif**"
 	}
 }
