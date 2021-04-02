@@ -4,11 +4,11 @@
 	"preconditionCooldown": "Anda baru sahaja menggunakan arahan ini. Cuba lagi dalam {{remaining, durationFormat}}.",
 	"DayOnly": "Arahan ini tidak boleh digunakan pada waktu malam ataupun semasa perbicaraan dijalankan.",
 	"preconditionDmOnly": "Arahan ini hanya boleh digunakan di Mesej Langsung (DM).",
-	"GameOnly": "There is no game currently going on in here. Use {{prefix}}create to start one!",
+	"GameOnly": "Tiada permainan yang sedang dijalankan di sini. Gunakan {{prefix}}create untuk memulakan sebuah permainan!",
 	"GameStartedOnly": "Permainan ini belum bermula lagi.",
 	"preconditionGuildOnly": "Anda tidak boleh menjalankan arahan ini di DM.",
 	"HostOnly": "Arahan ini hanya boleh digunakan oleh hos.",
 	"PlayerOnly": "Arahan ini hanya boleh digunakan oleh pemain.",
 	"TrialVotingOnly": "Arahan ini hanya boleh digunakan semasa perbicaraan dijalankan.",
-	"NoActiveGames": "You aren't in any active games."
+	"NoActiveGames": "Anda tidak menyertai sebarang permainan aktif."
 }
