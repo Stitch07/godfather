@@ -1,9 +1,9 @@
 {
 	"roleCleaned": "We could not determine their role.",
-	"displayRole": "They were a **{{role}}**.",
-	"displayWill": "They left a will: {{will, codeBlock}}",
-	"noWill": "We could not find a will.",
-	"removeHost": "The host cannot leave the game. Use the `delete` command to delete the game, or the `change-host` command to change the host.",
+	"displayRole": "Dia seorang **{{role}}**.",
+	"displayWill": "Dia telah meninggalkan wasiat: {{will, codeBlock}}",
+	"noWill": "Kami tidak menjumpai wasiatnya.",
+	"removeHost": "Hos tidak boleh keluar dari permainan. Gunakan arahan `delete` untuk memadamkan permainan, atau arahan `change-host` untuk menukar hos.",
 	"removeConfirmationReplace": "You will be replaced out.",
 	"removeConfirmationModkill": "Anda akan dibunuh secara automatik (mod-killed).",
 	"removeConfirmationPrompt": "Adakah anda pasti akan meninggal permainan ini? {{prompt}}",
