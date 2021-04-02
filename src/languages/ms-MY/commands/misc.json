@@ -6,7 +6,7 @@
 	],
 	"helpFooter": "Untuk maklumat lanjut tentang arahan spesifik, gunakan {{prefix}}help <arahan>.",
 	"infoText": [
-		"Godfather v{{VERSION}} is a Discord Bot that hosts games of Werewolf/Mafia, with 24/7 uptime and intuitive commands.",
+		"Godfather v{{VERSION}} ialah Bot Discord yang menghoskan permainan Werewolf/Mafia, dengan masa aktif 24/7 dan arahan yang intuitif.",
 		"",
 		"**Ciri Godfather:**",
 		"• Menghoskan permainan Mafia secara automatik, mempunyai lebih daripada 30 peranan dan pecahan berbeza.",
@@ -36,7 +36,7 @@
 		"servers": "**Pelayan**",
 		"users": "**Pengguna**",
 		"channels": "**Saluran**",
-		"cpuLoad": "**CPU Load**",
+		"cpuLoad": "**Beban CPU**",
 		"ramUsed": "**RAM yang Digunakan**",
 		"uptime": "**Tempoh Aktif**"
 	}
