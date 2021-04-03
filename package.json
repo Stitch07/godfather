@@ -65,7 +65,7 @@
 		"bufferutil": "^4.0.3",
 		"discord.js": "^12.5.1",
 		"fs-nextra": "^0.5.1",
-		"i18next": "19.8.7",
+		"i18next": "19.9.2",
 		"js-yaml": "^4.0.0",
 		"module-alias": "^2.2.2",
 		"node-fetch": "^2.6.1",
@@ -76,9 +76,9 @@
 		"typeorm-naming-strategies": "^2.0.0",
 		"utf-8-validate": "^5.0.4"
 	},
-    "resolutions": {
-        "i18next": "19.8.7"
-    },
+	"resolutions": {
+		"i18next": "19.9.2"
+	},
 	"_moduleAliases": {
 		"@lib": "dist/lib",
 		"@mafia": "dist/lib/mafia",
