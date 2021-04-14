@@ -420,9 +420,9 @@ export default class Game {
 					: this.t('game/endgame:factionWin', { winningFaction: data.winningFaction.name }),
 				data.independentWins.length === 0
 					? null
-					: this.t('game/endgame:independentWins', [
-							{ wins: listItems(data.independentWins.map((player) => `${player.user.username} (${player.role.faction.name})`)) }
-					  ])
+					: this.t('game/endgame:independentWins', {
+							wins: listItems(data.independentWins.map((player) => `${player.user.username} (${player.role.faction.name})`))
+					  })
 			]
 				.filter((text) => text !== null)
 				.join('\n')
