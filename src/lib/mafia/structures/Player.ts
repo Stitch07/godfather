@@ -1,5 +1,6 @@
 import { ENABLE_PRIVATE_CHANNELS } from '@root/config';
 import type { User } from 'discord.js';
+import i18next from 'i18next';
 import { cast } from '../../util/utils';
 import type Game from './Game';
 import type Role from './Role';
@@ -82,7 +83,7 @@ export default class Player {
 
 		const willText = this.game.settings.wills
 			? this.will && !(this.cleaned && night)
-				? this.game.t('game/players:displayWill')
+				? this.game.t('game/players:displayWill', { will: this.will, codeBlock: i18next.format('codeBlock') })
 				: this.game.t('game/players:noWill')
 			: '';
 
