@@ -1,10 +1,11 @@
 import GodfatherCommand from '@lib/GodfatherCommand';
-import { Phase } from '@mafia/structures/Game';
+import Game, { Phase } from '@mafia/structures/Game';
 import type Player from '@mafia/structures/Player';
 import { canManage } from '@root/lib/util/utils';
 import { ApplyOptions } from '@sapphire/decorators';
 import type { Args, CommandContext, CommandOptions } from '@sapphire/framework';
 import type { Message } from 'discord.js';
+import type { TFunction } from 'i18next';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['s', 'startgame'],
@@ -16,20 +17,10 @@ export default class extends GodfatherCommand {
 	public async run(message: Message, args: Args, context: CommandContext) {
 		const setupName = await args.rest('string').catch(() => '');
 		const { game } = message.channel;
+		const t = await message.fetchT();
 
-		if (game!.hasStarted) throw await message.resolveKey('commands/mafia:startAlreadyStarted');
-
-		if (!game!.setup && setupName === '') {
-			// attempt to find a setup
-			// TODO: prompt for multiple setups here
-			const foundSetup = this.context.client.stores.get('setups').find((setup) => setup.totalPlayers === game?.players.length);
-			if (!foundSetup) throw await message.resolveKey('commands/mafia:startNoSetups', { playerCount: game!.players.length });
-			game!.setup = foundSetup!;
-		} else if (setupName !== '') {
-			const foundSetup = this.context.client.stores.get('setups').find((setup) => setup.name === setupName.toLowerCase());
-			if (!foundSetup) throw await message.resolveKey('commands/mafia:startSetupNotFound', { name: setupName });
-			game!.setup = foundSetup;
-		}
+		if (game!.hasStarted) throw t('commands/mafia:startAlreadyStarted');
+		if (!game!.setup) game!.setup = await this.getSetup(message, game!, setupName, t);
 
 		if (game!.setup!.totalPlayers !== game!.players.length)
 			throw await message.resolveKey('commands/mafia:startWrongPlayerCount', { setup: game!.setup!.name, playerCount: game!.players!.length });
@@ -46,7 +37,6 @@ export default class extends GodfatherCommand {
 			}
 		}
 
-		const t = await message.fetchT();
 		const sent = await message.channel.send(t('commands/mafia:startSetupChosen', { setup: game!.setup!.name }));
 		game!.phase = Phase.Standby;
 		const generatedRoles = game!.setup!.generate(this.context.client);
@@ -81,5 +71,36 @@ export default class extends GodfatherCommand {
 			return game!.startNight();
 		}
 		return game!.startDay();
+	}
+
+	private async getSetup(message: Message, game: Game, setupName: string, t: TFunction) {
+		const possibleSetups =
+			setupName === ''
+				? this.context.stores.get('setups').filter((setup) => setup.totalPlayers === game.players.length)
+				: this.context.stores.get('setups').filter((setup) => setup.name === setupName);
+		if (possibleSetups.size === 0)
+			throw setupName === ''
+				? t('commands/mafia:startNoSetups', { playerCount: game.players.length })
+				: t('command/mafia:startSetupNotFound', { name: setupName });
+		if (possibleSetups.size === 1) return possibleSetups.first();
+
+		await message.channel.send(
+			t('commands/mafia:startMultipleSetups', {
+				amount: possibleSetups.size,
+				setups: possibleSetups.map((setup) => `	-- ${setup.name}`).join('\n')
+			})
+		);
+		const messages = await message.channel.awaitMessages(
+			(msg: Message) =>
+				msg.author.id === message.author.id &&
+				Number.isInteger(parseInt(msg.content, 10)) &&
+				parseInt(msg.content, 10) > 0 &&
+				parseInt(msg.content, 10) <= possibleSetups.size,
+			{
+				max: 1
+			}
+		);
+		if (messages.size === 0) throw t('commands/mafia:startPromptAborted');
+		return [...possibleSetups.values()][parseInt(messages.first()!.content, 10)! - 1];
 	}
 }

@@ -20,8 +20,6 @@ declare module 'discord.js' {
 		readonly invite: string;
 		ownerID: string | undefined;
 		games: Collection<string, Game>;
-		modifiers: ModifierStore;
-		setups: SetupStore;
 		prefixCache: Map<string, string>;
 		eventLoop: NodeJS.Timeout;
 		maintenance: boolean;
