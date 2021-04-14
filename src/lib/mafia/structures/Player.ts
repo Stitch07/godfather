@@ -82,7 +82,7 @@ export default class Player {
 
 		const willText = this.game.settings.wills
 			? this.will && !(this.cleaned && night)
-				? this.game.t('game/players:displayWill')
+				? this.game.t('game/players:displayWill', { will: this.will })
 				: this.game.t('game/players:noWill')
 			: '';
 

@@ -63,7 +63,7 @@ export default class Godfather extends SapphireClient {
 									return getHandler(language!).listAnd.format(value as string[]);
 								}
 								case 'codeBlock': {
-									return codeBlock('', value);
+									return codeBlock('txt', value);
 								}
 								case 'inlineCodeBlock': {
 									return inlineCodeBlock(value);
