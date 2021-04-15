@@ -2,6 +2,23 @@
 
 All notable changes to Godfather will be documented in this file.
 
+## v1.4.0
+
+### Bug Fixes:
+
+-   Wills are now displayed properly.
+-   Independent wins are now displayed properly.
+
+### Features:
+
+-   Godfather now prompts for multiple setups if applicable.
+-   Added 2 new setups: mafeight (8 players) and mafnine (9 players). Removed getburnt.
+-   Lots of settings changes:
+    1. disableWills -> wills (enabled if true, update accordingly)
+    2. disableWhispers -> whispers (enabled if true, update accordingly)
+    3. enableTrials -> trials
+    4. enablePlurality -> plurality
+
 ## v1.3.1
 
 ### Bug Fixes:
