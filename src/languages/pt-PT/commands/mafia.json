@@ -17,6 +17,8 @@
 	"startAlreadyStarted": "A partida já iniciou!",
 	"startNoSetups": "Nenhum setup encontrado para {{playerCount}} jogadores.",
 	"startSetupNotFound": "Não há nenhum setup chamado \"{{name}}\"",
+	"startMultipleSetups": "I found multiple setups for {{amount}} players. Pick a number between 1 and {{amount}}.\n {{setups}}",
+	"startPromptAborted": "I got no valid response!",
 	"startWrongPlayerCount": "O setup **{{setup}}** precisa de {{playerCount}} jogadores.",
 	"startSetupChosen": "Setup **{{setup}}** escolhido. Embaralhando as roles...",
 	"startSentRolePms": "Todas roles foram enviadas em suas mensagens!",
