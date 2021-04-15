@@ -17,6 +17,8 @@
 	"startAlreadyStarted": "Permainan ini sudah bermula!",
 	"startNoSetups": "Tiada setup yang dijumpai untuk {{playerCount}} orang pemain.",
 	"startSetupNotFound": "Saya tidak menemui sebarang setup yang dinamakan \"{{name}}\"",
+	"startMultipleSetups": "I found multiple setups for {{amount}} players. Pick a number between 1 and {{amount}}.\n {{setups}}",
+	"startPromptAborted": "I got no valid response!",
 	"startWrongPlayerCount": "Setup **{{setup}}** memerlukan {{playerCount}} orang pemain.",
 	"startSetupChosen": "Setup **{{setup}}** dipilih. Peranan sedang dirawakkan...",
 	"startSentRolePms": "PM peranan telah dihantar!",
