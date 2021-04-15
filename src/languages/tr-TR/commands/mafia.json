@@ -17,6 +17,8 @@
 	"startAlreadyStarted": "Oyun zaten başladı!",
 	"startNoSetups": "{{playerCount}} oyuncu için bir setup bulunamadı.",
 	"startSetupNotFound": "\"{{name}}\" isimli bir setup bulamadım.",
+	"startMultipleSetups": "I found multiple setups for {{amount}} players. Pick a number between 1 and {{amount}}.\n {{setups}}",
+	"startPromptAborted": "I got no valid response!",
 	"startWrongPlayerCount": "**{{setup}}** setup'ı için {{playerCount}} oyuncu gereklidir.",
 	"startSetupChosen": "**{{setup}}** setup'ı seçildi. Roller dağıtılıyor...",
 	"startSentRolePms": "Tüm roller DM olarak gönderildi!",
