@@ -3,6 +3,7 @@ import { allRoles } from '@mafia/roles';
 import type Player from '@mafia/structures/Player';
 import Role from '@mafia/structures/Role';
 import { randomArrayItem } from '@util/utils';
+import { Defence } from '../../managers/NightActionsManager';
 
 class Executioner extends Role {
 	public name = 'Executioner';
@@ -25,6 +26,10 @@ class Executioner extends Role {
 
 		this.target = randomArrayItem(targets)!;
 		return this.player.user.send(this.game.t('roles/neutral:executionerMessage', { target: this.target.user.tag }));
+	}
+
+	public get defence() {
+		return Defence.Basic;
 	}
 }
 

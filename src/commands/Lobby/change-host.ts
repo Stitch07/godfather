@@ -4,6 +4,8 @@ import type { CommandOptions } from '@sapphire/framework';
 import type { Message } from 'discord.js';
 
 @ApplyOptions<CommandOptions>({
+	aliases: ['repick'],
+	generateDashLessAliases: true,
 	description: 'commands/help:changehostDescription',
 	detailedDescription: 'commands/help:changehostDetailed',
 	preconditions: ['GuildOnly', 'GameOnly', 'PlayerOnly', 'AlivePlayerOnly']
