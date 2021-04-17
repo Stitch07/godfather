@@ -603,14 +603,14 @@
     "@discordjs/collection" "^0.1.6"
     tslib "^2.1.0"
 
-"@sapphire/plugin-i18next@1.3.2":
-  version "1.3.2"
-  resolved "https://registry.yarnpkg.com/@sapphire/plugin-i18next/-/plugin-i18next-1.3.2.tgz#53506928316d52ef1c58137f85e3efa33e5100f4"
-  integrity sha512-swoBVkqZHBuePT6tLM/XlTI+eyYh/pchQcg2A5weAo+gpx/7NE4TbSiJYIiMx+F6T/eDivLhklHGAzxGCq/wNQ==
+"@sapphire/plugin-i18next@1.3.4":
+  version "1.3.4"
+  resolved "https://registry.yarnpkg.com/@sapphire/plugin-i18next/-/plugin-i18next-1.3.4.tgz#b5cd23b6ba78c6e2ad8bbbfe6236ab90ccd8e029"
+  integrity sha512-137Wlbf5bNppU9gw1ada2A6fVtZU5eqCRcesLFkT9w3SPBcnYshsqkacFaN7Chk19q/tHVgUpAmItOFA31RikQ==
   dependencies:
-    "@sapphire/utilities" "^1.4.5"
-    i18next "^19.8.7"
-    i18next-fs-backend "^1.0.8"
+    "@sapphire/utilities" "^1.4.7"
+    i18next "^19.9.2"
+    i18next-fs-backend "^1.1.0"
     tslib "^2.1.0"
 
 "@sapphire/plugin-logger@1.0.10":
@@ -659,7 +659,7 @@
   resolved "https://registry.yarnpkg.com/@sapphire/type/-/type-1.1.7.tgz#149abfbe9072b2af03c991af823d58b78c72759b"
   integrity sha512-JzxmwjAahDbwq4VdytmLUv4PpbqUpvWnbhoSbZ5AqejG5YjXgM7t/QI1n7ih7841mIptO2Xp0eAOwZxeTQ8hNw==
 
-"@sapphire/utilities@^1.4.5", "@sapphire/utilities@^1.4.6":
+"@sapphire/utilities@^1.4.6":
   version "1.4.6"
   resolved "https://registry.yarnpkg.com/@sapphire/utilities/-/utilities-1.4.6.tgz#3fbc8b8682cb10c872e3f883864e49dbcf147e9f"
   integrity sha512-cSpifhuXlmIIEZQCMPU4psDzXE9WumdTGI7JgWmH+FbQkbJ2Hn1pxITMnLwOEPH96ypXFf9V4sOqr9kIxk2V6w==
@@ -2633,12 +2633,12 @@ human-signals@^1.1.1:
   resolved "https://registry.yarnpkg.com/human-signals/-/human-signals-1.1.1.tgz#c5b1cd14f50aeae09ab6c59fe63ba3395fe4dfa3"
   integrity sha512-SEQu7vl8KjNL2eoGBLF3+wAjpsNfA9XMlXAYj/3EdaNfAlxKthD1xjEQfGOUhllCGGJVNY34bRr6lPINhNjyZw==
 
-i18next-fs-backend@^1.0.8:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/i18next-fs-backend/-/i18next-fs-backend-1.1.0.tgz#3baa63bfb6fd00a331b91d186776cd886b46d2f6"
-  integrity sha512-QfzfrEYEsLsDC5sZsdSQl5fVYg8I5KrJynnWN7xgSU5yfClbBJ009mtNxUszR0uABQZ8PRr2gj3bN9+RNORBlg==
+i18next-fs-backend@^1.1.0:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/i18next-fs-backend/-/i18next-fs-backend-1.1.1.tgz#1d8028926803f63784ffa0f2b1478fb369f92735"
+  integrity sha512-RFkfy10hNxJqc7MVAp5iAZq0Tum6msBCNebEe3OelOBvrROvzHUPaR8Qe10RQrOGokTm0W4vJGEJzruFkEt+hQ==
 
-i18next@20.1.0, i18next@^19.7.0, i18next@^19.8.7:
+i18next@20.1.0, i18next@^19.7.0, i18next@^19.9.2:
   version "20.1.0"
   resolved "https://registry.yarnpkg.com/i18next/-/i18next-20.1.0.tgz#397dce9ad230ea822f487dc62d6128df5b678456"
   integrity sha512-sV+ZwTM4Ik4d6wKdwNS/ocKmvXi6DFA/YHMgdQX3i4L5993jnbo1/j1pK/c4+zBOjexer4dt+c5JHsFj4CUoXQ==
