@@ -428,17 +428,6 @@ export default class Game {
 				.join('\n')
 		);
 
-		const playerMapping = (player: Player, i: number) => {
-			const roleText =
-				player.previousRoles.length === 0 ? player.role.name : [...player.previousRoles, player.role].map((role) => role.name).join(' -> ');
-			return `${i + 1}. ${player} (${roleText})`;
-		};
-		await this.channel.sendTranslated('game/endgame:finalRolelist', [
-			{
-				roles: codeBlock('', this.players.map(playerMapping).join('\n'))
-			}
-		]);
-
 		if (PGSQL_ENABLED) {
 			const entity = new GameEntity();
 			entity.setupName = this.setup!.name;
@@ -466,6 +455,22 @@ export default class Game {
 	}
 
 	public async delete() {
+		this.client.games.delete(this.channel.id);
+
+		if (this.hasStarted) {
+			const playerMapping = (player: Player, i: number) => {
+				const roleText =
+					player.previousRoles.length === 0
+						? player.role.name
+						: [...player.previousRoles, player.role].map((role) => role.name).join(' -> ');
+				return `${i + 1}. ${player} (${roleText})`;
+			};
+			await this.channel.sendTranslated('game/endgame:finalRolelist', [
+				{
+					roles: codeBlock('', this.players.map(playerMapping).join('\n'))
+				}
+			]);
+		}
 		// free all permission overwrites
 		// deleted channels can't have modifiable overwrites
 		if (this.canOverwritePermissions && this.hasStarted && !this.channel.deleted) {
@@ -510,8 +515,6 @@ export default class Game {
 			}
 			if (factionalChannel.deletable) await factionalChannel.delete();
 		}
-
-		this.client.games.delete(this.channel.id);
 	}
 
 	public get canOverwritePermissions() {
