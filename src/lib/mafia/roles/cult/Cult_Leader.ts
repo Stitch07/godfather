@@ -2,8 +2,8 @@ import SingleTarget from '@mafia/mixins/SingleTarget';
 import { allRoles } from '..';
 import CultFaction from '../../factions/Cult';
 import NightActionsManager, { Attack, Defence, NightActionPriority } from '../../managers/NightActionsManager';
-import { Phase } from '../../structures/Game';
-import type Player from '../../structures/Player';
+import { Phase } from '@mafia/structures/Game';
+import type Player from '@mafia/structures/Player';
 
 // the factions that the CL can convert
 const CAN_CONVERT = ['Town', 'Survivor', 'Amnesiac', 'Jester'];

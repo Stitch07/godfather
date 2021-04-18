@@ -1,5 +1,5 @@
-import type Game from '../structures/Game';
-import Player from '../structures/Player';
+import type Game from '@mafia/structures/Game';
+import Player from '@mafia/structures/Player';
 import SingleTarget from './SingleTarget';
 
 export default class DoubleTarget extends SingleTarget {

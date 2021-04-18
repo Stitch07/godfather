@@ -1,6 +1,6 @@
 import MafiaFaction from '@mafia/factions/Mafia';
 import type Role from '@mafia/structures/Role';
-import { allRoles } from '../roles';
+import { allRoles } from '@mafia/roles';
 
 export default function MafiaRole<TBaseRole extends typeof Role>(BaseRole: TBaseRole) {
 	// @ts-ignore tsc bug

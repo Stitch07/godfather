@@ -1,7 +1,7 @@
 import NightActionsManager, { Defence } from '@mafia/managers/NightActionsManager';
 import Killer from '@mafia/mixins/Killer';
 import MafiaRole from '@mafia/mixins/MafiaRole';
-import type Player from '../../structures/Player';
+import type Player from '@mafia/structures/Player';
 
 class Godfather extends Killer {
 	public name = 'Godfather';
