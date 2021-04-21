@@ -11,11 +11,11 @@ export const allRoles = new Collection<string, Constructor<Role>>();
 export const roleCategories = new Collection<string, Constructor<Role>[]>();
 
 export const init = async () => {
-	const scannedFiles = await scan('dist/lib/mafia/roles', {
+	const scannedFiles = await scan(`${process.cwd()}/dist/lib/mafia/roles`, {
 		filter: (handle, path) => handle.isFile() && extname(path) === '.js' && basename(path, '.js') !== 'index'
 	});
 	for (const [filePath, file] of scannedFiles.entries()) {
-		const { default: roleClass } = await import(filePath);
+		const { default: roleClass } = require(filePath);
 		// convert Role_Name to Role Name
 		const roleName = parse(file.name).name.split('_').join(' ');
 		allRoles.set(roleName, roleClass);
