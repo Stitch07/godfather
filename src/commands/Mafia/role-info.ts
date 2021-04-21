@@ -8,7 +8,7 @@ import { Time } from '@sapphire/time-utilities';
 import { codeBlock } from '@sapphire/utilities';
 import DefaultMap from '@util/DefaultMap';
 import { Collection, Message, MessageEmbed } from 'discord.js';
-import roledocs from '../../assets/roledocs.json';
+const roledocs: Roledoc[] = require('../../../assets/roledocs.json');
 
 import i18next from 'i18next';
 
@@ -90,4 +90,9 @@ export default class extends GodfatherCommand {
 			return coll.set(role.name, role);
 		}, new Collection<string, Role>());
 	}
+}
+
+interface Roledoc {
+	name: string;
+	detailedDescription: string[];
 }

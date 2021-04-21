@@ -1,7 +1,6 @@
 import GodfatherCommand from '@lib/GodfatherCommand';
 import { ApplyOptions } from '@sapphire/decorators';
 import type { Args, CommandOptions } from '@sapphire/framework';
-import { Type } from '@sapphire/type';
 import { codeBlock, isThenable } from '@sapphire/utilities';
 import { DbSet } from '@lib/database/DbSet';
 import { clean, handleRequiredArg } from '@util/utils';
@@ -62,7 +61,8 @@ export default class extends GodfatherCommand {
 			success = false;
 		}
 
-		const type = new Type(result).toString();
+		// WIP: fix when sapph/utils patches Type
+		const type = 'string';
 		if (isThenable(result)) result = await result;
 
 		if (typeof result !== 'string') {
