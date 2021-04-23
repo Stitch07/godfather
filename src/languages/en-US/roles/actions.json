@@ -55,5 +55,7 @@
 	"janitorGerund": "cleaning",
 	"janitorText": "clean a player",
 	"cultLeaderGerund": "converting",
-	"cultLeaderText": "convert a player"
+	"cultLeaderText": "convert a player",
+	"hexMasterGerund": "hexing",
+	"hexMasterText": "hex a player"
 }

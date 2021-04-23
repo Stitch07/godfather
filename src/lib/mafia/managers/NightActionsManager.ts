@@ -10,6 +10,7 @@ export default class NightActionsManager extends Array<NightAction> {
 	public record = new NightRecord();
 	public framedPlayers: Player[] = [];
 	public protectedPlayers: Player[] = [];
+	public hexedPlayers: Player[] = [];
 	public constructor(public game: Game) {
 		super();
 	}
