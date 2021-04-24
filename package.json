@@ -72,8 +72,16 @@
 		"bufferutil": "^4.0.3",
 		"discord.js": "^12.5.3",
 		"fs-nextra": "^0.5.1",
+<<<<<<< HEAD
 		"i18next": "20.2.2",
 		"js-yaml": "^4.1.0",
+||||||| parent of 044e111 (Update all Yarn dependencies (2021-04-24) (#111))
+		"i18next": "20.1.0",
+		"js-yaml": "^4.0.0",
+=======
+		"i18next": "20.1.0",
+		"js-yaml": "^4.1.0",
+>>>>>>> 044e111 (Update all Yarn dependencies (2021-04-24) (#111))
 		"module-alias": "^2.2.2",
 		"node-fetch": "^2.6.1",
 		"pg": "^8.6.0",
