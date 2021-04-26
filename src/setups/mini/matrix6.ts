@@ -9,16 +9,16 @@ import { randomArrayItem } from '@root/lib/util/utils';
 })
 export default class extends BasicSetup {
 	public generate(client: Client) {
-		let options = [
+		const options = [
 			['Jailkeeper', 'Consort', 'Vanilla +bulletproof'],
 			['Vanilla', 'Cop', 'Goon'],
 			['Goon', 'Doctor', 'Tracker'],
 			['Jailkeeper', 'Vanilla', 'Goon'],
 			['Consort', 'Cop', 'Doctor'],
-			['Vanilla +bulletproof', 'Goon', 'Tracker']			
+			['Vanilla +bulletproof', 'Goon', 'Tracker']
 		];
 
-		let base = ['Vanilla x5', 'Goon'];
+		const base = ['Vanilla x5', 'Goon'];
 		this.roles = base.concat(randomArrayItem(options)!);
 		return super.generate(client);
 	}
