@@ -101,7 +101,7 @@ export default class Godfather extends SapphireClient {
 		};
 
 		this.fetchLanguage = async (context) => {
-			if (!context.guild) return 'en-US';
+			if (!PGSQL_ENABLED || !context.guild) return 'en-US';
 			const { guilds } = await DbSet.connect();
 			const settings = await guilds.findOne(context.guild.id, {
 				select: ['language']
