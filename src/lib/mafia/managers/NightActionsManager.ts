@@ -167,6 +167,7 @@ export enum NightActionPriority {
 	// healers always act after shooters
 	DOCTOR = 3,
 	BODYGUARD = 3,
+	JAILKEEPER = 3,
 	// these roles deal Powerful attacks that cannot be healed
 	ARSONIST = 4,
 	// roles that affect investigative results or stop powerful attacks
