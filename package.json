@@ -1,6 +1,6 @@
 {
 	"name": "godfather",
-	"version": "1.4.0",
+	"version": "1.4.1",
 	"description": "A Discord bot that hosts games of Mafia.",
 	"main": "dist/index.js",
 	"repository": "https://github.com/Stitch07/godfather.git",
