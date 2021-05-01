@@ -603,15 +603,15 @@
     "@discordjs/collection" "^0.1.6"
     tslib "^2.2.0"
 
-"@sapphire/plugin-i18next@1.3.4":
-  version "1.3.4"
-  resolved "https://registry.yarnpkg.com/@sapphire/plugin-i18next/-/plugin-i18next-1.3.4.tgz#b5cd23b6ba78c6e2ad8bbbfe6236ab90ccd8e029"
-  integrity sha512-137Wlbf5bNppU9gw1ada2A6fVtZU5eqCRcesLFkT9w3SPBcnYshsqkacFaN7Chk19q/tHVgUpAmItOFA31RikQ==
+"@sapphire/plugin-i18next@1.3.5":
+  version "1.3.5"
+  resolved "https://registry.yarnpkg.com/@sapphire/plugin-i18next/-/plugin-i18next-1.3.5.tgz#5c900d87c95bb4e1347c47ad7af18e060b7093c2"
+  integrity sha512-sCgRTS2ZZvGnI3bVJLJxhl2jM2DySqW7q4bnT1aUKtG2cZpWvQq17m0lQ3sVXk78LU4RX1Xk4GxvifYNqqfnOg==
   dependencies:
-    "@sapphire/utilities" "^1.4.7"
+    "@sapphire/utilities" "^1.5.0"
     i18next "^19.9.2"
-    i18next-fs-backend "^1.1.0"
-    tslib "^2.1.0"
+    i18next-fs-backend "^1.1.1"
+    tslib "^2.2.0"
 
 "@sapphire/plugin-logger@1.0.10":
   version "1.0.10"
@@ -2591,7 +2591,7 @@ human-signals@^1.1.1:
   resolved "https://registry.yarnpkg.com/human-signals/-/human-signals-1.1.1.tgz#c5b1cd14f50aeae09ab6c59fe63ba3395fe4dfa3"
   integrity sha512-SEQu7vl8KjNL2eoGBLF3+wAjpsNfA9XMlXAYj/3EdaNfAlxKthD1xjEQfGOUhllCGGJVNY34bRr6lPINhNjyZw==
 
-i18next-fs-backend@^1.1.0:
+i18next-fs-backend@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/i18next-fs-backend/-/i18next-fs-backend-1.1.1.tgz#1d8028926803f63784ffa0f2b1478fb369f92735"
   integrity sha512-RFkfy10hNxJqc7MVAp5iAZq0Tum6msBCNebEe3OelOBvrROvzHUPaR8Qe10RQrOGokTm0W4vJGEJzruFkEt+hQ==
