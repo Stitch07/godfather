@@ -10,12 +10,12 @@ import { randomArrayItem } from '@root/lib/util/utils';
 export default class extends BasicSetup {
 	public generate(client: Client) {
 		const options = [
-			['Jailkeeper', 'Consort', 'Vanilla +bulletproof'],
+			['Jailkeeper', 'Consort', 'Bulletproof'],
 			['Vanilla', 'Cop', 'Goon'],
 			['Goon', 'Doctor', 'Tracker'],
 			['Jailkeeper', 'Vanilla', 'Goon'],
 			['Consort', 'Cop', 'Doctor'],
-			['Vanilla +bulletproof', 'Goon', 'Tracker']
+			['Bulletproof', 'Goon', 'Tracker']
 		];
 
 		const base = ['Vanilla x5', 'Goon'];

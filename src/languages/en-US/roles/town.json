@@ -10,6 +10,7 @@
 	"bodyguardConfirmation": "You are guarding {{target}} tonight.",
 	"bulletproofDescription": "You have a bulletproof vest that will stop one nightkill. This vest will activate only if you would otherwise die.",
 	"bulletproofVestActivated": "Your bulletproof vest saved you from death!",
+	"bulletproofVestEnabled": "You have a bulletproof vest tonight.",
 	"copDescription": "You may interrogate one person each night for suspicious activity.",
 	"copResultInnocent": "Your target is innocent.",
 	"copResultSuspicious": "Your target is suspicious.",
