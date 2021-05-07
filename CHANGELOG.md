@@ -2,6 +2,18 @@
 
 All notable changes to Godfather will be documented in this file.
 
+## v1.4.1
+
+### Bug Fixes:
+
+-   Fixed Executioner not having a basic defence.
+-   Fixed the infinitely running start prompt.
+
+### Features:
+
+-   Godfather now shows the final rolelist when a game is deleted.
+-   Added "repick" as an alias for "changehost"
+
 ## v1.4.0
 
 ### Bug Fixes:

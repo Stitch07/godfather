@@ -24,7 +24,7 @@ export default class Godfather extends SapphireClient {
 	public eventLoop!: NodeJS.Timeout;
 	public maintenance = false;
 
-	private _version = [1, 4, 0];
+	private _version = [1, 5, 0];
 	public constructor() {
 		super({
 			caseInsensitiveCommands: true,

@@ -4,6 +4,7 @@ import type Player from '@mafia/structures/Player';
 import { canManage } from '@root/lib/util/utils';
 import { ApplyOptions } from '@sapphire/decorators';
 import type { Args, CommandContext, CommandOptions } from '@sapphire/framework';
+import { Time } from '@sapphire/time-utilities';
 import type { Message } from 'discord.js';
 import type { TFunction } from 'i18next';
 
@@ -97,7 +98,8 @@ export default class extends GodfatherCommand {
 				parseInt(msg.content, 10) > 0 &&
 				parseInt(msg.content, 10) <= possibleSetups.size,
 			{
-				max: 1
+				max: 1,
+				time: Time.Second * 30
 			}
 		);
 		if (messages.size === 0) throw t('commands/mafia:startPromptAborted');
