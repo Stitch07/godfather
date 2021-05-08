@@ -41,7 +41,7 @@
 	"investResultK": "Your target could be a Vanilla, Vanilla Mafia, Neapolitan, or Cult Member.",
 	"investResultDefault": "You could not find enough information about your target.",
 	"jailkeeperDescription": "You may jail someone each night. This will prevent your target from being nightkilled, but it will also prevent your target from carrying out any action.",
-	"jailkeeperProtectSuccess": "A Jailkeeper saved you from!",
+	"jailkeeperProtectSuccess": "A Jailkeeper saved you from death!",
 	"jailkeeperRoleblockSuccess": "You could not perform your action because you were jailed!",
 	"jailkeeperSelfTarget": "You may not self-jail.",
 	"lookoutDescription": "You may watch a person at night and see who visits them.",
