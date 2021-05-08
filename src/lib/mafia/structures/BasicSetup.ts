@@ -29,10 +29,9 @@ export default class BasicSetup extends Setup {
 
 	public generate(client: Client) {
 		const generatedRoles = [];
-		const shuffled = shuffle(this.roles);
 		const uniqueRoles: Constructor<Role>[] = [];
 
-		for (const roleName of shuffled) {
+		for (const roleName of this.roles) {
 			// Role x2 becomes Role, Role
 			if (/([a-zA-Z0-9_\- ;{}]+) ?x(\d)/.test(roleName)) {
 				const matches = /([a-zA-Z0-9_\- ;{}]+) ?x(\d+)/.exec(roleName)!;
@@ -44,7 +43,7 @@ export default class BasicSetup extends Setup {
 			generatedRoles.push(BasicSetup.resolve(client, roleName, uniqueRoles));
 		}
 
-		return generatedRoles;
+		return shuffle(generatedRoles);
 	}
 
 	public ok(roles: Constructor<Role>[]) {
