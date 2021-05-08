@@ -12,7 +12,7 @@ class Innocent_Child extends Role {
 		this.playerName = this.player.user?.username;
 	}
 
-	public async onGameStart() {
+	public async init() {
 		await this.game.channel.send(this.game.t('roles/town:innocentChildReveal', { player: this.playerName }));
 	}
 }

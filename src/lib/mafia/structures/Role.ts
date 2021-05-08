@@ -70,10 +70,6 @@ abstract class Role {
 		}
 	}
 
-	public onGameStart() {
-		// noop
-	}
-
 	public onNight() {
 		// noop
 	}
@@ -105,7 +101,6 @@ abstract class Role {
 
 interface Role {
 	onPmCommand(message: Message, command: string, ...args: string[]): void;
-	onGameStart(): Awaited<any>;
 	onNight(): Awaited<any>;
 	onDay(): Awaited<any>;
 	onDeath(): Awaited<any>;

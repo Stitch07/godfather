@@ -67,10 +67,6 @@ export default class extends GodfatherCommand {
 			);
 		}
 
-		for (const player of game!.players) {
-			await player.role.onGameStart();
-		}
-
 		if (game!.setup!.nightStart) {
 			game!.cycle++;
 			return game!.startNight();
