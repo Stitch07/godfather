@@ -35,7 +35,7 @@ export const randomArrayItem = <T>(array: readonly T[]): T | null => {
 
 export const getRandomInteger = () => {
 	return Math.floor(Math.random() * Number.MAX_SAFE_INTEGER);
-}
+};
 
 export const fauxAlive = (player: Player) => {
 	if (!player.isAlive && player.role!.name === 'Jester' && player.deathReason === `eliminated D${player.game.cycle}`) return true;

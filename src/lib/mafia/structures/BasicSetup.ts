@@ -33,8 +33,10 @@ export default class BasicSetup extends Setup {
 		const uniqueRoles: Constructor<Role>[] = [];
 		// This map is only used for Masons, so I've included the entire initialization in this function.
 		// You should refactor this if you need this for other roles (e.g. helper method)
-		const roleGroupIndices = new DefaultMap<string, RoleGroupData>(() => {return {currentIndex: -1, previousIndices: new Set<number>()}});
-		roleGroupIndices.set('Mason', {currentIndex: getRandomInteger(), previousIndices: new Set<number>()});
+		const roleGroupIndices = new DefaultMap<string, RoleGroupData>(() => {
+			return { currentIndex: -1, previousIndices: new Set<number>() };
+		});
+		roleGroupIndices.set('Mason', { currentIndex: getRandomInteger(), previousIndices: new Set<number>() });
 
 		for (const roleEntry of this.roles) {
 			// Role x2 becomes Role, Role
