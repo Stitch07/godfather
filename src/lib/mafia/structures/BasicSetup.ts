@@ -2,7 +2,6 @@ import { DEFAULT_GAME_SETTINGS } from '@lib/constants';
 import { allRoles, roleCategories } from '@mafia/roles';
 import Executioner from '@mafia/roles/neutral/Executioner';
 import Mayor from '@mafia/roles/town/Mayor';
-import type Modifier from '@mafia/structures/Modifier';
 import type Role from '@mafia/structures/Role';
 import Setup, { ModifierData, RoleResolverData, SetupOptions } from '@mafia/structures/Setup';
 import DefaultMap from '@root/lib/util/DefaultMap';
