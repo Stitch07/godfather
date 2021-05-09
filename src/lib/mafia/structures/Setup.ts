@@ -37,6 +37,10 @@ export default abstract class Setup extends Piece implements ISetup {
 	// Any algorithms used to randomize roles should be handled here.
 	public abstract generate(client: SapphireClient): RoleResolverData[];
 
+	public getRoleList() {
+		return this.roles.map((role, i) => `${i + 1}. ${role}`).join('\n');
+	}
+
 	// ok() is called while loading the setup, to check if the setup is functional
 	// checks for exe with no townies/single jester setups are handled here
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
