@@ -1,7 +1,7 @@
 import { ok, Piece, Result, SapphireClient } from '@sapphire/framework';
 import type { PieceContext, PieceOptions } from '@sapphire/pieces';
 import { Constructor, mergeDefault } from '@sapphire/utilities';
-import type { RoleResolverData } from './BasicSetup';
+import type Modifier from './Modifier';
 import type Role from './Role';
 
 export interface SetupOptions extends PieceOptions {
@@ -40,11 +40,22 @@ export default abstract class Setup extends Piece implements ISetup {
 	// ok() is called while loading the setup, to check if the setup is functional
 	// checks for exe with no townies/single jester setups are handled here
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	public ok(roles: Constructor<Role>[]): Result<boolean, string> {
+	public ok(roleResolverEntries: RoleResolverData[]): Result<boolean, string> {
 		return ok(true);
 	}
 
 	public get totalPlayers() {
 		return this.generate(this.context.client).length;
 	}
+}
+
+export interface RoleResolverData {
+	role: Constructor<Role>;
+	modifiers: ModifierData[];
+	roleGroupIndex: number;
+}
+
+export interface ModifierData {
+	modifier: Modifier;
+	context: any;
 }

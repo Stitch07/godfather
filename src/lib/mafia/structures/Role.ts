@@ -72,6 +72,10 @@ abstract class Role {
 		// noop
 	}
 
+	public resolveRoleGroup(roleGroupIndex: number) {
+		// noop
+	}
+
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	public onVisit(visitor: Player) {
 		// noop

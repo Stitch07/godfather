@@ -24,7 +24,7 @@ export default class extends GodfatherCommand {
 			game.setup = this.context.client.stores.get('setups').get(setupData);
 		} else {
 			const setup = BasicSetup.create(this.context.client, this.clean(setupData));
-			const check = setup.ok(setup.generate(this.context.client).map((data) => data.role));
+			const check = setup.ok(setup.generate(this.context.client));
 			if (!check.success) throw await message.resolveKey('commands/mafia:usesetupError', { error: check.error });
 			game.setup = setup;
 		}
