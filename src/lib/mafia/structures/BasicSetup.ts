@@ -4,13 +4,14 @@ import Executioner from '@mafia/roles/neutral/Executioner';
 import Mayor from '@mafia/roles/town/Mayor';
 import type Modifier from '@mafia/structures/Modifier';
 import type Role from '@mafia/structures/Role';
-import Setup, { SetupOptions } from '@mafia/structures/Setup';
+import Setup, { ModifierData, RoleResolverData, SetupOptions } from '@mafia/structures/Setup';
 import DefaultMap from '@root/lib/util/DefaultMap';
 import { err, ok, PieceContext } from '@sapphire/framework';
 import type { Constructor } from '@sapphire/utilities';
 import { getRandomInteger, randomArrayItem, shuffle } from '@util/utils';
 import type { Client } from 'discord.js';
 import yaml from 'js-yaml';
+import Mason from '../roles/town/Mason';
 
 export default class BasicSetup extends Setup {
 	public randomMafia!: Constructor<Role>[];
@@ -73,24 +74,39 @@ export default class BasicSetup extends Setup {
 		return shuffle(generatedRoles);
 	}
 
-	public ok(roles: Constructor<Role>[]) {
+	public ok(roleResolverEntries: RoleResolverData[]) {
 		// games can have between 3 and MAX_PLAYERS players
-		if (roles.length < 3) return err(`Setups need at least 3 roles. (currently ${roles.length})`);
-		if (roles.length > DEFAULT_GAME_SETTINGS.maxPlayers)
-			return err(`Setups can have at most ${DEFAULT_GAME_SETTINGS.maxPlayers} players. (currently ${roles.length})`);
+		if (roleResolverEntries.length < 3) return err(`Setups need at least 3 roles. (currently ${roleResolverEntries.length})`);
+		if (roleResolverEntries.length > DEFAULT_GAME_SETTINGS.maxPlayers)
+			return err(`Setups can have at most ${DEFAULT_GAME_SETTINGS.maxPlayers} players. (currently ${roleResolverEntries.length})`);
+
 		// check if there are at least 2 "main" factions, ie factions that do not win independently
+		const roles = roleResolverEntries.map((roleResolverEntry) => roleResolverEntry.role);
 		const mafiaRoles = roles.filter((role) => this.randomMafia.includes(role));
 		const townRoles = roles.filter((role) => this.randomTownies.includes(role));
 		const nkRoles = roles.filter((role) => this.randomNK.includes(role));
 		const cultRoles = roles.filter((role) => this.randomCult.includes(role));
+
 		// at least 2 of these should be greater than zero
 		const mainFactions = [mafiaRoles.length, nkRoles.length, townRoles.length, cultRoles].filter((count) => count !== 0);
 		if (mainFactions.length === 1) return err(`There must be 2 distinct factions in the game. (Town/Mafia/Neutral Killing/Cult)`);
 
 		// check if exe has any valid targets
-		if (roles.includes(Executioner)) {
-			const validExeTargets = townRoles.filter((role) => role !== Mayor);
+		if (roleResolverEntries.map((roleResolverEntry) => roleResolverEntry.role).includes(Executioner)) {
+			const validExeTargets = roles.filter((role) => role !== Mayor);
 			if (validExeTargets.length === 0) return err('There are no valid exe targets in this game.');
+		}
+
+		// masonries must contain at least two players
+		if (roleResolverEntries.map((roleResolverEntry) => roleResolverEntry.role).includes(Mason)) {
+			const masonryIds = roleResolverEntries
+				.filter((roleResolverEntry) => roleResolverEntry.role === Mason)
+				.map((roleResolverEntry) => roleResolverEntry.roleGroupIndex);
+			for (const uniqueMasonryId of new Set<number>(masonryIds).values()) {
+				if (masonryIds.filter((id) => id === uniqueMasonryId).length === 1) {
+					return err('All masonries must contain at least two players.');
+				}
+			}
 		}
 		return ok(true);
 	}
@@ -193,15 +209,4 @@ export interface SetupData {
 	name?: string;
 	roles: string[];
 	nightStart?: boolean;
-}
-
-export interface RoleResolverData {
-	role: Constructor<Role>;
-	modifiers: ModifierData[];
-	roleGroupIndex: number;
-}
-
-export interface ModifierData {
-	modifier: Modifier;
-	context: any;
 }
