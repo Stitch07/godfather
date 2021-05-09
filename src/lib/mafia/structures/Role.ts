@@ -83,6 +83,10 @@ abstract class Role {
 		// noop
 	}
 
+	public afterActions() {
+		// noop
+	}
+
 	public canUseAction(): CanUseActionData {
 		return { check: false, reason: '' };
 	}
