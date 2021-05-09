@@ -30,7 +30,6 @@ export default class BasicSetup extends Setup {
 
 	public generate(client: Client) {
 		const generatedRoles = [];
-		const shuffled = shuffle(this.roles);
 		const uniqueRoles: Constructor<Role>[] = [];
 		// This map is only used for Masons, so I've included the entire initialization in this function.
 		// You should refactor this if you need this for other roles (e.g. helper method)
@@ -57,7 +56,7 @@ export default class BasicSetup extends Setup {
 			}
 		}
 
-		return generatedRoles;
+		return shuffle(generatedRoles);
 	}
 
 	public ok(roles: Constructor<Role>[]) {
