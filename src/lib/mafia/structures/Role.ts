@@ -77,6 +77,10 @@ abstract class Role {
 		// noop
 	}
 
+	public afterActions() {
+		// noop
+	}
+
 	// Role categories such as Random Town, Neutral Evil
 	public static categories: string[] = [];
 
