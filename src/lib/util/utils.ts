@@ -33,6 +33,10 @@ export const randomArrayItem = <T>(array: readonly T[]): T | null => {
 	return array[Math.floor(Math.random() * array.length)];
 };
 
+export const getRandomInteger = () => {
+	return Math.floor(Math.random() * Number.MAX_SAFE_INTEGER);
+}
+
 export const fauxAlive = (player: Player) => {
 	if (!player.isAlive && player.role!.name === 'Jester' && player.deathReason === `eliminated D${player.game.cycle}`) return true;
 	if (player.role.name === 'Guardian Angel' && player.role.canUseAction().check) return true;

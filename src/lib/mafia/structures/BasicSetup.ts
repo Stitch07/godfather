@@ -8,7 +8,7 @@ import Setup, { SetupOptions } from '@mafia/structures/Setup';
 import DefaultMap from '@root/lib/util/DefaultMap';
 import { err, ok, PieceContext } from '@sapphire/framework';
 import type { Constructor } from '@sapphire/utilities';
-import { randomArrayItem, shuffle } from '@util/utils';
+import { getRandomInteger, randomArrayItem, shuffle } from '@util/utils';
 import type { Client } from 'discord.js';
 import yaml from 'js-yaml';
 
@@ -33,8 +33,8 @@ export default class BasicSetup extends Setup {
 		const uniqueRoles: Constructor<Role>[] = [];
 		// This map is only used for Masons, so I've included the entire initialization in this function.
 		// You should refactor this if you need this for other roles (e.g. helper method)
-		const roleGroupIndices = new DefaultMap<string, number>(() => -1);
-		roleGroupIndices.set('Mason', 0);
+		const roleGroupIndices = new DefaultMap<string, RoleGroupData>(() => {return {currentIndex: -1, previousIndices: new Set<number>()}});
+		roleGroupIndices.set('Mason', {currentIndex: getRandomInteger(), previousIndices: new Set<number>()});
 
 		for (const roleEntry of this.roles) {
 			// Role x2 becomes Role, Role
@@ -42,19 +42,31 @@ export default class BasicSetup extends Setup {
 				const matches = /([a-zA-Z0-9_\- ;{}]+) ?x(\d+)/.exec(roleEntry)!;
 				const roleName = matches[1].trimEnd();
 				for (let i = 0; i < Number(matches[2]); i++) {
-					generatedRoles.push(BasicSetup.resolve(client, roleName, uniqueRoles, roleGroupIndices.get(roleName)));
+					generatedRoles.push(BasicSetup.resolve(client, roleName, uniqueRoles, roleGroupIndices.get(roleName).currentIndex));
 				}
 
 				if (roleGroupIndices.has(roleName)) {
-					roleGroupIndices.set(roleName, roleGroupIndices.get(roleName) + 1);
+					roleGroupIndices.get(roleName).previousIndices.add(roleGroupIndices.get(roleName).currentIndex);
+					let newIndex = getRandomInteger();
+					while (roleGroupIndices.get(roleName).previousIndices.has(newIndex)) {
+						newIndex = getRandomInteger();
+					}
+					roleGroupIndices.get(roleName).currentIndex = newIndex;
 				}
 			} else {
-				generatedRoles.push(BasicSetup.resolve(client, roleEntry, uniqueRoles, roleGroupIndices.get(roleEntry)));
+				generatedRoles.push(BasicSetup.resolve(client, roleEntry, uniqueRoles, roleGroupIndices.get(roleEntry).currentIndex));
 				if (roleGroupIndices.has(roleEntry)) {
-					roleGroupIndices.set(roleEntry, roleGroupIndices.get(roleEntry) + 1);
+					roleGroupIndices.get(roleEntry).previousIndices.add(roleGroupIndices.get(roleEntry).currentIndex);
+					let newIndex = getRandomInteger();
+					while (roleGroupIndices.get(roleEntry).previousIndices.has(newIndex)) {
+						newIndex = getRandomInteger();
+					}
+					roleGroupIndices.get(roleEntry).currentIndex = newIndex;
 				}
 			}
 		}
+
+		console.log(roleGroupIndices.get('Mason').previousIndices);
 
 		return shuffle(generatedRoles);
 	}
@@ -168,6 +180,11 @@ export default class BasicSetup extends Setup {
 
 		throw `Invalid role provided: \`${roleName}\`.`;
 	}
+}
+
+export interface RoleGroupData {
+	currentIndex: number;
+	previousIndices: Set<number>;
 }
 
 export interface SetupData {
