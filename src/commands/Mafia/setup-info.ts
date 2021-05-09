@@ -25,13 +25,7 @@ export default class extends GodfatherCommand {
 				`* Description: ${setup.description ?? 'No description available'}`,
 				''
 			];
-			if (setup.roles.length) {
-				output.push('Roles:');
-				for (const [i, role] of setup.roles.entries()) {
-					// eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-					output.push(`${i + 1}. ${role}`);
-				}
-			}
+			output.push('Roles:', setup.getRoleList());
 			return message.channel.send(codeBlock('asciidoc', output.join('\n')));
 		}
 
