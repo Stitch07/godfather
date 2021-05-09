@@ -47,7 +47,13 @@ export default class Player {
 
 			// create channel for lone cult leader, as more members will be added easily
 			if (team.length > 1 || this.role.faction.name === 'Cult') {
-				const factionalChannel = ENABLE_PRIVATE_CHANNELS ? await this.role.faction.generateInvite(this.game) : null;
+				const factionalChannel = ENABLE_PRIVATE_CHANNELS
+					? await this.role.faction.generateInvite(
+							this.game,
+							team,
+							this.role.name === 'Mason' ? `mason-${(this.role as InstanceType<typeof Mason>).masonryIndex}` : undefined
+					  )
+					: null;
 				await this.user.send(
 					`Your team consists of: ${team.map((player) => `${player.user.tag} (${player.role.name})`).join(', ')}\n${
 						factionalChannel ? `Factional channel: ${factionalChannel}` : ''
