@@ -42,11 +42,13 @@ export default class extends GodfatherCommand {
 		game!.phase = Phase.Standby;
 		const generatedRoles = game!.setup!.generate(this.context.client);
 		for (const player of game!.players) {
-			const { role, modifiers } = generatedRoles.shift()!;
+			const { role, modifiers, roleGroupIndex } = generatedRoles.shift()!;
 			player.role = new role(player);
 			for (const { modifier, context } of modifiers) {
 				if (modifier.canPatch(player.role)) modifier.patch(player.role, context);
 			}
+
+			player.role.resolveRoleGroup(roleGroupIndex);
 		}
 
 		const noPms: Player[] = [];
