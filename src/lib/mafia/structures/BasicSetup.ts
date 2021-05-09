@@ -36,7 +36,7 @@ export default class BasicSetup extends Setup {
 		const roleGroupIndices = new DefaultMap<string, number>(() => -1);
 		roleGroupIndices.set('Mason', 0);
 
-		for (const roleEntry of shuffled) {
+		for (const roleEntry of this.roles) {
 			// Role x2 becomes Role, Role
 			if (/([a-zA-Z0-9_\- ;{}]+) ?x(\d)/.test(roleEntry)) {
 				const matches = /([a-zA-Z0-9_\- ;{}]+) ?x(\d+)/.exec(roleEntry)!;
