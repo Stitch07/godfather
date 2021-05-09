@@ -613,14 +613,14 @@
     i18next-fs-backend "^1.1.1"
     tslib "^2.2.0"
 
-"@sapphire/plugin-logger@1.0.10":
-  version "1.0.10"
-  resolved "https://registry.yarnpkg.com/@sapphire/plugin-logger/-/plugin-logger-1.0.10.tgz#cb6c4f1a5549c140c7249c68177a4e98156e6bd6"
-  integrity sha512-+gBbECA5z7/UTAaGnbppiSM24o1O2BqVdVYDvDCKS/V/6uP9RMmIPXiWH6p2mv8u78cjeB7p7wAkAHP7HGJiPw==
+"@sapphire/plugin-logger@1.0.11":
+  version "1.0.11"
+  resolved "https://registry.yarnpkg.com/@sapphire/plugin-logger/-/plugin-logger-1.0.11.tgz#9cf8aae21b3ee20dc83f6d73ad5dcfb2ff8bde8c"
+  integrity sha512-wt7GW9jSrN2Bc0LHWawudXPBcv7qt8I/Niq8E7f0dMmoxPhxBAe2I3Om08bwa7gN3a5zQzUVqI64akmmlCtbBQ==
   dependencies:
-    "@sapphire/time-utilities" "^1.2.12"
+    "@sapphire/time-utilities" "^1.3.0"
     colorette "^1.2.2"
-    tslib "^2.1.0"
+    tslib "^2.2.0"
 
 "@sapphire/prettier-config@^1.1.0":
   version "1.1.0"
@@ -633,13 +633,6 @@
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@sapphire/ratelimits/-/ratelimits-1.2.0.tgz#71a3e0166aa833db2ab431a7b4433fd736fbd92c"
   integrity sha512-A3ydg8HucxbW26FZ6yQaNLSogdSBVpXHQLhUbJ9gRnwB+N8h8bEMUBi2UJFyUoc3BV8kJi+5AjzF+Wz45mSdMw==
-
-"@sapphire/time-utilities@^1.2.12":
-  version "1.2.12"
-  resolved "https://registry.yarnpkg.com/@sapphire/time-utilities/-/time-utilities-1.2.12.tgz#2672d820048dc8092b5b6a6477ab266e56b2bd3b"
-  integrity sha512-siM/UnHQWISl+Eh8qpi4kDkJcmKuXIxnxg/AgpBpgOjmtmlB6fZR88VU1Fg8e1gtt0vVBuBX2/Nhr6ih9gSCnA==
-  dependencies:
-    "@sapphire/utilities" "^1.4.7"
 
 "@sapphire/time-utilities@^1.3.0":
   version "1.3.0"
@@ -660,11 +653,6 @@
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@sapphire/type/-/type-1.2.0.tgz#f2aedb894c091cc0be13b3afd645f601422321ff"
   integrity sha512-fkHWS3RtVqVdIWLSYOrd9thEUqWM5nq7XVNi7w0thOhfp4M1ab9DsGXf+z81B1+fHRORRl/uwoprGHHzt8S7sA==
-
-"@sapphire/utilities@^1.4.7":
-  version "1.4.7"
-  resolved "https://registry.yarnpkg.com/@sapphire/utilities/-/utilities-1.4.7.tgz#4668b57918fe773502087e63025f5ec84f670059"
-  integrity sha512-9x7LwCuhJJ+oWPpbQqU7EKUHNwBnB0ew52qKv7Og2ruSqyKrrBRdNZYhXqiXeC2JTlHwhE9v+pcc1YTm0L4oAg==
 
 "@sapphire/utilities@^1.5.0":
   version "1.5.0"
