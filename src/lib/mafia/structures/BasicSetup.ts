@@ -5,6 +5,7 @@ import Mayor from '@mafia/roles/town/Mayor';
 import type Modifier from '@mafia/structures/Modifier';
 import type Role from '@mafia/structures/Role';
 import Setup, { SetupOptions } from '@mafia/structures/Setup';
+import DefaultMap from '@root/lib/util/DefaultMap';
 import { err, ok, PieceContext } from '@sapphire/framework';
 import type { Constructor } from '@sapphire/utilities';
 import { randomArrayItem, shuffle } from '@util/utils';
@@ -31,17 +32,29 @@ export default class BasicSetup extends Setup {
 		const generatedRoles = [];
 		const shuffled = shuffle(this.roles);
 		const uniqueRoles: Constructor<Role>[] = [];
+		// This map is only used for Masons, so I've included the entire initialization in this function.
+		// You should refactor this if you need this for other roles (e.g. helper method)
+		const roleGroupIndices = new DefaultMap<string, number>(() => -1);
+		roleGroupIndices.set('Mason', 0);
 
-		for (const roleName of shuffled) {
+		for (const roleEntry of shuffled) {
 			// Role x2 becomes Role, Role
-			if (/([a-zA-Z0-9_\- ;{}]+) ?x(\d)/.test(roleName)) {
-				const matches = /([a-zA-Z0-9_\- ;{}]+) ?x(\d+)/.exec(roleName)!;
+			if (/([a-zA-Z0-9_\- ;{}]+) ?x(\d)/.test(roleEntry)) {
+				const matches = /([a-zA-Z0-9_\- ;{}]+) ?x(\d+)/.exec(roleEntry)!;
+				const roleName = matches[1].trimEnd();
 				for (let i = 0; i < Number(matches[2]); i++) {
-					generatedRoles.push(BasicSetup.resolve(client, matches[1].trimEnd(), uniqueRoles));
+					generatedRoles.push(BasicSetup.resolve(client, roleName, uniqueRoles, roleGroupIndices.get(roleName)));
 				}
-				continue;
+
+				if (roleGroupIndices.has(roleName)) {
+					roleGroupIndices.set(roleName, roleGroupIndices.get(roleName) + 1);
+				}
+			} else {
+				generatedRoles.push(BasicSetup.resolve(client, roleEntry, uniqueRoles, roleGroupIndices.get(roleEntry)));
+				if (roleGroupIndices.has(roleEntry)) {
+					roleGroupIndices.set(roleEntry, roleGroupIndices.get(roleEntry) + 1);
+				}
 			}
-			generatedRoles.push(BasicSetup.resolve(client, roleName, uniqueRoles));
 		}
 
 		return generatedRoles;
@@ -69,7 +82,7 @@ export default class BasicSetup extends Setup {
 		return ok(true);
 	}
 
-	public static resolve(client: Client, roleName: string, uniqueRoles: Constructor<Role>[]): RoleResolverData {
+	public static resolve(client: Client, roleName: string, uniqueRoles: Constructor<Role>[], roleGroupIndex: number): RoleResolverData {
 		const modifiers: ModifierData[] = [];
 		if (/\+(\w+)/g.test(roleName)) {
 			const mods: string[] = roleName.match(/\+(\w+)/g)!;
@@ -94,7 +107,7 @@ export default class BasicSetup extends Setup {
 			uniqueRoles.push(role);
 		}
 
-		return { modifiers, role };
+		return { modifiers, role, roleGroupIndex };
 	}
 
 	/**
@@ -118,7 +131,7 @@ export default class BasicSetup extends Setup {
 		for (const role of setupData.roles) {
 			// this will throw if an invalid role was provided
 			if (/(\w+ ?\w+ ?) ?x(\d)/.test(role)) continue;
-			BasicSetup.resolve(client, role, []);
+			BasicSetup.resolve(client, role, [], -1);
 		}
 
 		// @ts-ignore this is a hack, but is required
@@ -135,7 +148,7 @@ export default class BasicSetup extends Setup {
 		// Role1 | Role2 (one of these 2)
 		if (/(\w+) ?\| ?(\w+)/.test(roleName)) {
 			const possibleRoles = /(\w+) ?\| ?(\w+)/.exec(roleName)!.slice(1, 3);
-			return this.resolve(client, randomArrayItem(possibleRoles)!, uniqueRoles).role;
+			return this.resolve(client, randomArrayItem(possibleRoles)!, uniqueRoles, -1).role;
 		}
 
 		// Category MINUS Role(s)
@@ -167,6 +180,7 @@ export interface SetupData {
 export interface RoleResolverData {
 	role: Constructor<Role>;
 	modifiers: ModifierData[];
+	roleGroupIndex: number;
 }
 
 export interface ModifierData {

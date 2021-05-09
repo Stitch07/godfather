@@ -1,6 +1,7 @@
 import { ENABLE_PRIVATE_CHANNELS } from '@root/config';
 import type { User } from 'discord.js';
 import { cast } from '../../util/utils';
+import type Mason from '../roles/town/Mason';
 import type Game from './Game';
 import type Role from './Role';
 
@@ -32,8 +33,18 @@ export default class Player {
 			})
 		);
 
-		if (this.role.faction.informed && sendTeamInfo) {
-			const team = this.game.players.filter((player) => player.role.faction.name === this.role.faction.name);
+		if ((this.role.faction.informed && sendTeamInfo) || this.role.name === 'Mason') {
+			let team: Player[] = [];
+			if (this.role.name === 'Mason') {
+				team = this.game.players.filter(
+					(player) =>
+						player.role.name === 'Mason' &&
+						(player.role as InstanceType<typeof Mason>).masonryIndex === (this.role as InstanceType<typeof Mason>).masonryIndex
+				);
+			} else {
+				team = this.game.players.filter((player) => player.role.faction.name === this.role.faction.name);
+			}
+
 			// create channel for lone cult leader, as more members will be added easily
 			if (team.length > 1 || this.role.faction.name === 'Cult') {
 				const factionalChannel = ENABLE_PRIVATE_CHANNELS ? await this.role.faction.generateInvite(this.game) : null;
