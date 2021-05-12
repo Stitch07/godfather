@@ -1,5 +1,4 @@
 import GodfatherCommand from '@lib/GodfatherCommand';
-import { Phase } from '@mafia/structures/Game';
 import { ApplyOptions } from '@sapphire/decorators';
 import { BucketType, CommandOptions } from '@sapphire/framework';
 import { Time } from '@sapphire/time-utilities';
@@ -29,10 +28,9 @@ export default class extends GodfatherCommand {
 		await message.channel.send(t('commands/voting:noelimSuccess'));
 
 		if (noElim) {
-			game!.phase = Phase.Standby;
 			game!.idlePhases++;
 			await message.channel.send(t('commands/voting:noelimResult'));
-			await game!.startNight();
+			await game!.phaseChangeMutex.runExclusive(() => game!.startNight());
 		}
 	}
 }
