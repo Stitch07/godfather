@@ -16,7 +16,6 @@ export default class NightActionsManager extends Array<NightAction> {
 	}
 
 	public async addAction(action: NightAction) {
-		if (this.game.phaseChangeMutex.isLocked()) return;
 		const possibleActions = this.game.players.filter(
 			(player) => fauxAlive(player) && player.role.canUseAction().check && Reflect.get(player.role, 'actionPhase') === Phase.Night
 		);
