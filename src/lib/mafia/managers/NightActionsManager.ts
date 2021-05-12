@@ -77,6 +77,8 @@ export default class NightActionsManager extends Array<NightAction> {
 			await (actor.role! as SingleTarget).tearDown(this, target);
 		}
 
+		for (const player of this.game.players) await player.role.afterActions();
+
 		const deadPlayers = [];
 		for (const [playerID, record] of this.record.entries()) {
 			if (record.has('nightkill') && record.get('nightkill').result) {
@@ -168,6 +170,7 @@ export enum NightActionPriority {
 	// healers always act after shooters
 	DOCTOR = 3,
 	BODYGUARD = 3,
+	JAILKEEPER = 3,
 	// these roles deal Powerful attacks that cannot be healed
 	ARSONIST = 4,
 	// roles that affect investigative results or stop powerful attacks
