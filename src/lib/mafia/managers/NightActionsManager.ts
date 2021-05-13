@@ -39,7 +39,8 @@ export default class NightActionsManager extends Array<NightActionEntry> {
 				}`
 			);
 		}
-		if (this.length >= possibleActions.length && this.game.phase === Phase.Night) await this.game.startDay();
+		if (this.length >= possibleActions.length && this.game.phase === Phase.Night && !this.game.phaseChangeMutex.isLocked())
+			await this.game.phaseChangeMutex.runExclusive(() => this.game.startDay());
 	}
 
 	public async resolve(): Promise<Player[]> {
