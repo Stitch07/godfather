@@ -19,7 +19,7 @@ export default class extends GodfatherCommand {
 				// eslint-disable-next-line @typescript-eslint/no-base-to-string
 				{ channel: message.channel.toString(), prefix: context.prefix }
 			]);
-		} else if (game!.phase === Phase.Standby) {
+		} else if (game!.phaseChangeMutex.isLocked()) {
 			return message.channel.sendTranslated('commands/mafia:statusBotProcessing');
 		}
 
