@@ -5,7 +5,7 @@ import { fauxAlive, listItems } from '@root/lib/util/utils';
 import { mergeDefault } from '@sapphire/utilities';
 import DefaultMap from '@util/DefaultMap';
 import type { ActionRole } from '../structures/ActionRole';
-import type { NightAction, ZeroOrMultiplePlayers } from './NightAction';
+import type { NightAction, OneOrMultiplePlayers } from './NightAction';
 
 export default class NightActionsManager extends Array<NightActionEntry> {
 	public record = new NightRecord();
@@ -22,7 +22,7 @@ export default class NightActionsManager extends Array<NightActionEntry> {
 				fauxAlive(player) && (player.role as ActionRole).canUseAction().check && Reflect.get(player.role, 'actionPhase') === Phase.Night
 		);
 		if (action.actor.role.name === 'Reanimator' && action.target) {
-			const { priority } = (action.target as Player[])[0].role as ActionRole;
+			const { priority } = ((action.target as Player).role as ActionRole).actions[0];
 			action.priority = priority;
 		}
 
@@ -34,9 +34,7 @@ export default class NightActionsManager extends Array<NightActionEntry> {
 			const [factionalChannel] = this.game.factionalChannels.get(action.actor.role.faction.name)!;
 			const target = action.target ? (Array.isArray(action.target) ? action.target : [action.target]) : null;
 			await factionalChannel.send(
-				`**${action.actor.user.tag}** is ${(action.actor.role as ActionRole).actionGerund} ${
-					target ? listItems(target.map((pl) => pl.user.tag)) : ''
-				}`
+				`**${action.actor.user.tag}** is ${action.action.actionGerund} ${target ? listItems(target.map((pl) => pl.user.tag)) : ''}`
 			);
 		}
 		if (this.length >= possibleActions.length && this.game.phase === Phase.Night && !this.game.phaseChangeMutex.isLocked())
@@ -128,7 +126,7 @@ export interface NightActionEntry {
 	action: NightAction;
 	actor: Player;
 	priority: NightActionPriority;
-	target: ZeroOrMultiplePlayers;
+	target?: OneOrMultiplePlayers;
 	flags?: {
 		canBlock?: boolean;
 		canTransport?: boolean;
@@ -161,7 +159,7 @@ export enum NightActionPriority {
 	VETERAN = 0,
 	JESTER_HAUNT = 0,
 	VIGI_SUICIDE = 0,
-	SURVIVOR = 0,
+	Vest = 0,
 	Witch = 0,
 	Reanimator = 0,
 	// modify night actions directly
@@ -170,7 +168,7 @@ export enum NightActionPriority {
 	KILLER = 2, // godfather/goon/vigilante
 	SERIAL_KILLER = 2,
 	// healers always act after shooters
-	DOCTOR = 3,
+	Healer = 3,
 	BODYGUARD = 3,
 	JAILKEEPER = 3,
 	// these roles deal Powerful attacks that cannot be healed

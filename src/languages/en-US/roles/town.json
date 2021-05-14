@@ -18,7 +18,7 @@
 	"crusaderAttackedBy": "You were attacked by a Crusader!",
 	"crusaderFoughtOff": "You were attacked but somebody fought off your attacker!",
 	"doctorDescription": "You may heal someone every night, and self-heal once.",
-	"doctorHealed": "You were attacked but somebody nursed you back to health!",
+	"doctorSave": "You were attacked but somebody nursed you back to health!",
 	"doctorSelfHealOnce": "You can self-heal once per game.",
 	"doctorHealMayor": "You cannot heal a confirmed Mayor.",
 	"doctorCanSelfHeal": "You can self-heal tonight.",

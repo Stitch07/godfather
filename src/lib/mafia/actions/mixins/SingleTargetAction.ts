@@ -1,3 +1,4 @@
+import { listItems } from '@root/lib/util/utils';
 import { NightAction } from '../../managers/NightAction';
 import type NightActionsManager from '../../managers/NightActionsManager';
 import type { CanUseActionData } from '../../structures/ActionRole';
@@ -12,7 +13,7 @@ export class SingleTargetAction extends NightAction {
 	}
 
 	public confirmation(target: OneOrMultiplePlayers): string {
-		return '';
+		return `You are ${this.actionGerund} ${Array.isArray(target) ? listItems(target.map((tgt) => tgt.user.username)) : target} tonight.`;
 	}
 
 	public getTarget(args: string[], game: Game): OneOrMultiplePlayers {
