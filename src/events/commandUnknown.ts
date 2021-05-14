@@ -1,4 +1,4 @@
-import type SingleTarget from '@mafia/mixins/SingleTarget';
+import { ActionRole } from '@root/lib/mafia/structures/ActionRole';
 import { Event, Events, PieceContext, UnknownCommandPayload } from '@sapphire/framework';
 import { fauxAlive } from '@util/utils';
 
@@ -15,11 +15,11 @@ export default class extends Event<Events.UnknownCommand> {
 		if (!game || !game.hasStarted) return;
 
 		const player = game.players.get(message.author)!;
-		if (!fauxAlive(player) || !Reflect.has(player.role, 'action')) return;
+		if (!(player.role instanceof ActionRole) || !fauxAlive(player)) return;
 
 		// checks for a bitwise AND so that action phases can be aggregated using bitwise AND
 		// for example, an actionPhase set to Day | Night will work in both of those phases
-		if (((player.role! as SingleTarget).actionPhase & game.phase) !== game.phase) return;
+		// if ((player.role.actionPhase & game.phase) !== game.phase) return;
 		const prefixLess = message.content.slice(commandPrefix.length);
 		const [commandText, ...parameters] = prefixLess.split(' ');
 		try {

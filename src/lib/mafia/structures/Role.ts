@@ -1,17 +1,11 @@
 import type Player from '@mafia/structures/Player';
 import type { Awaited } from '@sapphire/framework';
-import type { Message } from 'discord.js';
 import { Attack, Defence } from '../managers/NightActionsManager';
 import { allRoles } from '../roles';
 import type Executioner from '../roles/neutral/Executioner';
 import type Faction from './Faction';
 
 const INNOCENT_FACTIONS = ['Town', 'Survivor', 'Jester', 'Amnesiac', 'Guardian Angel', 'Juggernaut', 'Godfather', 'Executioner'];
-
-export interface CanUseActionData {
-	check: boolean;
-	reason?: string;
-}
 
 abstract class Role {
 	public name = '';
@@ -83,10 +77,6 @@ abstract class Role {
 		// noop
 	}
 
-	public canUseAction(): CanUseActionData {
-		return { check: false, reason: '' };
-	}
-
 	// Role categories such as Random Town, Neutral Evil
 	public static categories: string[] = [];
 
@@ -96,7 +86,6 @@ abstract class Role {
 }
 
 interface Role {
-	onPmCommand(message: Message, command: string, ...args: string[]): void;
 	onNight(): Awaited<any>;
 	onDay(): Awaited<any>;
 	onDeath(): Awaited<any>;
