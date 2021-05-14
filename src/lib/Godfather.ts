@@ -24,7 +24,7 @@ export default class Godfather extends SapphireClient {
 	public eventLoop!: NodeJS.Timeout;
 	public maintenance = false;
 
-	private _version = [1, 4, 1];
+	private _version = [1, 4, 2];
 	public constructor() {
 		super({
 			caseInsensitiveCommands: true,
@@ -69,7 +69,7 @@ export default class Godfather extends SapphireClient {
 									return inlineCodeBlock(value);
 								}
 								case 'durationFormat': {
-									return getHandler(language!).duration.format(Number(value));
+									return getHandler(language!).duration.format(Math.ceil(Number(value)));
 								}
 								case 'prefix': {
 									if (UserOrMemberMentionRegex.test(value)) {
