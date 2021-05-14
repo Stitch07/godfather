@@ -5,26 +5,29 @@ import type Player from '../structures/Player';
 // @ts-ignore type bs
 import NightActionsManager, { NightActionPriority } from './NightActionsManager';
 
-export type ZeroOrMultiplePlayers = null | Player | Player[];
+export type OneOrMultiplePlayers = Player | Player[];
 
 export abstract class NightAction {
 	public name!: string;
 
 	public constructor(public role: ActionRole) {}
 
-	public abstract canUse(target: ZeroOrMultiplePlayers): CanUseActionData;
+	public abstract canUse(target?: OneOrMultiplePlayers): CanUseActionData;
 
-	public abstract getTarget(args: string[], game: Game): ZeroOrMultiplePlayers;
+	public abstract setUp(actions: NightActionsManager, target?: OneOrMultiplePlayers): Awaited<any>;
 
-	public abstract setUp(actions: NightActionsManager, target: ZeroOrMultiplePlayers): Awaited<any>;
+	public abstract runAction(actions: NightActionsManager, target?: OneOrMultiplePlayers): Awaited<any>;
 
-	public abstract runAction(actions: NightActionsManager, target: ZeroOrMultiplePlayers): Awaited<any>;
-
-	public abstract tearDown(actions: NightActionsManager, target: ZeroOrMultiplePlayers): Awaited<any>;
+	public abstract tearDown(actions: NightActionsManager, target?: OneOrMultiplePlayers): Awaited<any>;
 
 	public abstract runDayCommand(actions: NightActionsManager): Awaited<any>;
 
-	public abstract confirmation(target: ZeroOrMultiplePlayers): string;
+	public abstract confirmation(target: OneOrMultiplePlayers): string;
+
+	// eslint-disable-next-line @typescript-eslint/class-literal-property-style
+	public get extraNightContext(): string | null {
+		return null;
+	}
 
 	public get game() {
 		return this.role.game;
@@ -46,4 +49,5 @@ export interface NightAction {
 		canWitch?: boolean;
 	};
 	priority: NightActionPriority;
+	getTarget(args: string[], game: Game): OneOrMultiplePlayers;
 }

@@ -59,5 +59,11 @@
 	"cultLeaderGerund": "converting",
 	"cultLeaderText": "convert a player",
 	"hexMasterGerund": "hexing",
-	"hexMasterText": "hex a player"
+	"hexMasterText": "hex a player",
+	"vestGerund": "vesting",
+	"vestText": "protect yourself {{count}} time",
+	"vestTextPlural": "protect yourself {{count}} times",
+	"vestNoVests": "You don't have any vests left.",
+	"vestCanVest": "You can vest tonight.",
+	"vestCannotVest": "You cannot vest tonight."
 }

@@ -29,10 +29,10 @@ export class ActionRole extends Role {
 			case 'noaction': {
 				await this.player.user.send(this.game.t('roles/global:noAction'));
 				return this.game.nightActions.addAction({
-					action: new NoAction(),
+					action: new NoAction(this.player.role as ActionRole),
 					actor: this.player,
-					priority: this.priority,
-					target: null
+					priority: 0,
+					target: undefined
 				});
 			}
 
@@ -56,8 +56,8 @@ export class ActionRole extends Role {
 					action,
 					actor: this.player,
 					target,
-					priority: this.priority,
-					flags: this.flags ?? DEFAULT_ACTION_FLAGS
+					priority: action.priority,
+					flags: action.flags ?? DEFAULT_ACTION_FLAGS
 				});
 			}
 		}
