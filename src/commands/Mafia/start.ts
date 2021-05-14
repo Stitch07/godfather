@@ -1,5 +1,5 @@
 import GodfatherCommand from '@lib/GodfatherCommand';
-import Game, { Phase } from '@mafia/structures/Game';
+import type Game from '@mafia/structures/Game';
 import type Player from '@mafia/structures/Player';
 import { canManage } from '@root/lib/util/utils';
 import { ApplyOptions } from '@sapphire/decorators';
@@ -24,7 +24,10 @@ export default class extends GodfatherCommand {
 		if (!game!.setup) game!.setup = await this.getSetup(message, game!, setupName, t);
 
 		if (game!.setup!.totalPlayers !== game!.players.length)
-			throw await message.resolveKey('commands/mafia:startWrongPlayerCount', { setup: game!.setup!.name, playerCount: game!.players!.length });
+			throw await message.resolveKey('commands/mafia:startWrongPlayerCount', {
+				setup: game!.setup!.name,
+				playerCount: game!.setup!.totalPlayers
+			});
 
 		if (game!.settings.numberedNicknames && message.guild!.me?.hasPermission('MANAGE_NICKNAMES')) {
 			for (const plr of game!.players) {
@@ -38,15 +41,23 @@ export default class extends GodfatherCommand {
 			}
 		}
 
+		return game!.phaseChangeMutex.runExclusive(() => this.handleSetup(message, args, context));
+	}
+
+	private async handleSetup(message: Message, args: Args, context: CommandContext) {
+		const { game } = message.channel;
+		const t = await message.fetchT();
+
 		const sent = await message.channel.send(t('commands/mafia:startSetupChosen', { setup: game!.setup!.name }));
-		game!.phase = Phase.Standby;
 		const generatedRoles = game!.setup!.generate(this.context.client);
 		for (const player of game!.players) {
-			const { role, modifiers } = generatedRoles.shift()!;
+			const { role, modifiers, roleGroupIndex } = generatedRoles.shift()!;
 			player.role = new role(player);
 			for (const { modifier, context } of modifiers) {
 				if (modifier.canPatch(player.role)) modifier.patch(player.role, context);
 			}
+
+			player.role.resolveRoleGroup(roleGroupIndex);
 		}
 
 		const noPms: Player[] = [];

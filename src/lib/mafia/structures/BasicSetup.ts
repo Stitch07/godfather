@@ -2,14 +2,15 @@ import { DEFAULT_GAME_SETTINGS } from '@lib/constants';
 import { allRoles, roleCategories } from '@mafia/roles';
 import Executioner from '@mafia/roles/neutral/Executioner';
 import Mayor from '@mafia/roles/town/Mayor';
-import type Modifier from '@mafia/structures/Modifier';
 import type Role from '@mafia/structures/Role';
-import Setup, { SetupOptions } from '@mafia/structures/Setup';
+import Setup, { ModifierData, RoleResolverData, SetupOptions } from '@mafia/structures/Setup';
+import DefaultMap from '@root/lib/util/DefaultMap';
 import { err, ok, PieceContext } from '@sapphire/framework';
 import type { Constructor } from '@sapphire/utilities';
-import { randomArrayItem, shuffle } from '@util/utils';
+import { getRandomInteger, randomArrayItem, shuffle } from '@util/utils';
 import type { Client } from 'discord.js';
 import yaml from 'js-yaml';
+import Mason from '../roles/town/Mason';
 
 export default class BasicSetup extends Setup {
 	public randomMafia!: Constructor<Role>[];
@@ -29,47 +30,87 @@ export default class BasicSetup extends Setup {
 
 	public generate(client: Client) {
 		const generatedRoles = [];
-		const shuffled = shuffle(this.roles);
 		const uniqueRoles: Constructor<Role>[] = [];
+		// This map is only used for Masons, so I've included the entire initialization in this function.
+		// You should refactor this if you need this for other roles (e.g. helper method)
+		const roleGroupIndices = new DefaultMap<string, RoleGroupData>(() => {
+			return { currentIndex: -1, previousIndices: new Set<number>() };
+		});
+		roleGroupIndices.set('Mason', { currentIndex: getRandomInteger(), previousIndices: new Set<number>() });
 
-		for (const roleName of shuffled) {
+		for (const roleEntry of this.roles) {
 			// Role x2 becomes Role, Role
-			if (/([a-zA-Z0-9_\- ;{}]+) ?x(\d)/.test(roleName)) {
-				const matches = /([a-zA-Z0-9_\- ;{}]+) ?x(\d+)/.exec(roleName)!;
+			if (/([a-zA-Z0-9_\- ;{}]+) ?x(\d)/.test(roleEntry)) {
+				const matches = /([a-zA-Z0-9_\- ;{}]+) ?x(\d+)/.exec(roleEntry)!;
+				const roleName = matches[1].trimEnd();
 				for (let i = 0; i < Number(matches[2]); i++) {
-					generatedRoles.push(BasicSetup.resolve(client, matches[1].trimEnd(), uniqueRoles));
+					generatedRoles.push(BasicSetup.resolve(client, roleName, uniqueRoles, roleGroupIndices.get(roleName).currentIndex));
 				}
-				continue;
+
+				if (roleGroupIndices.has(roleName)) {
+					roleGroupIndices.get(roleName).previousIndices.add(roleGroupIndices.get(roleName).currentIndex);
+					let newIndex = getRandomInteger();
+					while (roleGroupIndices.get(roleName).previousIndices.has(newIndex)) {
+						newIndex = getRandomInteger();
+					}
+					roleGroupIndices.get(roleName).currentIndex = newIndex;
+				}
+			} else {
+				generatedRoles.push(BasicSetup.resolve(client, roleEntry, uniqueRoles, roleGroupIndices.get(roleEntry).currentIndex));
+				if (roleGroupIndices.has(roleEntry)) {
+					roleGroupIndices.get(roleEntry).previousIndices.add(roleGroupIndices.get(roleEntry).currentIndex);
+					let newIndex = getRandomInteger();
+					while (roleGroupIndices.get(roleEntry).previousIndices.has(newIndex)) {
+						newIndex = getRandomInteger();
+					}
+					roleGroupIndices.get(roleEntry).currentIndex = newIndex;
+				}
 			}
-			generatedRoles.push(BasicSetup.resolve(client, roleName, uniqueRoles));
 		}
 
-		return generatedRoles;
+		console.log(roleGroupIndices.get('Mason').previousIndices);
+
+		return shuffle(generatedRoles);
 	}
 
-	public ok(roles: Constructor<Role>[]) {
+	public ok(roleResolverEntries: RoleResolverData[]) {
 		// games can have between 3 and MAX_PLAYERS players
-		if (roles.length < 3) return err(`Setups need at least 3 roles. (currently ${roles.length})`);
-		if (roles.length > DEFAULT_GAME_SETTINGS.maxPlayers)
-			return err(`Setups can have at most ${DEFAULT_GAME_SETTINGS.maxPlayers} players. (currently ${roles.length})`);
+		if (roleResolverEntries.length < 3) return err(`Setups need at least 3 roles. (currently ${roleResolverEntries.length})`);
+		if (roleResolverEntries.length > DEFAULT_GAME_SETTINGS.maxPlayers)
+			return err(`Setups can have at most ${DEFAULT_GAME_SETTINGS.maxPlayers} players. (currently ${roleResolverEntries.length})`);
+
 		// check if there are at least 2 "main" factions, ie factions that do not win independently
+		const roles = roleResolverEntries.map((roleResolverEntry) => roleResolverEntry.role);
 		const mafiaRoles = roles.filter((role) => this.randomMafia.includes(role));
 		const townRoles = roles.filter((role) => this.randomTownies.includes(role));
 		const nkRoles = roles.filter((role) => this.randomNK.includes(role));
 		const cultRoles = roles.filter((role) => this.randomCult.includes(role));
+
 		// at least 2 of these should be greater than zero
 		const mainFactions = [mafiaRoles.length, nkRoles.length, townRoles.length, cultRoles].filter((count) => count !== 0);
 		if (mainFactions.length === 1) return err(`There must be 2 distinct factions in the game. (Town/Mafia/Neutral Killing/Cult)`);
 
 		// check if exe has any valid targets
-		if (roles.includes(Executioner)) {
-			const validExeTargets = townRoles.filter((role) => role !== Mayor);
+		if (roleResolverEntries.map((roleResolverEntry) => roleResolverEntry.role).includes(Executioner)) {
+			const validExeTargets = roles.filter((role) => role !== Mayor);
 			if (validExeTargets.length === 0) return err('There are no valid exe targets in this game.');
+		}
+
+		// masonries must contain at least two players
+		if (roleResolverEntries.map((roleResolverEntry) => roleResolverEntry.role).includes(Mason)) {
+			const masonryIds = roleResolverEntries
+				.filter((roleResolverEntry) => roleResolverEntry.role === Mason)
+				.map((roleResolverEntry) => roleResolverEntry.roleGroupIndex);
+			for (const uniqueMasonryId of new Set<number>(masonryIds).values()) {
+				if (masonryIds.filter((id) => id === uniqueMasonryId).length === 1) {
+					return err('All masonries must contain at least two players.');
+				}
+			}
 		}
 		return ok(true);
 	}
 
-	public static resolve(client: Client, roleName: string, uniqueRoles: Constructor<Role>[]): RoleResolverData {
+	public static resolve(client: Client, roleName: string, uniqueRoles: Constructor<Role>[], roleGroupIndex: number): RoleResolverData {
 		const modifiers: ModifierData[] = [];
 		if (/\+(\w+)/g.test(roleName)) {
 			const mods: string[] = roleName.match(/\+(\w+)/g)!;
@@ -94,7 +135,7 @@ export default class BasicSetup extends Setup {
 			uniqueRoles.push(role);
 		}
 
-		return { modifiers, role };
+		return { modifiers, role, roleGroupIndex };
 	}
 
 	/**
@@ -118,7 +159,7 @@ export default class BasicSetup extends Setup {
 		for (const role of setupData.roles) {
 			// this will throw if an invalid role was provided
 			if (/(\w+ ?\w+ ?) ?x(\d)/.test(role)) continue;
-			BasicSetup.resolve(client, role, []);
+			BasicSetup.resolve(client, role, [], -1);
 		}
 
 		// @ts-ignore this is a hack, but is required
@@ -135,7 +176,7 @@ export default class BasicSetup extends Setup {
 		// Role1 | Role2 (one of these 2)
 		if (/(\w+) ?\| ?(\w+)/.test(roleName)) {
 			const possibleRoles = /(\w+) ?\| ?(\w+)/.exec(roleName)!.slice(1, 3);
-			return this.resolve(client, randomArrayItem(possibleRoles)!, uniqueRoles).role;
+			return this.resolve(client, randomArrayItem(possibleRoles)!, uniqueRoles, -1).role;
 		}
 
 		// Category MINUS Role(s)
@@ -158,18 +199,13 @@ export default class BasicSetup extends Setup {
 	}
 }
 
+export interface RoleGroupData {
+	currentIndex: number;
+	previousIndices: Set<number>;
+}
+
 export interface SetupData {
 	name?: string;
 	roles: string[];
 	nightStart?: boolean;
-}
-
-export interface RoleResolverData {
-	role: Constructor<Role>;
-	modifiers: ModifierData[];
-}
-
-export interface ModifierData {
-	modifier: Modifier;
-	context: any;
 }

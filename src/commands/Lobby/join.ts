@@ -1,5 +1,4 @@
 import GodfatherCommand from '@lib/GodfatherCommand';
-import { Phase } from '@mafia/structures/Game';
 import Player from '@mafia/structures/Player';
 import { ApplyOptions } from '@sapphire/decorators';
 import type { CommandOptions } from '@sapphire/framework';
@@ -24,7 +23,7 @@ export default class extends GodfatherCommand {
 				throw await message.resolveKey('commands/lobby:otherChannel', [{ channel: message.channel.toString(), guild: message.guild!.name }]);
 		}
 		// do not allow replacing in while the bot is processing the game
-		if (game!.phase === Phase.Standby) throw await message.resolveKey('commands/lobby:joinBetweenPhases');
+		if (game!.phaseChangeMutex.isLocked()) throw await message.resolveKey('commands/lobby:joinBetweenPhases');
 		if (game!.hasStarted || game!.players.length === game!.settings.maxPlayers) {
 			if (game!.players.replacements.includes(message.author)) throw await message.resolveKey('commands/lobby:joinAlreadyReplacement');
 			game!.players.replacements.push(message.author);

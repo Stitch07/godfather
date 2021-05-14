@@ -4,9 +4,9 @@ import { cast, removeArrayItem } from '@util/utils';
 import type { Message } from 'discord.js';
 import ArsonistFaction from '../../factions/neutral/Arsonist';
 import NightActionsManager, { Attack, Defence, NightActionPriority } from '../../managers/NightActionsManager';
-import { Phase } from '../../structures/Game';
-import Player from '../../structures/Player';
-import Role from '../../structures/Role';
+import { Phase } from '@mafia/structures/Game';
+import Player from '@mafia/structures/Player';
+import Role from '@mafia/structures/Role';
 
 class Arsonist extends Role {
 	public name = 'Arsonist';

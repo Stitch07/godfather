@@ -72,9 +72,21 @@ abstract class Role {
 		// noop
 	}
 
+	public resolveRoleGroup(roleGroupIndex: number) {
+		// noop
+	}
+
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	public onVisit(visitor: Player) {
 		// noop
+	}
+
+	public afterActions() {
+		// noop
+	}
+
+	public canUseAction(): CanUseActionData {
+		return { check: false, reason: '' };
 	}
 
 	// Role categories such as Random Town, Neutral Evil

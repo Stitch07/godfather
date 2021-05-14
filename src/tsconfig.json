@@ -5,6 +5,8 @@
 		"rootDir": ".",
 		"baseUrl": ".",
 		"composite": true,
+		"sourceMap": true,
+		"esModuleInterop": true,
 		"paths": {
 			"@root/*": ["./*"],
 			"@mafia/*": ["lib/mafia/*"],

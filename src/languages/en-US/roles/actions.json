@@ -8,9 +8,11 @@
 	"doctorGerund": "healing",
 	"doctorText": "heal a player",
 	"escortGerund": "blocking",
-	"escortText": "block a text",
+	"escortText": "block a player",
 	"investigatorGerund": "investigating",
 	"investigatorText": "investigate a player",
+	"jailkeeperGerund": "jailing",
+	"jailkeeperText": "jail a player",
 	"lookoutGerund": "watching",
 	"lookoutText": "watch a player",
 	"mayorGerund": "revealing",
@@ -55,5 +57,7 @@
 	"janitorGerund": "cleaning",
 	"janitorText": "clean a player",
 	"cultLeaderGerund": "converting",
-	"cultLeaderText": "convert a player"
+	"cultLeaderText": "convert a player",
+	"hexMasterGerund": "hexing",
+	"hexMasterText": "hex a player"
 }

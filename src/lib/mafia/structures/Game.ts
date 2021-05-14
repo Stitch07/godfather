@@ -10,6 +10,7 @@ import { getHandler } from '@root/languages';
 import { Time } from '@sapphire/time-utilities';
 import { codeBlock } from '@sapphire/utilities';
 import { format } from '@util/durationFormat';
+import { Mutex } from 'async-mutex';
 import { Collection, GuildMember, TextChannel, User } from 'discord.js';
 import type { TFunction } from 'i18next';
 import { getConnection, getRepository } from 'typeorm';
@@ -26,11 +27,10 @@ const TRIAL_VOTING_DURATION = 30 * Time.Second;
 
 export const enum Phase {
 	Pregame = 2,
-	Standby = 4,
-	Day = 8,
-	Trial = 16,
-	TrialVoting = 32,
-	Night = 64
+	Day = 4,
+	Trial = 8,
+	TrialVoting = 16,
+	Night = 32
 }
 
 export default class Game {
@@ -66,6 +66,8 @@ export default class Game {
 
 	public t!: TFunction;
 
+	public phaseChangeMutex: Mutex;
+
 	private dayTimeLeft = 0;
 
 	private totalTrials = 0;
@@ -77,10 +79,10 @@ export default class Game {
 		this.players.push(new Player(host, this));
 		this.votes = new VoteManager(this);
 		this.nightActions = new NightActionsManager(this);
+		this.phaseChangeMutex = new Mutex();
 	}
 
 	public async startDay() {
-		this.phase = Phase.Standby;
 		if (this.cycle !== 0 || this.setup!.nightStart) {
 			const deadPlayers = await this.nightActions.resolve();
 			if (deadPlayers.length > 0) {
@@ -162,7 +164,6 @@ export default class Game {
 		if (this.settings.adaptiveSlowmode && this.channel.permissionsFor(this.client.user!)!.has('MANAGE_CHANNELS'))
 			await this.updateAdaptiveSlowmode();
 
-		this.phase = Phase.Standby;
 		this.votes.reset();
 		this.phaseEndAt = new Date(Date.now() + this.settings.nightDuration);
 		this.dayTimeLeft = 0;
@@ -250,10 +251,9 @@ export default class Game {
 		if (result === innocentVotes || innocentVotes === guiltyVotes) {
 			// after max trials are reached, end day without a lynch
 			if (this.totalTrials === this.settings.maxTrials) {
-				this.phase = Phase.Standby;
 				this.idlePhases++;
 				await this.channel.sendTranslated('game/trials:maxTrialsReached');
-				await this.startNight();
+				await this.phaseChangeMutex.runExclusive(() => this.startNight());
 			}
 			if (this.dayTimeLeft !== 0)
 				await this.channel.sendTranslated('game/trials:playerAcquitted', [{ playerName: this.votes.playerOnTrial!.user.tag }]);
@@ -269,8 +269,7 @@ export default class Game {
 
 	public async hammer(player: Player, force = false) {
 		// locks against multiple calls to hammer()
-		this.phase = Phase.Standby;
-		if (!player.isAlive) return;
+		if (!player.isAlive || this.phase !== Phase.Day) return;
 		// super saint forces a hammer
 		if (this.settings.trials && !force && player.role.name !== 'Super Saint') {
 			this.votes.playerOnTrial = player;
@@ -301,7 +300,7 @@ export default class Game {
 			}
 		}
 
-		if (this.phase === Phase.Standby) return;
+		if (this.phaseChangeMutex.isLocked()) return;
 
 		if (this.phaseEndAt && Date.now() > this.phaseEndAt.getTime()) {
 			switch (this.phase) {
@@ -327,11 +326,11 @@ export default class Game {
 						await this.channel.send('Nobody was eliminated!');
 						this.idlePhases++;
 					}
-					return this.startNight();
+					return this.phaseChangeMutex.runExclusive(() => this.startNight());
 				}
 
 				case Phase.Night: {
-					return this.startDay();
+					return this.phaseChangeMutex.runExclusive(() => this.startDay());
 				}
 
 				case Phase.Trial: {

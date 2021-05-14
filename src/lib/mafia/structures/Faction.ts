@@ -16,14 +16,13 @@ class Faction {
 	public name = '';
 	public winCondition = '';
 
-	public async generateInvite(game: Game) {
-		if (game.factionalChannels.has(this.name)) return game.factionalChannels.get(this.name)![1];
+	public async generateInvite(game: Game, factionMembers: Player[], name = this.name) {
+		if (game.factionalChannels.has(name)) return game.factionalChannels.get(name)![1];
 
 		const guild = game.client.guilds.cache.get(PRIVATE_CHANNEL_SERVER)!;
-		const factionMembers = game.players.filter((player) => player.role.faction.name === this.name);
 
-		const factionalChannel = await guild.channels.create(`${game.channel.guild.id}-${this.name}`, {
-			topic: game.t('game/factions:channelTopic'),
+		const factionalChannel = await guild.channels.create(`${game.channel.guild.id}-${name}`, {
+			topic: game.t('game/factions:channelTopic', { faction: name }),
 			permissionOverwrites: [
 				// deny all permissions for the everyone role
 				{
@@ -39,7 +38,7 @@ class Faction {
 		});
 
 		const invite = await factionalChannel.createInvite();
-		game.factionalChannels.set(this.name, [factionalChannel, invite.url]);
+		game.factionalChannels.set(name, [factionalChannel, invite.url]);
 		return invite.url;
 	}
 }

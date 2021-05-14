@@ -1,5 +1,4 @@
 import GodfatherCommand from '@lib/GodfatherCommand';
-import { Phase } from '@mafia/structures/Game';
 import { ApplyOptions } from '@sapphire/decorators';
 import { Args, BucketType, CommandOptions } from '@sapphire/framework';
 import { Time } from '@sapphire/time-utilities';
@@ -33,8 +32,7 @@ export default class extends GodfatherCommand {
 		await message.channel.sendTranslated('commands/voting:voteSuccess', [{ target: target.user.tag }]);
 
 		if (hammered && target.isAlive) {
-			game!.phase = Phase.Standby;
-			await game!.hammer(target);
+			await game!.phaseChangeMutex.runExclusive(() => game!.hammer(target));
 		}
 	}
 }

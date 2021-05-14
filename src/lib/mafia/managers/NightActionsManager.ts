@@ -11,6 +11,7 @@ export default class NightActionsManager extends Array<NightActionEntry> {
 	public record = new NightRecord();
 	public framedPlayers: Player[] = [];
 	public protectedPlayers: Player[] = [];
+	public hexedPlayers: Player[] = [];
 	public constructor(public game: Game) {
 		super();
 	}
@@ -38,7 +39,8 @@ export default class NightActionsManager extends Array<NightActionEntry> {
 				}`
 			);
 		}
-		if (this.length >= possibleActions.length && this.game.phase === Phase.Night) await this.game.startDay();
+		if (this.length >= possibleActions.length && this.game.phase === Phase.Night && !this.game.phaseChangeMutex.isLocked())
+			await this.game.phaseChangeMutex.runExclusive(() => this.game.startDay());
 	}
 
 	public async resolve(): Promise<Player[]> {
@@ -76,6 +78,8 @@ export default class NightActionsManager extends Array<NightActionEntry> {
 			if (action === undefined) continue;
 			await action.tearDown(this, target);
 		}
+
+		for (const player of this.game.players) await player.role.afterActions();
 
 		const deadPlayers = [];
 		for (const [playerID, record] of this.record.entries()) {
@@ -168,6 +172,7 @@ export enum NightActionPriority {
 	// healers always act after shooters
 	DOCTOR = 3,
 	BODYGUARD = 3,
+	JAILKEEPER = 3,
 	// these roles deal Powerful attacks that cannot be healed
 	ARSONIST = 4,
 	// roles that affect investigative results or stop powerful attacks
