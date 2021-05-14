@@ -1,29 +1,38 @@
 import NightActionsManager, { NightActionPriority } from '@mafia/managers/NightActionsManager';
-import SingleTarget from '@mafia/mixins/SingleTarget';
 import Townie from '@mafia/mixins/Townie';
 import type Player from '@mafia/structures/Player';
+import { SingleTargetAction } from '../../actions/mixins/SingleTargetAction';
+import type { NightAction } from '../../managers/NightAction';
+import { ActionRole } from '../../structures/ActionRole';
 
-class Cop extends SingleTarget {
+class Cop extends ActionRole {
 	public name = 'Cop';
-
-	public action = 'check';
-	public actionGerund = 'checking';
-	public actionText = 'check a player';
-
-	public priority = NightActionPriority.COP;
+	public actions: NightAction[] = [new CopCheckAction(this)];
 
 	public constructor(player: Player) {
 		super(player);
 
 		this.description = this.game.t('roles/town:copDescription');
-		this.actionText = this.game.t('roles/actions:copText');
-		this.actionGerund = this.game.t('roles/actions:copGerund');
 	}
 
 	// ensures that Dethy cops don't get PMed their real role
 	public get display(): string {
 		if (this.player.cleaned && !this.player.isAlive) return 'Cleaned';
 		return 'Cop';
+	}
+}
+
+Cop.categories = [...Cop.categories, 'Town Investigative'];
+
+export class CopCheckAction extends SingleTargetAction {
+	public name = 'check';
+	public priority = NightActionPriority.COP;
+
+	public constructor(role: ActionRole) {
+		super(role);
+
+		this.actionText = this.game.t('roles/actions:copText');
+		this.actionGerund = this.game.t('roles/actions:copGerund');
 	}
 
 	public tearDown(actions: NightActionsManager, target: Player) {
@@ -40,7 +49,5 @@ class Cop extends SingleTarget {
 		return innocence;
 	}
 }
-
-Cop.categories = [...Cop.categories, 'Town Investigative'];
 
 export default Townie(Cop);
