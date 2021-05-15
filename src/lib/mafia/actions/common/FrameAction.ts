@@ -7,8 +7,8 @@ export class FrameAction extends SingleTargetAction {
 	public name = 'frame';
 	public priority = NightActionPriority.Frame;
 
-	public constructor(role: ActionRole) {
-		super(role);
+	public constructor(role: ActionRole, numUsesRemaining = Number.POSITIVE_INFINITY) {
+		super(role, numUsesRemaining);
 
 		this.actionText = this.game.t('roles/actions:frameText');
 		this.actionGerund = this.game.t('roles/actions:frameGerund');
