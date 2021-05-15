@@ -17,7 +17,7 @@ export default class extends GodfatherCommand {
 		const game = this.context.client.games.find((game) => Boolean(game.players.get(message.author)));
 		if (!game) throw await message.resolveKey('preconditions:NoActiveGames');
 
-		if (game.settings.whispers) throw await message.resolveKey('commands/mafia:whisperDisabled');
+		if (!game.settings.whispers) throw await message.resolveKey('commands/mafia:whisperDisabled');
 		if (!game.hasStarted) throw await message.resolveKey('preconditions:GameStartedOnly');
 		if (game.phase !== Phase.Day) throw await message.resolveKey('preconditions:whisperDayOnly');
 
