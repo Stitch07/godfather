@@ -7,7 +7,7 @@ import { SingleTargetAction } from '../mixins/SingleTargetAction';
 export class WatchAction extends SingleTargetAction {
 	public name = 'watch';
 	public priority = NightActionPriority.Investigative;
-	public constructor(role: ActionRole, public vests = 1) {
+	public constructor(role: ActionRole) {
 		super(role);
 		this.actionText = this.game.t('roles/actions:watchText');
 		this.actionGerund = this.game.t('roles/actions:watchGerund');
