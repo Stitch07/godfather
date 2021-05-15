@@ -1,6 +1,6 @@
 import Townie from '@mafia/mixins/Townie';
 import type Player from '@mafia/structures/Player';
-import { AlignmentCheckAction } from '../../actions/common/CheckAction';
+import { AlignmentCheckAction } from '../../actions/common/AlignmentCheckAction';
 import type { NightAction } from '../../managers/NightAction';
 import { ActionRole } from '../../structures/ActionRole';
 
