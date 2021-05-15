@@ -1,6 +1,6 @@
 import JuggernautFaction from '@mafia/factions/neutral/Juggernaut';
 import NightActionsManager, { Attack, Defence, NightActionPriority } from '@mafia/managers/NightActionsManager';
-import Killer from '@mafia/mixins/Killer';
+import Killer from '@root/lib/mafia/actions/common/KillerAction';
 import type Player from '@mafia/structures/Player';
 
 class Juggernaut extends Killer {

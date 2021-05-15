@@ -1,6 +1,6 @@
 import WerewolfFaction from '@mafia/factions/neutral/Werewolf';
 import NightActionsManager, { Attack, Defence } from '@mafia/managers/NightActionsManager';
-import Killer from '@mafia/mixins/Killer';
+import Killer from '@root/lib/mafia/actions/common/KillerAction';
 import type Player from '@mafia/structures/Player';
 
 export default class Werewolf extends Killer {
