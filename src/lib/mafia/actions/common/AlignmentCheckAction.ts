@@ -7,8 +7,8 @@ export class AlignmentCheckAction extends SingleTargetAction {
 	public name = 'check';
 	public priority = NightActionPriority.Investigative;
 
-	public constructor(role: ActionRole) {
-		super(role);
+	public constructor(role: ActionRole, numUsesRemaining = Number.POSITIVE_INFINITY) {
+		super(role, numUsesRemaining);
 
 		this.actionText = this.game.t('roles/actions:alignmentCheckText');
 		this.actionGerund = this.game.t('roles/actions:alignmentCheckGerund');
