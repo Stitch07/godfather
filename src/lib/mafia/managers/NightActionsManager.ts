@@ -184,6 +184,7 @@ export enum NightActionPriority {
 	GUARDIAN_ANGEL = 5,
 	FRAMER = 5,
 	// investigative roles usually only rely on tearDown, so they can safely go last
+	Investigative = 6,
 	COP = 6,
 	LOOKOUT = 6,
 	INVEST = 6,
