@@ -7,7 +7,7 @@ export class VestAction extends NoTargetAction {
 	public name = 'vest';
 	public priority = NightActionPriority.Vest;
 	public constructor(role: ActionRole, public vests = 1) {
-		super(role);
+		super(role, vests);
 		this.actionGerund = this.game.t('roles/actions:vestGerund');
 		this.actionText = this.game.t('roles/actions:vestText');
 	}

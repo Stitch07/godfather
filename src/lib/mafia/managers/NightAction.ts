@@ -9,9 +9,8 @@ export type OneOrMultiplePlayers = Player | Player[];
 
 export abstract class NightAction {
 	public name!: string;
-	public numRemainingUses: number = Number.POSITIVE_INFINITY;
 
-	public constructor(public role: ActionRole) {}
+	public constructor(public role: ActionRole, public numRemainingUses = Number.POSITIVE_INFINITY) {}
 
 	public abstract canUse(target?: OneOrMultiplePlayers): CanUseActionData;
 

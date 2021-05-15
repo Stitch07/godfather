@@ -3,14 +3,21 @@ import type { ActionRole } from '../../structures/ActionRole';
 import type Player from '../../structures/Player';
 import { SingleTargetAction } from '../mixins/SingleTargetAction';
 
-// Action to return all players that visited a target.
-export class WatchAction extends SingleTargetAction {
-	public name = 'watch';
+export enum InvestigativeActionType {
+	Watch
+}
+
+export class InvestigativeAction extends SingleTargetAction {
 	public priority = NightActionPriority.Investigative;
-	public constructor(role: ActionRole, public vests = 1) {
-		super(role);
-		this.actionText = this.game.t('roles/actions:watchText');
-		this.actionGerund = this.game.t('roles/actions:watchGerund');
+	public constructor(role: ActionRole, type: InvestigativeActionType, numUsesRemaining = Number.POSITIVE_INFINITY) {
+		super(role, numUsesRemaining);
+
+		switch (type) {
+			case InvestigativeActionType.Watch:
+				this.name = 'watch';
+				this.actionText = this.game.t('roles/actions:watchText');
+				this.actionGerund = this.game.t('roles/actions:watchGerund');
+		}
 	}
 
 	public tearDown(actions: NightActionsManager, target: Player) {

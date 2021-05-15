@@ -12,7 +12,7 @@ export default class KillerAction extends SingleTargetAction {
 	public actionParticiple: string;
 	public attackStrength: Attack;
 
-	public constructor(role: ActionRole, attack: Attack, actionName: string) {
+	public constructor(role: ActionRole, attack: Attack, actionName: string, numRemainingUses = Number.POSITIVE_INFINITY) {
 		super(role);
 		this.action = actionName;
 		this.attackStrength = this.player.role.modifiers.attack ?? attack;
