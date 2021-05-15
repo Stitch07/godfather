@@ -9,14 +9,14 @@ export class TrackAction extends SingleTargetAction {
 	public priority = NightActionPriority.Investigative;
 	public constructor(role: ActionRole) {
 		super(role);
-		this.actionText = this.game.t('roles/actions:trackerText');
-		this.actionGerund = this.game.t('roles/actions:trackerGerund');
+		this.actionText = this.game.t('roles/actions:trackText');
+		this.actionGerund = this.game.t('roles/actions:trackGerund');
 	}
 
 	public tearDown(actions: NightActionsManager, target: Player) {
 		const visited = this.game.players.filter((player) => player.visitors.includes(target));
 		if (visited.length > 0) {
-			return this.player.queueMessage(this.game.t('roles/town:trackerResult', { players: visited }));
+			return this.player.queueMessage(this.game.t('roles/town:trackResult', { players: visited }));
 		}
 	}
 }

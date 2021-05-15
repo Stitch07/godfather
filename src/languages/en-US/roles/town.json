@@ -72,7 +72,7 @@
 	"superSaintAnnouncement": "{{player}} hammered the Super Saint and was blown up!",
 	"superSaintBoom": "💣 **BOOOOOOOOOOOOOOM!!!**",
 	"trackerDescription": "You may track one person at night to find out who they visited.",
-	"trackerResult": "Your target visited {{players, listAnd}}.",
+	"trackResult": "Your target visited {{players, listAnd}}.",
 	"transporterDescription": "You may transport 2 players each night.",
 	"transporterMessage": "You were transported to another location.",
 	"vanillaDescription": "You have no night actions. Your vote is your only power.",
