@@ -2,6 +2,14 @@
 
 All notable changes to Godfather will be documented in this file.
 
+### v1.4.2
+
+### Bug FIxes:
+
+-   Fixed start command prompt bug
+-   Fixed wills not being enabled properly
+-   Fixed cooldowns showing "in 0 seconds"
+
 ## v1.4.1
 
 ### Bug Fixes:

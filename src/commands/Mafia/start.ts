@@ -104,6 +104,7 @@ export default class extends GodfatherCommand {
 		);
 		const messages = await message.channel.awaitMessages(
 			(msg: Message) =>
+				!game.hasStarted &&
 				msg.author.id === message.author.id &&
 				Number.isInteger(parseInt(msg.content, 10)) &&
 				parseInt(msg.content, 10) > 0 &&
@@ -113,7 +114,7 @@ export default class extends GodfatherCommand {
 				time: Time.Second * 30
 			}
 		);
-		if (messages.size === 0) throw t('commands/mafia:startPromptAborted');
+		if (messages.size === 0 && !game.hasStarted) throw t('commands/mafia:startPromptAborted');
 		return [...possibleSetups.values()][parseInt(messages.first()!.content, 10)! - 1];
 	}
 }
