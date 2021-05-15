@@ -1,5 +1,5 @@
 import NightActionsManager, { Defence } from '@mafia/managers/NightActionsManager';
-import Killer from '@mafia/mixins/Killer';
+import Killer from '@root/lib/mafia/actions/common/KillerAction';
 import MafiaRole from '@mafia/mixins/MafiaRole';
 import type Player from '@mafia/structures/Player';
 

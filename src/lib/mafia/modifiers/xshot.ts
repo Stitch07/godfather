@@ -2,7 +2,7 @@ import Modifier from '@mafia/structures/Modifier';
 import type Role from '@mafia/structures/Role';
 import type { PieceContext } from '@sapphire/framework';
 import { cast } from '@util/utils';
-import type Killer from '../mixins/Killer';
+import type Killer from '../actions/common/KillerAction';
 
 const VALID_ROLES = ['Vigilante', 'Goon', 'Godfather', 'Serial Killer'];
 
