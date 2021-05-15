@@ -1,8 +1,8 @@
 {
 	"bodyguardText": "escolte um jogador",
 	"bodyguardGerund": "escoltando",
-	"copGerund": "checando",
-	"copText": "verifique um jogador",
+	"alignmentCheckGerund": "checando",
+	"alignmentCheckText": "verifique um jogador",
 	"crusaderGerund": "protegendo",
 	"crusaderText": "proteja um jogador",
 	"doctorGerund": "curando",

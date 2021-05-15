@@ -10,8 +10,8 @@ export class AlignmentCheckAction extends SingleTargetAction {
 	public constructor(role: ActionRole) {
 		super(role);
 
-		this.actionText = this.game.t('roles/actions:copText');
-		this.actionGerund = this.game.t('roles/actions:copGerund');
+		this.actionText = this.game.t('roles/actions:alignmentCheckText');
+		this.actionGerund = this.game.t('roles/actions:alignmentCheckGerund');
 	}
 
 	public tearDown(actions: NightActionsManager, target: Player) {
@@ -20,7 +20,9 @@ export class AlignmentCheckAction extends SingleTargetAction {
 			innocence = !innocence;
 			actions.framedPlayers.splice(actions.framedPlayers.indexOf(target), 1);
 		}
-		return this.player.queueMessage(this.game.t(innocence ? 'roles/town:copResultInnocent' : 'roles/town:copResultSuspicious'));
+		return this.player.queueMessage(
+			this.game.t(innocence ? 'roles/town:alignmentCheckResultInnocent' : 'roles/town:alignmentCheckResultSuspicious')
+		);
 	}
 
 	public innocenceModifier(innocence: boolean) {

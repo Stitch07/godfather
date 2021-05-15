@@ -6,7 +6,7 @@ import type Player from '@mafia/structures/Player';
 class Framer extends SingleTarget {
 	public name = 'Framer';
 	public action = 'frame';
-	public priority = NightActionPriority.FRAMER;
+	public priority = NightActionPriority.Frame;
 
 	public constructor(player: Player) {
 		super(player);

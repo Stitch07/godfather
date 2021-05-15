@@ -1,8 +1,8 @@
 {
 	"bodyguardText": "guard a player",
 	"bodyguardGerund": "guarding",
-	"copGerund": "checking",
-	"copText": "check a player",
+	"alignmentCheckGerund": "checking",
+	"alignmentCheckText": "check a player",
 	"crusaderGerund": "protecting",
 	"crusaderText": "protect a player",
 	"doctorGerund": "healing",
