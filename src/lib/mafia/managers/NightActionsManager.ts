@@ -4,7 +4,7 @@ import { DEFAULT_ACTION_FLAGS } from '@root/lib/constants';
 import { fauxAlive, listItems } from '@root/lib/util/utils';
 import { mergeDefault } from '@sapphire/utilities';
 import DefaultMap from '@util/DefaultMap';
-import type { ActionRole } from '../structures/ActionRole';
+import { ActionRole } from '../structures/ActionRole';
 import type { NightAction, OneOrMultiplePlayers } from './NightAction';
 
 export default class NightActionsManager extends Array<NightActionEntry> {
@@ -65,6 +65,7 @@ export default class NightActionsManager extends Array<NightActionEntry> {
 			if (!flags) flags = DEFAULT_ACTION_FLAGS;
 			if (action === undefined) continue;
 			await action.runAction(this, target);
+			action.numRemainingUses -= 1;
 			if (flags.canVisit) {
 				const targets = Array.isArray(target) ? (actor.role.name === 'Witch' ? [target[0]] : target) : [target];
 				for (const target of targets) {
@@ -77,7 +78,12 @@ export default class NightActionsManager extends Array<NightActionEntry> {
 			await action.tearDown(this, target);
 		}
 
-		for (const player of this.game.players) await player.role.afterActions();
+		for (const player of this.game.players) {
+			await player.role.afterActions();
+			if (player.role instanceof ActionRole) {
+				(player.role as ActionRole).actions = (player.role as ActionRole).actions.filter((action) => action.numRemainingUses !== 0);
+			}
+		}
 
 		const deadPlayers = [];
 		for (const [playerID, record] of this.record.entries()) {
