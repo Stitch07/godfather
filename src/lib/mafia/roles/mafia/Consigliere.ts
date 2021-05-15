@@ -1,23 +1,13 @@
-import NightActionsManager, { NightActionPriority } from '@mafia/managers/NightActionsManager';
 import MafiaRole from '@mafia/mixins/MafiaRole';
-import SingleTarget from '@mafia/mixins/SingleTarget';
 import type Player from '@mafia/structures/Player';
+import { ActionRole } from '../../structures/ActionRole';
 
-class Consigliere extends SingleTarget {
+class Consigliere extends ActionRole {
 	public name = 'Consigliere';
-
-	public action = 'check';
-	public priority = NightActionPriority.CONSIG;
 
 	public constructor(player: Player) {
 		super(player);
 		this.description = this.game.t('roles/neutral:consigliereDescription');
-		this.actionText = this.game.t('roles/actions:consigliereText');
-		this.actionGerund = this.game.t('roles/actions:consigliereGerund');
-	}
-
-	public tearDown(actions: NightActionsManager, target: Player) {
-		this.player.queueMessage(this.game.t('roles/mafia:consigResult', { role: target.role.display }));
 	}
 }
 
