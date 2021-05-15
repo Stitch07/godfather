@@ -16,9 +16,7 @@ export class WatchAction extends SingleTargetAction {
 	public tearDown(actions: NightActionsManager, target: Player) {
 		const visitors = target.visitors.filter((visitor) => visitor !== this.player);
 		if (visitors.length > 0)
-			return this.player.queueMessage(
-				this.game.t('roles/town:lookoutVisitedBy', { players: visitors.map((visitor) => visitor.user.username) })
-			);
-		return this.player.queueMessage(this.game.t('roles/town:lookoutNoVisits'));
+			return this.player.queueMessage(this.game.t('roles/town:watchVisitedBy', { players: visitors.map((visitor) => visitor.user.username) }));
+		return this.player.queueMessage(this.game.t('roles/town:watchNoVisits'));
 	}
 }
