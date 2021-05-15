@@ -9,6 +9,7 @@ export type OneOrMultiplePlayers = Player | Player[];
 
 export abstract class NightAction {
 	public name!: string;
+	public numRemainingUses: number = Number.POSITIVE_INFINITY;
 
 	public constructor(public role: ActionRole) {}
 
