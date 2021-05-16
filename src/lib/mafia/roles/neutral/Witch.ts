@@ -21,7 +21,6 @@ class Witch extends ActionRole {
 	public get defence() {
 		return this.attacked ? Defence.None : Defence.Basic;
 	}
-
 }
 
 Witch.categories = [...Witch.categories, 'Random Neutral', 'Neutral Evil', 'Evil'];
