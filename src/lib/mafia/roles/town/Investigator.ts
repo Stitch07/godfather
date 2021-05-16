@@ -1,10 +1,10 @@
-import SingleTarget from '@mafia/mixins/SingleTarget';
 import Townie from '@mafia/mixins/Townie';
 import type Player from '@mafia/structures/Player';
 import { InvestigationAction } from '../../actions/common/InvestigationAction';
 import type { NightAction } from '../../managers/NightAction';
+import { ActionRole } from '../../structures/ActionRole';
 
-class Investigator extends SingleTarget {
+class Investigator extends ActionRole {
 	public name = 'Investigator';
 	public actions: NightAction[] = [new InvestigationAction(this)];
 
