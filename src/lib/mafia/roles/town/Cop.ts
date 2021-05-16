@@ -19,6 +19,11 @@ class Cop extends ActionRole {
 		if (this.player.cleaned && !this.player.isAlive) return 'Cleaned';
 		return 'Cop';
 	}
+
+	public innocenceModifier(innocence: boolean) {
+		// dethy cops can use this
+		return innocence;
+	}
 }
 
 Cop.categories = [...Cop.categories, 'Town Investigative'];

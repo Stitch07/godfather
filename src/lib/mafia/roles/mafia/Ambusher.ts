@@ -1,25 +1,37 @@
 import NightActionsManager, { Attack, NightActionPriority } from '@mafia/managers/NightActionsManager';
 import MafiaRole from '@mafia/mixins/MafiaRole';
-import SingleTarget from '@mafia/mixins/SingleTarget';
 import type Player from '@mafia/structures/Player';
 import { randomArrayItem } from '@root/lib/util/utils';
+import { SingleTargetAction } from '../../actions/mixins/SingleTargetAction';
+import { ActionRole } from '../../structures/ActionRole';
 
-class Ambusher extends SingleTarget {
+class Ambusher extends ActionRole {
 	public name = 'Ambusher';
-	public action = 'ambush';
-	public priority = NightActionPriority.AMBUSHER;
-	private killTarget: Player | null = null;
 
 	public constructor(player: Player) {
 		super(player);
 		this.description = this.game.t('roles/neutral:ambusherDescription');
+	}
+}
+
+Ambusher.categories = [...Ambusher.categories, 'Mafia Killing'];
+
+export default MafiaRole(Ambusher);
+
+export class AmbushAction extends SingleTargetAction {
+	public name = 'ambush';
+	public priority = NightActionPriority.AMBUSHER;
+	private killTarget: Player | null = null;
+
+	public constructor(role: ActionRole) {
+		super(role);
 		this.actionText = this.game.t('roles/actions:ambusherText');
 		this.actionGerund = this.game.t('roles/actions:ambusherGerund');
 	}
 
-	public canTarget(target: Player) {
+	public canUse(target: Player) {
 		if (target.role.faction.name === 'Mafia') return { check: false, reason: this.game.t('roles/global:targetTeammates') };
-		return super.canTarget(target);
+		return super.canUse(target);
 	}
 
 	public runAction(actions: NightActionsManager, target: Player) {
@@ -50,7 +62,3 @@ class Ambusher extends SingleTarget {
 		}
 	}
 }
-
-Ambusher.categories = [...Ambusher.categories, 'Mafia Killing'];
-
-export default MafiaRole(Ambusher);
