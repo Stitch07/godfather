@@ -90,5 +90,14 @@
 			"this.actionText = this.game.t('roles/actions:${TM_FILENAME_BASE/(.*)/${1:/downcase}/g}Text');",
 			"this.actionGerund = this.game.t('roles/actions:${TM_FILENAME_BASE/(.*)/${1:/downcase}/g}Gerund');"
 		]
-	}
+	},
+	"GodfatherActionConstructor": {
+		"scope": "typescript",
+		"prefix": "actionRoleCtor",
+		"body": [
+			"public constructor(role: ActionRole) {",
+			"\tsuper(role);",
+			"}"
+		]
+	},
 }
