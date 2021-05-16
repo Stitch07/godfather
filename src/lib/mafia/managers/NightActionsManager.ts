@@ -185,12 +185,6 @@ export enum NightActionPriority {
 	Frame = 5,
 	// investigative roles usually only rely on tearDown, so they can safely go last
 	Investigative = 6,
-	COP = 6,
-	LOOKOUT = 6,
-	INVEST = 6,
-	CONSIG = 6,
-	TRACKER = 6,
-	NEOPOLITAN = 6,
 	AMBUSHER = 6,
 	// janitor cleans after killing roles have already killed them
 	JANITOR = 7,
