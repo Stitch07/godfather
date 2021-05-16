@@ -1,10 +1,10 @@
-import SingleTarget from '@mafia/mixins/SingleTarget';
 import Townie from '@mafia/mixins/Townie';
 import type Player from '@mafia/structures/Player';
 import { TrackAction } from '../../actions/common/TrackAction';
 import type { NightAction } from '../../managers/NightAction';
+import { ActionRole } from '../../structures/ActionRole';
 
-class Tracker extends SingleTarget {
+class Tracker extends ActionRole {
 	public name = 'Tracker';
 	public actions: NightAction[] = [new TrackAction(this)];
 

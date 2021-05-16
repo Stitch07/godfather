@@ -1,5 +1,6 @@
 import type Player from '@mafia/structures/Player';
 import NightActionsManager, { NightActionPriority } from '../../managers/NightActionsManager';
+import type Cop from '../../roles/town/Cop';
 import type { ActionRole } from '../../structures/ActionRole';
 import { SingleTargetAction } from '../mixins/SingleTargetAction';
 
@@ -15,7 +16,7 @@ export class AlignmentCheckAction extends SingleTargetAction {
 	}
 
 	public tearDown(actions: NightActionsManager, target: Player) {
-		let innocence = this.innocenceModifier(target.role.modifiers.innocence ?? target.role.innocence);
+		let innocence = (this.role as InstanceType<typeof Cop>).innocenceModifier(target.role.modifiers.innocence ?? target.role.innocence);
 		if (actions.framedPlayers.includes(target)) {
 			innocence = !innocence;
 			actions.framedPlayers.splice(actions.framedPlayers.indexOf(target), 1);
@@ -23,10 +24,5 @@ export class AlignmentCheckAction extends SingleTargetAction {
 		return this.player.queueMessage(
 			this.game.t(innocence ? 'roles/town:alignmentCheckResultInnocent' : 'roles/town:alignmentCheckResultSuspicious')
 		);
-	}
-
-	public innocenceModifier(innocence: boolean) {
-		// dethy cops can use this
-		return innocence;
 	}
 }

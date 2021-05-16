@@ -1,31 +1,27 @@
-import SingleTarget from '@mafia/mixins/SingleTarget';
 import { allRoles } from '..';
 import CultFaction from '../../factions/Cult';
 import NightActionsManager, { Attack, Defence, NightActionPriority } from '../../managers/NightActionsManager';
 import { Phase } from '@mafia/structures/Game';
 import type Player from '@mafia/structures/Player';
+import { SingleTargetAction } from '../../actions/mixins/SingleTargetAction';
+import { ActionRole } from '../../structures/ActionRole';
+import type { NightAction } from '../../managers/NightAction';
 
 // the factions that the CL can convert
 const CAN_CONVERT = ['Town', 'Survivor', 'Amnesiac', 'Jester'];
 
-class CultLeader extends SingleTarget {
+class CultLeader extends ActionRole {
 	public faction = new CultFaction();
 	public name = 'Cult Leader';
-	public action = 'convert';
-	public priority = NightActionPriority.CultLeader;
-
+	public actions: NightAction[] = [new ConvertAction(this)];
 	// whether the CL was already attacked once
 	public attacked = false;
-
 	// the last cycle with a successful conversion. setting it to -1 lets the CL convert someone on N1
-	private lastConverted = -1;
-	private successfulConversion = false;
+	public lastConverted = -1;
 
 	public constructor(player: Player) {
 		super(player);
 		this.description = this.game.t('roles/cult:cultLeaderDescription');
-		this.actionText = this.game.t('roles/actions:cultLeaderText');
-		this.actionGerund = this.game.t('roles/actions:cultLeaderGerund');
 	}
 
 	public get defence() {
@@ -35,35 +31,6 @@ class CultLeader extends SingleTarget {
 	public canUseAction() {
 		if (this.game.cycle - this.lastConverted < 2) return { check: false, reason: this.game.t('roles/cult:cultLeaderConsecutiveNights') };
 		return super.canUseAction();
-	}
-
-	public setUp() {
-		this.successfulConversion = false;
-	}
-
-	public runAction(actions: NightActionsManager, target: Player) {
-		const record = actions.record.get(target.user.id);
-		// players with basic defence, healed or GAed cannot be converted
-		if (target.role.actualDefence >= Defence.Basic || record.get('heal').result || record.get('guard').result) return;
-
-		if (!CAN_CONVERT.includes(target.role.faction.name)) {
-			// kill the target if CL cannot convert
-			actions.record.setAction(target.user.id, 'nightkill', { result: true, by: [this.player], type: Attack.Basic });
-			target.queueMessage(this.game.t('roles/cult:cultLeaderDenounce'));
-			return;
-		}
-		// convert the player
-		this.lastConverted = this.game.cycle;
-		this.successfulConversion = true;
-	}
-
-	public async tearDown(actions: NightActionsManager, target: Player) {
-		if (!this.successfulConversion) return;
-		const CultMember = allRoles.get('Cult Member')!;
-		target.role = new CultMember(target);
-		await target.user.send(this.game.t('roles/cult:successfulConversion'));
-		this.player.queueMessage(this.game.t('roles/cult:conversionMessage', { target: target.user.username }));
-		await target.sendPM();
 	}
 
 	public async onDeath() {
@@ -84,3 +51,45 @@ class CultLeader extends SingleTarget {
 CultLeader.aliases = ['CL'];
 
 export default CultLeader;
+
+export class ConvertAction extends SingleTargetAction {
+	public name = 'convert';
+	public priority = NightActionPriority.CultLeader;
+
+	private successfulConversion = false;
+
+	public constructor(role: ActionRole) {
+		super(role);
+		this.actionText = this.game.t('roles/actions:cultLeaderText');
+		this.actionGerund = this.game.t('roles/actions:cultLeaderGerund');
+	}
+
+	public setUp() {
+		this.successfulConversion = false;
+	}
+
+	public runAction(actions: NightActionsManager, target: Player) {
+		const record = actions.record.get(target.user.id);
+		// players with basic defence, healed or GAed cannot be converted
+		if (target.role.actualDefence >= Defence.Basic || record.get('heal').result || record.get('guard').result) return;
+
+		if (!CAN_CONVERT.includes(target.role.faction.name)) {
+			// kill the target if CL cannot convert
+			actions.record.setAction(target.user.id, 'nightkill', { result: true, by: [this.player], type: Attack.Basic });
+			target.queueMessage(this.game.t('roles/cult:cultLeaderDenounce'));
+			return;
+		}
+		// convert the player
+		(this.role as CultLeader).lastConverted = this.game.cycle;
+		this.successfulConversion = true;
+	}
+
+	public async tearDown(actions: NightActionsManager, target: Player) {
+		if (!this.successfulConversion) return;
+		const CultMember = allRoles.get('Cult Member')!;
+		target.role = new CultMember(target);
+		await target.user.send(this.game.t('roles/cult:successfulConversion'));
+		this.player.queueMessage(this.game.t('roles/cult:conversionMessage', { target: target.user.username }));
+		await target.sendPM();
+	}
+}
