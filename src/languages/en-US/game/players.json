@@ -1,4 +1,7 @@
 {
+	"actionPm": "It is now night {{cycle}}. You have the following actions available:\n{{actions}}",
+	"actionNoAction": "Stay at home.",
+	"actionCancel": "Cancel your previous action.",
 	"roleCleaned": "We could not determine their role.",
 	"displayRole": "They were a **{{role}}**.",
 	"displayWill": "They left a will: {{will, codeBlock}}",

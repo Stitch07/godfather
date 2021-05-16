@@ -1,3 +1,4 @@
+import { PREFIX } from '@root/config';
 import { DEFAULT_ACTION_FLAGS } from '@root/lib/constants';
 import { removeArrayItem } from '@root/lib/util/utils';
 import type { Message } from 'discord.js';
@@ -16,6 +17,14 @@ export class ActionRole extends Role {
 	public actions: NightAction[] = [];
 
 	public actionPhase = Phase.Night;
+
+	public onNight() {
+		const actionTexts = this.actions.map((action) => `${PREFIX}${action.name} → ${action.actionText}`);
+		actionTexts.push(`${PREFIX}noaction → ${this.game.t('game:players/actionNoAction')}`);
+		actionTexts.push(`${PREFIX}cancel → ${this.game.t('game:players/actionCancelled')}`);
+
+		return this.player.user.send(this.game.t('game:players/actionPm', { cycle: this.game.cycle, actions: actionTexts }));
+	}
 
 	public async onPmCommand(message: Message, command: string, ...args: string[]): Promise<any> {
 		if ((this.actionPhase & this.game.phase) !== this.game.phase) return;

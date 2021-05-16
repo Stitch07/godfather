@@ -62,7 +62,6 @@ class Guardian_Angel extends ActionRole {
 		return super.onNight();
 	}
 
-
 	private getInitialProtects() {
 		if (this.game.players.length <= 5) return 1;
 		if (this.game.players.length <= 10) return 2;
@@ -90,7 +89,9 @@ export class ProtectAction extends NoTargetAction {
 		const playerRecord = actions.record.get((this.role as Guardian_Angel).target.user.id);
 		if (playerRecord.has('nightkill')) {
 			const nightKills = playerRecord.get('nightkill');
-			const isClConverting = actions.find((action) => action.actor.role.name === 'Cult Leader' && action.target === (this.role as Guardian_Angel).target);
+			const isClConverting = actions.find(
+				(action) => action.actor.role.name === 'Cult Leader' && action.target === (this.role as Guardian_Angel).target
+			);
 
 			if (isClConverting || (nightKills.result && nightKills.type && nightKills.type < Attack.Unstoppable)) {
 				playerRecord.set('nightkill', { result: false, by: [] });
@@ -115,7 +116,9 @@ export class ProtectAction extends NoTargetAction {
 		if (success) {
 			(this.role as Guardian_Angel).target.queueMessage(this.game.t('roles/neutral:guardianAngelSave'));
 		}
-		return this.game.channel.send(this.game.t('roles/neutral:guardianAngelAnnouncement', { target: (this.role as Guardian_Angel).target.user.tag }));
+		return this.game.channel.send(
+			this.game.t('roles/neutral:guardianAngelAnnouncement', { target: (this.role as Guardian_Angel).target.user.tag })
+		);
 	}
 
 	public get extraNightContext() {

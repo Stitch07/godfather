@@ -27,7 +27,6 @@ class Arsonist extends ActionRole {
 		}
 		return super.canUseAction(command);
 	}
-
 }
 
 Arsonist.categories = ['Random Neutral', 'Evil', 'Neutral Killing'];
@@ -49,7 +48,6 @@ export class DouseAction extends SingleTargetAction {
 		}
 		return super.canUse(target);
 	}
-
 }
 
 export class IgniteAction extends NoTargetAction {
@@ -73,5 +71,4 @@ export class IgniteAction extends NoTargetAction {
 
 		(this.role as Arsonist).dousedPlayers = [];
 	}
-
 }
