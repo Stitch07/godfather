@@ -7,8 +7,8 @@ import { SingleTargetAction } from '../mixins/SingleTargetAction';
 export class TrackAction extends SingleTargetAction {
 	public name = 'track';
 	public priority = NightActionPriority.Investigative;
-	public constructor(role: ActionRole, numUsesRemaining = Number.POSITIVE_INFINITY) {
-		super(role, numUsesRemaining);
+	public constructor(role: ActionRole, remainingUses = Number.POSITIVE_INFINITY) {
+		super(role, remainingUses);
 		this.actionText = this.game.t('roles/actions:trackText');
 		this.actionGerund = this.game.t('roles/actions:trackGerund');
 	}
