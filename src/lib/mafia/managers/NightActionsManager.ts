@@ -65,7 +65,7 @@ export default class NightActionsManager extends Array<NightActionEntry> {
 			if (!flags) flags = DEFAULT_ACTION_FLAGS;
 			if (action === undefined) continue;
 			await action.runAction(this, target);
-			action.numRemainingUses -= 1;
+			action.remainingUses -= 1;
 			if (flags.canVisit) {
 				const targets = Array.isArray(target) ? (actor.role.name === 'Witch' ? [target[0]] : target) : [target];
 				for (const target of targets) {
@@ -81,7 +81,7 @@ export default class NightActionsManager extends Array<NightActionEntry> {
 		for (const player of this.game.players) {
 			await player.role.afterActions();
 			if (player.role instanceof ActionRole) {
-				(player.role as ActionRole).actions = (player.role as ActionRole).actions.filter((action) => action.numRemainingUses !== 0);
+				(player.role as ActionRole).actions = (player.role as ActionRole).actions.filter((action) => action.remainingUses !== 0);
 			}
 		}
 

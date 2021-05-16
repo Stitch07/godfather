@@ -64,6 +64,5 @@
 	"vestText": "protect yourself {{count}} time",
 	"vestTextPlural": "protect yourself {{count}} times",
 	"vestNoVests": "You don't have any vests left.",
-	"vestCanVest": "You can vest tonight.",
-	"vestCannotVest": "You cannot vest tonight."
+	"vestCanVest": "You can vest tonight."
 }
