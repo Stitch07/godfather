@@ -8,8 +8,8 @@ export class TransportAction extends DoubleTargetAction {
 	public name = 'transport';
 	public priority = NightActionPriority.TRANSPORTER;
 
-	public constructor(role: ActionRole) {
-		super(role);
+	public constructor(role: ActionRole, remainingUses = Number.POSITIVE_INFINITY) {
+		super(role, remainingUses);
 		this.actionText = this.game.t('roles/actions:transporterText');
 		this.actionGerund = this.game.t('roles/actions:transporterGerund');
 	}

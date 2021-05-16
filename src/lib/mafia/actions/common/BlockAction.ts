@@ -9,8 +9,8 @@ export class BlockAction extends SingleTargetAction {
 	public actionGerund = 'blocking';
 	public priority = NightActionPriority.ESCORT;
 
-	public constructor(role: ActionRole) {
-		super(role);
+	public constructor(role: ActionRole, remainingUses = Number.POSITIVE_INFINITY) {
+		super(role, remainingUses);
 		this.actionText = this.game.t('roles/actions:escortText');
 		this.actionGerund = this.game.t('roles/actions:escortGerund');
 	}
