@@ -6,8 +6,8 @@ import { SingleTargetAction } from '../mixins/SingleTargetAction';
 export class CleanAction extends SingleTargetAction {
 	public name = 'clean';
 	public priority = NightActionPriority.Clean;
-	public constructor(role: ActionRole, numUsesRemaining = Number.POSITIVE_INFINITY) {
-		super(role, numUsesRemaining);
+	public constructor(role: ActionRole, remainingUses = Number.POSITIVE_INFINITY) {
+		super(role, remainingUses);
 		this.actionText = this.game.t('roles/actions:cleanText');
 		this.actionGerund = this.game.t('roles/actions:cleanGerund');
 	}

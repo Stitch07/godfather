@@ -8,8 +8,8 @@ export class HealAction extends SingleTargetAction {
 	public hasSelfHealed = false;
 	private isGuarding: boolean;
 
-	public constructor(role: ActionRole, guard: boolean, numUsesRemaining = Number.POSITIVE_INFINITY) {
-		super(role, numUsesRemaining);
+	public constructor(role: ActionRole, guard: boolean, remainingUses = Number.POSITIVE_INFINITY) {
+		super(role, remainingUses);
 		this.actionText = this.game.t(`roles/actions:${this.role.name.toLowerCase()}Text`);
 		this.actionGerund = this.game.t(`roles/actions:${this.role.name.toLowerCase()}Gerund`);
 		this.isGuarding = guard;

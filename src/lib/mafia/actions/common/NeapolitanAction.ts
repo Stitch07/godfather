@@ -8,8 +8,8 @@ const VANILLA_ROLES = ['Cult Member', 'Vanilla', 'Vanilla Mafia'];
 export class NeapolitanAction extends SingleTargetAction {
 	public name = 'check';
 	public priority = NightActionPriority.Investigative;
-	public constructor(role: ActionRole, numUsesRemaining = Number.POSITIVE_INFINITY) {
-		super(role, numUsesRemaining);
+	public constructor(role: ActionRole, remainingUses = Number.POSITIVE_INFINITY) {
+		super(role, remainingUses);
 		this.actionText = this.game.t('roles/actions:neapolitanText');
 		this.actionGerund = this.game.t('roles/actions:neapolitanGerund');
 	}

@@ -12,8 +12,8 @@ export default class KillerAction extends SingleTargetAction {
 	public actionParticiple: string;
 	public attackStrength: Attack;
 
-	public constructor(role: ActionRole, attack: Attack, actionName: string, numUsesRemaining = Number.POSITIVE_INFINITY) {
-		super(role, numUsesRemaining);
+	public constructor(role: ActionRole, attack: Attack, actionName: string, remainingUses = Number.POSITIVE_INFINITY) {
+		super(role, remainingUses);
 		this.action = actionName;
 		this.attackStrength = this.player.role.modifiers.attack ?? attack;
 		this.actionText = this.game.t('roles/actions:killerText');
