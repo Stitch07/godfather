@@ -1,10 +1,10 @@
 import MafiaRole from '@mafia/mixins/MafiaRole';
-import SingleTarget from '@mafia/mixins/SingleTarget';
 import type Player from '@mafia/structures/Player';
 import { FrameAction } from '../../actions/common/FrameAction';
 import type { NightAction } from '../../managers/NightAction';
+import { ActionRole } from '../../structures/ActionRole';
 
-class Framer extends SingleTarget {
+class Framer extends ActionRole {
 	public name = 'Framer';
 	public actions: NightAction[] = [new FrameAction(this)];
 
