@@ -52,8 +52,8 @@
 	"roleCheckText": "verifique um jogador",
 	"frameGerund": "difamando",
 	"frameText": "difame um jogador",
-	"janitorGerund": "limpando",
-	"janitorText": "limpe um jogador",
+	"cleanGerund": "limpando",
+	"cleanText": "limpe um jogador",
 	"cultLeaderGerund": "convertendo",
 	"cultLeaderText": "converta um jogador"
 }

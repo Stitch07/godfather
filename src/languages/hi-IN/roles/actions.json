@@ -52,8 +52,8 @@
 	"roleCheckText": "check a player",
 	"frameGerund": "framing",
 	"frameText": "frame a player",
-	"janitorGerund": "cleaning",
-	"janitorText": "clean a player",
+	"cleanGerund": "cleaning",
+	"cleanText": "clean a player",
 	"cultLeaderGerund": "converting",
 	"cultLeaderText": "convert a player"
 }
