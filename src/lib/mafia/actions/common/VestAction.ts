@@ -6,14 +6,14 @@ import { NoTargetAction } from '../mixins/NoTargetAction';
 export class VestAction extends NoTargetAction {
 	public name = 'vest';
 	public priority = NightActionPriority.Vest;
-	public constructor(role: ActionRole, public vests = 1) {
-		super(role);
+	public constructor(role: ActionRole, remainingUses = 1) {
+		super(role, remainingUses);
 		this.actionGerund = this.game.t('roles/actions:vestGerund');
 		this.actionText = this.game.t('roles/actions:vestText');
 	}
 
 	public canUse() {
-		if (this.vests === 0) return { check: false, reason: this.game.t('roles/actions:vestNoVests') };
+		if (this.remainingUses === 0) return { check: false, reason: this.game.t('roles/actions:vestNoVests') };
 		return super.canUse();
 	}
 
@@ -27,6 +27,6 @@ export class VestAction extends NoTargetAction {
 	}
 
 	public get extraNightContext() {
-		return this.vests === 0 ? this.game.t('roles/actions:vestCannotVest') : this.game.t('roles/actions:vestCanVest');
+		return this.remainingUses === 0 ? this.game.t('roles/actions:vestCannotVest') : this.game.t('roles/actions:vestCanVest');
 	}
 }
