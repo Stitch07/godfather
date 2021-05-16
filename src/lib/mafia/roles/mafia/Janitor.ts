@@ -1,30 +1,16 @@
-import NightActionsManager, { NightActionPriority } from '@mafia/managers/NightActionsManager';
 import MafiaRole from '@mafia/mixins/MafiaRole';
-import SingleTarget from '@mafia/mixins/SingleTarget';
 import type Player from '@mafia/structures/Player';
+import { CleanAction } from '../../actions/common/CleanAction';
+import type { NightAction } from '../../managers/NightAction';
+import { ActionRole } from '../../structures/ActionRole';
 
-class Janitor extends SingleTarget {
+class Janitor extends ActionRole {
 	public name = 'Janitor';
-	public action = 'clean';
-	public priority = NightActionPriority.JANITOR;
+	public actions: NightAction[] = [new CleanAction(this)];
 
 	public constructor(player: Player) {
 		super(player);
 		this.description = this.game.t('roles/neutral:janitorDescription');
-		this.actionText = this.game.t('roles/actions:janitorText');
-		this.actionGerund = this.game.t('roles/actions:janitorGerund');
-	}
-
-	public runAction(actions: NightActionsManager, target: Player) {
-		const record = actions.record.get(target.user.id).get('nightkill');
-		if (record.result) target.cleaned = true;
-	}
-
-	public tearDown(actions: NightActionsManager, target: Player) {
-		const record = actions.record.get(target.user.id).get('nightkill');
-		if (record.result && target.cleaned) {
-			return this.player.queueMessage(this.game.t('roles/mafia:janitorResult', { role: target.role.name }));
-		}
 	}
 }
 

@@ -5,7 +5,7 @@
 	"ambusherAttack": "Você foi atacado por um Ambusher!",
 	"consigliereDescription": "Um investigador corrompido que foi subornado para conseguir informações para a Máfia.",
 	"roleCheckResult": "Seu alvo é um **{{role}}**.",
-	"janitorResult": "Você sabe secretamente que seu alvo era um **{{role}}**.",
+	"cleanResult": "Você sabe secretamente que seu alvo era um **{{role}}**.",
 	"goonDescription": "Você pode atirar em alguém toda noite.",
 	"goonMessageHome": "O Godfather ordenou que você fique em casa nessa noite.",
 	"goonMessageShoot": "O Godfather ordenou você a atirar em ${{target}} nessa noite.",
