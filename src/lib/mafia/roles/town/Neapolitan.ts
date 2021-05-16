@@ -1,9 +1,9 @@
-import SingleTarget from '@mafia/mixins/SingleTarget';
 import type Player from '@mafia/structures/Player';
 import { NeapolitanAction } from '../../actions/common/NeapolitanAction';
 import type { NightAction } from '../../managers/NightAction';
+import { ActionRole } from '../../structures/ActionRole';
 
-export default class Neapolitan extends SingleTarget {
+export default class Neapolitan extends ActionRole {
 	public name = 'Neapolitan';
 	public actions: NightAction[] = [new NeapolitanAction(this)];
 
