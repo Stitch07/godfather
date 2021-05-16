@@ -13,6 +13,7 @@ class Veteran extends ActionRole {
 		super(player);
 		this.alerts = player === null ? 0 : this.getInitialAlerts();
 		this.description = this.game.t('roles/town:veteranDescription', { count: this.alerts });
+		this.actions = [new VeteranAlert(this, this.alerts)];
 	}
 
 	public get defence() {
@@ -57,8 +58,8 @@ export class VeteranAlert extends NoTargetAction {
 		canWitch: false
 	};
 
-	public constructor(role: ActionRole) {
-		super(role);
+	public constructor(role: ActionRole, remainingUses: number) {
+		super(role, remainingUses);
 		this.actionText = this.game.t('roles/actions:veteranText');
 		this.actionGerund = this.game.t('roles/actions:veteranGerund');
 	}

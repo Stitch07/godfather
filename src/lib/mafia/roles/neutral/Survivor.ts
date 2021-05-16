@@ -7,9 +7,9 @@ export default class Survivor extends ActionRole {
 	public name = 'Survivor';
 	public faction = new SurivorFaction();
 
-	public constructor(player: Player, context: SurvivorContext = {}) {
+	public constructor(player: Player) {
 		super(player);
-		const vests = context.vests ?? this.getInitialVests();
+		const vests = this.game ? this.getInitialVests() : 0;
 		this.actions = [new VestAction(this, vests)];
 		this.description = this.game.t('roles/neutral:survivorDescription', { count: vests });
 	}
@@ -19,10 +19,6 @@ export default class Survivor extends ActionRole {
 		if (this.game.players.length <= 10) return 2;
 		return 4;
 	}
-}
-
-export interface SurvivorContext {
-	vests?: number;
 }
 
 Survivor.aliases = ['Surv'];

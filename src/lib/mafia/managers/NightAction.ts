@@ -10,9 +10,12 @@ export type OneOrMultiplePlayers = Player | Player[];
 export abstract class NightAction {
 	public name!: string;
 
-	public constructor(public role: ActionRole, public numRemainingUses = Number.POSITIVE_INFINITY) {}
+	public constructor(public role: ActionRole, public remainingUses = Number.POSITIVE_INFINITY) {}
 
-	public abstract canUse(target?: OneOrMultiplePlayers): CanUseActionData;
+	public canUse(target?: OneOrMultiplePlayers): CanUseActionData {
+		if (this.remainingUses === 0) return { check: false, reason: this.game.t(`roles/global:${this.name}RunOut`) };
+		return this.canUse(target);
+	}
 
 	public abstract setUp(actions: NightActionsManager, target?: OneOrMultiplePlayers): Awaited<any>;
 
