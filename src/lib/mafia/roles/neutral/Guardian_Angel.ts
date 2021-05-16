@@ -2,6 +2,7 @@ import GuardianAngelFaction from '@mafia/factions/neutral/GuardianAngel';
 import NightActionsManager, { Attack } from '@mafia/managers/NightActionsManager';
 import type Player from '@mafia/structures/Player';
 import { randomArrayItem, removeArrayItem } from '@util/utils';
+import type { Message } from 'discord.js';
 import { allRoles } from '..';
 import { NoTargetAction } from '../../actions/mixins/NoTargetAction';
 import { ActionRole } from '../../structures/ActionRole';
@@ -56,7 +57,9 @@ class Guardian_Angel extends ActionRole {
 			await this.player.user.send(this.game.t('roles/neutral:guardianAngelTargetDead'));
 			const Survivor = allRoles.get('Survivor')!;
 			this.player.role = new Survivor(this.player, { vests: 0 });
-			return this.player.sendPM();
+			await this.player.sendPM();
+			// eslint-disable-next-line @typescript-eslint/no-empty-function
+			return new Promise<Message>(() => {});
 		}
 
 		return super.onNight();
