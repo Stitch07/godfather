@@ -1,28 +1,18 @@
 import { Attack, Defence, NightActionPriority } from '@mafia/managers/NightActionsManager';
-import NoTarget from '@mafia/mixins/NoTarget';
 import Townie from '@mafia/mixins/Townie';
 import type Player from '@mafia/structures/Player';
+import { NoTargetAction } from '../../actions/mixins/NoTargetAction';
+import { ActionRole } from '../../structures/ActionRole';
 
-class Veteran extends NoTarget {
+class Veteran extends ActionRole {
 	public name = 'Veteran';
-	public action = 'alert';
-	public priority = NightActionPriority.VETERAN;
-	public flags = {
-		canBlock: false,
-		canTransport: true,
-		canVisit: false,
-		canWitch: false
-	};
-
-	private onAlert = false;
-	private alerts: number;
+	public alerts: number;
+	public onAlert = false;
 
 	public constructor(player: Player) {
 		super(player);
 		this.alerts = player === null ? 0 : this.getInitialAlerts();
 		this.description = this.game.t('roles/town:veteranDescription', { count: this.alerts });
-		this.actionText = this.game.t('roles/actions:veteranText');
-		this.actionGerund = this.game.t('roles/actions:veteranGerund');
 	}
 
 	public get defence() {
@@ -35,29 +25,12 @@ class Veteran extends NoTarget {
 		return super.canUseAction();
 	}
 
-	public setUp() {
-		this.onAlert = true;
-	}
-
-	public runAction() {
-		this.alerts--;
-	}
-
 	public onVisit(visitor: Player) {
 		if (this.onAlert && visitor.role.actualDefence < Defence.Invincible) {
 			this.game.nightActions.record.setAction(visitor.user.id, 'nightkill', { by: [this.player], result: true, type: Attack.Powerful });
 			visitor.queueMessage(this.game.t('roles/town:veteranAlert'));
 			return this.player.queueMessage(this.game.t('roles/town:veteranMessage'));
 		}
-	}
-
-	public tearDown() {
-		this.onAlert = false;
-	}
-
-	public get extraNightContext() {
-		if (this.alerts > 0) return this.game.t('roles/town:veteranAlertCount', { count: this.alerts });
-		return null;
 	}
 
 	private getInitialAlerts() {
@@ -73,3 +46,37 @@ Veteran.categories = [...Veteran.categories, 'Town Killing'];
 Veteran.aliases = ['Vet'];
 
 export default Townie(Veteran);
+
+export class VeteranAlert extends NoTargetAction {
+	public name = 'alert';
+	public priority = NightActionPriority.VETERAN;
+	public flags = {
+		canBlock: false,
+		canTransport: true,
+		canVisit: false,
+		canWitch: false
+	};
+
+	public constructor(role: ActionRole) {
+		super(role);
+		this.actionText = this.game.t('roles/actions:veteranText');
+		this.actionGerund = this.game.t('roles/actions:veteranGerund');
+	}
+
+	public get extraNightContext() {
+		if ((this.role as Veteran).alerts > 0) return this.game.t('roles/town:veteranAlertCount', { count: (this.role as Veteran).alerts });
+		return null;
+	}
+
+	public setUp() {
+		(this.role as Veteran).onAlert = true;
+	}
+
+	public runAction() {
+		(this.role as Veteran).alerts--;
+	}
+
+	public tearDown() {
+		(this.role as Veteran).onAlert = false;
+	}
+}

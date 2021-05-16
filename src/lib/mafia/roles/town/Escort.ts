@@ -12,7 +12,6 @@ class Escort extends ActionRole {
 		super(player);
 		this.description = this.game.t('roles/town:escortDescription');
 	}
-
 }
 
 Escort.categories = [...Escort.categories, 'Town Support'];

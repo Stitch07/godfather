@@ -1,7 +1,7 @@
-import NightActionsManager, { NightActionPriority } from "../../managers/NightActionsManager";
-import type { ActionRole } from "../../structures/ActionRole";
-import type Player from "../../structures/Player";
-import { SingleTargetAction } from "../mixins/SingleTargetAction";
+import NightActionsManager, { NightActionPriority } from '../../managers/NightActionsManager';
+import type { ActionRole } from '../../structures/ActionRole';
+import type Player from '../../structures/Player';
+import { SingleTargetAction } from '../mixins/SingleTargetAction';
 
 export class BlockAction extends SingleTargetAction {
 	public action = 'block';

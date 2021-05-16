@@ -1,21 +1,32 @@
 import NightActionsManager, { Attack, NightActionPriority } from '@mafia/managers/NightActionsManager';
-import SingleTarget from '@mafia/mixins/SingleTarget';
 import Townie from '@mafia/mixins/Townie';
 import type Player from '@mafia/structures/Player';
 import { randomArrayItem } from '@root/lib/util/utils';
+import { SingleTargetAction } from '../../actions/mixins/SingleTargetAction';
+import { ActionRole } from '../../structures/ActionRole';
 
-class Crusader extends SingleTarget {
+class Crusader extends ActionRole {
 	public name = 'Crusader';
-	public action = 'protect';
+
+	public constructor(player: Player) {
+		super(player);
+		this.description = this.game.t('roles/town:crusaderDescription');
+	}
+}
+
+Crusader.aliases = ['Crus'];
+Crusader.categories = [...Crusader.categories, 'Town Protective'];
+
+export default Townie(Crusader);
+
+export class CrusaderProtectAction extends SingleTargetAction {
+	public name = 'protect';
 	public actionText = 'protect a player';
 	public actionGerund = 'protecting';
 	public priority = NightActionPriority.CRUSADER;
 	private isTargetAttacked = false;
-
-	public constructor(player: Player) {
-		super(player);
-
-		this.description = this.game.t('roles/town:crusaderDescription');
+	public constructor(role: ActionRole) {
+		super(role);
 		this.actionText = this.game.t('roles/actions:crusaderText');
 		this.actionGerund = this.game.t('roles/actions:crusaderGerund');
 	}
@@ -60,14 +71,9 @@ class Crusader extends SingleTarget {
 		}
 	}
 
-	public canTarget(player: Player) {
+	public canUse(player: Player) {
 		// TODO: customizable rule here
 		if (player === this.player) return { check: false, reason: this.game.t('roles/global:targetSelf') };
-		return super.canTarget(player);
+		return super.canUse(player);
 	}
 }
-
-Crusader.aliases = ['Crus'];
-Crusader.categories = [...Crusader.categories, 'Town Protective'];
-
-export default Townie(Crusader);
