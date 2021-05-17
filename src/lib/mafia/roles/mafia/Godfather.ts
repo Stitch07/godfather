@@ -1,25 +1,17 @@
-import NightActionsManager, { Defence } from '@mafia/managers/NightActionsManager';
-import Killer from '@root/lib/mafia/actions/common/KillerAction';
+import { Attack, Defence } from '@mafia/managers/NightActionsManager';
 import MafiaRole from '@mafia/mixins/MafiaRole';
 import type Player from '@mafia/structures/Player';
+import KillerAction from '../../actions/common/KillerAction';
+import type { NightAction } from '../../managers/NightAction';
+import { ActionRole } from '../../structures/ActionRole';
 
-class Godfather extends Killer {
+class Godfather extends ActionRole {
 	public name = 'Godfather';
+	public actions: NightAction[] = [new KillerAction(this, Attack.Basic, 'shoot')];
 
 	public constructor(player: Player) {
 		super(player);
 		this.description = this.game.t('roles/mafia:godfatherDescription');
-	}
-
-	public setUp(actions: NightActionsManager) {
-		const goonKills = actions.filter((action) => action.actor.role.name === 'Goon');
-		// remove actions if the goon wasn't roleblocked
-		if (goonKills.length > 0) {
-			actions.splice(
-				actions.findIndex((action) => action.actor === this.player),
-				1
-			);
-		}
 	}
 
 	public get defence() {

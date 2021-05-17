@@ -27,13 +27,6 @@ class Goon extends ActionRole {
 		return super.onPmCommand(message, command, ...args);
 	}
 
-	public canUseAction() {
-		if (this.game.setup!.name === 'dethy' && this.game.cycle === 1) {
-			return { check: false, reason: this.game.t('roles/mafia:goonDethy') };
-		}
-		return super.canUseAction();
-	}
-
 	public static unique = true;
 }
 

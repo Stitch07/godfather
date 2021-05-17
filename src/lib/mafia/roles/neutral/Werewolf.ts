@@ -1,9 +1,9 @@
 import WerewolfFaction from '@mafia/factions/neutral/Werewolf';
 import NightActionsManager, { Attack, Defence } from '@mafia/managers/NightActionsManager';
-import Killer from '@root/lib/mafia/actions/common/KillerAction';
 import type Player from '@mafia/structures/Player';
+import { ActionRole } from '../../structures/ActionRole';
 
-export default class Werewolf extends Killer {
+export default class Werewolf extends ActionRole {
 	public name = 'Werewolf';
 	public faction = new WerewolfFaction();
 	public action = 'maul';
