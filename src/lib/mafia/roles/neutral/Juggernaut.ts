@@ -1,13 +1,12 @@
 import JuggernautFaction from '@mafia/factions/neutral/Juggernaut';
-import NightActionsManager, { Attack, Defence, NightActionPriority } from '@mafia/managers/NightActionsManager';
-import Killer from '@root/lib/mafia/actions/common/KillerAction';
+import NightActionsManager, { Attack, Defence } from '@mafia/managers/NightActionsManager';
 import type Player from '@mafia/structures/Player';
+import { ActionRole } from '../../structures/ActionRole';
 
-class Juggernaut extends Killer {
+class Juggernaut extends ActionRole {
 	public name = 'Juggernaut';
 	public faction = new JuggernautFaction();
 	public action = 'assault';
-	public priority = NightActionPriority.KILLER;
 
 	// level 1 lets them attack every night, level 2 lets them rampage, ands level 3 gives them a unstoppable attack
 	public level = 0;
