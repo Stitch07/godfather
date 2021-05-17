@@ -9,6 +9,8 @@ import type { OneOrMultiplePlayers } from '../../managers/NightAction';
 import Vigilante from '../../roles/town/Vigilante';
 import Godfather from '../../roles/mafia/Godfather';
 import Goon from '../../roles/mafia/Goon';
+import Juggernaut from '../../roles/neutral/Juggernaut';
+import Werewolf from '../../roles/neutral/Werewolf';
 
 export default class KillerAction extends SingleTargetAction {
 	public action: string;
@@ -41,18 +43,42 @@ export default class KillerAction extends SingleTargetAction {
 	}
 
 	public runAction(actions: NightActionsManager, target: Player) {
+		if (this.role instanceof Werewolf && target === this.player) return;
+
 		if (target.role.actualDefence > this.attackStrength) {
 			// witch defence: after attacked once, revert back to Basic
 			if (['Witch', 'Cult Leader'].includes(target.role.name)) cast<Witch | CultLeader>(target.role).attacked = true;
 			return;
 		}
 		actions.record.setAction(target.user.id, 'nightkill', { result: true, by: [this.player], type: this.attackStrength });
+
+		// Rampage.
+		if (this.role instanceof Werewolf || (this.role instanceof Juggernaut && cast<typeof Juggernaut>(this.role).prototype.level >= 2)) {
+			const visitors = target.visitors.filter((player) => player.user.id !== this.player.user.id);
+			for (const visitor of visitors) {
+				if (visitor.role.actualDefence > this.attackStrength) continue;
+				actions.record.setAction(visitor.user.id, 'nightkill', { result: true, by: [this.player], type: this.attackStrength });
+
+				if (this.role instanceof Werewolf) {
+					this.player.queueMessage(this.game.t('roles/neutral:juggernautAttackVisitors'));
+					visitor.queueMessage(this.game.t('roles/neutral:juggernautAssault'));
+				} else {
+					visitor.queueMessage(this.game.t('roles/neutral:werewolfMaul'));
+				}
+			}
+		}
 	}
 
 	public canUse(target: OneOrMultiplePlayers) {
 		if (this.role instanceof Goon && this.game.setup!.name === 'dethy' && this.game.cycle === 1) {
 			return { check: false, reason: this.game.t('roles/mafia:goonDethy') };
 		}
+		if (this.role instanceof Juggernaut && cast<typeof Juggernaut>(this.role).prototype.level === 0 && !this.game.isFullMoon) {
+			return { check: false, reason: this.game.t('roles/neutral:juggernautFullMoonOnly') };
+		}
+		if (this.role instanceof Werewolf && target === this.player && this.player.isAlive) return { check: true, reason: '' };
+		if (this.role instanceof Werewolf && cast<typeof Werewolf>(this.role).prototype.canRampage())
+			return { check: false, reason: this.game.t('roles/neutral:werewolfFullMoons') };
 		if (this.remainingUses === 0)
 			return { check: false, reason: this.game.t('roles/global:outOfBullets', { shootingMechanism: this.shootingMechanism }) };
 		return super.canUse(target);
@@ -60,13 +86,22 @@ export default class KillerAction extends SingleTargetAction {
 
 	public tearDown(actions: NightActionsManager, target: Player) {
 		if (target.role.faction.name === 'Town' && this.role instanceof Vigilante) {
-			cast<typeof Vigilante>(this.player.role).prototype.guilt = true;
+			cast<typeof Vigilante>(this.role).prototype.guilt = true;
 		}
 		const record = actions.record.get(target.user.id).get('nightkill');
 		const success = record.result && record.by.includes(this.player);
 		if (!success) {
 			return this.player.queueMessage(this.game.t('roles/global:targetTooStrong'));
 		}
+
+		if (this.role instanceof Juggernaut) {
+			const role = cast<typeof Juggernaut>(this.role).prototype;
+			role.level++;
+			if (role.level === 3) {
+				this.attackStrength = Attack.Unstoppable;
+			}
+		}
+
 		return target.queueMessage(
 			this.game.t('roles/global:killerMessage', { actionParticiple: this.actionParticiple, role: this.player.role.name })
 		);
