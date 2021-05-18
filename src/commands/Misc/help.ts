@@ -37,7 +37,7 @@ export default class extends GodfatherCommand {
 		const embed = new MessageEmbed()
 			.setColor('#000000')
 			.setAuthor(this.context.client.user!.username, this.context.client.user!.displayAvatarURL())
-			.setDescription(((t('commands/misc:helpDescription', { prefix, supportServer: SUPPORT_SERVER }) as unknown) as string[]).join('\n'))
+			.setDescription((t('commands/misc:helpDescription', { prefix, supportServer: SUPPORT_SERVER }) as unknown as string[]).join('\n'))
 			.setFooter(t('commands/misc:helpFooter', { prefix }));
 
 		for (const [category, commands] of Object.entries(allCommands)) {
@@ -48,7 +48,7 @@ export default class extends GodfatherCommand {
 	}
 
 	public buildCommandHelp(t: TFunction, command: GodfatherCommand, prefix: string) {
-		const builderData = (t('globals:helpTitles') as unknown) as {
+		const builderData = t('globals:helpTitles') as unknown as {
 			aliases: string;
 			extendedHelp: string;
 			examples: string;
@@ -62,7 +62,7 @@ export default class extends GodfatherCommand {
 			.setExtendedHelp(builderData.extendedHelp)
 			.setUsages(builderData.usages)
 			.setReminder(builderData.reminder);
-		const helpData = (t(command.detailedDescription, { prefix }) as unknown) as LanguageHelpDisplayOptions;
+		const helpData = t(command.detailedDescription, { prefix }) as unknown as LanguageHelpDisplayOptions;
 		const extendedHelp = languageBuilder.display(command.name, this.formatAliases(command.aliases, t), helpData, prefix);
 
 		return new MessageEmbed()
