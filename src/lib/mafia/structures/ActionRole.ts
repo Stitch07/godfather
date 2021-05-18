@@ -22,7 +22,7 @@ export class ActionRole extends Role {
 		const actionTexts = this.actions.map((action) => `${PREFIX}${action.name} → ${action.actionText}`);
 		actionTexts.push(`${PREFIX}noaction → ${this.game.t('game:players/actionNoAction')}`);
 		actionTexts.push(`${PREFIX}cancel → ${this.game.t('game:players/actionCancelled')}`);
-		const contexts = this.actions.map(action => action.extraNightContext).join('\n');
+		const contexts = this.actions.map((action) => action.extraNightContext).join('\n');
 
 		return this.player.user.send(this.game.t('game:players/actionPm', { cycle: this.game.cycle, actions: actionTexts, contexts }));
 	}
