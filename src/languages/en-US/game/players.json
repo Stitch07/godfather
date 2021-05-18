@@ -1,5 +1,5 @@
 {
-	"actionPm": "It is now night {{cycle}}. You have the following actions available:\n{{actions}}",
+	"actionPm": "It is now night {{cycle}}. You have the following actions available:\n{{actions}}\n{contexts}}",
 	"actionNoAction": "Stay at home.",
 	"actionCancel": "Cancel your previous action.",
 	"roleCleaned": "We could not determine their role.",
