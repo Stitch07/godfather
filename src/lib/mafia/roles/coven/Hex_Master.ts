@@ -1,9 +1,9 @@
-import SingleTarget from '@mafia/mixins/SingleTarget';
 import CovenRole from '@mafia/mixins/CovenRole';
-import NightActionsManager, { Attack, NightActionPriority } from '@mafia/managers/NightActionsManager';
+import { Attack, NightActionPriority } from '@mafia/managers/NightActionsManager';
 import type Player from '@mafia/structures/Player';
+import { ActionRole } from '../../structures/ActionRole';
 
-class HexMaster extends SingleTarget {
+class HexMaster extends ActionRole {
 	public name = 'Hex Master';
 	public action = 'hex';
 	public priority = NightActionPriority.KILLER;
@@ -11,8 +11,6 @@ class HexMaster extends SingleTarget {
 	public constructor(player: Player) {
 		super(player);
 		this.description = this.game.t('roles/coven:hexMasterDescription');
-		this.actionText = this.game.t('roles/actions:hexMasterText');
-		this.actionGerund = this.game.t('roles/actions:hexMasterGerund');
 	}
 
 	public onNight() {
@@ -30,19 +28,6 @@ class HexMaster extends SingleTarget {
 		}
 
 		return super.onNight();
-	}
-
-	public canUseAction() {
-		if (
-			this.game.nightActions.hexedPlayers.length ===
-			this.game.players.filter((player) => player.isAlive && player.role.faction.name !== 'Coven').length
-		)
-			return { check: false, reason: this.game.t('roles/coven:hexMasterEveryoneHexed') };
-		return super.canUseAction();
-	}
-
-	public runAction(actions: NightActionsManager, target: Player) {
-		actions.hexedPlayers.push(target);
 	}
 }
 
