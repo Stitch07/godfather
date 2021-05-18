@@ -17,7 +17,10 @@ class HexMaster extends SingleTarget {
 
 	public onNight() {
 		// eslint-disable-next-line prettier/prettier
-		if (this.game.nightActions.hexedPlayers.length === this.game.players.filter((player) => player.isAlive && player.role.faction.name !== 'Coven').length) {
+		if (
+			this.game.nightActions.hexedPlayers.length ===
+			this.game.players.filter((player) => player.isAlive && player.role.faction.name !== 'Coven').length
+		) {
 			for (const plr of this.game.players.filter((player) => player.isAlive && player.role.faction.name !== 'Coven')) {
 				if (plr.role.actualDefence > Attack.Unstoppable) {
 					return super.onNight();
