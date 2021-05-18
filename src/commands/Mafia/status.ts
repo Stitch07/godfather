@@ -23,7 +23,7 @@ export default class extends GodfatherCommand {
 			return message.channel.sendTranslated('commands/mafia:statusBotProcessing');
 		}
 
-		const titles = (await message.resolveKey('commands/mafia:statusTitles')) as unknown as StatusEmbedTitles;
+		const titles = ((await message.resolveKey('commands/mafia:statusTitles')) as unknown) as StatusEmbedTitles;
 		const embed = new MessageEmbed();
 		embed
 			.addField(titles.host, game!.host.user.tag, true)

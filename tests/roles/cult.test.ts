@@ -12,6 +12,9 @@
 import { NightActionPriority } from '@mafia/managers/NightActionsManager';
 import { init } from '@mafia/roles';
 import { Phase } from '@mafia/structures/Game';
+import type Cult_Leader from '@root/lib/mafia/roles/cult/Cult_Leader';
+import type Doctor from '@root/lib/mafia/roles/town/Doctor';
+import { cast } from '@root/lib/util/utils';
 import { createMockGame, createMockSetup } from '../mocks/';
 
 beforeAll(async (done) => {
@@ -29,6 +32,7 @@ describe('cult mechanics', () => {
 	});
 	// easy access
 	const cl = game.players[4];
+	const doc = game.players[2];
 
 	test('night 1', async () => {
 		game.cycle = 1;
@@ -41,7 +45,7 @@ describe('cult mechanics', () => {
 		game.nightActions.push({
 			actor: cl,
 			target: game.players[0],
-			action: 'convert',
+			action: cast<InstanceType<typeof Cult_Leader>>(cl.role).actions[0],
 			priority: NightActionPriority.CultLeader
 		});
 	});
@@ -60,7 +64,7 @@ describe('cult mechanics', () => {
 		game.nightActions.push({
 			actor: cl,
 			target: game.players[1],
-			action: 'convert',
+			action: cast<InstanceType<typeof Cult_Leader>>(cl.role).actions[0],
 			priority: NightActionPriority.CultLeader
 		});
 	});
@@ -79,14 +83,14 @@ describe('cult mechanics', () => {
 		game.nightActions.push({
 			actor: cl,
 			target: game.players[3],
-			action: 'convert',
+			action: cast<InstanceType<typeof Cult_Leader>>(cl.role).actions[0],
 			priority: NightActionPriority.CultLeader
 		});
 		game.nightActions.push({
 			actor: game.players[2],
 			target: game.players[3],
-			action: 'heal',
-			priority: NightActionPriority.DOCTOR
+			action: cast<InstanceType<typeof Doctor>>(doc.role).actions[0],
+			priority: NightActionPriority.Healer
 		});
 	});
 
@@ -104,7 +108,7 @@ describe('cult mechanics', () => {
 		game.nightActions.push({
 			actor: cl,
 			target: game.players[3],
-			action: 'convert',
+			action: cast<InstanceType<typeof Cult_Leader>>(cl.role).actions[0],
 			priority: NightActionPriority.CultLeader
 		});
 	});
