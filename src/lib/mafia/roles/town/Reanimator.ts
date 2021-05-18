@@ -1,7 +1,6 @@
 import NightActionsManager, { NightActionPriority } from '@mafia/managers/NightActionsManager';
 import Townie from '@mafia/mixins/Townie';
 import type Player from '@mafia/structures/Player';
-import type SingleTarget from '../../mixins/SingleTarget';
 import { Phase } from '@mafia/structures/Game';
 import { ActionRole } from '../../structures/ActionRole';
 import { DoubleTargetAction } from '../../actions/mixins/DoubleTargetAction';
@@ -42,17 +41,18 @@ export class ReanimateAction extends DoubleTargetAction {
 
 	public async setUp(actions: NightActionsManager, [actor, target]: Player[]) {
 		const thisArg = Object.assign(actor.role, { player: this.player });
-		await (actor.role as SingleTarget).setUp.call(thisArg, actions, target);
+		// TODO: make this work with JoATs when implemented
+		await (actor.role as ActionRole).actions[0].setUp.call(thisArg, actions, target);
 	}
 
 	public async runAction(actions: NightActionsManager, [actor, target]: Player[]) {
 		const thisArg = Object.assign(actor.role, { player: this.player });
-		await (actor.role as SingleTarget).runAction.call(thisArg, actions, target);
+		await (actor.role as ActionRole).actions[0].runAction.call(thisArg, actions, target);
 	}
 
 	public async tearDown(actions: NightActionsManager, [actor, target]: Player[]) {
 		const thisArg = Object.assign(actor.role, { player: this.player });
-		await (actor.role as SingleTarget).tearDown.call(thisArg, actions, target);
+		await (actor.role as ActionRole).actions[0].tearDown.call(thisArg, actions, target);
 	}
 
 	public canUse([player]: Player[]) {
