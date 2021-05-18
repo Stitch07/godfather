@@ -53,7 +53,7 @@ export default class KillerAction extends SingleTargetAction {
 		actions.record.setAction(target.user.id, 'nightkill', { result: true, by: [this.player], type: this.attackStrength });
 
 		// Rampage.
-		if (this.role instanceof Werewolf || (this.role instanceof Juggernaut && cast<typeof Juggernaut>(this.role).prototype.level >= 2)) {
+		if (this.role instanceof Werewolf || (this.role instanceof Juggernaut && cast<Juggernaut>(this.role).level >= 2)) {
 			const visitors = target.visitors.filter((player) => player.user.id !== this.player.user.id);
 			for (const visitor of visitors) {
 				if (visitor.role.actualDefence > this.attackStrength) continue;
@@ -73,11 +73,11 @@ export default class KillerAction extends SingleTargetAction {
 		if (this.role instanceof Goon && this.game.setup!.name === 'dethy' && this.game.cycle === 1) {
 			return { check: false, reason: this.game.t('roles/mafia:goonDethy') };
 		}
-		if (this.role instanceof Juggernaut && cast<typeof Juggernaut>(this.role).prototype.level === 0 && !this.game.isFullMoon) {
+		if (this.role instanceof Juggernaut && cast<Juggernaut>(this.role).level === 0 && !this.game.isFullMoon) {
 			return { check: false, reason: this.game.t('roles/neutral:juggernautFullMoonOnly') };
 		}
 		if (this.role instanceof Werewolf && target === this.player && this.player.isAlive) return { check: true, reason: '' };
-		if (this.role instanceof Werewolf && cast<typeof Werewolf>(this.role).prototype.canRampage())
+		if (this.role instanceof Werewolf && cast<Werewolf>(this.role).canRampage())
 			return { check: false, reason: this.game.t('roles/neutral:werewolfFullMoons') };
 		if (this.remainingUses === 0)
 			return { check: false, reason: this.game.t('roles/global:outOfBullets', { shootingMechanism: this.shootingMechanism }) };
@@ -86,7 +86,7 @@ export default class KillerAction extends SingleTargetAction {
 
 	public tearDown(actions: NightActionsManager, target: Player) {
 		if (target.role.faction.name === 'Town' && this.role instanceof Vigilante) {
-			cast<typeof Vigilante>(this.role).prototype.guilt = true;
+			cast<InstanceType<typeof Vigilante>>(this.role).guilt = true;
 		}
 		const record = actions.record.get(target.user.id).get('nightkill');
 		const success = record.result && record.by.includes(this.player);
@@ -95,7 +95,7 @@ export default class KillerAction extends SingleTargetAction {
 		}
 
 		if (this.role instanceof Juggernaut) {
-			const role = cast<typeof Juggernaut>(this.role).prototype;
+			const role = cast<Juggernaut>(this.role);
 			role.level++;
 			if (role.level === 3) {
 				this.attackStrength = Attack.Unstoppable;
