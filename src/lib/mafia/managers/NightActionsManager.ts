@@ -190,7 +190,7 @@ export enum NightActionPriority {
 	Clean = 7,
 	// ret's position literally doesn't matter
 	RETRIBUTIONIST = 8,
-	AMNESIAC = 9,
+	Remember = 9,
 	// CL should ALWAYS be last
 	CultLeader = 10
 }
