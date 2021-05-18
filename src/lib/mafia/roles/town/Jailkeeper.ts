@@ -1,9 +1,9 @@
 import NightActionsManager, { Attack, NightActionPriority } from '@mafia/managers/NightActionsManager';
-import SingleTarget from '@mafia/mixins/SingleTarget';
 import Townie from '@mafia/mixins/Townie';
 import type Player from '@mafia/structures/Player';
+import { ActionRole } from '../../structures/ActionRole';
 
-class Jailkeeper extends SingleTarget {
+class Jailkeeper extends ActionRole {
 	public name = 'Jailkeeper';
 	public action = 'jail';
 	public actionText = 'jail a player';

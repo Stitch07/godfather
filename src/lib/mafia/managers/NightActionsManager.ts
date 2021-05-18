@@ -163,7 +163,7 @@ export const enum Defence {
 export enum NightActionPriority {
 	// special cases that can never be transported/blocked/healed
 	VETERAN = 0,
-	JESTER_HAUNT = 0,
+	Haunt = 0,
 	VIGI_SUICIDE = 0,
 	Vest = 0,
 	Witch = 0,
