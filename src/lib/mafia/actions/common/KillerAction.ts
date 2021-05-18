@@ -13,7 +13,6 @@ import Juggernaut from '../../roles/neutral/Juggernaut';
 import Werewolf from '../../roles/neutral/Werewolf';
 
 export default class KillerAction extends SingleTargetAction {
-	public action: string;
 	public priority = NightActionPriority.KILLER;
 	public actionParticiple: string;
 	public attackStrength: Attack;
@@ -21,12 +20,12 @@ export default class KillerAction extends SingleTargetAction {
 
 	public constructor(role: ActionRole, attack: Attack, actionName: string, remainingUses = Number.POSITIVE_INFINITY) {
 		super(role, remainingUses);
-		this.action = actionName;
 		this.attackStrength = attack;
 		this.actionText = this.game.t('roles/actions:killerText');
 		this.actionGerund = this.game.t('roles/actions:killerGerund');
 		this.actionParticiple = this.game.t('roles/actions:killerParticiple');
 		this.shootingMechanism = this.game.t('roles/global:bullet');
+		this.name = actionName;
 	}
 
 	public setUp(actions: NightActionsManager) {
