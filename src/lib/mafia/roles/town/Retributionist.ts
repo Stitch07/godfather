@@ -33,7 +33,7 @@ Retributionist.aliases = ['Ret', 'Retri'];
 export default Townie(Retributionist);
 
 export class ReviveAction extends SingleTargetAction {
-	public action = 'revive';
+	public name = 'revive';
 	public priority = NightActionPriority.RETRIBUTIONIST;
 	public flags = {
 		canTransport: false,

@@ -30,7 +30,7 @@ Reanimator.categories = [...Reanimator.categories, 'Town Support'];
 export default Townie(Reanimator);
 
 export class ReanimateAction extends DoubleTargetAction {
-	public action = 'reanimate';
+	public name = 'reanimate';
 	public priority = NightActionPriority.Reanimator;
 
 	public constructor(role: ActionRole) {

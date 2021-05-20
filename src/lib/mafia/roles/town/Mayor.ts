@@ -31,7 +31,7 @@ Mayor.categories = [...Mayor.categories, 'Town Support'];
 export default Townie(Mayor);
 
 export class MayorRevealAction extends SingleTargetAction {
-	public action = 'reveal';
+	public name = 'reveal';
 	public actionPhase = Phase.Day | Phase.Trial | Phase.TrialVoting;
 	public constructor(role: ActionRole) {
 		super(role);

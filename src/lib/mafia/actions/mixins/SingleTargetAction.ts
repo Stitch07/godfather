@@ -9,7 +9,8 @@ export type OneOrMultiplePlayers = Player | Player[];
 
 export class SingleTargetAction extends NightAction {
 	public canUse(target: OneOrMultiplePlayers): CanUseActionData {
-		return { check: true, reason: '' };
+		if (!(target as Player).isAlive) return { check: false, reason: this.game.t('roles/global:targetDeadPlayers') };
+		return { check: target !== this.player, reason: this.game.t('roles/global:targetSelf') };
 	}
 
 	public confirmation(target: OneOrMultiplePlayers): string {
