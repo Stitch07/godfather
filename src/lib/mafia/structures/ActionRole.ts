@@ -4,7 +4,7 @@ import { removeArrayItem } from '@root/lib/util/utils';
 import type { Message } from 'discord.js';
 import { NoAction } from '../actions/mixins/NoAction';
 import type { NightAction } from '../managers/NightAction';
-import type { NightActionEntry } from '../managers/NightActionsManager';
+import { NightActionEntry, NightActionPriority } from '../managers/NightActionsManager';
 import { Phase } from './Game';
 import Role from './Role';
 
@@ -24,7 +24,14 @@ export class ActionRole extends Role {
 		actionTexts.push(`${PREFIX}cancel → ${this.game.t('game:players/actionCancelled')}`);
 		const contexts = this.actions.map((action) => action.extraNightContext).join('\n');
 
-		return this.player.user.send(this.game.t('game/players:actionPm', { cycle: this.game.cycle, actions: actionTexts.join('\n'), contexts }));
+		return this.player.user.send(
+			this.game.t('game/players:actionPm', {
+				cycle: this.game.cycle,
+				actions: actionTexts.join('\n'),
+				contexts,
+				playerlist: this.game.players.show({ codeblock: true })
+			})
+		);
 	}
 
 	public async onPmCommand(message: Message, command: string, ...args: string[]): Promise<any> {
@@ -58,6 +65,21 @@ export class ActionRole extends Role {
 				if (!check) {
 					throw this.game.t('roles/global:actionBlockedTarget', {
 						target: Array.isArray(target) ? target : [target]
+					});
+				}
+				if (this.name === 'Godfather' && this.game.players.some((player) => player.isAlive && player.role.name === 'Goon')) {
+					// first we remove any older action the goon had
+					this.game.nightActions.splice(
+						this.game.nightActions.findIndex((action) => action.actor.role.name === 'Goon'),
+						1
+					);
+					// the Godfather also orders his Goon to kill
+					await this.game.nightActions.addAction({
+						action: (this.game.players.find((player) => player.isAlive && player.role.name === 'Goon')!.role as ActionRole).actions[0],
+						actor: this.game.players.find((pl) => pl.role.name === 'Goon')!,
+						target,
+						priority: NightActionPriority.KILLER,
+						flags: DEFAULT_ACTION_FLAGS
 					});
 				}
 

@@ -4,7 +4,7 @@ import type Player from '../../structures/Player';
 import { SingleTargetAction } from '../mixins/SingleTargetAction';
 
 export class BlockAction extends SingleTargetAction {
-	public action = 'block';
+	public name = 'block';
 	public actionText = 'block a player';
 	public actionGerund = 'blocking';
 	public priority = NightActionPriority.ESCORT;
