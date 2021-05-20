@@ -4,7 +4,7 @@ import { DEFAULT_ACTION_FLAGS } from '@root/lib/constants';
 import { fauxAlive, listItems } from '@root/lib/util/utils';
 import { mergeDefault } from '@sapphire/utilities';
 import DefaultMap from '@util/DefaultMap';
-import { ActionRole } from '../structures/ActionRole';
+import type { ActionRole } from '../structures/ActionRole';
 import type { NightAction, OneOrMultiplePlayers } from './NightAction';
 
 export default class NightActionsManager extends Array<NightActionEntry> {
