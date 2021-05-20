@@ -14,7 +14,7 @@ export class TrackAction extends SingleTargetAction {
 	}
 
 	public tearDown(actions: NightActionsManager, target: Player) {
-		const visited = this.game.players.filter((player) => player.visitors.includes(target)).map(player => player.user.username);
+		const visited = this.game.players.filter((player) => player.visitors.includes(target)).map((player) => player.user.username);
 		if (visited.length > 0) {
 			return this.player.queueMessage(this.game.t('roles/town:trackResult', { players: visited }));
 		}
