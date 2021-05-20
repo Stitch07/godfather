@@ -24,7 +24,7 @@ export class ActionRole extends Role {
 		actionTexts.push(`${PREFIX}cancel → ${this.game.t('game/players:actionCancelled')}`);
 		const contexts = this.actions.map((action) => action.extraNightContext).join('\n');
 
-		return this.player.user.send(this.game.t('game/players:actionPm', { cycle: this.game.cycle, actions: actionTexts, contexts }));
+		return this.player.user.send(this.game.t('game/players:actionPm', { cycle: this.game.cycle, actions: actionTexts.join('\n'), contexts }));
 	}
 
 	public async onPmCommand(message: Message, command: string, ...args: string[]): Promise<any> {
