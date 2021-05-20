@@ -80,9 +80,9 @@ export default class NightActionsManager extends Array<NightActionEntry> {
 
 		for (const player of this.game.players) {
 			await player.role.afterActions();
-			if (player.role instanceof ActionRole) {
-				(player.role as ActionRole).actions = (player.role as ActionRole).actions.filter((action) => action.remainingUses !== 0);
-			}
+			// if (player.role instanceof ActionRole) {
+			// 	(player.role as ActionRole).actions = (player.role as ActionRole).actions.filter((action) => action.remainingUses !== 0);
+			// }
 		}
 
 		const deadPlayers = [];
