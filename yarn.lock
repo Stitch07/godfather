@@ -603,6 +603,14 @@
     "@discordjs/collection" "^0.1.6"
     tslib "^2.2.0"
 
+"@sapphire/pieces@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@sapphire/pieces/-/pieces-2.0.0.tgz#cab97f89dd1f60b5a10f5849a098c4911e2b9023"
+  integrity sha512-UjVwkCIOMRLwVzLNudrSSCsj1OeRX7cVR2XK/HE6NhsjSIP7ppATZaJ77fSUwqwZ4IgLCEXh96jNIhUyDX/COg==
+  dependencies:
+    "@discordjs/collection" "^0.1.6"
+    tslib "^2.2.0"
+
 "@sapphire/plugin-i18next@1.3.5":
   version "1.3.5"
   resolved "https://registry.yarnpkg.com/@sapphire/plugin-i18next/-/plugin-i18next-1.3.5.tgz#5c900d87c95bb4e1347c47ad7af18e060b7093c2"
