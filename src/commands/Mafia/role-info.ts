@@ -34,12 +34,15 @@ export default class extends GodfatherCommand {
 			const factionalRoles = new Map(
 				[
 					...uniqueRoles
-						.reduce((coll, role) => {
-							const facRoles = coll.get(role.faction.name);
-							facRoles.push(role.name);
-							coll.set(role.faction.name, facRoles);
-							return coll;
-						}, new DefaultMap<string, string[]>(() => []))
+						.reduce(
+							(coll, role) => {
+								const facRoles = coll.get(role.faction.name);
+								facRoles.push(role.name);
+								coll.set(role.faction.name, facRoles);
+								return coll;
+							},
+							new DefaultMap<string, string[]>(() => [])
+						)
 						.entries()
 				].sort((a, b) => b[1].length - a[1].length)
 			);
