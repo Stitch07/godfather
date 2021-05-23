@@ -34,7 +34,7 @@ export class ActionRole extends Role {
 		);
 	}
 
-	public async onPmCommand(message: Message, command: string, ...args: string[]): Promise<any> {
+	public async onPmCommand(_message: Message, command: string, ...args: string[]): Promise<any> {
 		if ((this.actionPhase & this.game.phase) !== this.game.phase) return;
 		removeArrayItem(this.game.nightActions, (action) => action.actor === this.player);
 
@@ -95,7 +95,7 @@ export class ActionRole extends Role {
 		}
 	}
 
-	public canUseAction(command?: string): CanUseActionData {
+	public canUseAction(_command?: string): CanUseActionData {
 		return { check: this.player.isAlive, reason: '' };
 	}
 
