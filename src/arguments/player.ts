@@ -10,7 +10,7 @@ export default class extends Argument<Player> {
 		const resolved = Player.resolve(game!, parameter);
 		if (resolved) return this.ok(resolved);
 
-		const user = (await ((this.store as unknown) as ArgumentStore).get('user')!.run(parameter, context)) as Result<User, UserError>;
+		const user = (await (this.store as unknown as ArgumentStore).get('user')!.run(parameter, context)) as Result<User, UserError>;
 		if (!user.success)
 			return this.error({
 				identifier: 'playerUnknownUser',

@@ -1,4 +1,5 @@
 import { DbSet } from '@lib/database/DbSet';
+
 import GodfatherCommand from '@lib/GodfatherCommand';
 import { ApplyOptions } from '@sapphire/decorators';
 import type { Args, CommandContext, CommandOptions } from '@sapphire/framework';
@@ -14,10 +15,10 @@ export default class extends GodfatherCommand {
 	public async run(message: Message, args: Args, context: CommandContext) {
 		if (args.finished) {
 			const t = await message.fetchT();
-			const output = (t('commands/admin:setLanguageView', {
+			const output = t('commands/admin:setLanguageView', {
 				currentLanguage: t.lng,
 				validLanguages: this.validLanguages
-			}) as unknown) as string[];
+			}) as unknown as string[];
 			return message.channel.send(output.join('\n'));
 		}
 
