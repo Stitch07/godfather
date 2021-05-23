@@ -8,7 +8,7 @@ import type { Message } from 'discord.js';
 })
 export default class extends GodfatherCommand {
 	public async run(message: Message, _: Args, context: CommandContext) {
-		const messageText = ((await message.resolveKey('commands/misc:infoText', { prefix: context.prefix })) as unknown) as string[];
+		const messageText = (await message.resolveKey('commands/misc:infoText', { prefix: context.prefix })) as unknown as string[];
 		return message.channel.send(messageText.join('\n'));
 	}
 }

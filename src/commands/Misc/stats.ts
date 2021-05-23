@@ -21,18 +21,18 @@ export default class extends GodfatherCommand {
 		const t = await message.fetchT();
 		const generalStatistics = this.generalStatistics(t.lng);
 
-		const titles = (t('commands/misc:statsTitles') as unknown) as StatsTitles;
-		const fields = (t('commands/misc:statsFields') as unknown) as StatsFields;
+		const titles = t('commands/misc:statsTitles') as unknown as StatsTitles;
+		const fields = t('commands/misc:statsFields') as unknown as StatsFields;
 
 		return new MessageEmbed()
 			.setColor('#000000')
 			.setAuthor(this.context.client.user!.username, this.context.client.user!.displayAvatarURL({ format: 'png' }))
 			.setDescription(
-				(t('commands/misc:statsDescription', {
+				t('commands/misc:statsDescription', {
 					botname: this.context.client.user!.username,
 					// eslint-disable-next-line object-shorthand
 					prefix: Array.isArray(prefix) ? prefix[0] : prefix
-				}) as unknown) as string[]
+				}) as unknown as string[]
 			)
 			.addField(
 				titles.connectedTo,
