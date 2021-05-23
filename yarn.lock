@@ -651,12 +651,12 @@
     i18next-fs-backend "^1.1.1"
     tslib "^2.2.0"
 
-"@sapphire/plugin-logger@1.0.11":
-  version "1.0.11"
-  resolved "https://registry.yarnpkg.com/@sapphire/plugin-logger/-/plugin-logger-1.0.11.tgz#9cf8aae21b3ee20dc83f6d73ad5dcfb2ff8bde8c"
-  integrity sha512-wt7GW9jSrN2Bc0LHWawudXPBcv7qt8I/Niq8E7f0dMmoxPhxBAe2I3Om08bwa7gN3a5zQzUVqI64akmmlCtbBQ==
+"@sapphire/plugin-logger@1.0.12":
+  version "1.0.12"
+  resolved "https://registry.yarnpkg.com/@sapphire/plugin-logger/-/plugin-logger-1.0.12.tgz#e36d32d7a6b6c75122bffd5bd6f844b1e6108a7e"
+  integrity sha512-ZESUlsvpteOB7qPmrsY+0hzsEmBBD+Lqgo5WXpXYqglc/S7MAAkM3typDPKpgfVXWi8vaLbTETp1UdohfodZOQ==
   dependencies:
-    "@sapphire/time-utilities" "^1.3.0"
+    "@sapphire/time-utilities" "^1.3.1"
     colorette "^1.2.2"
     tslib "^2.2.0"
 
@@ -684,6 +684,13 @@
   dependencies:
     "@sapphire/utilities" "^1.5.0"
 
+"@sapphire/time-utilities@^1.3.1":
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/@sapphire/time-utilities/-/time-utilities-1.3.2.tgz#9ac6c9f626acc5585382765c82f20f1d0dc5a191"
+  integrity sha512-tmXk5VOEdzXOzdtZkll7v6IbQs1tpTRP2VeqgTNFTxsES+iI0TiPRBqBx2tKdTLaMLdzgaw/mFmeCXXmmn9+6A==
+  dependencies:
+    "@sapphire/utilities" "^1.5.2"
+
 "@sapphire/ts-config@^2.2.1":
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/@sapphire/ts-config/-/ts-config-2.2.1.tgz#c86c5afb79cab60b0bf287e5b780ec534d4ed965"
@@ -706,7 +713,7 @@
   resolved "https://registry.yarnpkg.com/@sapphire/utilities/-/utilities-1.5.0.tgz#8ab8001219668e3a9db65e13d7305aec3b838e9b"
   integrity sha512-lgWjTsy9Dsl21zy4mAzZcftOhijWVq2Gok/aFfS8f3Jue5DC7jSTlJoyEypo9ihbLXHpl8ceIUlRPkMiXcaxIw==
 
-"@sapphire/utilities@^1.5.1":
+"@sapphire/utilities@^1.5.1", "@sapphire/utilities@^1.5.2":
   version "1.5.2"
   resolved "https://registry.yarnpkg.com/@sapphire/utilities/-/utilities-1.5.2.tgz#05188f78a41ea0ef8a753ebe58bb5c40eedbaecf"
   integrity sha512-0QqQzv7KCQuUWQgmWgGfkqhRKgjHkxWywjfVErBMXQWjXbjALN6uOKNVTNwUOOD4qD7sDpgyeRLX/bn3mRz1CQ==
