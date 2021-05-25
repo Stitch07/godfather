@@ -40,7 +40,7 @@ export const getRandomInteger = () => {
 
 export const fauxAlive = (player: Player) => {
 	if (!player.isAlive && player.role!.name === 'Jester' && player.deathReason === `eliminated D${player.game.cycle}`) return true;
-	if (player.role.name === 'Guardian Angel' && (player.role instanceof ActionRole) && player.role.canUseAction().check) return true;
+	if (player.role.name === 'Guardian Angel' && player.role instanceof ActionRole && player.role.canUseAction().check) return true;
 	return player.isAlive;
 };
 

@@ -5,7 +5,11 @@ import { ActionRole } from '../structures/ActionRole';
 
 const OPPOSING_FACTIONS = ['Town', 'Arsonist', 'Werewolf', 'Serial Killer', 'Juggernaut'];
 const filterOpposingPowerRoles = (player: Player) =>
-	player.isAlive && OPPOSING_FACTIONS.includes(player.role!.faction.name) && (player.role instanceof ActionRole) && player.role.canUseAction().check || player.role.name === 'Mayor';
+	(player.isAlive &&
+		OPPOSING_FACTIONS.includes(player.role!.faction.name) &&
+		player.role instanceof ActionRole &&
+		player.role.canUseAction().check) ||
+	player.role.name === 'Mayor';
 
 export default class MafiaFaction extends Faction {
 	public name = 'Mafia';
