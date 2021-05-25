@@ -38,6 +38,12 @@ export class DouseAction extends SingleTargetAction {
 	public name = 'douse';
 	public priority = NightActionPriority.ARSONIST;
 
+	public constructor(public role: ActionRole) {
+		super(role);
+		this.actionGerund = this.game.t('roles/neutral:arsonistDouseGerund');
+		this.actionText = this.game.t('roles/neutral:arsonistDouseText');
+	}
+
 	public runAction(_: NightActionsManager, target: Player) {
 		(this.role as Arsonist).dousedPlayers.push(target);
 	}
@@ -48,11 +54,23 @@ export class DouseAction extends SingleTargetAction {
 		}
 		return super.canUse(target);
 	}
+
+	public get extraNightContext() {
+		return this.game.t('roles/neutral:arsonistDouseContext', {
+			players: (this.role as Arsonist).dousedPlayers.map((player) => player.user.username)
+		});
+	}
 }
 
 export class IgniteAction extends NoTargetAction {
 	public name = 'ignite';
 	public priority = NightActionPriority.ARSONIST;
+
+	public constructor(public role: ActionRole) {
+		super(role);
+		this.actionGerund = this.game.t('roles/neutral:arsonistIgniteGerund');
+		this.actionText = this.game.t('roles/neutral:arsonistIgniteText');
+	}
 
 	public runAction(actions: NightActionsManager) {
 		for (const target of (this.role as Arsonist).dousedPlayers) {
