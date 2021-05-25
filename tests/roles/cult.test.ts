@@ -40,7 +40,7 @@ describe('cult mechanics', () => {
 
 		expect(game.phase).toBe(Phase.Night);
 		expect(game.cycle).toBe(1);
-		expect(cl.role.canUseAction().check).toBe(true);
+		expect(cast<Cult_Leader>(cl.role).canUseAction().check).toBe(true);
 
 		game.nightActions.push({
 			actor: cl,
@@ -59,7 +59,7 @@ describe('cult mechanics', () => {
 	test('night 2', async () => {
 		await game.startNight();
 
-		expect(cl.role.canUseAction().check).toBe(true);
+		expect(cast<Cult_Leader>(cl.role).canUseAction().check).toBe(true);
 
 		game.nightActions.push({
 			actor: cl,
@@ -78,7 +78,7 @@ describe('cult mechanics', () => {
 	test('night 3', async () => {
 		await game.startNight();
 
-		expect(cl.role.canUseAction().check).toBe(true);
+		expect(cast<Cult_Leader>(cl.role).canUseAction().check).toBe(true);
 
 		game.nightActions.push({
 			actor: cl,
@@ -103,7 +103,7 @@ describe('cult mechanics', () => {
 	test('night 4', async () => {
 		await game.startNight();
 
-		expect(cl.role.canUseAction().check).toBe(true);
+		expect(cast<Cult_Leader>(cl.role).canUseAction().check).toBe(true);
 
 		game.nightActions.push({
 			actor: cl,
@@ -123,6 +123,6 @@ describe('cult mechanics', () => {
 	test('night 5', async () => {
 		await game.startNight();
 
-		expect(cl.role.canUseAction().check).toBe(false);
+		expect(cast<Cult_Leader>(cl.role).canUseAction().check).toBe(false);
 	});
 });

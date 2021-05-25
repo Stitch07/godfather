@@ -62,6 +62,5 @@ describe('game testing', () => {
 
 	test('starting nights', () => {
 		expect(game.phase).toBe(Phase.Night);
-		expect(game.host.role!.canUseAction().check).toBe(false);
 	});
 });

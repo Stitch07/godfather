@@ -4,7 +4,7 @@ import { DEFAULT_ACTION_FLAGS } from '@root/lib/constants';
 import { fauxAlive, listItems } from '@root/lib/util/utils';
 import { mergeDefault } from '@sapphire/utilities';
 import DefaultMap from '@util/DefaultMap';
-import type { ActionRole } from '../structures/ActionRole';
+import { ActionRole } from '../structures/ActionRole';
 import type { NightAction, OneOrMultiplePlayers } from './NightAction';
 
 export default class NightActionsManager extends Array<NightActionEntry> {
@@ -44,7 +44,10 @@ export default class NightActionsManager extends Array<NightActionEntry> {
 	public async resolve(): Promise<Player[]> {
 		const possibleActions = this.game.players.filter(
 			(player) =>
-				fauxAlive(player) && (player.role as ActionRole).canUseAction().check && Reflect.get(player.role, 'actionPhase') === Phase.Night
+				fauxAlive(player) &&
+				player.role instanceof ActionRole &&
+				(player.role as ActionRole).canUseAction().check &&
+				Reflect.get(player.role, 'actionPhase') === Phase.Night
 		);
 		// add any default actions the player has
 		const noActionsSent = possibleActions.filter(
