@@ -1,5 +1,5 @@
 {
-	"actionPm": "It is now night {{cycle}}. You have the following actions available:\n{{actions}}\n{{contexts}}\n{{playerlist}}",
+	"actionPm": "It is now night {{cycle}}. You have the following actions available:\n{{actions}}\n{{contexts}}{{playerlist, codeBlock}}",
 	"actionNoAction": "stay at home",
 	"actionCancelled": "cancel your previous action.",
 	"roleCleaned": "We could not determine their role.",

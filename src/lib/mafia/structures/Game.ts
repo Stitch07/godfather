@@ -18,7 +18,7 @@ import { STALEMATE_PRIORITY_ORDER } from '../../constants';
 import GameEntity from '../../orm/entities/Game';
 import PlayerEntity from '../../orm/entities/Player';
 import { canManage, cast, fauxAlive, listItems, randomArrayItem } from '../../util/utils';
-import type { ActionRole } from './ActionRole';
+import { ActionRole } from './ActionRole';
 import type Setup from './Setup';
 
 const MAX_DELAY = 15 * Time.Minute;
@@ -126,7 +126,12 @@ export default class Game {
 		for (const player of this.players) {
 			// clear visitors
 			player.visitors = [];
-			if (player.isAlive && player.role.canUseAction().check && (cast<ActionRole>(player.role).actionPhase & Phase.Day) === Phase.Day) {
+			if (
+				player.isAlive &&
+				player.role instanceof ActionRole &&
+				player.role.canUseAction().check &&
+				(cast<ActionRole>(player.role).actionPhase & Phase.Day) === Phase.Day
+			) {
 				await player.role.onDay();
 			}
 		}
@@ -178,7 +183,11 @@ export default class Game {
 		]);
 		if (this.isFullMoon) await this.channel.sendTranslated('game/phases:fullMoon');
 		for (const player of this.players.filter(
-			(player) => fauxAlive(player) && player.role!.canUseAction().check && cast<ActionRole>(player.role!).actionPhase === Phase.Night
+			(player): boolean =>
+				fauxAlive(player) &&
+				player.role instanceof ActionRole &&
+				player.role!.canUseAction().check &&
+				cast<ActionRole>(player.role!).actionPhase === Phase.Night
 		)) {
 			await player.role!.onNight();
 		}

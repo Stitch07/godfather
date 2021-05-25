@@ -73,21 +73,28 @@ abstract class Role {
 		// noop
 	}
 
+<<<<<<< HEAD
 	public resolveRoleGroup(roleGroupIndex: number) {
+=======
+	public resolveRoleGroup(_roleGroupIndex: number) {
+>>>>>>> 85e27f7739411cc18a797e3f3b6c11a2ac33e6b1
 		// noop
 	}
 
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	public onVisit(visitor: Player) {
+	public onVisit(_visitor: Player) {
 		// noop
 	}
 
 	public afterActions() {
 		// noop
+<<<<<<< HEAD
 	}
 
 	public canUseAction(): CanUseActionData {
 		return { check: false, reason: '' };
+=======
+>>>>>>> 85e27f7739411cc18a797e3f3b6c11a2ac33e6b1
 	}
 
 	// Role categories such as Random Town, Neutral Evil

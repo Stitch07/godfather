@@ -2,22 +2,21 @@ version: '3.7'
 services:
   bot:
     image: godfather:alpha
-    build:
-      context: .
-      dockerfile: Dockerfile
-    command: 'docker:watch'
+    restart: 'always'
+    command: 'start'
     env_file: .env
     ports:
       - '4000:8080'
     depends_on:
       - postgres
-    volumes:
-      - ./:/usr/src/app
+    environment:
+      - NO_COLOR=true
   postgres:
     image: postgres
+    restart: 'always'
     env_file: .env
     ports:
-      - '$PGSQL_DATABASE_EXPOSED_PORT:$PGSQL_DATABASE_PORT'
+      - '$PGSQL_DATABASE_EXPOSED_PORT:5432'
     environment:
       - POSTGRES_DB=godfather
       - 'POSTGRES_USER=$PGSQL_DATABASE_USER'
