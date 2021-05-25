@@ -68,8 +68,6 @@ export default class BasicSetup extends Setup {
 			}
 		}
 
-		console.log(roleGroupIndices.get('Mason').previousIndices);
-
 		return shuffle(generatedRoles);
 	}
 
