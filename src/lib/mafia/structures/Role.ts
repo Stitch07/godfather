@@ -3,7 +3,6 @@ import type { Awaited } from '@sapphire/framework';
 import { Attack, Defence } from '../managers/NightActionsManager';
 import { allRoles } from '../roles';
 import type Executioner from '../roles/neutral/Executioner';
-import type { CanUseActionData } from './ActionRole';
 import type Faction from './Faction';
 
 const INNOCENT_FACTIONS = ['Town', 'Survivor', 'Jester', 'Amnesiac', 'Guardian Angel', 'Juggernaut', 'Godfather', 'Executioner'];
@@ -73,11 +72,7 @@ abstract class Role {
 		// noop
 	}
 
-<<<<<<< HEAD
-	public resolveRoleGroup(roleGroupIndex: number) {
-=======
 	public resolveRoleGroup(_roleGroupIndex: number) {
->>>>>>> 85e27f7739411cc18a797e3f3b6c11a2ac33e6b1
 		// noop
 	}
 
@@ -88,13 +83,6 @@ abstract class Role {
 
 	public afterActions() {
 		// noop
-<<<<<<< HEAD
-	}
-
-	public canUseAction(): CanUseActionData {
-		return { check: false, reason: '' };
-=======
->>>>>>> 85e27f7739411cc18a797e3f3b6c11a2ac33e6b1
 	}
 
 	// Role categories such as Random Town, Neutral Evil
