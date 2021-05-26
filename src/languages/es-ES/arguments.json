@@ -1,9 +1,9 @@
 {
-	"boolean": "{{parameter}} no es un booleano válido.",
-	"user": "{{parameter}} no es una mención válida de usuario.",
-	"gameSetting": "{{parameter}} no es un ajuste válido.",
-	"playerUnknownUser": "{{parameter}} no es una mención válida de usuario.",
-	"playerInvalid": "{{user}} no está jugando en la partida.",
-	"piece": "Un comando inválido ha sido recibido.",
-	"stringTooLong": "El texto enviado debe ser menor de {{maximum}} caracteres."
+	"boolean": "{{parameter}} is not a valid boolean.",
+	"user": "{{parameter}} is not a valid user mention.",
+	"gameSetting": "{{parameter}} is not a valid setting.",
+	"playerUnknownUser": "{{parameter}} is not a valid user mention.",
+	"playerInvalid": "{{user}} is not playing the game.",
+	"piece": "An invalid piece was provided.",
+	"stringTooLong": "The provided string must be smaller than {{maximum}} characters."
 }
