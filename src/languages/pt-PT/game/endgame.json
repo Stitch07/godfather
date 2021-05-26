@@ -3,7 +3,7 @@
 	"factionWin": "O jogo acabou. A(o) {{winningFaction}} ganhou! 🎉",
 	"independentWins": "Vitoria autônomas: {{wins}}",
 	"finalRolelist": [
-		"**Final Rolelist**:",
+		"**Lista de roles final**:",
 		"{{roles}}"
 	]
 }
