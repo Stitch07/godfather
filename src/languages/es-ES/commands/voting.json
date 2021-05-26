@@ -1,11 +1,11 @@
 {
-	"noelimAlreadyVoted": "Ya has votado para no eliminar.",
-	"noelimSuccess": "Has votado para no eliminar.",
-	"noelimResult": "Nadie fue eliminado!",
-	"unvoteFail": "¡No hay votos para eliminar!",
-	"voteDeadPlayer": "No puedes votar a un jugador muerto.",
-	"voteSelf": "El autovoto no está permitido.",
-	"voteAlreadyVoted": "Ya has votado a {{target}}",
-	"voteProtected": "No puedes votar a objetivos protegidos por un Ángel Guardián",
-	"voteSuccess": "Has votado a {{target}}."
+	"noelimAlreadyVoted": "You have already voted not to eliminate.",
+	"noelimSuccess": "You have voted not to eliminate.",
+	"noelimResult": "Nobody was eliminated!",
+	"unvoteFail": "No votes to remove!",
+	"voteDeadPlayer": "You can't vote a dead player.",
+	"voteSelf": "Self-voting is not allowed.",
+	"voteAlreadyVoted": "You have already voted for {{target}}",
+	"voteProtected": "You cannot vote targets protected by a Guardian Angel",
+	"voteSuccess": "Voted {{target}}."
 }
