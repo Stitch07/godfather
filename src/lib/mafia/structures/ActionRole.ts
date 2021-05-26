@@ -64,7 +64,8 @@ export class ActionRole extends Role {
 				({ check, reason } = action.canUse(target));
 				if (!check) {
 					throw this.game.t('roles/global:actionBlockedTarget', {
-						target: Array.isArray(target) ? target : [target]
+						target: (Array.isArray(target) ? target : [target]).map((player) => player.user.username),
+						reason
 					});
 				}
 				if (this.name === 'Godfather' && this.game.players.some((player) => player.isAlive && player.role.name === 'Goon')) {
