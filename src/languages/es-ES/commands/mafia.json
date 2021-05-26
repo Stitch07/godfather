@@ -10,8 +10,8 @@
 	"roleinfoNoDocumentation": "No información para {{role}} está disponible",
 	"rolepmFail": "¡No pude mandarte un Mensaje Directo! Activa tus Mensajes Directos y usa este comando otra vez.",
 	"setwillDead": "No puedes hacer un testamento como un jugador eliminado.",
-	"setwillMaximumLines": "Los testamentos no pueden tener más de {{max}} líneas.",
-	"setwillSuccess": "Tu testamento ha sido declarado.",
+	"setwillMaximumLines": "Wills cannot have more than {{max}} lines.",
+	"setwillSuccess": "Your will has been set.",
 	"showWillDisabled": "Testamentos están desactivados en este juego.",
 	"showWillInvalidTarget": "Solo puedes checar el testamento tuyo o de una persona eliminado",
 	"startAlreadyStarted": "El juego ya empezó!",
@@ -40,7 +40,7 @@
 	"whisperAsDeadPlayer": "No puedes susurrar como un jugador eliminado.",
 	"whisperToRevealedMayor": "No puedes susurrar a un Mayor revelado.",
 	"whisperToDeadPlayer": "No puedes susurrar a jugadores eliminados",
-	"whisperText": "Susurro de **{{sender}}**: \"{{message}}\"",
+	"whisperText": "Whisper from **{{sender}}**: \"{{message}}\"",
 	"whisperFail": "Susurro fallado: {{target}} no tiene los Mensajes Directos abiertos.",
 	"whisperAlert": "**{{sender}}** esta susurrando a **{{target}}**."
 }
