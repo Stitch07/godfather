@@ -1,164 +1,164 @@
 {
-	"changehostDescription": "Vote to change the host.",
+	"changehostDescription": "Vota para cambiar el anfitrión.",
 	"changehostDetailed": {
 		"extendedHelp": [
-			"With a majority vote, the next player in the player-list will become the host.",
-			"Hosts can use this command to automatically change the host (without a vote)."
+			"Con el voto mayoritario, el siguiente jugador de la lista se convertirá en el anfitrión.",
+			"Los anfitriones pueden utilizar este comando para cambiar automáticamente el anfitrión (Sin votar)."
 		]
 	},
-	"closeDescription": "Closes a game lobby, preventing more players from joining it.",
+	"closeDescription": "Cierra la sala de una partida, impiediendo que se unan más jugadores.",
 	"closeDetailed": {
-		"reminder": "The close command is now deprecated, and will be removed in future updates."
+		"reminder": "El comando de cerrar es obsoleto, y sera borrado en futuras actualizaciones."
 	},
-	"createDescription": "Creates a lobby in the current channel.",
+	"createDescription": "Crea una sala en el canal actual.",
 	"createDetailed": {
 		"extendedHelp": [
-			"After creating a game, players can join using `{{prefix}}join`, or by clicking the {{GREENTICK}} emoji.",
-			"When you have enough players, start playing using `{{prefix}}start`."
+			"Después de crear una partida, los jugadores pueden unirse usando `{{prefix}}join`, o haciendo click en el {{GREENTICK}} emoji.",
+			"Cuando haya suficientes jugadores, empieza a jugar usando `{{prefix}}start`."
 		]
 	},
-	"deleteDescription": "Deletes an ongoing game.",
-	"joinDescription": "Adds you to the playerlist of an ongoing game.",
+	"deleteDescription": "Elimina una partida en curso.",
+	"joinDescription": "Te añade a la lista de jugadores de una partida en curso.",
 	"joinDetailed": {
-		"extendedHelp": "If the player-list is full or the game has already started, you will be added as a replacement instead."
+		"extendedHelp": "Si la lista de jugadores está llena o la partida ya ha empezado, te unirás como un sustituto."
 	},
-	"leaveDescription": "Removes you from an ongoing game.",
+	"leaveDescription": "Te elimina de una partida en curso.",
 	"leaveDetailed": {
-		"extendedHelp": "If the game has already started, you will be replaced or mod-killed."
+		"extendedHelp": "Si la partida ya ha empezado, serás reemplazado o asesinado por un mod."
 	},
-	"openDescription": "Opens a game lobby, allowing people to join again.",
+	"openDescription": "Abre la sala de una partida, permitiendo a jugadores que se vuelvan a unir.",
 	"openDetailed": {
-		"reminder": "The open command is now deprecated, and will be removed in future updates."
+		"reminder": "El comando de abrir es obsoleto, y será borrado en futuras actualizaciones."
 	},
-	"playerlistDescription": "Shows the playerlist of an ongoing game.",
-	"removeDescription": "Removes a player from the game.",
+	"playerlistDescription": "Muestra la lista de jugadores de una partida en curso.",
+	"removeDescription": "Elimina a un jugador de la partida.",
 	"removeDetailed": {
 		"usages": [
 			"@Player"
 		],
-		"reminder": "If the game has already started, you can only remove players who are AFK (and don't respond to a 45 second prompt)."
+		"reminder": "Si la partida ya ha empezado, solo puedes eliminar jugadores que estén AFK (Y no respondan a un aviso de 45 segundos)."
 	},
-	"remainingDescription": "Shows when the current day/night ends.",
-	"roleinfoDescription": "Displays a list of all roles in Godfather, and shows information on a specific role.",
+	"remainingDescription": "Muestra cuando el día/noche acaba.",
+	"roleinfoDescription": "Muestra una lista de todos los roles en Godfather, y enseña información sobre un rol específico.",
 	"roleinfoDetailed": {
 		"usages": [
 			"",
-			"Role"
+			"Rol"
 		]
 	},
-	"rolepmDescription": "Sends you your role PM.",
+	"rolepmDescription": "Te envía tu mensaje privado con tu rol.",
 	"rolepmDetailed": {
-		"reminder": "Make sure your DMs are enabled before running this command."
+		"reminder": "Recuerda tener tus mensajes directos activados antes de utilizar este comando."
 	},
-	"setwillDescription": "Set your will.",
+	"setwillDescription": "Haz tu testamento.",
 	"setwillDetailed": {
 		"usages": [
-			"WillText",
-			"--append AdditionalText"
+			"Testamento",
+			"--append TextoAdicional"
 		],
 		"extendedHelp": [
-			"To add text to the end of your will, use the --append flag.",
-			"Wills can be only 8 lines long."
+			"Para añadir texto al final de tu testamento, usa el --append flag.",
+			"Los testamentos solo pueden ser de 8 líneas."
 		],
 		"examples": [
-			"Bodyguard, N1: 5",
+			"Guardaespaldas, N1: 5",
 			"--append N2: 6"
 		]
 	},
-	"setupinfoDescription": "Displays a list of all setups in Godfather, and shows information on a specific setup.",
+	"setupinfoDescription": "Muestra una lista de todos los roles en Godfather, y muestra información sobre un rol específico.",
 	"setupinfoDetailed": {
 		"usages": [
 			"",
-			"Setup"
+			"Configuración"
 		],
 		"examples": [
 			"ss3"
 		]
 	},
-	"showwillDescription": "Shows your current will.",
+	"showwillDescription": "Muestra tu actual testamento.",
 	"showwillDetailed": {
-		"extendedHelp": "To set your will, use the `set-will` command.",
-		"reminder": "You can only run this command in Direct Messages."
+		"extendedHelp": "Para hacer tu testamento, usa el comando `set-will`.",
+		"reminder": "Solo puedes utilizar este comando en Mensajes Directos."
 	},
-	"startDescription": "Starts the game.",
+	"startDescription": "Empieza la partida.",
 	"startDetailed": {
-		"extendedHelp": "If a setup isn't provided, Godfather will find a setup with the correct amount of players.",
-		"reminder": "To view a list of all setups, use the `setup-info` command."
+		"extendedHelp": "Si una configuración no es añadida, Godfather usará una con el correcto número de jugadores.",
+		"reminder": "Para ver una lista de todas las configuraciones, usa el comando the `setup-info`."
 	},
-	"statusDescription": "Shows useful info about the ongoing game.",
-	"usesetupDescription": "Use a custom setup.",
+	"statusDescription": "Muestra información útil sobre la partida en curso.",
+	"usesetupDescription": "Usa una configuración personalizada.",
 	"usesetupDetailed": {
 		"usages": [
 			"Roles"
 		],
-		"extendedHelp": "Do the default setups bore you? Use this command to create your own setup! Provide a list of roles (separated by commas) to use a custom setup.\nNote: To start your game at night 1, use the --nightStart or -n flag.",
+		"extendedHelp": "¿Te aburren los setups genéricos? ¡Usa este comando para crear tu propio setup! Añade una lista de roles (separados por comas) para usar un setup personalizado.\nNota: Para empezar tu juego en la noche 1, usa el --nightStart o -n flag.",
 		"examples": [
-			"Cop, Goon, Doc",
+			"Policía, matón, doctor",
 			"Godfather, Consig, RT x5 --nightStart"
 		],
-		"reminder": "Support for YAML setups is now deprecated, and will be removed in future updates."
+		"reminder": "El apoyo a configuraciones YAML es obsoleto, y será eliminado en futuras actualizaciones."
 	},
-	"whisperDescription": "Secretly send a message to another player.",
+	"whisperDescription": "Envía un mensaje de manera secreta a otro jugador.",
 	"whisperDetailed": {
 		"usages": [
-			"Number Text"
+			"Número de texto"
 		],
 		"extendedHelp": [
-			"All players will know that you are whispering, but not the content of your whisper.",
-			"You cannot whisper to a revealed mayor."
+			"Todos los jugadores sabrán que estás susurrando, pero no el susurro en si.",
+			"No puedes susurrar a un alcalde revelado."
 		],
 		"examples": [
-			"3 Player4 is the Lookout"
+			"3 Jugador4 está en el puesto de observación"
 		]
 	},
-	"abstainDescription": "Abstain from voting in a trial.",
+	"abstainDescription": "Abstente de votar en un juicio.",
 	"abstainDetailed": {
-		"reminder": "This command can only be used during trials."
+		"reminder": "Este comando solo se puede usar durante los juicios."
 	},
-	"guiltyDescription": "Vote guilty in a trial.",
+	"guiltyDescription": "Vota culpable en un juicio.",
 	"guiltyDetailed": {
-		"reminder": "This command can only be used during trials."
+		"reminder": "Este comando solo se puede usar durante los juicios."
 	},
-	"innocentDescription": "Vote innocent in a trial.",
+	"innocentDescription": "Vota inocente en un juicio.",
 	"innocentDetailed": {
-		"reminder": "This command can only be used during trials."
+		"reminder": "Este comando solo se puede usar durante los juicios."
 	},
-	"noelimDescription": "Vote to not eliminate and end day early.",
-	"unvoteDescription": "Remove your vote.",
-	"voteDescription": "Vote to eliminate a player.",
-	"votecountDescription": "Shows the current vote-count.",
+	"noelimDescription": "Vota para no eliminar y acabar el día temprano.",
+	"unvoteDescription": "Elimina tu voto.",
+	"voteDescription": "Vota para eliminar a un jugador.",
+	"votecountDescription": "Muestra la cuenta actual de votos.",
 	"voteDetailed": {
-		"reminder": "If the setting `enableTrials` is enabled, a majority vote will put the player on trial, and not kill him instantly."
+		"reminder": "Si el ajuste `enableTrials` está activado, el voto mayoritario pondrá al jugador en un juicio, y no le matará instantáneamente."
 	},
-	"helpDescription": "Displays a list of all commands in Godfather, and shows information on specific commands.",
+	"helpDescription": "Muestra una lista de todos los comandos en Godfather, y enseña información sobre comandos específicos.",
 	"helpDetailed": {
 		"usages": [
 			"",
-			"Command"
+			"Comando"
 		],
 		"examples": [
 			"",
-			"create-game"
+			"crear-partida"
 		]
 	},
-	"infoDescription": "Gives you useful information about Godfather.",
-	"inviteDescription": "Gives you the invite link to add Godfather to your server.",
-	"pingDescription": "Runs a connection test to Discord.",
-	"prefixDescription": "View and change the prefix in this server.",
+	"infoDescription": "Te da información útil sobre Godfather.",
+	"inviteDescription": "Te da el link para añadir a Godfather a tu servidor.",
+	"pingDescription": "Hace un test de connección a Discord.",
+	"prefixDescription": "Observa y cambia el prefijo en ester servidor.",
 	"prefixDetailed": {
-		"extendedHelp": "Prefixes can be up to 10 characters long.",
+		"extendedHelp": "Los prefijos pueden ser hasta de 10 caracteres de largo.",
 		"usages": [
 			"",
-			"NewPrefix"
+			"NuevoPrefijo"
 		],
 		"examples": [
 			"",
 			"g!"
 		],
-		"reminders": "This command can only be used by users with Manage Server permissions."
+		"reminders": "Este comando solo se puede utilizar por usuarios con permisos de administar el servidor."
 	},
-	"statsDescription": "Shows bot statistics.",
-	"userstatsDescription": "Shows game statistics of a user.",
+	"statsDescription": "Muestra estadísticas del bot.",
+	"userstatsDescription": "Muestra las estadísticas de un usuario.",
 	"userstatsDetailed": {
 		"usages": [
 			"",
@@ -166,50 +166,50 @@
 			"@User --role=Role",
 			"@User --faction=Faction"
 		],
-		"extendedHelp": "Use the --faction flag to filter statistics for a particular faction, and the --role flag to filter statistics for a particular role.",
+		"extendedHelp": "Usa los --faction flag para filtrar estadísticas de una facción en particular, y el --role flag para filtrar estadísticas sobre un rol.",
 		"examples": [
 			"",
 			"@Stitch",
-			"@Stitch --role=\"Serial Killer\"",
+			"@Stitch --role=\"Asesino en serie\"",
 			"@Stitch --faction=Mafia"
 		]
 	},
-	"disable-channelDescription": "Lets you disable the bot in certain channels.",
+	"disable-channelDescription": "Te deja disabilitar el bot en ciertos canales.",
 	"disable-channelDetailed": {
 		"usages": [
 			"",
-			"Channel1, Channel2"
+			"Canal1, Canal2"
 		],
-		"extendedHelp": "If a channel is already disabled, using this command again will enable it.",
+		"extendedHelp": "Si un canal ya está desabilitado, usar este comando otra vez lo abilitará.",
 		"examples": [
 			"",
-			"#general, #off-topic",
-			"#serious"
+			"#general #fuera-de-contexto",
+			"#serio"
 		]
 	},
-	"set-languageDescription": "Changes the server's language.",
+	"set-languageDescription": "Cambia el idioma de el servidor.",
 	"set-languageDetailed": {
 		"usages": [
 			"",
-			"Language"
+			"Idioma"
 		],
-		"extendedHelp": "Use this command without arguments to view a list of supported languages.",
+		"extendedHelp": "Usa este comando sin argumentos para ver una lista de idiomas apoyados.",
 		"examples": [
 			"",
 			"nl-NL"
 		]
 	},
-	"settingDescription": "View or modify game-settings.",
+	"settingDescription": "Observa o modifica ajustes de juego.",
 	"settingDetailed": {
 		"usages": [
 			"",
-			"Key Value"
+			"Valor Clave"
 		],
-		"extendedHelp": "Settings modify game behavior. If this command is used in a channel without an active game, it will modify server-wide defaults instead.",
+		"extendedHelp": "Los ajustes modifican el comportamiento de la partida. Si este comando se usa en un canal sin una partida activa, modificará los estándares del servidor.",
 		"examples": [
 			"",
-			"dayDuration 15 minutes",
-			"enableTrials true"
+			"duraciónDía 15 minutos",
+			"enableTrials verdadero"
 		]
 	}
 }
