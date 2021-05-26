@@ -56,9 +56,11 @@ export class DouseAction extends SingleTargetAction {
 	}
 
 	public get extraNightContext() {
-		return this.game.t('roles/neutral:arsonistDouseContext', {
-			players: (this.role as Arsonist).dousedPlayers.map((player) => player.user.username)
-		});
+		if ((this.role as Arsonist).dousedPlayers.length > 0)
+			return this.game.t('roles/neutral:arsonistDouseContext', {
+				players: (this.role as Arsonist).dousedPlayers.map((player) => player.user.username)
+			});
+		return null;
 	}
 }
 

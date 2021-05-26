@@ -22,7 +22,10 @@ export class ActionRole extends Role {
 		const actionTexts = this.actions.map((action) => `${PREFIX}${action.name} → ${action.actionText}`);
 		actionTexts.push(`${PREFIX}noaction → ${this.game.t('game/players:actionNoAction')}`);
 		actionTexts.push(`${PREFIX}cancel → ${this.game.t('game/players:actionCancelled')}`);
-		const contexts = this.actions.map((action) => action.extraNightContext).join('\n');
+		const contexts = this.actions
+			.map((action) => action.extraNightContext)
+			.filter((ctx) => ctx !== null)
+			.join('\n');
 
 		return this.player.user.send(
 			this.game.t('game/players:actionPm', {
@@ -60,13 +63,16 @@ export class ActionRole extends Role {
 				const action = this.actions.find((action) => action.name === command);
 				if (!action) return;
 
-				const target = action.getTarget(args, this.game);
-				({ check, reason } = action.canUse(target));
-				if (!check) {
-					throw this.game.t('roles/global:actionBlockedTarget', {
-						target: (Array.isArray(target) ? target : [target]).map((player) => player.user.username),
-						reason
-					});
+				let target = undefined;
+				if (Reflect.has(action, 'getTarget')) {
+					target = action.getTarget(args, this.game);
+					({ check, reason } = action.canUse(target));
+					if (!check) {
+						throw this.game.t('roles/global:actionBlockedTarget', {
+							target: (Array.isArray(target) ? target : [target]).map((player) => player.user.username),
+							reason
+						});
+					}
 				}
 				if (this.name === 'Godfather' && this.game.players.some((player) => player.isAlive && player.role.name === 'Goon')) {
 					// first we remove any older action the goon had

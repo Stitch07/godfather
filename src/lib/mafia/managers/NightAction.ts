@@ -25,7 +25,7 @@ export abstract class NightAction {
 
 	public abstract runDayCommand(actions: NightActionsManager): Awaited<any>;
 
-	public abstract confirmation(target: OneOrMultiplePlayers): string;
+	public abstract confirmation(target?: OneOrMultiplePlayers): string;
 
 	// eslint-disable-next-line @typescript-eslint/class-literal-property-style
 	public get extraNightContext(): string | null {
