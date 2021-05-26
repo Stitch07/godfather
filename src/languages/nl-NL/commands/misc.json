@@ -29,15 +29,15 @@
 	"userstatsNoDatabase": "Het opslaan van informatie in een database is momenteel uitgeschakeld voor deze bot.",
 	"statsDescription": "Gebruik `{{prefix}}invite` om {{botname}} aan je server toe te voegen.",
 	"statsTitles": {
-		"connectedTo": "Connected to",
-		"serverStats": "Server Stats"
+		"connectedTo": "Verbonden met",
+		"serverStats": "Serverstatistieken"
 	},
 	"statsFields": {
 		"servers": "**Servers**",
-		"users": "**Users**",
-		"channels": "**Channels**",
-		"cpuLoad": "**CPU Load**",
-		"ramUsed": "**RAM Used**",
+		"users": "**Gebruikers**",
+		"channels": "**Kanalen**",
+		"cpuLoad": "**Processorgebruik**",
+		"ramUsed": "**Gebruikte RAM**",
 		"uptime": "**Uptime**"
 	}
 }
