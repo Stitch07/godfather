@@ -3,8 +3,8 @@
 	"disableChannelView": "**Devre Dışı Kanallar**: {{channels, listAnd}}",
 	"disableChannelAdded": "Kanal(lar) Devre Dışı: {{channels, listAnd}}",
 	"disableChannelRemoved": "Kanal(lar) Etkin: {{channels, listAnd}}",
-	"setServerSettings": "**Server Settings**",
-	"setGameSettings": "**Game Settings**",
+	"setServerSettings": "** Sunucu Ayarları **",
+	"setGameSettings": "**Oyun ayarları**",
 	"setDuplicate": "The value of **{{key}}** is already `{{value}}`",
 	"setLanguageView": [
 		"Bu sunucudaki dil **{{currentLanguage}}**'dir.",
