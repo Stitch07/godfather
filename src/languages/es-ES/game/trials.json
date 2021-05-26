@@ -1,15 +1,15 @@
 {
-	"trialStart": "{{playerName}}, tienes 30 segundos para convencer al pueblo y evitar que te ejecuten.",
-	"trialVoteStart": "¡El pueblo ahora puede votar en el destino de {{playerName}}! Usa los comando `inocente`, `culpable` y `abstener` en los Mensajes Directos par votar. (tienes 30 segundos; quedan {{dailyTrialsLeft}} juicios hoy)",
+	"trialStart": "{{playerName}}, you have 30 seconds to convince the Town not to lynch you.",
+	"trialVoteStart": "The town may now vote on the Fate of {{playerName}}! Use the commands `innocent`, `guilty`, and `abstain` in Direct Messages to vote. (you have 30 seconds; {{dailyTrialsLeft}} trials left today)",
 	"trialVotes": [
-		"**Votos**:",
-		"Inocente: {{innocentVotes}}",
-		"Culpable: {{guiltyVotes}}",
-		"Se abstiene: {{abstainingVotes}}"
+		"**Votes**:",
+		"Innocent: {{innocentVotes}}",
+		"Guilty: {{guiltyVotes}}",
+		"Abstain: {{abstainingVotes}}"
 	],
-	"maxTrialsReached": "Se ha llegado al máximo de juicios. ¡Nadie fue eliminado!",
-	"playerAcquitted": "{{playerName}} ha sido absuelto.",
-	"playerEliminated": "{{playerName}} ha sido eliminado.{{RoleAndWill}}\n{{votes}}",
-	"votesShowHeader": "Cuenta de Votos Final",
-	"playerEliminatedKill": "eliminado D{{cycle}}"
+	"maxTrialsReached": "Maximum trials reached. Nobody was eliminated!",
+	"playerAcquitted": "{{playerName}} was acquitted.",
+	"playerEliminated": "{{playerName}} was eliminated. {{RoleAndWill}}\n{{votes}}",
+	"votesShowHeader": "Final Vote Count",
+	"playerEliminatedKill": "eliminated D{{cycle}}"
 }
