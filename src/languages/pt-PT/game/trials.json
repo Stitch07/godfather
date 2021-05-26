@@ -9,7 +9,7 @@
 	],
 	"maxTrialsReached": "Julgamentos máximos alcançados. Ninguém foi eliminado!",
 	"playerAcquitted": "{{playerName}} foi inocentado.",
-	"playerEliminated": "{{playerName}} foi eliminado. {{RoleAndWill}} \n{{votes}}",
+	"playerEliminated": "{{playerName}} was eliminated. {{RoleAndWill}}\n{{votes}}",
 	"votesShowHeader": "Contagem final de votos",
-	"playerEliminatedKill": "eliminado D{{cycle}}"
+	"playerEliminatedKill": "eliminated D{{cycle}}"
 }
