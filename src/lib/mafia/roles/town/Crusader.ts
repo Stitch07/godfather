@@ -3,10 +3,12 @@ import Townie from '@mafia/mixins/Townie';
 import type Player from '@mafia/structures/Player';
 import { randomArrayItem } from '@root/lib/util/utils';
 import { SingleTargetAction } from '../../actions/mixins/SingleTargetAction';
+import type { NightAction } from '../../managers/NightAction';
 import { ActionRole } from '../../structures/ActionRole';
 
 class Crusader extends ActionRole {
 	public name = 'Crusader';
+	public actions: NightAction[] = [new CrusaderProtectAction(this)];
 
 	public constructor(player: Player) {
 		super(player);
