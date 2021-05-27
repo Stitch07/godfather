@@ -85,7 +85,7 @@ export default class BasicSetup extends Setup {
 		const cultRoles = roles.filter((role) => this.randomCult.includes(role));
 
 		// at least 2 of these should be greater than zero
-		const mainFactions = [mafiaRoles.length, nkRoles.length, townRoles.length, cultRoles].filter((count) => count !== 0);
+		const mainFactions = [mafiaRoles.length, nkRoles.length, townRoles.length, cultRoles.length].filter((count) => count !== 0);
 		if (mainFactions.length === 1) return err(`There must be 2 distinct factions in the game. (Town/Mafia/Neutral Killing/Cult)`);
 
 		// check if exe has any valid targets
