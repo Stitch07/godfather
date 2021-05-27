@@ -83,7 +83,7 @@ export class HealAction extends SingleTargetAction {
 		}
 	}
 
-	public canTarget(player: Player) {
+	public canUse(player: Player) {
 		if (player === this.role.player && this.type !== ActionType.Heal) return { check: false, reason: this.game.t('roles/global:targetSelf') };
 		if (player === this.role.player && this.hasSelfHealed)
 			return { check: false, reason: this.role.game.t(`roles/town:${this.role.name.toLowerCase()}SelfHealOnce`) };
