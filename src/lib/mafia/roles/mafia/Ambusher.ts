@@ -3,10 +3,12 @@ import MafiaRole from '@mafia/mixins/MafiaRole';
 import type Player from '@mafia/structures/Player';
 import { randomArrayItem } from '@root/lib/util/utils';
 import { SingleTargetAction } from '../../actions/mixins/SingleTargetAction';
+import type { NightAction } from '../../managers/NightAction';
 import { ActionRole } from '../../structures/ActionRole';
 
 class Ambusher extends ActionRole {
 	public name = 'Ambusher';
+	public actions: NightAction[] = [new AmbushAction(this)];
 
 	public constructor(player: Player) {
 		super(player);
