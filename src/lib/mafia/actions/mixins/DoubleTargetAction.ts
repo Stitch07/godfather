@@ -12,7 +12,7 @@ export class DoubleTargetAction extends SingleTargetAction {
 		return targets;
 	}
 
-	public canTarget(target: Player[]) {
+	public canUse(target: Player[]) {
 		if (target[0] === target[1]) return { check: false, reason: this.game.t('roles/global:twoDistinct') };
 		if (target.some((player) => !player.isAlive)) return { check: false, reason: this.game.t('roles/global:targetDeadPlayers') };
 		return { check: true, reason: '' };
