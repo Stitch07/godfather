@@ -1,4 +1,5 @@
 import NightActionsManager, { Attack, NightActionPriority } from '../../managers/NightActionsManager';
+import Survivor from '../../roles/neutral/Survivor';
 import type { ActionRole } from '../../structures/ActionRole';
 import { NoTargetAction } from '../mixins/NoTargetAction';
 
@@ -9,7 +10,15 @@ export class VestAction extends NoTargetAction {
 	public constructor(role: ActionRole, remainingUses = 1) {
 		super(role, remainingUses);
 		this.actionGerund = this.game.t('roles/actions:vestGerund');
-		this.actionText = this.game.t('roles/actions:vestText');
+
+		// TODO: potentially refactor vest texts
+		if (role instanceof Survivor) {
+			this.actionText = this.game.t('roles/actions:survivorText');
+		} else if (remainingUses === 1) {
+			this.actionText = this.game.t('roles/actions:vestText', { count: remainingUses });
+		} else {
+			this.actionText = this.game.t('roles/actions:vestTextPlural', { count: remainingUses });
+		}
 	}
 
 	public canUse() {
