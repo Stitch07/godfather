@@ -22,7 +22,7 @@ export class HauntAction extends SingleTargetAction {
 		return target.queueMessage(this.game.t('roles/neutral:jesterHaunt'));
 	}
 
-	public canTarget(target: Player) {
+	public canUse(target: Player) {
 		if (this.potentialTargets.some((player) => player.user.id === target.user.id)) return { check: true, reason: '' };
 		return { check: false, reason: this.game.t('roles/neutral:jesterVotersOnly') };
 	}

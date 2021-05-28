@@ -1,5 +1,6 @@
 import JesterFaction from '@mafia/factions/neutral/Jester';
 import type Player from '@mafia/structures/Player';
+import { fauxAlive } from '@root/lib/util/utils';
 import { HauntAction } from '../../actions/common/HauntAction';
 import type { NightAction } from '../../managers/NightAction';
 import { TrialVoteType } from '../../managers/VoteManager';
@@ -32,9 +33,10 @@ class Jester extends ActionRole {
 			this.actions.push(new HauntAction(this, playersVoting));
 			await this.game.channel.send(this.game.t('roles/neutral:jesterAlert'));
 		}
+	}
 
-		// eslint-disable-next-line @typescript-eslint/no-empty-function
-		return new Promise<void>(() => {});
+	public canUseAction() {
+		return { check: fauxAlive(this.player) && this.actions.length > 0, reason: '' };
 	}
 }
 

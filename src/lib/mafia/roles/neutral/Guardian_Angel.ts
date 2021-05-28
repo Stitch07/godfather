@@ -1,5 +1,5 @@
 import GuardianAngelFaction from '@mafia/factions/neutral/GuardianAngel';
-import NightActionsManager, { Attack } from '@mafia/managers/NightActionsManager';
+import NightActionsManager, { Attack, NightActionPriority } from '@mafia/managers/NightActionsManager';
 import type Player from '@mafia/structures/Player';
 import { randomArrayItem, removeArrayItem } from '@util/utils';
 import type { Message } from 'discord.js';
@@ -88,6 +88,7 @@ export class ProtectAction extends NoTargetAction {
 		super(role, protects);
 		this.actionText = this.game.t('roles/actions:guardianAngelText');
 		this.actionGerund = this.game.t('roles/actions:guardianAngelGerund');
+		this.priority = NightActionPriority.GUARDIAN_ANGEL;
 	}
 
 	public runAction(actions: NightActionsManager) {
