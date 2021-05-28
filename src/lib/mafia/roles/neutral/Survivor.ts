@@ -1,11 +1,11 @@
-import SurivorFaction from '@mafia/factions/neutral/Survivor';
+import SurvivorFaction from '@mafia/factions/neutral/Survivor';
 import type Player from '@mafia/structures/Player';
 import { VestAction } from '../../actions/common/VestAction';
 import { ActionRole } from '../../structures/ActionRole';
 
 export default class Survivor extends ActionRole {
 	public name = 'Survivor';
-	public faction = new SurivorFaction();
+	public faction = new SurvivorFaction();
 
 	public constructor(player: Player) {
 		super(player);
