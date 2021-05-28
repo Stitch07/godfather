@@ -52,12 +52,12 @@ export class ReanimateAction extends DoubleTargetAction {
 
 	public async tearDown(actions: NightActionsManager, [actor, target]: Player[]) {
 		const thisArg = Object.assign(actor.role, { player: this.player });
-		await (actor.role as ActionRole).actions[0].tearDown.call(thisArg, actions, target);
+		await (actor.role as ActionRole).actions[0].tearDown.call((thisArg as ActionRole).actions[0], actions, target);
 	}
 
 	public canUse([player]: Player[]) {
 		if (player.isAlive) return { check: false, reason: this.game.t('roles/town:reanimatorDeadOnly') };
-		if (!Reflect.has(player.role, 'action') || Reflect.get(player.role, 'actionPhase') !== Phase.Night)
+		if (!(player.role instanceof ActionRole) || Reflect.get(player.role, 'actionPhase') !== Phase.Night)
 			return { check: false, reason: this.game.t('roles/town:reanimatorActionOnly') };
 		if (player.role.faction.name !== 'Town') return { check: false, reason: this.game.t('roles/town:reanimatorDeadTownies') };
 		if (INVALID_ROLES.includes(player.role.name))

@@ -25,7 +25,7 @@ export default class NightActionsManager extends Array<NightActionEntry> {
 				Reflect.get(player.role, 'actionPhase') === Phase.Night
 		);
 		if (action.actor.role.name === 'Reanimator' && action.target) {
-			const { priority } = ((action.target as Player).role as ActionRole).actions[0];
+			const { priority } = ((action.target as Player[])[0].role as ActionRole).actions[0];
 			action.priority = priority;
 		}
 
