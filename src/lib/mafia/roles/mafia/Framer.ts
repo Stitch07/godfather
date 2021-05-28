@@ -10,7 +10,7 @@ class Framer extends ActionRole {
 
 	public constructor(player: Player) {
 		super(player);
-		this.description = this.game.t('roles/neutral:framerDescription');
+		this.description = this.game.t('roles/mafia:framerDescription');
 	}
 }
 

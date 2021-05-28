@@ -13,9 +13,6 @@ export default class Serial_Killer extends ActionRole {
 	public constructor(player: Player) {
 		super(player);
 		this.description = this.game.t('roles/neutral:serialKillerDescription');
-		// this.actionText = this.game.t('roles/actions:serialKillerText');
-		// this.actionGerund = this.game.t('roles/actions:serialKillerGerund');
-		// this.actionParticiple = this.game.t('roles/neutral:serialKillerParticiple');
 	}
 
 	public get defence() {

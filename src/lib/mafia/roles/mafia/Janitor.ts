@@ -10,7 +10,7 @@ class Janitor extends ActionRole {
 
 	public constructor(player: Player) {
 		super(player);
-		this.description = this.game.t('roles/neutral:janitorDescription');
+		this.description = this.game.t('roles/mafia:janitorDescription');
 	}
 }
 
