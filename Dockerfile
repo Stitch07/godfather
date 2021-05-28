@@ -13,7 +13,6 @@ COPY src/config.example.ts src/config.ts
 
 RUN yarn build:prod
 
-
 # Production image
 FROM node:16-alpine
 
