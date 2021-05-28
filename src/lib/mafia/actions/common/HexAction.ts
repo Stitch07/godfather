@@ -16,7 +16,7 @@ export class HexAction extends SingleTargetAction {
 			canTransport: true,
 			canVisit: false,
 			canWitch: true
-		}
+		};
 	}
 
 	public canUse(target: Player) {

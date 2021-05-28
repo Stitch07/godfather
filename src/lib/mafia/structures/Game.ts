@@ -590,12 +590,11 @@ export default class Game {
 			.filter((player) => player.isAlive && player.role.faction.name === 'Coven')
 			.sort((a, b) => NECRONOMICON_INHERIT_ORDER.indexOf(a.role.name) - NECRONOMICON_INHERIT_ORDER.indexOf(b.role.name));
 		if (inheritOrder.length === 0) return;
-		if (inheritOrder[0] !== this.necronomiconWith) this.necronomiconWith = inheritOrder[0];
-		
+		if (inheritOrder[0] !== this.necronomiconWith) [this.necronomiconWith] = inheritOrder;
+
 		if (this.factionalChannels.has('Coven')) {
 			await this.factionalChannels.get('Coven')![0].sendTranslated('game/factions:covenNecronomicon', [{ player: this.necronomiconWith }]);
 		}
-
 	}
 }
 
