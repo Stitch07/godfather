@@ -31,7 +31,7 @@ export default Townie(Reanimator);
 
 export class ReanimateAction extends DoubleTargetAction {
 	public name = 'reanimate';
-	public priority = NightActionPriority.Reanimator;
+	public priority = NightActionPriority.Reanimate;
 
 	public constructor(role: ActionRole) {
 		super(role);

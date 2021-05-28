@@ -69,7 +69,7 @@ export class ReviveAction extends SingleTargetAction {
 		}
 	}
 
-	public canTarget(target: Player) {
+	public canUse(target: Player) {
 		if (target.isAlive || target.role.faction.name !== 'Town')
 			return { check: false, reason: this.game.t('roles/town:retributionistDeadTownies') };
 		if (target.cleaned) return { check: false, reason: this.game.t('roles/town:retributionistNoCleaned') };

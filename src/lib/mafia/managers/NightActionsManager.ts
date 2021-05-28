@@ -173,7 +173,7 @@ export enum NightActionPriority {
 	VIGI_SUICIDE = 0,
 	Vest = 0,
 	Witch = 0,
-	Reanimator = 0,
+	Reanimate = 0,
 	// modify night actions directly
 	ESCORT = 1,
 	TRANSPORTER = 1,
