@@ -66,6 +66,8 @@ export default class Game {
 
 	public t!: TFunction;
 
+	public necronomiconWith: Player | null = null;
+
 	public phaseChangeMutex: Mutex;
 
 	private dayTimeLeft = 0;
@@ -182,6 +184,8 @@ export default class Game {
 			}
 		]);
 		if (this.isFullMoon) await this.channel.sendTranslated('game/phases:fullMoon');
+		await this.assignNecronomicon();
+
 		for (const player of this.players.filter(
 			(player): boolean =>
 				fauxAlive(player) &&
@@ -580,7 +584,22 @@ export default class Game {
 			nightActions: this.nightActions.map((action) => action)
 		};
 	}
+
+	private async assignNecronomicon() {
+		const inheritOrder = this.players
+			.filter((player) => player.isAlive && player.role.faction.name === 'Coven')
+			.sort((a, b) => NECRONOMICON_INHERIT_ORDER.indexOf(a.role.name) - NECRONOMICON_INHERIT_ORDER.indexOf(b.role.name));
+		if (inheritOrder.length === 0) return;
+		if (inheritOrder[0] !== this.necronomiconWith) this.necronomiconWith = inheritOrder[0];
+		
+		if (this.factionalChannels.has('Coven')) {
+			await this.factionalChannels.get('Coven')![0].sendTranslated('game/factions:covenNecronomicon', [{ player: this.necronomiconWith }]);
+		}
+
+	}
 }
+
+const NECRONOMICON_INHERIT_ORDER = ['Coven Leader', 'Hex Master', 'Poisoner', 'Necromancer', 'Potion Master', 'Medusa'];
 
 export interface GameSettings {
 	dayDuration: number;

@@ -1,4 +1,4 @@
-import NightActionsManager, { NightActionPriority } from '../../managers/NightActionsManager';
+import NightActionsManager, { Attack, NightActionPriority } from '../../managers/NightActionsManager';
 import type { ActionRole } from '../../structures/ActionRole';
 import type Player from '../../structures/Player';
 import { SingleTargetAction } from '../mixins/SingleTargetAction';
@@ -11,6 +11,12 @@ export class HexAction extends SingleTargetAction {
 		super(role, remainingUses);
 		this.actionText = this.game.t('roles/actions:hexMasterText');
 		this.actionGerund = this.game.t('roles/actions:hexMasterGerund');
+		this.flags = {
+			canBlock: true,
+			canTransport: true,
+			canVisit: false,
+			canWitch: true
+		}
 	}
 
 	public canUse(target: Player) {
@@ -24,5 +30,9 @@ export class HexAction extends SingleTargetAction {
 
 	public runAction(actions: NightActionsManager, target: Player) {
 		actions.hexedPlayers.push(target);
+		if (this.game.necronomiconWith === this.player) {
+			const playerRecord = actions.record.get(target.user.id);
+			playerRecord.set(target.user.id, { by: [this.player], result: true, type: Attack.Basic });
+		}
 	}
 }
