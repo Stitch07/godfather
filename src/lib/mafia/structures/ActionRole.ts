@@ -1,6 +1,7 @@
 import { PREFIX } from '@root/config';
 import { DEFAULT_ACTION_FLAGS } from '@root/lib/constants';
 import { removeArrayItem } from '@root/lib/util/utils';
+import { codeBlock } from '@sapphire/utilities';
 import type { Message } from 'discord.js';
 import { NoAction } from '../actions/mixins/NoAction';
 import type { NightAction } from '../managers/NightAction';
@@ -32,7 +33,7 @@ export class ActionRole extends Role {
 				cycle: this.game.cycle,
 				actions: actionTexts.join('\n'),
 				contexts,
-				playerlist: this.game.players.show({ codeblock: true })
+				playerlist: codeBlock('diff', this.game.players.show({ codeblock: true }))
 			})
 		);
 	}
