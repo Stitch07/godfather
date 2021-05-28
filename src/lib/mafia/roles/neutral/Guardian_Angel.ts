@@ -82,6 +82,8 @@ Guardian_Angel.categories = [...Guardian_Angel.categories, 'Random Neutral', 'Ne
 export default Guardian_Angel;
 
 export class ProtectAction extends NoTargetAction {
+	public name = 'protect';
+
 	public constructor(role: ActionRole, protects: number) {
 		super(role, protects);
 		this.actionText = this.game.t('roles/actions:guardianAngelText');
