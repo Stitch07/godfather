@@ -11,6 +11,7 @@ import Godfather from '../../roles/mafia/Godfather';
 import Goon from '../../roles/mafia/Goon';
 import Juggernaut from '../../roles/neutral/Juggernaut';
 import Werewolf from '../../roles/neutral/Werewolf';
+import Serial_Killer from '../../roles/neutral/Serial_Killer';
 
 export default class KillerAction extends SingleTargetAction {
 	public priority = NightActionPriority.KILLER;
@@ -21,9 +22,15 @@ export default class KillerAction extends SingleTargetAction {
 	public constructor(role: ActionRole, attack: Attack, actionName: string, remainingUses = Number.POSITIVE_INFINITY) {
 		super(role, remainingUses);
 		this.attackStrength = attack;
-		this.actionText = this.game.t('roles/actions:killerText');
-		this.actionGerund = this.game.t('roles/actions:killerGerund');
-		this.actionParticiple = this.game.t('roles/actions:killerParticiple');
+		if (role instanceof Serial_Killer) {
+			this.actionText = this.game.t('roles/actions:serialKillerText');
+			this.actionGerund = this.game.t('roles/actions:serialKillerGerund');
+			this.actionParticiple = this.game.t('roles/actions:serialKillerParticiple');
+		} else {
+			this.actionText = this.game.t('roles/actions:killerText');
+			this.actionGerund = this.game.t('roles/actions:killerGerund');
+			this.actionParticiple = this.game.t('roles/actions:killerParticiple');
+		}
 		this.shootingMechanism = this.game.t('roles/global:bullet');
 		this.name = actionName;
 	}
