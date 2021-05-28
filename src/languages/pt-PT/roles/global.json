@@ -14,7 +14,7 @@
 	"targetInvalid": "Alvo inválido. Escolha um número entre 1 e {{maxPlayers}}.",
 	"bullet": "bala",
 	"bulletPlural": "balas",
-	"outOfBullets": "Você está sem {shootingMechanism}.",
+	"outOfBullets": "Você está sem {{shootingMechanism}}.",
 	"killerMessage": "Você foi {{actionParticiple}} por um {{role}}!",
 	"twoTargets": "Você precisa especificar 2 alvos.",
 	"twoDistinct": "Por favor escolha 2 alvos diferentes.",
