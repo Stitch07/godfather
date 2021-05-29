@@ -8,7 +8,7 @@ describe('game testing', () => {
 	const game = createMockGame({
 		numPlayers: 6,
 		setup: createMockSetup({
-			roles: ['Vanilla', 'Vanilla', 'Vanilla', 'Vanilla', 'Vanilla', 'Vanilla Mafia']
+			roles: ['Vanilla', 'Vanilla', 'Vanilla', 'Vanilla', 'Vanilla', 'Goon']
 		})
 	});
 
