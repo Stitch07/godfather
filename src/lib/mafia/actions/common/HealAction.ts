@@ -1,4 +1,5 @@
 import NightActionsManager, { NightActionPriority, Attack } from '../../managers/NightActionsManager';
+import Doctor from '../../roles/town/Doctor';
 import type { ActionRole } from '../../structures/ActionRole';
 import type Player from '../../structures/Player';
 import { SingleTargetAction } from '../mixins/SingleTargetAction';
@@ -92,6 +93,12 @@ export class HealAction extends SingleTargetAction {
 			return { check: false, reason: this.role.game.t(`roles/town:${this.role.name.toLowerCase()}HealMayor`) };
 		if (!player.isAlive) return { check: false, reason: this.role.game.t('roles/global:targetDeadPlayers') };
 		return { check: true, reason: '' };
+	}
+
+	public get extraNightContext() {
+		return this.hasSelfHealed && this.role instanceof Doctor
+			? this.game.t('roles/town:doctorCannotSelfHeal')
+			: this.game.t('roles/town:doctorCanSelfHeal');
 	}
 }
 

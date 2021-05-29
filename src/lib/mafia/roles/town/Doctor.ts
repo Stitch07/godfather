@@ -12,12 +12,6 @@ class Doctor extends ActionRole {
 		super(player);
 		this.description = this.game.t('roles/town:doctorDescription');
 	}
-
-	public get extraNightContext() {
-		return (this.actions.find((action) => action.name === 'heal') as DoctorHealAction).hasSelfHealed
-			? this.game.t('roles/town:doctorCannotSelfHeal')
-			: this.game.t('roles/town:doctorCanSelfHeal');
-	}
 }
 
 Doctor.aliases = ['Doc'];

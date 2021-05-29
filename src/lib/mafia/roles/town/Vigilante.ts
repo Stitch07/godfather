@@ -38,17 +38,6 @@ class Vigilante extends ActionRole {
 		return super.onPmCommand(message, command, args[0]);
 	}
 
-	public get extraNightContext() {
-		const bulletsRemaining = this.actions[0].remainingUses;
-		// Infinity bullets = no limit
-		if (bulletsRemaining > 0 && bulletsRemaining !== Infinity)
-			return this.game.t('roles/global:killerContext', {
-				bullets: bulletsRemaining === 1 ? this.game.t('roles/global:bullet') : this.game.t('roles/global:bulletPlural'),
-				amount: bulletsRemaining
-			});
-		return null;
-	}
-
 	private getInitialBullets() {
 		if (this.game.players.length <= 5) return 1;
 		if (this.game.players.length <= 10) return 2;

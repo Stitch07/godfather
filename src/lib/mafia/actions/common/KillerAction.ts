@@ -112,4 +112,18 @@ export default class KillerAction extends SingleTargetAction {
 			this.game.t('roles/global:killerMessage', { actionParticiple: this.actionParticiple, role: this.player.role.name })
 		);
 	}
+
+	public get extraNightContext() {
+		if (this.role instanceof Vigilante) {
+			const bulletsRemaining = this.remainingUses;
+			// Infinity bullets = no limit
+			if (bulletsRemaining > 0 && bulletsRemaining !== Infinity)
+				return this.game.t('roles/global:killerContext', {
+					bullets: bulletsRemaining === 1 ? this.game.t('roles/global:bullet') : this.game.t('roles/global:bulletPlural'),
+					amount: bulletsRemaining
+				});
+		} else if (this.role instanceof Juggernaut)
+			return this.game.t('roles/neutral:juggernautContext', { level: cast<Juggernaut>(this.role).level });
+		return null;
+	}
 }
