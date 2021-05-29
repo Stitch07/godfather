@@ -63,7 +63,6 @@ export default class extends GodfatherCommand {
 		const debouncedFn = debounce(
 			async () => {
 				if (playersAdded.length) {
-
 					await message.channel.send(t('commands/lobby:createPlayersAdded', { players: playersAdded.map((player) => player.tag) }));
 					playersAdded = [];
 				}
