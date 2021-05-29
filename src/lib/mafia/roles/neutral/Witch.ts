@@ -2,6 +2,7 @@ import WitchFaction from '@mafia/factions/neutral/Witch';
 import NightActionsManager, { Defence, NightActionPriority } from '@mafia/managers/NightActionsManager';
 import type Player from '@mafia/structures/Player';
 import { DoubleTargetAction } from '../../actions/mixins/DoubleTargetAction';
+import type { NightAction } from '../../managers/NightAction';
 import { ActionRole } from '../../structures/ActionRole';
 
 class Witch extends ActionRole {
@@ -12,6 +13,7 @@ class Witch extends ActionRole {
 	// whether the witch has been attacked already
 	public attacked = false;
 	public witchSuccessful = false;
+	public actions: NightAction[] = [new ControlAction(this)];
 
 	public constructor(player: Player) {
 		super(player);

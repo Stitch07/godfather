@@ -49,14 +49,15 @@ export default class KillerAction extends SingleTargetAction {
 	}
 
 	public runAction(actions: NightActionsManager, target: Player) {
-		if (this.role instanceof Werewolf && target === this.player) return;
+		// if (this.role instanceof Werewolf && target === this.player) return;
 
 		if (target.role.actualDefence > this.attackStrength) {
 			// witch defence: after attacked once, revert back to Basic
 			if (['Witch', 'Cult Leader'].includes(target.role.name)) cast<Witch | CultLeader>(target.role).attacked = true;
 			return;
 		}
-		actions.record.setAction(target.user.id, 'nightkill', { result: true, by: [this.player], type: this.attackStrength });
+		if (!(this.role instanceof Werewolf && target.user.id !== this.player.user.id))
+			actions.record.setAction(target.user.id, 'nightkill', { result: true, by: [this.player], type: this.attackStrength });
 
 		// Rampage.
 		if (this.role instanceof Werewolf || (this.role instanceof Juggernaut && cast<Juggernaut>(this.role).level >= 2)) {
@@ -66,10 +67,10 @@ export default class KillerAction extends SingleTargetAction {
 				actions.record.setAction(visitor.user.id, 'nightkill', { result: true, by: [this.player], type: this.attackStrength });
 
 				if (this.role instanceof Werewolf) {
+					visitor.queueMessage(this.game.t('roles/neutral:werewolfMaul'));
+				} else {
 					this.player.queueMessage(this.game.t('roles/neutral:juggernautAttackVisitors'));
 					visitor.queueMessage(this.game.t('roles/neutral:juggernautAssault'));
-				} else {
-					visitor.queueMessage(this.game.t('roles/neutral:werewolfMaul'));
 				}
 			}
 		}
@@ -80,8 +81,6 @@ export default class KillerAction extends SingleTargetAction {
 			return { check: false, reason: this.game.t('roles/mafia:goonDethy') };
 		}
 		if (this.role instanceof Werewolf && target === this.player && this.player.isAlive) return { check: true, reason: '' };
-		if (this.role instanceof Werewolf && cast<Werewolf>(this.role).canRampage())
-			return { check: false, reason: this.game.t('roles/neutral:werewolfFullMoons') };
 		if (this.remainingUses === 0)
 			return { check: false, reason: this.game.t('roles/global:outOfBullets', { shootingMechanism: this.shootingMechanism }) };
 		return super.canUse(target);

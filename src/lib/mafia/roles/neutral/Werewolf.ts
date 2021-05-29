@@ -28,6 +28,11 @@ export default class Werewolf extends ActionRole {
 		return Attack.Powerful;
 	}
 
+	public canUseAction() {
+		if (!this.canRampage()) return { check: false, reason: this.game.t('roles/neutral:werewolfFullMoons') };
+		return super.canUseAction();
+	}
+
 	public get defaultAction(): NightActionEntry {
 		return {
 			action: this.actions[0],
