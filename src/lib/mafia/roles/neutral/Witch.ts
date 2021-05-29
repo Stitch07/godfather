@@ -37,8 +37,8 @@ export class ControlAction extends DoubleTargetAction {
 		super(role);
 		this.actionText = this.game.t('roles/actions:witchText');
 		this.flags = {
-			canBlock: false	
-		}
+			canBlock: false
+		};
 	}
 
 	public setUp(actions: NightActionsManager, targets: Player[]) {

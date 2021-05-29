@@ -13,6 +13,7 @@ class CovenLeader extends ActionRole {
 		super(player);
 		this.description = this.game.t('roles/coven:covenLeaderDescription');
 	}
+
 	public get defence() {
 		return this.game.necronomiconWith === this.player ? Defence.Basic : Defence.None;
 	}
