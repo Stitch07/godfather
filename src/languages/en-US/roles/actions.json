@@ -45,7 +45,6 @@
 	"serialKillerText": "stab a player",
 	"serialKillerParticiple": "stabbed",
 	"survivorGerund": "vesting",
-	"vestText": "protect yourself tonight",
 	"werewolfGerund": "mauling",
 	"werewolfText": "maul a player",
 	"werewolfParticiple": "mauled",
@@ -65,5 +64,6 @@
 	"vestGerund": "vesting",
 	"vestNoVests": "You don't have any vests left.",
 	"vestCanVest": "You can vest tonight.",
-	"vestCannotVest": "You cannot vest tonight."
+	"vestCannotVest": "You cannot vest tonight.",
+	"vestText": "protect yourself tonight"
 }
