@@ -79,9 +79,6 @@ export default class KillerAction extends SingleTargetAction {
 		if (this.role instanceof Goon && this.game.setup!.name === 'dethy' && this.game.cycle === 1) {
 			return { check: false, reason: this.game.t('roles/mafia:goonDethy') };
 		}
-		if (this.role instanceof Juggernaut && cast<Juggernaut>(this.role).level === 0 && !this.game.isFullMoon) {
-			return { check: false, reason: this.game.t('roles/neutral:juggernautFullMoonOnly') };
-		}
 		if (this.role instanceof Werewolf && target === this.player && this.player.isAlive) return { check: true, reason: '' };
 		if (this.role instanceof Werewolf && cast<Werewolf>(this.role).canRampage())
 			return { check: false, reason: this.game.t('roles/neutral:werewolfFullMoons') };

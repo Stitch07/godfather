@@ -197,6 +197,18 @@ export default class Game {
 		}
 
 		this.phase = Phase.Night;
+
+		const possibleActions = this.players.filter(
+			(player) =>
+				fauxAlive(player) &&
+				player.role instanceof ActionRole &&
+				player.role.canUseAction().check &&
+				Reflect.get(player.role, 'actionPhase') === Phase.Night
+		);
+
+		if (possibleActions.length === 0) {
+			await this.startDay();
+		}
 	}
 
 	public async startTrial() {

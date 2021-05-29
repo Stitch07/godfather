@@ -22,6 +22,10 @@ class Juggernaut extends ActionRole {
 		return Defence.Basic;
 	}
 
+	public canUseAction() {
+		return { check: this.game.isFullMoon, reason: this.game.t('roles/neutral:juggernautFullMoonOnly') };
+	}
+
 	public static unique = true;
 }
 
