@@ -40,6 +40,9 @@ export class ActionRole extends Role {
 
 	public async onPmCommand(_message: Message, command: string, ...args: string[]): Promise<any> {
 		if ((this.actionPhase & this.game.phase) !== this.game.phase) return;
+		let { check, reason } = this.canUseAction(command);
+		if (!check) throw this.game.t('roles/global:actionBlocked', { reason });
+
 		removeArrayItem(this.game.nightActions, (action) => action.actor === this.player);
 
 		switch (command) {
@@ -58,9 +61,6 @@ export class ActionRole extends Role {
 			}
 
 			default: {
-				let { check, reason } = this.canUseAction(command);
-				if (!check) throw this.game.t('roles/global:actionBlocked', { reason });
-
 				const action = this.actions.find((action) => action.name === command);
 				if (!action) return;
 
