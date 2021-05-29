@@ -1,33 +1,35 @@
-import NightActionsManager, { NightActionPriority } from '@mafia/managers/NightActionsManager';
-import Killer from '@mafia/mixins/Killer';
+import { Attack, NightActionPriority } from '@mafia/managers/NightActionsManager';
 import Townie from '@mafia/mixins/Townie';
 import type Player from '@mafia/structures/Player';
 import type { Message } from 'discord.js';
+import KillerAction from '../../actions/common/KillerAction';
+import type { NightAction } from '../../managers/NightAction';
+import { ActionRole } from '../../structures/ActionRole';
 
-class Vigilante extends Killer {
+class Vigilante extends ActionRole {
 	public name = 'Vigilante';
-	private guilt = false;
+	public actions: NightAction[];
+	public guilt = false;
 
 	public constructor(player: Player) {
 		super(player);
-		this.bullets = player ? this.getInitialBullets() : 0;
-		this.description = this.game.t('roles/town:vigilanteDescription');
+		const bullets = this.getInitialBullets();
+		this.actions = [new KillerAction(this, Attack.Basic, 'shoot', player ? bullets : 0)];
+		this.description = this.game.t('roles/town:vigilanteDescription', { count: bullets });
 	}
 
 	public async onNight() {
 		if (this.guilt) {
 			await this.game.nightActions.addAction({
-				action: this.action,
+				action: this.actions[0],
 				actor: this.player,
 				target: this.player,
-				priority: NightActionPriority.VIGI_SUICIDE,
-				flags: this.flags
+				priority: NightActionPriority.VIGI_SUICIDE
 			});
 
-			await this.player.user.send(this.game.t('roles/town:vigilanteGuilt'));
-		} else {
-			return super.onNight();
+			return this.player.user.send(this.game.t('roles/town:vigilanteGuilt'));
 		}
+		return super.onNight();
 	}
 
 	public onPmCommand(message: Message, command: string, ...args: string[]) {
@@ -35,13 +37,6 @@ class Vigilante extends Killer {
 			return this.player.user.send(this.game.t('roles/town:vigilanteGuilt'));
 		}
 		return super.onPmCommand(message, command, args[0]);
-	}
-
-	public tearDown(actions: NightActionsManager, target: Player) {
-		if (target.role.faction.name === 'Town') {
-			this.guilt = true;
-		}
-		return super.tearDown(actions, target);
 	}
 
 	private getInitialBullets() {

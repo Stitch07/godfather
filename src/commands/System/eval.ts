@@ -19,7 +19,7 @@ import { inspect } from 'util';
 export default class extends GodfatherCommand {
 	public async run(message: Message, args: Args) {
 		const code = await args.rest('string').catch(handleRequiredArg('code'));
-		const executeSql = await args.getFlags('sql');
+		const executeSql = args.getFlags('sql');
 
 		const { result, success, type } = executeSql
 			? await this.sql(code)

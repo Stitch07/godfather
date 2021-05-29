@@ -62,8 +62,10 @@ export default class extends GodfatherCommand {
 		// eslint-disable-next-line @typescript-eslint/no-base-to-string
 		const debouncedFn = debounce(
 			async () => {
-				await message.channel.send(t('commands/lobby:createPlayersAdded', { players: playersAdded.map((player) => player.tag) }));
-				playersAdded = [];
+				if (playersAdded.length) {
+					await message.channel.send(t('commands/lobby:createPlayersAdded', { players: playersAdded.map((player) => player.tag) }));
+					playersAdded = [];
+				}
 			},
 			{
 				maxWait: Time.Second * 2,

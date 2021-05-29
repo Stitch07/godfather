@@ -12,6 +12,9 @@
 import { NightActionPriority } from '@mafia/managers/NightActionsManager';
 import { init } from '@mafia/roles';
 import { Phase } from '@mafia/structures/Game';
+import type Cult_Leader from '@root/lib/mafia/roles/cult/Cult_Leader';
+import type Doctor from '@root/lib/mafia/roles/town/Doctor';
+import { cast } from '@root/lib/util/utils';
 import { createMockGame, createMockSetup } from '../mocks/';
 
 beforeAll(async (done) => {
@@ -29,6 +32,7 @@ describe('cult mechanics', () => {
 	});
 	// easy access
 	const cl = game.players[4];
+	const doc = game.players[2];
 
 	test('night 1', async () => {
 		game.cycle = 1;
@@ -36,12 +40,12 @@ describe('cult mechanics', () => {
 
 		expect(game.phase).toBe(Phase.Night);
 		expect(game.cycle).toBe(1);
-		expect(cl.role.canUseAction().check).toBe(true);
+		expect(cast<Cult_Leader>(cl.role).canUseAction().check).toBe(true);
 
 		game.nightActions.push({
 			actor: cl,
 			target: game.players[0],
-			action: 'convert',
+			action: cast<InstanceType<typeof Cult_Leader>>(cl.role).actions[0],
 			priority: NightActionPriority.CultLeader
 		});
 	});
@@ -55,12 +59,12 @@ describe('cult mechanics', () => {
 	test('night 2', async () => {
 		await game.startNight();
 
-		expect(cl.role.canUseAction().check).toBe(true);
+		expect(cast<Cult_Leader>(cl.role).canUseAction().check).toBe(true);
 
 		game.nightActions.push({
 			actor: cl,
 			target: game.players[1],
-			action: 'convert',
+			action: cast<InstanceType<typeof Cult_Leader>>(cl.role).actions[0],
 			priority: NightActionPriority.CultLeader
 		});
 	});
@@ -74,19 +78,19 @@ describe('cult mechanics', () => {
 	test('night 3', async () => {
 		await game.startNight();
 
-		expect(cl.role.canUseAction().check).toBe(true);
+		expect(cast<Cult_Leader>(cl.role).canUseAction().check).toBe(true);
 
 		game.nightActions.push({
 			actor: cl,
 			target: game.players[3],
-			action: 'convert',
+			action: cast<InstanceType<typeof Cult_Leader>>(cl.role).actions[0],
 			priority: NightActionPriority.CultLeader
 		});
 		game.nightActions.push({
 			actor: game.players[2],
 			target: game.players[3],
-			action: 'heal',
-			priority: NightActionPriority.DOCTOR
+			action: cast<InstanceType<typeof Doctor>>(doc.role).actions[0],
+			priority: NightActionPriority.Healer
 		});
 	});
 
@@ -99,12 +103,12 @@ describe('cult mechanics', () => {
 	test('night 4', async () => {
 		await game.startNight();
 
-		expect(cl.role.canUseAction().check).toBe(true);
+		expect(cast<Cult_Leader>(cl.role).canUseAction().check).toBe(true);
 
 		game.nightActions.push({
 			actor: cl,
 			target: game.players[3],
-			action: 'convert',
+			action: cast<InstanceType<typeof Cult_Leader>>(cl.role).actions[0],
 			priority: NightActionPriority.CultLeader
 		});
 	});
@@ -119,6 +123,6 @@ describe('cult mechanics', () => {
 	test('night 5', async () => {
 		await game.startNight();
 
-		expect(cl.role.canUseAction().check).toBe(false);
+		expect(cast<Cult_Leader>(cl.role).canUseAction().check).toBe(false);
 	});
 });

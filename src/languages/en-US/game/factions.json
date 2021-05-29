@@ -10,5 +10,6 @@
 	"survivorWinCondition": "Live to see the end of the game.",
 	"townWinCondition": "Eliminate every evildoer.",
 	"witchWinCondition": "Survive to see the Town lose the game.",
-	"covenWinCondition": "Kill all town members and competing evil factions"
+	"covenWinCondition": "Kill all town members and competing evil factions",
+	"covenNecronomicon": "{{player}} has the Necronomicon."
 }

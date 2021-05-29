@@ -1,4 +1,5 @@
 import { DbSet } from '@lib/database/DbSet';
+
 import GodfatherCommand from '@lib/GodfatherCommand';
 import { ApplyOptions } from '@sapphire/decorators';
 import type { Args, CommandContext, CommandOptions } from '@sapphire/framework';

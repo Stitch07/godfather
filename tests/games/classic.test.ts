@@ -1,6 +1,11 @@
 import { Phase } from '@mafia/structures/Game';
 import { NightActionPriority } from '@root/lib/mafia/managers/NightActionsManager';
 import { init } from '@root/lib/mafia/roles';
+import type Goon from '@root/lib/mafia/roles/mafia/Goon';
+import type Cop from '@root/lib/mafia/roles/town/Cop';
+import type Doctor from '@root/lib/mafia/roles/town/Doctor';
+import type Escort from '@root/lib/mafia/roles/town/Escort';
+import { cast } from '@root/lib/util/utils';
 import { createMockGame, createMockSetup } from '../mocks';
 
 beforeAll(async (done) => {
@@ -17,6 +22,11 @@ describe('classic setup', () => {
 		})
 	});
 
+	const cop = cast<InstanceType<typeof Cop>>(game.players[0].role);
+	const doc = cast<InstanceType<typeof Doctor>>(game.players[1].role);
+	const escort = cast<InstanceType<typeof Escort>>(game.players[2].role);
+	const goon = cast<InstanceType<typeof Goon>>(game.players[5].role);
+
 	test('night 1', async () => {
 		game.cycle = 1;
 		await game.startNight();
@@ -25,28 +35,28 @@ describe('classic setup', () => {
 		expect(game.cycle).toBe(1);
 
 		game.nightActions.push({
-			action: 'heal',
+			action: doc.actions[0],
 			actor: game.players[1],
 			target: game.players[4],
-			priority: NightActionPriority.DOCTOR
+			priority: NightActionPriority.Healer
 		});
 
 		game.nightActions.push({
-			action: 'check',
+			action: cop.actions[0],
 			actor: game.players[0],
 			target: game.players[5],
-			priority: NightActionPriority.COP
+			priority: NightActionPriority.Investigative
 		});
 
 		game.nightActions.push({
-			action: 'shoot',
+			action: goon.actions[0],
 			actor: game.players[5],
 			target: game.players[4],
 			priority: NightActionPriority.KILLER
 		});
 
 		game.nightActions.push({
-			action: 'roleblock',
+			action: escort.actions[0],
 			actor: game.players[2],
 			target: game.players[5],
 			priority: NightActionPriority.ESCORT
@@ -68,25 +78,26 @@ describe('classic setup', () => {
 	});
 
 	test('night 2', () => {
+		const promotedGoon = cast<InstanceType<typeof Goon>>(game.players[6].role);
 		expect(game.phase).toBe(Phase.Night);
 		expect(game.cycle).toBe(2);
 
 		game.nightActions.push({
-			action: 'heal',
+			action: doc.actions[0],
 			actor: game.players[1],
 			target: game.players[4],
-			priority: NightActionPriority.DOCTOR
+			priority: NightActionPriority.Healer
 		});
 
 		game.nightActions.push({
-			action: 'check',
+			action: cop.actions[0],
 			actor: game.players[0],
 			target: game.players[1],
-			priority: NightActionPriority.COP
+			priority: NightActionPriority.Investigative
 		});
 
 		game.nightActions.push({
-			action: 'shoot',
+			action: promotedGoon.actions[0],
 			actor: game.players[6],
 			target: game.players[1],
 			priority: NightActionPriority.KILLER

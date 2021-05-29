@@ -1,8 +1,8 @@
-import type Game from '@mafia/structures/Game';
-import Player from '@mafia/structures/Player';
-import SingleTarget from './SingleTarget';
+import type Game from '../../structures/Game';
+import Player from '../../structures/Player';
+import { SingleTargetAction } from './SingleTargetAction';
 
-export default class DoubleTarget extends SingleTarget {
+export class DoubleTargetAction extends SingleTargetAction {
 	public getTarget(args: string[], game: Game): Player[] {
 		args = args.slice(0, 2);
 		if (args.length < 2) throw game.t('roles/global:twoTargets');
@@ -12,7 +12,7 @@ export default class DoubleTarget extends SingleTarget {
 		return targets;
 	}
 
-	public canTarget(target: Player[]) {
+	public canUse(target: Player[]) {
 		if (target[0] === target[1]) return { check: false, reason: this.game.t('roles/global:twoDistinct') };
 		if (target.some((player) => !player.isAlive)) return { check: false, reason: this.game.t('roles/global:targetDeadPlayers') };
 		return { check: true, reason: '' };

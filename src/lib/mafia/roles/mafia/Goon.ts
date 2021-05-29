@@ -1,10 +1,14 @@
-import Killer from '@mafia/mixins/Killer';
 import MafiaRole from '@mafia/mixins/MafiaRole';
 import type Player from '@mafia/structures/Player';
 import type { Message } from 'discord.js';
+import KillerAction from '@mafia/actions/common/KillerAction';
+import type { NightAction } from '@mafia/managers/NightAction';
+import { Attack } from '@mafia/managers/NightActionsManager';
+import { ActionRole } from '@mafia/structures/ActionRole';
 
-class Goon extends Killer {
+class Goon extends ActionRole {
 	public name = 'Goon';
+	public actions: NightAction[] = [new KillerAction(this, Attack.Basic, 'shoot')];
 
 	public constructor(player: Player) {
 		super(player);
@@ -21,13 +25,6 @@ class Goon extends Killer {
 			);
 		}
 		return super.onPmCommand(message, command, ...args);
-	}
-
-	public canUseAction() {
-		if (this.game.setup!.name === 'dethy' && this.game.cycle === 1) {
-			return { check: false, reason: this.game.t('roles/mafia:goonDethy') };
-		}
-		return super.canUseAction();
 	}
 
 	public static unique = true;

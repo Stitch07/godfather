@@ -1,52 +1,17 @@
-import SurivorFaction from '@mafia/factions/neutral/Survivor';
-import { Defence, NightActionPriority } from '@mafia/managers/NightActionsManager';
-import NoTarget from '@mafia/mixins/NoTarget';
+import SurvivorFaction from '@mafia/factions/neutral/Survivor';
 import type Player from '@mafia/structures/Player';
+import { VestAction } from '../../actions/common/VestAction';
+import { ActionRole } from '../../structures/ActionRole';
 
-export default class Survivor extends NoTarget {
+export default class Survivor extends ActionRole {
 	public name = 'Survivor';
-	public faction = new SurivorFaction();
-	public action = 'vest';
-	public priority = NightActionPriority.SURVIVOR;
+	public faction = new SurvivorFaction();
 
-	private vested = false;
-	private vests: number;
-
-	public constructor(player: Player, context: SurvivorContext = {}) {
+	public constructor(player: Player) {
 		super(player);
-		if (typeof context.vests === 'number') this.vests = context.vests;
-		else this.vests = this.getInitialVests();
-
-		this.description = this.game.t('roles/neutral:survivorDescription', { count: this.vests });
-		this.actionText = this.game.t('roles/actions:survivorText');
-		this.actionGerund = this.game.t('roles/actions:survivorGerund');
-	}
-
-	public canUseAction() {
-		if (this.vests === 0) return { check: false, reason: this.game.t('roles/neutral:survivorNoVests') };
-		return super.canUseAction();
-	}
-
-	public get defence() {
-		if (this.vested) return Defence.Basic;
-		return Defence.None;
-	}
-
-	public setUp() {
-		this.vested = true;
-	}
-
-	public runAction() {
-		this.vests--;
-	}
-
-	public tearDown() {
-		this.vested = false;
-	}
-
-	public get extraNightContext() {
-		if (this.vests > 0) return this.game.t('roles/neutral:survivorContext', { count: this.vests });
-		return null;
+		const vests = this.game ? this.getInitialVests() : 0;
+		this.actions = [new VestAction(this, vests)];
+		this.description = this.game.t('roles/neutral:survivorDescription', { count: vests });
 	}
 
 	private getInitialVests() {
@@ -54,10 +19,6 @@ export default class Survivor extends NoTarget {
 		if (this.game.players.length <= 10) return 2;
 		return 4;
 	}
-}
-
-export interface SurvivorContext {
-	vests?: number;
 }
 
 Survivor.aliases = ['Surv'];

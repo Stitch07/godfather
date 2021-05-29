@@ -1,27 +1,16 @@
-import NightActionsManager, { NightActionPriority } from '@mafia/managers/NightActionsManager';
-import SingleTarget from '@mafia/mixins/SingleTarget';
 import Townie from '@mafia/mixins/Townie';
 import type Player from '@mafia/structures/Player';
+import { WatchAction } from '../../actions/common/WatchAction';
+import type { NightAction } from '../../managers/NightAction';
+import { ActionRole } from '../../structures/ActionRole';
 
-class Lookout extends SingleTarget {
+class Lookout extends ActionRole {
 	public name = 'Lookout';
-	public action = 'watch';
-	public priority = NightActionPriority.LOOKOUT;
+	public actions: NightAction[] = [new WatchAction(this)];
 
 	public constructor(player: Player) {
 		super(player);
 		this.description = this.game.t('roles/town:lookoutDescription');
-		this.actionText = this.game.t('roles/actions:lookoutText');
-		this.actionGerund = this.game.t('roles/actions:lookoutGerund');
-	}
-
-	public tearDown(actions: NightActionsManager, target: Player) {
-		const visitors = target.visitors.filter((visitor) => visitor !== this.player);
-		if (visitors.length > 0)
-			return this.player.queueMessage(
-				this.game.t('roles/town:lookoutVisitedBy', { players: visitors.map((visitor) => visitor.user.username) })
-			);
-		return this.player.queueMessage(this.game.t('roles/town:lookoutNoVisits'));
 	}
 }
 

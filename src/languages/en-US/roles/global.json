@@ -14,10 +14,13 @@
 	"targetInvalid": "Invalid target. Choose a number between 1 and {{maxPlayers}}.",
 	"bullet": "bullet",
 	"bulletPlural": "bullets",
-	"outOfBullets": "You are out of {shootingMechanism}.",
+	"outOfBullets": "You are out of {{shootingMechanism}}.",
 	"killerMessage": "You were {{actionParticiple}} by a {{role}}!",
 	"twoTargets": "You have to specify 2 targets.",
 	"twoDistinct": "Please pick 2 distinct targets.",
 	"killerContext": "You have {{amount}} {{bullets}} remaining.",
-	"noTargetConfirmation": "You are {{gerund}} tonight."
+	"noTargetConfirmation": "You are {{gerund}} tonight.",
+	"alertRunOut": "You are out of alerts.",
+	"protectRunOut": "You are out of protects.",
+	"vestRunOut": "You are out of vests."
 }

@@ -8,7 +8,7 @@ describe('game testing', () => {
 	const game = createMockGame({
 		numPlayers: 6,
 		setup: createMockSetup({
-			roles: ['Vanilla', 'Vanilla', 'Vanilla', 'Vanilla', 'Vanilla', 'Vanilla Mafia']
+			roles: ['Vanilla', 'Vanilla', 'Vanilla', 'Vanilla', 'Vanilla', 'Goon']
 		})
 	});
 
@@ -62,6 +62,5 @@ describe('game testing', () => {
 
 	test('starting nights', () => {
 		expect(game.phase).toBe(Phase.Night);
-		expect(game.host.role!.canUseAction().check).toBe(false);
 	});
 });

@@ -1,6 +1,6 @@
+import Game from '@mafia/structures/Game';
 import Vanilla_Mafia from '@mafia/roles/mafia/Vanilla_Mafia';
 import Vanilla from '@mafia/roles/town/Vanilla';
-import Game from '@mafia/structures/Game';
 import Player from '@mafia/structures/Player';
 import type Role from '@mafia/structures/Role';
 import type Setup from '@mafia/structures/Setup';

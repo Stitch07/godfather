@@ -17,8 +17,8 @@ import { getConnection, getRepository } from 'typeorm';
 import { STALEMATE_PRIORITY_ORDER } from '../../constants';
 import GameEntity from '../../orm/entities/Game';
 import PlayerEntity from '../../orm/entities/Player';
-import { canManage, fauxAlive, listItems, randomArrayItem } from '../../util/utils';
-import type SingleTarget from '../mixins/SingleTarget';
+import { canManage, cast, fauxAlive, listItems, randomArrayItem } from '../../util/utils';
+import { ActionRole } from './ActionRole';
 import type Setup from './Setup';
 
 const MAX_DELAY = 15 * Time.Minute;
@@ -65,6 +65,8 @@ export default class Game {
 	public factionalChannels = new Collection<string, [TextChannel, string]>();
 
 	public t!: TFunction;
+
+	public necronomiconWith: Player | null = null;
 
 	public phaseChangeMutex: Mutex;
 
@@ -126,7 +128,12 @@ export default class Game {
 		for (const player of this.players) {
 			// clear visitors
 			player.visitors = [];
-			if (player.isAlive && player.role.canUseAction().check && ((player.role as SingleTarget).actionPhase & Phase.Day) === Phase.Day) {
+			if (
+				player.isAlive &&
+				player.role instanceof ActionRole &&
+				player.role.canUseAction().check &&
+				(cast<ActionRole>(player.role).actionPhase & Phase.Day) === Phase.Day
+			) {
 				await player.role.onDay();
 			}
 		}
@@ -177,13 +184,31 @@ export default class Game {
 			}
 		]);
 		if (this.isFullMoon) await this.channel.sendTranslated('game/phases:fullMoon');
+		if (this.cycle >= 3) await this.assignNecronomicon();
+
 		for (const player of this.players.filter(
-			(player) => fauxAlive(player) && player.role!.canUseAction().check && (player.role! as SingleTarget).actionPhase === Phase.Night
+			(player): boolean =>
+				fauxAlive(player) &&
+				player.role instanceof ActionRole &&
+				player.role!.canUseAction().check &&
+				cast<ActionRole>(player.role!).actionPhase === Phase.Night
 		)) {
 			await player.role!.onNight();
 		}
 
 		this.phase = Phase.Night;
+
+		const possibleActions = this.players.filter(
+			(player) =>
+				fauxAlive(player) &&
+				player.role instanceof ActionRole &&
+				player.role.canUseAction().check &&
+				Reflect.get(player.role, 'actionPhase') === Phase.Night
+		);
+
+		if (possibleActions.length === 0) {
+			await this.startDay();
+		}
 	}
 
 	public async startTrial() {
@@ -571,7 +596,21 @@ export default class Game {
 			nightActions: this.nightActions.map((action) => action)
 		};
 	}
+
+	private async assignNecronomicon() {
+		const inheritOrder = this.players
+			.filter((player) => player.isAlive && player.role.faction.name === 'Coven')
+			.sort((a, b) => NECRONOMICON_INHERIT_ORDER.indexOf(a.role.name) - NECRONOMICON_INHERIT_ORDER.indexOf(b.role.name));
+		if (inheritOrder.length === 0) return;
+		if (inheritOrder[0] !== this.necronomiconWith) [this.necronomiconWith] = inheritOrder;
+
+		if (this.factionalChannels.has('Coven')) {
+			await this.factionalChannels.get('Coven')![0].sendTranslated('game/factions:covenNecronomicon', [{ player: this.necronomiconWith }]);
+		}
+	}
 }
+
+const NECRONOMICON_INHERIT_ORDER = ['Coven Leader', 'Hex Master', 'Poisoner', 'Necromancer', 'Potion Master', 'Medusa'];
 
 export interface GameSettings {
 	dayDuration: number;
