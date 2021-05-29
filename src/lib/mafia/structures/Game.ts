@@ -517,7 +517,7 @@ export default class Game {
 		}
 
 		// reset numbered nicknames
-		if (this.settings.numberedNicknames && this.channel.guild!.me?.hasPermission('MANAGE_NICKNAMES')) {
+		if (this.settings.numberedNicknames && this.channel.guild!.me?.permissions.has('MANAGE_NICKNAMES')) {
 			for (const member of this.numberedNicknames) {
 				// only reset a nickname if it's in the correct form
 				if (member.nickname && /\[\d+\] (.+)/.test(member.nickname)) {
