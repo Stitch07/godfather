@@ -83,6 +83,6 @@
 	"veteranMessage": "You shot someone who visited you.",
 	"veteranAlertCount": "You have {{count}} alert remaining.",
 	"veteranAlertCountPlural": "You have {{count}} alerts remaining.",
-	"vigilanteDescription": "You may shoot someone every night.",
+	"vigilanteDescription": "You may shoot someone {{count}} times in a game.",
 	"vigilanteGuilt": "You cannot shoot tonight due to guilt."
 }

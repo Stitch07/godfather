@@ -13,8 +13,9 @@ class Vigilante extends ActionRole {
 
 	public constructor(player: Player) {
 		super(player);
-		this.actions = [new KillerAction(this, Attack.Basic, 'shoot', player ? this.getInitialBullets() : 0)];
-		this.description = this.game.t('roles/town:vigilanteDescription');
+		const bullets = this.getInitialBullets();
+		this.actions = [new KillerAction(this, Attack.Basic, 'shoot', player ? bullets : 0)];
+		this.description = this.game.t('roles/town:vigilanteDescription', { count: bullets });
 	}
 
 	public async onNight() {
