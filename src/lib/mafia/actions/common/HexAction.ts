@@ -34,6 +34,7 @@ export class HexAction extends SingleTargetAction {
 		if (this.game.necronomiconWith === this.player) {
 			const playerRecord = actions.record.get(target.user.id);
 			playerRecord.set(target.user.id, { by: [this.player], result: true, type: Attack.Basic });
+			target.queueMessage(this.game.t('roles/coven:hexMasterAlert'));
 		}
 	}
 }

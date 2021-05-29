@@ -38,6 +38,7 @@ class HexMaster extends ActionRole {
 					return super.onNight();
 				}
 				this.game.nightActions.record.setAction(plr.user.id, 'nightkill', { result: true, by: [this.player], type: Attack.Unstoppable });
+				plr.queueMessage(this.game.t('roles/coven:hexMasterAlert'));
 			}
 			await this.player.user.send(this.game.t('roles/coven:hexMasterFinalHex'));
 		}
