@@ -22,10 +22,6 @@ class Juggernaut extends ActionRole {
 		return Defence.Basic;
 	}
 
-	public get extraNightContext() {
-		return this.game.t('roles/neutral:juggernautContext', { level: this.level });
-	}
-
 	public static unique = true;
 }
 
