@@ -14,5 +14,6 @@
 	"promoteToGodfather": "You have been promoted to the Godfather!",
 	"godfatherDescription": "You can order the mafioso to shoot someone every night.",
 	"janitorDescription": "You may clean a player at night.",
-	"vanillaMafiaDescription": "You have no night actions. Your vote is your only power."
+	"vanillaMafiaDescription": "You have no night actions. Your vote is your only power.",
+	"framerDescription": "You may frame a player and make them appear suspicious"
 }
