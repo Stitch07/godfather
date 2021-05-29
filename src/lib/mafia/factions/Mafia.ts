@@ -3,10 +3,11 @@ import type Game from '@mafia/structures/Game';
 import type Player from '@mafia/structures/Player';
 import { ActionRole } from '../structures/ActionRole';
 
-const OPPOSING_FACTIONS = ['Town', 'Arsonist', 'Werewolf', 'Serial Killer', 'Juggernaut'];
+const WINS_WITH = ['Mafia', 'Survivor', 'Witch'];
+
 const filterOpposingPowerRoles = (player: Player) =>
 	(player.isAlive &&
-		OPPOSING_FACTIONS.includes(player.role!.faction.name) &&
+		!WINS_WITH.includes(player.role!.faction.name) &&
 		player.role instanceof ActionRole &&
 		player.role.canUseAction().check) ||
 	player.role.name === 'Mayor';
@@ -25,7 +26,7 @@ export default class MafiaFaction extends Faction {
 
 		const aliveMafia = players.filter((player) => player.isAlive && player.role!.faction.name === 'Mafia');
 		const aliveOpposingPrs = players.filter(filterOpposingPowerRoles);
-		const aliveOpposing = players.filter((player) => player.isAlive && OPPOSING_FACTIONS.includes(player.role!.faction.name));
+		const aliveOpposing = players.filter((player) => player.isAlive && !WINS_WITH.includes(player.role!.faction.name));
 
 		return aliveMafia.length > 0 && aliveMafia.length >= aliveOpposing.length && aliveOpposingPrs.length === 0;
 	}
