@@ -1,7 +1,7 @@
 import Faction from '@mafia/structures/Faction';
 import type Game from '@mafia/structures/Game';
 
-const SUPPORTING_FACTIONS = ['Witch', 'Survivor', 'Cult'];
+const WINS_WITH = ['Witch', 'Survivor', 'Cult'];
 
 export default class CultFaction extends Faction {
 	public name = 'Cult';
@@ -9,7 +9,7 @@ export default class CultFaction extends Faction {
 	public informed = true;
 
 	public hasWon(game: Game) {
-		const aliveOpposing = game.players.filter((player) => player.isAlive && !SUPPORTING_FACTIONS.includes(player.role.faction.name)).length;
+		const aliveOpposing = game.players.filter((player) => player.isAlive && !WINS_WITH.includes(player.role.faction.name)).length;
 		const aliveFactional = game.players.filter((player) => player.isAlive && player.role.faction.name === 'Cult').length;
 		const alivePlayers = game.players.filter((player) => player.isAlive);
 
