@@ -49,7 +49,7 @@
 	"werewolfRampageHome": "You are rampaging at home tonight.",
 	"werewolfFullMoons": "You can only rampage on full moons.",
 	"witchDescription": "You may witch one player onto another at night.",
-	"witchAlert": "You felt a mystical presence dominating you. You were controlled by a witch!",
+	"controlAlert": "You felt a mystical presence dominating you. You were controlled by a {{role}}!",
 	"witchMessage": "You secretly know that your target is a {{role}}.",
 	"witchActionConfirmation": "You are controlling {{player1}} onto {{player2}} tonight."
 }

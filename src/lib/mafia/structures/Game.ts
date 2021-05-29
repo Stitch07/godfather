@@ -184,7 +184,7 @@ export default class Game {
 			}
 		]);
 		if (this.isFullMoon) await this.channel.sendTranslated('game/phases:fullMoon');
-		await this.assignNecronomicon();
+		if (this.cycle >= 3) await this.assignNecronomicon();
 
 		for (const player of this.players.filter(
 			(player): boolean =>

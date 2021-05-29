@@ -12,7 +12,6 @@ class Witch extends ActionRole {
 
 	// whether the witch has been attacked already
 	public attacked = false;
-	public witchSuccessful = false;
 	public actions: NightAction[] = [new ControlAction(this)];
 
 	public constructor(player: Player) {
@@ -32,11 +31,14 @@ export default Witch;
 export class ControlAction extends DoubleTargetAction {
 	public name = 'witch';
 	public priority = NightActionPriority.Witch;
+	public witchSuccessful = false;
 
 	public constructor(role: ActionRole) {
 		super(role);
 		this.actionText = this.game.t('roles/actions:witchText');
-		this.actionGerund = this.game.t('roles/actions:witchGerund');
+		this.flags = {
+			canBlock: false	
+		}
 	}
 
 	public setUp(actions: NightActionsManager, targets: Player[]) {
@@ -45,14 +47,14 @@ export class ControlAction extends DoubleTargetAction {
 			if (!(action.flags?.canWitch ?? true)) continue;
 			if (action.actor === targetOne) {
 				if (action.target && !Array.isArray(action.target)) action.target = targetTwo;
-				(this.role as Witch).witchSuccessful = true;
+				this.witchSuccessful = true;
 			}
 		}
 	}
 
 	public tearDown(actions: NightActionsManager, [target]: Player[]) {
-		if ((this.role as Witch).witchSuccessful) {
-			target.queueMessage(this.game.t('roles/neutral:witchAlert'));
+		if (this.witchSuccessful) {
+			target.queueMessage(this.game.t(`roles/neutral:controlAlert`, { role: this.role.name }));
 			this.player.queueMessage(this.game.t('roles/neutral:witchMessage', { role: target.role.name }));
 		}
 	}
