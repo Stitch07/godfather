@@ -21,6 +21,10 @@ export class AlignmentCheckAction extends SingleTargetAction {
 			innocence = !innocence;
 			actions.framedPlayers.splice(actions.framedPlayers.indexOf(target), 1);
 		}
+
+		if (actions.hexedPlayers.includes(target)) {
+			innocence = false;
+		}
 		return this.player.queueMessage(
 			this.game.t(innocence ? 'roles/town:alignmentCheckResultInnocent' : 'roles/town:alignmentCheckResultSuspicious')
 		);

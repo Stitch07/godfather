@@ -7,6 +7,7 @@ import { SingleTargetAction } from '../mixins/SingleTargetAction';
 export class HexAction extends SingleTargetAction {
 	public name = 'hex';
 	public priority = NightActionPriority.KILLER;
+
 	public constructor(role: ActionRole, remainingUses = Number.POSITIVE_INFINITY) {
 		super(role, remainingUses);
 		this.actionText = this.game.t('roles/actions:hexMasterText');
