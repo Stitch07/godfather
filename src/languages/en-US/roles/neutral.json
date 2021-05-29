@@ -46,6 +46,7 @@
 	"survivorContext": "You have {{count}} vests remaining.",
 	"werewolfDescription": "You may rampage at someone's house every night.",
 	"werewolfMaul": "You were mauled by a Werewolf!",
+	"werewolfRampageHome": "You are rampaging at home tonight.",
 	"werewolfFullMoons": "You can only rampage on full moons.",
 	"witchDescription": "You may witch one player onto another at night.",
 	"witchAlert": "You felt a mystical presence dominating you. You were controlled by a witch!",
