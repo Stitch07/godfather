@@ -1,6 +1,6 @@
 import NightActionsManager, { Attack, NightActionPriority } from '../../managers/NightActionsManager';
-import Survivor from '../../roles/neutral/Survivor';
 import type { ActionRole } from '../../structures/ActionRole';
+import type Player from '../../structures/Player';
 import { NoTargetAction } from '../mixins/NoTargetAction';
 
 /* A common vesting action BGs and Survivors can use */
@@ -10,15 +10,7 @@ export class VestAction extends NoTargetAction {
 	public constructor(role: ActionRole, remainingUses = 1) {
 		super(role, remainingUses);
 		this.actionGerund = this.game.t('roles/actions:vestGerund');
-
-		// TODO: potentially refactor vest texts
-		if (role instanceof Survivor) {
-			this.actionText = this.game.t('roles/actions:survivorText');
-		} else if (remainingUses === 1) {
-			this.actionText = this.game.t('roles/actions:vestText', { count: remainingUses });
-		} else {
-			this.actionText = this.game.t('roles/actions:vestTextPlural', { count: remainingUses });
-		}
+		this.actionText = this.game.t('roles/actions:vestText');
 	}
 
 	public canUse() {
@@ -26,7 +18,7 @@ export class VestAction extends NoTargetAction {
 		return super.canUse();
 	}
 
-	public tearDown(actions: NightActionsManager) {
+	public tearDown(actions: NightActionsManager, target?: Player) {
 		const playerRecord = actions.record.get(this.player.user.id);
 		const kills = playerRecord.get('nightkill');
 

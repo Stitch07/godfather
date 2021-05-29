@@ -14,7 +14,7 @@ export abstract class NightAction {
 
 	public canUse(target?: OneOrMultiplePlayers): CanUseActionData {
 		if (this.remainingUses === 0) return { check: false, reason: this.game.t(`roles/global:${this.name}RunOut`) };
-		return this.canUse(target);
+		return { check: true, reason: '' };
 	}
 
 	public abstract setUp(actions: NightActionsManager, target?: OneOrMultiplePlayers): Awaited<any>;

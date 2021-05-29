@@ -104,7 +104,15 @@ export class ActionRole extends Role {
 	}
 
 	public canUseAction(_command?: string): CanUseActionData {
-		return { check: this.player.isAlive, reason: '' };
+		let hasUsableAction = false;
+		for (const action of this.actions) {
+			if (action.remainingUses !== 0) {
+				hasUsableAction = true;
+				break;
+			}
+		}
+
+		return { check: this.player.isAlive && hasUsableAction, reason: '' };
 	}
 
 	// eslint-disable-next-line @typescript-eslint/class-literal-property-style

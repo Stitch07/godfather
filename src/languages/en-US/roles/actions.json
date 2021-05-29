@@ -45,7 +45,7 @@
 	"serialKillerText": "stab a player",
 	"serialKillerParticiple": "stabbed",
 	"survivorGerund": "vesting",
-	"survivorText": "protect yourself tonight",
+	"vestText": "protect yourself tonight",
 	"werewolfGerund": "mauling",
 	"werewolfText": "maul a player",
 	"werewolfParticiple": "mauled",
@@ -63,8 +63,6 @@
 	"hexMasterGerund": "hexing",
 	"hexMasterText": "hex a player",
 	"vestGerund": "vesting",
-	"vestText": "protect yourself {{count}} time",
-	"vestTextPlural": "protect yourself {{count}} times",
 	"vestNoVests": "You don't have any vests left.",
 	"vestCanVest": "You can vest tonight.",
 	"vestCannotVest": "You cannot vest tonight."
