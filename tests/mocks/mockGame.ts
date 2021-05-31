@@ -14,6 +14,7 @@ import Doctor from '@root/lib/mafia/roles/town/Doctor';
 import Escort from '@root/lib/mafia/roles/town/Escort';
 import type { Constructor } from '@sapphire/utilities';
 import { createMockChannel, createMockUser } from './';
+import Vigilante from '@root/lib/mafia/roles/town/Vigilante';
 
 const allRoles = new Map<string, Constructor<Role>>([
 	['Vanilla', Vanilla],
@@ -24,7 +25,8 @@ const allRoles = new Map<string, Constructor<Role>>([
 	['Escort', Escort],
 	['Godfather', Godfather],
 	['Consigliere', Consigliere],
-	['Cult Leader', CultLeader]
+	['Cult Leader', CultLeader],
+	['Vigilante', Vigilante]
 ]);
 
 interface MockGameParams {

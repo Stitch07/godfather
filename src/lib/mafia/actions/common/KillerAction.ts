@@ -95,7 +95,7 @@ export default class KillerAction extends SingleTargetAction {
 		}
 
 		if (target.role.faction.name === 'Town' && this.role instanceof Vigilante) {
-			cast<InstanceType<typeof Vigilante>>(this.role).guilt = true;
+			cast<InstanceType<typeof Vigilante>>(this.role).cycleGuiltObtained = this.game.cycle;
 		}
 		const record = actions.record.get(target.user.id).get('nightkill');
 		const success = record.result && record.by.includes(this.player);
