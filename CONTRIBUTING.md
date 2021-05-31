@@ -3,13 +3,13 @@
 **The issue tracker is only for issue reporting or proposals/suggestions. If you have a question, you can find us in our [Discord Server]**.
 
 To contribute to this repository, feel free to create a new fork of the repository and
-submit a pull request. We highly suggest [ESLint] to be installed
+submit a pull request. We highly suggest [ESLint] to be installed, and if using VSCode, the [ESLint Extension].
 in your text editor or IDE of your choice to ensure builds from GitHub Actions do not fail.
 
 1. Fork, clone, and select the **master** branch.
 2. Create a new branch in your fork.
 3. Make your changes.
-4. Ensure your linting passes and unit-tests work by running `yarn lint` and `yarn test` respectively.
+4. Ensure your linting passes and unit-tests work by running `yarn lint`, `yarn format`, and `yarn test` (Tests failing may not be your fault, if they do fail, try running them without your changes and if it still fails, just ignore it).
 5. Commit your changes, and push them.
 6. Submit a Pull Request [here]!
 
@@ -68,6 +68,7 @@ This guide is heavily based on the [Skyra Contributor Guide](https://github.com/
 [discord server]: https://discord.gg/gFhvChy
 [here]: https://github.com/Soumil07/godfather/pulls
 [eslint]: https://eslint.org/
+[eslint extension]: https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint
 [node.js]: https://nodejs.org/en/download/
 [yarn]: https://classic.yarnpkg.com/en/docs/install
 [docker]: https://www.docker.com
