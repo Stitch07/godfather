@@ -2,8 +2,9 @@ name: Continuous Integration
 
 on:
   push:
-    branches-ignore:
-      - 'legacy-python'
+    branches:
+      - master
+      - 1.5.0
     paths:
       - '**.ts'
       - 'yarn.lock'
