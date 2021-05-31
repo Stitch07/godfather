@@ -31,7 +31,7 @@ class Vigilante extends ActionRole {
 		}
 		return super.onPmCommand(message, command, args[0]);
 	}
-      
+
 	public canUseAction(): CanUseActionData {
 		if (this.cycleGuiltObtained !== -1) {
 			return { check: false, reason: this.game.t('roles/town:vigilanteGuilt') };
@@ -48,7 +48,7 @@ class Vigilante extends ActionRole {
 			);
 		}
 	}
-      
+
 	private getInitialBullets() {
 		if (this.game.players.length <= 5) return 1;
 		if (this.game.players.length <= 10) return 2;
