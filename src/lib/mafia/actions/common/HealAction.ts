@@ -96,9 +96,8 @@ export class HealAction extends SingleTargetAction {
 	}
 
 	public get extraNightContext() {
-		return this.hasSelfHealed && this.role instanceof Doctor
-			? this.game.t('roles/town:doctorCannotSelfHeal')
-			: this.game.t('roles/town:doctorCanSelfHeal');
+		if (!(this.role instanceof Doctor)) return null;
+		return this.hasSelfHealed ? this.game.t('roles/town:doctorCannotSelfHeal') : this.game.t('roles/town:doctorCanSelfHeal');
 	}
 }
 

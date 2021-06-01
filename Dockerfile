@@ -27,5 +27,6 @@ COPY ormconfig.js ./
 RUN yarn install --frozen-lockfile --link-duplicates
 
 COPY --from=BUILDER /usr/src/app/dist/ dist/
+COPY --from=BUILDER /usr/src/app/assets/ assets/
 
 ENTRYPOINT [ "yarn" ]
