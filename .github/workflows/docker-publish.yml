@@ -27,7 +27,7 @@ jobs:
         uses: docker/build-push-action@v2
         if: ${{ github.event_name == 'release' }}
         with:
-          file: ./Dockerfile.prod
+          file: ./Dockerfile
           push: true
           tags: soumil07/godfather:${{ github.event.release.tag_name }}
       - name: Push Alpha build
@@ -35,7 +35,7 @@ jobs:
         uses: docker/build-push-action@v2
         if: ${{ github.event_name == 'workflow_dispatch' }}
         with:
-          file: ./Dockerfile.prod
+          file: ./Dockerfile
           push: true
           tags: soumil07/godfather:${{ github.event.inputs.tag_name }}
       - name: Image digest
