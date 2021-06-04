@@ -1,7 +1,7 @@
 {
-	"amnesiacDescription": "You may remember who you were by selecting a dead player.",
-	"amnesiacMessage": "You have remembered that you were a {{role}}!",
-	"amnesiacAnnouncement": "An Amnesiac has remembered that they were a **{{role}}**!",
+	"amnesiacDescription": "Puedes recordar quien eres seleccionando a un jugador muerto.",
+	"amnesiacMessage": "¡Has recordado que eres un {{role}}!",
+	"amnesiacAnnouncement": "¡Un Amnésico ha recordado que era un **{{role}}**!",
 	"amnesiacDeadOnly": "You can only remember dead roles.",
 	"amnesiacNoCleaned": "You cannot remember cleaned roles.",
 	"amnesiacNoUniqueTown": "You cannot remember as unique Town roles.",
