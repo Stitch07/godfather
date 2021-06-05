@@ -17,6 +17,7 @@ export default class BasicSetup extends Setup {
 	public randomNK!: Constructor<Role>[];
 	public randomTownies!: Constructor<Role>[];
 	public randomCult!: Constructor<Role>[];
+	public randomCoven: Constructor<Role>[];
 
 	public constructor(context: PieceContext, options: SetupOptions) {
 		// @ts-ignore aa aa
@@ -26,6 +27,7 @@ export default class BasicSetup extends Setup {
 		this.randomMafia = roleCategories.get('Random Mafia')!;
 		this.randomNK = roleCategories.get('Neutral Killing')!;
 		this.randomCult = [allRoles.get('Cult Leader')!, allRoles.get('Cult Member')!];
+		this.randomCoven = roleCategories.get('Random Coven')!;
 	}
 
 	public generate(client: Client) {
@@ -83,9 +85,10 @@ export default class BasicSetup extends Setup {
 		const townRoles = roles.filter((role) => this.randomTownies.includes(role));
 		const nkRoles = roles.filter((role) => this.randomNK.includes(role));
 		const cultRoles = roles.filter((role) => this.randomCult.includes(role));
+		const covenRoles = roles.filter((role) => this.randomCoven.includes(role));
 
 		// at least 2 of these should be greater than zero
-		const mainFactions = [mafiaRoles.length, nkRoles.length, townRoles.length, cultRoles.length].filter((count) => count !== 0);
+		const mainFactions = [mafiaRoles.length, nkRoles.length, townRoles.length, cultRoles.length, covenRoles.length].filter((count) => count !== 0);
 		if (mainFactions.length === 1) return err(`There must be 2 distinct factions in the game. (Town/Mafia/Neutral Killing/Cult)`);
 
 		// check if exe has any valid targets
