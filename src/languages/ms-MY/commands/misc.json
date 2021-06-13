@@ -1,0 +1,43 @@
+{
+	"helpInvalidCommand": "Arahan yang diberikan tidak sah.",
+	"helpDescription": [
+		"Bot Discord yang menghoskan permainan Mafia secara automatik. Sini, prefiks saya ialah `{{prefix}}`",
+		"[Pelayan Sokongan]({{supportServer}})"
+	],
+	"helpFooter": "Untuk maklumat lanjut tentang arahan spesifik, gunakan {{prefix}}help <arahan>.",
+	"infoText": [
+		"Godfather v{{VERSION}} ialah Bot Discord yang menghoskan permainan Werewolf/Mafia, dengan masa aktif 24/7 dan arahan yang intuitif.",
+		"",
+		"**Ciri Godfather:**",
+		"• Menghoskan permainan Mafia secara automatik, mempunyai lebih daripada 30 peranan dan pecahan berbeza.",
+		"• Setup kustom yang dapat ditambahkan",
+		"• Statistik pemain dan permainan",
+		"dan lebih banyak lagi!",
+		"",
+		"Untuk menambah Godfather ke pelayan Discord anda, gunakan arahan `{{prefix}}invite`."
+	],
+	"inviteText": "[Menjemput {{bot}} ke pelayan anda]({{invite}}) | [Menyertai Pelayan Sokongan]({{supportServer}})",
+	"pingInitial": "Ping sedang berjalan...",
+	"pingResponse": "Pong! Itu mengambil masa {{ping}}ms. Latensi: {{latency}}ms",
+	"prefixCurrent": "Prefiks saya di pelayan ini ditetapkan kepada: {{prefix}}",
+	"prefixUpdated": "Berjaya mengemaskinikan prefiks pelayan ini kepada: `{{prefix}}`",
+	"userStats": [
+		"Permainan: {{totalGames}}",
+		"Kemenangan: {{wins}}",
+		"Prestasi Kemenangan: {{winRate}}"
+	],
+	"userstatsNoDatabase": "Storing information on a database is currently disabled for this bot",
+	"statsDescription": "Untuk menambah {{botname}} ke pelayan anda, gunakan arahan `{{prefix}}invite`.",
+	"statsTitles": {
+		"connectedTo": "Bersambung ke",
+		"serverStats": "Statistik Pelayan"
+	},
+	"statsFields": {
+		"servers": "**Pelayan**",
+		"users": "**Pengguna**",
+		"channels": "**Saluran**",
+		"cpuLoad": "**Beban CPU**",
+		"ramUsed": "**RAM yang Digunakan**",
+		"uptime": "**Tempoh Aktif**"
+	}
+}

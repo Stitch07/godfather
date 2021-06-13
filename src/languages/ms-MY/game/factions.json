@@ -1,0 +1,13 @@
+{
+	"channelTopic": "Saluran perbincangan untuk {{faction}}.",
+	"amnesiacWinCondition": "Remember a role and satisfy its win condition.",
+	"cultWinCondition": "Convert everyone to your side.",
+	"executionerWinCondition": "Eliminate your target at all costs.",
+	"guardianAngelWinCondition": "Keep your target alive.",
+	"jesterWinCondition": "Get eliminated by all means necessary.",
+	"nkWinCondition": "Kill everyone who would oppose you.",
+	"mafiaWinCondition": "Kill all townies and competing evil factions.",
+	"survivorWinCondition": "Live to see the end of the game.",
+	"townWinCondition": "Eliminate every evildoer.",
+	"witchWinCondition": "Survive to see the Town lose the game."
+}

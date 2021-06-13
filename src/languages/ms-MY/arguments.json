@@ -1,0 +1,9 @@
+{
+	"boolean": "{{parameter}} bukan boolean yang sah.",
+	"user": "{{parameter}} bukan sebutan pengguna yang sah.",
+	"gameSetting": "{{parameter}} bukan tetapan yang sah.",
+	"playerUnknownUser": "{{parameter}} bukan sebutan pengguna yang sah.",
+	"playerInvalid": "{{user}} tidak menyertai permainan ini.",
+	"piece": "Arahan yang diberikan tidak sah.",
+	"stringTooLong": "Talian yang diberikan tidak boleh melebihi {{maximum}} aksara."
+}

@@ -1,0 +1,19 @@
+{
+	"disableChannelNone": "Tiada saluran yang telah dimatikan. Mematikan saluran menggunakan {{prefix}}disablechannel #saluran.",
+	"disableChannelView": "**Saluran yang Dimatikan**: {{channels, listAnd}}",
+	"disableChannelAdded": "Saluran yang Dimatikan: {{channels, listAnd}}",
+	"disableChannelRemoved": "Saluran yang Diaktifkan: {{channels, listAnd}}",
+	"setServerSettings": "**Tetapan Pelayan**",
+	"setGameSettings": "**Tetapan Permainan**",
+	"setDuplicate": "Nilai **{{key}}** sudah ditetapkan sebagai `{{value}}`",
+	"setLanguageView": [
+		"Bahasa pelayan ini telah ditetapkan kepada **{{currentLanguage}}**.",
+		"Gunakan `set-language <language>` untuk mengemaskininya.",
+		"Bahasa yang disokong di Godfather: {{validLanguages, listAnd}}"
+	],
+	"setLanguageInvalidLocale": [
+		"\"{{locale}}\" bukan bahasa yang sah.",
+		"Bahasa yang disokong di Godfather: {{validLanguages, listAnd}}"
+	],
+	"setLanguageAlreadySet": "Bahasa pelayan ini sudah ditetapkan kepada **{{locale}}**."
+}

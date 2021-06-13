@@ -1,0 +1,14 @@
+{
+	"roleCleaned": "We could not determine their role.",
+	"displayRole": "Dia seorang **{{role}}**.",
+	"displayWill": "Dia telah meninggalkan wasiat: {{will, codeBlock}}",
+	"noWill": "Kami tidak menjumpai wasiatnya.",
+	"removeHost": "Hos tidak boleh keluar dari permainan. Gunakan arahan `delete` untuk memadamkan permainan, atau arahan `change-host` untuk menukar hos.",
+	"removeConfirmationReplace": "You will be replaced out.",
+	"removeConfirmationModkill": "Anda akan dibunuh secara automatik (mod-killed).",
+	"removeConfirmationPrompt": "Adakah anda pasti akan meninggal permainan ini? {{prompt}}",
+	"removeSuccessfulReplacement": "{{replacement}} telah menggantikan {{player}}.",
+	"removeSuccessfulModkill": "{{player}} dibunuh secara automatik (mod-killed).",
+	"removeModkillReason": "dibunuh secara automatik (mod-killed) {{phase}}",
+	"rolePm": "Hai {{user}}, anda seorang **{{role}}**.\n{{description}}\nSyarat Menang: {{winCondition}}"
+}

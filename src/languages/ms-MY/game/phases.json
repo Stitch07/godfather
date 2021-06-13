@@ -1,0 +1,8 @@
+{
+	"dayStart": [
+		"Day **{{cycle}}** will last {{dayDuration}}",
+		"With {{alivePlayers}} alive, it takes {{majorityVotes}} to eliminate."
+	],
+	"nightStart": "Night **{{cycle}}** will last {{nightDuration}}. Send in your actions quickly!",
+	"fullMoon": "Awas, malam ini ialah bulan purnama 🌕"
+}

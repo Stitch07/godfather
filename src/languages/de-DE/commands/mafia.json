@@ -17,6 +17,8 @@
 	"startAlreadyStarted": "The game has already started!",
 	"startNoSetups": "No setups found for {{playerCount}} players.",
 	"startSetupNotFound": "I couldn't find a setup named \"{{name}}\"",
+	"startMultipleSetups": "I found multiple setups for {{amount}} players. Pick a number between 1 and {{amount}}.\n {{setups}}",
+	"startPromptAborted": "I got no valid response!",
 	"startWrongPlayerCount": "The setup **{{setup}}** requires {{playerCount}} players.",
 	"startSetupChosen": "Chose the setup **{{setup}}**. Randomizing roles...",
 	"startSentRolePms": "Sent all role PMs!",
