@@ -1,5 +1,5 @@
 {
-	"boolean": "{{parameter}} no es un booleano válido.",
+	"boolean": "{{parameter}} no es un boolean válido.",
 	"user": "{{parameter}} no es una mención válida de usuario.",
 	"gameSetting": "{{parameter}} no es un ajuste válido.",
 	"playerUnknownUser": "{{parameter}} no es una mención válida de usuario.",
