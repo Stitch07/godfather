@@ -54,7 +54,7 @@
 	"setwillDetailed": {
 		"usages": [
 			"Testamento",
-			"--append TextoAdicional"
+			"--append AdditionalText"
 		],
 		"extendedHelp": [
 			"Para añadir texto al final de tu testamento, usa el --append flag.",
