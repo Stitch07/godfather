@@ -7,6 +7,7 @@ import { SingleTargetAction } from '../mixins/SingleTargetAction';
 export class HexAction extends SingleTargetAction {
 	public name = 'hex';
 	public priority = NightActionPriority.KILLER;
+
 	public constructor(role: ActionRole, remainingUses = Number.POSITIVE_INFINITY) {
 		super(role, remainingUses);
 		this.actionText = this.game.t('roles/actions:hexMasterText');
@@ -33,6 +34,7 @@ export class HexAction extends SingleTargetAction {
 		if (this.game.necronomiconWith === this.player) {
 			const playerRecord = actions.record.get(target.user.id);
 			playerRecord.set(target.user.id, { by: [this.player], result: true, type: Attack.Basic });
+			target.queueMessage(this.game.t('roles/coven:hexMasterAlert'));
 		}
 	}
 }
