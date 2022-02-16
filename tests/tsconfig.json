@@ -1,0 +1,16 @@
+{
+    "extends": "../tsconfig.base.json",
+    "compilerOptions": {
+        "noEmit": true,
+        "incremental": false,
+        "baseUrl": ".",
+        "paths": {
+            "#lib/*": ["../src/lib/*"],
+            "#mafia/*": ["../src/lib/mafia/*"],
+            "#util/*": ["../src/lib/util/*"]
+        }
+    },
+    "include": [".", "../src/**/*"],
+    "exclude": ["../dist/**/*"],
+    "references": [{ "path": "../src" }]
+}
