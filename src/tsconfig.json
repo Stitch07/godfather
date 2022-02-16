@@ -6,7 +6,9 @@
     "composite": true,
     "preserveConstEnums": true,
     "paths": {
-      "#lib/*": ["lib/*"]
+      "#lib/*": ["./lib/*"],
+      "#mafia/*": ["./lib/mafia/*"],
+      "#util/*": ["./lib/util/*"]
     }
   },
   "include": ["."]

@@ -16,4 +16,8 @@ export class GodfatherCommand extends Command {
       { behaviorWhenNotIdentical: RegisterBehavior.Overwrite }
     );
   }
+
+  public get client() {
+    return this.container.client;
+  }
 }
