@@ -3,6 +3,7 @@ import type { Nullable } from "#lib/util/utils";
 import { PlayerManager } from "#mafia/managers/PlayerManager";
 import { VoteManager } from "#mafia/managers/VoteManager";
 import type Faction from "#mafia/structures/Faction";
+import type Role from "#mafia/structures/Role";
 
 export const enum Phase {
   Pregame,
@@ -33,7 +34,7 @@ export class Game<
     UserClass
   >(this);
 
-  public votes = new VoteManager(this);
+  public votes: VoteManager = new VoteManager(this);
 
   public get majorityVotes() {
     const alivePlayers = this.players.filter((player) => player.isAlive);
@@ -42,6 +43,13 @@ export class Game<
 
   public constructor(public host: UserClass) {
     this.players.push(this.makePlayer(host));
+  }
+
+  public setup(roles: Role[]) {
+    // roles = shuffle(roles);
+    for (const player of this.players) {
+      player.role = roles.shift()!;
+    }
   }
 
   public startDay() {
@@ -56,7 +64,7 @@ export class Game<
   }
 
   public get hasStarted() {
-    return this.phase !== Phase.Pregame;
+    return this.phase !== Phase.Pregame && this.phase !== Phase.Ended;
   }
 
   public checkEndgame(): EndgameCheckData<PlayerClass> {
@@ -98,7 +106,7 @@ export class Game<
     }
 
     return {
-      hasEnded: winningFaction !== undefined,
+      hasEnded: winningFaction !== null,
       winningFaction,
       independentWins,
     };

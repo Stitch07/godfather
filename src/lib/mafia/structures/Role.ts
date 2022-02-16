@@ -1,4 +1,5 @@
 import type Faction from "#lib/mafia/structures/Faction";
+import type { Player } from "#mafia/structures/Player";
 
 const INNOCENT_FACTIONS = [
   "Town",
@@ -24,7 +25,7 @@ class Role {
   // Mayor
   public readonly voteWeight = 1;
 
-  public onDeath() {
+  public onDeath(_player: Player<any>) {
     // noop
   }
 }

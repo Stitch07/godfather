@@ -8,7 +8,7 @@ import type Role from "#mafia/structures/Role";
  */
 export class Player<UserType extends { id: string }> {
   public role!: Role;
-  public isAlive = false;
+  public isAlive = true;
   public deathReason = "";
 
   public constructor(
@@ -20,6 +20,6 @@ export class Player<UserType extends { id: string }> {
     this.isAlive = false;
     this.deathReason = deathReason;
 
-    this.role.onDeath();
+    this.role.onDeath(this);
   }
 }
