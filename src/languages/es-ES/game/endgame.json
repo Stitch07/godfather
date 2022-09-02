@@ -1,9 +1,9 @@
 {
-	"noWinner": "La partida ha acabado. ¡Nadie gana!",
-	"factionWin": "La partida ha acabado. ¡{{winningFaction}} gana! 🎉",
-	"independentWins": "Victorias independientes: {{wins}}",
+	"noWinner": "The game is over. Nobody wins!",
+	"factionWin": "The game is over. {{winningFaction}} wins! 🎉",
+	"independentWins": "Independent wins: {{wins}}",
 	"finalRolelist": [
-		"**Lista de roles Final**:",
+		"**Final Rolelist**:",
 		"{{roles}}"
 	]
 }
