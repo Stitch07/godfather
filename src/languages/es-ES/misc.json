@@ -1,4 +1,4 @@
 {
-	"prefixReminderGuilds": "Mi prefijo en este servidor es {{prefix, inlineCodeBlock}}.",
-	"prefixReminderDms": "¡No tienes que utilizar prefijos en los Mensajes Directos!"
+	"prefixReminderGuilds": "My prefix in this server is set to {{prefix, inlineCodeBlock}}.",
+	"prefixReminderDms": "You don't have to use a prefix in Direct Messages!"
 }
