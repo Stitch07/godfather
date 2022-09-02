@@ -1,14 +1,14 @@
 {
-	"helpInvalidCommand": "Comando invalido.",
+	"helpInvalidCommand": "Este comando esta invalido.",
 	"helpDescription": [
-		"Un Bot de Discord que automáticamente hace partidas de mafia. Mi prefijo es `{{prefix}}`",
+		"Un bot de Discord que automáticamente hace juegos de mafia. Mi prefijo es `{{prefix}}`",
 		"[Servidor de Ayuda]({{supportServer}})"
 	],
-	"helpFooter": "Para información sobre un comando, usa {{prefix}}help <command>.",
+	"helpFooter": "Para información sobre un comando, as {{prefix}}help <command>.",
 	"infoText": [
-		"Godfather v{{VERSION}} es un bot de Discord que hace juegos de Hombre lobo/Mafia que funciona 24-7 y comandos intuitivos.",
+		"Godfather v{{VERSION}} es un bot de Discord que hace juegos de Hombrelobo/Mafia que corre 24-7 y comandos intuitivos.",
 		"",
-		"**Caracteristicas de Godfather:**",
+		"**Habilidades de Godfather:**",
 		"• Automáticamente hace juegos de Mafia, con más de 30 roles y facciones diferentes.",
 		"• Configuraciones personificadas añadibles",
 		"• Estadísticas de juego y jugadores",
@@ -16,7 +16,7 @@
 		"",
 		"Para añadir Godfather a tu servidor de Discord, usa el comando de `{{prefix}}invite`."
 	],
-	"inviteText": "[Invita a {{bot}} a tu servidor]({{invite}}) | [Únete al Servidor de Ayuda]({{supportServer}})",
+	"inviteText": "[Invitar {{bot}} a tu servidor]({{invite}}) | [Únete al Servidor de Ayuda]({{supportServer}})",
 	"pingInitial": "Haciendo un ping...",
 	"pingResponse": "Pong! Eso tomo {{ping}}ms. Latencia: {{latency}}ms",
 	"prefixCurrent": "Mi prefijo en este servidor es {{prefix}}",
@@ -29,15 +29,15 @@
 	"userstatsNoDatabase": "El almacenar de la información en el base de datos esta desactivado en el bot en este momento",
 	"statsDescription": "Para añadir {{botname}} a tu servidor de Discord, usa el comando, `{{prefix}}invite`.",
 	"statsTitles": {
-		"connectedTo": "Conectado a",
-		"serverStats": "Estadísticas de servidor"
+		"connectedTo": "Connected to",
+		"serverStats": "Server Stats"
 	},
 	"statsFields": {
-		"servers": "**Servidores**",
-		"users": "**Usuarios**",
-		"channels": "**Canales**",
-		"cpuLoad": "**Carga de CPU**",
-		"ramUsed": "**RAM Usado**",
-		"uptime": "**Tiempo de actividad**"
+		"servers": "**Servers**",
+		"users": "**Users**",
+		"channels": "**Channels**",
+		"cpuLoad": "**CPU Load**",
+		"ramUsed": "**RAM Used**",
+		"uptime": "**Uptime**"
 	}
 }
