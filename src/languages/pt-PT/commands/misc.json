@@ -29,15 +29,15 @@
 	"userstatsNoDatabase": "Armazenar as informações em um banco de dados está indisponível no momento para este bot",
 	"statsDescription": "Para adicionar {{botname}} ao seu servidor, use o comando `{{prefix}}invite`.",
 	"statsTitles": {
-		"connectedTo": "Conectado à",
-		"serverStats": "Status do servidor"
+		"connectedTo": "Connected to",
+		"serverStats": "Server Stats"
 	},
 	"statsFields": {
-		"servers": "**Servidores**",
-		"users": "**Usuários**",
-		"channels": "**Canais**",
-		"cpuLoad": "**Processamento da CPU**",
-		"ramUsed": "**Ram Utilizado**",
-		"uptime": "**Tempo de atividade**"
+		"servers": "**Servers**",
+		"users": "**Users**",
+		"channels": "**Channels**",
+		"cpuLoad": "**CPU Load**",
+		"ramUsed": "**RAM Used**",
+		"uptime": "**Uptime**"
 	}
 }
