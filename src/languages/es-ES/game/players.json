@@ -1,14 +1,14 @@
 {
-	"roleCleaned": "No podemos averiguar su rol.",
+	"roleCleaned": "No podemos determinar su role.",
 	"displayRole": "Ellos eran un **{{role}}**.",
 	"displayWill": "Dejaron un testamento: {{will, codeBlock}}",
-	"noWill": "No pudimos encontrar un testamento.",
-	"removeHost": "El anfitrión no puede abandonar la partida. Usa el comando de `delete` para borrar la partida, o el comando de `change-host` para cambiar el anfitrión.",
-	"removeConfirmationReplace": "Serás reemplazado.",
-	"removeConfirmationModkill": "Serás eliminado.",
-	"removeConfirmationPrompt": "Estás seguro que quieres salir de este juego? {{prompt}}",
-	"removeSuccessfulReplacement": "{{replacement}} ha reemplazado a {{player}}.",
-	"removeSuccessfulModkill": "{{player}} ha sido autoeliminado.",
-	"removeModkillReason": "autoeliminado {{phase}}",
-	"rolePm": "Hola {{user}}, eres un/una **{{role}}**. {{description}}\nCondición para ganar: {{winCondition}}"
+	"noWill": "No podemos encontrar un testamento.",
+	"removeHost": "The host cannot leave the game. Use the `delete` command to delete the game, or the `change-host` command to change the host.",
+	"removeConfirmationReplace": "Vas a estar reemplazado.",
+	"removeConfirmationModkill": "Vas a estar eliminado.",
+	"removeConfirmationPrompt": "Estas seguro que te quieres salir de este juego? {{prompt}}",
+	"removeSuccessfulReplacement": "{{replacement}} a reemplazado a {{player}}.",
+	"removeSuccessfulModkill": "{{player}} ha sido auto eliminado.",
+	"removeModkillReason": "auto Eliminado {{phase}}",
+	"rolePm": "Hello {{user}}, you are a **{{role}}**. {{description}}\nWin Condition: {{winCondition}}"
 }
