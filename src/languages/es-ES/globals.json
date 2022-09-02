@@ -2,10 +2,10 @@
 	"default": "La llave {{key}} todavía no ha sido traducido.",
 	"listAnd": "{{value, listAnd}}",
 	"helpTitles": {
-		"aliases": "🖇️ | **Alias**",
-		"usages": "📝 | **Uso de Comandos**",
-		"extendedHelp": "🔍 | **Ayuda extendida**",
-		"examples": "🔗 | **Ejemplos**",
-		"reminder": "⏰ | **Recordatorio**"
+		"aliases": "🖇️ | **Aliases**",
+		"usages": "📝 | **Command Usage**",
+		"extendedHelp": "🔍 | **Extended Help**",
+		"examples": "🔗 | **Examples**",
+		"reminder": "⏰ | **Reminder**"
 	}
 }
