@@ -1,11 +1,11 @@
 {
-	"cultLeaderDescription": "You're the leader of a mysterious cult and want everyone to follow your beliefs.",
-	"cultLeaderConsecutiveNights": "You cannot convert on 2 consecutive nights.",
-	"cultLeaderDenounce": "You were denounced by a Cult Leader.",
-	"successfulConversion": "You were converted by a Cult!",
-	"conversionMessage": "You successfully converted {{target}}!",
-	"cultMemberDescription": "You have no night action.",
-	"cultMemberSuicide": "You committed suicide after losing your Cult Leader!",
-	"cultMemberSuicideAnnouncement": "{{follower}} died.",
-	"cultMemberSuicideReason": "committed suicide"
+	"cultLeaderDescription": "Eres el líder de un misterioso culto y quieres que todo el mundo siga tus creencias.",
+	"cultLeaderConsecutiveNights": "No puedes convertir en 2 noches consecutivas.",
+	"cultLeaderDenounce": "Has sido denunciado por el Líder de un Culto.",
+	"successfulConversion": "¡Has sido convertido por un Culto!",
+	"conversionMessage": "¡Has conseguido convertir a {{target}}!",
+	"cultMemberDescription": "No tienes acción de noche.",
+	"cultMemberSuicide": "¡Has cometido suicidio tras perder al líder de tu Culto!",
+	"cultMemberSuicideAnnouncement": "{{follower}} ha muerto.",
+	"cultMemberSuicideReason": "cometió suicidio"
 }
