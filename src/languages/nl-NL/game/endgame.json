@@ -3,7 +3,7 @@
 	"factionWin": "Het spel is tot een einde gekomen. {{winningFaction}} wint! 🎉",
 	"independentWins": "Solo-overwinningen: {{wins}}",
 	"finalRolelist": [
-		"**Uiteindelijke rollenlijst**:",
+		"**Final Rolelist**:",
 		"{{roles}}"
 	]
 }
