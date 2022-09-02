@@ -7,5 +7,5 @@
 	"voteSelf": "Votar em si mesmo não é permitido.",
 	"voteAlreadyVoted": "Você já votou em {{target}}",
 	"voteProtected": "Você não pode votar em alvos protegidos pelo Guardian Angel",
-	"voteSuccess": "Votado em {{target}}."
+	"voteSuccess": "Votou em {{target}}."
 }
