@@ -34,7 +34,7 @@
     "jest": "^29.7.0",
     "ts-jest": "^29.2.0",
     "tsc-watch": "^6.2.0",
-    "typescript": "^5.5.3"
+    "typescript": "^5.4.5"
   },
   "dependencies": {
     "@sapphire/decorators": "^6.1.0",
