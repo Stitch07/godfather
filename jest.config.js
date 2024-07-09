@@ -1,5 +1,7 @@
 /** @type {import('ts-jest/dist/types').InitialOptionsTsJest} */
 
+const { createDefaultPreset } = require('ts-jest');
+
 module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'node',
@@ -9,9 +11,9 @@ module.exports = {
     '^#mafia/(.*)$': '<rootDir>/src/lib/mafia/$1',
     '^#util/(.*)$': '<rootDir>/src/lib/util/$1',
   },
-  globals: {
-    'ts-jest': {
+  transform: {
+    ...createDefaultPreset({
       tsconfig: '<rootDir>/tests/tsconfig.json'
-    }
+    }).transform
   }
 }
